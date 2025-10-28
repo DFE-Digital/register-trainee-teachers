@@ -89,10 +89,10 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         post(
           "/api/v2025.0/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
-          params: params.to_json
+          params: params.to_json,
         )
 
-        expect(response.parsed_body.dig(:data, :withdraw_reasons)).to match_array([reason.name])
+        expect(response.parsed_body.dig(:data, :withdraw_reasons)).to contain_exactly([reason.name])
         expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
         expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
         expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
@@ -134,10 +134,10 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
           post(
             "/api/v2025.0/trainees/#{trainee_id}/withdraw",
             headers: { Authorization: "Bearer #{token}", **json_headers },
-            params: params.to_json
+            params: params.to_json,
           )
 
-          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to match_array([reason.name])
+          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to contain_exactly([reason.name])
           expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
           expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
           expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
@@ -180,10 +180,10 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
           post(
             "/api/v2025.0/trainees/#{trainee_id}/withdraw",
             headers: { Authorization: "Bearer #{token}", **json_headers },
-            params: params.to_json
+            params: params.to_json,
           )
 
-          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to match_array([reason.name])
+          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to contain_exactly([reason.name])
           expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
           expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
           expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
