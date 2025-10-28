@@ -447,7 +447,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
       end
 
-      context "when lead_partner_urn is blank and lead_partner_ukprn is present" do
+      context "when lead_partner_urn is blank and lead_partner_ukprn is present and valid" do
         let(:lead_partner) { create(:lead_partner, :scitt) }
         let(:params) do
           {
@@ -468,6 +468,25 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           trainee = Trainee.last
 
           expect(trainee.lead_partner_not_applicable).to be(false)
+        end
+      end
+
+      context "when lead_partner_urn is blank and lead_partner_ukprn is present but invalid" do
+        let(:lead_partner) { create(:lead_partner, :scitt) }
+        let(:params) do
+          {
+            data: data.merge(
+              lead_partner_ukprn: "99999999",
+              employing_school_urn: "",
+            ),
+          }
+        end
+
+        it "sets lead_partner_ukprn to lead_partner#ukprn and employing_school_urn to nil" do
+            expect(response).to have_http_status(:unprocessable_entity)
+
+            response.parsed_body[:data]
+            expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
         end
       end
 
@@ -508,8 +527,6 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             response.parsed_body[:data]
-
-            expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
           end
         end
@@ -591,6 +608,26 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
               trainee = Trainee.last
 
               expect(trainee.employing_school_not_applicable).to be(false)
+            end
+          end
+
+          context "when applicable school urn is not valid" do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_partner_urn: "900020",
+                  employing_school_urn: "123456",
+                ),
+              }
+            end
+
+            let(:employing_school) { create(:school, urn: "456789") }
+
+            it "returns unprocessible entity HTTP code and a validation error message" do
+              expect(response).to have_http_status(:unprocessable_entity)
+
+              response.parsed_body[:data]
+              expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
             end
           end
 
