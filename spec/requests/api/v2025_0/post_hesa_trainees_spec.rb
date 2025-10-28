@@ -483,10 +483,10 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
 
         it "sets lead_partner_ukprn to lead_partner#ukprn and employing_school_urn to nil" do
-            expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_entity)
 
-            response.parsed_body[:data]
-            expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
+          response.parsed_body[:data]
+          expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
         end
       end
 
