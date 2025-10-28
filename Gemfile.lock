@@ -195,7 +195,7 @@ GEM
     cuprite (0.17)
       capybara (~> 3.0)
       ferrum (~> 0.17.0)
-    data_migrate (11.3.0)
+    data_migrate (11.3.1)
       activerecord (>= 6.1)
       railties (>= 6.1)
     database_cleaner-active_record (2.2.2)
@@ -816,7 +816,7 @@ DEPENDENCIES
   cssbundling-rails
   csv-safe
   cuprite (~> 0.17)
-  data_migrate (= 11.3.0)
+  data_migrate (= 11.3.1)
   database_cleaner-active_record
   debug
   dfe-analytics!
@@ -961,7 +961,7 @@ CHECKSUMS
   csv (3.3.5) sha256=6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f
   csv-safe (3.3.1) sha256=c2ab44cc38358af58197a5cd281b402191c0bde01ff9972da2104c739291a73f
   cuprite (0.17) sha256=b140d5dc70d08b97ad54bcf45cd95d0bd430e291e9dffe76fff851fddd57c12b
-  data_migrate (11.3.0) sha256=92fbe774b3de0930df9aee81933a7a5abd2183d8adab7359c1579ebbc6b96459
+  data_migrate (11.3.1) sha256=18b9b2189d15e482d5335f3fc2248b8b447204bd8257ded872dd077737168ffb
   database_cleaner-active_record (2.2.2) sha256=88296b9f3088c31f7c0d4fcec10f68e4b71c96698043916de59b04debec10388
   database_cleaner-core (2.0.1) sha256=8646574c32162e59ed7b5258a97a208d3c44551b854e510994f24683865d846c
   date (3.4.1) sha256=bf268e14ef7158009bfeaec40b5fa3c7271906e88b196d958a89d4b408abe64f
