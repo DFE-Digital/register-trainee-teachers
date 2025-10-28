@@ -239,7 +239,7 @@ module Api
 
         def lead_partner_from_urn
           lead_partner_id =
-            if params[:lead_partner_urn].present?
+            if params[:lead_partner_urn].present? && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
               LeadPartner.find_by(urn: params[:lead_partner_urn])&.id || InvalidValue.new(params[:lead_partner_urn])
             end
 
