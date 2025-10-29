@@ -2087,11 +2087,13 @@ en:
             inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
             trainee_start_date:
               future: must be in the past
+            date_of_birth:
+              future: must be in the past
+              under16: cannot be less than 16 years ago
             itt_start_date:
               future: must not be more than one year in the future
             itt_end_date:
-              api:
-                before_or_same_as_start_date: must be after itt_start_date
+              before_or_same_as_start_date: must be after itt_start_date
               csv:
                 before_or_same_as_start_date: must be after ITT start date
             course_subject_two:
