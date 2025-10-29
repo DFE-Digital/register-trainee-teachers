@@ -155,7 +155,7 @@ module Api
 
         super(
           new_attributes.slice(
-            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys + %i[nationalities]),
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys),
           ).except(
             :placements_attributes,
             :degrees_attributes,
@@ -199,7 +199,7 @@ module Api
       def assign_attributes(new_attributes)
         super(
           new_attributes.slice(
-            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys + %i[nationalities]),
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys),
           ).except(
             :placements_attributes,
             :degrees_attributes,
