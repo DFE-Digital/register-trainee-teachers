@@ -1,75 +1,61 @@
 <%= f.hidden_field :record_source, value: Trainee::MANUAL_SOURCE %>
 
+<h1 class="govuk-heading-l">
+  <%= t("components.page_titles.trainees.training_routes.edit") %>
+</h1>
 
-  <% if FeatureService.enabled?(:itt_reform) %>
+<p class="govuk-body govuk-!-static-padding-bottom-6">
+  <%= t(".lede") %>
+</p>
 
-    <h1 class="govuk-heading-l">
-      <%= t("components.page_titles.trainees.training_routes.edit") %>
-    </h1>
-
-    <p class="govuk-body govuk-!-static-padding-bottom-6">
-      <%= t(".lede") %>
-    </p>
-
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_fee_funded"), tag: "h2" }) do %>
-      <% [:provider_led_postgrad, :early_years_postgrad].each do |option| %>
-        <%= f.govuk_radio_button(
-          :training_route,
-          TRAINING_ROUTE_ENUMS[option],
-          label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
-        ) %>
-      <% end %>
-    <% end %>
-
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_salaried"), tag: "h2" }) do %>
-      <%= f.govuk_radio_button(
+<%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_fee_funded"), tag: "h2" }) do %>
+  <% [:provider_led_postgrad, :early_years_postgrad].each do |option| %>
+    <%= f.govuk_radio_button(
         :training_route,
-        TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-        label: { text: t("activerecord.attributes.trainee.training_routes.itt.school_direct_salaried") }
+        TRAINING_ROUTE_ENUMS[option],
+        label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
       ) %>
-      <% [:pg_teaching_apprenticeship, :early_years_salaried].each do |option| %>
-        <%= f.govuk_radio_button(
-          :training_route,
-          TRAINING_ROUTE_ENUMS[option],
-          label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
-        ) %>
-      <% end %>
-    <% end %>
+  <% end %>
+<% end %>
 
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.undergrad_fee_funded"), tag: "h2" }) do %>
-      <% [:provider_led_undergrad, :opt_in_undergrad, :early_years_undergrad].each do |option| %>
-        <%= f.govuk_radio_button(
-          :training_route,
-          TRAINING_ROUTE_ENUMS[option],
-          label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
-        ) %>
-      <% end %>
-    <% end %>
-
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.other"), tag: "h2" }) do %>
-      <% %i[assessment_only early_years_assessment_only iqts teacher_degree_apprenticeship].select { |route| enabled_route?(route) }.each do |option| %>
-        <%= f.govuk_radio_button(
-          :training_route,
-          TRAINING_ROUTE_ENUMS[option],
-          label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
-        ) %>
-      <% end %>
-    <% end %>
-  <% else %>
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "l", text: t("components.page_titles.trainees.training_routes.edit"), tag: "h2" }) do %>
-    <% if current_user.provider? && current_user.organisation.hpitt_postgrad? %>
-      <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:hpitt_postgrad], label: { text: t("activerecord.attributes.trainee.training_routes.hpitt_postgrad") } %>
-    <% end %>
-
-    <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:assessment_only], label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
-
-    <% training_routes_options.each do |option| %>
-      <%= f.govuk_radio_button(
+<%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_salaried"), tag: "h2" }) do %>
+  <%= f.govuk_radio_button(
+      :training_route,
+      TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      label: { text: t("activerecord.attributes.trainee.training_routes.itt.school_direct_salaried") }
+    ) %>
+  <% [:pg_teaching_apprenticeship, :early_years_salaried].each do |option| %>
+    <%= f.govuk_radio_button(
         :training_route,
-        option[:name],
-        hint: { text: option[:hint] },
-        label: { text: option[:label] }
+        TRAINING_ROUTE_ENUMS[option],
+        label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
       ) %>
-    <% end %>
+  <% end %>
+<% end %>
+
+<%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.undergrad_fee_funded"), tag: "h2" }) do %>
+  <% [:provider_led_undergrad, :opt_in_undergrad, :early_years_undergrad].each do |option| %>
+    <%= f.govuk_radio_button(
+        :training_route,
+        TRAINING_ROUTE_ENUMS[option],
+        label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
+      ) %>
+  <% end %>
+<% end %>
+
+<%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.other"), tag: "h2" }) do %>
+  <% %i[assessment_only early_years_assessment_only iqts teacher_degree_apprenticeship].select { |route| enabled_route?(route) }.each do |option| %>
+    <%= f.govuk_radio_button(
+        :training_route,
+        TRAINING_ROUTE_ENUMS[option],
+        label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
+      ) %>
+  <% end %>
+  <% if current_user.provider? && current_user.organisation.hpitt_postgrad? %>
+    <%= f.govuk_radio_button(
+        :training_route,
+        TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+        label: { text: t("activerecord.attributes.trainee.training_routes.hpitt_postgrad") }
+      ) %>
   <% end %>
 <% end %>
