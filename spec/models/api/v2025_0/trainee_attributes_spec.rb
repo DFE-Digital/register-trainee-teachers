@@ -8,8 +8,6 @@ RSpec.describe Api::V20250::TraineeAttributes do
   subject { described_class.new }
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:first_names) }
-    it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:diversity_disclosure) }
     it { is_expected.to validate_presence_of(:study_mode) }
     it { is_expected.to validate_presence_of(:hesa_id) }
@@ -30,6 +28,20 @@ RSpec.describe Api::V20250::TraineeAttributes do
         )
         .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::TrainingInitiatives::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
     }
+
+    describe "first_names" do
+      it { is_expected.to validate_presence_of(:first_names) }
+      it { is_expected.to validate_length_of(:first_names).is_at_most(60) }
+    end
+
+    describe "last_name" do
+      it { is_expected.to validate_presence_of(:last_name) }
+      it { is_expected.to validate_length_of(:last_name).is_at_most(60) }
+    end
+
+    describe "middle_names" do
+      it { is_expected.to validate_length_of(:middle_names).is_at_most(60) }
+    end
 
     describe "hesa_id" do
       describe "length" do
@@ -342,7 +354,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
       context "when valid" do
         before do
-          subject.date_of_birth = Time.zone.today.iso8601
+          subject.date_of_birth = 16.years.ago.iso8601
         end
 
         it do
@@ -361,6 +373,42 @@ RSpec.describe Api::V20250::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:date_of_birth]).to contain_exactly("is invalid")
+        end
+      end
+
+      context "when under 16 years old" do
+        before do
+          subject.date_of_birth = 15.years.ago.iso8601
+        end
+
+        it "is invalid" do
+          subject.validate
+
+          expect(subject.errors[:date_of_birth]).to contain_exactly("cannot be less than 16 years ago")
+        end
+      end
+
+      context "when future date" do
+        before do
+          subject.date_of_birth = 1.year.from_now.iso8601
+        end
+
+        it "is invalid" do
+          subject.validate
+
+          expect(subject.errors[:date_of_birth]).to contain_exactly("must be in the past")
+        end
+      end
+
+      context "when past date" do
+        before do
+          subject.date_of_birth = 101.years.ago.iso8601
+        end
+
+        it "is invalid" do
+          subject.validate
+
+          expect(subject.errors[:date_of_birth]).to include("is invalid")
         end
       end
     end

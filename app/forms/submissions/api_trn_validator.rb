@@ -23,7 +23,7 @@ module Submissions
 
     def sections
       [
-        :personal_details, :contact_details, :diversity,
+        :contact_details, :diversity,
         *(:degrees if trainee.requires_degree?),
         :course_details, # `:training_details` seems unnecessary as it only details trainee_id which according to DD is not needed
         *(:schools if trainee.requires_lead_partner?),
