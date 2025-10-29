@@ -2759,7 +2759,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
               )
               expect(response.parsed_body["errors"]).to eq(
                 "funding_method" => [
-                  "'bursary' is not allowed when fund_code is '2' and course_subject_one is 'primary teaching'"
+                  "'bursary' is not allowed when fund_code is '2' and course_subject_one is 'primary teaching'",
                 ],
               )
             end
