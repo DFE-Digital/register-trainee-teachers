@@ -74,7 +74,7 @@ features:
     school_direct_tuition_fee: true
     iqts: true
     teacher_degree_apprenticeship: true
-    hpitt_postgrad: false
+    hpitt_postgrad: true
   google:
     send_data_to_big_query: false
   filters:
@@ -98,7 +98,6 @@ features:
   change_accredited_provider: true
   funding_uploads: true
   register_api: true
-  itt_reform: true
   duplicate_checking: true
   bulk_add_trainees: true
   token_management: true
