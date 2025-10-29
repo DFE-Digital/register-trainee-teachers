@@ -263,9 +263,10 @@ module Api
 
         def employing_school_attributes
           if params.key?(:employing_school_urn) && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
-            employing_school_id = params[:employing_school_urn].present? ?
-              School.find_by(urn: params[:employing_school_urn])&.id || InvalidValue.new(params[:lead_partner_ukprn]) :
-              nil
+            employing_school_id =
+              if params[:employing_school_urn].present?
+                School.find_by(urn: params[:employing_school_urn])&.id || InvalidValue.new(params[:lead_partner_ukprn])
+              end
             {
               employing_school_id: employing_school_id,
               employing_school_not_applicable: employing_school_id.nil?,
