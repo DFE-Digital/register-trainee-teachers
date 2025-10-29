@@ -156,13 +156,8 @@ module Api
         super(
           new_attributes.slice(
             *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys),
-          ).except(
-            :placements_attributes,
-            :degrees_attributes,
-            :nationalisations_attributes,
-            :hesa_trainee_detail_attributes,
-            :trainee_disabilities_attributes,
-          ))
+          )
+        )
 
         build_nested_models(new_attributes)
       end
@@ -200,16 +195,11 @@ module Api
         super(
           new_attributes.slice(
             *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys),
-          ).except(
-            :placements_attributes,
-            :degrees_attributes,
-            :nationalisations_attributes,
-            :hesa_trainee_detail_attributes,
-            :trainee_disabilities_attributes,
           )
         )
 
         self.nationalisations_attributes = []
+
         new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes.new(nationalisation_params)
         end
