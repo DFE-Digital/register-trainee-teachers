@@ -66,6 +66,7 @@ module Api
         ethnic_background: { type: :string, options: { default: Diversities::NOT_PROVIDED } },
         course_min_age: {},
         course_max_age: {},
+        record_source: { type: :string, options: { default: Trainee::API_SOURCE } },
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end
@@ -93,14 +94,13 @@ module Api
       attribute :nationalisations_attributes, array: true, default: -> { [] }
       attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
-      attribute :record_source, default: -> { Trainee::API_SOURCE }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
       validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
       validate :validate_trainee_start_date
-      validate :validate_date_of_birth
+      validate :validate_date_of_birth, if: -> { date_of_birth.present? }
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
       validate :validate_hesa_id_length, if: -> { hesa_id.present? }
 
@@ -113,6 +113,10 @@ module Api
         in: Hesa::CodeSets::Sexes::MAPPING.values,
         valid_values: Hesa::CodeSets::Sexes::MAPPING.keys,
       }, allow_blank: true
+
+      validates :first_names, length: { maximum: 60 }
+      validates :last_name, length: { maximum: 60 }
+      validates :middle_names, length: { maximum: 60 }, allow_nil: true
 
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
       validates(
@@ -151,14 +155,9 @@ module Api
 
         super(
           new_attributes.slice(
-            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys + %i[record_source nationalities]),
-          ).except(
-            :placements_attributes,
-            :degrees_attributes,
-            :nationalisations_attributes,
-            :hesa_trainee_detail_attributes,
-            :trainee_disabilities_attributes,
-          ))
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys),
+          )
+        )
 
         build_nested_models(new_attributes)
       end
@@ -195,17 +194,12 @@ module Api
       def assign_attributes(new_attributes)
         super(
           new_attributes.slice(
-            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys) + %i[record_source nationalities],
-          ).except(
-            :placements_attributes,
-            :degrees_attributes,
-            :nationalisations_attributes,
-            :hesa_trainee_detail_attributes,
-            :trainee_disabilities_attributes,
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys),
           )
         )
 
         self.nationalisations_attributes = []
+
         new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes.new(nationalisation_params)
         end
@@ -330,8 +324,16 @@ module Api
       end
 
       def validate_date_of_birth
-        if date_of_birth.present? && !valid_date_string?(date_of_birth)
+        return errors.add(:date_of_birth, :invalid) unless valid_date_string?(date_of_birth)
+
+        parsed_date_of_birth = date_of_birth.is_a?(String) ? Date.iso8601(date_of_birth) : date_of_birth
+
+        if parsed_date_of_birth < 100.years.ago
           errors.add(:date_of_birth, :invalid)
+        elsif parsed_date_of_birth > Time.zone.today
+          errors.add(:date_of_birth, :future)
+        elsif parsed_date_of_birth > 16.years.ago
+          errors.add(:date_of_birth, :under16)
         end
       end
 

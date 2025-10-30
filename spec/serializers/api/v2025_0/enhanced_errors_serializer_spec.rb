@@ -28,7 +28,6 @@ RSpec.describe Api::V20250::EnhancedErrorsSerializer do
   end
 
   %w[
-    personal_details
     contact_details
     diversity
     degrees
