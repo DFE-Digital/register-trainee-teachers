@@ -117,6 +117,7 @@ Recommendation details
         "withdrawal_trigger": null,
         "withdrawal_reasons": null,
         "withdrawal_another_reason": null,
+        "withdrawal_safeguarding_concern_reasons": null,
         "placement_detail": null,
         "ukprn": "10000571",
         "ethnicity": "120",

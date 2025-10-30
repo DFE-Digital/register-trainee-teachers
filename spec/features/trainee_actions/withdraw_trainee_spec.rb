@@ -372,7 +372,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_reason_not_chosen
-    expect(page).to have_css(".govuk-error-message", text: /Choose a reason for the trainee’s decision to withdraw/)
+    expect(page).to have_css(".govuk-error-message", text: /Select why the trainee chose to withdraw/)
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen

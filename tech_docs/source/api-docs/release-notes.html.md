@@ -25,6 +25,7 @@ Originally released for testing as v2025.0-rc on 13 May 2025.
 * Added support for some missing HESA data values
 * Improved error messages to include exact field names in error response
 * Updated reference documentation
+* New withdrawal `reasons` value `safeguarding_concerns` and optional field `safeguarding_concern_reasons` for `POST /trainees/{trainee_id}/withdraw`
 
 ## v1.0-pre — 12 August 2024
 
