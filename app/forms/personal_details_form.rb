@@ -161,8 +161,6 @@ private
   end
 
   def nationalities_cannot_be_empty
-    return if trainee.api_record? || trainee.csv_record?
-
     if nationality_ids.empty?
       errors.add(:nationality_names, :empty_nationalities)
     end
