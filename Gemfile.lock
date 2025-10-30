@@ -457,7 +457,7 @@ GEM
     ostruct (0.6.2)
     pagy (9.4.0)
     parallel (1.27.0)
-    parallel_tests (5.4.0)
+    parallel_tests (5.5.0)
       parallel
     parser (3.3.9.0)
       ast (~> 2.4.1)
@@ -1074,7 +1074,7 @@ CHECKSUMS
   ostruct (0.6.2) sha256=6d7302a299e400a2c248d6ce0dad18fc3a5714e8096facc25ffd0c54ee57cfc0
   pagy (9.4.0) sha256=db3f2e043f684155f18f78be62a81e8d033e39b9f97b1e1a8d12ad38d7bce738
   parallel (1.27.0) sha256=4ac151e1806b755fb4e2dc2332cbf0e54f2e24ba821ff2d3dcf86bf6dc4ae130
-  parallel_tests (5.4.0) sha256=89413fc46e8f6d8e309b0cb1162287ead1c7e9d41a1fee344a73fab4dc14a248
+  parallel_tests (5.5.0) sha256=783c1e4da27c4096a7b360f080ae03cf1122cb0dfdb4fe827013e0521642f666
   parser (3.3.9.0) sha256=94d6929354b1a6e3e1f89d79d4d302cc8f5aa814431a6c9c7e0623335d7687f2
   pg (1.6.2-arm64-darwin) sha256=4d44500b28d5193b26674583d199a6484f80f1f2ea9cf54f7d7d06a1b7e316b6
   pg (1.6.2-x86_64-linux) sha256=525f438137f2d1411a1ebcc4208ec35cb526b5a3b285a629355c73208506a8ea
