@@ -612,6 +612,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           end
 
           context "when applicable school urn is not valid" do
+            let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]] }
             let(:params) do
               {
                 data: data.merge(
@@ -625,9 +626,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
             it "returns unprocessible entity HTTP code and a validation error message" do
               expect(response).to have_http_status(:unprocessable_entity)
-
-              response.parsed_body[:data]
-              expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
+              expect(response.parsed_body.dig("errors", "schools", "employing_school_id")).to include("The employing school is not valid for this trainee")
             end
           end
 
