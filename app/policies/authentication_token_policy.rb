@@ -17,6 +17,8 @@ class AuthenticationTokenPolicy
     end
   end
 
+  MAX_TOKENS_PER_PROVIDER = 2
+
   attr_reader :user
   attr_reader :token
 
@@ -30,11 +32,11 @@ class AuthenticationTokenPolicy
   end
 
   def new?
-    user.accredited_hei_provider?
+    user.accredited_hei_provider? && can_create_more_tokens?
   end
 
   def create?
-    user.accredited_hei_provider?
+    user.accredited_hei_provider? && can_create_more_tokens?
   end
 
   def show?
@@ -43,5 +45,12 @@ class AuthenticationTokenPolicy
 
   def update?
     user.accredited_hei_provider? && token.can_revoke?
+  end
+
+private
+
+  def can_create_more_tokens?
+    existing_tokens_count = AuthenticationToken.where(provider_id: user.organisation.id).active.count
+    existing_tokens_count < MAX_TOKENS_PER_PROVIDER
   end
 end
