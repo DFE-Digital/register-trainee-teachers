@@ -86,7 +86,7 @@ describe AuthenticationTokenForm, type: :model do
           it "returns false" do
             expect(subject.valid?).to be(false)
             expect(subject.errors[:expires_at]).to contain_exactly(
-              "Expiration date must not be more than 6 months in the future"
+              "Expiration date must not be more than 6 months in the future",
             )
           end
         end
