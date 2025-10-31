@@ -3,11 +3,6 @@
 require "rails_helper"
 
 feature "create a new authentication token" do
-  background do
-    given_i_am_authenticated_as_an_hei_provider_user
-    and_i_can_generate_an_authentication_token
-  end
-
   let(:invalid_past_expires_at) { 1.year.ago.to_date }
   let(:invalid_future_expires_at) { (6.months + 1.day).from_now.to_date }
   let(:expires_at) { 6.months.from_now.to_date }
@@ -73,22 +68,10 @@ feature "create a new authentication token" do
     then_i_should_see_the_existing_tokens_in_the_list
     and_i_cannot_see_the_generate_new_token_button
 
-    # when_i_revoke_one_token
-    # then_i_should_see_the_token_revoked_confirmation_message
-    # and_i_can_see_the_generate_new_token_button
-    #
-    # and_i_click_the_generate_new_token_button
-    # then_i_should_see_the_new_token_form
-    #
-    # when_i_fill_in_the_form_with_valid_data
-    # and_i_click_the_submit_button
-    # then_i_should_see_the_new_token_confirmation_page
-    #
-    # when_i_refresh_the_page
-    # then_i_can_no_longer_see_the_token
-    #
-    # when_i_click_the_continue_to_manage_tokens_button
-    # then_i_should_see_the_new_token_in_the_list
+    when_i_revoke_one_token
+    then_i_should_see_the_revoke_token_page
+    and_i_click_the_revoke_token_confirmation_button
+    then_i_can_see_the_generate_new_token_button
   end
 
 private
@@ -110,8 +93,8 @@ private
     (1..2).each do |token_number|
       create(
         :authentication_token,
-        provider: @current_user.provider,
-        created_by: @current_user,
+        provider: @current_user.organisation,
+        created_by: @current_user.user,
         name: "Old token #{token_number}",
       )
     end
@@ -196,5 +179,23 @@ private
 
   def and_i_cannot_see_the_generate_new_token_button
     expect(page).not_to have_button("Generate a new token")
+  end
+
+  def then_i_can_see_the_generate_new_token_button
+    expect(page).to have_link("Generate a new token")
+  end
+
+  def when_i_revoke_one_token
+    within(".govuk-summary-card", text: "Old token 1") do
+      click_on "Revoke"
+    end
+  end
+
+  def then_i_should_see_the_revoke_token_page
+    expect(page).to have_content("Are you sure you want to revoke this token?")
+  end
+
+  def and_i_click_the_revoke_token_confirmation_button
+    click_on "Yes I’m sure — revoke this token"
   end
 end
