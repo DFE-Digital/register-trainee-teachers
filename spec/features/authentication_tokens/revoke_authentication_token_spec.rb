@@ -39,9 +39,6 @@ private
     visit authentication_tokens_path
     click_on "Generate a new token"
     fill_in "Token name", with: "My new token"
-    fill_in "Day", with: 1.year.from_now.day.to_s
-    fill_in "Month", with: 1.year.from_now.month.to_s
-    fill_in "Year", with: 1.year.from_now.year.to_s
     click_on "Generate token"
     click_on "Continue to manage tokens"
   end
