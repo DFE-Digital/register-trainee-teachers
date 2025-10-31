@@ -9,10 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= render AuthenticationTokens::Manage::View.new(
-      tokens: @tokens,
-      current_user: @current_user_session,
-    ) %>
+    <%= render AuthenticationTokens::Manage::View.new(current_user:) %>
   </div>
 </div>
 
