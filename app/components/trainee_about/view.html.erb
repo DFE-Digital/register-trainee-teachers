@@ -19,7 +19,7 @@
 
 <% if trainee.withdrawn? %>
   <div class="withdrawal-details">
-    <%= render Withdrawal::View.new(data_model: trainee, undo_withdrawal: trainee_editable?) %>
+    <%= render Withdrawal::View.new(data_model: trainee, undo_withdrawal: trainee_editable?, show_date_prefix: false) %>
   </div>
 <% end %>
 
