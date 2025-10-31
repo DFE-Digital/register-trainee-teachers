@@ -37,6 +37,6 @@
 </p>
 
 <div class="govuk-button-group">
-  <%= govuk_link_to "Generate a new token", new_authentication_token_path, class: "govuk-button" %>
+  <%= govuk_link_to "Generate a new token", new_authentication_token_path, class: "govuk-button" if can_generate_new_token? %>
   <%= govuk_link_to "Cancel", organisation_settings_path %>
 </div>
