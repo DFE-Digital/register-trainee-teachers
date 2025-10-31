@@ -5,14 +5,19 @@ class AuthenticationTokenForm
   include DatesHelper
 
   FIELDS = %i[name day month year].freeze
+  EXPIRES_AT_LIMIT = 6.months
 
   attr_accessor(:name, :day, :month, :year, :user, :params, :authentication_token)
 
   validates :name, presence: true, length: { maximum: 200 }
-  validates :expires_at, date: true, date_relative_to_time: { future: true }
+  validates :expires_at,
+    presence: true,
+    date: true,
+    date_relative_to_time: { future: true },
+    date_future_limit: EXPIRES_AT_LIMIT
 
   def initialize(user, params: {})
-    @user = user
+    @user   = user
     @params = params
 
     FIELDS.each do |field|
@@ -21,9 +26,11 @@ class AuthenticationTokenForm
   end
 
   def expires_at
-    date_hash = { year:, month:, day: }
-
-    return nil if date_hash.values.all?(&:blank?)
+    date_hash = {
+      year: year || EXPIRES_AT_LIMIT.from_now.year,
+      month: month || EXPIRES_AT_LIMIT.from_now.month,
+      day: day || EXPIRES_AT_LIMIT.from_now.day,
+    }
 
     date_args = date_hash.values.map(&:to_i)
 

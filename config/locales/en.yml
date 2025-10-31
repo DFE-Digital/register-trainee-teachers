@@ -1543,6 +1543,7 @@ en:
       messages:
         future: must be in the future
         not_future: must not be in the future
+        future_limit: must not be more than %{limit} in the future
       validators:
         postcode:
           invalid: Enter a valid postcode (for example, BN1 1AA)
@@ -2077,6 +2078,7 @@ en:
             expires_at:
               invalid: Enter a valid expiration date
               future: Expiration date must be in the future
+              future_limit: Expiration date must not be more than %{limit} in the future
         undo_withdrawal_form:
           attributes:
             comment:
