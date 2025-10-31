@@ -110,9 +110,7 @@ private
     expect(page).to have_content("Enter the token name")
 
     expect(page).to have_content(
-      past ?
-        "Expiration date must be in the future" :
-        "Expiration date must not be more than 6 months in the future"
+      past ? "Expiration date must be in the future" : "Expiration date must not be more than 6 months in the future",
     )
   end
 

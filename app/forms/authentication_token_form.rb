@@ -11,10 +11,10 @@ class AuthenticationTokenForm
 
   validates :name, presence: true, length: { maximum: 200 }
   validates :expires_at,
-    presence: true,
-    date: true,
-    date_relative_to_time: { future: true },
-    date_future_limit: EXPIRES_AT_LIMIT
+            presence: true,
+            date: true,
+            date_relative_to_time: { future: true },
+            date_future_limit: EXPIRES_AT_LIMIT
 
   def initialize(user, params: {})
     @user   = user
