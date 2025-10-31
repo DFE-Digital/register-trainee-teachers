@@ -68,6 +68,10 @@ feature "create a new authentication token" do
     then_i_should_see_the_existing_tokens_in_the_list
     and_i_cannot_see_the_generate_new_token_button
 
+    when_i_navigate_to_the_create_authentication_token_page
+    then_i_see_an_unauthorised_message
+
+    given_i_navigate_to_the_authentication_token_index_page
     when_i_revoke_one_token
     then_i_should_see_the_revoke_token_page
     and_i_click_the_revoke_token_confirmation_button
