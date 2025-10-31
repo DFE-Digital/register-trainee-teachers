@@ -167,7 +167,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cgi (0.4.2)
+    cgi (0.5.0)
     charlock_holmes (0.7.9)
     chartkick (5.1.4)
     childprocess (5.1.0)
@@ -305,7 +305,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 4.0, < 4.1)
-    govuk_design_system_formbuilder (5.10.1)
+    govuk_design_system_formbuilder (5.13.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -948,7 +948,7 @@ CHECKSUMS
   byebug (12.0.0) sha256=d4a150d291cca40b66ec9ca31f754e93fed8aa266a17335f71bb0afa7fca1a1e
   canonical-rails (0.2.17) sha256=771a2bc71bb4742fe175a639b545ec597d166f46a498611387ab7d81eae43ceb
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cgi (0.4.2) sha256=a3cb190d46a820ca01a3e28bd5b64e67003ff99d7884b70512448566f35347e6
+  cgi (0.5.0) sha256=fe99f65bb2c146e294372ebb27602adbc3b4c008e9ea7038c6bd48c1ec9759da
   charlock_holmes (0.7.9) sha256=b49e8a11ce1921e2c5b65511bb864ae51720ce9bd1c336ccf0e89e6c8ae62db0
   chartkick (5.1.4) sha256=893b2b5e6321a917f4ada2db082e0cb81a247cdad014e0b0a37aeb9287c10be5
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
@@ -1012,7 +1012,7 @@ CHECKSUMS
   google-logging-utils (0.2.0) sha256=675462b4ea5affa825a3442694ca2d75d0069455a1d0956127207498fca3df7b
   googleauth (1.15.1) sha256=d61960893d0d573601d94a38889613b991f40a59ab755b5beed87bf2c3d3cb24
   govuk-components (5.11.3) sha256=b3fbf5c040c93e0552220c6296382a8730a0398032639393edc88c68fb240dcc
-  govuk_design_system_formbuilder (5.10.1) sha256=36aeaff5d0bd2a31767bfc6b9ba20bb4a86829ba79812f21db9c76b4f792338b
+  govuk_design_system_formbuilder (5.13.0) sha256=126ff4af70b36f06395e8f4f09d399944bcc10e9a41c2ff7d7773e81e92ca885
   govuk_markdown (2.0.3) sha256=30fc99b502d96cf81751cbfc115e3717f8252940735dc40ee6dc83b454b1b35e
   govuk_notify_rails (3.0.0) sha256=e0e1b8b0a7c47f90963034f290fb2982652aa8051a733c25c178680d44f2d7aa
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
