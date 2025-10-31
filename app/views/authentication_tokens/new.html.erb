@@ -32,12 +32,12 @@
 
       <%= f.govuk_date_field(:expires_at,
         legend: {
-          text: "Expiration date (optional)",
+          text: "Expiration date",
           size: "s",
           classes: "govuk-fieldset__legend--s govuk-!-font-weight-bold",
         },
         hint: {
-          text: "For example, 27 3 2026",
+          text: "It will default to #{distance_of_time_in_words(f.object.class::EXPIRES_AT_LIMIT)} in the future.",
         },
       ) %>
 
