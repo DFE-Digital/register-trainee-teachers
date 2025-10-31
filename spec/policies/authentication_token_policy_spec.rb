@@ -9,8 +9,32 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     let(:provider_user) { create(:user, :hei) }
     let(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
 
-    permissions :index?, :create?, :new? do
-      it { is_expected.to permit(provider_user_context) }
+    context "when the provider has less than the maximum number of tokens" do
+      before do
+        create_list(
+          :authentication_token,
+          described_class::MAX_TOKENS_PER_PROVIDER - 1,
+          provider: provider_user_context.organisation,
+        )
+      end
+
+      permissions :index?, :create?, :new? do
+        it { is_expected.to permit(provider_user_context) }
+      end
+    end
+
+    context "when the provider already has the maximum number of tokens" do
+      before do
+        create_list(
+          :authentication_token,
+          described_class::MAX_TOKENS_PER_PROVIDER,
+          provider: provider_user_context.organisation,
+        )
+      end
+
+      permissions :create?, :new? do
+        it { is_expected.not_to permit(provider_user_context) }
+      end
     end
   end
 
