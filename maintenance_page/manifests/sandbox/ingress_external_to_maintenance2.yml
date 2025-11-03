@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: staging.register-trainee-teachers.education.gov.uk
+  name: sandbox.register-trainee-teachers.education.gov.uk
 spec:
   ingressClassName: nginx
   rules:
-  - host: staging.register-trainee-teachers.education.gov.uk
+  - host: sandbox.register-trainee-teachers.education.gov.uk
     http:
       paths:
       - pathType: ImplementationSpecific
