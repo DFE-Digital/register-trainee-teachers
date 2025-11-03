@@ -80,6 +80,7 @@ class Provider < ApplicationRecord
                   }
 
   scope :active_hei, -> { kept.where(accredited: true).where("accreditation_id LIKE ? OR accreditation_id = ?", "1%", NIOT_ACCREDITATION_ID) }
+  scope :active_scitt, -> { kept.where(accredited: true).where("accreditation_id LIKE ? AND accreditation_id != ?", "5%", NIOT_ACCREDITATION_ID) }
 
   TEACH_FIRST_PROVIDER_CODE = "1TF"
   AMBITION_PROVIDER_CODE = "2A2"
