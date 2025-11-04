@@ -224,7 +224,7 @@ group :test do
   gem "rspec-retry"
 end
 
-# Required for example_data and vendor:swap so needed in stated environments
+# Required for example_data and vendor:transform so needed in stated environments
 group :development, :test, :review, :qa, :audit, :sandbox do
   gem "bundle-audit", require: false
   gem "factory_bot_rails"
