@@ -4,10 +4,11 @@ module Withdrawal
   class ReasonForm < TraineeForm
     validate :reasons_present?
     validates :another_reason, presence: true, if: :another_reason_id_provided?
+    validates :safeguarding_concern_reasons, presence: true, if: :safeguarding_concern?
 
     delegate :trigger, to: :trigger_form
 
-    FIELDS = %i[reason_ids another_reason].freeze
+    FIELDS = %i[reason_ids another_reason safeguarding_concern_reasons].freeze
 
     attr_accessor(*FIELDS)
 
@@ -29,7 +30,11 @@ module Withdrawal
 
     def save!
       withdrawal = trainee.current_withdrawal
-      withdrawal.update!(another_reason:) if another_reason.present?
+      attrs = {}.tap do |h|
+        h[:another_reason] = another_reason if another_reason.present?
+        h[:safeguarding_concern_reasons] = safeguarding_concern_reasons if safeguarding_concern_reasons.present?
+      end
+      withdrawal.update!(attrs)
 
       reason_ids.each do |reason_id|
         withdrawal.trainee_withdrawal_reasons.create!(
@@ -77,6 +82,10 @@ module Withdrawal
 
     def another_reason_id_provided?
       WithdrawalReason.where("name like ?", "%another_reason").exists?(id: reason_ids)
+    end
+
+    def safeguarding_concern?
+      WithdrawalReason.where(name: WithdrawalReasons::SAFEGUARDING_CONCERNS).exists?(id: reason_ids)
     end
   end
 end

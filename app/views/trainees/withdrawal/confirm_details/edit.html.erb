@@ -9,11 +9,15 @@
     ) %>
 <% end %>
 
-<%= render TraineeName::View.new(trainee) %>
-<h1 class="govuk-heading-l"> <%= heading %> </h1>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
+    <h1 class="govuk-heading-l"> <%= heading %> </h1>
 
-<%= render Withdrawal::View.new(data_model: form, editable: true) %>
+    <%= render Withdrawal::View.new(data_model: form, editable: true, render_list_only: true) %>
 
-<%= govuk_button_to t("trainees.withdrawals.confirm_details.edit.confirm"), trainee_withdrawal_confirm_detail_path(trainee), method: :put %>
+    <%= govuk_button_to t("trainees.withdrawals.confirm_details.edit.confirm"), trainee_withdrawal_confirm_detail_path(trainee), method: :put %>
 
-<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>
+    <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>
+  </div>
+</div>

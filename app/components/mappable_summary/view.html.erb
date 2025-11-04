@@ -1,10 +1,21 @@
-<%= render SummaryCard::View.new(
-  title: title,
-  rows: mappable_rows,
-  id_suffix: id_suffix,
-  heading_level: header_level,
-) do |component|
-  component.with_header_actions do %>
-    <%= header_actions %>
-  <% end
-end %>
+<% if render_list_only %>
+  <%= render SummaryList::View.new(
+    rows: mappable_rows,
+    id_suffix: id_suffix,
+  ) do |component|
+    component.with_header_actions do %>
+      <%= header_actions %>
+    <% end
+  end %>
+<% else %>
+  <%= render SummaryCard::View.new(
+    title: title,
+    rows: mappable_rows,
+    id_suffix: id_suffix,
+    heading_level: header_level,
+  ) do |component|
+    component.with_header_actions do %>
+      <%= header_actions %>
+    <% end
+  end %>
+<% end %>

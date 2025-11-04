@@ -58,6 +58,22 @@ module Withdrawal
           end
         end
       end
+
+      context "when safeguarding concern has been chosen" do
+        let(:trigger) { "trainee" }
+        let(:safeguarding_reason_id) { WithdrawalReason.where(name: "safeguarding_concerns").first.id }
+        let(:params) { { reason_ids: [safeguarding_reason_id], safeguarding_concern_reasons: safeguarding_concern_reasons } }
+
+        context "when the reason provided is blank" do
+          let(:safeguarding_concern_reasons) { "" }
+
+          it "provides the correct error message" do
+            subject.validate
+
+            expect(subject.errors[:safeguarding_concern_reasons]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.safeguarding_concern_reasons.blank"))
+          end
+        end
+      end
     end
 
     describe "#stash" do

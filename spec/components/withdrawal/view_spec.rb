@@ -9,6 +9,7 @@ describe Withdrawal::View do
   let(:trainee_withdrawal) { trainee.current_withdrawal }
   let(:withdraw_date) { trainee.withdraw_date }
   let(:withdrawal_reasons) { trainee.withdrawal_reasons }
+  let(:show_date_prefix) { true }
 
   let(:data_model) do
     OpenStruct.new(
@@ -22,16 +23,12 @@ describe Withdrawal::View do
   end
 
   before do
-    render_inline(described_class.new(data_model:))
+    render_inline(described_class.new(data_model:, show_date_prefix:))
   end
 
   context "when showing a withdrawal" do
     it "renders trainee start date" do
-      expect(rendered_content).to have_text(date_for_summary_view(trainee.trainee_start_date))
-    end
-
-    it "renders the date of withdrawal" do
-      expect(rendered_content).to have_text(date_for_summary_view(withdraw_date))
+      expect(rendered_content).not_to have_text(date_for_summary_view(trainee.trainee_start_date))
     end
 
     it "renders the reasons for withdrawal" do
@@ -52,7 +49,52 @@ describe Withdrawal::View do
       let(:withdraw_date) { nil }
 
       it "renders no date of withdrawal" do
-        expect(rendered_content).to have_css("#date-the-trainee-withdrew", text: "-")
+        expect(rendered_content).to have_css("#when-did-the-trainee-withdraw", text: "-")
+      end
+    end
+
+    context "with withdrawal date today" do
+      let(:withdraw_date) { Time.zone.now }
+
+      it "renders a prefixed date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: "Today - #{date_for_summary_view(withdraw_date)}",
+        )
+      end
+    end
+
+    context "with withdrawal date today but prefixes switched off" do
+      let(:show_date_prefix) { false }
+      let(:withdraw_date) { Time.zone.now }
+
+      it "renders a prefixed date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: date_for_summary_view(withdraw_date),
+        )
+      end
+    end
+
+    context "with withdrawal date yesterday" do
+      let(:withdraw_date) { 1.day.ago }
+
+      it "renders a prefixed date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: "Yesterday - #{date_for_summary_view(withdraw_date)}",
+        )
+      end
+    end
+
+    context "with withdrawal date 3 days ago" do
+      let(:withdraw_date) { 3.days.ago }
+
+      it "renders an unprefixed date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: date_for_summary_view(withdraw_date),
+        )
       end
     end
   end

@@ -205,6 +205,9 @@ en:
       another_reason_label:
         title: Enter the reason
         hint: We may contact you to discuss this further
+      safeguarding_concern_reasons_label:
+        title: Enter the concerns
+        hint: We may contact you to discuss this further
       hints:
         unacceptable_behaviour: For example, fitness to practise
         mandatory_reasons: For example, lack of right to work, DBS issues
@@ -235,6 +238,7 @@ en:
         moved_to_different_itt_course: They moved to a different ITT course
         had_to_withdraw_trainee_another_reason: Another reason
         trainee_chose_to_withdraw_another_reason: Another reason
+        safeguarding_concerns: Safeguarding concerns
     award_details:
         waiting_for_award: Waiting for award - met standards on %{recommended_for_award_at}
     confirmation:
@@ -976,15 +980,14 @@ en:
         deferral_notice_html: We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">%{date}</span> as their withdrawal date.
         deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
       withdrawal_trigger:
-        title: Why are you withdrawing the trainee?
+        title: Who chose to withdraw the trainee?
         hint: Choose an option
         provider:
-          label: We had to withdraw the trainee
+          label: We chose to withdraw the trainee
         trainee:
           label: The trainee chose to withdraw
       withdrawal_future_interest:
         title: Would this trainee be interested in becoming a teacher in the future?
-        hint: Choose an option
         "yes":
           label: "Yes"
         "no":
@@ -1321,13 +1324,13 @@ en:
     withdrawals:
       start:
         show:
-          heading: "Withdraw the trainee"
+          heading: "Withdraw trainee"
           before_you_start:
             header: "Before you start"
-            body: "Make sure you have all the background information to why this trainee has withdrawn."
+            body: "Make sure you have all the information related to the withdrawal of this trainee."
           how_your_answers_will_help:
-            header: "How your answers will help us"
-            body: "Your answers will help us better understand withdrawal reasons and inform policy with the aim to increase trainee retention."
+            header: "How your answers help us"
+            body: "These may help inform policy in the future and help increase trainee retention."
       dates:
         edit:
           heading: When did the trainee withdraw?
@@ -1335,9 +1338,12 @@ en:
       reasons:
         edit:
           heading:
-            trainee: Why did the trainee choose to withdraw?
-            provider: Why did you have to withdraw the trainee?
-          hint: Select all reasons that apply
+            trainee: Why did the trainee withdraw?
+            provider: Why did you withdraw the trainee?
+          hint: Select all that apply
+      trigger:
+        edit:
+          heading: Who chose to withdraw the trainee?
       extra_informations:
         edit:
           heading: More details of why the trainee withdrew from the course
@@ -1350,9 +1356,6 @@ en:
         update:
           success: Trainee withdrawn
           error: Unable to withdraw trainee, please message support
-      triggers:
-        edit:
-          heading: Why are you withdrawing the trainee?
       future_interests:
         edit:
           heading: Would this trainee be interested in becoming a teacher in the future?
@@ -1771,25 +1774,27 @@ en:
           attributes:
             reason_ids:
               trainee:
-                blank: Choose a reason for the trainee’s decision to withdraw
+                blank: Select why the trainee chose to withdraw
               provider:
-                blank: Choose a reason for removing the trainee
+                blank: Select why you withdrew the trainee
             another_reason:
               blank: Enter another reason
+            safeguarding_concern_reasons:
+              blank: Enter the concerns
         withdrawal/trigger_form:
           attributes:
             trigger:
-              blank: Please select an option
+              blank: Select who chose to withdraw the trainee
         withdrawal/future_interest_form:
           attributes:
             future_interest:
-              blank: Please select an option
+              blank: Select if the trainee would be interested in becoming a teacher in the future
         withdrawal/date_form:
           attributes:
             date_string:
-              blank: Choose a withdrawal date
+              blank: Select when the trainee withdrew
             date:
-              blank: &withdrawal_date_blank The withdrawal date must have a day, month and year
+              blank: &withdrawal_date_blank Enter the date the trainee withdrew
               invalid: *withdrawal_date_blank
         funding/training_initiatives_form:
           attributes:
@@ -2117,6 +2122,8 @@ en:
               blank: Please select an option. Valid options are yes, no and unknown.
             another_reason:
               blank: Enter another reason
+            safeguarding_concern_reasons:
+              blank: Enter the concerns
         api/v20250/hesa_trainee_detail_attributes:
           attributes:
             fund_code:

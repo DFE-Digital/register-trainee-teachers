@@ -12,6 +12,7 @@ feature "Withdrawing a trainee" do
 
   let!(:withdrawal_reason_provider) { create(:withdrawal_reason, :provider) }
   let!(:withdrawal_reason_trainee) { create(:withdrawal_reason, :trainee) }
+  let!(:withdrawal_reason_safeguarding) { create(:withdrawal_reason, :safeguarding) }
   let!(:withdrawal_reason_unknown) { create(:withdrawal_reason, :unknown) }
   let!(:withdrawal_reason_another_reason) { create(:withdrawal_reason, :another_reason) }
 
@@ -67,10 +68,10 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
       end
     end
 
@@ -87,10 +88,10 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
       end
     end
 
@@ -108,10 +109,36 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
+      end
+    end
+
+    context "with safeguarding concerns" do
+      let(:withdrawal_date) { nil }
+
+      scenario "successfully" do
+        when_i_choose_another_day
+        withdrawal_date = and_i_enter_a_valid_date
+        and_i_continue(:date)
+        when_i_choose_trainee_chose_to_withdraw
+        and_i_continue(:trigger)
+        when_i_check_the_safeguarding_reason
+        and_i_continue(:reason)
+        then_i_see_validation_error_for_safeguarding_concern_reasons
+        and_i_fill_in_details_for_safeguarding_concern_reasons
+        and_i_continue(:reason)
+        when_i_choose_future_interest
+        and_i_continue(:future_interest)
+        then_i_am_redirected_to_withdrawal_confirmation_page
+        and_i_see_the_summary_card(withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
+        and_i_can_see_the_safeguarding_concern_reasons_text
+        and_i_continue(:confirm_detail)
+        then_i_am_redirected_to_the_record_page
+        and_i_see_the_summary_card(withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
+        and_i_can_see_the_safeguarding_concern_reasons_text
       end
     end
 
@@ -134,7 +161,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw_and_continue
+    and_i_click_on_withdraw
     and_i_choose_they_have_not_started
     then_i_am_taken_to_the_forbidden_withdrawal_page
   end
@@ -188,27 +215,6 @@ feature "Withdrawing a trainee" do
     and_i_am_on_the_trainee_record_page
     and_i_click_on_withdraw_and_continue
     then_the_duplicate_record_text_should_be_shown
-  end
-
-  scenario "trainee is withdrawn and changes their start date to a date before the withdrawal date", skip: skip_test_due_to_first_day_of_current_academic_year? do
-    when_i_am_on_the_withdrawal_page
-    and_i_choose_today
-    and_i_continue(:date)
-    when_i_choose_trainee_chose_to_withdraw
-    and_i_continue(:trigger)
-    when_i_check_a_reason
-    and_i_continue(:reason)
-    when_i_choose_future_interest
-    and_i_continue(:future_interest)
-    then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_click_change_start_date
-    and_i_choose_they_have_started
-    and_i_continue(:date)
-    and_i_select_no_they_started_later
-    and_i_fill_in_a_new_start_date(2.days.ago)
-    and_i_continue(:date)
-    then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_see_my_date(2.days.ago)
   end
 
   scenario "trainee is already withdrawn" do
@@ -292,6 +298,18 @@ feature "Withdrawing a trainee" do
     end
   end
 
+  def when_i_check_the_safeguarding_reason
+    when_i_check(:reason, I18n.t("components.withdrawal_details.reasons.safeguarding_concerns"))
+  end
+
+  def then_i_see_validation_error_for_safeguarding_concern_reasons
+    expect(page).to have_css(".govuk-error-message", text: /Enter the concerns/)
+  end
+
+  def and_i_fill_in_details_for_safeguarding_concern_reasons
+    fill_in "Enter the concerns", with: "Some details about safeguarding concerns"
+  end
+
   def when_i_choose(page, option)
     public_send("withdrawal_#{page}_page").choose(option)
   end
@@ -338,7 +356,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(withdrawal_date_page).to have_content("Choose a withdrawal date")
+    expect(withdrawal_date_page).to have_content("Select when the trainee withdrew")
   end
 
   def then_i_see_the_error_message_for_invalid_date
@@ -354,25 +372,28 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_reason_not_chosen
-    expect(page).to have_css(".govuk-error-message", text: /Choose a reason for the trainee’s decision to withdraw/)
+    expect(page).to have_css(".govuk-error-message", text: /Select why the trainee chose to withdraw/)
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen
-    expect(withdrawal_trigger_page).to have_content("Please select an option")
+    expect(withdrawal_trigger_page).to have_content("Select who chose to withdraw the trainee")
   end
 
   def then_i_see_the_error_message_for_future_interest_not_chosen
-    expect(withdrawal_future_interest_page).to have_content("Please select an option")
+    expect(withdrawal_future_interest_page).to have_content("Select if the trainee would be interested in becoming a teacher in the future")
   end
 
   def then_i_see_the_error_message_for_unknown_exclusivity
     expect(withdrawal_reason_page).to have_content('Only select "Unknown" if no other withdrawal reasons apply')
   end
 
-  def and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
-    expect(page).to have_text(date_for_summary_view(start_date))
+  def and_i_see_the_summary_card(withdrawal_date:, reason:)
     expect(page).to have_text(date_for_summary_view(withdrawal_date))
     expect(page).to have_text(I18n.t("components.withdrawal_details.reasons.#{reason}"))
+  end
+
+  def and_i_can_see_the_safeguarding_concern_reasons_text
+    expect(page).to have_text("Some details about safeguarding concerns")
   end
 
   def then_the_withdrawal_details_is_updated

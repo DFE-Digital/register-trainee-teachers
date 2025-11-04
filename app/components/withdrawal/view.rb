@@ -4,11 +4,13 @@ module Withdrawal
   class View < ApplicationComponent
     include SanitizeHelper
 
-    def initialize(data_model:, editable: false, undo_withdrawal: false)
+    def initialize(data_model:, editable: false, undo_withdrawal: false, show_date_prefix: true, render_list_only: false)
       @data_model = data_model
       @undo_withdrawal = undo_withdrawal
       @editable = editable
       @deferred = trainee.deferred?
+      @show_date_prefix = show_date_prefix
+      @render_list_only = render_list_only
     end
 
     def trainee
@@ -17,7 +19,6 @@ module Withdrawal
 
     def rows
       @rows ||= [
-        start_date,
         withdraw_date_from_course,
         withdrawal_trigger,
         reasons,
@@ -27,22 +28,31 @@ module Withdrawal
 
   private
 
-    attr_accessor :data_model, :editable, :undo_withdrawal, :deferred
-
-    def start_date
-      mappable_field(
-        data_model.trainee_start_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
-        "Trainee start date",
-        (trainee_start_date_verification_path(trainee, context: :withdraw) unless deferred),
-      )
-    end
+    attr_accessor :data_model, :editable, :undo_withdrawal, :deferred, :render_list_only
 
     def withdraw_date_from_course
       mappable_field(
-        withdraw_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
-        "Date the trainee withdrew",
+        formatted_withdraw_date || "-",
+        t("trainees.withdrawals.dates.edit.heading"),
         edit_trainee_withdrawal_date_path(trainee),
       )
+    end
+
+    def formatted_withdraw_date
+      return if withdraw_date.nil?
+
+      [withdraw_date_prefix, withdraw_date&.strftime(Date::DATE_FORMATS[:govuk])].compact.join
+    end
+
+    def withdraw_date_prefix
+      return unless @show_date_prefix
+
+      case withdraw_date&.to_date
+      when Time.zone.today
+        "Today - "
+      when 1.day.ago.to_date
+        "Yesterday - "
+      end
     end
 
     def withdraw_date
@@ -56,7 +66,7 @@ module Withdrawal
     def withdrawal_trigger
       mappable_field(
         t("views.forms.withdrawal_trigger.#{trigger}.label", default: "-"),
-        "How the trainee withdrew",
+        t("trainees.withdrawals.trigger.edit.heading"),
         edit_trainee_withdrawal_trigger_path(trainee),
       )
     end
@@ -72,7 +82,7 @@ module Withdrawal
     def reasons
       mappable_field(
         reasons_html_safe,
-        "Why the trainee withdrew",
+        t("trainees.withdrawals.reasons.edit.heading.#{trigger || 'provider'}"),
         edit_trainee_withdrawal_reason_path(trainee),
       )
     end
@@ -80,11 +90,24 @@ module Withdrawal
     def reasons_html_safe
       return unless withdrawal_reasons
 
-      withdrawal_reasons.map do |reason|
-        return another_reason if reason.name.match?("another_reason")
+      reason_names = withdrawal_reasons.map do |reason|
+        if reason.name.match?("another_reason")
+          [
+            t("components.withdrawal_details.reasons.#{reason.name}"),
+            sanitize(another_reason),
+          ].compact_blank.join("<br>")
+        elsif reason.name == "safeguarding_concerns"
+          [
+            t("components.withdrawal_details.reasons.#{reason.name}"),
+            sanitize(safeguarding_concern_reasons),
+          ].compact_blank.join("<br>")
+        else
+          t("components.withdrawal_details.reasons.#{reason.name}", default: "-")
+        end
+      end
+      reasons = reason_names.map { |reason| "<li>#{reason}</li>" }
 
-        t("components.withdrawal_details.reasons.#{reason.name}", default: "-")
-      end.join("<br>").html_safe
+      ["<ul class=\"app-summary-card__values-list app-summary-list__values-list\">", *reasons, "</ul>"].join.html_safe
     end
 
     def withdrawal_reasons
@@ -98,7 +121,7 @@ module Withdrawal
     def future_interest_in_teaching
       mappable_field(
         t("views.forms.withdrawal_future_interest.#{future_interest}.label", default: "-"),
-        "Future interest in teaching",
+        t("trainees.withdrawals.future_interests.edit.heading"),
         edit_trainee_withdrawal_future_interest_path(trainee),
       )
     end
@@ -116,6 +139,14 @@ module Withdrawal
         data_model.trainee_withdrawals&.last&.another_reason
       else
         data_model.another_reason
+      end
+    end
+
+    def safeguarding_concern_reasons
+      if data_model.is_a?(Trainee)
+        data_model.trainee_withdrawals&.last&.safeguarding_concern_reasons
+      else
+        data_model.safeguarding_concern_reasons
       end
     end
 

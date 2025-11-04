@@ -8,7 +8,7 @@ module PageObjects
 
         set_url "/trainees/{id}/withdrawal/start"
 
-        element :continue, ".govuk-button", text: "Continue"
+        element :continue, ".govuk-button", text: "Start"
         element :cancel, "a", text: "Cancel and return to record"
       end
     end

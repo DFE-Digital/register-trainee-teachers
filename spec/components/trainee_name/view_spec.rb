@@ -5,9 +5,10 @@ require "rails_helper"
 module TraineeName
   describe View do
     alias_method :component, :page
+    let(:prefix) { nil }
 
     before do
-      render_inline(described_class.new(trainee))
+      render_inline(described_class.new(trainee, prefix:))
     end
 
     context "name not set" do
@@ -30,9 +31,16 @@ module TraineeName
 
     context "name is set" do
       let(:trainee) { build(:trainee, first_names: "Joe", middle_names: "Smith", last_name: "Blogs") }
+      let(:prefix) { "The Magnificent -" }
 
       it "displays short name" do
         expect(component).to have_text("Joe Blogs")
+      end
+
+      context "with a prefix" do
+        it "displays a prefixed short name" do
+          expect(component).to have_text("The Magnificent - Joe Blogs")
+        end
       end
     end
   end
