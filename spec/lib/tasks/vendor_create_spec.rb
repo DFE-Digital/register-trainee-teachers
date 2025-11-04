@@ -8,7 +8,7 @@ describe "vendor:create" do
   end
 
   let(:generate_providers) {
-    (1..20).to_a.reverse.map { |number|
+    (1..10).to_a.reverse.map { |number|
       trainees = build_list(:trainee, number)
       create(:provider, trainees:)
     }
@@ -18,9 +18,9 @@ describe "vendor:create" do
     generate_providers
   end
 
-  it "invoke vendor swap" do
-    expect(Rake::Task["vendor:swap"]).to receive(:invoke).exactly(17).times
-    expect(Rake::Task["vendor:swap"]).to receive(:reenable).exactly(17).times
+  it "invoke vendor transform" do
+    expect(Rake::Task["vendor:transform"]).to receive(:invoke).exactly(7).times
+    expect(Rake::Task["vendor:transform"]).to receive(:reenable).exactly(7).times
 
     subject
   end
