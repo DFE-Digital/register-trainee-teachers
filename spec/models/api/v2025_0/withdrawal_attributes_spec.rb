@@ -170,6 +170,59 @@ RSpec.describe Api::V20250::WithdrawalAttributes do
           end
         end
       end
+
+      describe "safeguarding concern" do
+        context "and the trigger is trainee" do
+          before do
+            subject.trigger = "trainee"
+            subject.reasons = [WithdrawalReasons::SAFEGUARDING_CONCERNS]
+          end
+
+          context "and the safeguarding_concern_reasons text is not provided" do
+            it "is invalid" do
+              subject.validate
+              expect(subject.errors[:safeguarding_concern_reasons]).to contain_exactly("Enter the concerns")
+            end
+          end
+
+          context "and the safeguarding_concern_reasons text is provided" do
+            before do
+              subject.validate
+              subject.safeguarding_concern_reasons = "Some kind of reason"
+            end
+
+            it "is valid" do
+              subject.validate
+              expect(subject.errors[:safeguarding_concern_reasons]).to be_empty
+            end
+          end
+        end
+
+        context "and the trigger is provider" do
+          before do
+            subject.trigger = "provider"
+            subject.reasons = [WithdrawalReasons::SAFEGUARDING_CONCERNS]
+          end
+
+          context "and the safeguarding_concern_reasons text is not provided" do
+            it "is invalid" do
+              subject.validate
+              expect(subject.errors[:safeguarding_concern_reasons]).to contain_exactly("Enter the concerns")
+            end
+          end
+
+          context "and the safeguarding_concern_reasons text is provided" do
+            before do
+              subject.safeguarding_concern_reasons = "Some sort of reason"
+            end
+
+            it "is valid" do
+              subject.validate
+              expect(subject.errors[:safeguarding_concern_reasons]).to be_empty
+            end
+          end
+        end
+      end
     end
   end
 end

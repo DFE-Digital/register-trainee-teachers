@@ -12,6 +12,7 @@ describe Api::Trainees::WithdrawResponse do
       trigger:,
       future_interest:,
       another_reason:,
+      safeguarding_concern_reasons:,
     }
   end
   let(:reason) { create(:withdrawal_reason, :provider) }
@@ -20,6 +21,7 @@ describe Api::Trainees::WithdrawResponse do
   let(:future_interest) { "no" }
   let(:withdraw_date) { Time.zone.today.iso8601 }
   let(:another_reason) { "" }
+  let(:safeguarding_concern_reasons) { "" }
 
   subject { withdraw_response }
 
@@ -76,6 +78,17 @@ describe Api::Trainees::WithdrawResponse do
           expect(subject[:status]).to be(:unprocessable_entity)
           expect(subject[:json][:errors]).to include(
             { error: "UnprocessableEntity", message: "another_reason Enter another reason" },
+          )
+        end
+      end
+
+      context "with safeguarding_concerns reason selected but the safeguarding_concern_reasons text not provided" do
+        let(:reason) { create(:withdrawal_reason, :safeguarding) }
+
+        it "returns status unprocessable entity with error response" do
+          expect(subject[:status]).to be(:unprocessable_entity)
+          expect(subject[:json][:errors]).to include(
+            { error: "UnprocessableEntity", message: "safeguarding_concern_reasons Enter the concerns" },
           )
         end
       end
