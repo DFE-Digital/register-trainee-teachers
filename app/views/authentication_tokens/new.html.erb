@@ -37,7 +37,7 @@
           classes: "govuk-fieldset__legend--s govuk-!-font-weight-bold",
         },
         hint: {
-          text: "It will default to #{distance_of_time_in_words(f.object.class::EXPIRES_AT_LIMIT)} in the future.",
+          text: "It will default to #{distance_of_time_in_words(f.object.class::MAX_TOKEN_DURATION)} in the future.",
         },
       ) %>
 

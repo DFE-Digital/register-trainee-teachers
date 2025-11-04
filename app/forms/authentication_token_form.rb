@@ -5,7 +5,7 @@ class AuthenticationTokenForm
   include DatesHelper
 
   FIELDS = %i[name day month year].freeze
-  EXPIRES_AT_LIMIT = 6.months
+  MAX_TOKEN_DURATION = 6.months
 
   attr_accessor(:name, :day, :month, :year, :user, :params, :authentication_token)
 
@@ -14,7 +14,7 @@ class AuthenticationTokenForm
             presence: true,
             date: true,
             date_relative_to_time: { future: true },
-            date_future_limit: EXPIRES_AT_LIMIT
+            date_future_limit: MAX_TOKEN_DURATION
 
   def initialize(user, params: {})
     @user   = user
@@ -27,9 +27,9 @@ class AuthenticationTokenForm
 
   def expires_at
     date_hash = {
-      year: year || EXPIRES_AT_LIMIT.from_now.year,
-      month: month || EXPIRES_AT_LIMIT.from_now.month,
-      day: day || EXPIRES_AT_LIMIT.from_now.day,
+      year: year || MAX_TOKEN_DURATION.from_now.year,
+      month: month || MAX_TOKEN_DURATION.from_now.month,
+      day: day || MAX_TOKEN_DURATION.from_now.day,
     }
 
     date_args = date_hash.values.map(&:to_i)
