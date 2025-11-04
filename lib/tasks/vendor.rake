@@ -47,8 +47,5 @@ namespace :vendor do
       code: Faker::Alphanumeric.alphanumeric(number: 3).upcase,
       name: vendor_name,
     )
-
-    token = AuthenticationToken.create_with_random_token(provider: existing_provider, created_by: existing_provider.users.first, name: "Sandbox Token").token
-    puts "Token: `#{token}`"
   end
 end

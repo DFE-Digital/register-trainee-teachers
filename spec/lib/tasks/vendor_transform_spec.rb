@@ -12,13 +12,9 @@ describe "vendor:transform" do
   let(:provider_id_to_replace) { existing_provider.id }
   let(:vendor_name) { "vendor name" }
   let(:message) { "Transforming: #{existing_provider.name_and_code} to #{vendor_name}" }
-  let(:token) { AuthenticationToken.last.hashed_token }
-  let(:token_message) { "Token: `not_for_production_#{token}`" }
 
   it "transformed the provider to a vendor" do
     expect($stdout).to receive(:puts).with(message)
-    expect(AuthenticationToken).to receive(:create_with_random_token).with(provider: existing_provider, created_by: existing_provider.users.first, name: "Sandbox Token").and_call_original
-    expect($stdout).to receive(:puts)
 
     expect {
       subject
@@ -28,6 +24,5 @@ describe "vendor:transform" do
      .and change { existing_provider.accreditation_id }
      .and change { existing_provider.ukprn }
      .and change { existing_provider.code }
-     .and change { AuthenticationToken.all.reload.count }.from(0).to(1)
   end
 end

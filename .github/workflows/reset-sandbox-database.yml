@@ -63,7 +63,7 @@ jobs:
       run: |
         bin/konduit.sh -n bat-production -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-sandbox -- psql
 
-    - name: Swap providers to vendor
+    - name: Transform providers to vendor providers
       shell: bash
       run: |
         (kubectl -n bat-production exec -ti deployment/register-sandbox -- bundle exec rake vendor:create) >> vendor_create.txt
