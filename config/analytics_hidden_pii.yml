@@ -5,6 +5,8 @@ shared:
     - email
     - date_of_birth
     - trn
+  trainee_withdrawals:
+    - safeguarding_concern_reasons
   users:
     - dfe_sign_in_uid
     - email
