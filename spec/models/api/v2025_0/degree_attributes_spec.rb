@@ -207,4 +207,77 @@ RSpec.describe Api::V20250::DegreeAttributes do
       end
     end
   end
+
+  describe "#duplicates" do
+    context "with duplicate" do
+      let(:degree) { trainee.degrees.first }
+
+      it "returns the duplicate degrees" do
+        expect(subject.duplicates).to contain_exactly(degree)
+      end
+    end
+
+    context "without duplicate" do
+      it "returns no duplicate degrees" do
+        expect(subject.duplicates).to be_empty
+      end
+    end
+  end
+
+  describe "#attributes_for_duplicates" do
+    context "with a uk degree" do
+      let(:degree) { build(:degree, :uk_degree_with_details) }
+
+      it "returns the attributes to be evaluated for duplicate degrees" do
+        expect(subject.attributes_for_duplicates.keys).to contain_exactly(
+          "subject",
+          "graduation_year",
+          "uk_degree",
+          "grade",
+        )
+      end
+
+      context "when an attribute is blank" do
+        before do
+          degree.graduation_year = ""
+        end
+
+        it "returns the attributes with present values" do
+          expect(subject.attributes_for_duplicates.keys).to contain_exactly(
+            "subject",
+            "uk_degree",
+            "grade",
+          )
+        end
+      end
+
+      context "when an attribute is invalid" do
+        before do
+          degree.graduation_year = Api::V20250::HesaMapper::Attributes::InvalidValue.new("invalid")
+        end
+
+        it "returns the valid attributes" do
+          expect(subject.attributes_for_duplicates.keys).to contain_exactly(
+            "subject",
+            "uk_degree",
+            "grade",
+          )
+        end
+      end
+    end
+
+    context "with a non-uk degree" do
+      let(:degree) { build(:degree, :non_uk_degree_with_details) }
+
+      it "returns the attributes to be evaluated for duplicate degrees" do
+        expect(subject.attributes_for_duplicates.keys).to contain_exactly(
+          "subject",
+          "graduation_year",
+          "non_uk_degree",
+          "grade",
+          "country",
+        )
+      end
+    end
+  end
 end

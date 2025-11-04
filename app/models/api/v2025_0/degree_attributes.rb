@@ -30,6 +30,15 @@ module Api
         attribute attr
       end
 
+      POTENTIAL_DUPLICATE_ATTRIBUTES = %i[
+        subject
+        graduation_year
+        country
+        uk_degree
+        non_uk_degree
+        grade
+      ].freeze
+
       attr_reader :existing_degrees
 
       validates :locale_code, presence: true
@@ -88,12 +97,7 @@ module Api
       def duplicates
         existing_degrees&.where(
           attributes.with_indifferent_access.slice(
-            :subject,
-            :graduation_year,
-            :country,
-            :uk_degree,
-            :non_uk_degree,
-            :grade,
+            *POTENTIAL_DUPLICATE_ATTRIBUTES
           ).reject { |_, value| value.blank? || value.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue) },
         )
       end
