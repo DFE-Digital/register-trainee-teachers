@@ -83,7 +83,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::NONE)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::NONE)
     end
   end
 
@@ -97,7 +97,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
     end
   end
 
@@ -140,7 +140,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY)
     end
   end
 
@@ -155,7 +155,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
     end
   end
 
@@ -170,7 +170,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::TIER_TWO)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::TIER_TWO)
     end
   end
 
@@ -185,7 +185,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::TIER_THREE)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::TIER_THREE)
     end
   end
 
@@ -200,7 +200,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY)
     end
   end
 
@@ -216,7 +216,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::SCHOLARSHIP)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::SCHOLARSHIP)
     end
   end
 
@@ -232,7 +232,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::GRANT)
+      expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::GRANT)
     end
   end
 end
