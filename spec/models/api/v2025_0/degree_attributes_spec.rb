@@ -174,22 +174,6 @@ RSpec.describe Api::V20250::DegreeAttributes do
     end
   end
 
-  describe "duplicates" do
-    context "with duplicate" do
-      let(:degree) { trainee.degrees.first }
-
-      it "returns the duplicate degrees" do
-        expect(subject.duplicates).to contain_exactly(degree)
-      end
-    end
-
-    context "without duplicate" do
-      it "returns no duplicate degrees" do
-        expect(subject.duplicates).to be_empty
-      end
-    end
-  end
-
   describe "#duplicates?" do
     subject { degree_attributes.duplicates? }
 

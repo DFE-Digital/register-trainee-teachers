@@ -102,7 +102,7 @@ module Api
       validate :validate_trainee_start_date
       validate :validate_date_of_birth, if: -> { date_of_birth.present? }
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
-      validate :validate_degrees_duplicates, if: -> { degrees_attributes.present? }
+      validate :validate_degrees_duplicates, if: :duplicate_degrees?
       validate :validate_hesa_id_length, if: -> { hesa_id.present? }
 
       validates :ethnicity, api_inclusion: {
@@ -370,13 +370,13 @@ module Api
       end
 
       def validate_degrees_duplicates
-        duplicates = degrees_attributes.group_by do |degree_attributes|
-          degree_attributes.slice(
-            *DegreeAttributes::POTENTIAL_DUPLICATE_ATTRIBUTES
-          ).reject { |_, value| value.blank? || value.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue) }
-        end.any? { |_key, group| group.size > 1 }
+        errors.add(:degrees_attributes, :duplicate)
+      end
 
-        errors.add(:degrees_attributes, :duplicate) if duplicates
+      def duplicate_degrees?
+        degrees_attributes.group_by(&:attributes_for_duplicates).any? do |key, group|
+          key.present? && group.size > 1
+        end
       end
 
       def set_course_allocation_subject_id
