@@ -545,7 +545,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
             it do
               subject.validate
 
-              expect(subject.errors[:degrees_attributes]).to contain_exactly("uk_degree or non_uk_degree must be entered if specifying a postgraduate training_route")
+              expect(subject.errors[:degrees_attributes]).to contain_exactly("degrees_attributes must be entered if specifying a postgraduate training_route")
             end
           end
 
