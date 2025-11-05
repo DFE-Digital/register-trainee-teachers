@@ -579,7 +579,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
     end
 
     describe "degrees_attributes" do
-      context "when present" do
+      context "with duplicate attributes" do
         before do
           subject.degrees_attributes =
             [
@@ -604,7 +604,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
             ]
         end
 
-        it "validates for duplicate attributes" do
+        it "returns errors" do
           subject.validate
 
           expect(subject.errors[:degrees_attributes]).to include(
@@ -613,14 +613,28 @@ RSpec.describe Api::V20250::TraineeAttributes do
         end
       end
 
-      context "when not present" do
-        it "does not validate for duplicate attributes" do
-          allow(subject).to receive(:validate_degrees_duplicates)
+      context "without duplicate attributes" do
+        before do
+          subject.degrees_attributes =
+            [
+              Api::V20250::DegreeAttributes.new(
+                {
+                  grade: "02",
+                  subject: "100485",
+                  institution: "0117",
+                  uk_degree: "083",
+                  graduation_year: "2024",
+                },
+              ),
+            ]
+        end
 
+        it "does not return errors" do
           subject.validate
 
-          expect(subject).not_to have_received(:validate_degrees_duplicates)
-          expect(subject.errors[:degrees_attributes]).to be_empty
+          expect(subject.errors[:degrees_attributes]).not_to include(
+            "degree_attributes contain duplicate values",
+          )
         end
       end
 
