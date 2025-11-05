@@ -80,6 +80,8 @@ RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
 
+RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
+
 RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info yaml yarn zlib
 
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
@@ -92,7 +94,11 @@ COPY --from=middleman-build /app/public/reference-data/ $APP_HOME/public/referen
 RUN echo export PATH=/usr/local/bin:\$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
 
+RUN chown -R appuser:appgroup /app/tmp /app/log
+
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
+
+USER 10001
 
 CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"]

@@ -96,6 +96,12 @@ variable "send_traffic_to_maintenance_page" {
   default     = false
 }
 
+variable "run_as_non_root" {
+  type        = bool
+  default     = true
+  description = "Whether to enforce that containers must run as non-root user"
+}
+
 # pg_airbyte_enabled used in the postgres module
 variable "pg_airbyte_enabled" { default = false }
 

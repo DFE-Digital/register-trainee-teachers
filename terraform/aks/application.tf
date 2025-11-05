@@ -14,12 +14,12 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image = var.app_docker_image
-  command     = each.value.startup_command
-  max_memory  = each.value.memory_max
-  replicas    = each.value.replicas
+  docker_image           = var.app_docker_image
+  command                = each.value.startup_command
+  max_memory             = each.value.memory_max
+  replicas               = each.value.replicas
   web_external_hostnames = var.gov_uk_host_names
-  probe_path  = each.value.probe_path
+  probe_path             = each.value.probe_path
 
   azure_resource_prefix   = var.azure_resource_prefix
   service_short           = var.service_short
@@ -29,6 +29,7 @@ module "web_application" {
 
   enable_prometheus_monitoring     = var.enable_prometheus_monitoring
   send_traffic_to_maintenance_page = var.send_traffic_to_maintenance_page
+  run_as_non_root                  = var.run_as_non_root
 }
 
 module "worker_application" {
@@ -48,13 +49,14 @@ module "worker_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image   = var.app_docker_image
-  command        = each.value.startup_command
-  max_memory     = each.value.memory_max
-  replicas       = each.value.replicas
-  probe_command  = each.value.probe_command
-  enable_logit   = var.enable_logit
-  enable_gcp_wif = var.enable_gcp_wif
+  docker_image    = var.app_docker_image
+  command         = each.value.startup_command
+  max_memory      = each.value.memory_max
+  replicas        = each.value.replicas
+  probe_command   = each.value.probe_command
+  enable_logit    = var.enable_logit
+  enable_gcp_wif  = var.enable_gcp_wif
+  run_as_non_root = var.run_as_non_root
 }
 
 module "application_configuration" {
