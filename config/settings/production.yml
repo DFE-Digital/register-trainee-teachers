@@ -38,6 +38,7 @@ features:
     sync_teachers: true
   duplicate_checking: true
   school_data_auto_import: true
+  maintenance_banner: true
 environment:
   name: beta
   display_name: Beta
