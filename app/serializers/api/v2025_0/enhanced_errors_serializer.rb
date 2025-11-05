@@ -4,7 +4,6 @@ module Api
   module V20250
     class EnhancedErrorsSerializer
       EXCLUDED_ATTRIBUTES = %i[
-        personal_details
         contact_details
         diversity
         degrees

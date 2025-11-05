@@ -2087,26 +2087,25 @@ en:
             inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
             trainee_start_date:
               future: must be in the past
+            date_of_birth:
+              future: must be in the past
+              under16: cannot be less than 16 years ago
             itt_start_date:
               future: must not be more than one year in the future
             itt_end_date:
-              api:
-                before_or_same_as_start_date: must be after itt_start_date
+              before_or_same_as_start_date: must be after itt_start_date
               csv:
                 before_or_same_as_start_date: must be after ITT start date
             course_subject_two:
-              api:
-                duplicate: &api_duplicate_course_subjects might contain duplicate values
+              duplicate: &api_duplicate_course_subjects might contain duplicate values
               csv:
                 duplicate: &csv_duplicate_course_subjects Course subject fields contain duplicate values
             course_subject_three:
-              api:
-                duplicate: *api_duplicate_course_subjects
+              duplicate: *api_duplicate_course_subjects
               csv:
                 duplicate: *csv_duplicate_course_subjects
             degrees_attributes:
-              api:
-                blank: degrees_attributes must be entered if specifying a postgraduate training_route
+              blank: degrees_attributes must be entered if specifying a postgraduate training_route
               csv:
                 blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
             training_initiative:
@@ -2138,14 +2137,12 @@ en:
               csv:
                 not_eligible_fund_code: "'%{funding_type}' is not allowed when Fund Code is '%{fund_code}' and Course Subject One is '%{subject}'"
                 ineligible: "'%{funding_type}' is not allowed when Training Route is '%{training_route}' and Course Subject One is '%{subject}' in academic cycle '%{academic_cycle}'"
-              api:
-                not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_one is '%{subject}'"
-                ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_one is '%{subject}' in academic cycle '%{academic_cycle}'"
+              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_one is '%{subject}'"
+              ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_one is '%{subject}' in academic cycle '%{academic_cycle}'"
             itt_aim:
               ineligible: *ineligible
             itt_qualification_aim:
-              api:
-                blank: must be entered if 202 selected for itt_aim
+              blank: must be entered if 202 selected for itt_aim
               csv:
                 blank: must be entered if 202 selected for ITT Aim
         api/v20250/degree_attributes:
@@ -2161,8 +2158,7 @@ en:
               blank: must be entered if specifying a previous UK degree or non-UK degree
             graduation_year:
               blank: must be entered if specifying a previous UK degree or non-UK degree
-              api:
-                future: must be in the past, for example 2014
+              future: must be in the past, for example 2014
               csv:
                 future: Enter a year that is in the past, for example 2014
                 invalid: Enter a valid graduation year

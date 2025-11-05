@@ -19,11 +19,6 @@ module Api
       trainee_disabilities_attributes: "disabilities",
     }.freeze
 
-    EXCLUDE_ATTRIBUTE_NAMES = {
-      course_subject_two: %i[duplicate],
-      course_subject_three: %i[duplicate],
-    }.freeze
-
     module ClassMethods
       def attribute_mappings
         self.csv_field_mappings ||= begin
@@ -58,18 +53,6 @@ module Api
                                  type
                                end
           super(attribute, record_source_type, **options)
-        end
-
-        err.define_singleton_method(:full_messages) do
-          errors.map do |error|
-            mapped_error = EXCLUDE_ATTRIBUTE_NAMES[error.attribute]
-
-            if mapped_error.present? && error.type.in?(mapped_error)
-              error.message
-            else
-              error.full_message
-            end
-          end
         end
       end
     end

@@ -177,11 +177,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
         it "returns status code 422" do
           expect(response).to have_http_status(:unprocessable_entity)
 
-          expect(response.parsed_body[:errors]).to eq(
-            "personal_details" => {
-              "first_names" => ["First name must be 60 characters or fewer"],
-            },
-          )
+          expect(response.parsed_body[:errors]).to contain_exactly("first_names is too long (maximum is 60 characters)")
         end
 
         context "with enhanced errors" do
@@ -191,9 +187,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             expect(response.parsed_body[:errors]).to eq(
-              "personal_details" => {
-                "first_names" => ["First name must be 60 characters or fewer"],
-              },
+              "first_names" => ["is too long (maximum is 60 characters)"],
             )
           end
         end
@@ -241,6 +235,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
         expect(trainee.reload.first_names).to eq("Alice")
         expect(trainee.provider_trainee_id).to eq("99157234/2/01")
+        expect(trainee.record_source).to eq("manual")
         expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
       end
 
@@ -574,6 +569,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
+
       expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be after itt_start_date")
       expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
