@@ -87,7 +87,7 @@ module Api
 
       def duplicates
         existing_degrees&.where(
-          attributes_for_duplicates
+          attributes_for_duplicates,
         )
       end
 
