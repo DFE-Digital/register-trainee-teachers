@@ -100,14 +100,12 @@ Deletes an existing degree for this trainee.
         "lead_partner_ukprn": null,
         "lead_partner_urn": null,
         "fund_code": "7",
-        "bursary_level": "4",
         "course_year": "2",
         "funding_method": "4",
         "itt_aim": "201",
         "itt_qualification_aim": "004",
         "ni_number": null,
         "previous_last_name": null,
-        "hesa_disabilities": null,
         "additional_training_initiative": null,
         "placements": [
           {
