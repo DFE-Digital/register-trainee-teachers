@@ -311,6 +311,8 @@ paths:
                           type: string
                         application_id:
                           nullable: true
+                        withdrawal_safeguarding_concern_reasons:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -332,7 +334,6 @@ paths:
                       - itt_end_date
                       - trn
                       - submitted_for_trn_at
-                      - withdraw_date
                       - defer_date
                       - recommended_for_award_at
                       - trainee_start_date
@@ -360,8 +361,8 @@ paths:
                       - lead_partner_ukprn
                       - lead_partner_urn
                       - fund_code
-                      - bursary_level
                       - nationality
+                      - withdraw_date
                       - withdraw_reasons
                       - withdrawal_trigger
                       - withdrawal_future_interest
@@ -412,7 +413,6 @@ paths:
                   itt_end_date: '2027-07-05'
                   trn:
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-28'
@@ -440,12 +440,13 @@ paths:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
-                  bursary_level:
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '012'
@@ -486,7 +487,6 @@ paths:
                   itt_end_date: '2027-07-24'
                   trn:
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-24'
@@ -514,12 +514,13 @@ paths:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
-                  bursary_level:
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree:
@@ -560,7 +561,6 @@ paths:
                   itt_end_date: '2026-07-03'
                   trn: '6487542'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-21'
@@ -587,23 +587,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '7'
-                  bursary_level: '9'
                   previous_last_name: Kuhic
                   itt_aim: '201'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: '9'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '031'
-                  hesa_disabilities: {}
+                  fund_code: '7'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '083'
@@ -644,7 +643,6 @@ paths:
                   itt_end_date: '2026-07-31'
                   trn: '2228051'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-11'
@@ -671,23 +669,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '7'
-                  bursary_level: '9'
                   previous_last_name: Parisian
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: '9'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '021'
-                  hesa_disabilities: {}
+                  fund_code: '7'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '073'
@@ -728,7 +725,6 @@ paths:
                   itt_end_date: '2026-07-09'
                   trn: '2656218'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-16'
@@ -755,23 +751,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '2'
-                  bursary_level: '8'
                   previous_last_name: Effertz
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: '8'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '001'
-                  hesa_disabilities: {}
+                  fund_code: '2'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '010'
@@ -812,7 +807,6 @@ paths:
                   itt_end_date: '2026-07-10'
                   trn: '9024117'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-25'
@@ -839,23 +833,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '2'
-                  bursary_level: '6'
                   previous_last_name: Schneider
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: '6'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '021'
-                  hesa_disabilities: {}
+                  fund_code: '2'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '002'
@@ -896,7 +889,6 @@ paths:
                   itt_end_date: '2027-07-07'
                   trn: '7643236'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-25'
@@ -923,23 +915,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '7'
-                  bursary_level: '9'
                   previous_last_name: Konopelski
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: '9'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '008'
-                  hesa_disabilities: {}
+                  fund_code: '7'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '079'
@@ -980,7 +971,6 @@ paths:
                   itt_end_date: '2026-07-14'
                   trn: '1394904'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-12'
@@ -1007,23 +997,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '7'
-                  bursary_level: '6'
                   previous_last_name: Reynolds
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: '6'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '021'
-                  hesa_disabilities: {}
+                  fund_code: '7'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '207'
@@ -1064,7 +1053,6 @@ paths:
                   itt_end_date: '2027-07-03'
                   trn: '7977883'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-09-06'
@@ -1091,23 +1079,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '2'
-                  bursary_level: '4'
                   previous_last_name: Heathcote
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: '4'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '021'
-                  hesa_disabilities: {}
+                  fund_code: '2'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '302'
@@ -1148,7 +1135,6 @@ paths:
                   itt_end_date: '2026-07-31'
                   trn: '7153606'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-09-11'
@@ -1158,7 +1144,7 @@ paths:
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
-                  training_initiative: '019'
+                  training_initiative:
                   study_mode: '01'
                   course_education_phase: secondary
                   hesa_id: '6795039364263'
@@ -1175,23 +1161,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '2'
-                  bursary_level: C
                   previous_last_name: Moore
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: C
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '032'
-                  hesa_disabilities: {}
+                  fund_code: '2'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '005'
@@ -1232,7 +1217,6 @@ paths:
                   itt_end_date: '2027-07-31'
                   trn: '5087231'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-25'
@@ -1259,23 +1243,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '2'
-                  bursary_level: B
                   previous_last_name: Considine
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: B
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '001'
-                  hesa_disabilities: {}
+                  fund_code: '2'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '003'
@@ -1316,7 +1299,6 @@ paths:
                   itt_end_date: '2026-07-22'
                   trn: '4659921'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-22'
@@ -1343,23 +1325,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '7'
-                  bursary_level: B
                   previous_last_name: Kub
                   itt_aim: '202'
-                  course_study_mode: '01'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
                   funding_method: B
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '008'
-                  hesa_disabilities: {}
+                  fund_code: '7'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '214'
@@ -1683,6 +1664,8 @@ paths:
                         type: string
                       disability2:
                         type: string
+                      withdrawal_safeguarding_concern_reasons:
+                        nullable: true
                     required:
                     - first_names
                     - last_name
@@ -1704,7 +1687,6 @@ paths:
                     - itt_end_date
                     - trn
                     - submitted_for_trn_at
-                    - withdraw_date
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -1731,19 +1713,17 @@ paths:
                     - employing_school_urn
                     - lead_partner_ukprn
                     - lead_partner_urn
-                    - fund_code
-                    - bursary_level
                     - previous_last_name
                     - itt_aim
-                    - course_study_mode
                     - course_year
                     - pg_apprenticeship_start_date
                     - funding_method
                     - ni_number
                     - additional_training_initiative
                     - itt_qualification_aim
-                    - hesa_disabilities
+                    - fund_code
                     - nationality
+                    - withdraw_date
                     - withdraw_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
@@ -1794,7 +1774,7 @@ paths:
                   record_source: api
                   provider_trainee_id:
                   defer_reason:
-                  ukprn: '92725297'
+                  ukprn: '10235527'
                   ethnicity: '997'
                   course_qualification: QTS
                   course_title:
@@ -1830,7 +1810,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: xjbXFgc7Ukhvvj5Tg4SP1NGF
+                    placement_id: veDSNrYaXffQyiaLtCai6Ab5
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -1846,12 +1826,13 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: DmzGv5ppD8FmHPj62ZBi67c5
+                    degree_id: GoFAsG9kKZW1djQrQq3qMPcy
                   state: submitted_for_trn
-                  trainee_id: P8xdeX895G7KsXoEF3smxuLJ
+                  trainee_id: X7CbWEXaTtWYUsfq54gnfQuN
                   application_id:
                   disability1: '58'
                   disability2: '57'
+                  withdrawal_safeguarding_concern_reasons:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
@@ -2046,6 +2027,8 @@ paths:
                           type: string
                         application_id:
                           nullable: true
+                        withdrawal_safeguarding_concern_reasons:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -2067,7 +2050,6 @@ paths:
                       - itt_end_date
                       - trn
                       - submitted_for_trn_at
-                      - withdraw_date
                       - defer_date
                       - recommended_for_award_at
                       - trainee_start_date
@@ -2095,8 +2077,8 @@ paths:
                       - lead_partner_ukprn
                       - lead_partner_urn
                       - fund_code
-                      - bursary_level
                       - nationality
+                      - withdraw_date
                       - withdraw_reasons
                       - withdrawal_trigger
                       - withdrawal_future_interest
@@ -2134,7 +2116,6 @@ paths:
                   itt_end_date: '2028-07-18'
                   trn:
                   submitted_for_trn_at:
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-10-03'
@@ -2162,12 +2143,13 @@ paths:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
-                  bursary_level:
                   nationality:
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
                   - uk_degree: '213'
@@ -2189,7 +2171,7 @@ paths:
                   trainee_id: 7rqulwskux1yfmo7cfrb7cuw
                   application_id:
         '422':
-          description: returns status 422 with a meaningful error message
+          description: does not create a trainee with a bursary and returns an error
           content:
             application/json:
               schema:
@@ -2211,8 +2193,134 @@ paths:
                               type: string
                         required:
                         - date_of_birth
-                    required:
-                    - personal_details
+                      graduation_year:
+                        type: array
+                        items:
+                          type: string
+                      subject:
+                        type: array
+                        items:
+                          type: string
+                      non_uk_degree:
+                        type: array
+                        items:
+                          type: string
+                      provider_trainee_id:
+                        type: array
+                        items:
+                          type: string
+                      application_id:
+                        type: array
+                        items:
+                          type: string
+                      disabilities:
+                        type: array
+                        items:
+                          type: string
+                      itt_start_date:
+                        type: array
+                        items:
+                          type: string
+                      trainee_start_date:
+                        type: array
+                        items:
+                          type: string
+                      itt_end_date:
+                        type: array
+                        items:
+                          type: string
+                      course_subject_two:
+                        type: array
+                        items:
+                          type: string
+                      course_subject_three:
+                        type: array
+                        items:
+                          type: string
+                      ethnicity:
+                        type: array
+                        items:
+                          type: string
+                      training_route:
+                        type: array
+                        items:
+                          type: string
+                      degrees_attributes:
+                        type: array
+                        items:
+                          type: string
+                      first_names:
+                        type: array
+                        items:
+                          type: string
+                      last_name:
+                        type: array
+                        items:
+                          type: string
+                      date_of_birth:
+                        type: array
+                        items:
+                          type: string
+                      sex:
+                        type: array
+                        items:
+                          type: string
+                      course_subject_one:
+                        type: array
+                        items:
+                          type: string
+                      study_mode:
+                        type: array
+                        items:
+                          type: string
+                      hesa_id:
+                        type: array
+                        items:
+                          type: string
+                      email:
+                        type: array
+                        items:
+                          type: string
+                      itt_aim:
+                        type: array
+                        items:
+                          type: string
+                      course_year:
+                        type: array
+                        items:
+                          type: string
+                      course_age_range:
+                        type: array
+                        items:
+                          type: string
+                      fund_code:
+                        type: array
+                        items:
+                          type: string
+                      funding_method:
+                        type: array
+                        items:
+                          type: string
+                      itt_qualification_aim:
+                        type: array
+                        items:
+                          type: string
+                      nationality:
+                        type: array
+                        items:
+                          type: string
+                      training_initiative:
+                        type: array
+                        items:
+                          type: string
+                      placements_attributes:
+                        type: array
+                        items:
+                          type: string
+                      uk_degree:
+                        type: array
+                        items:
+                          type: string
                 required:
                 - message
                 - errors
@@ -2220,7 +2328,9 @@ paths:
                 message: 'Validation failed: 1 error prohibited this trainee from
                   being saved'
                 errors:
-                - hesa_id must be 13 or 17 characters
+                - funding_method 'scholarship' is not allowed when training_route
+                  is 'provider_led_postgrad' and course_subject_one is 'psychology'
+                  in academic cycle '2024 to 2025'
       requestBody:
         content:
           application/json:
@@ -2390,10 +2500,10 @@ paths:
                 - urn: '900020'
                 provider_trainee_id: 99157234/2/01
                 pg_apprenticeship_start_date: '2024-03-11'
-                application_id: 1637320
-                lead_partner_ukprn: '12253386'
-                employing_school_urn: '440535'
-                lead_partner_urn: '276401'
+                application_id: 1392334
+                lead_partner_ukprn: '65782432'
+                employing_school_urn: '429929'
+                lead_partner_urn: '459283'
                 course_subject_two: '101410'
                 course_subject_three: '100366'
                 ethnicity: '142'
@@ -2463,8 +2573,6 @@ paths:
                     nullable: true
                   submitted_for_trn_at:
                     nullable: true
-                  withdraw_date:
-                    nullable: true
                   defer_date:
                     nullable: true
                   recommended_for_award_at:
@@ -2517,15 +2625,9 @@ paths:
                     nullable: true
                   lead_partner_urn:
                     nullable: true
-                  fund_code:
-                    type: string
-                  bursary_level:
-                    type: string
                   previous_last_name:
                     type: string
                   itt_aim:
-                    type: string
-                  course_study_mode:
                     type: string
                   course_year:
                     type: integer
@@ -2539,10 +2641,11 @@ paths:
                     type: string
                   itt_qualification_aim:
                     type: string
-                  hesa_disabilities:
-                    type: object
-                    properties: {}
+                  fund_code:
+                    type: string
                   nationality:
+                    nullable: true
+                  withdraw_date:
                     nullable: true
                   withdraw_reasons:
                     nullable: true
@@ -2551,6 +2654,8 @@ paths:
                   withdrawal_future_interest:
                     nullable: true
                   withdrawal_another_reason:
+                    nullable: true
+                  withdrawal_safeguarding_concern_reasons:
                     nullable: true
                   placements:
                     type: array
@@ -2585,7 +2690,6 @@ paths:
                 - itt_end_date
                 - trn
                 - submitted_for_trn_at
-                - withdraw_date
                 - defer_date
                 - recommended_for_award_at
                 - trainee_start_date
@@ -2612,23 +2716,22 @@ paths:
                 - employing_school_urn
                 - lead_partner_ukprn
                 - lead_partner_urn
-                - fund_code
-                - bursary_level
                 - previous_last_name
                 - itt_aim
-                - course_study_mode
                 - course_year
                 - pg_apprenticeship_start_date
                 - funding_method
                 - ni_number
                 - additional_training_initiative
                 - itt_qualification_aim
-                - hesa_disabilities
+                - fund_code
                 - nationality
+                - withdraw_date
                 - withdraw_reasons
                 - withdrawal_trigger
                 - withdrawal_future_interest
                 - withdrawal_another_reason
+                - withdrawal_safeguarding_concern_reasons
                 - placements
                 - degrees
                 - state
@@ -2655,7 +2758,6 @@ paths:
                 itt_end_date:
                 trn:
                 submitted_for_trn_at:
-                withdraw_date:
                 defer_date:
                 recommended_for_award_at:
                 trainee_start_date:
@@ -2682,23 +2784,22 @@ paths:
                 employing_school_urn:
                 lead_partner_ukprn:
                 lead_partner_urn:
-                fund_code: '7'
-                bursary_level: '4'
                 previous_last_name: Schuppe
                 itt_aim: '201'
-                course_study_mode: '01'
                 course_year: 2025
                 pg_apprenticeship_start_date: '2025-09-15'
                 funding_method: '4'
                 ni_number: QQ 12 34 56 C
                 additional_training_initiative: '026'
                 itt_qualification_aim: '007'
-                hesa_disabilities: {}
+                fund_code: '7'
                 nationality:
+                withdraw_date:
                 withdraw_reasons:
                 withdrawal_trigger:
                 withdrawal_future_interest:
                 withdrawal_another_reason:
+                withdrawal_safeguarding_concern_reasons:
                 placements: []
                 degrees: []
                 state: draft
@@ -2745,7 +2846,7 @@ paths:
         required: true
         schema:
           type: string
-        example: yDJMC1RLTwU19EwJdaQZSrnM
+        example: 4M4HhYBmFtcujKteanhFrcD5
       responses:
         '200':
           description: does not update the degrees
@@ -2802,8 +2903,6 @@ paths:
                       submitted_for_trn_at:
                         nullable: true
                         type: string
-                      withdraw_date:
-                        nullable: true
                       defer_date:
                         nullable: true
                       recommended_for_award_at:
@@ -2865,18 +2964,11 @@ paths:
                       lead_partner_urn:
                         type: string
                         nullable: true
-                      fund_code:
-                        type: string
-                      bursary_level:
-                        type: string
                       previous_last_name:
                         type: string
                         nullable: true
                       itt_aim:
                         type: string
-                      course_study_mode:
-                        type: string
-                        nullable: true
                       course_year:
                         type: integer
                       pg_apprenticeship_start_date:
@@ -2892,16 +2984,13 @@ paths:
                         nullable: true
                       itt_qualification_aim:
                         type: string
-                      hesa_disabilities:
-                        type: object
-                        properties:
-                          disability1:
-                            type: string
-                          disability2:
-                            type: string
+                      fund_code:
+                        type: string
                       nationality:
                         nullable: true
                         type: string
+                      withdraw_date:
+                        nullable: true
                       withdraw_reasons:
                         nullable: true
                       withdrawal_trigger:
@@ -2909,6 +2998,8 @@ paths:
                       withdrawal_future_interest:
                         nullable: true
                       withdrawal_another_reason:
+                        nullable: true
+                      withdrawal_safeguarding_concern_reasons:
                         nullable: true
                       placements:
                         type: array
@@ -2944,7 +3035,6 @@ paths:
                           properties:
                             uk_degree:
                               type: string
-                              nullable: true
                             non_uk_degree:
                               nullable: true
                             created_at:
@@ -2953,7 +3043,6 @@ paths:
                               type: string
                             subject:
                               type: string
-                              nullable: true
                             institution:
                               type: string
                             graduation_year:
@@ -3020,7 +3109,6 @@ paths:
                     - itt_end_date
                     - trn
                     - submitted_for_trn_at
-                    - withdraw_date
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -3047,23 +3135,22 @@ paths:
                     - employing_school_urn
                     - lead_partner_ukprn
                     - lead_partner_urn
-                    - fund_code
-                    - bursary_level
                     - previous_last_name
                     - itt_aim
-                    - course_study_mode
                     - course_year
                     - pg_apprenticeship_start_date
                     - funding_method
                     - ni_number
                     - additional_training_initiative
                     - itt_qualification_aim
-                    - hesa_disabilities
+                    - fund_code
                     - nationality
+                    - withdraw_date
                     - withdraw_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
+                    - withdrawal_safeguarding_concern_reasons
                     - placements
                     - degrees
                     - state
@@ -3093,7 +3180,6 @@ paths:
                   itt_end_date: '2027-07-31'
                   trn:
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-01'
@@ -3110,7 +3196,7 @@ paths:
                   record_source: api
                   provider_trainee_id:
                   defer_reason:
-                  ukprn: '90694801'
+                  ukprn: '51150788'
                   ethnicity: '997'
                   disability1: '55'
                   course_qualification: QTS
@@ -3121,25 +3207,22 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '2'
-                  bursary_level: '6'
                   previous_last_name:
                   itt_aim: '202'
-                  course_study_mode: '63'
                   course_year: 2012
                   pg_apprenticeship_start_date:
                   funding_method: '6'
                   ni_number:
                   additional_training_initiative:
                   itt_qualification_aim: '001'
-                  hesa_disabilities:
-                    disability1: '55'
-                    disability2: '57'
+                  fund_code: '2'
                   nationality: GB
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
@@ -3147,7 +3230,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: tLd3RXtLoj5gw6T5KtRaUUWS
+                    placement_id: 3EsnquvswPgXucoCn32Bfnbq
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3163,9 +3246,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: 9gGTWVQyvj9657rc3oiJTACq
+                    degree_id: 6tKsN7GFgrzHN5YcHXCYskz6
                   state: submitted_for_trn
-                  trainee_id: pKUd2MzFxMXqMXkksoEW8pSd
+                  trainee_id: c1fBV25QF4fwEb8d7QiYHgWi
                   application_id:
                   disability2: '57'
         '401':
@@ -3216,30 +3299,95 @@ paths:
                   message:
                     type: string
                   errors:
-                    type: array
+                    type: object
                     items:
                       type: string
                     properties:
-                      personal_details:
-                        type: object
-                        properties:
-                          first_names:
-                            type: array
-                            items:
-                              type: string
-                        required:
-                        - first_names
-                    required:
-                    - personal_details
+                      email:
+                        type: array
+                        items:
+                          type: string
+                      first_names:
+                        type: array
+                        items:
+                          type: string
+                      course_age_range:
+                        type: array
+                        items:
+                          type: string
+                      sex:
+                        type: array
+                        items:
+                          type: string
+                      nationality:
+                        type: array
+                        items:
+                          type: string
+                      itt_start_date:
+                        type: array
+                        items:
+                          type: string
+                      itt_end_date:
+                        type: array
+                        items:
+                          type: string
+                      trainee_start_date:
+                        type: array
+                        items:
+                          type: string
+                      ethnicity:
+                        type: array
+                        items:
+                          type: string
+                      training_route:
+                        type: array
+                        items:
+                          type: string
+                      disabilities:
+                        type: array
+                        items:
+                          type: string
+                      course_subject_one:
+                        type: array
+                        items:
+                          type: string
+                      course_subject_two:
+                        type: array
+                        items:
+                          type: string
+                      course_subject_three:
+                        type: array
+                        items:
+                          type: string
+                      study_mode:
+                        type: array
+                        items:
+                          type: string
+                      training_initiative:
+                        type: array
+                        items:
+                          type: string
+                      funding_method:
+                        type: array
+                        items:
+                          type: string
+                      itt_aim:
+                        type: array
+                        items:
+                          type: string
+                      itt_qualification_aim:
+                        type: array
+                        items:
+                          type: string
                 required:
                 - errors
               example:
                 message: 'Validation failed: 1 error prohibited this trainee from
                   being saved'
                 errors:
-                - funding_method training route 'opt_in_undergrad' and subject code
-                  'primary teaching' are not eligible for 'bursary' in academic cycle
-                  '2025 to 2026'
+                  funding_method:
+                  - "'bursary' is not allowed when fund_code is '2' and course_subject_one
+                    is 'primary teaching'"
       requestBody:
         content:
           application/json:
@@ -3277,8 +3425,10 @@ paths:
                       type: string
                     course_subject_two:
                       type: string
+                      nullable: true
                     course_subject_three:
                       type: string
+                      nullable: true
                     fund_code:
                       type: string
                     course_year:
@@ -3321,7 +3471,7 @@ paths:
                 nationality: FR
                 course_age_range: '13914'
                 lead_partner_urn: '900020'
-                employing_school_urn: '208380'
+                employing_school_urn: '523486'
                 ethnicity:
                 itt_start_date: '2023-01-01'
                 training_route:
@@ -3359,7 +3509,7 @@ paths:
         required: true
         schema:
           type: string
-        example: hzaf3qze8g174d58yg67wgog
+        example: 02c9bsps0f3625occbjj2ko9
       requestBody:
         content:
           application/json:
@@ -3443,8 +3593,6 @@ paths:
                         type: string
                       submitted_for_trn_at:
                         type: string
-                      withdraw_date:
-                        nullable: true
                       recommended_for_award_at:
                         nullable: true
                       reinstate_date:
@@ -3485,10 +3633,10 @@ paths:
                         nullable: true
                       fund_code:
                         nullable: true
-                      bursary_level:
-                        nullable: true
                       nationality:
                         type: string
+                      withdraw_date:
+                        nullable: true
                       withdraw_reasons:
                         nullable: true
                       withdrawal_trigger:
@@ -3496,6 +3644,8 @@ paths:
                       withdrawal_future_interest:
                         nullable: true
                       withdrawal_another_reason:
+                        nullable: true
+                      withdrawal_safeguarding_concern_reasons:
                         nullable: true
                       placements:
                         type: array
@@ -3520,7 +3670,7 @@ paths:
                             graduation_year:
                               type: integer
                             grade:
-                              nullable: true
+                              type: string
                             country:
                               nullable: true
                             other_grade:
@@ -3585,7 +3735,6 @@ paths:
                     - outcome_date
                     - itt_end_date
                     - submitted_for_trn_at
-                    - withdraw_date
                     - recommended_for_award_at
                     - reinstate_date
                     - course_min_age
@@ -3606,12 +3755,13 @@ paths:
                     - lead_partner_ukprn
                     - lead_partner_urn
                     - fund_code
-                    - bursary_level
                     - nationality
+                    - withdraw_date
                     - withdraw_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
+                    - withdrawal_safeguarding_concern_reasons
                     - placements
                     - degrees
                     - state
@@ -3623,20 +3773,20 @@ paths:
                 data:
                   defer_date: '2025-09-15'
                   defer_reason:
-                  trainee_start_date: '2025-08-23'
-                  first_names: Marcella
-                  middle_names: Mayert
-                  last_name: Treutel
-                  email: Marcella.Treutel@example.com
+                  trainee_start_date: '2025-08-16'
+                  first_names: Luther
+                  middle_names: Towne
+                  last_name: McDermott
+                  email: Luther.McDermott@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '3440437'
+                  trn: '5495634'
                   hesa_id:
                   course_subject_one: '100403'
                   course_subject_two:
                   course_subject_three:
                   record_source: manual
-                  date_of_birth: '1976-12-01'
+                  date_of_birth: '1978-01-24'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
                   training_route:
@@ -3644,56 +3794,56 @@ paths:
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2025-08-19'
+                  itt_start_date: '2025-08-14'
                   outcome_date:
-                  itt_end_date: '2026-07-29'
+                  itt_end_date: '2027-07-11'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   recommended_for_award_at:
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
+                  course_max_age: 18
                   awarded_at:
-                  training_initiative: '001'
+                  training_initiative: '009'
                   study_mode:
                   course_education_phase: secondary
-                  provider_trainee_id: 25/26-955
-                  ukprn: '12463833'
+                  provider_trainee_id: 25/26-1170
+                  ukprn: '92304327'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2025-08-19'
+                  course_itt_start_date: '2025-08-14'
                   course_age_range:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
-                  bursary_level:
-                  nationality: TL
+                  nationality: CN
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
-                  - uk_degree: '073'
+                  - uk_degree: '081'
                     non_uk_degree:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    subject: '101103'
-                    institution: '1110'
-                    graduation_year: 1999
-                    grade:
+                    subject: '101510'
+                    institution: '0023'
+                    graduation_year: 1993
+                    grade: '13'
                     country:
                     other_grade:
-                    institution_uuid: 4c8eb11b-4a26-4bf5-a358-76304a60a09d
-                    uk_degree_uuid: 076a5652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 578570f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                    degree_id: mzoqeayagu8kfe3ky377s8dn
+                    institution_uuid: dc70f34a-2887-e711-80d8-005056ac45bb
+                    uk_degree_uuid: 176a5652-c197-e711-80d8-005056ac45bb
+                    subject_uuid: b18770f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
+                    degree_id: 7qdtn7jmbzmzdi3o5oigg57k
                   state: deferred
-                  trainee_id: hcj2e3a32layhu4xy3rkk068
+                  trainee_id: 0n3yo0m57qpmchajhyq3urvv
                   application_id:
         '404':
           description: returns status code 404
@@ -3762,7 +3912,7 @@ paths:
         required: true
         schema:
           type: string
-        example: ecsptn3zethefm2lkogfv77w
+        example: dsvnv6etmpifbwxbhcv6z5z8
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -3842,7 +3992,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 635f5afaeqxkawk11v1455tm
+        example: dcwc91k52cdhm2ovq498t9oi
       requestBody:
         content:
           application/json:
@@ -3963,7 +4113,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: kJhZaVpAJ2brh1D7CT7iZsxa
+                  degree_id: jPXmSAfKy3fNxTiufyMV3XwU
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4029,7 +4179,7 @@ paths:
                         graduation_year:
                           type: integer
                         grade:
-                          type: string
+                          nullable: true
                         country:
                           nullable: true
                         other_grade:
@@ -4068,21 +4218,21 @@ paths:
                 - error: Conflict
                   message: This is a duplicate degree
                 data:
-                - uk_degree: '208'
+                - uk_degree: '084'
                   non_uk_degree:
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  subject: '100823'
-                  institution: '0099'
-                  graduation_year: 1969
-                  grade: '03'
+                  subject: '101330'
+                  institution: '0169'
+                  graduation_year: 2001
+                  grade:
                   country:
                   other_grade:
-                  institution_uuid: 9ba81897-b8e8-4000-b66a-d3530b3b751c
-                  uk_degree_uuid: 4b6a5652-c197-e711-80d8-005056ac45bb
-                  subject_uuid: c78370f0-5dce-e911-a985-000d3ab79618
-                  grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
-                  degree_id: r5zf8053pxutstvpexkumaej
+                  institution_uuid: 42228041-7042-e811-80ff-3863bb3640b8
+                  uk_degree_uuid: 1d6a5652-c197-e711-80d8-005056ac45bb
+                  subject_uuid: 678670f0-5dce-e911-a985-000d3ab79618
+                  grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
+                  degree_id: hepq5j2hbvzzrsc1lykg0bxm
         '422':
           description: does not create a new degree and returns a 422 status (unprocessable_entity)
             status
@@ -4107,6 +4257,10 @@ paths:
                 - errors
               example:
                 errors:
+                - error: UnprocessableEntity
+                  message: graduation_year must be in the past, for example 2014
+                - error: UnprocessableEntity
+                  message: graduation_year is invalid
                 - error: UnprocessableEntity
                   message: subject must be entered if specifying a previous UK degree
                     or non-UK degree
@@ -4135,13 +4289,13 @@ paths:
         required: true
         schema:
           type: string
-        example: 5no5gwzwpzh87ze0dvibmh0a
+        example: jcisqpfefqsju8mgh5r3pa7a
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: mj18fqggqmzcyhhtf55f47ol
+        example: 04tuemnajmvma44f6e48a0oz
       responses:
         '200':
           description: deletes the degree and returns a 200 status (ok)
@@ -4192,8 +4346,6 @@ paths:
                       trn:
                         nullable: true
                       submitted_for_trn_at:
-                        nullable: true
-                      withdraw_date:
                         nullable: true
                       defer_date:
                         nullable: true
@@ -4249,9 +4401,9 @@ paths:
                         nullable: true
                       fund_code:
                         nullable: true
-                      bursary_level:
-                        nullable: true
                       nationality:
+                        nullable: true
+                      withdraw_date:
                         nullable: true
                       withdraw_reasons:
                         nullable: true
@@ -4260,6 +4412,8 @@ paths:
                       withdrawal_future_interest:
                         nullable: true
                       withdrawal_another_reason:
+                        nullable: true
+                      withdrawal_safeguarding_concern_reasons:
                         nullable: true
                       placements:
                         type: array
@@ -4294,7 +4448,6 @@ paths:
                     - itt_end_date
                     - trn
                     - submitted_for_trn_at
-                    - withdraw_date
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -4322,12 +4475,13 @@ paths:
                     - lead_partner_ukprn
                     - lead_partner_urn
                     - fund_code
-                    - bursary_level
                     - nationality
+                    - withdraw_date
                     - withdraw_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
+                    - withdrawal_safeguarding_concern_reasons
                     - placements
                     - degrees
                     - state
@@ -4337,15 +4491,15 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Jenna
-                  last_name: Wiegand
-                  date_of_birth: '2002-12-23'
+                  first_names: Garnett
+                  last_name: Jacobson
+                  date_of_birth: '1967-07-24'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  email: Jenna.Wiegand@example.com
-                  middle_names: Williamson
+                  email: Garnett.Jacobson@example.com
+                  middle_names: Tremblay
                   training_route:
-                  sex: '96'
+                  sex: '99'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   ethnic_background:
@@ -4357,7 +4511,6 @@ paths:
                   itt_end_date:
                   trn:
                   submitted_for_trn_at:
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date:
@@ -4372,9 +4525,9 @@ paths:
                   course_education_phase:
                   hesa_id:
                   record_source: manual
-                  provider_trainee_id: 25/26-924
+                  provider_trainee_id: 25/26-1139
                   defer_reason:
-                  ukprn: '13510819'
+                  ukprn: '90003795'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
@@ -4385,16 +4538,17 @@ paths:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
-                  bursary_level:
                   nationality:
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees: []
                   state: draft
-                  trainee_id: wpxpyhf2p584ufa0jbo3tpjs
+                  trainee_id: oi313f8dgetyo168hae03n6v
                   application_id:
         '404':
           description: does not delete the degree and returns a 404 status (not_found)
@@ -4443,7 +4597,7 @@ paths:
         required: true
         schema:
           type: string
-        example: prpgpuf4roymli9lzlag2mgo
+        example: qzdl48xgivd73clgrvhgu5fe
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -4505,21 +4659,21 @@ paths:
                 - data
               example:
                 data:
-                  uk_degree: '054'
+                  uk_degree: '057'
                   non_uk_degree:
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  subject: '100190'
-                  institution: '0283'
+                  subject: '101510'
+                  institution: '1191'
                   graduation_year: 1984
-                  grade: '13'
+                  grade: '03'
                   country:
                   other_grade:
-                  institution_uuid: dd3e182c-1425-ec11-b6e6-000d3adf095a
-                  uk_degree_uuid: e1695652-c197-e711-80d8-005056ac45bb
-                  subject_uuid: 138070f0-5dce-e911-a985-000d3ab79618
-                  grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
-                  degree_id: wwghigp9enaf9ahn7gs9opsl
+                  institution_uuid: 184f9945-d4a6-4bdd-8827-12534d550893
+                  uk_degree_uuid: e7695652-c197-e711-80d8-005056ac45bb
+                  subject_uuid: b18770f0-5dce-e911-a985-000d3ab79618
+                  grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
+                  degree_id: rdt1xo2nmg0fg9zsvwgu5n8e
         '404':
           description: returns status code 404 with a valid JSON response
           content:
@@ -4561,13 +4715,13 @@ paths:
         required: true
         schema:
           type: string
-        example: 1o1fig0xddkx1h2y25pdi2ya
+        example: 3fgaimhdkahyyuu8oodlkw25
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: jo3xp8j89uz70fa3ltbyl0fp
+        example: ug1ao0a9a3imf57hhqy8a537
       requestBody:
         content:
           application/json:
@@ -4670,11 +4824,11 @@ paths:
                   grade: '02'
                   country:
                   other_grade:
-                  institution_uuid: 5aeb7735-7042-e811-80ff-3863bb3640b8
+                  institution_uuid: 185b3b8a-375a-43f8-9689-364b835c3c24
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 917f70f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
-                  degree_id: y9tdpvhvuzdsbb1pvwvmtx1k
+                  degree_id: npguwjamz0vb8wgdbf9vh04v
         '404':
           description: does not update the degree and returns a 404 status (not_found)
           content:
@@ -4741,7 +4895,7 @@ paths:
         required: true
         schema:
           type: string
-        example: d5nhpahmm28wze7im93hl4rm
+        example: 3fh31hdwzmtw59f0v91qoq6y
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -4797,7 +4951,7 @@ paths:
         required: true
         schema:
           type: string
-        example: '008xeo2gtoxujam394z8wp8b'
+        example: v2e15iwqhx8fi6g8jcsmtmqh
       requestBody:
         content:
           application/json:
@@ -4817,9 +4971,9 @@ paths:
               - data
             example:
               data:
-                urn: '298671'
-                name: Western Rhode Island College
-                postcode: Y8 3NB
+                urn: '317419'
+                name: East Michigan University
+                postcode: YS5 1NS
       responses:
         '201':
           description: creates a new placement and returns a 201 (created) status
@@ -4858,13 +5012,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '298671'
-                  name: Western Rhode Island College
-                  address: URN 298671, Y8 3NB
-                  postcode: Y8 3NB
+                  urn: '317419'
+                  name: East Michigan University
+                  address: URN 317419, YS5 1NS
+                  postcode: YS5 1NS
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: gYXBSiC7nJf1N4QPfo7DsYu4
+                  placement_id: xvbNdw79h3hGadLwh7tfSer7
         '404':
           description: does not create a new placement and returns a 404 status (not_found)
             status
@@ -4934,13 +5088,13 @@ paths:
         required: true
         schema:
           type: string
-        example: c94yi2nxc012a7v7sto6dyt9
+        example: lh887urkd64xk5kmkxyl1eew
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: vcdlk2yp6b7mu1wxov4kazqs
+        example: dl5ps53w03aktd9ol7ayhrqu
       responses:
         '200':
           description: removes the specified placement
@@ -4991,8 +5145,6 @@ paths:
                       trn:
                         nullable: true
                       submitted_for_trn_at:
-                        nullable: true
-                      withdraw_date:
                         nullable: true
                       defer_date:
                         nullable: true
@@ -5046,15 +5198,9 @@ paths:
                         nullable: true
                       lead_partner_urn:
                         nullable: true
-                      fund_code:
-                        type: string
-                      bursary_level:
-                        type: string
                       previous_last_name:
                         type: string
                       itt_aim:
-                        type: string
-                      course_study_mode:
                         type: string
                       course_year:
                         type: integer
@@ -5068,10 +5214,11 @@ paths:
                         type: string
                       itt_qualification_aim:
                         type: string
-                      hesa_disabilities:
-                        type: object
-                        properties: {}
+                      fund_code:
+                        type: string
                       nationality:
+                        nullable: true
+                      withdraw_date:
                         nullable: true
                       withdraw_reasons:
                         nullable: true
@@ -5080,6 +5227,8 @@ paths:
                       withdrawal_future_interest:
                         nullable: true
                       withdrawal_another_reason:
+                        nullable: true
+                      withdrawal_safeguarding_concern_reasons:
                         nullable: true
                       placements:
                         type: array
@@ -5138,7 +5287,6 @@ paths:
                     - itt_end_date
                     - trn
                     - submitted_for_trn_at
-                    - withdraw_date
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -5165,23 +5313,22 @@ paths:
                     - employing_school_urn
                     - lead_partner_ukprn
                     - lead_partner_urn
-                    - fund_code
-                    - bursary_level
                     - previous_last_name
                     - itt_aim
-                    - course_study_mode
                     - course_year
                     - pg_apprenticeship_start_date
                     - funding_method
                     - ni_number
                     - additional_training_initiative
                     - itt_qualification_aim
-                    - hesa_disabilities
+                    - fund_code
                     - nationality
+                    - withdraw_date
                     - withdraw_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
+                    - withdrawal_safeguarding_concern_reasons
                     - placements
                     - degrees
                     - state
@@ -5191,13 +5338,13 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Gavin
-                  last_name: Ryan
-                  date_of_birth: '1965-10-15'
+                  first_names: Thomas
+                  last_name: D'Amore
+                  date_of_birth: '1997-11-27'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  email: Gavin.Ryan@example.com
-                  middle_names: Larkin
+                  email: Thomas.D'Amore@example.com
+                  middle_names: Lind
                   training_route:
                   sex: '96'
                   diversity_disclosure: diversity_not_disclosed
@@ -5211,7 +5358,6 @@ paths:
                   itt_end_date:
                   trn:
                   submitted_for_trn_at:
-                  withdraw_date:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date:
@@ -5224,11 +5370,11 @@ paths:
                   training_initiative:
                   study_mode: '01'
                   course_education_phase:
-                  hesa_id: '4755229652758'
+                  hesa_id: '1060206808645'
                   record_source: manual
-                  provider_trainee_id: 25/26-934
+                  provider_trainee_id: 25/26-1149
                   defer_reason:
-                  ukprn: '17278911'
+                  ukprn: '60237720'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
@@ -5238,34 +5384,33 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '2'
-                  bursary_level: '7'
-                  previous_last_name: Tromp
-                  itt_aim: '201'
-                  course_study_mode: '01'
+                  previous_last_name: Weber
+                  itt_aim: '202'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
-                  funding_method: '7'
+                  funding_method: '6'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
-                  itt_qualification_aim: '004'
-                  hesa_disabilities: {}
+                  itt_qualification_aim: '003'
+                  fund_code: '7'
                   nationality:
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements:
-                  - urn: '787293'
-                    name: Brighthurst 154 High
-                    address: URN 787293, Howellberg, ZV2P 4YF
-                    postcode: ZV2P 4YF
+                  - urn: '806301'
+                    name: Brighthurst 299 Secondary College
+                    address: URN 806301, Herbertville, W9 0LN
+                    postcode: W9 0LN
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: jme109l4bxx67c42f4aghyuy
+                    placement_id: sz4rmnayuva1yqxu2knrezn2
                   degrees: []
                   state: draft
-                  trainee_id: vcdlk2yp6b7mu1wxov4kazqs
+                  trainee_id: dl5ps53w03aktd9ol7ayhrqu
                   application_id:
         '404':
           description: returns status code 404 with a valid JSON response
@@ -5314,7 +5459,7 @@ paths:
         required: true
         schema:
           type: string
-        example: bt94g0dpj3qlfovxg5s82gta
+        example: xjvsueaixscukakfnj6k1hjk
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -5352,13 +5497,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '514338'
-                  name: Brighthurst 156 Secondary College
-                  address: URN 514338, New Diegofort, SH0 4EA
-                  postcode: SH0 4EA
+                  urn: '700580'
+                  name: Mallowpond 301 Secondary College
+                  address: URN 700580, New Elease, Y2B 1BL
+                  postcode: Y2B 1BL
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: snxrkak4nx71s87af1i6bw11
+                  placement_id: nl98v4cyvq10qiroh6yh17ev
         '404':
           description: returns status code 404 with a valid JSON response
           content:
@@ -5400,13 +5545,13 @@ paths:
         required: true
         schema:
           type: string
-        example: d476w0ffgowfmatv6ssq3ahk
+        example: c4n4i0gx78fizeoq5ml530ae
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: tpui87uhm01rvxdg3kfiihde
+        example: 183f5eolrkf1dzaf7qi9oqwv
       requestBody:
         content:
           application/json:
@@ -5426,9 +5571,9 @@ paths:
               - data
             example:
               data:
-                urn: '927918'
-                name: North Tennessee University
-                postcode: WH2 0BR
+                urn: '486044'
+                name: Eastern Reichert College
+                postcode: TE4 4XA
       responses:
         '200':
           description: updates the placement and returns a 200 (ok) status
@@ -5467,13 +5612,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '700409'
-                  name: North Tennessee University
-                  address: URN 700409, WH2 0BR
-                  postcode: WH2 0BR
+                  urn: '496433'
+                  name: Eastern Reichert College
+                  address: URN 496433, TE4 4XA
+                  postcode: TE4 4XA
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: d476w0ffgowfmatv6ssq3ahk
+                  placement_id: c4n4i0gx78fizeoq5ml530ae
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5543,7 +5688,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 8f5yefqb37uxr8jxtwn0b96x
+        example: wki8t04q6lmloa0h6z1vdccu
       requestBody:
         content:
           application/json:
@@ -5573,6 +5718,8 @@ paths:
                   data:
                     type: object
                     properties:
+                      outcome_date:
+                        type: string
                       recommended_for_award_at:
                         type: string
                       first_names:
@@ -5615,14 +5762,10 @@ paths:
                         nullable: true
                       itt_start_date:
                         type: string
-                      outcome_date:
-                        type: string
                       itt_end_date:
                         type: string
                       submitted_for_trn_at:
                         type: string
-                      withdraw_date:
-                        nullable: true
                       defer_date:
                         nullable: true
                       trainee_start_date:
@@ -5636,7 +5779,7 @@ paths:
                       awarded_at:
                         nullable: true
                       training_initiative:
-                        type: string
+                        nullable: true
                       study_mode:
                         nullable: true
                       course_education_phase:
@@ -5669,10 +5812,10 @@ paths:
                         nullable: true
                       fund_code:
                         nullable: true
-                      bursary_level:
-                        nullable: true
                       nationality:
                         type: string
+                      withdraw_date:
+                        nullable: true
                       withdraw_reasons:
                         nullable: true
                       withdrawal_trigger:
@@ -5680,6 +5823,8 @@ paths:
                       withdrawal_future_interest:
                         nullable: true
                       withdrawal_another_reason:
+                        nullable: true
+                      withdrawal_safeguarding_concern_reasons:
                         nullable: true
                       placements:
                         type: array
@@ -5742,6 +5887,7 @@ paths:
                       application_id:
                         nullable: true
                     required:
+                    - outcome_date
                     - recommended_for_award_at
                     - first_names
                     - middle_names
@@ -5763,10 +5909,8 @@ paths:
                     - ethnic_group
                     - disability_disclosure
                     - itt_start_date
-                    - outcome_date
                     - itt_end_date
                     - submitted_for_trn_at
-                    - withdraw_date
                     - defer_date
                     - trainee_start_date
                     - reinstate_date
@@ -5790,12 +5934,13 @@ paths:
                     - lead_partner_ukprn
                     - lead_partner_urn
                     - fund_code
-                    - bursary_level
                     - nationality
+                    - withdraw_date
                     - withdraw_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
+                    - withdrawal_safeguarding_concern_reasons
                     - placements
                     - degrees
                     - state
@@ -5805,79 +5950,79 @@ paths:
                 - data
               example:
                 data:
+                  outcome_date: '2025-09-15'
                   recommended_for_award_at: '2025-09-15T12:34:56Z'
-                  first_names: Rosaura
-                  middle_names: Schuster
-                  last_name: Ernser
-                  email: Rosaura.Ernser@example.com
+                  first_names: Sasha
+                  middle_names: Bauch
+                  last_name: Ledner
+                  email: Sasha.Ledner@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '9146459'
+                  trn: '4513955'
                   hesa_id:
                   course_subject_one: '100403'
                   course_subject_two:
                   course_subject_three:
-                  date_of_birth: '2006-11-27'
+                  date_of_birth: '1968-02-15'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
                   training_route:
-                  sex: '96'
+                  sex: '11'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2025-08-21'
-                  outcome_date: '2025-09-15'
-                  itt_end_date: '2026-07-05'
+                  itt_start_date: '2025-08-11'
+                  itt_end_date: '2026-07-02'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date:
                   defer_date:
-                  trainee_start_date: '2025-08-21'
+                  trainee_start_date: '2025-08-11'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
+                  course_max_age: 16
                   awarded_at:
-                  training_initiative: '009'
+                  training_initiative:
                   study_mode:
                   course_education_phase: secondary
                   record_source: manual
-                  provider_trainee_id: 25/26-978
+                  provider_trainee_id: 25/26-1193
                   defer_reason:
-                  ukprn: '72284567'
+                  ukprn: '22734498'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2025-08-21'
+                  course_itt_start_date: '2025-08-11'
                   course_age_range:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
-                  bursary_level:
                   nationality: FR
+                  withdraw_date:
                   withdraw_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
-                  - uk_degree: '085'
+                  - uk_degree: '216'
                     non_uk_degree:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    subject: '100076'
-                    institution: '0311'
-                    graduation_year: 1997
+                    subject: '100761'
+                    institution: '1034'
+                    graduation_year: 1980
                     grade: '05'
                     country:
                     other_grade:
-                    institution_uuid: db3e182c-1425-ec11-b6e6-000d3adf095a
-                    uk_degree_uuid: 1f6a5652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 677f70f0-5dce-e911-a985-000d3ab79618
+                    institution_uuid: ba104e98-1f74-44be-a4a7-3f1b6f46edf1
+                    uk_degree_uuid: f3eaa983-d543-4d4b-a239-f46d7cc94825
+                    subject_uuid: 618370f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 3d57e5f7-7904-4895-a982-ed953fff3f94
-                    degree_id: nf0c79edrfhh49opa53e7gwc
+                    degree_id: ja6vp15tzmk0esexd7uek6pk
                   state: recommended_for_award
-                  trainee_id: kyvflr6kzqwpewmufuya7fid
+                  trainee_id: mcro43xlz5gvem4t721xbd79
                   application_id:
         '404':
           description: returns status code 404
@@ -5946,10 +6091,10 @@ paths:
         required: true
         schema:
           type: string
-        example: 25r14l89dktpi70l7pfwsqld
+        example: kpnizzm3nokhbeua0guiyt9d
       responses:
         '200':
-          description: returns status code 200 with a valid JSON response
+          description: returns the trainee's withdrawal details in the response
           content:
             application/json:
               schema:
@@ -6006,8 +6151,6 @@ paths:
                         type: string
                       submitted_for_trn_at:
                         type: string
-                      withdraw_date:
-                        type: string
                       defer_date:
                         nullable: true
                       recommended_for_award_at:
@@ -6023,6 +6166,7 @@ paths:
                       awarded_at:
                         nullable: true
                       training_initiative:
+                        type: string
                         nullable: true
                       study_mode:
                         type: string
@@ -6052,15 +6196,9 @@ paths:
                         nullable: true
                       lead_partner_urn:
                         nullable: true
-                      fund_code:
-                        type: string
-                      bursary_level:
-                        type: string
                       previous_last_name:
                         type: string
                       itt_aim:
-                        type: string
-                      course_study_mode:
                         type: string
                       course_year:
                         type: integer
@@ -6074,10 +6212,11 @@ paths:
                         type: string
                       itt_qualification_aim:
                         type: string
-                      hesa_disabilities:
-                        type: object
-                        properties: {}
+                      fund_code:
+                        type: string
                       nationality:
+                        type: string
+                      withdraw_date:
                         type: string
                       withdraw_reasons:
                         type: array
@@ -6089,6 +6228,10 @@ paths:
                         type: string
                       withdrawal_another_reason:
                         nullable: true
+                        type: string
+                      withdrawal_safeguarding_concern_reasons:
+                        nullable: true
+                        type: string
                       placements:
                         type: array
                         items: {}
@@ -6113,6 +6256,7 @@ paths:
                               type: integer
                             grade:
                               type: string
+                              nullable: true
                             country:
                               nullable: true
                             other_grade:
@@ -6174,7 +6318,6 @@ paths:
                     - outcome_date
                     - itt_end_date
                     - submitted_for_trn_at
-                    - withdraw_date
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -6197,23 +6340,22 @@ paths:
                     - employing_school_urn
                     - lead_partner_ukprn
                     - lead_partner_urn
-                    - fund_code
-                    - bursary_level
                     - previous_last_name
                     - itt_aim
-                    - course_study_mode
                     - course_year
                     - pg_apprenticeship_start_date
                     - funding_method
                     - ni_number
                     - additional_training_initiative
                     - itt_qualification_aim
-                    - hesa_disabilities
+                    - fund_code
                     - nationality
+                    - withdraw_date
                     - withdraw_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
+                    - withdrawal_safeguarding_concern_reasons
                     - placements
                     - degrees
                     - state
@@ -6223,34 +6365,33 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Bud
-                  middle_names: Lindgren
-                  last_name: Kunde
-                  email: Bud.Kunde@example.com
+                  first_names: Maxima
+                  middle_names: Ward
+                  last_name: Hahn
+                  email: Maxima.Hahn@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '6167243'
-                  hesa_id: '2560171519066'
+                  trn: '8757873'
+                  hesa_id: '3565584657354'
                   course_subject_one: '100403'
                   course_subject_two:
                   course_subject_three:
                   record_source: manual
-                  date_of_birth: '1969-03-29'
+                  date_of_birth: '1989-11-25'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
                   training_route:
-                  sex: '96'
+                  sex: '11'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2025-08-28'
+                  itt_start_date: '2025-08-25'
                   outcome_date:
-                  itt_end_date: '2027-07-30'
+                  itt_end_date: '2026-07-10'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
-                  withdraw_date: '2025-09-15'
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2025-08-31'
+                  trainee_start_date: '2025-08-26'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -6258,9 +6399,9 @@ paths:
                   training_initiative:
                   study_mode: '01'
                   course_education_phase: secondary
-                  provider_trainee_id: 25/26-988
+                  provider_trainee_id: 25/26-1233
                   defer_reason:
-                  ukprn: '74006137'
+                  ukprn: '50624448'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
@@ -6270,43 +6411,42 @@ paths:
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
-                  fund_code: '7'
-                  bursary_level: '4'
-                  previous_last_name: McKenzie
-                  itt_aim: '201'
-                  course_study_mode: '01'
+                  previous_last_name: Ratke
+                  itt_aim: '202'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
-                  funding_method: '4'
+                  funding_method: '6'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
                   itt_qualification_aim: '028'
-                  hesa_disabilities: {}
-                  nationality: TT
+                  fund_code: '2'
+                  nationality: CG
+                  withdraw_date: '2025-09-15'
                   withdraw_reasons:
-                  - record_added_in_error
+                  - safeguarding_concerns
                   withdrawal_trigger: provider
                   withdrawal_future_interest: 'no'
                   withdrawal_another_reason:
+                  withdrawal_safeguarding_concern_reasons: Some safeguarding reasons
                   placements: []
                   degrees:
-                  - uk_degree: '204'
+                  - uk_degree: '051'
                     non_uk_degree:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    subject: '101453'
-                    institution: '0330'
-                    graduation_year: 1996
-                    grade: '03'
+                    subject: '100661'
+                    institution: '1035'
+                    graduation_year: 1970
+                    grade: '01'
                     country:
                     other_grade:
-                    institution_uuid: a33e182c-1425-ec11-b6e6-000d3adf095a
-                    uk_degree_uuid: 436a5652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 458770f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
-                    degree_id: 8rrhw7yrovg5xed5ke8lv92f
+                    institution_uuid: 801fc599-211a-41e6-a01c-195c2df464a7
+                    uk_degree_uuid: db695652-c197-e711-80d8-005056ac45bb
+                    subject_uuid: cd8270f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: 8741765a-13d8-4550-a413-c5a860a59d25
+                    degree_id: xywkqahqn0rmm2xppc7h1yyq
                   state: withdrawn
-                  trainee_id: drlsyfxfzr0q7sj6csi7f1hp
+                  trainee_id: dqmk6lqs6wvdw0a9cuv3zc3m
                   application_id:
         '401':
           description: did not change the trainee
@@ -6391,6 +6531,10 @@ paths:
                       type: string
                     future_interest:
                       type: string
+                    another_reason:
+                      type: string
+                    safeguarding_concern_reasons:
+                      type: string
                   required:
                   - reasons
                   - withdraw_date
@@ -6401,7 +6545,9 @@ paths:
             example:
               data:
                 reasons:
-                - record_added_in_error
+                - safeguarding_concerns
                 withdraw_date: '2025-09-15'
                 trigger: provider
                 future_interest: 'no'
+                another_reason: Another test reason
+                safeguarding_concern_reasons: Some safeguarding reasons
