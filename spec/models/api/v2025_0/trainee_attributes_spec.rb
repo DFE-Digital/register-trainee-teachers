@@ -607,7 +607,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:degrees_attributes]).to include(
-            "degrees_attributes contain duplicate degrees",
+            "degrees_attributes contains duplicate degrees",
           )
         end
       end
@@ -632,7 +632,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:degrees_attributes]).not_to include(
-            "degrees_attributes contain duplicate degrees",
+            "degrees_attributes contains duplicate degrees",
           )
         end
       end
