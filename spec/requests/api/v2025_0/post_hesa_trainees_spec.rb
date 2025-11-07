@@ -1715,11 +1715,13 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
   end
 
   context "when a degree has invalid reference data values" do
-    it "return status code 422 with a meaningful error message" do
+    before do
       params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
 
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
 
+    it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body["message"]).to eq("Validation failed: 2 errors prohibited this trainee from being saved")
       expect(response.parsed_body["errors"]).to contain_exactly(
@@ -1751,10 +1753,11 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       it "return status code 422 with a meaningful error message" do
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["message"]).to eq("Validation failed: 1 error prohibited this trainee from being saved")
+        expect(response.parsed_body["message"]).to eq("Validation failed: 3 errors prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to contain_exactly(
-          /uk_degree has invalid reference data value of/,
+          "graduation_year must be in the past, for example 2014",
+          "graduation_year is invalid",
+          /uk_degree has invalid reference data value of 'Bachelor of Arts'/,
         )
       end
 
@@ -1771,39 +1774,43 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
       end
     end
+  end
 
-    context "with duplicate degree attributes" do
-      let(:degrees_attributes) {
-        [
-          {
-            grade: "02",
-            subject: "100485",
-            institution: "0117",
-            uk_degree: "083",
-            graduation_year: graduation_year,
-          },
-          {
-            grade: "02",
-            subject: "100485",
-            institution: "0117",
-            uk_degree: "083",
-            graduation_year: graduation_year,
-          },
-        ]
+  context "with duplicate degree attributes" do
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    let(:degrees_attributes) {
+      [
+        {
+          grade: "02",
+          subject: "100485",
+          institution: "0117",
+          uk_degree: "083",
+          graduation_year: "1999",
+        },
+        {
+          grade: "02",
+          subject: "100485",
+          institution: "0117",
+          uk_degree: "083",
+          graduation_year: "1999",
+        },
+      ]
+    }
+
+    it "return status code 422 with a meaningful error message" do
+      expect {
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      }.not_to change {
+        Trainee.count
       }
 
-      it "return status code 422 with a meaningful error message" do
-        expect {
-          post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
-        }.not_to change {
-          Trainee.count
-        }
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body[:errors]).to contain_exactly(
-          "degree_attributes contain duplicate values",
-        )
-      end
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body[:errors]).to contain_exactly(
+        "degrees_attributes contain duplicate degrees",
+      )
     end
   end
 

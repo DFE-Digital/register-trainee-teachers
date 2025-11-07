@@ -581,34 +581,33 @@ RSpec.describe Api::V20250::TraineeAttributes do
     describe "degrees_attributes" do
       context "with duplicate attributes" do
         before do
-          subject.degrees_attributes =
-            [
-              Api::V20250::DegreeAttributes.new(
-                {
-                  grade: "02",
-                  subject: "100485",
-                  institution: "0117",
-                  uk_degree: "083",
-                  graduation_year: "2024",
-                },
-              ),
-              Api::V20250::DegreeAttributes.new(
-                {
-                  grade: "02",
-                  subject: "100485",
-                  institution: "0117",
-                  uk_degree: "083",
-                  graduation_year: "2024",
-                },
-              ),
-            ]
+          subject.degrees_attributes = [
+            Api::V20250::DegreeAttributes.new(
+              {
+                grade: "02",
+                subject: "100485",
+                institution: "0117",
+                uk_degree: "083",
+                graduation_year: "2024",
+              },
+            ),
+            Api::V20250::DegreeAttributes.new(
+              {
+                grade: "02",
+                subject: "100485",
+                institution: "0117",
+                uk_degree: "083",
+                graduation_year: "2024",
+              },
+            ),
+          ]
         end
 
         it "returns errors" do
           subject.validate
 
           expect(subject.errors[:degrees_attributes]).to include(
-            "degree_attributes contains duplicate values",
+            "degrees_attributes contain duplicate degrees",
           )
         end
       end
@@ -633,7 +632,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:degrees_attributes]).not_to include(
-            "degree_attributes contains duplicate values",
+            "degrees_attributes contain duplicate degrees",
           )
         end
       end
