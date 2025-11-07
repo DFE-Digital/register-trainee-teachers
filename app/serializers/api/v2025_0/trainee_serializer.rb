@@ -128,7 +128,6 @@ module Api
           course_education_phase:,
           course_itt_start_date:,
           course_age_range:,
-          expected_end_date:,
           trainee_start_date:,
         }
       end
@@ -167,10 +166,6 @@ module Api
 
       def course_age_range
         @trainee&.hesa_trainee_detail&.course_age_range
-      end
-
-      def expected_end_date
-        @trainee.itt_end_date&.iso8601
       end
 
       def recommended_for_award_at

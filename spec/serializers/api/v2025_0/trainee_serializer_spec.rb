@@ -58,7 +58,6 @@ RSpec.describe Api::V20250::TraineeSerializer do
         course_study_mode
         course_itt_start_date
         course_age_range
-        expected_end_date
         employing_school_urn
         lead_partner_urn
         lead_partner_ukprn

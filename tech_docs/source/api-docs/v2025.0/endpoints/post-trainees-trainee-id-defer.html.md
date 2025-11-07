@@ -141,7 +141,6 @@ Deferral details
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
         "course_age_range": null,
-        "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
         "lead_partner_urn": null,
