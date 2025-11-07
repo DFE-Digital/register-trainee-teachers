@@ -658,4 +658,116 @@ weight: 1
       </ul>
     </dd>
   </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdrawal_reasons</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        array of strings
+      </p>
+      <p class="govuk-body">
+        The list of reasons for the trainee’s withdrawal. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>unacceptable_behaviour</code></li>
+        <li><code>lack_of_progress_during_placements</code></li>
+        <li><code>did_not_make_progress</code></li>
+        <li><code>could_not_give_enough_time</code></li>
+        <li><code>did_not_meet_entry_requirements</code></li>
+        <li><code>teaching_placement_problems</code></li>
+        <li><code>does_not_want_to_become_a_teacher</code></li>
+        <li><code>stopped_responding_to_messages</code></li>
+        <li><code>record_added_in_error</code></li>
+        <li><code>mandatory_reasons</code></li>
+        <li><code>not_meeting_qts_standards</code></li>
+        <li><code>change_in_personal_or_health_circumstances</code></li>
+        <li><code>never_intended_to_obtain_qts</code></li>
+        <li><code>moved_to_different_itt_course</code></li>
+        <li><code>had_to_withdraw_trainee_another_reason</code></li>
+        <li><code>trainee_chose_to_withdraw_another_reason</code></li>
+        <li><code>trainee_workload_issues</code></li>
+        <li><code>another_reason</code></li>
+        <li><code>unknown</code></li>
+        <li><code>safeguarding_concern</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdrawal_future_interest</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        Whether the trainee has expressed future interest in teacher training. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>yes</code></li>
+        <li><code>no</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdrawal_future_interest</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        Whether the trainee has expressed future interest in teacher training. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>yes</code></li>
+        <li><code>no</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdrawal_trigger</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        Whether the trainee’s withdrawal was triggered by the provider or the trainee. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>provider</code></li>
+        <li><code>trainee</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdrawal_another_reason</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        When the reason for withdrawal is 'another_reason', this field provides additional context. (read-only)
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdrawal_safeguarding_concern_reasons</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        When the reason for withdrawal is 'safeguarding_concern', this field provides additional context. (read-only)
+      </p>
+    </dd>
+  </div>
 </dl>
