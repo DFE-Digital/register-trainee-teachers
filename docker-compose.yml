@@ -3,6 +3,7 @@ volumes:
   redis-data:
 services:
   db:
+    user: root
     image: postgres:13-alpine
     # To preserve data between runs of docker compose, we mount a folder from the host machine.
     volumes:
@@ -10,11 +11,13 @@ services:
     environment:
       - POSTGRES_PASSWORD=developmentpassword
   redis:
+    user: root
     image: redis:alpine
     restart: unless-stopped
     volumes:
       - redis-data:/data
   web:
+    user: root
     build:
       context: .
       cache_from:
@@ -34,6 +37,7 @@ services:
       - REDIS_CACHE_URL=redis://redis:6379
       - SENTRY_DSN=${SENTRY_DSN}
   docs:
+    user: root
     build:
       context: .
       target: middleman-build
