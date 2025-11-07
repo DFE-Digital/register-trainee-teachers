@@ -58,7 +58,7 @@ module Funding
     def predicted?(month_index)
       return false if first_predicted_month_index.nil?
 
-      MONTH_ORDER.index(month_index) >= MONTH_ORDER.index(first_predicted_month_index.to_i)
+      MONTH_ORDER.index(month_index) > MONTH_ORDER.index(first_predicted_month_index.to_i)
     end
   end
 end

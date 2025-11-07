@@ -19,8 +19,8 @@
         <li>
           <%= f.govuk_select :month,
               funding_upload_month_options(f.object.month),
-              label: { text: "Select applicable month" },
-              hint: { text: "Please select the month you are uploading funding information for." } %>
+              label: { text: "Select last paid month" },
+              hint: { text: "Choose the most recent month with confirmed payments. Later months will be treated as predicted." } %>
         </li>
         <li>
           <%= f.govuk_file_field(:file, label: { text: "Upload the CSV file" }, accept: ".csv") %>
