@@ -3,11 +3,6 @@
 require "rails_helper"
 
 feature "create a new authentication token" do
-  background do
-    given_i_am_authenticated_as_an_hei_provider_user
-    and_i_can_generate_an_authentication_token
-  end
-
   let(:invalid_past_expires_at) { 1.year.ago.to_date }
   let(:invalid_future_expires_at) { (6.months + 1.day).from_now.to_date }
   let(:expires_at) { 6.months.from_now.to_date }
@@ -65,6 +60,24 @@ feature "create a new authentication token" do
     then_i_should_see_the_new_token_in_the_list
   end
 
+  scenario "when the feature flag is on and I already have two tokens I CANNOT create a token", feature_token_management: true do
+    given_i_am_authenticated_as_an_hei_provider_user
+    and_i_already_have_two_authentication_tokens
+
+    given_i_navigate_to_the_authentication_token_index_page
+    then_i_should_see_the_existing_tokens_in_the_list
+    and_i_cannot_see_the_generate_new_token_button
+
+    when_i_navigate_to_the_create_authentication_token_page
+    then_i_see_an_unauthorised_message
+
+    given_i_navigate_to_the_authentication_token_index_page
+    when_i_revoke_one_token
+    then_i_should_see_the_revoke_token_page
+    and_i_click_the_revoke_token_confirmation_button
+    then_i_can_see_the_generate_new_token_button
+  end
+
 private
 
   def when_i_navigate_to_the_create_authentication_token_page
@@ -78,6 +91,17 @@ private
   def and_i_can_generate_an_authentication_token
     @token_string = SecureRandom.hex(32)
     allow(SecureRandom).to receive(:hex).with(32).and_return(@token_string)
+  end
+
+  def and_i_already_have_two_authentication_tokens
+    (1..2).each do |token_number|
+      create(
+        :authentication_token,
+        provider: @current_user.organisation,
+        created_by: @current_user.user,
+        name: "Old token #{token_number}",
+      )
+    end
   end
 
   def given_i_navigate_to_the_authentication_token_index_page
@@ -143,6 +167,11 @@ private
     click_on "Continue to manage tokens"
   end
 
+  def then_i_should_see_the_existing_tokens_in_the_list
+    expect(page).to have_content("Old token 1")
+    expect(page).to have_content("Old token 2")
+  end
+
   def then_i_should_see_the_new_token_in_the_list
     expect(page).to have_content("My new token")
     expect(page).to have_content(expires_at.to_fs(:govuk))
@@ -154,5 +183,23 @@ private
 
   def and_i_cannot_see_the_generate_new_token_button
     expect(page).not_to have_button("Generate a new token")
+  end
+
+  def then_i_can_see_the_generate_new_token_button
+    expect(page).to have_link("Generate a new token")
+  end
+
+  def when_i_revoke_one_token
+    within(".govuk-summary-card", text: "Old token 1") do
+      click_on "Revoke"
+    end
+  end
+
+  def then_i_should_see_the_revoke_token_page
+    expect(page).to have_content("Are you sure you want to revoke this token?")
+  end
+
+  def and_i_click_the_revoke_token_confirmation_button
+    click_on "Yes I’m sure — revoke this token"
   end
 end
