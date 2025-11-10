@@ -1809,7 +1809,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body[:errors]).to contain_exactly(
-        "degrees_attributes contain duplicate degrees",
+        "degrees_attributes contains duplicate degrees",
       )
     end
   end
