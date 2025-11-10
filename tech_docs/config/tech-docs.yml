@@ -14,6 +14,9 @@ header_links:
   Reference data: /reference-data/
   Help: /help.html
 
+footer_links:
+  Give feedback to help us improve Register trainee teachers: https://forms.office.com/e/Q6LVwtEKje
+
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id:
 
@@ -35,7 +38,7 @@ google_site_verification:
 
 enable_search: true
 
-show_contribution_banner: true
+show_contribution_banner: false
 
 github_repo: DFE-Digital/register-trainee-teachers
 github_branch: main/tech_docs
