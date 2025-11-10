@@ -1,4 +1,4 @@
-variable "postgres_version" { default = 13 }
+variable "postgres_version" { default = 16 }
 
 variable "app_name" { default = null }
 
