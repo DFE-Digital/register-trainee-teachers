@@ -30,10 +30,20 @@ module Trainees
       end
 
       context "when TRS integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
-        it "queues an update to TRS" do
-          expect(Trs::UpdateProfessionalStatusJob).to receive(:perform_later).with(trainee)
-          expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later)
-          described_class.call(trainee:)
+        context "when the trainee does NOT have a TRN" do
+          it "queues an update to TRS" do
+            expect(Trs::UpdateProfessionalStatusJob).not_to receive(:perform_later).with(trainee)
+            described_class.call(trainee:)
+          end
+        end
+
+        context "when the trainee has a TRN" do
+          let(:trainee) { create(:trainee, :trn_received) }
+
+          it "queues an update to TRS" do
+            expect(Trs::UpdateProfessionalStatusJob).to receive(:perform_later).with(trainee)
+            described_class.call(trainee:)
+          end
         end
       end
 
