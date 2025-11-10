@@ -26,7 +26,6 @@ module Submissions
         :contact_details, :diversity,
         *(:degrees if trainee.requires_degree?),
         :course_details, # `:training_details` seems unnecessary as it only details trainee_id which according to DD is not needed
-        *(:schools if trainee.requires_lead_partner?),
         *(:placements if trainee.requires_placements?),
         *(:funding if trainee.requires_funding?),
         *(:iqts_country if trainee.requires_iqts_country?)
