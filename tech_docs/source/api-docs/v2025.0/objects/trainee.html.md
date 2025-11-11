@@ -671,6 +671,19 @@ weight: 1
         Possible values:
       </p>
       <ul>
+        <li><code>death</code></li>
+        <li><code>did_not_pass_assessment</code></li>
+        <li><code>did_not_pass_exams</code></li>
+        <li><code>exclusion</code></li>
+        <li><code>personal_reasons</code></li>
+        <li><code>transferred_to_another_provider</code></li>
+        <li><code>written_off_after_lapse_of_time</code></li>
+        <li><code>course_was_not_suitable</code></li>
+        <li><code>family_problems</code></li>
+        <li><code>financial_problems</code></li>
+        <li><code>got_a_job</code></li>
+        <li><code>problems_with_their_health</code></li>
+        <li><code>unhappy_with_course_provider_or_employing_school</code></li>
         <li><code>unacceptable_behaviour</code></li>
         <li><code>lack_of_progress_during_placements</code></li>
         <li><code>did_not_make_progress</code></li>
