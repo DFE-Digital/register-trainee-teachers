@@ -91,7 +91,7 @@ Trainee start date
 
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
-## Lead partners and employing schools
+## Training partners and employing schools
 
 These are only required for School direct and Teaching apprenticeship routes.
 

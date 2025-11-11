@@ -5,7 +5,7 @@ title: Signing off your list of trainees for the initial teacher training census
 
 Each year, as an accredited provider, you need to sign off your teacher trainee data in Register.
 
-If you’re in a partnership, you’re responsible for ensuring your lead partners’ trainee data is accurate and signed off by the deadline.
+If you’re in a partnership, you’re responsible for ensuring your training partners’ trainee data is accurate and signed off by the deadline.
 
 ## Why the census sign-off is important
 
