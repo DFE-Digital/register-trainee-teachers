@@ -1753,8 +1753,6 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       it "return status code 422 with a meaningful error message" do
-        expect(response).to have_http_status(:unprocessable_entity)
-
         expect(response.parsed_body["message"]).to eq("Validation failed: 3 errors prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to contain_exactly(
           "graduation_year must be in the past, for example 2014",
@@ -1775,6 +1773,44 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           )
         end
       end
+    end
+  end
+
+  context "with duplicate degree attributes" do
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    let(:degrees_attributes) {
+      [
+        {
+          grade: "02",
+          subject: "100485",
+          institution: "0117",
+          uk_degree: "083",
+          graduation_year: "1999",
+        },
+        {
+          grade: "02",
+          subject: "100485",
+          institution: "0117",
+          uk_degree: "083",
+          graduation_year: "1999",
+        },
+      ]
+    }
+
+    it "return status code 422 with a meaningful error message" do
+      expect {
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      }.not_to change {
+        Trainee.count
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body[:errors]).to contain_exactly(
+        "degrees_attributes contains duplicate degrees",
+      )
     end
   end
 

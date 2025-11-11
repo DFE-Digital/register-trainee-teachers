@@ -102,6 +102,7 @@ module Api
       validate :validate_trainee_start_date
       validate :validate_date_of_birth, if: -> { date_of_birth.present? }
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
+      validate :validate_degrees_duplicates, if: :duplicate_degrees?
       validate :validate_hesa_id_length, if: -> { hesa_id.present? }
 
       validates :ethnicity, api_inclusion: {
@@ -366,6 +367,16 @@ module Api
 
       def validate_degrees_presence
         errors.add(:degrees_attributes, :blank) if degrees_attributes.empty?
+      end
+
+      def validate_degrees_duplicates
+        errors.add(:degrees_attributes, :duplicate)
+      end
+
+      def duplicate_degrees?
+        degrees_attributes.group_by(&:attributes_for_duplicates).any? do |key, group|
+          key.present? && group.size > 1
+        end
       end
 
       def set_course_allocation_subject_id

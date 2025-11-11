@@ -579,6 +579,64 @@ RSpec.describe Api::V20250::TraineeAttributes do
     end
 
     describe "degrees_attributes" do
+      context "with duplicate attributes" do
+        before do
+          subject.degrees_attributes = [
+            Api::V20250::DegreeAttributes.new(
+              {
+                grade: "02",
+                subject: "100485",
+                institution: "0117",
+                uk_degree: "083",
+                graduation_year: "2024",
+              },
+            ),
+            Api::V20250::DegreeAttributes.new(
+              {
+                grade: "02",
+                subject: "100485",
+                institution: "0117",
+                uk_degree: "083",
+                graduation_year: "2024",
+              },
+            ),
+          ]
+        end
+
+        it "returns errors" do
+          subject.validate
+
+          expect(subject.errors[:degrees_attributes]).to include(
+            "degrees_attributes contains duplicate degrees",
+          )
+        end
+      end
+
+      context "without duplicate attributes" do
+        before do
+          subject.degrees_attributes =
+            [
+              Api::V20250::DegreeAttributes.new(
+                {
+                  grade: "02",
+                  subject: "100485",
+                  institution: "0117",
+                  uk_degree: "083",
+                  graduation_year: "2024",
+                },
+              ),
+            ]
+        end
+
+        it "does not return errors" do
+          subject.validate
+
+          expect(subject.errors[:degrees_attributes]).not_to include(
+            "degrees_attributes contains duplicate degrees",
+          )
+        end
+      end
+
       context "when training_route is present" do
         context "when requires_degree? is true" do
           before do

@@ -2108,6 +2108,7 @@ en:
                 duplicate: *csv_duplicate_course_subjects
             degrees_attributes:
               blank: degrees_attributes must be entered if specifying a postgraduate training_route
+              duplicate: degrees_attributes contains duplicate degrees
               csv:
                 blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
             training_initiative:

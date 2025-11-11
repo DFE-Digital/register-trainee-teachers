@@ -87,15 +87,19 @@ module Api
 
       def duplicates
         existing_degrees&.where(
-          attributes.with_indifferent_access.slice(
-            :subject,
-            :graduation_year,
-            :country,
-            :uk_degree,
-            :non_uk_degree,
-            :grade,
-          ).reject { |_, value| value.blank? || value.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue) },
+          attributes_for_duplicates,
         )
+      end
+
+      def attributes_for_duplicates
+        slice(
+          :subject,
+          :graduation_year,
+          :country,
+          :uk_degree,
+          :non_uk_degree,
+          :grade,
+        ).reject { |_, value| value.blank? || value.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue) }
       end
 
     private
