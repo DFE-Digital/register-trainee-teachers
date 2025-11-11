@@ -305,7 +305,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 4.0, < 4.2)
-    govuk_design_system_formbuilder (5.10.1)
+    govuk_design_system_formbuilder (5.13.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -1012,7 +1012,7 @@ CHECKSUMS
   google-logging-utils (0.2.0) sha256=675462b4ea5affa825a3442694ca2d75d0069455a1d0956127207498fca3df7b
   googleauth (1.15.1) sha256=d61960893d0d573601d94a38889613b991f40a59ab755b5beed87bf2c3d3cb24
   govuk-components (5.13.0) sha256=d36569e1ee9a082a6fd9293f3e8a0c5919daec657a84ab4bfa4e595faabfd423
-  govuk_design_system_formbuilder (5.10.1) sha256=36aeaff5d0bd2a31767bfc6b9ba20bb4a86829ba79812f21db9c76b4f792338b
+  govuk_design_system_formbuilder (5.13.0) sha256=126ff4af70b36f06395e8f4f09d399944bcc10e9a41c2ff7d7773e81e92ca885
   govuk_markdown (2.0.3) sha256=30fc99b502d96cf81751cbfc115e3717f8252940735dc40ee6dc83b454b1b35e
   govuk_notify_rails (3.0.0) sha256=e0e1b8b0a7c47f90963034f290fb2982652aa8051a733c25c178680d44f2d7aa
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
