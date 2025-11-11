@@ -659,7 +659,7 @@ weight: 1
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>withdrawal_reasons</code></dt>
+    <dt class="govuk-summary-list__key"><code>withdraw_reasons</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         array of strings
