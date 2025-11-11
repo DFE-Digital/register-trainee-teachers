@@ -22,7 +22,7 @@ module SystemAdmin
       end
 
       if @lead_partner_form.save
-        redirect_to(user_path(@user), flash: { success: "Lead partner added" })
+        redirect_to(user_path(@user), flash: { success: "Training partner added" })
       else
         @lead_partner_search = LeadPartnerSearch.call(query: params[:query])
         render(index_or_new_page)
