@@ -56,7 +56,6 @@ module Api
             course_attributes,
             lead_partner_and_employing_school_attributes,
             hesa_trainee_attributes,
-            fund_code: fund_code,
             sex: sex,
             study_mode: course_study_mode,
             course_subject_one: course_subject_one,
@@ -190,10 +189,6 @@ module Api
 
       def lead_partner_urn
         @trainee.lead_partner&.urn
-      end
-
-      def fund_code
-        @trainee&.hesa_trainee_detail&.fund_code
       end
 
       def hesa_trainee_attributes
