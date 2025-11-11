@@ -26,7 +26,7 @@
                            html: { data: { module: "app-users-autocomplete" } } do |f| %>
       <%= f.govuk_text_field :search,
                              label: { text: "Search for a user", size: "s" },
-                             hint: { text: "Search using the person’s name, email, accredited provider or lead partner", size: "s" },
+                             hint: { text: "Search using the person’s name, email, accredited provider or training partner", size: "s" },
                              width: "one-half",
                              "data-field" => "users-autocomplete" %>
       <div id="users-autocomplete-element" class="govuk-!-width-one-half" data-field-name="search"></div>
@@ -38,7 +38,7 @@
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Name</th>
         <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Email</th>
-        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Lead Partners</th>
+        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Training Partners</th>
         <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Providers</th>
       </tr>
     </thead>

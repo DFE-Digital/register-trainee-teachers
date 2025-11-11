@@ -11,7 +11,7 @@
 
 <%= register_form_with(model: @school_form, url: school_path(@school_form), method: :put, local: true) do |f| %>
   <%= f.govuk_collection_radio_buttons :lead_partner,
-    @school_form.lead_partner_options, :id, :name, legend: { text: "Is a lead partner?" } %>
+    @school_form.lead_partner_options, :id, :name, legend: { text: "Is a training partner?" } %>
 
   <%= f.govuk_error_summary %>
   <%= f.govuk_submit t("continue") %>
