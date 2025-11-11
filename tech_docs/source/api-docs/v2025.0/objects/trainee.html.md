@@ -659,6 +659,20 @@ weight: 1
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdraw_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        This field records the date on with the trainee withdrew.
+      </p>
+      <p class="govuk-body">
+        Example: <code>2025-01-01</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>withdraw_reasons</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
