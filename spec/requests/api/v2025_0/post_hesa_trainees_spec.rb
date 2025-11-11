@@ -486,7 +486,9 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
 
           response.parsed_body[:data]
-          expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
+          expect(response.parsed_body.dig("errors")).to include(
+            "lead_partner_id is invalid. The URN '99999999' does not match any known lead partners",
+          )
         end
       end
 
@@ -527,7 +529,9 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             response.parsed_body[:data]
-            expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
+            expect(response.parsed_body.dig("errors")).to include(
+              "lead_partner_id is invalid. The URN '123456' does not match any known lead partners",
+            )
           end
         end
 
@@ -561,7 +565,9 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
             it "returns unprocessible entity HTTP code and a validation error message" do
               expect(response).to have_http_status(:unprocessable_entity)
-              expect(response.parsed_body.dig("errors", "schools", "lead_partner_id")).to include("The lead partner section is not valid for this trainee")
+              expect(response.parsed_body.dig("errors")).to include(
+                "lead_partner_id is invalid. The URN '#{lead_partner.urn}' does not match any known lead partners",
+              )
             end
           end
         end
@@ -626,7 +632,9 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
             it "returns unprocessible entity HTTP code and a validation error message" do
               expect(response).to have_http_status(:unprocessable_entity)
-              expect(response.parsed_body.dig("errors", "schools", "employing_school_id")).to include("The employing school is not valid for this trainee")
+              expect(response.parsed_body.dig("errors")).to include(
+                "employing_school_id is invalid. The URN '123456' does not match any known schools",
+              )
             end
           end
 
