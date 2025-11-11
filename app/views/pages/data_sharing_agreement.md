@@ -123,7 +123,7 @@ title: Register trainee teachers data sharing agreement
   collected about a provider (depending on route), these extend to:
 </p>
 <ul class='govuk-list govuk-list--bullet'>
-  <li>lead partner ID</li>
+  <li>training partner ID</li>
   <li>employing school ID</li>
   <li>unique reference number (URN)</li>
   <li>organisation name</li>
@@ -169,7 +169,7 @@ title: Register trainee teachers data sharing agreement
   records.
 </p>
 <p class='govuk-body'>
-  When lead partners import Register’s data they have an obligation to
+  When training partners import Register’s data they have an obligation to
   ensure the data is used in accordance with the rules stated in the
   Third party section of this document.
 </p>
@@ -307,7 +307,7 @@ title: Register trainee teachers data sharing agreement
       trainees and for registering their QTS or EYTS.
     </li>
     <li>
-      lead partners connect to Register to view their funding
+      training partners connect to Register to view their funding
       information and trainees’ information
     </li>
     <li>
@@ -596,7 +596,7 @@ title: Register trainee teachers data sharing agreement
   confirmation.
 </p>
 <h3 class='govuk-heading-s'>
-  If you’re a lead partner
+  If you’re a training partner
 </h3>
 <p class='govuk-body'>
   You will have received an email from us asking you to fill out a form where a relevant person from your organisation needs to consent to this data sharing agreement.
