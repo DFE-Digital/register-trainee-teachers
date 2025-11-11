@@ -690,7 +690,7 @@ weight: 1
         <li><code>trainee_workload_issues</code></li>
         <li><code>another_reason</code></li>
         <li><code>unknown</code></li>
-        <li><code>safeguarding_concern</code></li>
+        <li><code>safeguarding_concerns</code></li>
       </ul>
     </dd>
   </div>
@@ -766,7 +766,7 @@ weight: 1
         string
       </p>
       <p class="govuk-body">
-        When the reason for withdrawal is 'safeguarding_concern', this field provides additional context. (read-only)
+        When the reason for withdrawal is 'safeguarding_concerns', this field provides additional context. (read-only)
       </p>
     </dd>
   </div>
