@@ -675,8 +675,8 @@ GEM
     sentry-sidekiq (6.1.0)
       sentry-ruby (~> 6.1.0)
       sidekiq (>= 5.0)
-    shoulda-matchers (6.5.0)
-      activesupport (>= 5.2.0)
+    shoulda-matchers (7.0.1)
+      activesupport (>= 7.1)
     sidekiq (6.5.12)
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
@@ -881,7 +881,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   sentry-sidekiq
-  shoulda-matchers (~> 6.5)
+  shoulda-matchers (~> 7.0)
   sidekiq (~> 6.5)
   sidekiq-cron (~> 2.3)
   simplecov (~> 0.22.0)
@@ -1151,7 +1151,7 @@ CHECKSUMS
   sentry-rails (6.1.0) sha256=55422991fef630ff5b4bee035f7b0fea6b67d8df0178da668f97ed28e6c8f8f2
   sentry-ruby (6.1.0) sha256=ac00b41cd1ac95d17108727292bec7a6d71434b9b3974398899c0e8c01414df9
   sentry-sidekiq (6.1.0) sha256=49c7621dccbe305049631354b31827ef57bbef8b12da1e27353861448602dfd1
-  shoulda-matchers (6.5.0) sha256=ef6b572b2bed1ac4aba6ab2c5ff345a24b6d055a93a3d1c3bfc86d9d499e3f44
+  shoulda-matchers (7.0.1) sha256=b4bfd8744c10e0a36c8ac1a687f921ee7e25ed529e50488d61b79a8688749c77
   sidekiq (6.5.12) sha256=b4f93b2204c42220d0b526a7b8e0c49b5f9da82c1ce1a05d2baf1e8f744c197f
   sidekiq-cron (2.3.1) sha256=96ab3da372289a30dc744c1daa2ae2e85960b2444a6f6ed68df1ff7882c44aac
   signet (0.21.0) sha256=d617e9fbf24928280d39dcfefba9a0372d1c38187ffffd0a9283957a10a8cd5b
