@@ -95,6 +95,18 @@ module RecordDetails
       end
     end
 
+    context "when no timeline events exist" do
+      let(:timeline_event) { nil }
+
+      before do
+        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event))
+      end
+
+      it "renders the updated_at date in the Last updated row" do
+        expect(rendered_content).to have_text("Last updated#{date_for_summary_view(trainee.updated_at)}")
+      end
+    end
+
     context "when any data has not been provided" do
       before do
         trainee.provider_trainee_id = nil
