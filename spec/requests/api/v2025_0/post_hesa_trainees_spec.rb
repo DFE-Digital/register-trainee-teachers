@@ -199,7 +199,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       expect(Trainee.last.applying_for_bursary).to be(false)
       expect(Trainee.last.applying_for_grant).to be(false)
       expect(parsed_body[:fund_code]).to eq(Hesa::CodeSets::FundCodes::NOT_ELIGIBLE)
-      expect(parsed_body[:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::NONE)
+      expect(parsed_body[:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::NONE)
       expect(parsed_body[:applying_for_scholarship]).to be_nil
       expect(parsed_body[:applying_for_bursary]).to be_nil
       expect(parsed_body[:applying_for_grant]).to be_nil

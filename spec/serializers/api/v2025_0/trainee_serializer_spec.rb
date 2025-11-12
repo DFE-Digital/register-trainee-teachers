@@ -55,7 +55,6 @@ RSpec.describe Api::V20250::TraineeSerializer do
         course_qualification
         course_title
         course_level
-        course_study_mode
         course_itt_start_date
         course_age_range
         employing_school_urn
@@ -67,7 +66,6 @@ RSpec.describe Api::V20250::TraineeSerializer do
         ni_number
         pg_apprenticeship_start_date
         previous_last_name
-        hesa_disabilities
         additional_training_initiative
         nationality
         placements
@@ -76,7 +74,6 @@ RSpec.describe Api::V20250::TraineeSerializer do
         application_id
         ethnic_background
         additional_ethnic_background
-        bursary_level
         funding_method
         itt_qualification_aim
         state
