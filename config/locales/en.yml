@@ -1704,7 +1704,7 @@ en:
               provider_trainee_id: Provider trainee ID must match trainee record
               first_names: First name must match trainee record
               last_names: Last name must match trainee record
-              lead_partner: Training partner must match trainee record
+              lead_partner: Lead partner must match trainee record
               qts_or_eyts: QTS or EYTS must match trainee record
               route: Route must match trainee record
               phase: Phase must match trainee record
