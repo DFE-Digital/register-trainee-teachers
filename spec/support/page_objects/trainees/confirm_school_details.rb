@@ -7,7 +7,7 @@ module PageObjects
 
       element :continue, "button[type='submit']"
       element :employing_school_row, ".employing-school"
-      element :lead_partner_row, ".lead-partner"
+      element :lead_partner_row, ".training-partner"
     end
   end
 end

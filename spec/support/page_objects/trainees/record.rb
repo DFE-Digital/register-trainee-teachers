@@ -29,7 +29,7 @@ module PageObjects
       section :diversity_detail, PageObjects::Sections::Summaries::DiversityDetail, ".diversity-details"
       section :degree_detail, PageObjects::Sections::Summaries::DegreeDetail, ".degree-details"
 
-      element :change_lead_partner, "a", text: "Change lead partner", visible: false
+      element :change_lead_partner, "a", text: "Change training partner", visible: false
       element :change_employing_school, "a", text: "Change employing school", visible: false
       element :change_course_details, "a", text: "Change course", visible: false
       element :change_trainee_status, "a", text: "Change status", visible: false
