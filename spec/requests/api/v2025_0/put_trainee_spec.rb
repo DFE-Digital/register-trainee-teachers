@@ -962,7 +962,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
               it "returns an error" do
                 expect(response).to have_http_status(:unprocessable_entity)
-                expect(response.parsed_body.dig("errors")).to include(
+                expect(response.parsed_body["errors"]).to include(
                   "lead_partner_id is invalid. The URN '#{new_lead_partner.urn}' does not match any known lead partners",
                 )
               end
@@ -1023,7 +1023,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
               it "returns an error" do
                 expect(response).to have_http_status(:unprocessable_entity)
-                expect(response.parsed_body.dig("errors")).to include(
+                expect(response.parsed_body["errors"]).to include(
                   "employing_school_id is invalid. The URN '#{new_employing_school.urn}' does not match any known schools",
                 )
               end
