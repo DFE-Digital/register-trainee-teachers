@@ -174,7 +174,7 @@ module RecordDetails
       return render_text_with_hint(last_updated_event.date) if last_updated_event.present?
 
       # Fall back to trainee updated_at if no timeline event exists. This will be the case for sanitised databases.
-      trainee.updated_at.to_date.to_fs(:govuk)
+      trainee.updated_at.to_fs(:govuk)
     end
 
     def progress_date

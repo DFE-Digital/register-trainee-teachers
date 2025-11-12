@@ -69,7 +69,7 @@ feature "Viewing duplicate Apply applications" do
     candidate_attributes = @duplicate_apply_application.application.dig("attributes", "candidate")
     expect(page).to have_content(candidate_attributes["first_name"])
     expect(page).to have_content(candidate_attributes["last_name"])
-    expect(page).to have_content(@duplicate_apply_application.created_at.to_date.to_fs(:govuk_short))
+    expect(page).to have_content(@duplicate_apply_application.created_at.to_fs(:govuk_short))
   end
 
   def when_i_click_on_a_duplicate_apply_application

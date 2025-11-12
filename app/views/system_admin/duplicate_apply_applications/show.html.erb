@@ -11,7 +11,7 @@
 
   summary_list.with_row do |row|
     row.with_key { "Created on" }
-    row.with_value { @apply_application.created_at.to_date.to_fs(:govuk_short) }
+    row.with_value { @apply_application.created_at.to_fs(:govuk_short) }
   end
 
   if @duplicate_trainees.present?

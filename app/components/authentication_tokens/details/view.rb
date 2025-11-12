@@ -31,7 +31,7 @@ module AuthenticationTokens
             key: { text: "Status" }, value: { text: status.capitalize }
           },
           {
-            key: { text: "Created by" }, value: { text: ("#{created_by.name} on #{created_at.to_date.to_fs(:govuk)}" if created_by.present?) }
+            key: { text: "Created by" }, value: { text: ("#{created_by.name} on #{created_at.to_fs(:govuk)}" if created_by.present?) }
           },
           {
             key: { text: "Last used" }, value: { text: last_used_at&.to_date&.to_fs(:govuk) }
@@ -41,7 +41,7 @@ module AuthenticationTokens
         if revoked?
           row += [
             {
-              key: { text: "Revoked by" }, value: { text: "#{revoked_by.name} on #{revoked_at.to_date.to_fs(:govuk)}" }
+              key: { text: "Revoked by" }, value: { text: "#{revoked_by.name} on #{revoked_at.to_fs(:govuk)}" }
             },
           ]
         end
