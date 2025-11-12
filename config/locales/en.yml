@@ -1374,6 +1374,7 @@ en:
   activerecord:
     models:
       provider: Accredited provider
+      lead_partner: Training partner
     attributes:
       trainee:
         record_sources:

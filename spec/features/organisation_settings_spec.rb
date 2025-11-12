@@ -293,7 +293,7 @@ private
     expect(organisation_settings_page).to have_content(organisation.name)
     expect(organisation_settings_page).to have_content("About your organisation")
     expect(organisation_settings_page).to have_content(
-      "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Lead partner'}",
+      "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Training partner'}",
     )
     expect(organisation_settings_page).to have_content("Accreditation ID#{accreditation_id}")
   end
