@@ -3,7 +3,7 @@
 module PageObjects
   module LeadPartners
     class Index < PageObjects::Base
-      set_url "/system-admin/lead-partners"
+      set_url "/system-admin/training-partners"
     end
   end
 end

@@ -5,7 +5,7 @@ module PageObjects
     module LeadPartners
       module Details
         class Edit < PageObjects::Base
-          set_url "/trainees/{trainee_id}/lead-partners/details/edit"
+          set_url "/trainees/{trainee_id}/training-partners/details/edit"
 
           elements :lead_partner_radio_buttons, 'input[type="radio"][name="partners_lead_partner_form[lead_partner_not_applicable]"]'
           element :continue_button, 'button.govuk-button[type="submit"]'

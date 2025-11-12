@@ -3,7 +3,7 @@
 module PageObjects
   module Trainees
     class EditLeadPartner < PageObjects::Base
-      set_url "/trainees/{trainee_id}/lead-partners/edit"
+      set_url "/trainees/{trainee_id}/training-partners/edit"
 
       element :lead_partner, "#partners-lead-partner-form-query-field"
       element :lead_partner_no_js, "#partners-lead-partner-form-query-field"

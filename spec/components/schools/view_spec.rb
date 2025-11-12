@@ -25,7 +25,7 @@ module Schools
         end
 
         it "has correct change links" do
-          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/lead-partners/details/edit")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/training-partners/details/edit")
         end
       end
 
@@ -55,7 +55,7 @@ module Schools
         end
 
         it "has correct change links" do
-          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/lead-partners/details/edit")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/training-partners/details/edit")
         end
       end
 
