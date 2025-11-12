@@ -301,8 +301,10 @@ module Funding
         end
       end
 
-      describe "fund code row" do
-        context "when trainee has fund code" do
+     describe "fund code row" do
+        let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
+
+        context "when trainee has eligible fund code" do
           let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
           let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
 
@@ -312,34 +314,35 @@ module Funding
           end
 
           it "renders the fund code with description" do
-            expected_text = "#{fund_code} - #{Hesa::CodeSets::FundCodes::MAPPING[fund_code]}"
-            expect(rendered_content).to have_text(expected_text)
             expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("Eligible for funding from the DfE")
+          end
+        end
+
+        context "when trainee has not eliglble fund code" do
+          let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+          let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
+
+          before do
+            trainee.hesa_trainee_detail.update!(fund_code:)
+            render_inline(View.new(data_model: trainee))
+          end
+
+          it "renders the fund code with description" do
+            expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("Not fundable by funding council/body")
           end
         end
 
         context "when trainee has no fund code" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
-
           before do
             trainee.hesa_trainee_detail.update!(fund_code: nil)
             render_inline(View.new(data_model: trainee))
           end
 
-          it "does not render fund code row" do
-            expect(rendered_content).not_to have_text("Fund code")
-          end
-        end
-
-        context "when trainee is not from HESA" do
-          let(:trainee) { create(:trainee) }
-
-          before do
-            render_inline(View.new(data_model: trainee))
-          end
-
-          it "does not render fund code row" do
-            expect(rendered_content).not_to have_text("Fund code")
+          it "renders fund code row with empty value" do
+            expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("Not provided")
           end
         end
       end

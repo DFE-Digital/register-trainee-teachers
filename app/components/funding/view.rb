@@ -122,11 +122,7 @@ module Funding
     end
 
     def fund_code_row
-      return unless trainee.hesa_record? && trainee.hesa_trainee_detail&.fund_code.present?
-
-      fund_code_value = trainee.hesa_trainee_detail.fund_code
-      fund_code_description = Hesa::CodeSets::FundCodes::MAPPING[fund_code_value]
-      fund_code_text = "#{fund_code_value} - #{fund_code_description}"
+      fund_code_text = Hesa::CodeSets::FundCodes::MAPPING[trainee.hesa_trainee_detail&.fund_code]
 
       mappable_field(fund_code_text, t(".fund_code"), nil)
     end
