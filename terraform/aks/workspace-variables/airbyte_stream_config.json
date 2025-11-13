@@ -732,70 +732,6 @@
         ]
       },
       {
-        "name": "dqt_trn_requests",
-        "syncMode": "incremental_append",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "trainee_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "request_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "response"
-            ]
-          },
-          {
-            "fieldPath": [
-              "state"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
-            ]
-          }
-        ]
-      },
-      {
         "name": "dttp_providers",
         "syncMode": "incremental_append",
         "cursorField": [
@@ -2440,6 +2376,70 @@
           {
             "fieldPath": [
               "application_choice_id"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "trs_trn_requests",
+        "syncMode": "incremental_append",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "request_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "response"
+            ]
+          },
+          {
+            "fieldPath": [
+              "state"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
             ]
           }
         ]
