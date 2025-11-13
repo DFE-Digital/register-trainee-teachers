@@ -12,6 +12,8 @@ module Hesa
         NOT_ELIGIBLE => "Not fundable by funding council/body",
         ELIGIBLE => "Eligible for funding from the DfE",
       }.freeze
+
+      NO_FUND_CODE_PROVIDED = "No fund code provided"
     end
   end
 end

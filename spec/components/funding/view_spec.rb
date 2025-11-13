@@ -342,7 +342,7 @@ module Funding
 
           it "renders fund code row with empty value" do
             expect(rendered_content).to have_text("Fund code")
-            expect(rendered_content).to have_text("Not provided")
+            expect(rendered_content).to have_text("No fund code provided")
           end
         end
       end

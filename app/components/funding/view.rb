@@ -122,7 +122,8 @@ module Funding
     end
 
     def fund_code_row
-      fund_code_text = Hesa::CodeSets::FundCodes::MAPPING[trainee.hesa_trainee_detail&.fund_code]
+      fund_code_text = Hesa::CodeSets::FundCodes::MAPPING[trainee.hesa_trainee_detail&.fund_code] ||
+        Hesa::CodeSets::FundCodes::NO_FUND_CODE_PROVIDED
 
       mappable_field(fund_code_text, t(".fund_code"), nil)
     end

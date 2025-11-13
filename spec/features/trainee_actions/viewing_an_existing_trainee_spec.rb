@@ -98,9 +98,11 @@ feature "View trainees" do
     end
 
     scenario "viewing fund code for HESA trainee" do
-      trainee_with_fund_code = create(:trainee, :completed, :trn_received, :with_hesa_trainee_detail,
-                                      hesa_id: "5678", lead_partner: @current_user.lead_partners.first,
-                                      record_source: :hesa_collection)
+      trainee_with_fund_code = create(
+        :trainee, :completed, :trn_received, :with_hesa_trainee_detail,
+        hesa_id: "5678",
+        record_source: :hesa_collection,
+      )
       trainee_with_fund_code.hesa_trainee_detail.update!(fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE)
 
       visit trainee_path(trainee_with_fund_code)
@@ -200,8 +202,7 @@ private
   end
 
   def then_i_should_see_the_fund_code_displayed
-    fund_code = Hesa::CodeSets::FundCodes::ELIGIBLE
-    expected_text = "#{fund_code} - #{Hesa::CodeSets::FundCodes::MAPPING[fund_code]}"
+    expected_text = Hesa::CodeSets::FundCodes::MAPPING[Hesa::CodeSets::FundCodes::ELIGIBLE]
     expect(page).to have_text("Fund code")
     expect(page).to have_text(expected_text)
   end
