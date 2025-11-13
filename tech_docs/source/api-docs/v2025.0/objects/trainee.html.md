@@ -740,24 +740,6 @@ weight: 1
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>withdrawal_future_interest</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string
-      </p>
-      <p class="govuk-body">
-        Whether the trainee has expressed future interest in teacher training. (read-only)
-      </p>
-      <p class="govuk-body">
-        Possible values:
-      </p>
-      <ul>
-        <li><code>yes</code></li>
-        <li><code>no</code></li>
-      </ul>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>withdrawal_trigger</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
