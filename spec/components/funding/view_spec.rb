@@ -301,7 +301,7 @@ module Funding
         end
       end
 
-     describe "fund code row" do
+      describe "fund code row" do
         let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
 
         context "when trainee has eligible fund code" do

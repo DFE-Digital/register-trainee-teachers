@@ -99,9 +99,13 @@ feature "View trainees" do
 
     scenario "viewing fund code for HESA trainee" do
       trainee_with_fund_code = create(
-        :trainee, :completed, :trn_received, :with_hesa_trainee_detail,
+        :trainee,
+        :completed,
+        :trn_received,
+        :with_hesa_trainee_detail,
         hesa_id: "5678",
         record_source: :hesa_collection,
+        lead_partner: @current_user.lead_partners.first,
       )
       trainee_with_fund_code.hesa_trainee_detail.update!(fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE)
 
