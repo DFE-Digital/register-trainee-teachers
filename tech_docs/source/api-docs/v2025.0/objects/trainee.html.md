@@ -665,7 +665,7 @@ weight: 1
         string
       </p>
       <p class="govuk-body">
-        This field records the date on with the trainee withdrew.
+        This field records the date on which the trainee withdrew.
       </p>
       <p class="govuk-body">
         Example: <code>2025-01-01</code>
