@@ -412,7 +412,7 @@ feature "Withdrawing a trainee" do
 
   def given_a_trainee_exists_to_be_withdrawn
     given_a_trainee_exists(
-      %i[submitted_for_trn trn_received].sample,
+      :trn_received,
       trainee_start_date: 10.days.ago,
       itt_end_date: 1.year.from_now,
     )
@@ -420,7 +420,7 @@ feature "Withdrawing a trainee" do
 
   def given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     given_a_trainee_exists(
-      %i[submitted_for_trn trn_received].sample,
+      :trn_received,
       trainee_start_date: nil,
       itt_end_date: 1.year.from_now,
     )
