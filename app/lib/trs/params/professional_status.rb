@@ -3,7 +3,7 @@
 module Trs
   module Params
     class ProfessionalStatus
-      # Match the exceptions used in DQT
+      # Match the exceptions used in TRS
       COUNTRY_CODE_EXCEPTIONS = {
         "CY" => "XC",
       }.freeze
@@ -105,7 +105,7 @@ module Trs
       end
 
       def subject_reference(subject_name)
-        # These three subjects are not coded by HESA so we've agreed these encodings with the DQT team
+        # These three subjects are not coded by HESA so we've agreed these encodings with the TRS team
         return "999001" if subject_name == ::CourseSubjects::CITIZENSHIP
         return "999002" if subject_name == ::CourseSubjects::PHYSICAL_EDUCATION
         return "999003" if subject_name == ::CourseSubjects::DESIGN_AND_TECHNOLOGY
@@ -151,14 +151,14 @@ module Trs
       def strip_territory_component(country_territory_code)
         return if country_territory_code.blank?
 
-        # Match DQT implementation using regex
+        # Match TRS implementation using regex
         country_territory_code.gsub(/-\w+$/, "")
       end
 
       def apply_special_case_country_code_mappings(country_code)
         return if country_code.blank?
 
-        # Use the same mappings as DQT
+        # Use the same mappings as TRS
         COUNTRY_CODE_EXCEPTIONS.key?(country_code) ? COUNTRY_CODE_EXCEPTIONS[country_code] : country_code
       end
 

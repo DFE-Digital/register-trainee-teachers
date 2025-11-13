@@ -50,7 +50,6 @@ module Trainees
           create_placements!
           store_hesa_metadata!
           check_for_potential_duplicate_trainees!
-          enqueue_background_jobs!
           check_for_missing_hesa_mappings!
         end
       end
@@ -211,7 +210,7 @@ module Trainees
       if trainee.trn.present?
         Trainees::Update.call(trainee:)
       else
-        Dqt::RegisterForTrnJob.perform_later(trainee)
+        Trs::RegisterForTrnJob.perform_later(trainee)
       end
     end
 

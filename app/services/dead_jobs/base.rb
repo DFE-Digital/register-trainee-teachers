@@ -4,9 +4,8 @@ module DeadJobs
   class Base
     include Hashable
 
-    def initialize(dead_set: Sidekiq::DeadSet.new, include_dqt_status: false, sort_by: :register)
+    def initialize(dead_set: Sidekiq::DeadSet.new, sort_by: :register)
       @dead_set = dead_set
-      @include_dqt_status = include_dqt_status
       @sort_by = sort_by
     end
 
@@ -38,14 +37,14 @@ module DeadJobs
     end
 
     def trainees
-      Trainee.kept.includes(:provider, :dqt_teacher, :dqt_teacher_trainings).find(dead_jobs.keys)
+      Trainee.kept.includes(:provider).find(dead_jobs.keys)
     end
 
     delegate :count, to: :dead_jobs
 
   private
 
-    attr_reader :dead_set, :include_dqt_status, :sort_by
+    attr_reader :dead_set, :sort_by
 
     def csv_headers
       build_csv_row(trainees.first).keys
@@ -72,7 +71,7 @@ module DeadJobs
         course_subject_two: trainee.course_subject_two,
         course_subject_three: trainee.course_subject_three,
         error_message: dead_job_error_message(trainee.id),
-        dqt: dqt(trainee),
+        dqt: nil,
       }
     end
 
@@ -92,19 +91,6 @@ module DeadJobs
       return nil unless enqueued_at
 
       (Time.zone.today - Time.zone.at(enqueued_at).to_date).to_i
-    end
-
-    def dqt(trainee)
-      return unless include_dqt_status && trainee.trn.present? && dqt_record_available?(trainee)
-
-      dqt_teacher_keys = %w[trn first_name last_name middle_name date_of_birth]
-      dqt_teacher_training_keys = %w[programme_start_date programme_end_date programme_type result provider_ukprn hesa_id active]
-
-      flatten_hash(
-        trainee.dqt_teacher.attributes.slice(*dqt_teacher_keys).merge(
-          dqt_teacher_trainings: trainee.dqt_teacher_trainings.map { |tt| tt.attributes.slice(*dqt_teacher_training_keys) },
-        ),
-      )
     end
 
     def dead_jobs
@@ -162,10 +148,6 @@ module DeadJobs
         end
       end
       result
-    end
-
-    def dqt_record_available?(trainee)
-      trainee.dqt_teacher.present? && trainee.dqt_teacher_trainings.present?
     end
   end
 end

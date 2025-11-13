@@ -2,7 +2,7 @@
 
 module Trainees
   class AdminsController < BaseController
-    helper_method :trainee, :collections, :dqt_data
+    helper_method :trainee, :collections
 
     def show
       return redirect_to(trainees_path) unless current_user.system_admin?
@@ -19,14 +19,6 @@ module Trainees
                                       .pluck(:collection_reference)
                                       .sort
                                       .reverse
-    end
-
-    def dqt_data
-      return unless FeatureService.enabled?(:integrate_with_dqt)
-
-      @dqt_data ||= Dqt::RetrieveTeacher.call(trainee:)
-    rescue Dqt::Client::HttpError
-      false
     end
   end
 end

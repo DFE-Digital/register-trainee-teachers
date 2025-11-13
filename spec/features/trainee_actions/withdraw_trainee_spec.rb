@@ -142,7 +142,7 @@ feature "Withdrawing a trainee" do
       end
     end
 
-    scenario "when DQT integration feature is active", feature_integrate_with_dqt: true do
+    scenario "when TRS integration feature is active", feature_integrate_with_trs: true do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
       when_i_choose_today
       and_i_continue(:date)
@@ -412,7 +412,7 @@ feature "Withdrawing a trainee" do
 
   def given_a_trainee_exists_to_be_withdrawn
     given_a_trainee_exists(
-      %i[submitted_for_trn trn_received].sample,
+      :trn_received,
       trainee_start_date: 10.days.ago,
       itt_end_date: 1.year.from_now,
     )
@@ -420,7 +420,7 @@ feature "Withdrawing a trainee" do
 
   def given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     given_a_trainee_exists(
-      %i[submitted_for_trn trn_received].sample,
+      :trn_received,
       trainee_start_date: nil,
       itt_end_date: 1.year.from_now,
     )
@@ -515,11 +515,7 @@ feature "Withdrawing a trainee" do
     trainee_start_status_edit_page.set_date_fields("trainee_start_date", date.strftime("%d/%m/%Y"))
   end
 
-  def and_integrate_with_dqt_feature_is_active
-    enable_features(:integrate_with_dqt)
-  end
-
   def and_a_withdrawal_job_has_been_queued
-    expect(Dqt::WithdrawTraineeJob).to have_been_enqueued
+    expect(Trs::UpdateProfessionalStatusJob).to have_been_enqueued
   end
 end

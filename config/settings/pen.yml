@@ -23,7 +23,6 @@ features:
   import_courses_from_ttapi: true
   import_applications_from_apply: true
   publish_course_details: true
-  integrate_with_dqt: true
   integrate_with_trs: false
   google:
     send_data_to_big_query: false

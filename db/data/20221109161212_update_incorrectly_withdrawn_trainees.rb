@@ -30,7 +30,7 @@ class UpdateIncorrectlyWithdrawnTrainees < ActiveRecord::Migration[6.1]
       Trainees::Update.call(
         trainee: trainee,
         params: params,
-        update_dqt: false,
+        update_trs: false,
       )
     end
   end

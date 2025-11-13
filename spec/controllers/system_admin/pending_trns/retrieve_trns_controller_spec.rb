@@ -7,7 +7,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
   let(:trainee) { create(:trainee, :submitted_for_trn) }
   let(:request_id) { SecureRandom.uuid }
   let(:trn) { "1234567" }
-  let(:trn_request) { create(:dqt_trn_request, trainee:, request_id:) }
+  let(:trn_request) { create(:trs_trn_request, trainee:, request_id:) }
 
   before do
     allow(Trainee).to receive(:from_param).and_return(trainee)
@@ -15,9 +15,9 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
   end
 
   describe "#update" do
-    context "when TRS integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
+    context "when TRS integration is enabled", feature_integrate_with_trs: true do
       before do
-        allow(trainee).to receive(:dqt_trn_request).and_return(trn_request)
+        allow(trainee).to receive(:trs_trn_request).and_return(trn_request)
       end
 
       it "uses Trs::RetrieveTrn when TRN is available" do
@@ -58,48 +58,9 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
       end
     end
 
-    context "when DQT integration is enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
+    context "when TRS integration is NOT enabled", feature_integrate_with_trs: false do
       before do
-        allow(trainee).to receive(:dqt_trn_request).and_return(trn_request)
-      end
-
-      it "uses Dqt::RetrieveTrn when TRN is available" do
-        allow(Dqt::RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
-        expect(trainee).to receive(:trn_received!).with(trn)
-        expect(trn_request).to receive(:received!)
-
-        patch :update, params: { id: trainee.slug }
-
-        expect(response).to redirect_to(pending_trns_path)
-        expect(flash[:success]).to include("TRN successfully retrieved")
-      end
-
-      it "handles case when TRN is not available" do
-        allow(Dqt::RetrieveTrn).to receive(:call).with(trn_request:).and_return(nil)
-        expect(trainee).not_to receive(:trn_received!)
-        expect(trn_request).not_to receive(:received!)
-
-        patch :update, params: { id: trainee.slug }
-
-        expect(response).to redirect_to(pending_trns_path)
-        expect(flash[:warning]).to include("TRN still not available")
-      end
-
-      it "handles API errors" do
-        allow(Dqt::RetrieveTrn).to receive(:call).with(trn_request:).and_raise(
-          Dqt::Client::HttpError.new("API error"),
-        )
-
-        patch :update, params: { id: trainee.slug }
-
-        expect(response).to redirect_to(pending_trns_path)
-        expect(flash[:dqt_error]).to include("API error")
-      end
-    end
-
-    context "when neither integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: false do
-      before do
-        allow(trainee).to receive(:dqt_trn_request).and_return(trn_request)
+        allow(trainee).to receive(:trs_trn_request).and_return(trn_request)
       end
 
       it "raises an error" do
@@ -111,7 +72,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
 
     context "when trainee has no TRN request" do
       before do
-        allow(trainee).to receive(:dqt_trn_request).and_return(nil)
+        allow(trainee).to receive(:trs_trn_request).and_return(nil)
       end
 
       it "redirects with a warning" do

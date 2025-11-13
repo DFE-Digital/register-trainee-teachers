@@ -15,11 +15,11 @@ module SystemAdmin
     def sorted_trainees
       sort_by = params.fetch(:sort_by, default_sort_by).to_sym
 
-      trainees = Trainee.includes(:dqt_trn_request).submitted_for_trn.undiscarded
+      trainees = Trainee.includes(:trs_trn_request).submitted_for_trn.undiscarded
 
       case sort_by
       when :days_waiting
-        trainees.sort_by { |t| t.dqt_trn_request&.days_waiting || 0 }.reverse
+        trainees.sort_by { |t| t.trs_trn_request&.days_waiting || 0 }.reverse
       when :register
         trainees.sort_by(&:id)
       else
