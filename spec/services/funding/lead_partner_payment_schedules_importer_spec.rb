@@ -255,7 +255,8 @@ module Funding
         it "sets predicted correctly" do
           subject
           expect(school_one_first_row.amounts.find_by(month: 11)).not_to be_predicted
-          expect(school_one_first_row.amounts.find_by(month: 12)).to be_predicted
+          expect(school_one_first_row.amounts.find_by(month: 12)).not_to be_predicted
+          expect(school_one_first_row.amounts.find_by(month: 1)).to be_predicted
         end
       end
 
