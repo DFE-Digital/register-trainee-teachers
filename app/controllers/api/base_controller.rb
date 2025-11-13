@@ -61,7 +61,7 @@ module Api
       render(**not_found_response(message:))
     end
 
-    def current_version
+    def api_version
       params[:api_version]
     end
 
@@ -73,7 +73,7 @@ module Api
 
   private
 
-    alias_method :version, :current_version
+    alias_method :version, :api_version
 
     def enhance_errors
       body = JSON.parse(response.body, symbolize_names: true)

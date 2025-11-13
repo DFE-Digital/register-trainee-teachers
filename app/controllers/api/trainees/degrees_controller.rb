@@ -24,7 +24,7 @@ module Api
           **SaveDegreeResponse.call(
             degree: new_degree,
             params: degree_params,
-            version: current_version,
+            version: version,
           ),
         )
       end
@@ -34,7 +34,7 @@ module Api
           **SaveDegreeResponse.call(
             degree: degree,
             params: degree_params_for_update,
-            version: current_version,
+            version: version,
           ),
         )
       end
