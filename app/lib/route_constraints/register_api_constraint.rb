@@ -2,7 +2,7 @@
 
 module RouteConstraints
   class RegisterApiConstraint
-    AVAILABLE_VERSIONS = ["v2025.0", "v2025.0-rc"].freeze
+    AVAILABLE_VERSIONS = ["v2025.0", "v2025.0-rc", "v2026.0"].freeze
 
     def self.matches?(request)
       redirect_release_candidate_requests_to_api(request)
