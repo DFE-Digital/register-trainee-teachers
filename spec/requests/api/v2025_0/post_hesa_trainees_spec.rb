@@ -84,9 +84,6 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
   before do
     create(:nationality, :british)
-  end
-
-  before do
     create(:disability, :blind)
     create(:disability, :deaf)
   end

@@ -8,9 +8,9 @@ module Api
           status: "ok",
           version: {
             requested: api_version,
-            latest: Settings.api.current_version
-          }
-        }
+            latest: Settings.api.current_version,
+          },
+        },
       )
     end
   end
