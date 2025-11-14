@@ -5,7 +5,6 @@ require "rails_helper"
 describe "`POST /api/v2026.0/trainees` endpoint" do
   let!(:auth_token) { create(:authentication_token) }
   let!(:token) { auth_token.token }
-  let!(:nationality) { create(:nationality, :british) }
 
   let!(:course_allocation_subject) do
     create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -81,6 +80,10 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       provider_trainee_id: "99157234/2/01",
       pg_apprenticeship_start_date: "2024-03-11",
     }
+  end
+
+  before do
+    create(:nationality, :british)
   end
 
   before do
