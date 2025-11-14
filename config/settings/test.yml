@@ -29,4 +29,3 @@ govuk_notify:
 
 api:
   allowed_versions: [v2025.0-rc, v2025.0, v2026.0]
-  current_version: v2025.0
