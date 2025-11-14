@@ -25,7 +25,7 @@ end
 A utility service can be called via rake task to generate new API code:
 
 ```sh
-rake api:generate_new_version[v2025.0-rc,v2026.0-rc]
+rails "api:generate_new_version[v2025.0-rc,v2026.0-rc]"
 ```
 
 This will copy all API services, models, and serializers into a new namespace, properly defining inheritance from the previous version. For example:
@@ -62,7 +62,7 @@ end
 Specs can also be generated using a similar rake task:
 
 ```sh
-rake api:generate_new_spec_version[v2025.0-rc,v2026.0-rc]
+rails "api:generate_new_spec_version[v2025.0-rc,v2026.0-rc]"
 ```
 
 This generator focuses on copying all request specs for the existing version and performing a find-and-replace for all instances of `vX.X` (in its various forms) to the new version.
