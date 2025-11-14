@@ -66,15 +66,9 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
     }
   end
 
-  # rubocop:disable RSpec/BeforeAfterAll
-  before(:all) do
+  before do
     Rails.application.load_seed
   end
-
-  after(:all) do
-    Rake::Task["db:truncate_all"].invoke
-  end
-  # rubocop:enable RSpec/BeforeAfterAll
 
   context "when the request is valid" do
     it "creates a trainee" do
