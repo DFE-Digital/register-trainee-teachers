@@ -10,7 +10,7 @@ let statusMessage = ' '
 const fetchLeadPartners = ({ query, populateResults }) => {
   const encodedQuery = encodeURIComponent(query)
 
-  window.fetch(`/autocomplete/lead_partners?query=${encodedQuery}`)
+  window.fetch(`/autocomplete/training-partners?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
     .then(data => data.lead_partners)
@@ -57,7 +57,7 @@ const setupAutoComplete = (form) => {
         templates: renderTemplate,
         onConfirm: (value) => {
           if (value?.id && element.dataset.systemAdminRedirectLeadPartner) {
-            window.location.assign(`/system-admin/lead-partners/${value.id}`)
+            window.location.assign(`/system-admin/training-partners/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
             setHiddenField(idElement, value)
