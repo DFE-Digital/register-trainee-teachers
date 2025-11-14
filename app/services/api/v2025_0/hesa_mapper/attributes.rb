@@ -239,8 +239,8 @@ module Api
 
         def lead_partner_from_urn
           lead_partner_id =
-            if params[:lead_partner_urn].present?
-              LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
+            if params[:lead_partner_urn].present? && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
+              LeadPartner.find_by(urn: params[:lead_partner_urn])&.id || InvalidValue.new(params[:lead_partner_urn])
             end
 
           {
@@ -252,7 +252,7 @@ module Api
         def lead_partner_from_ukprn
           lead_partner_id =
             if params[:lead_partner_ukprn].present?
-              LeadPartner.find_by(ukprn: params[:lead_partner_ukprn])&.id
+              LeadPartner.find_by(ukprn: params[:lead_partner_ukprn])&.id || InvalidValue.new(params[:lead_partner_ukprn])
             end
 
           {
@@ -262,11 +262,19 @@ module Api
         end
 
         def employing_school_attributes
-          if params.key?(:employing_school_urn)
-            employing_school_id = School.find_by(urn: params[:employing_school_urn])&.id
+          if params.key?(:employing_school_urn) && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
+            employing_school_id =
+              if params[:employing_school_urn].present?
+                School.find_by(urn: params[:employing_school_urn])&.id || InvalidValue.new(params[:employing_school_urn])
+              end
             {
               employing_school_id: employing_school_id,
               employing_school_not_applicable: employing_school_id.nil?,
+            }
+          elsif params.key?(:employing_school_urn) && NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
+            {
+              employing_school_id: nil,
+              employing_school_not_applicable: true,
             }
           else
             { employing_school_not_applicable: true } unless update

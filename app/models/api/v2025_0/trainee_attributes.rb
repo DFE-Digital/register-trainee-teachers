@@ -58,9 +58,9 @@ module Api
       end
 
       INTERNAL_ATTRIBUTES = {
-        lead_partner_id: { type: :integer },
+        lead_partner_id: {},
         lead_partner_not_applicable: { type: :boolean, options: { default: false } },
-        employing_school_id: { type: :integer },
+        employing_school_id: {},
         employing_school_not_applicable: { type: :boolean, options: { default: false } },
         ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
         ethnic_background: { type: :string, options: { default: Diversities::NOT_PROVIDED } },
@@ -150,6 +150,9 @@ module Api
       }, allow_blank: true
 
       validates :trainee_disabilities_attributes, uniqueness: true
+
+      validate :validate_lead_partner, unless: :lead_partner_not_applicable
+      validate :validate_employing_school, unless: :employing_school_not_applicable
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
@@ -448,6 +451,18 @@ module Api
 
       def next_year
         Time.zone.now.year.next
+      end
+
+      def validate_lead_partner
+        if lead_partner_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+          errors.add(:lead_partner_id, :invalid, value: lead_partner_id.to_s)
+        end
+      end
+
+      def validate_employing_school
+        if employing_school_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+          errors.add(:employing_school_id, :invalid, value: employing_school_id.to_s)
+        end
       end
     end
   end

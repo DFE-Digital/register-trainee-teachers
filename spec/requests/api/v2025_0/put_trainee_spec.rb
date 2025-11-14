@@ -4,11 +4,12 @@ require "rails_helper"
 
 # rubocop:disable RSpec/NestedGroups
 describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
+  let(:trainee_route_trait) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
   let(:trainee) do
     create(
       :trainee,
       :in_progress,
-      :with_training_route,
+      trainee_route_trait,
       :with_no_funding_hesa_trainee_detail,
       :with_lead_partner,
       :with_employing_school,
@@ -840,11 +841,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             let(:new_lead_partner) { build(:lead_partner, :school) }
 
             it "sets lead_partner_urn to nil and lead_partner_not_applicable to true" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
-
-              trainee.reload
-
-              expect(trainee.lead_partner_not_applicable).to be(true)
+              expect(response).to have_http_status(:unprocessable_entity)
             end
           end
         end
@@ -899,18 +896,11 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           end
 
           context "when employing_school does not exist" do
-            let(:new_employing_school) { build(:school) }
+            let(:trainee_route_trait) { TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] }
+            let(:new_employing_school) { build(:school, urn: "123456") }
 
-            it "sets lead_partner_urn and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
-              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
-            end
-
-            it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
-              trainee.reload
-
-              expect(trainee.lead_partner_not_applicable).to be(true)
-              expect(trainee.employing_school_not_applicable).to be(true)
+            it "returns status unprocessable entity" do
+              expect(response).to have_http_status(:unprocessable_entity)
             end
           end
         end
@@ -970,12 +960,11 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             context "when lead_partner does not exist" do
               let(:new_lead_partner) { build(:lead_partner, :school) }
 
-              it "sets lead_partner_urn to nil and lead_partner_not_applicable to true" do
-                expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
-
-                trainee.reload
-
-                expect(trainee.lead_partner_not_applicable).to be(true)
+              it "returns an error" do
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response.parsed_body["errors"]).to include(
+                  "lead_partner_id is invalid. The URN '#{new_lead_partner.urn}' does not match any known lead partners",
+                )
               end
             end
           end
@@ -1032,16 +1021,18 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             context "when employing_school does not exist" do
               let(:new_employing_school) { build(:school) }
 
-              it "sets lead_partner_urn and employing_school_urn to nil" do
-                expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
-                expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+              it "returns an error" do
+                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response.parsed_body["errors"]).to include(
+                  "employing_school_id is invalid. The URN '#{new_employing_school.urn}' does not match any known schools",
+                )
               end
 
-              it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
+              it "leaves lead_partner_not_applicable and employing_school_not_applicable unchanged" do
                 trainee.reload
 
-                expect(trainee.lead_partner_not_applicable).to be(true)
-                expect(trainee.employing_school_not_applicable).to be(true)
+                expect(trainee.lead_partner_not_applicable).to be(false)
+                expect(trainee.employing_school_not_applicable).to be(false)
               end
             end
           end

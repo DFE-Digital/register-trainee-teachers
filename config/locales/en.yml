@@ -2115,6 +2115,14 @@ en:
               ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
             hesa_id:
               length: must be 13 or 17 characters
+            lead_partner_id:
+              invalid: is invalid. The URN '%{value}' does not match any known lead partners
+              csv:
+                invalid: Lead Partner URN is invalid. The URN '%{value}' does not match any known lead partners
+            employing_school_id:
+              invalid: is invalid. The URN '%{value}' does not match any known schools
+              csv:
+                invalid: Employing School URN is invalid. The URN '%{value}' does not match any known schools
         api/v20250/withdrawal_attributes:
           attributes:
             reasons:
