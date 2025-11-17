@@ -66,7 +66,10 @@ jobs:
       - name: Install git
         run: docker compose exec -T web /bin/sh -c 'apk add git'
 
-      - name: Bundle audit
+      - name: Install bundle-audit
+        run: docker compose exec -T web /bin/sh -c 'gem install bundle-audit'
+
+      - name: Run bundle-audit
         run: docker compose exec -T web /bin/sh -c 'bundle-audit check --update'
 
       - name: Check for Failure
