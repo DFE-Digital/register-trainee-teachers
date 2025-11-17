@@ -5,7 +5,7 @@ module PageObjects
     class ConfirmDetails < PageObjects::Base
       set_url "/trainees/{id}/{section}/confirm"
 
-      element :change, "#lead-partner .govuk-link", text: "Change"
+      element :change, "#training-partner .govuk-link", text: "Change"
       element :confirm, "input[name='confirm_detail_form[mark_as_completed]']"
       element :submit_button, "button[type='submit']"
       element :continue_button, "button[type='submit']", text: "Continue"

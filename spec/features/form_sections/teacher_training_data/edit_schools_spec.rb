@@ -211,10 +211,10 @@ private
   def and_i_see_the_edit_lead_partner_details_page
     expect(edit_trainee_lead_partner_details_page).to be_displayed
     expect(edit_trainee_lead_partner_details_page).to have_content(
-      "Is there a lead partner?",
+      "Is there a training partner?",
     )
     expect(edit_trainee_lead_partner_details_page).to have_content(
-      "You do not need to provide a lead partner if the trainee is funded or employed privately.",
+      "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end
 

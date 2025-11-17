@@ -93,7 +93,7 @@ en:
           title: Grants breakdown
       column_headings:
         amount_per_trainee: Amount per trainee
-        lead_partner: Lead partner
+        lead_partner: Training partner
         payment_type: Payment type
         route_and_course: Route and course
         route: Route
@@ -108,7 +108,7 @@ en:
   schools:
     view:
       summary_title: Training partners
-      lead_partner: &lead_partner Lead partner
+      lead_partner: &lead_partner Training partner
       employing_school: &employing_school Employing school
   record_details:
     view:
@@ -327,7 +327,7 @@ en:
         avoidable: Could the Department of Education have done anything to avoid the candidate withdawning?
     lead_partner_and_employing_school_details:
       summary_title: Schools
-      lead_partner_key: Lead partner
+      lead_partner_key: Training partner
       employing_school_key: Employing school
     placement_detail: &placement_detail
       title: Placement details
@@ -384,8 +384,8 @@ en:
         index: Upload funding information
         confirmation: File processed successfully
         new:
-          lead_partner_trainee_summary: Upload lead partner trainee funding payments
-          lead_partner_payment_schedule: Upload lead partner funding payments
+          lead_partner_trainee_summary: Upload training partner trainee funding payments
+          lead_partner_payment_schedule: Upload training partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
       pending_trns:
@@ -501,8 +501,8 @@ en:
           date_updated: Date updated
           last_name: Last name
         lead_partners:
-          edit: Lead partner
-          index: Select the lead partner
+          edit: Training partner
+          index: Select the training partner
         employing_schools:
           index: Select the employing school
           edit: Employing school
@@ -547,7 +547,7 @@ en:
       schools:
         index: Schools
       lead_partners:
-        index: Lead partners
+        index: Training partners
       search_schools:
         page_title_no_results: No results
         sub_text_results: Results for
@@ -558,7 +558,7 @@ en:
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
-        search_hint: Search for a lead partner by name, school postcode, school URN or training provider UKPRN
+        search_hint: Search for a training partner by name, school postcode, school URN or training provider UKPRN
         search_button: Search again
       service_updates: News and updates
       organisations: Choose organisation
@@ -675,15 +675,15 @@ en:
       result_text: "1 more school matches your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
       multiple_result_text: "%{remaining_search_count} more schools match your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
     lead_partner_result_notice:
-      result_text: "1 more lead partner matches your search for ‘%{search_query}’. Try narrowing down your search if the lead partner you’re looking for is not listed."
-      multiple_result_text: "%{remaining_search_count} more lead partners match your search for ‘%{search_query}’. Try narrowing down your search if the lead partner you’re looking for is not listed."
+      result_text: "1 more training partner matches your search for ‘%{search_query}’. Try narrowing down your search if the training partner you’re looking for is not listed."
+      multiple_result_text: "%{remaining_search_count} more training partners match your search for ‘%{search_query}’. Try narrowing down your search if the training partner you’re looking for is not listed."
     review_draft:
       draft:
         schools:
           titles:
             school_direct_tuition_fee: *lead_partner
             iqts: *lead_partner
-            school_direct_salaried: &lead_partner_and_employing_school Lead partner and employing school
+            school_direct_salaried: &lead_partner_and_employing_school Training partner and employing school
             pg_teaching_apprenticeship: *lead_partner_and_employing_school
             provider_led_postgrad: *lead_partner_and_employing_school
             provider_led_undergrad: *lead_partner_and_employing_school
@@ -693,7 +693,7 @@ en:
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
-        lead_partner_user: "Associated with <strong>%{lead_partner_name}</strong> and can view trainees assigned to that lead partner."
+        lead_partner_user: "Associated with <strong>%{lead_partner_name}</strong> and can view trainees assigned to that training partner."
     state_tag:
       trainee:
         state:
@@ -1228,20 +1228,20 @@ en:
     lead_partners:
       details:
         edit:
-          heading: Is there a lead partner?
+          heading: Is there a training partner?
           not_applicable_details:
-            hint: You do not need to provide a lead partner if the trainee is funded or employed privately.
+            hint: You do not need to provide a training partner if the trainee is funded or employed privately.
       edit:
-        heading: Lead partner
-        hint: Search for a lead partner by name, postcode, school URN or training provider UKPRN
-        description: <p>The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The lead partner you select will be able to view trainee’s record.</p>
+        heading: Training partner
+        hint: Search for a training partner by name, postcode, school URN or training provider UKPRN
+        description: <p>The training partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The training partner you select will be able to view trainee’s record.</p>
         not_applicable_details:
-          summary_text: Lead partner is not listed, or the trainee is funded or employed privately
-          label_text: Lead partner is not applicable
+          summary_text: Training partner is not listed, or the trainee is funded or employed privately
+          label_text: Training partner is not applicable
           body:
-            <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
-            <p class="govuk-body">If you still cannot find the lead partner, contact %{contact_link}</a></p>
-            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">If the training partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If you still cannot find the training partner, contact %{contact_link}</a></p>
+            <p class="govuk-body">You do not need to provide a training partner if the trainee is funded or employed privately.</p>
     employing_schools:
       details:
         edit:
@@ -1374,6 +1374,7 @@ en:
   activerecord:
     models:
       provider: Accredited provider
+      lead_partner: Training partner
     attributes:
       trainee:
         record_sources:
@@ -1590,7 +1591,7 @@ en:
               blank: Enter a partner unique reference number (URN), name or postcode
               length: Enter at least two characters
             lead_partner_id:
-              blank: Select a lead partner or search again
+              blank: Select a training partner or search again
             results_search_again_query:
               blank: Enter a partner unique reference number (URN), name or postcode
             no_results_search_again_query:
@@ -2019,7 +2020,7 @@ en:
         schools/form_validator:
           attributes:
             lead_partner_id:
-              not_valid: The lead partner section is not valid for this trainee
+              not_valid: The training partner section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
         partners/lead_partner_form:
@@ -2027,7 +2028,7 @@ en:
             query:
               blank: Enter a partner unique reference number (URN), name or postcode
             lead_partner_id:
-              blank: Select a lead partner or search again
+              blank: Select a training partner or search again
             results_search_again_query:
               blank: Enter a partner unique reference number (URN), name or postcode
             no_results_search_again_query:
@@ -2235,8 +2236,8 @@ en:
           heading: Confirm deletion of trainee record
     funding_uploads:
       new:
-        lead_partner_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead partners.
-        lead_partner_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead partners.
+        lead_partner_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at training partners.
+        lead_partner_payment_schedule: You can upload a CSV file to make monthly funding payments available to training partners.
         provider_trainee_summary: You can upload a CSV file to make monthly funding payments available to provider trainees.
         provider_payment_schedule: You can upload a CSV file to make monthly funding payments available to providers.
   api:

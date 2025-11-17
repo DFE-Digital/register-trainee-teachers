@@ -46,7 +46,7 @@ module SystemAdminRoutes
             resource :accessions, controller: "providers/accessions", only: %i[edit destroy]
           end
 
-          resources :lead_partners, controller: "user_lead_partners", only: %i[index new create], path: "lead-partners" do
+          resources :lead_partners, controller: "user_lead_partners", only: %i[index new create], path: "training-partners" do
             resource :accessions, controller: "lead_partners/accessions", only: %i[edit destroy]
           end
 
@@ -60,7 +60,7 @@ module SystemAdminRoutes
           end
         end
 
-        resources :lead_partners, path: "lead-partners", only: %i[index show] do
+        resources :lead_partners, path: "training-partners", only: %i[index show] do
           resources :users, controller: "lead_partners/users", only: %i[edit update]
         end
 

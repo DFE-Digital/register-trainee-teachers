@@ -32,7 +32,7 @@ module SchoolDetails
         render_inline(View.new(trainee: trainee, editable: true))
       end
 
-      it_behaves_like("school row", "lead partner")
+      it_behaves_like("school row", "training partner")
     end
 
     context "with employing school" do

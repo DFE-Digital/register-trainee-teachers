@@ -7,11 +7,11 @@ module Wizards
     subject { described_class.new(trainee:) }
 
     describe "#start_point" do
-      context "when theres no lead partner or employing school" do
+      context "when theres no training partner or employing school" do
         let(:trainee) { create(:trainee, :school_direct_salaried) }
 
         it "returns the lead school step" do
-          expect(subject.start_point).to eq "/trainees/#{trainee.slug}/lead-partners/edit"
+          expect(subject.start_point).to eq "/trainees/#{trainee.slug}/training-partners/edit"
         end
       end
 

@@ -35,7 +35,7 @@ feature "List lead partners" do
   end
 
   def and_i_click_the_lead_partner_link
-    click_on "Lead partners"
+    click_on "Training partners"
   end
 
   def then_i_see_the_lead_partners_index_page
