@@ -4,7 +4,7 @@ module Api
   class TraineesController < Api::BaseController
     include Api::Serializable
 
-    after_action :enhance_errors, if: -> { request.headers["ENHANCED_ERRORS"] }, only: %i[create update]
+    after_action :enhance_errors, if: -> { request.headers["HTTP_ENHANCED_ERRORS"] == "true" }, only: %i[create update]
 
     def index
       trainees, errors = GetTraineesService.call(

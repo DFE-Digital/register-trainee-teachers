@@ -105,7 +105,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "creates a trainee" do
         post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -133,7 +133,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "creates a trainee" do
         post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -307,7 +307,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it "returns errors" do
             expect {
               post endpoint, params: params.to_json, headers: {
-                Authorization: token, **json_headers.merge("ENHANCED_ERRORS" => true)
+                Authorization: token, **json_headers.merge("HTTP_ENHANCED_ERRORS" => "true")
               }
             }.not_to change {
               Degree.count
@@ -358,7 +358,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
 
         context "with enhanced errors" do
-          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "returns errors" do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -405,7 +405,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
 
         context "with enhanced errors" do
-          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "returns errors" do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -682,7 +682,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "does not create a trainee record and returns a 422 status with meaningful error message" do
           post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -708,7 +708,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "does not create a trainee record and returns a 422 status with meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -732,7 +732,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "does not create a trainee record and returns a 422 status with meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -784,7 +784,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
@@ -808,7 +808,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
@@ -958,7 +958,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
 
         context "with enhanced errors" do
-          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -992,7 +992,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
 
         context "with enhanced errors" do
-          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -1135,7 +1135,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
 
         context "with enhanced errors" do
-          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -1203,7 +1203,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         end
 
         context "with enhanced errors" do
-          let(:json_headers) { { "ENHANCED_ERRORS" => true } }
+          let(:json_headers) { { "HTTP_ENHANCED_ERRORS" => "true" } }
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -1253,7 +1253,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           end
 
           context "with enhanced errors" do
-            let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+            let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
             it do
               expect(response).to have_http_status(:unprocessable_entity)
@@ -1288,7 +1288,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           end
 
           context "with enhanced errors" do
-            let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+            let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
             it "is invalid" do
               expect(response).to have_http_status(:unprocessable_entity)
@@ -1318,7 +1318,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -1353,7 +1353,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1381,7 +1381,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1403,7 +1403,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1427,7 +1427,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1448,7 +1448,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1472,7 +1472,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1495,7 +1495,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1520,7 +1520,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1545,7 +1545,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1570,7 +1570,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1595,7 +1595,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1620,7 +1620,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1645,7 +1645,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1670,7 +1670,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1695,7 +1695,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1720,7 +1720,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1745,7 +1745,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -1789,7 +1789,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -1820,7 +1820,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -1886,7 +1886,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -1919,7 +1919,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -1988,7 +1988,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
 
     context "with enhanced errors" do
-      let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
       it "returns status 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
