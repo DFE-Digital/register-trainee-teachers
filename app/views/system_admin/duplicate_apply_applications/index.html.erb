@@ -19,7 +19,7 @@
           body.with_row do |row|
             row.with_cell(text: apply_application.application&.dig("attributes", "candidate", "first_name"))
             row.with_cell(text: apply_application.application&.dig("attributes", "candidate", "last_name"))
-            row.with_cell(text: apply_application.created_at.to_date.to_fs(:govuk_short))
+            row.with_cell(text: apply_application.created_at.to_fs(:govuk_short))
             row.with_cell do |cell|
               govuk_button_link_to(
                 "View",
