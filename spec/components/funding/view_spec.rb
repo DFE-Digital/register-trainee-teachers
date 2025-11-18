@@ -349,7 +349,7 @@ module Funding
           end
         end
 
-        context "when trainee has eligible fund code in Hesa::Student record" do
+        context "when trainee has not eligible fund code in Hesa::Student record" do
           let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
           let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_student) }
 
