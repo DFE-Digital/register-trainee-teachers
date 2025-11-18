@@ -3,9 +3,7 @@
 require "rails_helper"
 
 RSpec.shared_examples "register versioned api GET request" do |version, path, completed|
-  url = path.gsub(":api_version", version)
-
-  describe "`GET #{url}` endpoint" do
+  describe "`GET #{path.gsub(':api_version', version)}` endpoint" do
     let(:auth_token) { create(:authentication_token) }
     let(:token) { auth_token.token }
 
@@ -26,7 +24,7 @@ RSpec.shared_examples "register versioned api GET request" do |version, path, co
       academic_cycle
       trainee_with_slug
       trainee_with_slug_placements_and_degrees
-      get url, headers: { Authorization: token }
+      get path.gsub(":api_version", version), headers: { Authorization: token }
     end
 
     if completed

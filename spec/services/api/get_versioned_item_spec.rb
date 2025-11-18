@@ -3,10 +3,8 @@
 require "rails_helper"
 
 describe Api::GetVersionedItem do
-  get_versioned_item = "get versioned item"
-
-  shared_examples get_versioned_item do |item_type, item_models|
-    wrapper_method = "for_#{item_type}"
+  shared_examples "get versioned item" do |item_type, item_models|
+    let(:wrapper_method) { "for_#{item_type}" }
 
     def expected_module(item_type, model)
       if item_type == :service
@@ -38,7 +36,7 @@ describe Api::GetVersionedItem do
       end
     end
 
-    describe "##{wrapper_method}" do
+    describe "#for_#{item_type}" do
       context "v2025.0" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
@@ -61,7 +59,7 @@ describe Api::GetVersionedItem do
     end
   end
 
-  it_behaves_like get_versioned_item, :service, %i[map_hesa_attributes degree placement update_trainee]
-  it_behaves_like get_versioned_item, :attributes, %i[degree hesa_trainee_detail nationality placement trainee withdrawal trainee_filter_params]
-  it_behaves_like get_versioned_item, :serializer, %i[degree hesa_trainee_detail placement trainee]
+  it_behaves_like "get versioned item", :service, %i[map_hesa_attributes degree placement update_trainee]
+  it_behaves_like "get versioned item", :attributes, %i[degree hesa_trainee_detail nationality placement trainee withdrawal trainee_filter_params]
+  it_behaves_like "get versioned item", :serializer, %i[degree hesa_trainee_detail placement trainee]
 end

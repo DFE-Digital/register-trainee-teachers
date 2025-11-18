@@ -66,7 +66,7 @@ describe EmailFormatValidator do
     end
 
     context "that has a hostname that is too long" do
-      valid_part = SecureRandom.alphanumeric(63)
+      let(:valid_part) { SecureRandom.alphanumeric(63) }
       let(:email) { "invalid@#{Array.new(4, valid_part).join('.')}.com" }
 
       it_behaves_like error_test
