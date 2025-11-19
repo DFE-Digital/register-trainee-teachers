@@ -1,6 +1,6 @@
 metadata:
   source: "HESA"
-  name: "course_study_mode"
+  name: "trainee_study_mode"
   display_name: "Trainee study mode"
   change_log:                             # is this duplicating what's already in source control or do we need user facing changes like this?
     - date: "2025-11-19"                  # (probably only useful here if we can use them to automatically generate a reference data change log, assuming the reference data as a whole has a version number)
