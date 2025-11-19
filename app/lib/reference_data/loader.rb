@@ -8,6 +8,10 @@ module ReferenceData
 
     attr_reader :types
 
+    def find(type_name)
+      @types_by_name[type_name]
+    end
+
   private
 
     def initialize
@@ -22,6 +26,12 @@ module ReferenceData
           data: type_data["data"],
         )
       end
+
+      index_types_by_name
+    end
+
+    def index_types_by_name
+      @types_by_name = @types.index_by(&:name).with_indifferent_access
     end
   end
 end
