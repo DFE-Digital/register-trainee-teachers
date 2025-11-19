@@ -5,13 +5,13 @@ require "rails_helper"
 RSpec.describe ReferenceData::Loader do
   describe ".load_all" do
     it "loads an array of `ReferenceData::Type`s" do
-      types = described_class.load_all
+      types = described_class.instance.types
       expect(types).to be_an(Array)
       expect(types.first).to be_a(ReferenceData::Type)
     end
 
     it "includes the course study mode reference data type" do
-      types = described_class.load_all
+      types = described_class.instance.types
       study_mode_type = types.find { |type| type.name == "trainee_study_mode" }
       expect(study_mode_type).not_to be_nil
       expect(study_mode_type.values).to include(

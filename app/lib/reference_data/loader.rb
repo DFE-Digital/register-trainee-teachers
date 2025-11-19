@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "singleton"
+
 module ReferenceData
   class Loader
     def self.load_all
