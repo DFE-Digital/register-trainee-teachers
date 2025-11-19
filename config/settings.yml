@@ -206,6 +206,10 @@ api:
   allowed_versions: [v2025.0-rc, v2025.0]
   current_version: v2025.0
 
+bulk_update:
+  add_trainees:
+    version: v2025.0
+
 qualtrics:
   api_token: please_change_me
   directory_id: POOL_please_change_me
