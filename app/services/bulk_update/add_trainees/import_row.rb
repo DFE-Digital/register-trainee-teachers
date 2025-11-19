@@ -5,8 +5,6 @@ module BulkUpdate
     class ImportRow
       include ServicePattern
 
-      CURRENT_API_VERSION = "v2025.0"
-
       attr_accessor :row, :current_provider
 
       Result = Struct.new(:slug, :success, :errors, :error_type) do
@@ -22,7 +20,7 @@ module BulkUpdate
 
       def call
         # Map the CSV header names to the correct attribute names
-        attributes = BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.to_h do |header_name, attribute_name|
+        attributes = BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.to_h do |header_name, attribute_name|
           [attribute_name, row[header_name]]
         end.with_indifferent_access
 
@@ -50,7 +48,7 @@ module BulkUpdate
     private
 
       def version
-        CURRENT_API_VERSION
+        BulkUpdate::AddTrainees::Config::VERSION
       end
 
       def trainee_attributes_service

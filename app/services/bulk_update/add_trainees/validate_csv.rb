@@ -24,14 +24,14 @@ module BulkUpdate
         end
 
         return if headers.all? { |value| value.is_a?(String) } &&
-          headers.sort == BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.sort
+          headers.sort == BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys.sort
 
         record.errors.add(:file, :invalid_headers, explanations: error_explanations)
       end
 
       def error_explanations
-        missing_columns = BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys - headers
-        extra_columns = headers - BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
+        missing_columns = BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys - headers
+        extra_columns = headers - BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys
 
         explanations = []
         if missing_columns.any?
