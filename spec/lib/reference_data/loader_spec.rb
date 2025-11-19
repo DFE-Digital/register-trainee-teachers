@@ -22,14 +22,20 @@ RSpec.describe ReferenceData::Loader do
   end
 
   describe "#find" do
-    it "can lookup reference data type by name" do
+    it "can lookup reference data type by name as a string" do
       study_mode_type = described_class.instance.find("trainee_study_mode")
       expect(study_mode_type).to be_a(ReferenceData::Type)
       expect(study_mode_type.name).to eq("trainee_study_mode")
     end
 
+    it "can lookup reference data type by name as a symbol" do
+      study_mode_type = described_class.instance.find(:trainee_study_mode)
+      expect(study_mode_type).to be_a(ReferenceData::Type)
+      expect(study_mode_type.name).to eq("trainee_study_mode")
+    end
+
     it "returns nil for unknown reference data type names" do
-      wheel_size_type = described_class.instance.find("wheel_sizes")
+      wheel_size_type = described_class.instance.find("wheel_size")
       expect(wheel_size_type).to be_nil
     end
   end
