@@ -8,9 +8,11 @@ feature "Edit providers" do
     let(:existing_provider) { create(:provider) }
     let(:accreditation_id) { Faker::Number.number(digits: 4) }
     let(:provider) { build(:provider) }
+    let(:authentication_token) { create(:authentication_token, provider:, created_by: user) }
 
     before do
       given_i_am_authenticated(user:)
+      and_the_provider_has_an_authentication_token
       when_i_visit_the_provider_index_page
       when_i_click_on_provider_name
       and_i_click_edit_this_provider
@@ -41,6 +43,7 @@ feature "Edit providers" do
       and_i_click_on_the_delete_confirmation_button
       then_i_am_on_the_providers_listing_page
       and_the_provider_is_deleted
+      and_the_authentication_token_is_revoked
     end
   end
 
@@ -72,6 +75,15 @@ private
 
     expect(page).to have_css(".govuk-tag.govuk-tag--red", text: "Deleted")
     expect(page).to have_text("0 users")
+  end
+
+  def and_the_authentication_token_is_revoked
+    authentication_token.reload
+    expect(authentication_token).to be_revoked
+  end
+
+  def and_the_provider_has_an_authentication_token
+    authentication_token
   end
 
   def when_i_visit_the_provider_index_page
