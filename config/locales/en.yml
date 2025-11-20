@@ -56,6 +56,7 @@ en:
       no_bursary_applied_for: Not funded
       no_grant_applied_for: Not grant funded
       no_funding_available: Not applicable
+      fund_code: Fund code
       applying_for_bursary: Applying for bursary
       applying: "Yes"
       not_applying: "No"

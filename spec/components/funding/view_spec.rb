@@ -301,6 +301,82 @@ module Funding
         end
       end
 
+      describe "fund code row" do
+        let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
+
+        context "when trainee has eligible fund code in Hesa::TraineeDetail record" do
+          let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+          let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
+
+          before do
+            trainee.hesa_trainee_detail.update!(fund_code:)
+            render_inline(View.new(data_model: trainee))
+          end
+
+          it "renders the fund code with description" do
+            expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("Eligible for funding from the DfE")
+          end
+        end
+
+        context "when trainee has not eliglble fund code in Hesa::TraineeDetail record" do
+          let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+          let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_trainee_detail) }
+
+          before do
+            trainee.hesa_trainee_detail.update!(fund_code:)
+            render_inline(View.new(data_model: trainee))
+          end
+
+          it "renders the fund code with description" do
+            expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("Not fundable by funding council/body")
+          end
+        end
+
+        context "when trainee has eligible fund code in Hesa::Student record" do
+          let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+          let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_student) }
+
+          before do
+            trainee.hesa_students.last.update!(fund_code:)
+            render_inline(View.new(data_model: trainee))
+          end
+
+          it "renders the fund code with description" do
+            expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("Eligible for funding from the DfE")
+          end
+        end
+
+        context "when trainee has not eligible fund code in Hesa::Student record" do
+          let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+          let(:trainee) { create(:trainee, :imported_from_hesa, :with_hesa_student) }
+
+          before do
+            trainee.hesa_students.last.update!(fund_code:)
+            render_inline(View.new(data_model: trainee))
+          end
+
+          it "renders the fund code with description" do
+            expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("Not fundable by funding council/body")
+          end
+        end
+
+        context "when trainee has no fund code" do
+          before do
+            trainee.hesa_trainee_detail.update!(fund_code: nil)
+            render_inline(View.new(data_model: trainee))
+          end
+
+          it "renders fund code row with empty value" do
+            expect(rendered_content).to have_text("Fund code")
+            expect(rendered_content).to have_text("No fund code provided")
+          end
+        end
+      end
+
       describe "hesa selected bursary level" do
         let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: true) }
         let(:hesa_bursary_code) { trainee.hesa_students.first.bursary_level }
