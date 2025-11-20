@@ -13,7 +13,7 @@ describe Reports::BulkTraineeUploadReport do
 
       data = CSV.parse(generated_csv)
       expect(data.size).to eq(1)
-      expect(data[0]).to eq(BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys + ["Validation results", "Errors"])
+      expect(data[0]).to eq(BulkUpdate::AddTrainees::V20250::ImportRows::ALL_HEADERS.keys + ["Validation results", "Errors"])
     end
   end
 
