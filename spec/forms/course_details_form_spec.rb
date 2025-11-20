@@ -150,7 +150,7 @@ describe CourseDetailsForm, type: :model do
     end
 
     describe "custom" do
-      translation_key_prefix = "activemodel.errors.models.course_details_form.attributes"
+      let(:translation_key_prefix) { "activemodel.errors.models.course_details_form.attributes" }
 
       before do
         subject.assign_attributes(attributes)
@@ -294,9 +294,8 @@ describe CourseDetailsForm, type: :model do
           it_behaves_like date_error_message, :itt_start_date, :invalid,
                           "foo", "foo", "foo"
 
-          start_date = 10.years.ago
           it_behaves_like date_error_message, :itt_start_date, :too_old,
-                          start_date.day, start_date.month, start_date.year
+                          10.years.ago.day, 10.years.ago.month, 10.years.ago.year
 
           context "the start date fields are too far in future" do
             let(:start_date_attributes) do
@@ -329,7 +328,7 @@ describe CourseDetailsForm, type: :model do
         end
 
         describe "#itt_end_date_valid" do
-          start_date = 1.month.ago
+          let(:start_date) { 1.month.ago }
 
           let(:start_date_attributes) do
             {
@@ -358,9 +357,9 @@ describe CourseDetailsForm, type: :model do
           it_behaves_like date_error_message, :itt_end_date, :invalid,
                           "foo", "foo", "foo"
           it_behaves_like date_error_message, :itt_end_date, :before_or_same_as_start_date,
-                          start_date.day, start_date.month, start_date.year
+                          1.month.ago.day, 1.month.ago.month, 1.month.ago.year
           it_behaves_like date_error_message, :itt_end_date, :before_or_same_as_start_date,
-                          start_date.day, start_date.month, start_date.year - 1
+                          1.month.ago.day, 1.month.ago.month, 1.month.ago.year - 1
 
           context "the end date fields are too far in future" do
             let(:end_date_attributes) do
