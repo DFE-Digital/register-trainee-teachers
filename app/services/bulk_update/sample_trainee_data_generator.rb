@@ -91,17 +91,17 @@ module BulkUpdate
     def csv_row
       row_values = generate_row_data
       column_labels.map do |column_label|
-        attribute_name = BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS[column_label]
+        attribute_name = BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS[column_label]
         row_values[attribute_name]
       end
     end
 
     def column_labels
-      @column_labels ||= BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
+      @column_labels ||= BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys
     end
 
     def column_ids
-      @column_ids ||= BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.values
+      @column_ids ||= BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.values
     end
 
     def adjust_row(row)
