@@ -5,6 +5,7 @@ require "yaml"
 require "middleman-core"
 require "kramdown"
 require "open3"
+require "config"
 
 namespace :tech_docs do
   desc "Build docs"
