@@ -62,7 +62,7 @@ module BulkUpdate
     end
 
     context "when passed file with just a header row" do
-      let(:test_file_contents) { BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys.join(",") }
+      let(:test_file_contents) { BulkUpdate::AddTrainees::V20250::ImportRows::ALL_HEADERS.keys.join(",") }
 
       it "returns validation errors and does not create a bulk_updates_trainee_upload record" do
         expect(form.valid?).to be false
@@ -72,7 +72,7 @@ module BulkUpdate
     end
 
     context "when passed a valid file" do
-      let(:valid_columns) { BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys.join(",") }
+      let(:valid_columns) { BulkUpdate::AddTrainees::V20250::ImportRows::ALL_HEADERS.keys.join(",") }
       let(:test_file_contents) { "#{valid_columns}\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts,,,,,,,,,," }
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
@@ -91,7 +91,7 @@ module BulkUpdate
     end
 
     context "when passed a file with mixed case headings" do
-      let(:mixed_case_headings) { BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys.map.with_index { |header, index| index.odd? ? header.upcase : header.downcase } }
+      let(:mixed_case_headings) { BulkUpdate::AddTrainees::V20250::ImportRows::ALL_HEADERS.keys.map.with_index { |header, index| index.odd? ? header.upcase : header.downcase } }
       let(:mixed_case_columns) { mixed_case_headings.join(",") }
       let(:test_file_contents) { "#{mixed_case_columns}\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts,,,,,,,,,," }
 
@@ -111,7 +111,7 @@ module BulkUpdate
     end
 
     context "when passed a valid file with blank lines" do
-      let(:valid_columns) { BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys.join(",") }
+      let(:valid_columns) { BulkUpdate::AddTrainees::V20250::ImportRows::ALL_HEADERS.keys.join(",") }
       let(:test_file_contents) { "#{valid_columns}\n\n0123456789,Bob,Roberts\n\n9876543210,Alice,Roberts\n" }
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
