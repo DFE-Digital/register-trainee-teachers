@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
+describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
   let!(:auth_token) { create(:authentication_token) }
   let(:token) { auth_token.token }
 
@@ -21,7 +21,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
   let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::MATHEMATICS] }
 
-  let(:endpoint) { "/api/v2025.0/trainees" }
+  let(:endpoint) { "/api/v2026.0/trainees" }
 
   let(:data) do
     {

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "`POST /api/v2025.0/trainees` endpoint" do
+describe "`POST /api/v2026.0/trainees` endpoint" do
   let!(:auth_token) { create(:authentication_token) }
   let!(:token) { auth_token.token }
 
@@ -43,7 +43,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
   }
   let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY] }
 
-  let(:endpoint) { "/api/v2025.0/trainees" }
+  let(:endpoint) { "/api/v2026.0/trainees" }
   let!(:academic_cycle) { create(:academic_cycle, :current) }
 
   let(:data) do
@@ -92,7 +92,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     let(:trainee_start_date) { "" }
 
     before do
-      allow(Api::V20250::HesaMapper::Attributes).to receive(:call).and_call_original
+      allow(Api::V20260::HesaMapper::Attributes).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
     end
 
@@ -119,7 +119,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
   context "when the request is valid" do
     before do
-      allow(Api::V20250::HesaMapper::Attributes).to receive(:call).and_call_original
+      allow(Api::V20260::HesaMapper::Attributes).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
     end
 
@@ -675,7 +675,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       let(:disability2) { "58" }
 
       it "does not create a trainee record and returns a 422 status with meaningful error message" do
-        post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include("disabilities contain duplicate values")
@@ -685,7 +685,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "does not create a trainee record and returns a 422 status with meaningful error message" do
-          post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+          post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
@@ -775,7 +775,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       let(:graduation_year) { 200 }
 
       before do
-        post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       it "does not create a degree" do
@@ -799,7 +799,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       let(:graduation_year) { "abc" }
 
       before do
-        post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       it "does not create a degree" do
@@ -1905,7 +1905,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
       params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY]
 
-      post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "return status code 422 with a meaningful error message" do
@@ -1961,7 +1961,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         allocation_subject: french_allocation_subject,
       )
 
-      post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "returns success status code with no errors" do
@@ -1974,7 +1974,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     before do
       params[:data][:hesa_id] = SecureRandom.random_number(10 * 12).to_s
 
-      post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "returns status 422 with a meaningful error message" do

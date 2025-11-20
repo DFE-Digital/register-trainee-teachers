@@ -45,3 +45,6 @@ google_tag_manager:
   env_id: 12
 
 sign_off_period: # census_period, performance_period, outside_period. See app/services/determine_sign_off_period.rb
+
+api:
+  allowed_versions: [v2025.0-rc, v2025.0, v2026.0]
