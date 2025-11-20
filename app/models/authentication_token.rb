@@ -106,7 +106,7 @@ class AuthenticationToken < ApplicationRecord
     # Temp logic to convert existing tokens
     #
     token = find_by(hashed_token: legacy_hash_token(unhashed_token))
-    token.update!(token_hash: hash_token(unhashed_token)) if token.present?
+    token.presence&.update!(token_hash: hash_token(unhashed_token))
     token
   end
 
