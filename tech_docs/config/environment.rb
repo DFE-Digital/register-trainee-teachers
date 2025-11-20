@@ -5,4 +5,4 @@ app = File.expand_path("../../app", __dir__)
 
 $LOAD_PATH.unshift(lib, app)
 
-Config.load_and_set_settings(Config.setting_files("../config", ENV["RAILS_ENV"]))
+Config.load_and_set_settings(Config.setting_files("../config", ENV.fetch("RAILS_ENV", nil)))

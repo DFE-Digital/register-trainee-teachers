@@ -2,6 +2,6 @@
 
 source "https://rubygems.org"
 
+gem "config", "~> 5.6"
 gem "govuk_tech_docs"
 gem "middleman-minify-html"
-gem "config", "~> 5.6"

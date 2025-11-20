@@ -15,7 +15,6 @@ RSpec.describe BulkUpdate::AddTrainees::V20250::ImportRows do
 
         described_class.call(trainee_upload)
 
-
         expect(BulkUpdate::AddTrainees::ImportRow).not_to have_received(:call)
       end
     end
