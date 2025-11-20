@@ -16,7 +16,7 @@ describe "`GET /info` endpoint" do
     it_behaves_like "a register API endpoint", "/api/v2026.0/info"
 
     it "shows the requested version" do
-      expect(response.parsed_body).to eq({ "status" => "ok", "version" => { "latest" => "v2026.0", "requested" => "v2026.0" } })
+      expect(response.parsed_body).to eq({ "status" => "ok", "version" => { "latest" => "v2025.0", "requested" => "v2026.0" } })
     end
   end
 end
