@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe BulkUpdate::AddTrainees::V20250::ImportRows do
+RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
   describe "#call" do
     let!(:nationality) { create(:nationality, :british) }
     let!(:academic_cycle) { create(:academic_cycle, :current) }
