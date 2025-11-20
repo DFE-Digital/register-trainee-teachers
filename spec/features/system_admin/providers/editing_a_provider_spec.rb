@@ -8,7 +8,7 @@ feature "Edit providers" do
     let(:existing_provider) { create(:provider) }
     let(:accreditation_id) { Faker::Number.number(digits: 4) }
     let(:provider) { build(:provider) }
-    let(:authentication_token) { create(:authentication_token, provider:, created_by: user) }
+    let(:authentication_token) { create(:authentication_token, provider: provider, created_by: user) }
 
     before do
       given_i_am_authenticated(user:)
