@@ -11,7 +11,7 @@ class CookiePreferencesController < ApplicationController
     @cookie_preferences_form = CookiePreferencesForm.new(cookies, cookie_preferences_params)
 
     if @cookie_preferences_form.save
-      redirect_back(fallback_location: root_path, flash: { success: t("cookies.preference_updated") })
+      redirect_back_or_to(root_path, flash: { success: t("cookies.preference_updated") })
     else
       render(:show)
     end

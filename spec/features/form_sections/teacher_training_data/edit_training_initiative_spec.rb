@@ -67,7 +67,7 @@ private
 
   def and_i_update_the_training_initiative(initiative = "international_relocation_payment")
     radio_button = training_initiative_page.find("input[value='#{initiative}']", visible: :all)
-    radio_button.click if radio_button.present?
+    radio_button.presence&.click
   end
 
   def and_i_submit_the_form
