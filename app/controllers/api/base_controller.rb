@@ -86,7 +86,7 @@ module Api
     end
 
     def valid_authentication_token?
-      auth_token.present? && auth_token.active?
+      auth_token.present? && auth_token.active? && current_provider&.kept?
     end
 
     def auth_token

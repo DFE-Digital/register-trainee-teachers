@@ -2,9 +2,12 @@
 
 RSpec.shared_examples "a register API endpoint", openapi: false do |url, openapi: false|
   context "with a valid authentication token" do
-    let(:auth_token) { create(:authentication_token) }
+    let(:auth_token) do
+      super() || create(:authentication_token)
+    end
+
     let(:token) do
-      super() || auth_token.token
+      auth_token.token
     end
 
     before do
@@ -30,7 +33,7 @@ RSpec.shared_examples "a register API endpoint", openapi: false do |url, openapi
     end
 
     context "for a discarded provider" do
-      before { auth_token.provider.discard }
+      before { auth_token.provider.discard! }
 
       it "returns status code 401", openapi: do
         get "/api/v2025.0/info", headers: { Authorization: token }
