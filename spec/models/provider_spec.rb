@@ -397,5 +397,19 @@ describe Provider do
         expect(expired_token.reload).to be_expired
       end
     end
+
+    context "when the provider has associated users" do
+      let!(:users) { create_list(:user, 2, providers: [provider]) }
+
+      it "discards the provider and discards the provider_users leaving the users" do
+        provider.discard
+        expect(provider.reload.discarded?).to be(true)
+
+        users.each do |user|
+          expect(user.reload.providers).to be_empty
+          expect(user.discarded?).to be(false)
+        end
+      end
+    end
   end
 end
