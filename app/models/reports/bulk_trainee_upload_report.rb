@@ -4,7 +4,9 @@ module Reports
   class BulkTraineeUploadReport < TemplateClassCsv
     include ActionView::Helpers::TextHelper
 
-    HEADERS = (BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys + ["Validation results", "Errors"]).freeze
+    HEADERS = (
+      BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys +
+      ["Validation results", "Errors"]).freeze
 
     def initialize(csv, scope:)
       @csv = csv

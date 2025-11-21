@@ -9,7 +9,7 @@ class AddTraineeCsvValueSanitiser < CsvValueSanitiser
 
   def safe?
     super &&
-      (!@key.in?(BulkUpdate::AddTrainees::ImportRows::PREFIXED_HEADERS) ||
+      (!@key.in?(BulkUpdate::AddTrainees::VERSION::ImportRows::PREFIXED_HEADERS) ||
       @value.blank? ||
       @value.start_with?("'"))
   end

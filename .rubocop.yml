@@ -148,6 +148,9 @@ RSpec/SpecFilePathFormat:
     - "spec/data_migrations/**/*"
     - "spec/models/api/**/*"
     - "spec/services/api/**/*"
+    - "spec/services/bulk_update/add_trainees/**/*"
+    - "spec/forms/bulk_update/v20*/**/*"
+    - "spec/models/reports/v20*/**/*"
     - "spec/requests/api/**/*"
     - "spec/serializers/api/**/*"
 
