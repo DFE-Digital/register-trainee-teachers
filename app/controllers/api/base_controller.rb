@@ -66,7 +66,7 @@ module Api
     end
 
     def update_last_used_at_on_token!
-      return unless valid_authentication_token?
+      return unless Api::ValidateAuthenticationToken.call(auth_token:)
 
       auth_token.update_last_used_at!
     end
@@ -83,10 +83,6 @@ module Api
       body[:errors] = enhanced_errors_serializer.new(body[:errors]).as_hash
 
       response.body = body.to_json
-    end
-
-    def valid_authentication_token?
-      auth_token.present? && auth_token.active? && current_provider&.kept?
     end
 
     def auth_token
