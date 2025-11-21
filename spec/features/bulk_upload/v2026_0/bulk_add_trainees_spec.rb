@@ -8,6 +8,7 @@ feature "bulk add trainees" do
   include FileHelper
 
   before do
+    stub_const("BulkUpdate::AddTrainees::Config::VERSION", "v2026.0")
     stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20260)
 
     allow(Trainees::SubmitForTrn).to receive(:call).and_call_original

@@ -256,13 +256,13 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
   describe "documentation cross-checks" do
     let(:documentation_fields) { YAML.load_file(CsvFields::View::FIELD_DEFINITION_PATH) }
 
-    BulkUpdate::AddTrainees::V20250::ImportRows::TRAINEE_HEADERS.each_value do |id|
+    BulkUpdate::AddTrainees::V20260::ImportRows::TRAINEE_HEADERS.each_value do |id|
       it "documents field with id #{id}" do
         expect(documentation_fields.map { |field| field["technical"] }).to include(id)
       end
     end
 
-    BulkUpdate::AddTrainees::V20250::ImportRows::TRAINEE_HEADERS.each_key do |name|
+    BulkUpdate::AddTrainees::V20260::ImportRows::TRAINEE_HEADERS.each_key do |name|
       it "documents field with name #{name}" do
         expect(documentation_fields.map { |field| field["field_name"] }).to include(name)
       end
@@ -273,7 +273,7 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
     let(:file_path) { Rails.public_path.join("csv/bulk_create_trainee.csv") }
     let(:headers) { CSVSafe.new(File.open(file_path), headers: true, encoding: "UTF-8").read.headers }
 
-    BulkUpdate::AddTrainees::V20250::ImportRows::ALL_HEADERS.each_key do |name|
+    BulkUpdate::AddTrainees::V20260::ImportRows::ALL_HEADERS.each_key do |name|
       it "includes column header #{name}" do
         expect(headers).to include(name)
       end
