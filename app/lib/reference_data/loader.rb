@@ -3,6 +3,9 @@
 require 'singleton'
 
 module ReferenceData
+  class UnknownReferenceDataTypeError < StandardError
+  end
+
   class Loader
     include Singleton
 
@@ -10,6 +13,15 @@ module ReferenceData
 
     def find(type_name)
       @types_by_name[type_name]
+    end
+
+    def enum_values_for(type_name)
+      type = find(type_name)
+      raise UnknownReferenceDataTypeError unless type
+
+      type.values.each_with_object({}) do |value, enum_hash|
+        enum_hash[value.name] = value.id
+      end
     end
 
   private

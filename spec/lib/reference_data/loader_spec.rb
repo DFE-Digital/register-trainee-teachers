@@ -39,4 +39,18 @@ RSpec.describe ReferenceData::Loader do
       expect(wheel_size_type).to be_nil
     end
   end
+
+  describe "#enum_values_for" do
+    it "returns a hash of enum values for the given reference data type name" do
+      enum_values = described_class.instance.enum_values_for("trainee_study_mode")
+      expect(enum_values).to eq({
+        "part_time" => 0,
+        "full_time" => 1,
+      })
+    end
+
+    it "raises an error for unknown reference data type" do
+      expect { described_class.instance.enum_values_for("wheel_size") }.to raise_error(ReferenceData::UnknownReferenceDataTypeError)
+    end
+  end
 end
