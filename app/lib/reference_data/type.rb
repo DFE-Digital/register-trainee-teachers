@@ -23,5 +23,13 @@ module ReferenceData
     def find(identifier)
       @values_by_id[identifier.to_s] || @values_by_name[identifier.to_s]
     end
+
+    def ids
+      @values_by_id.keys
+    end
+
+    def names
+      @values.map(&:name)
+    end
   end
 end
