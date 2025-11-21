@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class ValidateAuthenticationToken < BaseService
     attr_reader :auth_token
