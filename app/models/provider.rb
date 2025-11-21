@@ -70,6 +70,8 @@ class Provider < ApplicationRecord
 
   before_update :update_courses, if: :code_changed?
 
+  before_discard :revoke_active_authentication_tokens, :delete_all_provider_users
+
   pg_search_scope :search,
                   against: %i[name code ukprn],
                   using: {
@@ -170,5 +172,13 @@ private
 
   def name_normalised
     ReplaceAbbreviation.call(string: StripPunctuation.call(string: name))
+  end
+
+  def revoke_active_authentication_tokens
+    AuthenticationToken.where(provider_id: id).active.each(&:revoke!)
+  end
+
+  def delete_all_provider_users
+    provider_users.destroy_all
   end
 end

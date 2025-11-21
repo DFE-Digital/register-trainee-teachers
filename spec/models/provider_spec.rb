@@ -379,4 +379,37 @@ describe Provider do
       end
     end
   end
+
+  describe "#discard" do
+    let(:provider) { create(:provider) }
+
+    context "when the provider has associated authentication tokens" do
+      let!(:active_tokens) { create_list(:authentication_token, 2, provider:) }
+      let!(:expired_token) { create(:authentication_token, :expired, provider:) }
+
+      it "discards the provider and revokes the active tokens" do
+        provider.discard
+        expect(provider.reload.discarded?).to be(true)
+
+        active_tokens.each do |token|
+          expect(token.reload).to be_revoked
+        end
+        expect(expired_token.reload).to be_expired
+      end
+    end
+
+    context "when the provider has associated users" do
+      let!(:users) { create_list(:user, 2, providers: [provider]) }
+
+      it "discards the provider and discards the provider_users leaving the users" do
+        provider.discard
+        expect(provider.reload.discarded?).to be(true)
+
+        users.each do |user|
+          expect(user.reload.providers).to be_empty
+          expect(user.discarded?).to be(false)
+        end
+      end
+    end
+  end
 end
