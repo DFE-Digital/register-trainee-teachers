@@ -264,7 +264,7 @@ FactoryBot.define do
     end
 
     trait :with_study_mode_and_course_dates do
-      study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
+      study_mode { ReferenceData::TRAINEE_STUDY_MODES.names.sample }
       itt_start_date { compute_valid_past_itt_start_date }
       itt_end_date do
         additional_years = if [2, 9, 10].include?(training_route)
@@ -279,7 +279,7 @@ FactoryBot.define do
     end
 
     trait :with_study_mode_and_future_course_dates do
-      study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
+      study_mode { ReferenceData::TRAINEE_STUDY_MODES.names.sample }
       itt_start_date { Faker::Date.in_date_period(month: ACADEMIC_CYCLE_START_MONTH, year: current_academic_year + 1) }
       itt_end_date do
         additional_years = if [2, 9, 10].include?(training_route)

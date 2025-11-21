@@ -11,7 +11,7 @@ class BackfillStudyMode < ActiveRecord::Migration[6.1]
   end
 
   def course_study_mode_if_valid(course)
-    course.study_mode if TRAINEE_STUDY_MODE_ENUMS.keys.include?(course.study_mode)
+    course.study_mode if ReferenceData::TRAINEE_STUDY_MODES.names.include?(course.study_mode)
   end
 
   def down

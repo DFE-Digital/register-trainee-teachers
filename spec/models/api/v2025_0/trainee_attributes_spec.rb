@@ -226,7 +226,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
       end
 
       context "when included in the list of HESA study modes" do
-        TRAINEE_STUDY_MODE_ENUMS.each_key do |study_mode|
+        ReferenceData::TRAINEE_STUDY_MODES.names.each do |study_mode|
           subject { described_class.new(study_mode:) }
 
           it "is expected to allow #{study_mode}" do
