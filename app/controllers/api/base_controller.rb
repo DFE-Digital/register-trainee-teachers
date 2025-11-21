@@ -40,7 +40,7 @@ module Api
     end
 
     def authenticate!
-      return if valid_authentication_token?
+      return if Api::ValidateAuthenticationToken.call(auth_token:)
 
       render(status: :unauthorized, json: { error: "Unauthorized" })
     end
