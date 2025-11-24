@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SystemAdmin
-  class LeadPartnersController < ApplicationController
+  class TrainingPartnersController < ApplicationController
     def index
       @lead_partners = policy_scope(
         LeadPartner,

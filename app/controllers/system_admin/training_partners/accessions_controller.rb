@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SystemAdmin
-  module LeadPartners
+  module TrainingPartners
     class AccessionsController < ApplicationController
       before_action :load_models
 

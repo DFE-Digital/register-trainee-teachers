@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class LeadPartnersController < BaseController
+  class TrainingPartnersController < BaseController
     before_action :lead_partner_applicable
     before_action :validate_form_completeness
 
@@ -13,7 +13,7 @@ module Trainees
 
     def update
       if @lead_partner_form.lead_partner_not_selected? && @lead_partner_form.valid?
-        return redirect_to(trainee_lead_partners_path(@trainee, query:))
+        return redirect_to(trainee_training_partners_path(@trainee, query:))
       end
 
       if @lead_partner_form.stash_or_save!
@@ -54,7 +54,7 @@ module Trainees
 
     def lead_partner_applicable
       if lead_partner_form.lead_partner_not_applicable?
-        redirect_to(edit_trainee_lead_partners_details_path(trainee))
+        redirect_to(edit_trainee_training_partners_details_path(trainee))
       end
     end
 
