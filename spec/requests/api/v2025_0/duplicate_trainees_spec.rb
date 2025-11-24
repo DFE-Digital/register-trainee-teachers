@@ -24,7 +24,7 @@ describe "Trainees API" do
           itt_end_date: trainee.itt_end_date,
           diversity_disclosure: "diversity_disclosed",
           course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
-          study_mode: ReferenceData::TRAINEE_STUDY_MODES.find("full_time").hesa_codes.first,
+          study_mode: ReferenceData::TRAINEE_STUDY_MODES.find("full_time").hesa_codes.last,
           nationality: "GB",
           itt_aim: "202",
           itt_qualification_aim: "001",
