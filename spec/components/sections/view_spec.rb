@@ -188,7 +188,7 @@ module Sections
           in_progress_valid: "trainee_training_details_confirm_path",
         },
         schools: {
-          incomplete: "edit_trainee_lead_partners_path",
+          incomplete: "edit_trainee_training_partners_path",
           in_progress_valid: "trainee_schools_confirm_path",
         },
         funding: {
