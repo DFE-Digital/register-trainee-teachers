@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "singleton"
+require "singleton"
 
 module ReferenceData
   class UnknownReferenceDataTypeError < StandardError
@@ -17,7 +18,7 @@ module ReferenceData
 
     def enum_values_for(type_name)
       type = find(type_name)
-      raise UnknownReferenceDataTypeError unless type
+      raise(UnknownReferenceDataTypeError) unless type
 
       type.values.each_with_object({}) do |value, enum_hash|
         enum_hash[value.name] = value.id
