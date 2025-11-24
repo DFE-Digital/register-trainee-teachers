@@ -227,7 +227,7 @@ private
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).not_to have_content("Revoked by")
-      expect(token_management_page).not_to have_content("Expires on")
+      expect(token_management_page).to have_content("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
       expect(token_management_page).not_to have_content("Expired")
       expect(token_management_page).to have_link("Revoke")
     end
@@ -258,7 +258,7 @@ private
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Revoked by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).not_to have_content("Expires on")
+      expect(token_management_page).to have_content("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
       expect(token_management_page).not_to have_content("Expired")
       expect(token_management_page).not_to have_link("Revoke")
     end

@@ -23,7 +23,6 @@ RSpec.describe AuthenticationToken do
 
   describe "scopes" do
     describe "::will_expire" do
-      let!(:active_token) { create(:authentication_token) }
       let!(:active_token_will_expire_today) { create(:authentication_token, expires_at: date) }
       let!(:active_token_should_have_expired_yesterday) { create(:authentication_token, expires_at: 1.day.ago) }
       let!(:active_token_will_expire_in_the_future) { create(:authentication_token, :will_expire) }
@@ -75,6 +74,7 @@ RSpec.describe AuthenticationToken do
       described_class.create_with_random_token(
         provider: provider,
         name: "Provider test token",
+        expires_at: 6.months.from_now,
         created_by: user,
       )
     end
@@ -131,6 +131,7 @@ RSpec.describe AuthenticationToken do
         described_class.create_with_random_token(
           name: "hmac_token",
           provider: provider,
+          expires_at: 6.months.from_now,
           created_by: user,
         )
       end
