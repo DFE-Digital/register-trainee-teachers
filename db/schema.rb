@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_07_154220) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -127,7 +127,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_154220) do
   create_table "authentication_tokens", force: :cascade do |t|
     t.string "hashed_token"
     t.bigint "provider_id", null: false
-    t.date "expires_at"
+    t.date "expires_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
