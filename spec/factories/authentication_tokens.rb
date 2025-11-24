@@ -9,6 +9,8 @@ FactoryBot.define do
     name { "test token" }
     last_used_at { Time.current }
 
+    will_expire
+
     trait :will_expire do
       expires_at { 1.month.from_now }
     end
