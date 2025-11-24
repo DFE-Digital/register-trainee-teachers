@@ -118,7 +118,7 @@ Rails.application.routes.draw do
 
   resources :trainees, except: :edit do
     scope module: :trainees do
-      namespace :lead_partners, path: "training-partners" do
+      namespace :training_partners, path: "training-partners" do
         resource :details, only: %i[edit update]
       end
 
