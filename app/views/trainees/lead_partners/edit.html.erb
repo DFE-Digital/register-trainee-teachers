@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @lead_partner_form, url: trainee_lead_partners_path(@trainee), local: true,
+    <%= register_form_with model: @lead_partner_form, url: trainee_training_partners_path(@trainee), local: true,
                            html: { data: { module: "app-lead-partners-autocomplete" } } do |f| %>
       <%= f.govuk_error_summary %>
 
@@ -36,3 +36,4 @@
 <% unless @trainee.draft? %>
   <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
 <% end %>
+

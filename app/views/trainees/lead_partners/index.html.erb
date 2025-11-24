@@ -3,14 +3,14 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: "Back",
-    href: edit_trainee_lead_partners_path,
+    href: edit_trainee_training_partners_path,
   ) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @lead_partner_form,
-                           url: trainee_lead_partners_path(@trainee, query: params[:query]),
+                           url: trainee_training_partners_path(@trainee, query: params[:query]),
                            method: :put,
                            local: true) do |f| %>
       <% render (@lead_partner_search.lead_partners.empty? ? "no_results" : "results"), f: f %>

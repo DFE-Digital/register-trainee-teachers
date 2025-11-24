@@ -63,7 +63,7 @@
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
               <% user.lead_partners.each do |lead_partner| %>
                 <%= govuk_link_to(lead_partner.name,
-                                  lead_partner_path(lead_partner, context: :users),
+                                  training_partner_path(lead_partner, context: :users),
                                   class: "govuk-!-display-block") %>
               <% end %>
             </span>

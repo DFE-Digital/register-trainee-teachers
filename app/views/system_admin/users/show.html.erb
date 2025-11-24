@@ -74,7 +74,7 @@
         <% @user.lead_partners.each do |lead_partner| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-              <%= govuk_link_to lead_partner.name, lead_partner_path(lead_partner), class: "lead-partner" %>
+              <%= govuk_link_to lead_partner.name, training_partner_path(lead_partner), class: "lead-partner" %>
             </td>
             <td class="govuk-table__cell">
               <%= govuk_link_to "Remove<span class=\"govuk-visually-hidden\"> access to #{lead_partner.name}</span>".html_safe,
@@ -93,7 +93,7 @@
 
 <%= render GovukButtonLinkTo::View.new(
   body: "Add user to a training partner",
-  url: new_user_lead_partner_path(@user),
+  url: new_user_training_partner_path(@user),
   class_option: "govuk-button--secondary add-user-lead-partner",
 ) %>
 
