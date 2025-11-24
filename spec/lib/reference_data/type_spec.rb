@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ReferenceData::Type do
-    subject(:type) { ReferenceData::Loader.instance.find("trainee_study_mode") }
+  subject(:type) { ReferenceData::Loader.instance.find("trainee_study_mode") }
 
   describe "#name" do
     it "has the correct name value" do
@@ -53,6 +53,36 @@ RSpec.describe ReferenceData::Type do
 
     it "returns nil for unknown reference data values" do
       expect(type.find("over_time")).to be_nil
+    end
+  end
+
+  describe "#ids" do
+    it "returns all ids as strings" do
+      expect(type.ids).to contain_exactly("0", "1")
+    end
+  end
+
+  describe "#hesa_codes" do
+    it "returns all HESA codes as strings" do
+      expect(type.hesa_codes).to contain_exactly("31", "64", "01", "02", "63")
+    end
+  end
+
+  describe "#find_by_hesa_code" do
+    it "can lookup reference data value by HESA code" do
+      part_time_value = type.find_by_hesa_code("31")
+      expect(part_time_value).to be_present
+      expect(part_time_value).to be_a(ReferenceData::Value)
+    end
+
+    it "can lookup reference data value by alternate HESA code" do
+      part_time_value = type.find_by_hesa_code("64")
+      expect(part_time_value).to be_present
+      expect(part_time_value).to be_a(ReferenceData::Value)
+    end
+
+    it "returns nil for unknown HESA codes" do
+      expect(type.find_by_hesa_code("99")).to be_nil
     end
   end
 end
