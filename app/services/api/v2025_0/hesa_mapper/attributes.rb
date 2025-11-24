@@ -196,11 +196,11 @@ module Api
         end
 
         def study_mode
-          mapped_value = ::Hesa::CodeSets::StudyModes::MAPPING[params[:study_mode]]
+          mapped_value = ::ReferenceData::TRAINEE_STUDY_MODES.find_by_hese_code(params[:study_mode])&.id
 
           return InvalidValue.new(params[:study_mode]) if params[:study_mode].present? && mapped_value.nil?
 
-          TRAINEE_STUDY_MODE_ENUMS.invert[mapped_value]
+          mapped_value
         end
 
         def course_age_range

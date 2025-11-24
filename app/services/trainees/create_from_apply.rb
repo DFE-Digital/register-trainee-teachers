@@ -13,7 +13,7 @@ module Trainees
       @raw_trainee = application_record.application.dig("attributes", "candidate")
       @raw_contact_details = application_record.application.dig("attributes", "contact_details")
       @disability_uuids = raw_trainee["disabilities_and_health_conditions"]&.filter_map { |d| d["uuid"] } || []
-      @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
+      @study_mode = ::ReferenceData::TRAINEE_STUDY_MODES.find(@raw_course["study_mode"])&.id
       @disabilities = Disability.where(uuid: disability_uuids)
       @trainee = Trainee.new(mapped_attributes)
       @personal_details_form = PersonalDetailsForm.new(trainee, params: { nationality_names: })

@@ -36,7 +36,7 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
       course_subject_one: course_subject_one,
-      study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
+      study_mode: ReferenceData::TRAINEE_STUDY_MODES.find("full_time").hesa_codes.first,
       disability1: disability1,
       disability2: disability2,
       degrees_attributes: [

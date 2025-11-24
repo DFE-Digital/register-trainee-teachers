@@ -10,13 +10,20 @@ module ReferenceData
       @values = values
       @values_by_id = @values.index_by(&:id).transform_keys(&:to_s).with_indifferent_access
       @values_by_name = @values.index_by(&:name).transform_keys(&:to_s).with_indifferent_access
+      @values_by_hesa_code = {}.tap do |hash|
+        @values.each do |value|
+          value.hesa_codes.each do |hesa_code|
+            hash[hesa_code.to_s] = value
+          end
+        end
+      end
     end
 
     def self.from_yaml(metadata:, data:)
       new(
         name: metadata[:name],
         display_name: metadata[:display_name],
-        values: data.map { |value_attrs| ReferenceData::Value.from_yaml(value_attrs.with_indifferent_access) }
+        values: data.map { |value_attrs| ReferenceData::Value.from_yaml(value_attrs.with_indifferent_access) },
       )
     end
 
@@ -30,6 +37,14 @@ module ReferenceData
 
     def names
       @values.map(&:name)
+    end
+
+    def hesa_codes
+      @values_by_hesa_code.keys
+    end
+
+    def find_by_hesa_code(hesa_code)
+      @values_by_hesa_code[hesa_code.to_s]
     end
   end
 end
