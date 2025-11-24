@@ -5,7 +5,7 @@
 <%= render "system_admin/tab_nav" %>
 
 <%= register_form_with(
-  url: lead_partners_path,
+  url: training_partners_path,
   local: true,
   method: :get,
   html: { data: { module: "app-lead-partners-autocomplete" } },
@@ -39,7 +39,7 @@
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= govuk_link_to(lead_partner.name, lead_partner_path(lead_partner)) %>
+            <%= govuk_link_to(lead_partner.name, training_partner_path(lead_partner)) %>
           </span>
         </td>
 

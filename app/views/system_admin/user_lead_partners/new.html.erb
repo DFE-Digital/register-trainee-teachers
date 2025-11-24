@@ -3,7 +3,7 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= register_form_with(
         model: @lead_partner_form,
-        url: user_lead_partners_path(@user),
+        url: user_training_partners_path(@user),
         local: true,
         html: { data: { module: "app-lead-partners-autocomplete" } },
       ) do |f| %>

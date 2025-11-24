@@ -3,7 +3,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: t(:back),
-    href: params[:context] == "users" ? users_path : lead_partners_path,
+    href: params[:context] == "users" ? users_path : training_partners_path,
   ) %>
 <% end %>
 
@@ -72,7 +72,7 @@
 </dl>
 
 <%= render TabNavigation::View.new(items: [
-  { name: "Users", url: lead_partner_path(@lead_partner) },
+  { name: "Users", url: training_partner_path(@lead_partner) },
 ]) %>
 
 <% if @lead_partner.users.kept.any? %>
