@@ -5,7 +5,7 @@
     <span class="govuk-caption-l"><%= @user.name %></span>
     <h1 class="govuk-heading-l">Remove <%= @user.name %>’s access to <%= @lead_partner.name %>?</h1>
     <%= govuk_button_to "Yes I’m sure – remove #{@user.name}’s access to #{@lead_partner.name}",
-                        user_lead_partner_accessions_path(@user, @lead_partner),
+                        user_training_partner_accessions_path(@user, @lead_partner),
                         method: :delete,
                         class: "govuk-button govuk-button--warning" %>
     <%= govuk_link_to("Cancel", user_path(@user), class: "govuk-link--no-visited-state govuk-body") %>
