@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'singleton'
+require "singleton"
 
 module ReferenceData
   class UnknownReferenceDataTypeError < StandardError
@@ -17,7 +17,7 @@ module ReferenceData
 
     def enum_values_for(type_name)
       type = find(type_name)
-      raise UnknownReferenceDataTypeError unless type
+      raise(UnknownReferenceDataTypeError) unless type
 
       type.values.each_with_object({}) do |value, enum_hash|
         enum_hash[value.name] = value.id
@@ -31,7 +31,7 @@ module ReferenceData
     end
 
     def load_all
-      @types = Dir[Rails.root.join("config", "reference_data", "*.yml")].map do |file_path|
+      @types = Rails.root.glob("config/reference_data/*.yml").map do |file_path|
         type_data = YAML.load_file(file_path)
         ReferenceData::Type.from_yaml(
           metadata: type_data["metadata"].with_indifferent_access,

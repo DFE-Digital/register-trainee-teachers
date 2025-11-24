@@ -34,7 +34,7 @@ RSpec.describe ReferenceData::Type do
     end
 
     it "can lookup reference data value by `id` as a string" do
-      part_time_value = type.find('0')
+      part_time_value = type.find("0")
       expect(part_time_value).to be_present
       expect(part_time_value).to be_a(ReferenceData::Value)
     end
