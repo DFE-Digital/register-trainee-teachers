@@ -136,7 +136,7 @@ module Api
 
       validates :study_mode, api_inclusion: {
         in: ReferenceData::TRAINEE_STUDY_MODES.names,
-        valid_values: Hesa::CodeSets::StudyModes::MAPPING.keys,
+        valid_values: ReferenceData::TRAINEE_STUDY_MODES.hesa_codes,
       }, allow_blank: true
 
       validates :nationality, api_inclusion: {
