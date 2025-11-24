@@ -785,9 +785,9 @@ en:
         grade: *degree_path
         graduation_year: *degree_path
         country: *degree_path
-        lead_partner_id: &lead_partner_path edit_trainee_lead_partners_details_path
+        lead_partner_id: &training_partner_path edit_trainee_training_partners_details_path
         employing_school_id: edit_trainee_employing_schools_details_path
-        school_id: *lead_partner_path
+        school_id: *training_partner_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
         trainee_start_date_radio_option: *trainee_start_date_path
         provider_trainee_id: edit_trainee_training_details_path
@@ -1226,7 +1226,7 @@ en:
       edit:
         confirm_course: Confirm course
         edit_details: Edit details for this trainee only
-    lead_partners:
+    training_partners:
       details:
         edit:
           heading: Is there a training partner?

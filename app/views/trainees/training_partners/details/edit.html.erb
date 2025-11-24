@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @lead_partner_form, url: trainee_lead_partners_details_path(@trainee) do |f| %>
+    <%= register_form_with model: @lead_partner_form, url: trainee_training_partners_details_path(@trainee) do |f| %>
 
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons :lead_partner_not_applicable,
