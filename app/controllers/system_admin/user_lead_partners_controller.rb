@@ -18,7 +18,7 @@ module SystemAdmin
       @lead_partner_form = UserLeadPartnersForm.new(lead_partner_params.merge(user: @user))
 
       if @lead_partner_form.partner_not_selected? && @lead_partner_form.valid?
-        return redirect_to(user_lead_partners_path(query:))
+        return redirect_to(user_training_partners_path(query:))
       end
 
       if @lead_partner_form.save

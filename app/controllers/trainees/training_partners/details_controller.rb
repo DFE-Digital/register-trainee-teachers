@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  module LeadPartners
+  module TrainingPartners
     class DetailsController < BaseController
       def edit
         @lead_partner_form = Partners::LeadPartnerForm.new(trainee)
@@ -12,7 +12,7 @@ module Trainees
 
         if @lead_partner_form.stash_or_save!
           if @lead_partner_form.lead_partner_applicable?
-            redirect_to(edit_trainee_lead_partners_path(trainee))
+            redirect_to(edit_trainee_training_partners_path(trainee))
           else
             redirect_to(step_wizard.next_step)
           end
