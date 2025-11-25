@@ -8,7 +8,7 @@ feature "Organisation details" do
   end
 
   let!(:token_four) { create(:authentication_token, :revoked, provider: provider, name: "Token 4", created_by: user) }
-  let!(:token_two) { create(:authentication_token, :will_expire, name: "Token 2", provider: provider, created_by: user, last_used_at: 1.day.ago) }
+  let!(:token_two) { create(:authentication_token, name: "Token 2", provider: provider, created_by: user, last_used_at: 1.day.ago) }
   let!(:token_one) { create(:authentication_token, name: "Token 1", provider: provider, created_by: user) }
   let!(:token_three) { create(:authentication_token, :expired, provider: provider, name: "Token 3", created_by: user) }
   let!(:token_five) { create(:authentication_token, name: "Token 5", created_by: user) }

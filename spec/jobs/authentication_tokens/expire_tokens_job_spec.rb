@@ -8,7 +8,7 @@ RSpec.describe AuthenticationTokens::ExpireTokensJob do
   describe "#perform" do
     let!(:token_will_expire_today) { create(:authentication_token, expires_at: Date.current) }
     let!(:token_should_have_expired_in_the_past) { create(:authentication_token, expires_at: 1.day.ago) }
-    let!(:token_will_expire_in_the_future) { create(:authentication_token, :will_expire) }
+    let!(:token_will_expire_in_the_future) { create(:authentication_token) }
     let!(:token_wont_expire) { create(:authentication_token) }
     let!(:token_expired) { create(:authentication_token, :expired) }
     let!(:token_revoked) { create(:authentication_token, :revoked) }

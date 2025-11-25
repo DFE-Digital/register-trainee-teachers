@@ -25,9 +25,9 @@ RSpec.describe AuthenticationToken do
     describe "::will_expire" do
       let!(:active_token_will_expire_today) { create(:authentication_token, expires_at: date) }
       let!(:active_token_should_have_expired_yesterday) { create(:authentication_token, expires_at: 1.day.ago) }
-      let!(:active_token_will_expire_in_the_future) { create(:authentication_token, :will_expire) }
+      let!(:active_token_will_expire_in_the_future) { create(:authentication_token) }
       let!(:expired_token) { create(:authentication_token, :expired) }
-      let!(:revoked_token) { create(:authentication_token, :will_expire, :revoked) }
+      let!(:revoked_token) { create(:authentication_token, :revoked) }
 
       let(:date) { Time.current.to_date }
 

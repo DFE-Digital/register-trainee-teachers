@@ -113,7 +113,7 @@ namespace :example_data do
 
       FactoryBot.create(:authentication_token, :revoked, provider: provider, revoked_by: persona)
       FactoryBot.create(:authentication_token, provider: provider, last_used_at: 1.day.ago)
-      FactoryBot.create(:authentication_token, :will_expire, provider:)
+      FactoryBot.create(:authentication_token, provider:)
       FactoryBot.create(:authentication_token, :expired, provider:)
 
       if persona_attributes[:lead_partner]
