@@ -891,7 +891,7 @@ private
 
   def then_i_receive_the_empty_csv_file
     expect(page.response_headers["content-type"]).to eq("text/csv")
-    expect(download_filename).to eq("v2025_0_bulk_create_trainee.csv")
+    expect(download_filename).to eq("v2026_0_bulk_create_trainee.csv")
     expect(download_content).to eq(empty_file_with_headers_content)
   end
 
