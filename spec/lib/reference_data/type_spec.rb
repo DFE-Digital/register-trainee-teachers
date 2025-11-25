@@ -85,4 +85,16 @@ RSpec.describe ReferenceData::Type do
       expect(type.find_by_hesa_code("99")).to be_nil
     end
   end
+
+  describe "#method_missing" do
+    it "responds to dynamic finders for name" do
+      full_time_value = type.full_time
+      expect(full_time_value).to be_present
+      expect(full_time_value).to be_a(ReferenceData::Value)
+    end
+
+    it "returns nil for unknown dynamic finders" do
+      expect { type.over_time }.to raise_error(NoMethodError)
+    end
+  end
 end
