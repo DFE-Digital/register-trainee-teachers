@@ -46,5 +46,17 @@ module ReferenceData
     def find_by_hesa_code(hesa_code)
       @values_by_hesa_code[hesa_code.to_s]
     end
+
+    def method_missing(method_name, *args)
+      if names.include?(method_name.to_s)
+        find(method_name)
+      else
+        super
+      end
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      names.include?(method_name.to_s) || super
+    end
   end
 end
