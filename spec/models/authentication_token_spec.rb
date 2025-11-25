@@ -40,7 +40,7 @@ RSpec.describe AuthenticationToken do
       end
 
       context "when date is not present" do
-        it "returns all the active tokens with an expired_at date" do
+        it "returns all the active tokens" do
           expect(described_class.will_expire).to contain_exactly(
             active_token_will_expire_today,
             active_token_should_have_expired_yesterday,
