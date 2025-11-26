@@ -68,7 +68,7 @@ class AuthenticationToken < ApplicationRecord
     if date.present?
       active.where(expires_at: ..date)
     else
-      active.where.not(expires_at: nil)
+      active
     end
   }
 

@@ -7,11 +7,8 @@ FactoryBot.define do
     provider
     created_by { provider.users.first }
     name { "test token" }
+    expires_at { 1.month.from_now }
     last_used_at { Time.current }
-
-    trait :will_expire do
-      expires_at { 1.month.from_now }
-    end
 
     trait :expired do
       status { :expired }
