@@ -15,7 +15,7 @@ module Wizards
 
     def start_point
       return unless forms_to_complete?
-      return edit_trainee_lead_partners_path(trainee) unless lead_partner_selected?
+      return edit_trainee_training_partners_path(trainee) unless lead_partner_selected?
 
       edit_trainee_employing_schools_path(trainee)
     end
