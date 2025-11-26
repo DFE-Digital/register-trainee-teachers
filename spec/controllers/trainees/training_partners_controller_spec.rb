@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Trainees::LeadPartnersController do
+describe Trainees::TrainingPartnersController do
   describe "#update" do
     let(:lead_partner) { create(:lead_partner, :school) }
 
