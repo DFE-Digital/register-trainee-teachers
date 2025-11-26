@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.lead_partners.index", has_errors: @lead_partner_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.training_partners.index", has_errors: @training_partner_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @lead_partner_form,
+    <%= register_form_with(model: @training_partner_form,
                            url: trainee_training_partners_path(@trainee, query: params[:query]),
                            method: :put,
                            local: true) do |f| %>
