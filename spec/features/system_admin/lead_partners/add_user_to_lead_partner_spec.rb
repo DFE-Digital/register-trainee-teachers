@@ -75,7 +75,7 @@ feature "Add user to lead partners" do
   end
 
   def then_i_see_the_add_to_lead_partner_page
-    expect(page).to have_current_path(new_user_lead_partner_path(user))
+    expect(page).to have_current_path(new_user_training_partner_path(user))
     expect(page).to have_content("Add a training partner for #{user.name}")
   end
 
@@ -98,7 +98,7 @@ feature "Add user to lead partners" do
 
   def then_i_see_the_user_added_to_the_lead_partner
     expect(page).to have_content("Training partner added")
-    expect(page).to have_link("Garibaldi School", href: lead_partner_path(school_lead_partner))
+    expect(page).to have_link("Garibaldi School", href: training_partner_path(school_lead_partner))
   end
 
   def when_i_click_the_lead_partner_link
@@ -106,7 +106,7 @@ feature "Add user to lead partners" do
   end
 
   def then_i_see_the_lead_partner_detail_page
-    expect(page).to have_current_path(lead_partner_path(school_lead_partner))
+    expect(page).to have_current_path(training_partner_path(school_lead_partner))
     expect(page).to have_content("Garibaldi School")
   end
 
@@ -121,7 +121,7 @@ feature "Add user to lead partners" do
   end
 
   def then_i_see_the_remove_lead_partner_page
-    expect(page).to have_current_path(edit_user_lead_partner_accessions_path(user, school_lead_partner))
+    expect(page).to have_current_path(edit_user_training_partner_accessions_path(user, school_lead_partner))
     expect(page).to have_content("Yes I’m sure – remove #{user.name}’s access to Garibaldi School")
   end
 
@@ -159,7 +159,7 @@ feature "Add user to lead partners" do
 
   def then_i_see_the_user_added_to_the_hei_lead_partner
     expect(page).to have_content("Training partner added")
-    expect(page).to have_link("Digestive University", href: lead_partner_path(hei_lead_partner2))
+    expect(page).to have_link("Digestive University", href: training_partner_path(hei_lead_partner2))
   end
 
   alias_method :when_i_enter_a_discarded_lead_partner_search_and_submit, :when_i_enter_a_lead_partner_search_and_submit
