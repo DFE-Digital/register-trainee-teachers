@@ -39,7 +39,7 @@ feature "List lead partners" do
   end
 
   def then_i_see_the_lead_partners_index_page
-    expect(page).to have_current_path(lead_partners_path)
+    expect(page).to have_current_path(training_partners_path)
   end
 
   def and_i_see_the_hei_lead_partner
@@ -57,7 +57,7 @@ feature "List lead partners" do
   end
 
   def then_i_see_the_school_lead_partner_detail_page
-    expect(page).to have_current_path(lead_partner_path(school_lead_partner.id))
+    expect(page).to have_current_path(training_partner_path(school_lead_partner.id))
     expect(page).to have_text("School Partner")
     expect(page).to have_text(school_lead_partner.urn)
     expect(page).to have_text(school_lead_partner.school.town)
@@ -74,7 +74,7 @@ feature "List lead partners" do
   end
 
   def then_i_see_the_hei_lead_partner_detail_page
-    expect(page).to have_current_path(lead_partner_path(hei_lead_partner.id))
+    expect(page).to have_current_path(training_partner_path(hei_lead_partner.id))
     expect(page).to have_text("HEI Partner")
     expect(page).to have_text(hei_lead_partner.provider.ukprn)
     expect(page).to have_text(hei_lead_partner.provider.code)
