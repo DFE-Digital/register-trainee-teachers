@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.lead_partners.edit", has_errors: @training_partner_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.training_partners.edit", has_errors: @training_partner_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>

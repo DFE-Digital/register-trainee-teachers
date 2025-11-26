@@ -501,7 +501,7 @@ en:
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
-        lead_partners:
+        training_partners:
           edit: Training partner
           index: Select the training partner
         employing_schools:

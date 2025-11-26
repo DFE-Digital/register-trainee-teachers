@@ -6,7 +6,7 @@
 
 <%= render TraineeName::View.new(@trainee) %>
 <%= f.govuk_radio_buttons_fieldset :lead_partner_id,
-  legend: { text: t("components.page_titles.trainees.lead_partners.index"), tag: "h1", size: "l" },
+  legend: { text: t("components.page_titles.trainees.training_partners.index"), tag: "h1", size: "l" },
   hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} ‘#{query}’" } do %>
     <% @lead_partner_search.lead_partners.each_with_index do |lead_partner, index| %>
       <%= f.govuk_radio_button :lead_partner_id, lead_partner.id,
