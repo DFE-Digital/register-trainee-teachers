@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Partners
-  class LeadPartnerForm < Form
+  class TrainingPartnerForm < Form
     LEAD_PARTNER_NOT_APPLICABLE_OPTION = Struct.new(:id, :name)
 
     FIELDS = %i[

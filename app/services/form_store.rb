@@ -30,7 +30,7 @@ class FormStore
     diversity
     degrees
     employing_school
-    lead_partner
+    training_partner
     schools
     training_initiative
     bursary

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Partners
-  describe LeadPartnerForm, type: :model do
+  describe TrainingPartnerForm, type: :model do
     let(:trainee) { create(:trainee) }
     let(:form_store) { class_double(FormStore) }
     let(:lead_partner_id) { create(:lead_partner, :school).id }
@@ -21,7 +21,7 @@ module Partners
       let(:params) { { "query" => "w" } }
 
       it "returns an error" do
-        expect(subject.errors[:query]).to include(I18n.t("activemodel.errors.models.lead_partners_form.attributes.query.length", count: 2))
+        expect(subject.errors[:query]).to include(I18n.t("activemodel.errors.models.training_partner_form.attributes.query.length", count: 2))
       end
     end
 
@@ -29,7 +29,7 @@ module Partners
       let(:params) { { "results_search_again_query" => "a", "lead_partner_id" => "results_search_again" } }
 
       it "returns an error against the search again query" do
-        expect(subject.errors[:results_search_again_query]).to include(I18n.t("activemodel.errors.models.lead_partners_form.attributes.query.length", count: 2))
+        expect(subject.errors[:results_search_again_query]).to include(I18n.t("activemodel.errors.models.training_partner_form.attributes.query.length", count: 2))
       end
     end
 
@@ -38,14 +38,14 @@ module Partners
 
       it "returns an error" do
         expect(subject.errors[:lead_partner_id]).to include(
-          I18n.t("activemodel.errors.models.partners/lead_partner_form.attributes.lead_partner_id.blank"),
+          I18n.t("activemodel.errors.models.partners/training_partner_form.attributes.lead_partner_id.blank"),
         )
       end
     end
 
     describe "#stash" do
-      it "uses FormStore to temporarily save the fields under a key combination of trainee ID and lead_partner" do
-        expect(form_store).to receive(:set).with(trainee.id, :lead_partner, subject.fields)
+      it "uses FormStore to temporarily save the fields under a key combination of trainee ID and training_partner" do
+        expect(form_store).to receive(:set).with(trainee.id, :training_partner, subject.fields)
 
         subject.stash
       end
@@ -54,7 +54,7 @@ module Partners
     describe "#save!" do
       before do
         allow(form_store).to receive(:get).and_return({ "lead_partner_id" => lead_partner_id })
-        allow(form_store).to receive(:set).with(trainee.id, :lead_partner, nil)
+        allow(form_store).to receive(:set).with(trainee.id, :training_partner, nil)
       end
 
       it "takes any data from the form store and saves it to the database" do

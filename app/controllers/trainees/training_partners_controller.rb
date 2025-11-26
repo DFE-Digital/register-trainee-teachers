@@ -12,14 +12,14 @@ module Trainees
     end
 
     def update
-      if @lead_partner_form.lead_partner_not_selected? && @lead_partner_form.valid?
+      if @training_partner_form.lead_partner_not_selected? && @training_partner_form.valid?
         return redirect_to(trainee_training_partners_path(@trainee, query:))
       end
 
-      if @lead_partner_form.stash_or_save!
+      if @training_partner_form.stash_or_save!
         redirect_to(step_wizard.next_step)
       else
-        @lead_partner_search = LeadPartnerSearch.call(query: params[:query])
+        @training_partner_search = TrainingPartnerSearch.call(query: params[:query])
         render(index_or_edit_page)
       end
     end
@@ -29,7 +29,7 @@ module Trainees
     def trainee_params
       params.fetch(:partners_lead_partner_form, {})
             .permit(:lead_partner_id,
-                    *Partners::LeadPartnerForm::NON_TRAINEE_FIELDS)
+                    *Partners::TrainingPartnerForm::NON_TRAINEE_FIELDS)
     end
 
     def query
@@ -41,11 +41,11 @@ module Trainees
     end
 
     def index_or_edit_page
-      @lead_partner_form.search_results_found? || @lead_partner_form.no_results_searching_again? ? :index : :edit
+      @training_partner_form.search_results_found? || @training_partner_form.no_results_searching_again? ? :index : :edit
     end
 
-    def lead_partner_form
-      @lead_partner_form ||= Partners::LeadPartnerForm.new(
+    def training_partner_form
+      @training_partner_form ||= Partners::TrainingPartnerForm.new(
         trainee,
         params: trainee_params,
         user: current_user,
@@ -53,7 +53,7 @@ module Trainees
     end
 
     def lead_partner_applicable
-      if lead_partner_form.lead_partner_not_applicable?
+      if training_partner_form.lead_partner_not_applicable?
         redirect_to(edit_trainee_training_partners_details_path(trainee))
       end
     end

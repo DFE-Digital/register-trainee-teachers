@@ -21,7 +21,7 @@ describe Trainees::TrainingPartnersController do
       let(:user) { build_current_user(user: create(:user, providers: [trainee.provider])) }
 
       before do
-        post(:update, params: { trainee_id: trainee, partners_lead_partner_form: params })
+        post(:update, params: { trainee_id: trainee, partners_training_partner_form: params })
       end
 
       it "redirects to trainee employing school details page" do
@@ -34,7 +34,7 @@ describe Trainees::TrainingPartnersController do
       let(:user) { build_current_user(user: create(:user, providers: [trainee.provider])) }
 
       before do
-        post(:update, params: { trainee_id: trainee, partners_lead_partner_form: params })
+        post(:update, params: { trainee_id: trainee, partners_training_partner_form: params })
       end
 
       it "redirects to schools confirmation page" do
