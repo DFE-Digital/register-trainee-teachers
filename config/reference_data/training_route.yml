@@ -1,0 +1,87 @@
+metadata:
+  source: "HESA"
+  name: "training_route"
+  display_name: "Training route"
+  change_log:
+    - date: "2025-11-26"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: 0
+    name: "assessment_only"
+    display_name: "Assessment only"
+    description: "Assessment only training route"
+    hesa_codes:
+  - id: 1
+    name: "provider_led_postgrad"
+    display_name: "Provider-led postgrad"
+    description: "Provider-led postgrad training route"
+    hesa_codes:
+      - "12"
+  - id: 2
+    name: "early_years_undergrad"
+    display_name: "Early-years undergrad"
+    description: "Early-years undergrad training route"
+    hesa_codes:
+  - id: 3
+    name: "school_direct_tuition_fee"
+    display_name: "School direct tuition fee"
+    description: "School direct tuition fee training route"
+    hesa_codes:
+      - "02"
+  - id: 4
+    name: "school_direct_salaried"
+    display_name: "School direct salaried"
+    description: "School direct salaried training route"
+    hesa_codes:
+      - "03"
+  - id: 5
+    name: "pg_teaching_apprenticeship"
+    display_name: "Postgrad teaching apprenticeship"
+    description: "Postgrad teaching apprenticeship training route"
+    hesa_codes:
+      - "10"
+  - id: 6
+    name: "early_years_assessment_only"
+    display_name: "Early years assessment only"
+    description: "Early years assessment only training route"
+    hesa_codes:
+  - id: 7
+    name: "early_years_salaried"
+    display_name: "Early years salaried"
+    description: "Early years salaried training route"
+    hesa_codes:
+  - id: 8
+    name: "early_years_postgrad"
+    display_name: "Early years postgrad"
+    description: "Early years postgrad training route"
+    hesa_codes:
+  - id: 9
+    name: "provider_led_undergrad"
+    display_name: "Provider-led undergrad"
+    description: "Provider-led undergrad training route"
+    hesa_codes:
+      - "11"
+  - id: 10
+    name: "opt_in_undergrad"
+    display_name: "Opt-in undergrad"
+    description: "Opt-in undergrad training route"
+    hesa_codes:
+      - "09"
+  - id: 11
+    name: "hpitt_postgrad"
+    display_name: "HPITT postgrad"
+    description: "HPITT postgrad training route"
+    hesa_codes:
+  - id: 12
+    name: "iqts"
+    display_name: "iQTS"
+    description: "iQTS training route"
+    hesa_codes:
+  - id: 14
+    name: "teacher_degree_apprenticeship"
+    display_name: "Teacher degree apprenticeship"
+    description: "Teacher degree apprenticeship training route"
+    hesa_codes:
+      - "14"
