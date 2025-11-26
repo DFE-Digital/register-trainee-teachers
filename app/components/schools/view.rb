@@ -32,7 +32,7 @@ module Schools
 
     def lead_partner_not_applicable?
       if data_model.is_a?(Schools::FormValidator)
-        data_model.lead_partner_form.lead_partner_not_applicable?
+        data_model.training_partner_form.lead_partner_not_applicable?
       else
         data_model.lead_partner_not_applicable?
       end

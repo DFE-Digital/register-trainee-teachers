@@ -43,7 +43,7 @@ module Wizards
     end
 
     def lead_partner_selected?
-      ::Partners::LeadPartnerForm.new(trainee, params: { non_search_validation: true }).valid?
+      ::Partners::TrainingPartnerForm.new(trainee, params: { non_search_validation: true }).valid?
     end
 
     def progress_service

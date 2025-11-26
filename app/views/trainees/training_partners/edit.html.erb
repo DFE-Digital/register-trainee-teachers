@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.lead_partners.edit", has_errors: @lead_partner_form.errors.present?) %>
+<%= render PageTitle::View.new(i18n_key: "trainees.lead_partners.edit", has_errors: @training_partner_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -6,7 +6,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @lead_partner_form, url: trainee_training_partners_path(@trainee), local: true,
+    <%= register_form_with model: @training_partner_form, url: trainee_training_partners_path(@trainee), local: true,
                            html: { data: { module: "app-lead-partners-autocomplete" } } do |f| %>
       <%= f.govuk_error_summary %>
 
@@ -20,7 +20,7 @@
         width: "three-quarters",
       ) %>
       <div id="lead-partners-autocomplete-element" class="govuk-!-width-three-quarters"
-           data-default-value="<%= query %>" data-field-name="partners_lead_partner_form[query]"></div>
+           data-default-value="<%= query %>" data-field-name="partners_training_partner_form[query]"></div>
 
       <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
 

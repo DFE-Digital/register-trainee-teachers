@@ -2000,7 +2000,7 @@ en:
               length:
                 one: Enter at least one character
                 other: Enter at least %{count} characters
-        lead_partners_form:
+        training_partner_form:
           attributes:
             query:
               length:
@@ -2026,7 +2026,7 @@ en:
               not_valid: The training partner section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
-        partners/lead_partner_form:
+        partners/training_partner_form:
           attributes:
             query:
               blank: Enter a partner unique reference number (URN), name or postcode
