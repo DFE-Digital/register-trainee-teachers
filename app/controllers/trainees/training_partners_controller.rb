@@ -27,7 +27,7 @@ module Trainees
   private
 
     def trainee_params
-      params.fetch(:partners_lead_partner_form, {})
+      params.fetch(:partners_training_partner_form, {})
             .permit(:lead_partner_id,
                     *Partners::TrainingPartnerForm::NON_TRAINEE_FIELDS)
     end
