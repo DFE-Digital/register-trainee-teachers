@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SystemAdmin
-  class UserLeadPartnersController < ApplicationController
+  class UserTrainingPartnersController < ApplicationController
     before_action :set_user
     helper_method :query
 

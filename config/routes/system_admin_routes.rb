@@ -46,7 +46,7 @@ module SystemAdminRoutes
             resource :accessions, controller: "providers/accessions", only: %i[edit destroy]
           end
 
-          resources :training_partners, controller: "user_lead_partners", only: %i[index new create], path: "training-partners" do
+          resources :training_partners, controller: "user_training_partners", only: %i[index new create], path: "training-partners" do
             resource :accessions, controller: "training_partners/accessions", only: %i[edit destroy]
           end
 
