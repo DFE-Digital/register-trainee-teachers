@@ -271,7 +271,7 @@ jobs:
     - name: Restore backup to staging database
       shell: bash
       run: |
-        bin/konduit.sh -n bat-staging -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
+        bin/konduit.sh -n bat-production -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
 
     - name: Check for Failure
       uses: ./.github/actions/send-slack-notification/
