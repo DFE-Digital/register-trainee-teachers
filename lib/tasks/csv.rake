@@ -13,7 +13,7 @@ namespace :csv do
         prefixed_row = {}
         row.to_h.each do |key, value|
           prefixed_value =
-            if key.in?(BulkUpdate::AddTrainees::ImportRows::PREFIXED_HEADERS) &&
+            if key.in?(BulkUpdate::AddTrainees::VERSION::ImportRows::PREFIXED_HEADERS) &&
                 value.is_a?(String) &&
                 value.present? &&
                 !value.start_with?("'")
@@ -28,7 +28,7 @@ namespace :csv do
 
       # Write the updated content back to the file
       CSV.open(file, "w") do |csv|
-        csv << BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
+        csv << BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys
         prefixed_rows.each { |row| csv << row.values }
       end
     end

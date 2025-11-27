@@ -2087,7 +2087,7 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/v20250/trainee_attributes:
+        api/v20250/trainee_attributes: &v20250_trainee_attributes
           attributes:
             inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
             inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
@@ -2127,7 +2127,7 @@ en:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:
                 invalid: Employing School URN is invalid. The URN '%{value}' does not match any known schools
-        api/v20250/withdrawal_attributes:
+        api/v20250/withdrawal_attributes: &v20250_withdrawal_attributes
           attributes:
             reasons:
               inclusion: Choose one or more reasons why the trainee withdrew from the course
@@ -2144,7 +2144,7 @@ en:
               blank: Enter another reason
             safeguarding_concern_reasons:
               blank: Enter the concerns
-        api/v20250/hesa_trainee_detail_attributes:
+        api/v20250/hesa_trainee_detail_attributes: &v20250_hesa_trainee_detail_attributes
           attributes:
             fund_code:
               ineligible: &ineligible is not valid for this trainee
@@ -2160,7 +2160,7 @@ en:
               blank: must be entered if 202 selected for itt_aim
               csv:
                 blank: must be entered if 202 selected for ITT Aim
-        api/v20250/degree_attributes:
+        api/v20250/degree_attributes: &v20250_degree_attributes
           duplicate: This is a duplicate degree
           attributes:
             uk_degree:
@@ -2177,6 +2177,15 @@ en:
               csv:
                 future: Enter a year that is in the past, for example 2014
                 invalid: Enter a valid graduation year
+
+        api/v20260/trainee_attributes:
+          <<: *v20250_trainee_attributes
+        api/v20260/withdrawal_attributes:
+          <<: *v20250_withdrawal_attributes
+        api/v20260/hesa_trainee_detail_attributes:
+          <<: *v20250_hesa_trainee_detail_attributes
+        api/v20260/degree_attributes:
+          <<: *v20250_degree_attributes
         api/create_trainee:
           duplicate: This trainee is already in Register
         api/trainees/award_recommendation_service:
