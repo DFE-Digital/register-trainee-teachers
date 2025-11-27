@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "LeadPartnerSearch" do
+feature "TrainingPartnerSearch" do
   before do
     given_i_am_authenticated
     given_a_provider_led_postgrad_trainee_exists

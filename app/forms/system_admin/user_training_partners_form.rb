@@ -19,7 +19,7 @@ module SystemAdmin
     validates :query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: QUERY_ERROR,
               },
               if: -> { initial_search? }
@@ -27,7 +27,7 @@ module SystemAdmin
     validates :results_search_again_query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: QUERY_ERROR,
               },
               if: -> { results_searching_again? }
@@ -35,7 +35,7 @@ module SystemAdmin
     validates :no_results_search_again_query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: QUERY_ERROR,
               },
               if: -> { no_results_searching_again? }

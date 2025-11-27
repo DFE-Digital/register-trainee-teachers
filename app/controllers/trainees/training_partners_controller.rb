@@ -8,7 +8,7 @@ module Trainees
     helper_method :query
 
     def index
-      @lead_partner_search = LeadPartnerSearch.call(query:)
+      @training_partner_search = TrainingPartnerSearch.call(query:)
     end
 
     def update

@@ -6,7 +6,7 @@
 <%= form.govuk_radio_buttons_fieldset :lead_partner_id,
   legend: { text: t("components.page_titles.trainees.training_partners.index"), tag: "h1", size: "l" },
   hint: { text: "#{t('components.page_titles.search_lead_partners.sub_text_results')} ‘#{query}’" } do %>
-    <% @lead_partner_search.lead_partners.each_with_index do |lead_partner, index| %>
+    <% @training_partner_search.lead_partners.each_with_index do |lead_partner, index| %>
       <%= form.govuk_radio_button :lead_partner_id, lead_partner.id,
                               checked: false,
                               label: { text: lead_partner.name },
@@ -27,8 +27,8 @@
 
 <%= render TrainingPartnerResultNotice::View.new(
   search_query: query,
-  search_limit: @lead_partner_search.limit,
-  search_count: @lead_partner_search.lead_partners.unscope(:limit).count,
+  search_limit: @training_partner_search.limit,
+  search_count: @training_partner_search.lead_partners.unscope(:limit).count,
 ) %>
 
 <%= form.govuk_submit %>

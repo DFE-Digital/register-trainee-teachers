@@ -7,7 +7,7 @@ module SystemAdmin
 
     def index
       @training_partner_form = UserTrainingPartnersForm.new
-      @lead_partner_search = LeadPartnerSearch.call(query:)
+      @training_partner_search = TrainingPartnerSearch.call(query:)
     end
 
     def new
@@ -24,7 +24,7 @@ module SystemAdmin
       if @training_partner_form.save
         redirect_to(user_path(@user), flash: { success: "Training partner added" })
       else
-        @lead_partner_search = LeadPartnerSearch.call(query: params[:query])
+        @training_partner_search = TrainingPartnerSearch.call(query: params[:query])
         render(index_or_new_page)
       end
     end

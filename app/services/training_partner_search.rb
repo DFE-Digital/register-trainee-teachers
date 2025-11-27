@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LeadPartnerSearch
+class TrainingPartnerSearch
   class Result
     attr_reader :lead_partners, :limit, :total_count
 
