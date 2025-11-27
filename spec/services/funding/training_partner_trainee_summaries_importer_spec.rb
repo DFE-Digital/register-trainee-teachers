@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Funding
-  describe LeadPartnerTraineeSummariesImporter do
+  describe TrainingPartnerTraineeSummariesImporter do
     describe described_class::SummaryRowMapper do
       describe "::TRAINING_ROUTES" do
         subject { described_class::TRAINING_ROUTES }
