@@ -9,11 +9,13 @@ describe FundingDataImporter do
 
       it "calls the TrainingPartnerTraineeSummariesImporter" do
         importer = FundingDataImporter.new(funding_upload)
+        expect(Funding::Parsers::TrainingPartnerTraineeSummaries).to receive(:to_attributes)
         expect(Funding::TrainingPartnerTraineeSummariesImporter).to receive(:call).with(attributes: anything)
         importer.import_data
       end
 
       it "sets the funding_upload status to failed if TrainingPartnerTraineeSummariesImporter returns missing URNs" do
+        allow(Funding::Parsers::TrainingPartnerTraineeSummaries).to receive(:to_attributes)
         allow(Funding::TrainingPartnerTraineeSummariesImporter).to receive(:call).and_return(%w[urn1 urn2])
         importer = FundingDataImporter.new(funding_upload)
         importer.import_data
