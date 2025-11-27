@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LeadPartnerResultNotice
+module TrainingPartnerResultNotice
   class ViewPreview < ViewComponent::Preview
     def with_one_remaining_record
       render(

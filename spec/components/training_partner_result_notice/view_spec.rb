@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module LeadPartnerResultNotice
+module TrainingPartnerResultNotice
   describe View, type: :component do
     let(:search_query) { "oxf" }
     let(:search_limit) { 15 }

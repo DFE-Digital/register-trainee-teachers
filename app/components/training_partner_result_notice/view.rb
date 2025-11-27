@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module LeadPartnerResultNotice
+module TrainingPartnerResultNotice
   class View < ApplicationComponent
     attr_reader :search_query
 
