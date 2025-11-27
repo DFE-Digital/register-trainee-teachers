@@ -23,7 +23,6 @@ module "web_application" {
 
   azure_resource_prefix   = var.azure_resource_prefix
   service_short           = var.service_short
-  azure_enable_monitoring = var.enable_container_monitoring
   kubernetes_cluster_id   = module.cluster_data.kubernetes_id
   enable_logit            = var.enable_logit
 
