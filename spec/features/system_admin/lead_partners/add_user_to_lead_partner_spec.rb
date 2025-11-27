@@ -80,7 +80,7 @@ feature "Add user to lead partners" do
   end
 
   def when_i_search_for_a_discarded_lead_partner
-    fill_in "system-admin-user-lead-partners-form-query-field", with: school_lead_partner.name
+    fill_in "system-admin-user-training-partners-form-query-field", with: school_lead_partner.name
   end
 
   def then_i_dont_see_matching_results
@@ -88,7 +88,7 @@ feature "Add user to lead partners" do
   end
 
   def when_i_select_a_lead_partner
-    fill_in "system-admin-user-lead-partners-form-query-field", with: school_lead_partner.name
+    fill_in "system-admin-user-training-partners-form-query-field", with: school_lead_partner.name
     first("input#lead-partners-id", visible: false).set(school_lead_partner.id)
   end
 
@@ -138,11 +138,11 @@ feature "Add user to lead partners" do
   end
 
   def when_i_enter_a_lead_partner_search_and_submit(name:)
-    if page.has_field?("system-admin-user-lead-partners-form-no-results-search-again-query-field")
-      fill_in("system-admin-user-lead-partners-form-no-results-search-again-query-field", with: name)
+    if page.has_field?("system-admin-user-training-partners-form-no-results-search-again-query-field")
+      fill_in("system-admin-user-training-partners-form-no-results-search-again-query-field", with: name)
       click_on("Search again")
     else
-      fill_in "system-admin-user-lead-partners-form-query-field", with: name
+      fill_in "system-admin-user-training-partners-form-query-field", with: name
       click_on("Continue")
     end
   end
