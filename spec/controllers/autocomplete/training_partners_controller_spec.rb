@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Autocomplete
-  describe LeadPartnersController do
+  describe TrainingPartnersController do
     describe "#index" do
       let(:json_response) { response.parsed_body }
 
