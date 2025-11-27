@@ -10,7 +10,7 @@ module PageObjects
           elements :remove_access_links, "a.remove-access"
         end
 
-        section :lead_partners, "#lead-partners" do
+        section :lead_partners, "#training-partners" do
           elements :remove_access_links, "a.remove-access"
         end
 

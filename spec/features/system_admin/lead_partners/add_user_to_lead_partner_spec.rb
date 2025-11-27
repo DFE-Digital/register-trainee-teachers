@@ -115,7 +115,7 @@ feature "Add user to lead partners" do
   end
 
   def and_i_click_the_remove_link
-    within("table#lead-partners") do
+    within("table#training-partners") do
       click_on("Remove")
     end
   end
