@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SystemAdmin
-  class UserLeadPartnersForm
+  class UserTrainingPartnersForm
     include ActiveModel::Model
 
     FIELDS = %i[
@@ -12,7 +12,7 @@ module SystemAdmin
       no_results_search_again_query
     ].freeze
 
-    QUERY_ERROR = I18n.t("activemodel.errors.models.system_admin/user_lead_partners_form.attributes.query.length")
+    QUERY_ERROR = I18n.t("activemodel.errors.models.system_admin/user_training_partners_form.attributes.query.length")
 
     validates :lead_partner_id, presence: true, if: :partner_validation_required?
 

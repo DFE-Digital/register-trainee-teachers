@@ -1588,7 +1588,7 @@ en:
           attributes:
             trainee:
               incomplete: Review all of the trainee’s details before submitting
-        system_admin/user_lead_partners_form:
+        system_admin/user_training_partners_form:
           attributes:
             query:
               blank: Enter a partner unique reference number (URN), name or postcode
