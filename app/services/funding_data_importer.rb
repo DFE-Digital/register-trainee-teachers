@@ -45,8 +45,7 @@ private
   end
 
   def import_lead_partner_trainee_summaries
-    attributes = Funding::Parsers::LeadPartnerTraineeSummaries.to_attributes(funding_upload: @funding_upload)
-    missing_urns = Funding::LeadPartnerTraineeSummariesImporter.call(attributes:)
+    missing_urns = Funding::TrainingPartnerTraineeSummariesImporter.call(attributes:)
     raise("Lead partner URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
   end
 end

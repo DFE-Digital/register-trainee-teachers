@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Funding
-  class LeadPartnerTraineeSummariesImporter < PayableTraineeSummariesImporter
+  class TrainingPartnerTraineeSummariesImporter < PayableTraineeSummariesImporter
     class SummaryRowMapper < PayableTraineeSummariesImporter::SummaryRowMapper
       TRAINING_ROUTES = {
         "School Direct salaried" => TRAINING_ROUTE_ENUMS[:school_direct_salaried],
