@@ -373,7 +373,7 @@ There is UI that the support agent that can use, so no need for a dev.
 1. Find the school in question, <https://www.register-trainee-teachers.service.gov.uk/system-admin/schools>
 2. Change `Is a lead partner?` from `No` to `Yes`
 3. Confirm it
-4. Verify it, <https://www.register-trainee-teachers.service.gov.uk/system-admin/lead-partners>
+4. Verify it, <https://www.register-trainee-teachers.service.gov.uk/system-admin/training-partners>
 
 ### Adding a previous trainee for a former accredited provider
 
