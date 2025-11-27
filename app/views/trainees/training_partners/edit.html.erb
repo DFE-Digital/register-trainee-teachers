@@ -7,7 +7,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with model: @training_partner_form, url: trainee_training_partners_path(@trainee), local: true,
-                           html: { data: { module: "app-lead-partners-autocomplete" } } do |f| %>
+                           html: { data: { module: "app-training-partners-autocomplete" } } do |f| %>
       <%= f.govuk_error_summary %>
 
       <%= render TraineeName::View.new(@trainee) %>
@@ -16,10 +16,10 @@
         label: { text: t(".heading"), size: "l", tag: "h1" },
         hint: { text: "#{t('.description')}<p>#{t('.hint')}</p>".html_safe },
         value: query,
-        "data-field" => "lead-partners-autocomplete",
+        "data-field" => "training-partners-autocomplete",
         width: "three-quarters",
       ) %>
-      <div id="lead-partners-autocomplete-element" class="govuk-!-width-three-quarters"
+      <div id="training-partners-autocomplete-element" class="govuk-!-width-three-quarters"
            data-default-value="<%= query %>" data-field-name="partners_training_partner_form[query]"></div>
 
       <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
