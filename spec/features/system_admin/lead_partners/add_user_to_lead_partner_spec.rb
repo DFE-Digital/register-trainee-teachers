@@ -50,7 +50,7 @@ feature "Add user to lead partners" do
       given_i_am_authenticated(user:)
     end
 
-    scenario "list lead partners page" do
+    scenario "list training partners page" do
       when_i_visit_the_user_page
       and_i_click_the_lead_partner_link
       then_i_see_the_add_to_lead_partner_page

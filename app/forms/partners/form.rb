@@ -15,7 +15,7 @@ module Partners
     validates :query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { lead_partner_applicable? && initial_search? }
@@ -23,7 +23,7 @@ module Partners
     validates :results_search_again_query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { results_searching_again? }
@@ -31,7 +31,7 @@ module Partners
     validates :no_results_search_again_query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { no_results_searching_again? }
