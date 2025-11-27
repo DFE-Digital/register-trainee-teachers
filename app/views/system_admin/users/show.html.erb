@@ -62,7 +62,7 @@
 <% if @user.lead_partners.any? %>
   <div class="govuk-grid-row">
     <div class ="govuk-grid-column-full">
-      <table id="lead-partners" class="govuk-table">
+      <table id="training-partners" class="govuk-table">
         <caption class="govuk-visually-hidden govuk-table__caption govuk-table__caption--m">Training partners</caption>
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
@@ -94,7 +94,7 @@
 <%= render GovukButtonLinkTo::View.new(
   body: "Add user to a training partner",
   url: new_user_training_partner_path(@user),
-  class_option: "govuk-button--secondary add-user-lead-partner",
+  class_option: "govuk-button--secondary add-user-training-partner",
 ) %>
 
 <p class="govuk-body">

@@ -2,7 +2,7 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import tracker from './tracker.js'
 import { guard, renderTemplate, setHiddenField } from './autocomplete/helpers.js'
 
-const $allAutocompleteElements = document.querySelectorAll('[data-module="app-lead-partners-autocomplete"]')
+const $allAutocompleteElements = document.querySelectorAll('[data-module="app-training-partners-autocomplete"]')
 const idElement = document.getElementById('lead-partners-id')
 
 let statusMessage = ' '
@@ -34,8 +34,8 @@ const findLeadPartners = ({ query, populateResults }) => {
 }
 
 const setupAutoComplete = (form) => {
-  const element = form.querySelector('#lead-partners-autocomplete-element')
-  const inputs = form.querySelectorAll('[data-field="lead-partners-autocomplete"]')
+  const element = form.querySelector('#training-partners-autocomplete-element')
+  const inputs = form.querySelectorAll('[data-field="training-partners-autocomplete"]')
   const defaultValueOption = element.getAttribute('data-default-value') || ''
   const fieldName = element.getAttribute('data-field-name') || ''
 
@@ -56,7 +56,7 @@ const setupAutoComplete = (form) => {
         },
         templates: renderTemplate,
         onConfirm: (value) => {
-          if (value?.id && element.dataset.systemAdminRedirectLeadPartner) {
+          if (value?.id && element.dataset.systemAdminRedirectTrainingPartner) {
             window.location.assign(`/system-admin/training-partners/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
