@@ -22,14 +22,14 @@ s189t01-tsc-test-aks
 - in s189-teacher-services-cloud-test subscription
 - in s189t01-tsc-ts-rg resource group
 - contains bat-qa and bat-staging namespaces
-- will hold register review apps, register-qa, register-staging
+- will hold register review apps, and register-qa
 - PIM self approval required
 
 s189p01-tsc-production-aks
 - in s189-teacher-services-cloud-production subscription
 - in s189p01-tsc-pd-rg resource group
 - contains bat-production namespace
-- will hold register-production, register-sandbox and register-productiondata
+- will hold register-production, register-sandbox, register-staging and register-productiondata
 - PIM approval required
 
 ## Authentication
