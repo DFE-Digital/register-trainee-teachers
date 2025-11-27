@@ -11,11 +11,11 @@ class FundingDataImporter
     when "provider_payment_schedule"
       import_provider_payment_schedules
     when "lead_partner_payment_schedule"
-      import_lead_partner_payment_schedules
+      import_training_partner_payment_schedules
     when "provider_trainee_summary"
       import_provider_trainee_summaries
     when "lead_partner_trainee_summary"
-      import_lead_partner_trainee_summaries
+      import_training_partner_trainee_summaries
     else
       return false
     end
@@ -32,7 +32,7 @@ private
     raise("Provider accreditation ids: #{missing_ids.join(', ')} not found") if missing_ids.present?
   end
 
-  def import_lead_partner_payment_schedules
+  def import_training_partner_payment_schedules
     attributes = Funding::Parsers::TrainingPartnerPaymentSchedules.to_attributes(funding_upload: @funding_upload)
     missing_urns = Funding::TrainingPartnerPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: @funding_upload.month)
     raise("Lead partner URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
@@ -44,7 +44,7 @@ private
     raise("Provider accreditation ids: #{missing_ids.join(', ')} not found") if missing_ids.present?
   end
 
-  def import_lead_partner_trainee_summaries
+  def import_training_partner_trainee_summaries
     attributes = Funding::Parsers::TrainingPartnerTraineeSummaries.to_attributes(funding_upload: @funding_upload)
     missing_urns = Funding::TrainingPartnerTraineeSummariesImporter.call(attributes:)
     raise("Lead partner URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
