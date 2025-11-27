@@ -27,7 +27,7 @@
   <% end %>
 <% end %>
 
-<%= render LeadPartnerResultNotice::View.new(
+<%= render TrainingPartnerResultNotice::View.new(
   search_query: query,
   search_limit: @lead_partner_search.limit,
   search_count: @lead_partner_search.lead_partners.unscope(:limit).count,
