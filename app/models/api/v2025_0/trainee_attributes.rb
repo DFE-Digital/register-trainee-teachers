@@ -309,11 +309,12 @@ module Api
     private
 
       def valid_training_routes
-        if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)
-        else
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values
-        end
+        ReferenceData::TRAINING_ROUTES.names(start_year:)
+        # if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
+        #   Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)
+        # else
+        #   Hesa::CodeSets::TrainingRoutes::MAPPING.values
+        # end
       end
 
       def start_year

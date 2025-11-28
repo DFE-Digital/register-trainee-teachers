@@ -35,8 +35,8 @@ module ReferenceData
       @values_by_id.keys
     end
 
-    def names
-      @values.map(&:name)
+    def names(year: nil)
+      valid_values_for(year:).map(&:name)
     end
 
     def hesa_codes
@@ -57,6 +57,12 @@ module ReferenceData
 
     def respond_to_missing?(method_name, include_private = false)
       names.include?(method_name.to_s) || super
+    end
+
+  private
+
+    def valid_values_for(year: nil)
+      @values.select { |value| value.valid_in?(year:) }
     end
   end
 end
