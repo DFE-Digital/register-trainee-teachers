@@ -53,20 +53,22 @@ ROUTE_INITIATIVES = {
 }.freeze
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
-  TRAINING_ROUTE_ENUMS.values_at(:provider_led_postgrad,
-                                 :provider_led_undergrad,
-                                 :teacher_degree_apprenticeship,
-                                 :school_direct_tuition_fee,
-                                 :school_direct_salaried,
-                                 :pg_teaching_apprenticeship).include?(training_route)
+  %w[
+    provider_led_postgrad
+    provider_led_undergrad
+    teacher_degree_apprenticeship
+    school_direct_tuition_fee
+    school_direct_salaried
+    pg_teaching_apprenticeship
+  ].include?(training_route)
 }.freeze
 
 UNDERGRAD_ROUTES = TRAINING_ROUTES.select { |training_route|
-  TRAINING_ROUTE_ENUMS.values_at(:early_years_undergrad, :provider_led_undergrad, :opt_in_undergrad, :teacher_degree_apprenticeship).include?(training_route)
+  %w[early_years_undergrad provider_led_undergrad opt_in_undergrad teacher_degree_apprenticeship].include?(training_route)
 }.freeze
 
 PLACEMENTS_ROUTES = TRAINING_ROUTES.select { |training_route|
-  TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :early_years_assessment_only).exclude?(training_route)
+  %w[assessment_only early_years_assessment_only].exclude?(training_route)
 }.freeze
 
 LEAD_PARTNER_ROUTES = %i[
@@ -87,8 +89,8 @@ EMPLOYING_SCHOOL_ROUTES = %i[
   teacher_degree_apprenticeship
 ].freeze
 
-TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
-  %i[assessment_only].include?(training_route)
+TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTES.keys.reject { |training_route|
+  %w[assessment_only].include?(training_route)
 }.freeze
 
 QTS_AWARD_TYPE = "QTS"
