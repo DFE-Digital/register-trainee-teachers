@@ -13,7 +13,7 @@
                            url: trainee_training_partners_path(@trainee, query: params[:query]),
                            method: :put,
                            local: true) do |f| %>
-      <% render (@training_partner_search.lead_partners.empty? ? "no_results" : "results"), f: f %>
+      <% render (@training_partner_search.training_partners.empty? ? "no_results" : "results"), f: f %>
     <% end %>
   </div>
 </div>
