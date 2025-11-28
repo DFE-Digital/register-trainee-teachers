@@ -18,7 +18,7 @@ describe ReviewDraft::ApplyDraft::View do
           expect(rendered_content).to have_text("Course details")
           expect(rendered_content).to have_text("Trainee data")
           expect(rendered_content).to have_text("Trainee ID")
-          expect(rendered_content).to have_text(lead_partner_and_employing_school_details_title(route))
+          expect(rendered_content).to have_text(training_partner_and_employing_school_details_title(route))
         end
 
         it "does not render non school-direct sections" do

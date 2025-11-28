@@ -24,7 +24,7 @@ module TrainingPartnerResultNotice
         let(:search_count) { 16 }
 
         it "renders the remaining search count" do
-          expected_text = I18n.t("components.lead_partner_result_notice.result_text", search_query:)
+          expected_text = I18n.t("components.training_partner_result_notice.result_text", search_query:)
 
           expect(rendered_content).to have_text(expected_text)
         end
@@ -35,7 +35,7 @@ module TrainingPartnerResultNotice
 
         it "renders the pluralised remaining search count" do
           expected_text = I18n.t(
-            "components.lead_partner_result_notice.multiple_result_text",
+            "components.training_partner_result_notice.multiple_result_text",
             search_query: search_query,
             remaining_search_count: expected_count,
           )

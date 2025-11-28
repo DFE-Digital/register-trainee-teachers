@@ -10,7 +10,7 @@ module TrainingPartnerHelper
 
   def training_partner_row(not_applicable: false)
     mappable_field(
-      not_applicable ? t(:not_applicable) : training_partner_detail(lead_partner),
+      not_applicable ? t(:not_applicable) : training_partner_detail(training_partner),
       t("components.training_partner_and_employing_school_details.training_partner_key"),
       change_paths(:training_partner),
     )
