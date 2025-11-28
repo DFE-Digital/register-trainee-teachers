@@ -1,0 +1,87 @@
+<%= render PageTitle::View.new(text: @training_partner.name) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: params[:context] == "users" ? users_path : training_partners_path,
+  ) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= @training_partner.name %></h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      URN
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @training_partner.urn %>
+    </dd>
+  </div>
+  <% if @training_partner.hei? %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        UKPRN
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @training_partner.provider&.ukprn %>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Provider code
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @training_partner.provider&.code %>
+      </dd>
+    </div>
+  <% else %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Town
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @training_partner.school&.town %>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Postcode
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @training_partner.school&.postcode %>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Open date
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @training_partner.school&.open_date&.strftime("%d %B %Y") %>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Close date
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= @training_partner.school&.close_date&.strftime("%d %B %Y") %>
+      </dd>
+    </div>
+  <% end %>
+</dl>
+
+<%= render TabNavigation::View.new(items: [
+  { name: "Users", url: training_partner_path(@training_partner) },
+]) %>
+
+<% if @training_partner.users.kept.any? %>
+  <% @training_partner.users.kept.each do |user| %>
+    <%= render UserCard::View.new(
+      user: user,
+      edit_path: "#",
+    ) %>
+  <% end %>
+<% else %>
+  <p class="govuk-body">There are no users yet.</p>
+<% end %>

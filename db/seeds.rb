@@ -60,7 +60,7 @@ ACADEMIC_CYCLES.each do |academic_cycle|
   AcademicCycle.find_or_create_by!(start_date: academic_cycle[:start_date], end_date: academic_cycle[:end_date])
 end
 
-SEED_FUNDING_RULES = [
+[
   {
     academic_cycle: AcademicCycle.for_year(2020),
     bursaries: BURSARIES_2020_TO_2021,
@@ -97,9 +97,7 @@ SEED_FUNDING_RULES = [
     scholarships: SCHOLARSHIPS_2025_TO_2026,
     grants: GRANTS_2025_TO_2026,
   },
-].freeze
-
-SEED_FUNDING_RULES.each do |rule|
+].each do |rule|
   rule[:bursaries].each do |b|
     bursary = FundingMethod.find_or_create_by!(training_route: b.training_route,
                                                amount: b.amount,

@@ -55,10 +55,10 @@ module TaskListHelper
         ).status,
       }
 
-    when :lead_partner_and_employing_school_details
+    when :training_partner_and_employing_school_details
       {
-        task_name: lead_partner_and_employing_school_details_title(trainee.training_route),
-        path: edit_trainee_lead_partners_details_path(trainee),
+        task_name: training_partner_and_employing_school_details_title(trainee.training_route),
+        path: edit_trainee_training_partners_details_path(trainee),
         confirm_path: trainee_schools_confirm_path(trainee),
         classes: "school-details",
         status: ProgressService.call(
@@ -168,7 +168,7 @@ module TaskListHelper
 
 private
 
-  def lead_partner_and_employing_school_details_title(route)
+  def training_partner_and_employing_school_details_title(route)
     I18n.t("components.review_draft.draft.schools.titles.#{route}")
   end
 end

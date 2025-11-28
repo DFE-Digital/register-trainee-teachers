@@ -65,7 +65,7 @@ private
   end
 
   def when_i_click_on_a_lead_partner_link
-    organisations_index_page.lead_partner_links.find { |link| link.text == lead_partner.name }.click
+    organisations_index_page.training_partner_links.find { |link| link.text == lead_partner.name }.click
   end
 
   def then_i_am_redirected_to_the_start_page

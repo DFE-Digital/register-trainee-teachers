@@ -40,7 +40,7 @@ describe ReviewDraft::Draft::View do
       let(:trainee) { create(:trainee, route) }
 
       it "renders additional school-direct specific sections" do
-        expect(rendered_content).to have_text(lead_partner_and_employing_school_details_title(route))
+        expect(rendered_content).to have_text(training_partner_and_employing_school_details_title(route))
       end
 
       it "does not render non school direct sections" do

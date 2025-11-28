@@ -15,7 +15,7 @@ module Wizards
 
     def start_point
       return unless forms_to_complete?
-      return edit_trainee_lead_partners_path(trainee) unless lead_partner_selected?
+      return edit_trainee_training_partners_path(trainee) unless training_partner_selected?
 
       edit_trainee_employing_schools_path(trainee)
     end
@@ -42,8 +42,8 @@ module Wizards
       page_tracker.last_origin_page_path&.include?("schools/confirm") || page_tracker.last_origin_page_path == "/trainees/#{trainee.slug}"
     end
 
-    def lead_partner_selected?
-      ::Partners::LeadPartnerForm.new(trainee, params: { non_search_validation: true }).valid?
+    def training_partner_selected?
+      ::Partners::TrainingPartnerForm.new(trainee, params: { non_search_validation: true }).valid?
     end
 
     def progress_service

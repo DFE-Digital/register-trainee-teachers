@@ -1,0 +1,29 @@
+<div class="govuk-form-group">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= register_form_with(
+        model: @training_partner_form,
+        url: user_training_partners_path(@user),
+        local: true,
+        html: { data: { module: "app-training-partners-autocomplete" } },
+      ) do |f| %>
+        <%= f.govuk_error_summary %>
+        <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
+
+        <%= f.govuk_text_field(
+          :query,
+          label: { text: "Add a training partner for #{@user.name}", size: "l", tag: "h1" },
+          hint: { text: "Search for a training partner by name, school postcode, school URN or training provider UKPRN" },
+          value: params[:query],
+          "data-field" => "training-partners-autocomplete",
+          width: "three-quarters",
+        ) %>
+
+        <div id="training-partners-autocomplete-element" class="govuk-!-width-three-quarters"
+            data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_training_partners_form[query]"></div>
+
+        <%= f.govuk_submit(t(:continue), class: "govuk-!-margin-top-4") %>
+      <% end %>
+    </div>
+  </div>
+</div>

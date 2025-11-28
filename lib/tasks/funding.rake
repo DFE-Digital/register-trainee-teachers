@@ -10,8 +10,8 @@ namespace :funding do
 
   desc "imports lead school payment schedules from a provided csv"
   task :import_lead_school_payment_schedules, %i[csv_path first_predicted_month_index] => [:environment] do |_, args|
-    attributes = Funding::Parsers::LeadPartnerPaymentSchedules.to_attributes(file_path: args.csv_path)
-    missing_urns = Funding::LeadPartnerPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: args.first_predicted_month_index)
+    attributes = Funding::Parsers::TrainingPartnerPaymentSchedules.to_attributes(file_path: args.csv_path)
+    missing_urns = Funding::TrainingPartnerPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: args.first_predicted_month_index)
     abort("Lead school URNs: #{missing_urns.join(', ')} not found") unless missing_urns.empty?
   end
 
@@ -24,8 +24,8 @@ namespace :funding do
 
   desc "imports lead school trainee summaries from a provided csv"
   task :import_lead_school_trainee_summaries, %i[csv_path] => [:environment] do |_, args|
-    attributes = Funding::Parsers::LeadPartnerTraineeSummaries.to_attributes(file_path: args.csv_path)
-    missing_urns = Funding::LeadPartnerTraineeSummariesImporter.call(attributes:)
+    attributes = Funding::Parsers::TrainingPartnerTraineeSummaries.to_attributes(file_path: args.csv_path)
+    missing_urns = Funding::TrainingPartnerTraineeSummariesImporter.call(attributes:)
     abort("Lead school URNs: #{missing_urns.join(', ')} not found") unless missing_urns.empty?
   end
 

@@ -15,15 +15,15 @@ module Partners
     validates :query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
-              if: -> { lead_partner_applicable? && initial_search? }
+              if: -> { training_partner_applicable? && initial_search? }
 
     validates :results_search_again_query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { results_searching_again? }
@@ -31,7 +31,7 @@ module Partners
     validates :no_results_search_again_query,
               presence: true,
               length: {
-                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
+                minimum: TrainingPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { no_results_searching_again? }
@@ -44,19 +44,19 @@ module Partners
       school_applicable? && school_id.to_i.zero?
     end
 
-    def lead_partner_not_selected?
-      lead_partner_applicable? && lead_partner_id.to_i.zero?
+    def training_partner_not_selected?
+      training_partner_applicable? && lead_partner_id.to_i.zero?
     end
 
     def no_results_searching_again?
       lead_partner_id == "no_results_search_again"
     end
 
-    def lead_partner_applicable?
-      !lead_partner_not_applicable?
+    def training_partner_applicable?
+      !training_partner_not_applicable?
     end
 
-    def lead_partner_not_applicable?
+    def training_partner_not_applicable?
       ActiveModel::Type::Boolean.new.cast(lead_partner_not_applicable)
     end
 
@@ -86,8 +86,8 @@ module Partners
       non_search_validation == true
     end
 
-    def lead_partner_validation_required?
-      lead_partner_applicable? && (non_search_validation? || (search_results_found? && results_search_again_query.blank?))
+    def training_partner_validation_required?
+      training_partner_applicable? && (non_search_validation? || (search_results_found? && results_search_again_query.blank?))
     end
   end
 end

@@ -1,0 +1,39 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.training_partners.edit", has_errors: @training_partner_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with model: @training_partner_form, url: trainee_training_partners_path(@trainee), local: true,
+                           html: { data: { module: "app-training-partners-autocomplete" } } do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= render TraineeName::View.new(@trainee) %>
+      <%= f.govuk_text_field(
+        :query,
+        label: { text: t(".heading"), size: "l", tag: "h1" },
+        hint: { text: "#{t('.description')}<p>#{t('.hint')}</p>".html_safe },
+        value: query,
+        "data-field" => "training-partners-autocomplete",
+        width: "three-quarters",
+      ) %>
+      <div id="training-partners-autocomplete-element" class="govuk-!-width-three-quarters"
+           data-default-value="<%= query %>" data-field-name="partners_training_partner_form[query]"></div>
+
+      <%= f.hidden_field :lead_partner_id, id: "training-partners-id" %>
+
+      <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
+
+      <%= f.govuk_submit t("continue") %>
+    <% end %>
+
+  </div>
+
+</div>
+
+<% unless @trainee.draft? %>
+  <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+<% end %>
+

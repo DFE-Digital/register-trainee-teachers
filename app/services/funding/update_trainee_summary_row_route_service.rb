@@ -5,7 +5,7 @@ module Funding
     include ServicePattern
 
     class TrainingRouteMapper
-      TRAINING_ROUTES = LeadPartnerTraineeSummariesImporter::SummaryRowMapper::TRAINING_ROUTES.merge(
+      TRAINING_ROUTES = TrainingPartnerTraineeSummariesImporter::SummaryRowMapper::TRAINING_ROUTES.merge(
         ProviderTraineeSummariesImporter::SummaryRowMapper::TRAINING_ROUTES,
       ).freeze
 
