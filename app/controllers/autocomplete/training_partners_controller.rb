@@ -5,11 +5,11 @@ module Autocomplete
     def index
       return error_response if invalid_query?
 
-      @training_partner_search = TrainingPartnerSearch.call(**args).lead_partners
+      @training_partner_search = TrainingPartnerSearch.call(**args).training_partners
 
       render(
         json: {
-          lead_partners: @training_partner_search.as_json(only: %i[id name urn ukprn]),
+          training_partners: @training_partner_search.as_json(only: %i[id name urn ukprn]),
         },
       )
     end
