@@ -8,7 +8,7 @@ module RecordDetails
     include ActionView::Helpers::SanitizeHelper
 
     let(:state) { :trn_received }
-    let(:training_route) { TRAINING_ROUTE_ENUMS[:assessment_only] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.assessment_only.name }
     let(:provider) { create(:provider) }
     let(:trainee) do
       create(
@@ -175,7 +175,7 @@ module RecordDetails
         end
 
         context "and the trainee is an EY trainee" do
-          let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+          let(:training_route) { ReferenceData::TRAINING_ROUTES.early_years_undergrad.name }
 
           it "renders the trainee recommended date" do
             expect(rendered_content).to have_text(date_for_summary_view(trainee.recommended_for_award_at))
@@ -191,7 +191,7 @@ module RecordDetails
         end
 
         context "and the trainee is an EY trainee" do
-          let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+          let(:training_route) { ReferenceData::TRAINING_ROUTES.early_years_undergrad.name }
 
           it "renders the trainee awarded date" do
             expect(rendered_content).to have_text(date_for_summary_view(trainee.awarded_at))

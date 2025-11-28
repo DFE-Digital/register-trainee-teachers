@@ -7,7 +7,7 @@ describe FundingMethod do
 
   describe "validations" do
     it { is_expected.to validate_presence_of(:training_route) }
-    it { is_expected.to validate_inclusion_of(:training_route).in_array(TRAINING_ROUTE_ENUMS.values) }
+    it { is_expected.to validate_inclusion_of(:training_route).in_array(ReferenceData::TRAINING_ROUTES.names) }
     it { is_expected.to validate_presence_of(:amount) }
   end
 

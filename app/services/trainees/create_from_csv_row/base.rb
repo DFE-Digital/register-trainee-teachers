@@ -10,17 +10,17 @@ module Trainees
       class Error < StandardError; end
 
       TRAINING_ROUTES = {
-        "Assessment only" => TRAINING_ROUTE_ENUMS[:assessment_only],
-        "Early years assessment only" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
-        "Early years graduate entry" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
-        "Early years graduate employment based" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
-        "Early years undergraduate" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],
-        "Opt-in (undergrad)" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
-        "Provider-led (postgrad)" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-        "Provider-led (undergrad)" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
-        "School direct (fee funded)" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-        "School direct (salaried)" => TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-        "Teaching apprenticeship (postgrad)" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+        "Assessment only" => ReferenceData::TRAINING_ROUTES.assessment_only.name,
+        "Early years assessment only" => ReferenceData::TRAINING_ROUTES.early_years_assessment_only.name,
+        "Early years graduate entry" => ReferenceData::TRAINING_ROUTES.early_years_postgrad.name,
+        "Early years graduate employment based" => ReferenceData::TRAINING_ROUTES.early_years_salaried.name,
+        "Early years undergraduate" => ReferenceData::TRAINING_ROUTES.early_years_undergrad.name,
+        "Opt-in (undergrad)" => ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name,
+        "Provider-led (postgrad)" => ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name,
+        "Provider-led (undergrad)" => ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name,
+        "School direct (fee funded)" => ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name,
+        "School direct (salaried)" => ReferenceData::TRAINING_ROUTES.school_direct_salaried.name,
+        "Teaching apprenticeship (postgrad)" => ReferenceData::TRAINING_ROUTES.pg_teaching_apprenticeship.name,
       }.freeze
 
       INITIATIVES = {
@@ -207,7 +207,7 @@ module Trainees
       end
 
       def training_route
-        TRAINING_ROUTE_ENUMS[:hpitt_postgrad]
+        ReferenceData::TRAINING_ROUTES.hpitt_postgrad.name
       end
 
       def training_initiative

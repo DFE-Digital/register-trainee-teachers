@@ -2,7 +2,7 @@
 
 BURSARIES_2022_TO_2023 = [
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    training_route: :provider_led_undergrad,
     amount: 9_000,
     allocation_subjects: [
       AllocationSubjects::MATHEMATICS,
@@ -10,7 +10,7 @@ BURSARIES_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 24_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -20,7 +20,7 @@ BURSARIES_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 15_000,
     allocation_subjects: [
       AllocationSubjects::DESIGN_AND_TECHNOLOGY,
@@ -30,14 +30,14 @@ BURSARIES_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 24_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -47,7 +47,7 @@ BURSARIES_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 15_000,
     allocation_subjects: [
       AllocationSubjects::DESIGN_AND_TECHNOLOGY,
@@ -57,14 +57,14 @@ BURSARIES_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    training_route: :opt_in_undergrad,
     amount: 9_000,
     allocation_subjects: [
       AllocationSubjects::MATHEMATICS,

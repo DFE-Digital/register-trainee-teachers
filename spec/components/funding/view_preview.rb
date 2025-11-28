@@ -16,7 +16,7 @@ module Funding
         course_subject_one: "Primary",
         course_age_range: [3, 11],
         itt_start_date: Date.new(2020, 0o1, 28),
-        training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+        training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name,
         training_initiative: ROUTE_INITIATIVES.keys.first,
       )
     end

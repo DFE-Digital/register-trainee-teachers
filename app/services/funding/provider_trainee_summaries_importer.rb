@@ -4,15 +4,15 @@ module Funding
   class ProviderTraineeSummariesImporter < PayableTraineeSummariesImporter
     class SummaryRowMapper < PayableTraineeSummariesImporter::SummaryRowMapper
       TRAINING_ROUTES = {
-        "EYITT Graduate entry" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
-        "EYITT Graduate employment-based" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
+        "EYITT Graduate entry" => ReferenceData::TRAINING_ROUTES.early_years_postgrad.name,
+        "EYITT Graduate employment-based" => ReferenceData::TRAINING_ROUTES.early_years_salaried.name,
         "Provider-led" => {
-          "PG" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-          "UG" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+          "PG" => ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name,
+          "UG" => ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name,
         },
-        "Undergraduate opt-in" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
-        "School Direct tuition fee" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-        "Teacher Degree Apprenticeship" => TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
+        "Undergraduate opt-in" => ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name,
+        "School Direct tuition fee" => ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name,
+        "Teacher Degree Apprenticeship" => ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name,
       }.freeze
 
       def to_h

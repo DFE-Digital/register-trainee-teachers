@@ -106,7 +106,7 @@ module Features
 
     def given_there_is_grant_funding_available_for_early_years_postgrad
       funding = OpenStruct.new(
-        training_route: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+        training_route: ReferenceData::TRAINING_ROUTES.early_years_postgrad.name,
         amount: 5_000,
         allocation_subjects: [
           AllocationSubjects::EARLY_YEARS_ITT,

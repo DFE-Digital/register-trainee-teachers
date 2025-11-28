@@ -14,7 +14,7 @@ FactoryBot.define do
 
     provider
 
-    training_route { TRAINING_ROUTE_ENUMS[:assessment_only] }
+    training_route { ReferenceData::TRAINING_ROUTES.assessment_only.name }
 
     first_names { Faker::Name.first_name }
     middle_names { Faker::Name.middle_name }
@@ -82,7 +82,7 @@ FactoryBot.define do
     end
 
     trait :with_training_route do
-      training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+      training_route { ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name }
     end
 
     trait :without_required_placements do
@@ -380,7 +380,7 @@ FactoryBot.define do
     end
 
     trait :provider_led_postgrad do
-      training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+      training_route { ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name }
       study_mode { COURSE_STUDY_MODES[:full_time] }
     end
 
@@ -392,45 +392,45 @@ FactoryBot.define do
     end
 
     trait :early_years_assessment_only do
-      training_route { TRAINING_ROUTE_ENUMS[:early_years_assessment_only] }
+      training_route { ReferenceData::TRAINING_ROUTES.early_years_assessment_only.name }
       with_early_years_course_details
     end
 
     trait :early_years_salaried do
-      training_route { TRAINING_ROUTE_ENUMS[:early_years_salaried] }
+      training_route { ReferenceData::TRAINING_ROUTES.early_years_salaried.name }
       with_early_years_course_details
     end
 
     trait :early_years_postgrad do
-      training_route { TRAINING_ROUTE_ENUMS[:early_years_postgrad] }
+      training_route { ReferenceData::TRAINING_ROUTES.early_years_postgrad.name }
       with_early_years_course_details
     end
 
     trait :early_years_undergrad do
-      training_route { TRAINING_ROUTE_ENUMS[:early_years_undergrad] }
+      training_route { ReferenceData::TRAINING_ROUTES.early_years_undergrad.name }
       with_early_years_course_details
     end
 
     trait :school_direct_tuition_fee do
-      training_route { TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] }
+      training_route { ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name }
       study_mode { COURSE_STUDY_MODES[:full_time] }
     end
 
     trait :school_direct_salaried do
-      training_route { TRAINING_ROUTE_ENUMS[:school_direct_salaried] }
+      training_route { ReferenceData::TRAINING_ROUTES.school_direct_salaried.name }
       study_mode { COURSE_STUDY_MODES[:full_time] }
     end
 
     trait :opt_in_undergrad do
-      training_route { TRAINING_ROUTE_ENUMS[:opt_in_undergrad] }
+      training_route { ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name }
     end
 
     trait :teacher_degree_apprenticeship do
-      training_route { TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] }
+      training_route { ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name }
     end
 
     trait :iqts do
-      training_route { TRAINING_ROUTE_ENUMS[:iqts] }
+      training_route { ReferenceData::TRAINING_ROUTES.iqts.name }
       iqts_country { CodeSets::Countries::MAPPING.keys.sample }
     end
 
@@ -711,7 +711,7 @@ FactoryBot.define do
     end
 
     trait :with_hpitt_provider do
-      training_route { TRAINING_ROUTE_ENUMS[:hpitt_postgrad] }
+      training_route { ReferenceData::TRAINING_ROUTES.hpitt_postgrad.name }
       region { CodeSets::Regions::MAPPING.keys.sample }
       provider factory: %i[provider teach_first]
     end

@@ -175,8 +175,8 @@ feature "Filtering trainees" do
 private
 
   def given_registered_trainees_exist_in_the_system
-    @assessment_only_trainee ||= create(:trainee, :submitted_for_trn, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
-    @provider_led_postgrad_trainee ||= create(:trainee, :submitted_for_trn, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+    @assessment_only_trainee ||= create(:trainee, :submitted_for_trn, training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name)
+    @provider_led_postgrad_trainee ||= create(:trainee, :submitted_for_trn, training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)
     @biology_trainee ||= create(:trainee, :submitted_for_trn, :with_subject_specialism, subject_name: CourseSubjects::BIOLOGY)
     @history_trainee ||= create(:trainee, :submitted_for_trn, :with_subject_specialism, subject_name: CourseSubjects::HISTORY)
     @searchable_trainee ||= create(:trainee, :submitted_for_trn, trn: "123")

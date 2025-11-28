@@ -70,7 +70,7 @@ class AddOldFundingMethods < ActiveRecord::Migration[6.1]
   ].freeze
 
   def up
-    TRAINING_ROUTE_ENUMS.each_value do |route|
+    ReferenceData::TRAINING_ROUTES.names.each do |route|
       BURSARIES_2019.each do |bursary|
         b = FundingMethod.find_or_create_by!(
           training_route: route,

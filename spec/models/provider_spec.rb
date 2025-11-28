@@ -180,7 +180,7 @@ describe Provider do
           :trainee,
           :trn_received,
           provider: provider,
-          training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+          training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name,
         )
       end
 
@@ -195,7 +195,7 @@ describe Provider do
           :trainee,
           :withdrawn,
           provider: provider,
-          training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+          training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name,
         )
       end
 

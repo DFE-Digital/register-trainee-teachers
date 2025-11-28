@@ -23,8 +23,11 @@ module CourseDetails
   private
 
     def mock_trainee_with_no_data(training_route_enums_key:)
-      @mock_trainee ||= Trainee.new(id: 1,
-                                    provider: Provider.new, training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key])
+      @mock_trainee ||= Trainee.new(
+        id: 1,
+        provider: Provider.new,
+        training_route: ReferenceData::TRAINING_ROUTES.find(training_route_enums_key).name,
+      )
     end
 
     def mock_trainee(training_route_enums_key:)
@@ -34,7 +37,7 @@ module CourseDetails
         course_subject_one: "Primary",
         course_age_range: [3, 11],
         itt_start_date: Date.new(2020, 1, 28),
-        training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key],
+        training_route: ReferenceData::TRAINING_ROUTES.find(training_route_enums_key).name,
       )
     end
 
@@ -46,7 +49,7 @@ module CourseDetails
         course_subject_two: "Science",
         course_age_range: [3, 11],
         itt_start_date: Date.new(2020, 1, 28),
-        training_route: TRAINING_ROUTE_ENUMS[training_route_enums_key],
+        training_route: ReferenceData::TRAINING_ROUTES.find(training_route_enums_key).name,
       )
     end
   end

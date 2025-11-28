@@ -2,7 +2,7 @@
 
 BURSARIES_2024_TO_2025 = [
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    training_route: :provider_led_undergrad,
     amount: 9_000,
     allocation_subjects: [
       AllocationSubjects::MATHEMATICS,
@@ -10,7 +10,7 @@ BURSARIES_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 28_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -20,7 +20,7 @@ BURSARIES_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 25_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
@@ -34,7 +34,7 @@ BURSARIES_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,
@@ -44,7 +44,7 @@ BURSARIES_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    training_route: :opt_in_undergrad,
     amount: 9_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
@@ -58,7 +58,7 @@ BURSARIES_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 28_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -68,7 +68,7 @@ BURSARIES_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 25_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
@@ -82,7 +82,7 @@ BURSARIES_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,

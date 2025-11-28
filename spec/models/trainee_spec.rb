@@ -8,20 +8,20 @@ describe Trainee do
 
     it do
       expect(subject).to define_enum_for(:training_route).with_values(
-        TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
-        TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
-        TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
-        TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
-        TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
-        TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
-        TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
-        TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
-        TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
-        TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
-        TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
-        TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
-        TRAINING_ROUTE_ENUMS[:iqts] => 12,
-        TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
+        ReferenceData::TRAINING_ROUTES.assessment_only.name => 0,
+        ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name => 1,
+        ReferenceData::TRAINING_ROUTES.early_years_undergrad.name => 2,
+        ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name => 3,
+        ReferenceData::TRAINING_ROUTES.school_direct_salaried.name => 4,
+        ReferenceData::TRAINING_ROUTES.pg_teaching_apprenticeship.name => 5,
+        ReferenceData::TRAINING_ROUTES.early_years_assessment_only.name => 6,
+        ReferenceData::TRAINING_ROUTES.early_years_salaried.name => 7,
+        ReferenceData::TRAINING_ROUTES.early_years_postgrad.name => 8,
+        ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name => 9,
+        ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name => 10,
+        ReferenceData::TRAINING_ROUTES.hpitt_postgrad.name => 11,
+        ReferenceData::TRAINING_ROUTES.iqts.name => 12,
+        ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name => 14,
       )
     end
 
@@ -359,7 +359,7 @@ describe Trainee do
 
       describe "validation" do
         context "when training route is present" do
-          subject { build(:trainee, training_route: TRAINING_ROUTE_ENUMS[:assessment_only]) }
+          subject { build(:trainee, training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name) }
 
           it "is valid" do
             expect(subject).to be_valid

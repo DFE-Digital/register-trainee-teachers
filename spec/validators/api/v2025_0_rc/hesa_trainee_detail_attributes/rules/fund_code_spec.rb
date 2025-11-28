@@ -54,7 +54,7 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundCode do
           let(:course_age_range) { course_age_range }
 
           %i[provider_led_postgrad provider_led_undergrad school_direct_tuition_fee school_direct_salaried].each do |training_route|
-            let(:training_route) { TRAINING_ROUTE_ENUMS[training_route] }
+            let(:training_route) { ReferenceData::TRAINING_ROUTES.raining_route.name }
 
             context "when the training_route is #{training_route}" do
               it "returns true" do
@@ -64,7 +64,7 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundCode do
           end
 
           context "when the training_route is invalid" do
-            let(:training_route) { TRAINING_ROUTE_ENUMS[:hpitt_postgrad] }
+            let(:training_route) { ReferenceData::TRAINING_ROUTES.hpitt_postgrad.name }
 
             it "returns false" do
               expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)
@@ -75,7 +75,7 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundCode do
 
       context "when the age_range is invalid" do
         let(:course_age_range) { "1234" }
-        let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+        let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name }
 
         it "returns false" do
           expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)

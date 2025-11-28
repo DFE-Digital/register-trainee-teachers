@@ -39,7 +39,7 @@ describe TraineeFilter do
         {
           subject: "Biology",
           text_search: "search terms",
-          training_route: [TRAINING_ROUTE_ENUMS[:assessment_only]],
+          training_route: [ReferenceData::TRAINING_ROUTES.assessment_only.name],
           status: %w[course_not_started],
         }
       end

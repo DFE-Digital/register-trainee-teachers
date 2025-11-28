@@ -2,21 +2,21 @@
 
 GRANTS_2024_TO_2025 = [
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+    training_route: :early_years_postgrad,
     amount: 7_000,
     allocation_subjects: [
       AllocationSubjects::EARLY_YEARS_ITT,
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
+    training_route: :early_years_salaried,
     amount: 14_000,
     allocation_subjects: [
       AllocationSubjects::EARLY_YEARS_ITT,
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: :school_direct_salaried,
     amount: 28_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -26,7 +26,7 @@ GRANTS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: :school_direct_salaried,
     amount: 25_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
@@ -40,7 +40,7 @@ GRANTS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: :school_direct_salaried,
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,
@@ -50,7 +50,7 @@ GRANTS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    training_route: :pg_teaching_apprenticeship,
     amount: 28_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -60,7 +60,7 @@ GRANTS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    training_route: :pg_teaching_apprenticeship,
     amount: 25_000,
     allocation_subjects: [
       AllocationSubjects::FRENCH_LANGUAGE,
@@ -69,7 +69,7 @@ GRANTS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    training_route: :pg_teaching_apprenticeship,
     amount: 16_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
@@ -80,7 +80,7 @@ GRANTS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    training_route: :pg_teaching_apprenticeship,
     amount: 1_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,
