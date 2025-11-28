@@ -2,10 +2,10 @@
 
 class TrainingPartnerSearch
   class Result
-    attr_reader :lead_partners, :limit, :total_count
+    attr_reader :training_partners, :limit, :total_count
 
-    def initialize(lead_partners:, limit:, total_count:)
-      @lead_partners = lead_partners
+    def initialize(training_partners:, limit:, total_count:)
+      @training_partners = training_partners
       @limit = limit
       @total_count = total_count
     end
@@ -22,13 +22,13 @@ class TrainingPartnerSearch
   end
 
   def call
-    Result.new(lead_partners: specified_lead_partners, limit: limit, total_count: total_count)
+    Result.new(training_partners: specified_training_partners, limit: limit, total_count: total_count)
   end
 
-  def all_lead_partners
-    lead_partners = LeadPartner.kept
+  def all_training_partners
+    training_partners = LeadPartner.kept
     if query
-      lead_partners = lead_partners
+      training_partners = training_partners
         .includes(:provider, :school)
         .where("lead_partners.name ilike ?", "%#{query}%")
         .or(LeadPartner.kept.where("lead_partners.urn ilike ?", "%#{query}%"))
@@ -37,16 +37,16 @@ class TrainingPartnerSearch
           LeadPartner.kept.joins(:school).where(school: School.where("postcode ilike ?", "%#{query}%")).select(:id)))
 
     end
-    lead_partners.reorder(:name)
+    training_partners.reorder(:name)
   end
 
-  def specified_lead_partners
-    lead_partners = all_lead_partners
-    lead_partners.limit(limit) if limit
+  def specified_training_partners
+    training_partners = all_training_partners
+    training_partners.limit(limit) if limit
   end
 
   def total_count
-    all_lead_partners.count
+    all_training_partners.count
   end
 
 private
