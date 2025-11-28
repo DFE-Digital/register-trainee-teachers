@@ -33,27 +33,27 @@ private
   end
 
   def and_i_choose_my_lead_partner
-    lead_partners_search_page.choose_lead_partner(id: my_lead_partner.id)
+    training_partners_search_page.choose_lead_partner(id: my_lead_partner.id)
   end
 
   def and_i_choose_the_search_option
-    lead_partners_search_page.search_again_option.choose
+    training_partners_search_page.search_again_option.choose
   end
 
   def and_i_enter_a_search_term_that_should_yield_no_results
-    lead_partners_search_page.results_search_again_input.set(discarded_lead_partner.name)
+    training_partners_search_page.results_search_again_input.set(discarded_lead_partner.name)
   end
 
   def then_i_should_see_no_results
-    expect(lead_partners_search_page).to have_text("#{t('components.page_titles.search_schools.sub_text_no_results')} #{discarded_lead_partner.name}")
+    expect(training_partners_search_page).to have_text("#{t('components.page_titles.search_schools.sub_text_no_results')} #{discarded_lead_partner.name}")
   end
 
   def and_i_should_see_a_search_again_field
-    expect(lead_partners_search_page).to have_zero_results_search_again_input
+    expect(training_partners_search_page).to have_zero_results_search_again_input
   end
 
   def and_i_continue
-    lead_partners_search_page.continue.click
+    training_partners_search_page.continue.click
   end
 
   def and_a_number_of_lead_partners_exists
@@ -61,7 +61,7 @@ private
   end
 
   def and_i_am_on_the_lead_partners_page_filtered_by_my_query
-    lead_partners_search_page.load(trainee_id: trainee.slug, query: query)
+    training_partners_search_page.load(trainee_id: trainee.slug, query: query)
   end
 
   def then_i_am_redirected_to_the_confirm_lead_partner_page

@@ -87,6 +87,6 @@ private
   end
 
   def then_i_am_redirected_to_the_lead_partners_page_filtered_by_my_query
-    expect(lead_partners_search_page).to be_displayed(trainee_id: trainee.slug, query: my_lead_partner_name)
+    expect(training_partners_search_page).to be_displayed(trainee_id: trainee.slug, query: my_lead_partner_name)
   end
 end

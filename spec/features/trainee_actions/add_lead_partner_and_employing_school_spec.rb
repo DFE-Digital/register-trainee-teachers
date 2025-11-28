@@ -154,7 +154,7 @@ feature "add lead partner and employing school" do
   end
 
   def then_i_see_the_lead_partner_search_page
-    expect(lead_partners_search_page).to be_displayed
+    expect(training_partners_search_page).to be_displayed
   end
 
   def when_i_fill_in_my_lead_partner
@@ -166,11 +166,11 @@ feature "add lead partner and employing school" do
   end
 
   def when_i_type_the_lead_partner_name
-    lead_partners_search_page.choose_lead_partner(id: @lead_partner.id)
+    training_partners_search_page.choose_lead_partner(id: @lead_partner.id)
   end
 
   def when_i_choose_a_lead_partner
-    lead_partners_search_page.choose_lead_partner(id: @lead_partner.id)
+    training_partners_search_page.choose_lead_partner(id: @lead_partner.id)
   end
 
   def then_i_see_the_employing_school_search_page
