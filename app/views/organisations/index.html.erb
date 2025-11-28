@@ -16,14 +16,14 @@
         <%- end -%>
       </ul>
     <%- end -%>
-    <%- if @lead_partners.any? -%>
+    <%- if @training_partners.any? -%>
       <h2 class="govuk-heading-m">Training partners</h2>
       <p class="govuk-body">As a training partner you can only view records. You cannot change them.</p>
       <ul class="govuk-list govuk-!-margin-bottom-7">
-        <%- @lead_partners.each do |lead_partner| -%>
+        <%- @training_partners.each do |training_partner| -%>
           <li class="govuk-!-margin-bottom-2">
-            <%= govuk_link_to lead_partner.name,
-              organisation_path(id: lead_partner.id, type: "LeadPartner"),
+            <%= govuk_link_to training_partner.name,
+              organisation_path(id: training_partner.id, type: "LeadPartner"),
               class: "training-partner-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
           </li>
         <%- end -%>
