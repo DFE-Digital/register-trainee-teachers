@@ -4,13 +4,13 @@ module Schools
   class View < ApplicationComponent
     include SummaryHelper
     include SchoolHelper
-    include LeadPartnerHelper
+    include TrainingPartnerHelper
 
     def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
       @editable = editable
-      @lead_partner = fetch_lead_partner
+      @lead_partner = fetch_training_partner
       @employing_school = fetch_employing_school
       @header_level = header_level
     end
@@ -21,7 +21,7 @@ module Schools
 
     def school_rows
       [
-        lead_partner_row(not_applicable: lead_partner_not_applicable?),
+        training_partner_row(not_applicable: training_partner_not_applicable?),
         employing_school_row(not_applicable: employing_school_not_applicable?),
       ].compact
     end
@@ -30,9 +30,9 @@ module Schools
 
     attr_accessor :data_model, :lead_partner, :employing_school, :has_errors, :editable, :header_level
 
-    def lead_partner_not_applicable?
+    def training_partner_not_applicable?
       if data_model.is_a?(Schools::FormValidator)
-        data_model.training_partner_form.lead_partner_not_applicable?
+        data_model.training_partner_form.training_partner_not_applicable?
       else
         data_model.lead_partner_not_applicable?
       end
@@ -48,7 +48,7 @@ module Schools
 
     def change_paths(school_type)
       {
-        lead: edit_trainee_training_partners_details_path(trainee),
+        training_partner: edit_trainee_training_partners_details_path(trainee),
         employing: edit_trainee_employing_schools_details_path(trainee),
       }[school_type.to_sym]
     end
@@ -64,10 +64,10 @@ module Schools
       ).to_h
     end
 
-    def fetch_lead_partner
+    def fetch_training_partner
       return data_model.lead_partner if data_model.respond_to?(:lead_partner)
 
-      fetch_lead_partner_record(data_model.lead_partner_id)
+      fetch_training_partner_record(data_model.lead_partner_id)
     end
 
     def fetch_employing_school
@@ -82,7 +82,7 @@ module Schools
       School.find(id)
     end
 
-    def fetch_lead_partner_record(id)
+    def fetch_training_partner_record(id)
       return if id.blank?
 
       LeadPartner.find(id)

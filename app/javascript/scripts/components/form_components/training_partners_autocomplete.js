@@ -3,34 +3,34 @@ import tracker from './tracker.js'
 import { guard, renderTemplate, setHiddenField } from './autocomplete/helpers.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-training-partners-autocomplete"]')
-const idElement = document.getElementById('lead-partners-id')
+const idElement = document.getElementById('training-partners-id')
 
 let statusMessage = ' '
 
-const fetchLeadPartners = ({ query, populateResults }) => {
+const fetchTrainingPartners = ({ query, populateResults }) => {
   const encodedQuery = encodeURIComponent(query)
 
   window.fetch(`/autocomplete/training-partners?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
-    .then(data => data.lead_partners)
-    .then((leadPartners) => {
-      if (leadPartners.length === 0) {
+    .then(data => data.training_partners)
+    .then((trainingPartners) => {
+      if (trainingPartners.length === 0) {
         statusMessage = 'No results found'
       }
 
-      return leadPartners
+      return trainingPartners
     })
     .then(populateResults)
     .catch(console.log)
 }
 
-const findLeadPartners = ({ query, populateResults }) => {
+const findTrainingPartners = ({ query, populateResults }) => {
   idElement.value = ''
 
   statusMessage = 'Loading...' // Shared state
 
-  fetchLeadPartners({ query, populateResults })
+  fetchTrainingPartners({ query, populateResults })
 }
 
 const setupAutoComplete = (form) => {
@@ -49,7 +49,7 @@ const setupAutoComplete = (form) => {
         name: fieldName,
         source: (query, populateResults) => {
           tracker.trackSearch(query)
-          return findLeadPartners({
+          return findTrainingPartners({
             query,
             populateResults
           })
