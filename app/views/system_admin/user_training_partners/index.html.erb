@@ -6,7 +6,7 @@
       method: :post,
       local: true,
     ) do |form| %>
-      <% render (@training_partner_search.lead_partners.empty? ? "no_results" : "results"), form: form %>
+      <% render (@training_partner_search.training_partners.empty? ? "no_results" : "results"), form: form %>
     <% end %>
   </div>
 </div>
