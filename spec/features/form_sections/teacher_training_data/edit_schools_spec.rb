@@ -14,10 +14,10 @@ feature "edit schools spec" do
 
     scenario "changing the lead partner", js: true do
       when_i_see_the_lead_partner
-      and_i_click_on_change_lead_partner(:lead_partner)
+      and_i_click_on_change_lead_partner(:training_partner)
       and_i_see_the_edit_lead_partner_details_page
       and_i_continue
-      and_i_am_on_the_edit_lead_partner_page
+      and_i_am_on_the_edit_training_partner_page
       and_i_fill_in_my_lead_partner
       and_i_click_the_first_item_in_the_list_lead_partner
       and_i_continue
@@ -27,7 +27,7 @@ feature "edit schools spec" do
 
     scenario "choosing not applicable for lead partner" do
       when_i_see_the_lead_partner
-      and_i_click_on_change_lead_partner(:lead_partner)
+      and_i_click_on_change_lead_partner(:training_partner)
       and_i_see_the_edit_lead_partner_details_page
       and_i_see_the_not_applicable_lead_partner_radio_option(false)
       and_i_choose_the_not_applicable_lead_partner_option(true)
@@ -72,10 +72,10 @@ feature "edit schools spec" do
 
     scenario "changing the lead partner", js: true do
       when_i_see_the_lead_partner
-      and_i_click_on_change_lead_partner(:lead_partner)
+      and_i_click_on_change_lead_partner(:training_partner)
       and_i_see_the_edit_lead_partner_details_page
       and_i_continue
-      and_i_am_on_the_edit_lead_partner_page
+      and_i_am_on_the_edit_training_partner_page
       and_i_fill_in_my_lead_partner
       and_i_click_the_first_item_in_the_list_lead_partner
       and_i_continue
@@ -113,23 +113,23 @@ private
   end
 
   def and_i_see_the_not_applicable_lead_partner_radio_option(value)
-    expect(edit_trainee_lead_partner_details_page).to have_lead_partner_radio_button_checked(value)
+    expect(edit_trainee_training_partner_details_page).to have_training_partner_radio_button_checked(value)
   end
 
   def and_i_choose_the_not_applicable_lead_partner_option(value)
-    edit_trainee_lead_partner_details_page.select_radio_button(value)
+    edit_trainee_training_partner_details_page.select_radio_button(value)
   end
 
   def and_i_fill_in_my_lead_partner
-    edit_lead_partner_page.lead_partner.fill_in with: my_lead_partner_name
+    edit_training_partner_page.training_partner.fill_in with: my_lead_partner_name
   end
 
   def and_i_fill_in_my_employing_school
     edit_employing_school_page.employing_school.fill_in with: my_employing_school_name
   end
 
-  def and_i_am_on_the_edit_lead_partner_page
-    expect(edit_lead_partner_page).to be_displayed(trainee_id: trainee.slug)
+  def and_i_am_on_the_edit_training_partner_page
+    expect(edit_training_partner_page).to be_displayed(trainee_id: trainee.slug)
   end
 
   def and_i_am_on_the_edit_employing_school_page
@@ -137,7 +137,7 @@ private
   end
 
   def and_i_click_the_first_item_in_the_list_lead_partner
-    click(edit_lead_partner_page.autocomplete_list_item)
+    click(edit_training_partner_page.autocomplete_list_item)
   end
 
   def and_i_click_the_first_item_in_the_list_employing_school
@@ -145,7 +145,7 @@ private
   end
 
   def and_i_continue
-    click(edit_lead_partner_page.submit)
+    click(edit_training_partner_page.submit)
   end
 
   def and_a_number_of_lead_partners_exist
@@ -205,15 +205,15 @@ private
   end
 
   def and_the_lead_partner_displays_not_applicable
-    expect(confirm_schools_page.lead_partner_row).to have_text(I18n.t(:not_applicable))
+    expect(confirm_schools_page.training_partner_row).to have_text(I18n.t(:not_applicable))
   end
 
   def and_i_see_the_edit_lead_partner_details_page
-    expect(edit_trainee_lead_partner_details_page).to be_displayed
-    expect(edit_trainee_lead_partner_details_page).to have_content(
+    expect(edit_trainee_training_partner_details_page).to be_displayed
+    expect(edit_trainee_training_partner_details_page).to have_content(
       "Is there a training partner?",
     )
-    expect(edit_trainee_lead_partner_details_page).to have_content(
+    expect(edit_trainee_training_partner_details_page).to have_content(
       "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end

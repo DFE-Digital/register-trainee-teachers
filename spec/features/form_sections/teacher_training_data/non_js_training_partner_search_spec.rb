@@ -33,7 +33,7 @@ private
   end
 
   def and_i_choose_my_lead_partner
-    training_partners_search_page.choose_lead_partner(id: my_lead_partner.id)
+    training_partners_search_page.choose_training_partner(id: my_lead_partner.id)
   end
 
   def and_i_choose_the_search_option

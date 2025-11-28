@@ -11,9 +11,9 @@ module Partners
 
     attr_accessor(*FIELDS)
 
-    validates :lead_partner_id, presence: true, if: :lead_partner_validation_required?
+    validates :lead_partner_id, presence: true, if: :training_partner_validation_required?
 
-    def lead_partner_not_applicable_options
+    def training_partner_not_applicable_options
       [true, false].map do |value|
         LEAD_PARTNER_NOT_APPLICABLE_OPTION.new(id: value, name: value ? "No" : "Yes")
       end

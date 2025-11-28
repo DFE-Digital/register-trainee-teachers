@@ -7,7 +7,7 @@ feature "TrainingPartnerSearch" do
     given_i_am_authenticated
     given_a_provider_led_postgrad_trainee_exists
     and_a_number_of_lead_partners_exist
-    and_i_visit_the_trainee_edit_lead_partner_page
+    and_i_visit_the_trainee_edit_training_partner_page
   end
 
   scenario "choosing a lead partner", js: true do
@@ -43,31 +43,31 @@ private
   end
 
   def and_i_fill_in_my_lead_partner
-    edit_lead_partner_page.lead_partner.fill_in with: my_lead_partner_name
+    edit_training_partner_page.training_partner.fill_in with: my_lead_partner_name
   end
 
   def and_i_fill_in_my_lead_partner_postcode
-    edit_lead_partner_page.lead_partner.fill_in with: my_lead_partner_postcode
+    edit_training_partner_page.training_partner.fill_in with: my_lead_partner_postcode
   end
 
   def and_i_fill_in_my_lead_partner_without_js
-    edit_lead_partner_page.lead_partner_no_js.fill_in with: my_lead_partner_name
+    edit_training_partner_page.training_partner_no_js.fill_in with: my_lead_partner_name
   end
 
   def and_i_click_the_first_item_in_the_list
-    click(edit_lead_partner_page.autocomplete_list_item)
+    click(edit_training_partner_page.autocomplete_list_item)
   end
 
   def and_i_continue
-    click(edit_lead_partner_page.submit)
+    click(edit_training_partner_page.submit)
   end
 
   def and_a_number_of_lead_partners_exist
     @lead_partners = create_list(:lead_partner, 5, :school)
   end
 
-  def and_i_visit_the_trainee_edit_lead_partner_page
-    edit_lead_partner_page.load(trainee_id: trainee.slug)
+  def and_i_visit_the_trainee_edit_training_partner_page
+    edit_training_partner_page.load(trainee_id: trainee.slug)
   end
 
   def my_lead_partner_name
