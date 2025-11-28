@@ -8,12 +8,12 @@
 <%= f.govuk_radio_buttons_fieldset :lead_partner_id,
   legend: { text: t("components.page_titles.trainees.training_partners.index"), tag: "h1", size: "l" },
   hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} ‘#{query}’" } do %>
-    <% @training_partner_search.lead_partners.each_with_index do |lead_partner, index| %>
-      <%= f.govuk_radio_button :lead_partner_id, lead_partner.id,
+    <% @training_partner_search.training_partners.each_with_index do |training_partner, index| %>
+      <%= f.govuk_radio_button :lead_partner_id, training_partner.id,
                               checked: false,
-                              label: { text: lead_partner.name },
+                              label: { text: training_partner.name },
                               link_errors: index.zero?,
-                              hint: { text: lead_partner_urn_and_location(lead_partner) } %>
+                              hint: { text: training_partner_urn_and_location(training_partner) } %>
     <% end %>
 
   <%= f.govuk_radio_divider %>
@@ -30,7 +30,7 @@
 <%= render TrainingPartnerResultNotice::View.new(
   search_query: query,
   search_limit: @training_partner_search.limit,
-  search_count: @training_partner_search.lead_partners.unscope(:limit).count,
+  search_count: @training_partner_search.training_partners.unscope(:limit).count,
 ) %>
 
 <%= f.govuk_submit %>

@@ -2,7 +2,7 @@
 
 module Trainees
   class TrainingPartnersController < BaseController
-    before_action :lead_partner_applicable
+    before_action :training_partner_applicable
     before_action :validate_form_completeness
 
     helper_method :query
@@ -12,7 +12,7 @@ module Trainees
     end
 
     def update
-      if @training_partner_form.lead_partner_not_selected? && @training_partner_form.valid?
+      if @training_partner_form.training_partner_not_selected? && @training_partner_form.valid?
         return redirect_to(trainee_training_partners_path(@trainee, query:))
       end
 
@@ -52,8 +52,8 @@ module Trainees
       )
     end
 
-    def lead_partner_applicable
-      if training_partner_form.lead_partner_not_applicable?
+    def training_partner_applicable
+      if training_partner_form.training_partner_not_applicable?
         redirect_to(edit_trainee_training_partners_details_path(trainee))
       end
     end
