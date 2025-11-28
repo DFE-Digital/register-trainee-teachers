@@ -8,7 +8,7 @@ module SystemAdmin
       def edit; end
 
       def destroy
-        @lead_partner.users.delete(@user)
+        @training_partner.users.delete(@user)
         redirect_to(user_path(@user), flash: { success: "User access removed successfully" })
       end
 
@@ -16,7 +16,7 @@ module SystemAdmin
 
       def load_models
         @user = authorize(User.find(params[:user_id]))
-        @lead_partner = policy_scope(LeadPartner, policy_scope_class: LeadPartnerPolicy::Scope).find(params[:training_partner_id])
+        @training_partner = policy_scope(LeadPartner, policy_scope_class: LeadPartnerPolicy::Scope).find(params[:training_partner_id])
       end
     end
   end
