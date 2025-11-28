@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :funding_method do
-    training_route { TRAINING_ROUTES.keys.sample }
+    training_route { ReferenceData::TRAINING_ROUTES.names.sample }
     amount { Faker::Number.number(digits: 5) }
     funding_type { FUNDING_TYPE_ENUMS[:bursary] }
     academic_cycle { AcademicCycle.current || create(:academic_cycle, :current) }

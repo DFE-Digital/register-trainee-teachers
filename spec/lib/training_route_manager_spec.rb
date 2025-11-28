@@ -17,7 +17,7 @@ describe TrainingRouteManager do
         end
 
         context "with the :routes_#{route} feature flag disabled", "feature_routes.#{route}": false do
-          context "with a non school direct trainee" do
+          context "with a school direct trainee" do
             let(:trainee) { build(:trainee) }
 
             it "returns false" do
@@ -158,7 +158,7 @@ describe TrainingRouteManager do
   end
 
   describe "#requires_study_mode?" do
-    (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
+    (ReferenceData::TRAINING_ROUTES.names - %w[early_years_assessment_only assessment_only]).each do |route|
       context "for route #{route}" do
         let(:trainee) { Struct.new(:training_route).new(route.to_s) }
 
@@ -180,7 +180,7 @@ describe TrainingRouteManager do
   end
 
   describe "#requires_placements?" do
-    (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
+    (ReferenceData::TRAINING_ROUTES.names - %w[early_years_assessment_only assessment_only]).each do |route|
       context "for route #{route}" do
         let(:trainee) { Struct.new(:training_route).new(route.to_s) }
 
