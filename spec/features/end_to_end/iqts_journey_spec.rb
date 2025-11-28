@@ -16,7 +16,7 @@ feature "iQTS end-to-end journey" do
     and_the_course_details_is_complete
     and_the_placements_details_is_complete
     and_the_trainee_id_is_complete
-    and_the_lead_partner_section_is_complete
+    and_the_training_partner_section_is_complete
     and_the_iqts_country_is_complete
     and_the_draft_record_has_been_reviewed
     and_all_sections_are_complete
