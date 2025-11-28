@@ -2,7 +2,7 @@
 
 module PageObjects
   module Trainees
-    class LeadPartnersSearch < PageObjects::Base
+    class TrainingPartnersSearch < PageObjects::Base
       set_url "/trainees/{trainee_id}/training-partners?query={query}"
 
       element :search_again_option, "input#partners-training-partner-form-lead-partner-id-results-search-again-field"

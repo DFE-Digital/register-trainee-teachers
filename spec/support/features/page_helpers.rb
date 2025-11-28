@@ -322,8 +322,8 @@ module Features
       @edit_trainee_lead_partner_details_page ||= PageObjects::Trainees::LeadPartners::Details::Edit.new
     end
 
-    def lead_partners_search_page
-      @lead_partners_search_page ||= PageObjects::Trainees::LeadPartnersSearch.new
+    def training_partners_search_page
+      @training_partners_search_page ||= PageObjects::Trainees::TrainingPartnersSearch.new
     end
 
     def employing_schools_search_page

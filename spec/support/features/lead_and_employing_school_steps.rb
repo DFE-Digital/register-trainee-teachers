@@ -9,7 +9,7 @@ module Features
       and_i_continue
       and_i_fill_in_my_lead_partner
       and_i_continue
-      lead_partners_search_page.choose_lead_partner(id: @lead_partner.id)
+      training_partners_search_page.choose_lead_partner(id: @lead_partner.id)
       and_i_continue
       and_i_choose_the_not_applicable_employing_school_option(false)
       and_i_continue
@@ -28,7 +28,7 @@ module Features
       and_i_continue
       and_i_fill_in_my_lead_partner
       and_i_continue
-      lead_partners_search_page.choose_lead_partner(id: @lead_partner.id)
+      training_partners_search_page.choose_lead_partner(id: @lead_partner.id)
       and_i_continue
       and_i_confirm_my_details
       and_the_lead_and_employing_schools_section_is_marked_completed
