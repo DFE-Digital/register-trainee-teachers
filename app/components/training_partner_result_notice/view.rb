@@ -18,10 +18,10 @@ module TrainingPartnerResultNotice
       total
     end
 
-    def lead_partner_result_text
-      return pluralised_lead_partner_result_text if remaining_search_count > 1
+    def training_partner_result_text
+      return pluralised_training_partner_result_text if remaining_search_count > 1
 
-      t("components.lead_partner_result_notice.result_text", search_query:)
+      t("components.training_partner_result_notice.result_text", search_query:)
     end
 
   private
@@ -32,8 +32,8 @@ module TrainingPartnerResultNotice
       @total ||= search_count - search_limit
     end
 
-    def pluralised_lead_partner_result_text
-      t("components.lead_partner_result_notice.multiple_result_text", search_query:, remaining_search_count:)
+    def pluralised_training_partner_result_text
+      t("components.training_partner_result_notice.multiple_result_text", search_query:, remaining_search_count:)
     end
   end
 end
