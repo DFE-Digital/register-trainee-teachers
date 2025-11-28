@@ -17,6 +17,7 @@ data:
     name: "provider_led_postgrad"
     display_name: "Primary and Secondary Postgraduate Fee Funded"
     description: "Primary and Secondary Postgraduate Fee Funded"
+    start_year: 2024
     hesa_codes:
       - "12"
   - id: 2
