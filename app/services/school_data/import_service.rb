@@ -59,6 +59,7 @@ module SchoolData
       {
         name: row["EstablishmentName"]&.strip,
         open_date: parse_date(row["OpenDate"]),
+        close_date: parse_date(row["CloseDate"]),
         town: extract_town(row),
         postcode: row["Postcode"]&.strip,
       }

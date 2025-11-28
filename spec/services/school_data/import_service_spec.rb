@@ -8,13 +8,13 @@ RSpec.describe SchoolData::ImportService do
   let(:download_record) { create(:school_data_download, :running) }
   let(:sample_csv_content) do
     <<~CSV
-      URN,EstablishmentName,TypeOfEstablishment (code),Postcode,Town,Address3,Locality,OpenDate
-      123456,Test Primary School,1,AB1 2CD,TestTown,,,2020-01-01
-      234567,Test Academy,10,EF3 4GH,TestCity,,,2019-05-15
-      345678,Test Secondary School,15,IJ5 6KL,,TestVillage,,
-      456789,Test Special School,7,MN7 8OP,,,TestLocality,2018-09-01
-      567890,Test Independent School,4,PQ9 0RS,TestPlace,,,2021-03-10
-      678901,Test Excluded School,29,QR1 2ST,TestTown,,,2020-06-01
+      URN,EstablishmentName,TypeOfEstablishment (code),Postcode,Town,Address3,Locality,OpenDate,CloseDate
+      123456,Test Primary School,1,AB1 2CD,TestTown,,,2020-01-01,2023-07-20
+      234567,Test Academy,10,EF3 4GH,TestCity,,,2019-05-15,2024-12-31
+      345678,Test Secondary School,15,IJ5 6KL,,TestVillage,,,
+      456789,Test Special School,7,MN7 8OP,,,TestLocality,2018-09-01,
+      567890,Test Independent School,4,PQ9 0RS,TestPlace,,,2021-03-10,
+      678901,Test Excluded School,29,QR1 2ST,TestTown,,,2020-06-01,
     CSV
   end
 
@@ -44,6 +44,8 @@ RSpec.describe SchoolData::ImportService do
           name: "Test Academy",
           postcode: "EF3 4GH",
           town: "TestCity",
+          open_date: Date.parse("2019-05-15"),
+          close_date: Date.parse("2024-12-31"),
         )
 
         expect(School.find_by(urn: "345678")).to have_attributes(
@@ -63,6 +65,7 @@ RSpec.describe SchoolData::ImportService do
           name: "Test Independent School",
           postcode: "PQ9 0RS",
           town: "TestPlace",
+          open_date: Date.parse("2021-03-10"),
         )
       end
 
@@ -78,6 +81,7 @@ RSpec.describe SchoolData::ImportService do
 
         expect { subject }.to change { existing_school.reload.name }
           .from("Old School Name").to("Test Primary School")
+        expect(existing_school.close_date).to eq(Date.parse("2023-07-20"))
       end
 
       it "handles town extraction with fallback logic" do
@@ -143,7 +147,7 @@ RSpec.describe SchoolData::ImportService do
       end
     end
 
-    context "fail fast behavior" do
+    context "fail fast behaviour" do
       context "when individual school import fails" do
         let(:invalid_csv_content) do
           <<~CSV
