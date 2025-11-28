@@ -82,8 +82,8 @@ module Features
       @provider_index_page ||= PageObjects::Providers::Index.new
     end
 
-    def lead_partners_index_page
-      @lead_partners_index_page ||= PageObjects::LeadPartners::Index.new
+    def training_partners_index_page
+      @training_partners_index_page ||= PageObjects::TrainingPartners::Index.new
     end
 
     def schools_index_page
@@ -318,8 +318,8 @@ module Features
       @edit_trainee_employing_school_details_page ||= PageObjects::Trainees::EmployingSchools::Details::Edit.new
     end
 
-    def edit_trainee_lead_partner_details_page
-      @edit_trainee_lead_partner_details_page ||= PageObjects::Trainees::LeadPartners::Details::Edit.new
+    def edit_trainee_training_partner_details_page
+      @edit_trainee_training_partner_details_page ||= PageObjects::Trainees::TrainingPartners::Details::Edit.new
     end
 
     def training_partners_search_page
@@ -330,8 +330,8 @@ module Features
       @employing_schools_search_page ||= PageObjects::Trainees::EmployingSchoolsSearch.new
     end
 
-    def edit_lead_partner_page
-      @edit_lead_partner_page ||= PageObjects::Trainees::EditLeadPartner.new
+    def edit_training_partner_page
+      @edit_training_partner_page ||= PageObjects::Trainees::EditTrainingPartner.new
     end
 
     def edit_employing_school_page
@@ -510,8 +510,8 @@ module Features
       @admin_remove_provider_access_page ||= PageObjects::SystemAdmin::Providers::RemoveAccessConfirmation.new
     end
 
-    def admin_remove_lead_partner_access_page
-      @admin_remove_lead_partner_access_page ||= PageObjects::SystemAdmin::Partners::RemoveAccessConfirmation.new
+    def admin_remove_training_partner_access_page
+      @admin_remove_training_partner_access_page ||= PageObjects::SystemAdmin::Partners::RemoveAccessConfirmation.new
     end
 
     def admin_delete_trainee_reasons_page

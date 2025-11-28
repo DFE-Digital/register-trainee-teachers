@@ -10,7 +10,7 @@ module PageObjects
       element :zero_results_search_again_input, "input#partners-training-partner-form-no-results-search-again-query-field"
       element :continue, "button[type='submit']"
 
-      def choose_lead_partner(id:)
+      def choose_training_partner(id:)
         find("#partners-training-partner-form-lead-partner-id-#{id}-field").choose
       end
     end

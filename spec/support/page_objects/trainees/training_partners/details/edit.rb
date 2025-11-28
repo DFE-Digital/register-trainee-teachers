@@ -2,19 +2,19 @@
 
 module PageObjects
   module Trainees
-    module LeadPartners
+    module TrainingPartners
       module Details
         class Edit < PageObjects::Base
           set_url "/trainees/{trainee_id}/training-partners/details/edit"
 
-          elements :lead_partner_radio_buttons, 'input[type="radio"][name="partners_training_partner_form[lead_partner_not_applicable]"]'
+          elements :training_partner_radio_buttons, 'input[type="radio"][name="partners_training_partner_form[lead_partner_not_applicable]"]'
           element :continue_button, 'button.govuk-button[type="submit"]'
 
-          def has_lead_partner_radio_button_checked?(value)
+          def has_training_partner_radio_button_checked?(value)
             radio_button(value).checked?
           end
 
-          def has_lead_partner_radio_button_unchecked?(value)
+          def has_training_partner_radio_button_unchecked?(value)
             radio_button(value).unchecked?
           end
 
@@ -25,7 +25,7 @@ module PageObjects
         private
 
           def radio_button(value)
-            lead_partner_radio_buttons.detect { |radio| radio.value == value.to_s }
+            training_partner_radio_buttons.detect { |radio| radio.value == value.to_s }
           end
         end
       end
