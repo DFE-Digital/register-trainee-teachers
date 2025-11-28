@@ -24,11 +24,11 @@ class TrainingRouteManager
   end
 
   def requires_funding?
-    training_route != TRAINING_ROUTE_ENUMS[:iqts]
+    training_route != ReferenceData::TRAINING_ROUTES.iqts.name
   end
 
   def requires_iqts_country?
-    training_route == TRAINING_ROUTE_ENUMS[:iqts]
+    training_route == ReferenceData::TRAINING_ROUTES.iqts.name
   end
 
   def award_type
@@ -41,8 +41,8 @@ class TrainingRouteManager
 
   def requires_study_mode?
     [
-      TRAINING_ROUTE_ENUMS[:assessment_only],
-      TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+      ReferenceData::TRAINING_ROUTES.assessment_only.name,
+      ReferenceData::TRAINING_ROUTES.early_years_assessment_only.name,
     ].exclude?(training_route)
   end
 
@@ -59,6 +59,6 @@ private
   attr_reader :trainee
 
   def enabled?(training_route_enums_key)
-    FeatureService.enabled?("routes.#{training_route_enums_key}") && training_route == TRAINING_ROUTE_ENUMS[training_route_enums_key.to_sym]
+    FeatureService.enabled?("routes.#{training_route_enums_key}") && training_route == ReferenceData::TRAINING_ROUTES.find(training_route_enums_key.to_sym)
   end
 end

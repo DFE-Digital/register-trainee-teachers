@@ -54,22 +54,23 @@ ROUTE_INITIATIVES_ENUMS = {
   additional_itt_place_for_pe_with_a_priority_subject: "additional_itt_place_for_pe_with_a_priority_subject",
 }.freeze
 
-TRAINING_ROUTES = {
-  TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
-  TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
-  TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
-  TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
-  TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
-  TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
-  TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
-  TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
-  TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
-  TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
-  TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
-  TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
-  TRAINING_ROUTE_ENUMS[:iqts] => 12,
-  TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
-}.freeze
+# TRAINING_ROUTES = {
+#   TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
+#   TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
+#   TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
+#   TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
+#   TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
+#   TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
+#   TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
+#   TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
+#   TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
+#   TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
+#   TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
+#   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
+#   TRAINING_ROUTE_ENUMS[:iqts] => 12,
+#   TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
+# }.freeze
+TRAINING_ROUTES = ReferenceData::Loader.instance.enum_values_for(:training_route)
 
 ROUTE_INITIATIVES = {
   ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars] => 0,

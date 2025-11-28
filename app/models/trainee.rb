@@ -196,7 +196,7 @@ class Trainee < ApplicationRecord
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
 
-  enum :training_route, TRAINING_ROUTES
+  enum :training_route, ReferenceData::Loader.instance.enum_values_for(:training_route)
 
   enum :training_initiative, ROUTE_INITIATIVES
 

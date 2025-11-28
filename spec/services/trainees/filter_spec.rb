@@ -20,7 +20,7 @@ module Trainees
     context "when an empty trainee exists" do
       let!(:empty_trainee) do
         Trainee.create(provider_id: draft_trainee.provider.id,
-                       training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
+          training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name)
       end
 
       it { is_expected.not_to include(empty_trainee) }
@@ -93,7 +93,7 @@ module Trainees
 
     context "with training_route filter" do
       let!(:provider_led_postgrad_trainee) { create(:trainee, :provider_led_postgrad) }
-      let(:filters) { { training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad] } }
+      let(:filters) { { training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name } }
 
       it { is_expected.to eq([provider_led_postgrad_trainee]) }
     end

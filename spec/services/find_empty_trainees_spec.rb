@@ -6,7 +6,7 @@ describe FindEmptyTrainees do
   let(:provider) { create(:provider) }
 
   let!(:draft_trainee_with_no_data) do
-    Trainee.create(provider: provider, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
+    Trainee.create(provider: provider, training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name)
   end
 
   subject { described_class.call }
@@ -48,7 +48,7 @@ describe FindEmptyTrainees do
   context "for trainees with a provider_trainee_id" do
     # trainees with a provider_trainee_id should not be classed as empty
     let!(:draft_trainee_with_no_data) do
-      Trainee.create(provider: provider, training_route: TRAINING_ROUTE_ENUMS[:assessment_only], provider_trainee_id: 1)
+      Trainee.create(provider: provider, training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name, provider_trainee_id: 1)
     end
 
     subject { described_class.call }

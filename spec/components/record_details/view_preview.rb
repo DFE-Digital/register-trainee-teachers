@@ -38,7 +38,7 @@ module RecordDetails
     end
 
     def with_eyts_recommended
-      trainee = mock_trainee("eyts_recommended", :recommended_for_award, TRAINING_ROUTE_ENUMS[:early_years_undergrad])
+      trainee = mock_trainee("eyts_recommended", :recommended_for_award, ReferenceData::TRAINING_ROUTES.early_years_undergrad.name)
       render(View.new(trainee:, last_updated_event:))
     end
 
@@ -47,18 +47,18 @@ module RecordDetails
     end
 
     def with_eyts_awarded
-      trainee = mock_trainee("eyts_awarded", :awarded, TRAINING_ROUTE_ENUMS[:early_years_undergrad])
+      trainee = mock_trainee("eyts_awarded", :awarded, ReferenceData::TRAINING_ROUTES.early_years_undergrad.name)
       render(View.new(trainee:, last_updated_event:))
     end
 
     def with_itt_not_yet_started
-      trainee = mock_trainee("eyts_awarded", :awarded, TRAINING_ROUTE_ENUMS[:early_years_undergrad], :itt_not_yet_started)
+      trainee = mock_trainee("eyts_awarded", :awarded, ReferenceData::TRAINING_ROUTES.early_years_undergrad.name, :itt_not_yet_started)
       render(View.new(trainee:, last_updated_event:))
     end
 
   private
 
-    def mock_trainee(provider_trainee_id, state = :draft, training_route = TRAINING_ROUTE_ENUMS[:assessment_only], commencement_status = :itt_started_later)
+    def mock_trainee(provider_trainee_id, state = :draft, training_route = ReferenceData::TRAINING_ROUTES.assessment_only.name, commencement_status = :itt_started_later)
       @mock_trainee ||= Trainee.new(
         id: 1,
         training_route: training_route,

@@ -12,7 +12,7 @@
   <% [:provider_led_postgrad, :early_years_postgrad].each do |option| %>
     <%= f.govuk_radio_button(
         :training_route,
-        TRAINING_ROUTE_ENUMS[option],
+        ReferenceData::TRAINING_ROUTES.find(option).name,
         label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
       ) %>
   <% end %>
@@ -21,13 +21,13 @@
 <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_salaried"), tag: "h2" }) do %>
   <%= f.govuk_radio_button(
       :training_route,
-      TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      ReferenceData::TRAINING_ROUTES.school_direct_salaried.name,
       label: { text: t("activerecord.attributes.trainee.training_routes.itt.school_direct_salaried") }
     ) %>
   <% [:pg_teaching_apprenticeship, :early_years_salaried].each do |option| %>
     <%= f.govuk_radio_button(
         :training_route,
-        TRAINING_ROUTE_ENUMS[option],
+        ReferenceData::TRAINING_ROUTES.find(option).name,
         label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
       ) %>
   <% end %>
@@ -37,7 +37,7 @@
   <% [:provider_led_undergrad, :opt_in_undergrad, :early_years_undergrad].each do |option| %>
     <%= f.govuk_radio_button(
         :training_route,
-        TRAINING_ROUTE_ENUMS[option],
+        ReferenceData::TRAINING_ROUTES.find(option).name,
         label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
       ) %>
   <% end %>
@@ -47,14 +47,14 @@
   <% %i[assessment_only early_years_assessment_only iqts teacher_degree_apprenticeship].select { |route| enabled_route?(route) }.each do |option| %>
     <%= f.govuk_radio_button(
         :training_route,
-        TRAINING_ROUTE_ENUMS[option],
+        ReferenceData::TRAINING_ROUTES.find(option).name,
         label: { text: t("activerecord.attributes.trainee.training_routes.itt.#{option}") }
       ) %>
   <% end %>
   <% if current_user.provider? && current_user.organisation.hpitt_postgrad? %>
     <%= f.govuk_radio_button(
         :training_route,
-        TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+        ReferenceData::TRAINING_ROUTES.hpitt_postgrad.name,
         label: { text: t("activerecord.attributes.trainee.training_routes.hpitt_postgrad") }
       ) %>
   <% end %>

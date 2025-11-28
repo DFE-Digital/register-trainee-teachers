@@ -24,7 +24,7 @@ module PlacementDetails
 
       @mock_trainee ||= Trainee.new(
         id: 1,
-        training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+        training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name,
         placements: placements,
       )
     end

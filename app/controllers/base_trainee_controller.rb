@@ -94,7 +94,7 @@ private
       .count
       .keys
       .compact
-      .sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
+      .sort_by(&ReferenceData::TRAINING_ROUTES.names.method(:index))
   end
 
   def academic_cycle_options

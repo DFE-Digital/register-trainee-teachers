@@ -2,7 +2,7 @@
 
 BURSARIES_2025_TO_2026 = [
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    training_route: :provider_led_undergrad,
     amount: 9_000,
     allocation_subjects: [
       AllocationSubjects::MATHEMATICS,
@@ -10,7 +10,7 @@ BURSARIES_2025_TO_2026 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 29_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -20,7 +20,7 @@ BURSARIES_2025_TO_2026 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 26_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
@@ -34,7 +34,7 @@ BURSARIES_2025_TO_2026 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,
@@ -43,14 +43,14 @@ BURSARIES_2025_TO_2026 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 5_000,
     allocation_subjects: [
       AllocationSubjects::ENGLISH,
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    training_route: :opt_in_undergrad,
     amount: 9_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,

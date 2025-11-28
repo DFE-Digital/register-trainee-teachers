@@ -144,7 +144,7 @@ namespace :example_data do
       end
 
       # Hpitt provider can only have trainees on the hpitt_postgrad route
-      enabled_routes = [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] if provider.hpitt_postgrad?
+      enabled_routes = [ReferenceData::TRAINING_ROUTES.hpitt_postgrad.name] if provider.hpitt_postgrad?
 
       nationalities = Nationality.all
 
