@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "lead_partners.index") %>
+<%= render PageTitle::View.new(i18n_key: "training_partners.index") %>
 
 <h1 class="govuk-heading-l">Training partners</h1>
 
@@ -10,7 +10,7 @@
   method: :get,
   html: { data: { module: "app-training-partners-autocomplete" } },
 ) do |f| %>
-  <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
+  <%= f.hidden_field :lead_partner_id, id: "training-partners-id" %>
   <%= f.govuk_text_field(
     :query,
     form_group: { class: "govuk-form-group app-js-only" },
@@ -22,7 +22,7 @@
   )%>
   <div id="training-partners-autocomplete-element" class="govuk-!-width-three-quarters"
       data-system-admin-redirect-training-partner="true"
-      data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_partners_form[query]"></div>
+      data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_training_partners_form[query]"></div>
 <% end %>
 
 <table class="govuk-table" summary="Training partners list">
@@ -34,18 +34,18 @@
   </thead>
 
   <tbody class="govuk-table__body">
-    <% @lead_partners.each do |lead_partner| %>
+    <% @training_partners.each do |training_partner| %>
       <tr class="govuk-table__row">
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= govuk_link_to(lead_partner.name, training_partner_path(lead_partner)) %>
+            <%= govuk_link_to(training_partner.name, training_partner_path(training_partner)) %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= lead_partner.urn %>
+            <%= training_partner.urn %>
           </span>
         </td>
       </tr>
@@ -53,4 +53,4 @@
   </tbody>
 </table>
 
-<%= render Paginator::View.new(scope: @lead_partners) %>
+<%= render Paginator::View.new(scope: @training_partners) %>

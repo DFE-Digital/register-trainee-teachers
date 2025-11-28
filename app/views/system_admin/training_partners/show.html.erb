@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: @lead_partner.name) %>
+<%= render PageTitle::View.new(text: @training_partner.name) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -7,7 +7,7 @@
   ) %>
 <% end %>
 
-<h1 class="govuk-heading-l"><%= @lead_partner.name %></h1>
+<h1 class="govuk-heading-l"><%= @training_partner.name %></h1>
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
@@ -15,16 +15,16 @@
       URN
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @lead_partner.urn %>
+      <%= @training_partner.urn %>
     </dd>
   </div>
-  <% if @lead_partner.hei? %>
+  <% if @training_partner.hei? %>
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
         UKPRN
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @lead_partner.provider&.ukprn %>
+        <%= @training_partner.provider&.ukprn %>
       </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -32,7 +32,7 @@
         Provider code
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @lead_partner.provider&.code %>
+        <%= @training_partner.provider&.code %>
       </dd>
     </div>
   <% else %>
@@ -41,7 +41,7 @@
         Town
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @lead_partner.school&.town %>
+        <%= @training_partner.school&.town %>
       </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -49,7 +49,7 @@
         Postcode
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @lead_partner.school&.postcode %>
+        <%= @training_partner.school&.postcode %>
       </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -57,7 +57,7 @@
         Open date
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @lead_partner.school&.open_date&.strftime("%d %B %Y") %>
+        <%= @training_partner.school&.open_date&.strftime("%d %B %Y") %>
       </dd>
     </div>
     <div class="govuk-summary-list__row">
@@ -65,18 +65,18 @@
         Close date
       </dt>
       <dd class="govuk-summary-list__value">
-        <%= @lead_partner.school&.close_date&.strftime("%d %B %Y") %>
+        <%= @training_partner.school&.close_date&.strftime("%d %B %Y") %>
       </dd>
     </div>
   <% end %>
 </dl>
 
 <%= render TabNavigation::View.new(items: [
-  { name: "Users", url: training_partner_path(@lead_partner) },
+  { name: "Users", url: training_partner_path(@training_partner) },
 ]) %>
 
-<% if @lead_partner.users.kept.any? %>
-  <% @lead_partner.users.kept.each do |user| %>
+<% if @training_partner.users.kept.any? %>
+  <% @training_partner.users.kept.each do |user| %>
     <%= render UserCard::View.new(
       user: user,
       edit_path: "#",
