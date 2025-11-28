@@ -2,7 +2,7 @@
 
 SCHOLARSHIPS_2022_TO_2023 = [
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 26_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -12,7 +12,7 @@ SCHOLARSHIPS_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 26_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,

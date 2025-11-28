@@ -6,7 +6,7 @@ feature "publish course details", feature_publish_course_details: true do
   include CourseDetailsHelper
 
   let(:subjects) { [] }
-  let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+  let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name }
   let(:study_mode) { "full_time" }
   let(:itt_start_date) { Date.new(Settings.current_recruitment_cycle_year, 9, 1) }
   let(:itt_end_date) { itt_start_date + 1.year }
@@ -285,8 +285,10 @@ feature "publish course details", feature_publish_course_details: true do
 
   private
 
-    def given_a_trainee_exists_with_some_courses(with_subjects: [],
-                                                 with_training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+    def given_a_trainee_exists_with_some_courses(
+      with_subjects: [],
+      with_training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name,
+    )
       given_a_trainee_exists(:with_related_courses,
                              :with_secondary_education,
                              subject_names: with_subjects,

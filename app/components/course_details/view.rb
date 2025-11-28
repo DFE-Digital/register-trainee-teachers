@@ -75,8 +75,8 @@ module CourseDetails
 
     def requires_study_mode?
       [
-        TRAINING_ROUTE_ENUMS[:assessment_only],
-        TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+        ReferenceData::TRAINING_ROUTES.assessment_only.name,
+        ReferenceData::TRAINING_ROUTES.early_years_assessment_only.name,
       ].exclude?(data_model.training_route)
     end
 

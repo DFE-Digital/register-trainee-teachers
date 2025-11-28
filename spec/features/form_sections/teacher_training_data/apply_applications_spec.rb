@@ -110,7 +110,7 @@ private
   def training_route
     # NOTE: `pg_teaching_apprenticeship` has a different journey covered by it's own spec
 
-    (TRAINING_ROUTES_FOR_COURSE.keys - [TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship]]).sample
+    (TRAINING_ROUTES_FOR_COURSE.keys - [ReferenceData::TRAINING_ROUTES.pg_teaching_apprenticeship.name]).sample
   end
 
   def and_a_trainee_exists_created_from_apply

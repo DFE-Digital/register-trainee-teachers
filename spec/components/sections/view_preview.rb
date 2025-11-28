@@ -53,7 +53,7 @@ module Sections
         ethnic_background: "ethnic_background",
         additional_ethnic_background: "additional_ethnic_background",
         course_subject_one: "subject",
-        training_route: TRAINING_ROUTE_ENUMS[training_route(section)],
+        training_route: ReferenceData::TRAINING_ROUTES.find(training_route(section)).name,
         lead_partner_school: School.new(id: 1),
         degrees: [Degree.new(id: 1, locale_code: :uk)],
         training_initiative: ROUTE_INITIATIVES_ENUMS[:now_teach],
@@ -64,7 +64,7 @@ module Sections
     end
 
     def start_sections_trainee(section)
-      @start_sections_trainee ||= Trainee.new(id: 1000, training_route: TRAINING_ROUTE_ENUMS[training_route(section)], provider: Provider.new)
+      @start_sections_trainee ||= Trainee.new(id: 1000, training_route: ReferenceData::TRAINING_ROUTES.find(training_route(section)).name, provider: Provider.new)
     end
 
     def training_route(section)
