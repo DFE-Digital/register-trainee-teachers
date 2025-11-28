@@ -1022,14 +1022,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
   end
 
   create_table "trs_trn_requests", force: :cascade do |t|
-    t.bigint("trainee_id", null: false)
-    t.uuid("request_id", null: false)
-    t.jsonb("response")
-    t.integer("state", default: 0)
-    t.datetime("created_at", null: false)
-    t.datetime("updated_at", null: false)
-    t.index(["request_id"], name: "index_trs_trn_requests_on_request_id", unique: true)
-    t.index(["trainee_id"], name: "index_trs_trn_requests_on_trainee_id")
+    t.bigint "trainee_id", null: false
+    t.uuid "request_id", null: false
+    t.jsonb "response"
+    t.integer "state", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_trs_trn_requests_on_request_id", unique: true
+    t.index ["trainee_id"], name: "index_trs_trn_requests_on_trainee_id"
   end
 
   create_table "uploads", force: :cascade do |t|
