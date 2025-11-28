@@ -22,7 +22,7 @@
             component.with_row(**row_helper(@trainee, :training_details))
 
             if @trainee.requires_lead_partner?
-              component.with_row(**row_helper(@trainee, :lead_partner_and_employing_school_details))
+              component.with_row(**row_helper(@trainee, :training_partner_and_employing_school_details))
             end
 
             if @trainee.requires_placements?
