@@ -789,4 +789,15 @@ describe Trainee do
       expect(trainee.duplicate?).to be(true)
     end
   end
+
+  describe "enums" do
+    describe "#study_mode" do
+      it "defines the study_mode enum with values" do
+        expect(subject).to define_enum_for(:study_mode).with_values(
+          part_time: 0,
+          full_time: 1,
+        )
+      end
+    end
+  end
 end
