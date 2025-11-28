@@ -1,43 +1,10 @@
 # frozen_string_literal: true
 
-TRAINING_ROUTE_ENUMS = {
-  assessment_only: "assessment_only",
-  early_years_assessment_only: "early_years_assessment_only",
-  early_years_postgrad: "early_years_postgrad",
-  early_years_salaried: "early_years_salaried",
-  early_years_undergrad: "early_years_undergrad",
-  iqts: "iqts",
-  opt_in_undergrad: "opt_in_undergrad",
-  provider_led_postgrad: "provider_led_postgrad",
-  provider_led_undergrad: "provider_led_undergrad",
-  school_direct_tuition_fee: "school_direct_tuition_fee",
-  school_direct_salaried: "school_direct_salaried",
-  pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
-  hpitt_postgrad: "hpitt_postgrad",
-  teacher_degree_apprenticeship: "teacher_degree_apprenticeship",
-}.freeze
-
 TRAINING_ROUTE_TYPES = {
-  postgrad_funded: [
-    TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-    TRAINING_ROUTE_ENUMS[:early_years_postgrad],
-  ],
-  postgrad_salaried: [
-    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
-    TRAINING_ROUTE_ENUMS[:early_years_salaried],
-    TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
-  ],
-  undergrad_funded: [
-    TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
-    TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
-    TRAINING_ROUTE_ENUMS[:early_years_undergrad],
-  ],
-  other: [
-    TRAINING_ROUTE_ENUMS[:assessment_only],
-    TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
-    TRAINING_ROUTE_ENUMS[:iqts],
-    TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
-  ],
+  postgrad_funded: %w[provider_led_postgrad early_years_postgrad],
+  postgrad_salaried: %w[pg_teaching_apprenticeship early_years_salaried hpitt_postgrad],
+  undergrad_funded: %w[provider_led_undergrad opt_in_undergrad early_years_undergrad],
+  other: %w[assessment_only early_years_assessment_only iqts teacher_degree_apprenticeship],
 }.freeze
 
 ROUTE_INITIATIVES_ENUMS = {
@@ -54,23 +21,22 @@ ROUTE_INITIATIVES_ENUMS = {
   additional_itt_place_for_pe_with_a_priority_subject: "additional_itt_place_for_pe_with_a_priority_subject",
 }.freeze
 
-# TRAINING_ROUTES = {
-#   TRAINING_ROUTE_ENUMS[:assessment_only] => 0,
-#   TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
-#   TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
-#   TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
-#   TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
-#   TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
-#   TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
-#   TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
-#   TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 8,
-#   TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
-#   TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
-#   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
-#   TRAINING_ROUTE_ENUMS[:iqts] => 12,
-#   TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
-# }.freeze
-TRAINING_ROUTES = ReferenceData::Loader.instance.enum_values_for(:training_route)
+TRAINING_ROUTES = {
+  "assessment_only" => 0,
+  "provider_led_postgrad" => 1,
+  "early_years_undergrad" => 2,
+  "school_direct_tuition_fee" => 3,
+  "school_direct_salaried" => 4,
+  "pg_teaching_apprenticeship" => 5,
+  "early_years_assessment_only" => 6,
+  "early_years_salaried" => 7,
+  "early_years_postgrad" => 8,
+  "provider_led_undergrad" => 9,
+  "opt_in_undergrad" => 10,
+  "hpitt_postgrad" => 11,
+  "iqts" => 12,
+  "teacher_degree_apprenticeship" => 14,
+}.freeze
 
 ROUTE_INITIATIVES = {
   ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars] => 0,
