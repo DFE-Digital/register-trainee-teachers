@@ -7,6 +7,8 @@ require "kramdown"
 require "open3"
 require "config"
 
+require_relative "config/environment"
+
 namespace :tech_docs do
   desc "Build docs"
   task :build do
@@ -78,6 +80,8 @@ namespace :tech_docs do
       TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.reverse_each.with_index do |version, index|
         data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
         version_dir       = TechDocsHelpers.format_version(version)
+
+        next unless version_dir.in?(Settings.api.allowed_versions)
 
         FileUtils.mkdir_p("source/reference-data/#{version_dir}")
 
