@@ -9,7 +9,7 @@ module SchoolData
     def initialize(csv_content:, download_record:)
       @csv_rows = CSV.parse(csv_content, headers: true)
       @download_record = download_record
-      @stats = { created: 0, updated: 0, lead_partners_updated: 0, total_rows: 0, filtered_rows: 0 }
+      @stats = { created: 0, updated: 0, lead_partners_updated: 0, deleted: 0, total_rows: 0, filtered_rows: 0 }
     end
 
     def call
@@ -93,6 +93,7 @@ module SchoolData
                                                         :funding_payment_schedules,
                                                         :funding_trainee_summaries,
                                                         :placements)
+      @stats[:deleted] = register_schools_to_delete.count
 
       register_schools_to_delete.find_each(&:destroy!)
     end
@@ -112,6 +113,7 @@ module SchoolData
         status: :completed,
         completed_at: Time.current,
         schools_created: @stats[:created],
+        schools_deleted: @stats[:deleted],
         schools_updated: @stats[:updated],
         lead_partners_updated: @stats[:lead_partners_updated],
       )
