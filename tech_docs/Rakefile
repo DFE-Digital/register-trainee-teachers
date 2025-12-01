@@ -75,12 +75,25 @@ namespace :tech_docs do
     task :generate do
       version_runner_code = "print Hesa::ReferenceData.constants"
 
-      TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.each do |version|
+      TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.reverse_each.with_index do |version, index|
         data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
         version_dir       = TechDocsHelpers.format_version(version)
-        temp_version_dir  = "temp_#{version_dir}"
 
-        FileUtils.mkdir_p("source/reference-data/#{temp_version_dir}")
+        FileUtils.mkdir_p("source/reference-data/#{version_dir}")
+
+        File.open("source/reference-data/#{version_dir}/index.html.md.erb", "w") do |f|
+          f.write(
+            <<~METADATA,
+            ---
+            title: #{version_dir}
+            weight: #{index + 3}
+            ---
+
+            # #{version_dir}
+
+            METADATA
+          )
+        end
 
         app     = Middleman::Application.new
         context = Middleman::TemplateContext.new(app, {})
@@ -95,7 +108,7 @@ namespace :tech_docs do
           field               = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }
           formatted_attribute = attribute.gsub("_", "-")
 
-          File.open("source/reference-data/#{temp_version_dir}/#{formatted_attribute}.html.md", "w") do |f|
+          File.open("source/reference-data/#{version_dir}/#{formatted_attribute}.html.md", "w") do |f|
             html = context.partial(
               "partials/reference_data/attribute", locals: {
                 attribute: formatted_attribute,
@@ -119,10 +132,6 @@ namespace :tech_docs do
             f.write(html)
           end
         end
-
-        FileUtils.cp("source/reference-data/#{version_dir}/index.html.md.erb", "source/reference-data/#{temp_version_dir}")
-        FileUtils.rm_rf("source/reference-data/#{version_dir}")
-        FileUtils.mv("source/reference-data/#{temp_version_dir}", "source/reference-data/#{version_dir}")
       end
     end
   end
