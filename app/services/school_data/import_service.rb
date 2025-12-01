@@ -7,13 +7,14 @@ module SchoolData
     EXCLUDED_ESTABLISHMENT_TYPES = [29].freeze
 
     def initialize(csv_content:, download_record:)
-      @csv_content = csv_content
+      @csv_rows = CSV.parse(csv_content, headers: true)
       @download_record = download_record
       @stats = { created: 0, updated: 0, lead_partners_updated: 0, total_rows: 0, filtered_rows: 0 }
     end
 
     def call
       import_schools
+      delete_schools
       realign_lead_partner_names
       update_final_stats
       log_final_stats
@@ -25,7 +26,7 @@ module SchoolData
 
     def import_schools
       School.transaction do
-        CSV.parse(@csv_content, headers: true) do |row|
+        @csv_rows.each do |row|
           @stats[:total_rows] += 1
           import_single_school(row)
         end
@@ -81,6 +82,19 @@ module SchoolData
     rescue Date::Error
       Rails.logger.warn("Failed to parse date: #{date_string}")
       nil
+    end
+
+    def delete_schools
+      gias_schools = @csv_rows.map { |row| row["URN"]&.strip }.compact
+      # Only delete schools that are not associated with any trainees or funding records or placements
+      register_schools_to_delete = School.where.not(urn: gias_schools)
+                                         .where.missing(:employing_school_trainees,
+                                                        :lead_partner_trainees,
+                                                        :funding_payment_schedules,
+                                                        :funding_trainee_summaries,
+                                                        :placements)
+
+      register_schools_to_delete.find_each(&:destroy!)
     end
 
     def realign_lead_partner_names
