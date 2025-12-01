@@ -349,11 +349,11 @@ This command will:
 
 Note: This process will import a fresh copy of the applicants’ details and use them to create new records. This ensures that the system realigns with its normal mode of operation, correcting any issues caused by previously imported, potentially stale data.
 
-## Lead partners
+## Training partners
 
-### Converting a provider into lead partner
+### Converting a provider into training partner
 
-If a provider loses accreditation and needs to be converted into a lead partner, do the following
+If a provider loses accreditation and needs to be converted into a training partner, do the following
 
 * Find the ids of all providers that need to be converted
 * run the following task including the apostrophes
@@ -362,22 +362,22 @@ If a provider loses accreditation and needs to be converted into a lead partner,
 bundle exec rails 'copy_providers_to_lead_partners:copy[<provider ids separated by spaces>, <provider type, eg hei or scitt>]'
 ```
 
-This task should create the new lead partner and associate the providers’ users with the new lead partner record.
+This task should create the new training partner and associate the providers' users with the new training partner record.
 
-### Creating a lead partner from a school
+### Creating a training partner from a school
 
 Ensure that the schools data are up to date see docs/setup-development.md
 
 There is UI that the support agent that can use, so no need for a dev.
 
 1. Find the school in question, <https://www.register-trainee-teachers.service.gov.uk/system-admin/schools>
-2. Change `Is a lead partner?` from `No` to `Yes`
+2. Change `Is a training partner?` from `No` to `Yes`
 3. Confirm it
 4. Verify it, <https://www.register-trainee-teachers.service.gov.uk/system-admin/training-partners>
 
 ### Adding a previous trainee for a former accredited provider
 
-Given a lead partner and the former accredited provider is the same.
+Given a training partner and the former accredited provider is the same.
 
 ```ruby
 
