@@ -18,7 +18,7 @@ module Autocomplete
         end
 
         it "returns a list of lead_partners" do
-          expect(json_response["lead_partners"].size).to eq(1)
+          expect(json_response["training_partners"].size).to eq(1)
         end
       end
 
@@ -43,7 +43,7 @@ module Autocomplete
           end
 
           it "returns the lead_partners matching the query only" do
-            expect(json_response["lead_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
+            expect(json_response["training_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
           end
         end
 
@@ -53,7 +53,7 @@ module Autocomplete
           end
 
           it "returns the lead_partners matching the query only" do
-            expect(json_response["lead_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
+            expect(json_response["training_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
           end
         end
 
@@ -63,7 +63,7 @@ module Autocomplete
           end
 
           it "returns the lead_partners matching the query only" do
-            expect(json_response["lead_partners"]).to match([lead_partner_hei.as_json(only: %i[id name urn ukprn])])
+            expect(json_response["training_partners"]).to match([lead_partner_hei.as_json(only: %i[id name urn ukprn])])
           end
         end
       end
@@ -75,7 +75,7 @@ module Autocomplete
         end
 
         it "limits the results based on the provided limit" do
-          expect(json_response["lead_partners"].size).to eq(2)
+          expect(json_response["training_partners"].size).to eq(2)
         end
       end
     end
