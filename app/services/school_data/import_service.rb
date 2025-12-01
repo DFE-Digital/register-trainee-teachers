@@ -49,9 +49,11 @@ module SchoolData
       school.assign_attributes(attributes)
       if school.new_record?
         school.save!
+        Rails.logger.info("Created school: #{school.urn} - #{school.name}")
         @stats[:created] += 1
       elsif school.changed?
         school.save!
+        Rails.logger.info("Updated school: #{school.urn} - #{school.name}")
         @stats[:updated] += 1
       end
     end
@@ -95,7 +97,10 @@ module SchoolData
                                                         :placements)
       @stats[:deleted] = register_schools_to_delete.count
 
-      register_schools_to_delete.find_each(&:destroy!)
+      register_schools_to_delete.find_each do |school|
+        Rails.logger.info("Deleted school: #{school.urn} - #{school.name}")
+        school.destroy!
+      end
     end
 
     def realign_lead_partner_names
@@ -104,6 +109,7 @@ module SchoolData
 
       lead_partners.find_each do |lead_partner|
         lead_partner.update!(name: lead_partner.school.name)
+        Rails.logger.info("Updated lead partner name from '#{lead_partner.name}' to '#{lead_partner.school.name}'")
         @stats[:lead_partners_updated] += 1
       end
     end
