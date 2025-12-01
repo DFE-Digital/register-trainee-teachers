@@ -19,7 +19,7 @@ describe "Trainees API" do
           sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
           email: trainee.email,
           trn: "123456",
-          training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name],
+          training_route: ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code,
           itt_start_date: trainee.itt_start_date,
           itt_end_date: trainee.itt_end_date,
           diversity_disclosure: "diversity_disclosed",

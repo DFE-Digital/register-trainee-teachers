@@ -118,7 +118,7 @@ module Api
         end
 
         def training_route
-          mapped_value = ::Hesa::CodeSets::TrainingRoutes::MAPPING[params[:training_route]]
+          mapped_value = ReferenceData::TRAINING_ROUTES.find_by_hesa_code(params[:training_route]).name
 
           return InvalidValue.new(params[:training_route]) if params[:training_route].present? && mapped_value.nil?
 
