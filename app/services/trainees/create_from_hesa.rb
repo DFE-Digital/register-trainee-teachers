@@ -190,7 +190,7 @@ module Trainees
     end
 
     def training_route
-      ::Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_trainee[:training_route]]
+      ReferenceData::TRAINING_ROUTES.find_by_hesa_code(hesa_trainee[:training_route]).name
     end
 
     def ethnic_background

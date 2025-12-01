@@ -35,5 +35,11 @@ module ReferenceData
         year <= end_year
       end
     end
+
+    def hesa_code
+      raise(StandardError, "Multiple HESA codes present") if hesa_codes.size > 1
+
+      hesa_codes.first
+    end
   end
 end

@@ -124,7 +124,7 @@ module Api
         :training_route,
         inclusion: {
           in: :valid_training_routes,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys) },
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: ReferenceData::TRAINING_ROUTES.hesa_codes) },
         },
         allow_blank: true,
         if: :valid_trainee_start_date?,
@@ -311,9 +311,9 @@ module Api
       def valid_training_routes
         ReferenceData::TRAINING_ROUTES.names(start_year:)
         # if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-        #   Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)
+        #   ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.excluding(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)
         # else
-        #   Hesa::CodeSets::TrainingRoutes::MAPPING.values
+        #   ReferenceData::TRAINING_ROUTES.names_with_hesa_codes
         # end
       end
 

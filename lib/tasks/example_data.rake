@@ -48,7 +48,7 @@ REAL_PUBLISH_COURSES_WITH_SUBJECTS = {
   "Social Sciences" => ["Social sciences"],
 }.freeze
 
-HESA_TRAINING_ROUTES = Hesa::CodeSets::TrainingRoutes::MAPPING.values.freeze
+HESA_TRAINING_ROUTES = ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.freeze
 
 namespace :example_data do
   desc "Create personas, their providers and a selection of trainees"

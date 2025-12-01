@@ -206,7 +206,7 @@ module Api
       end
 
       def training_route
-        ::Hesa::CodeSets::TrainingRoutes::MAPPING.key(@trainee.training_route)
+        ReferenceData::TRAINING_ROUTES.find(@trainee.training_route).hesa_code
       end
 
       def training_initiative

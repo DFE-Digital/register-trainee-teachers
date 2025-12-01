@@ -110,7 +110,7 @@ namespace :reference_data do
   desc "HESA training routes reference data checks"
   task training_routes: :environment do
     HesaCodeChecker.new.call("training_routes") do |hesa_code|
-      Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_code.code]
+      ReferenceData::TRAINING_ROUTES.find_by_hesa_code(hesa_code.code)&.name
     end
   end
 

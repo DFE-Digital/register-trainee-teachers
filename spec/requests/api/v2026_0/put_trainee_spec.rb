@@ -1361,7 +1361,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         end
 
         let(:itt_start_date) { "2023-01-01" }
-        let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+        let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
 
         before do
           put(
@@ -1408,7 +1408,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body[:data][:training_route]).to eq(
-            Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name],
+            ReferenceData::TRAINING_ROUTES.provider_led_postgrad.hesa_code,
           )
           expect(trainee.reload.training_route).to eq(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)
         end
@@ -1419,7 +1419,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it do
             expect(response).to have_http_status(:ok)
             expect(response.parsed_body[:data][:training_route]).to eq(
-              Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name],
+              ReferenceData::TRAINING_ROUTES.provider_led_postgrad.hesa_code,
             )
             expect(trainee.reload.training_route).to eq(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)
           end
@@ -1440,7 +1440,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
 
         let(:itt_start_date) { "2021-08-01" }
         let(:itt_end_date)   { "2022-01-01" }
-        let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name] }
+        let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_postgrad.hesa_code }
 
         let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2021, next_cycle: true) }
 
@@ -2301,7 +2301,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
           email: "john.doe@example.com",
           nationality: "GB",
-          training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name],
+          training_route: ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code,
           itt_start_date: start_academic_cycle.start_date,
           itt_end_date: end_academic_cycle.end_date,
           course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[course_subject],
@@ -2597,7 +2597,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           let(:params_for_update) do
             {
               data: {
-                training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name],
+                training_route: ReferenceData::TRAINING_ROUTES.opt_in_undergrad.hesa_code,
                 fund_code: Hesa::CodeSets::FundCodes::NOT_ELIGIBLE,
                 funding_method: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
               },
@@ -2728,7 +2728,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             let(:params_for_update) do
               {
                 data: {
-                  training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name],
+                  training_route: ReferenceData::TRAINING_ROUTES.opt_in_undergrad.hesa_code,
                   fund_code: Hesa::CodeSets::FundCodes::NOT_ELIGIBLE,
                   funding_method: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
                 },

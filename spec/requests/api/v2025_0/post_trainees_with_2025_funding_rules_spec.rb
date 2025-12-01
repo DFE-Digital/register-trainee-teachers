@@ -14,7 +14,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   let(:trainee_start_date) { itt_start_date }
   let(:itt_start_date) { "2024-10-01" }
   let(:itt_end_date) { "2025-08-01" }
-  let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+  let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
   let(:disability1) { "58" }
   let(:disability2) { "57" }
   let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
@@ -110,7 +110,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is invalid because no funding exists for the combination of academic_cycle, funding_method, course_subject_one, and training_route" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::SCHOLARSHIP }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_postgrad.hesa_code }
     let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PSYCHOLOGY] }
 
     it "does not create a trainee with a bursary and returns an error" do
@@ -126,7 +126,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is valid and includes a undergrad bursary" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
 
     it "creates a trainee with a bursary" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -141,7 +141,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is valid and includes a tier one bursary" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::TIER_ONE }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
 
     it "creates a trainee with a bursary" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -156,7 +156,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is valid and includes a tier two bursary" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::TIER_TWO }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
 
     it "creates a trainee with a bursary" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -171,7 +171,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is valid and includes a tier three bursary" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::TIER_THREE }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
 
     it "creates a trainee with a bursary" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -186,7 +186,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is valid and includes a veterans bursary" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
 
     it "creates a trainee with a bursary" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -201,7 +201,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is valid and includes a scholarship" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::SCHOLARSHIP }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_postgrad.hesa_code }
     let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PHYSICS] }
 
     it "creates a trainee with a scholarship" do
@@ -217,7 +217,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
   context "when the request is valid and includes a grant" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::GRANT }
-    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.school_direct_salaried.name] }
+    let(:training_route) { ReferenceData::TRAINING_ROUTES.school_direct_salaried.hesa_code }
     let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::MUSIC_EDUCATION_AND_TEACHING] }
 
     it "creates a trainee with a grant" do

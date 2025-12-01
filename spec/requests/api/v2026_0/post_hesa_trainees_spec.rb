@@ -26,7 +26,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
   let(:trainee_start_date) { itt_start_date }
   let(:itt_start_date) { academic_cycle.start_date.iso8601 }
   let(:itt_end_date) { (academic_cycle.start_date + 1.year).iso8601 }
-  let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+  let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
   let(:disability1) { "58" }
   let(:disability2) { "57" }
   let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
@@ -618,7 +618,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           end
 
           context "when applicable school urn is not valid" do
-            let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name] }
+            let(:training_route) { ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.hesa_code }
             let(:params) do
               {
                 data: data.merge(
@@ -644,7 +644,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
                 data: data.merge(
                   lead_partner_urn: lead_partner.urn,
                   employing_school_urn: employing_school.urn,
-                  training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name],
+                  training_route: ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.hesa_code,
                 ),
               }
             end
@@ -1159,7 +1159,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         end
 
         let(:itt_start_date) { "2023-01-01" }
-        let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name] }
+        let(:training_route) { ReferenceData::TRAINING_ROUTES.provider_led_undergrad.hesa_code }
 
         before do
           post endpoint, params: params, headers: { Authorization: token, **json_headers }, as: :json
@@ -1221,7 +1221,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
               itt_start_date: itt_start_date,
               itt_end_date: itt_end_date,
               trainee_start_date: itt_start_date,
-              training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name],
+              training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.hesa_code,
             ),
           }
         end
@@ -1900,7 +1900,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
 
   context "with a fund_code that is ineligible for funding" do
     before do
-      params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name]
+      params[:data][:training_route] = ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.hesa_code
       params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
       params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
       params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY]
@@ -1945,7 +1945,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
     end
 
     before do
-      params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name]
+      params[:data][:training_route] = ReferenceData::TRAINING_ROUTES.provider_led_postgrad.hesa_code
       params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
       params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
       params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::FRENCH_LANGUAGE]
