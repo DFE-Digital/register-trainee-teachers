@@ -287,7 +287,7 @@ feature "publish course details", feature_publish_course_details: true do
 
     def given_a_trainee_exists_with_some_courses(
       with_subjects: [],
-      with_training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name,
+      with_training_route: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name
     )
       given_a_trainee_exists(:with_related_courses,
                              :with_secondary_education,

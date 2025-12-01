@@ -309,7 +309,6 @@ module Api
     private
 
       def valid_training_routes
-        require 'pry'; binding.pry
         ReferenceData::TRAINING_ROUTES.hesa_codes(year: start_year)
         # if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
         #   ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.excluding(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name)

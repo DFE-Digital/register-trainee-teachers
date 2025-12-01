@@ -19,8 +19,10 @@ module Trainees
 
     context "when an empty trainee exists" do
       let!(:empty_trainee) do
-        Trainee.create(provider_id: draft_trainee.provider.id,
-          training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name)
+        Trainee.create(
+          provider_id: draft_trainee.provider.id,
+          training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name,
+        )
       end
 
       it { is_expected.not_to include(empty_trainee) }
