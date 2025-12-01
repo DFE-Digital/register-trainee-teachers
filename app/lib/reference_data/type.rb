@@ -43,8 +43,8 @@ module ReferenceData
       valid_values_for(year:).select { |value| value.hesa_codes.present? }.map(&:name)
     end
 
-    def hesa_codes
-      @values_by_hesa_code.keys
+    def hesa_codes(year: nil)
+      valid_values_for(year:).flat_map(&:hesa_codes)
     end
 
     def find_by_hesa_code(hesa_code)

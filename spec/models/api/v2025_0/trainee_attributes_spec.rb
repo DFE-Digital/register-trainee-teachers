@@ -275,7 +275,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes)
+                .in_array(ReferenceData::TRAINING_ROUTES.hesa_codes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -285,7 +285,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes)
+                .in_array(ReferenceData::TRAINING_ROUTES.hesa_codes)
                 .with_message(/has invalid reference data value/)
             end
 
@@ -640,7 +640,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
       context "when training_route is present" do
         context "when requires_degree? is true" do
           before do
-            subject.training_route = ReferenceData::TRAINING_ROUTES.provider_led_postgra.named
+            subject.training_route = ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name
           end
 
           context "with empty degrees_attributes" do
@@ -670,7 +670,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
         context "when requires_degree? is false" do
           before do
-            subject.training_route = ReferenceData::TRAINING_ROUTES.provider_led_undergra.named
+            subject.training_route = ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name
             subject.degrees_attributes = []
           end
 
