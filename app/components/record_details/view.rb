@@ -20,6 +20,8 @@ module RecordDetails
              :lead_partner_not_applicable?,
              :employing_school_not_applicable?, to: :trainee
 
+    alias_method :training_partner, :lead_partner
+
     def initialize(
       trainee:,
       last_updated_event:,

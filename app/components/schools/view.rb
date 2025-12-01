@@ -10,7 +10,7 @@ module Schools
       @data_model = data_model
       @has_errors = has_errors
       @editable = editable
-      @lead_partner = fetch_training_partner
+      @training_partner = fetch_training_partner
       @employing_school = fetch_employing_school
       @header_level = header_level
     end
@@ -28,7 +28,7 @@ module Schools
 
   private
 
-    attr_accessor :data_model, :lead_partner, :employing_school, :has_errors, :editable, :header_level
+    attr_accessor :data_model, :training_partner, :employing_school, :has_errors, :editable, :header_level
 
     def training_partner_not_applicable?
       if data_model.is_a?(Schools::FormValidator)
