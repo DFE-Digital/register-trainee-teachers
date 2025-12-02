@@ -1,0 +1,51 @@
+# <%= type.fetch("display_name") %>
+
+<%= link_to "Download entries as a CSV file", "/reference-data/#{version}/#{formatted_type_name}/download" %>
+
+## Overview
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      CSV field name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= type.fetch("display_name") %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      API field name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= type.fetch("name") %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Description
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= type.fetch("description") %>
+    </dd>
+  </div>
+</dl>
+
+## Reference data
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">Label</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% values.each do |value| %>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><%= value.fetch("hesa_codes") %></td>
+        <td class="govuk-table__cell"><%= value.fetch("display_name") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
