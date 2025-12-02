@@ -131,6 +131,50 @@ namespace :tech_docs do
         end
       end
     end
+
+    desc "Generate reference data docs from the Register reference data YAML files"
+    task :generate_from_yaml do
+      # TODO: The version dir should not be hardcoded
+      version_dir = "v2026-0"
+      temp_version_dir = "temp_#{version_dir}"
+
+      FileUtils.mkdir_p("source/reference-data/#{temp_version_dir}")
+
+      app = Middleman::Application.new
+      context = Middleman::TemplateContext.new(app, {})
+
+      Dir["#{TechDocsHelpers::RAILS_DIR}/config/reference_data/*.yml"].each_with_index do |file_path, index|
+        type = YAML.load_file(file_path)
+        metadata = type.fetch("metadata", {})
+        values = type.fetch("data", {})
+        puts metadata.fetch("name").inspect
+        formatted_type_name = metadata.fetch("name").gsub("_", "-")
+
+        File.open("source/reference-data/#{temp_version_dir}/#{formatted_type_name}.html.md", "w") do |f|
+          html = context.partial(
+            "partials/reference_data/attribute_from_yaml", locals: {
+              version: version_dir,
+              formatted_type_name: formatted_type_name,
+              type: metadata,
+              values: values,
+            }
+          )
+
+          f.write(
+            <<~METADATA,
+              ---
+              title: #{metadata.fetch("display_name")}
+              weight: #{index + 1}
+              source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
+              ---
+
+            METADATA
+          )
+
+          f.write(html)
+        end
+      end
+    end
   end
 end
 

@@ -2,6 +2,7 @@ metadata:
   source: "HESA"
   name: "training_route"
   display_name: "Training route"
+  description: "Training route indicates which of various pathways into teaching the trainee is taking"
   change_log:
     - date: "2025-11-26"
       change: "Initial version"
