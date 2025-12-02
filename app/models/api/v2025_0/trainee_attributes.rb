@@ -309,7 +309,7 @@ module Api
     private
 
       def valid_training_routes
-        ReferenceData::TRAINING_ROUTES.hesa_codes(year: start_year)
+        ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: start_year)
       end
 
       def start_year
