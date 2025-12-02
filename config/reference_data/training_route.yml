@@ -17,7 +17,7 @@ data:
     name: "provider_led_postgrad"
     display_name: "Provider-led postgrad"
     description: "Provider-led postgrad training route"
-    start_year: 2024
+    start_year: 2022
     hesa_codes:
       - "12"
   - id: 2
