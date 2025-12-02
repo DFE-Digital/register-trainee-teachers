@@ -15,10 +15,12 @@ RSpec.describe SchoolData::ImportService do
       456789,Test Special School,7,MN7 8OP,,,TestLocality,2018-09-01,
       567890,Test Independent School,4,PQ9 0RS,TestPlace,,,2021-03-10,
       678901,Test Excluded School,29,QR1 2ST,TestTown,,,2020-06-01,
+      999888,School With Lead Partner,20,ST1 2AB,LeadTown,,,2022-01-01,
     CSV
   end
 
   let(:existing_school) { create(:school, urn: "123456", name: "Old School Name") }
+  let(:school_removed_from_gias) { create(:school, urn: "987645", name: "Removed from GIAS School") }
 
   describe "#call" do
     subject { described_class.call(csv_content: sample_csv_content, download_record: download_record) }
@@ -30,7 +32,7 @@ RSpec.describe SchoolData::ImportService do
       end
 
       it "imports new schools with valid establishment types" do
-        expect { subject }.to change { School.count }.by(5)
+        expect { subject }.to change { School.count }.by(6)
 
         # Should import schools with types 1, 10, 15, 7, and 4 (not in EXCLUDED_ESTABLISHMENT_TYPES)
         expect(School.find_by(urn: "123456")).to have_attributes(
@@ -84,6 +86,15 @@ RSpec.describe SchoolData::ImportService do
         expect(existing_school.close_date).to eq(Date.parse("2023-07-20"))
       end
 
+      it "deletes schools no longer present in GIAS data" do
+        school_removed_from_gias
+
+        expect { subject }.to change { School.count }
+          .by(5) # 6 imported - 1 removed = net +5
+
+        expect(School.find_by(urn: "987645")).to be_nil
+      end
+
       it "handles town extraction with fallback logic" do
         subject
 
@@ -98,21 +109,35 @@ RSpec.describe SchoolData::ImportService do
 
       it "tracks import and filtering statistics correctly" do
         existing_school
+        school_removed_from_gias
         result = subject
 
-        expect(result[:total_rows]).to eq(6)
+        expect(result[:total_rows]).to eq(7)
         expect(result[:filtered_rows]).to eq(1) # Only type 29 filtered out
-        expect(result[:created]).to eq(4) # 234567, 345678, 456789, 567890
+        expect(result[:created]).to eq(5) # 234567, 345678, 456789, 567890, 999888
         expect(result[:updated]).to eq(1) # 123456 existing school
+        expect(result[:deleted]).to eq(1) # 987645
 
         download_record.reload
-        expect(download_record.schools_created).to eq(4)
+        expect(download_record.schools_created).to eq(5)
         expect(download_record.schools_updated).to eq(1)
+        expect(download_record.schools_deleted).to eq(1)
         expect(download_record.completed_at).to be_present
       end
 
       it "logs filtering results" do
-        expect(Rails.logger).to receive(:info).with("Processed 6. Kept 5. Filtered out: 1")
+        existing_school
+        school_removed_from_gias
+
+        expect(Rails.logger).to receive(:info).with("Updated school: 123456 - Test Primary School")
+        expect(Rails.logger).to receive(:info).with("Created school: 234567 - Test Academy")
+        expect(Rails.logger).to receive(:info).with("Created school: 345678 - Test Secondary School")
+        expect(Rails.logger).to receive(:info).with("Created school: 456789 - Test Special School")
+        expect(Rails.logger).to receive(:info).with("Created school: 567890 - Test Independent School")
+        expect(Rails.logger).to receive(:info).with("Created school: 999888 - School With Lead Partner")
+        expect(Rails.logger).to receive(:info).with("Deleted school: 987645 - Removed from GIAS School")
+
+        expect(Rails.logger).to receive(:info).with("Processed 7. Kept 6. Filtered out: 1")
 
         subject
       end
