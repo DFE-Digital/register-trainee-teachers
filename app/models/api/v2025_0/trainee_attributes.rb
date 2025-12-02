@@ -124,7 +124,7 @@ module Api
         :training_route,
         inclusion: {
           in: :valid_training_routes,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: ReferenceData::TRAINING_ROUTES.hesa_codes) },
+          message: ->(object, data) { hesa_code_inclusion_message(value: data[:value], valid_values: object.valid_training_route_hesa_codes.sort) },
         },
         allow_blank: true,
         if: :valid_trainee_start_date?,
@@ -304,6 +304,10 @@ module Api
 
       def all_errors
         errors
+      end
+
+      def valid_training_route_hesa_codes
+        ReferenceData::TRAINING_ROUTES.hesa_codes(year: start_year)
       end
 
     private
