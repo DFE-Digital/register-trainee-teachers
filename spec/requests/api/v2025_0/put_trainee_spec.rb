@@ -1455,7 +1455,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '14'.",
           )
         end
 
@@ -1466,7 +1466,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '14'.",
               ],
             )
           end
