@@ -53,10 +53,10 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundCode do
         context "when the age_range is #{course_age_range}" do
           let(:course_age_range) { course_age_range }
 
-          %i[provider_led_postgrad provider_led_undergrad school_direct_tuition_fee school_direct_salaried].each do |training_route|
-            let(:training_route) { ReferenceData::TRAINING_ROUTES.raining_route.name }
+          %i[provider_led_postgrad provider_led_undergrad school_direct_tuition_fee school_direct_salaried].each do |training_route_name|
+            let(:training_route) { ReferenceData::TRAINING_ROUTES.send(training_route_name).name }
 
-            context "when the training_route is #{training_route}" do
+            context "when the training_route is #{training_route_name}" do
               it "returns true" do
                 expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
               end
