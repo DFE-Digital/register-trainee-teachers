@@ -42,6 +42,7 @@ module RegisterTraineeTeachers
 
     config.middleware.use(Rack::Deflater)
     config.middleware.insert_before(ActionDispatch::Static, TechDocs::TrailingSlashRedirect)
+    config.middleware.insert_before(ActionDispatch::Static, TechDocs::Availability)
 
     config.active_job.queue_adapter = :sidekiq
 

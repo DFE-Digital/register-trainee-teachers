@@ -81,23 +81,17 @@ namespace :tech_docs do
         data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
         version_dir       = TechDocsHelpers.format_version(version)
 
-        next unless version_dir.in?(Settings.api.allowed_versions)
-
         FileUtils.mkdir_p("source/reference-data/#{version_dir}")
 
-        File.open("source/reference-data/#{version_dir}/index.html.md.erb", "w") do |f|
-          f.write(
-            <<~METADATA,
-            ---
-            title: #{version_dir}
-            weight: #{index + 3}
-            ---
+        File.write("source/reference-data/#{version_dir}/index.html.md.erb", <<~METADATA)
+          ---
+          title: #{version_dir}
+          weight: #{index + 3}
+          ---
 
-            # #{version_dir}
+          # #{version_dir}
 
-            METADATA
-          )
-        end
+        METADATA
 
         app     = Middleman::Application.new
         context = Middleman::TemplateContext.new(app, {})
