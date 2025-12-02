@@ -275,7 +275,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(ReferenceData::TRAINING_ROUTES.hesa_codes)
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: 2022))
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -285,7 +285,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(ReferenceData::TRAINING_ROUTES.hesa_codes)
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: 2023))
                 .with_message(/has invalid reference data value/)
             end
 
