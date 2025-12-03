@@ -66,6 +66,7 @@ WORKDIR $DOCS_HOME
 
 RUN bundle exec rake tech_docs:csv:generate
 RUN bundle exec rake tech_docs:reference_data:generate
+RUN bundle exec rake tech_docs:reference_data:generate_from_yaml
 RUN bundle exec rake tech_docs:build
 
 ###
