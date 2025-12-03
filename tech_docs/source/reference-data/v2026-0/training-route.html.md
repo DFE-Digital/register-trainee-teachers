@@ -48,60 +48,60 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
   </thead>
   <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">-</td>
         <td class="govuk-table__cell">Assessment only</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["12"]</td>
-        <td class="govuk-table__cell">Provider-led postgrad</td>
+        <td class="govuk-table__cell">12</td>
+        <td class="govuk-table__cell">Primary and Secondary Postgraduate Fee Funded</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">-</td>
         <td class="govuk-table__cell">Early-years undergrad</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["02"]</td>
-        <td class="govuk-table__cell">School direct tuition fee</td>
+        <td class="govuk-table__cell">02</td>
+        <td class="govuk-table__cell">School Direct tuition fee</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["03"]</td>
-        <td class="govuk-table__cell">School direct salaried</td>
+        <td class="govuk-table__cell">03</td>
+        <td class="govuk-table__cell">School Direct salaried</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["10"]</td>
-        <td class="govuk-table__cell">Postgrad teaching apprenticeship</td>
+        <td class="govuk-table__cell">10</td>
+        <td class="govuk-table__cell">Postgraduate teaching apprenticeship</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">-</td>
         <td class="govuk-table__cell">Early years assessment only</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">-</td>
         <td class="govuk-table__cell">Early years salaried</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">-</td>
         <td class="govuk-table__cell">Early years postgrad</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["11"]</td>
-        <td class="govuk-table__cell">Provider-led undergrad</td>
+        <td class="govuk-table__cell">11</td>
+        <td class="govuk-table__cell">Primary and Secondary Undergraduate Fee Funded</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["09"]</td>
-        <td class="govuk-table__cell">Opt-in undergrad</td>
+        <td class="govuk-table__cell">09</td>
+        <td class="govuk-table__cell">Undergraduate Opt-in</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">-</td>
         <td class="govuk-table__cell">HPITT postgrad</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">-</td>
         <td class="govuk-table__cell">iQTS</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["14"]</td>
-        <td class="govuk-table__cell">Teacher degree apprenticeship</td>
+        <td class="govuk-table__cell">14</td>
+        <td class="govuk-table__cell">Teacher Degree Apprenticeship</td>
       </tr>
   </tbody>
 </table>

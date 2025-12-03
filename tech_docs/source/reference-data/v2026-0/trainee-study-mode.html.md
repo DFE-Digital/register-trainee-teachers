@@ -48,11 +48,23 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
   </thead>
   <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["31", "64"]</td>
+        <td class="govuk-table__cell">31</td>
         <td class="govuk-table__cell">Part-time</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">["01", "02", "63"]</td>
+        <td class="govuk-table__cell">64</td>
+        <td class="govuk-table__cell">Part-time</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">01</td>
+        <td class="govuk-table__cell">Full-time</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">02</td>
+        <td class="govuk-table__cell">Full-time</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">63</td>
         <td class="govuk-table__cell">Full-time</td>
       </tr>
   </tbody>

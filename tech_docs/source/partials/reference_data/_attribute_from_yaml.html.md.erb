@@ -43,8 +43,8 @@
   <tbody class="govuk-table__body">
     <% values.each do |value| %>
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell"><%= value.fetch("hesa_codes") %></td>
-        <td class="govuk-table__cell"><%= value.fetch("display_name") %></td>
+        <td class="govuk-table__cell"><%= value.hesa_code %></td>
+        <td class="govuk-table__cell"><%= value.display_name %></td>
       </tr>
     <% end %>
   </tbody>
