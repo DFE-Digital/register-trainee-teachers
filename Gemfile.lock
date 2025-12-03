@@ -774,7 +774,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yabeda (0.13.2)
+    yabeda (0.14.0)
       anyway_config (>= 1.0, < 3)
       concurrent-ruby
       dry-initializer
@@ -782,7 +782,7 @@ GEM
       prometheus-client (>= 3.0, < 5.0)
       rack
       yabeda (~> 0.10)
-    yabeda-rails (0.10.0)
+    yabeda-rails (0.11.0)
       activesupport
       anyway_config (>= 1.3, < 3)
       railties
@@ -1197,9 +1197,9 @@ CHECKSUMS
   websocket-driver (0.8.0) sha256=ed0dba4b943c22f17f9a734817e808bc84cdce6a7e22045f5315aa57676d4962
   websocket-extensions (0.1.5) sha256=1c6ba63092cda343eb53fc657110c71c754c56484aad42578495227d717a8241
   xpath (3.2.0) sha256=6dfda79d91bb3b949b947ecc5919f042ef2f399b904013eb3ef6d20dd3a4082e
-  yabeda (0.13.2) sha256=aa9edfd8afa8b7ced2c3fbb5f5965a138fb17e665a581095a06e42dc4dab48cc
+  yabeda (0.14.0) sha256=bc517bf22d692ebd80a29fc9fd2246c257aaf92d10b2735a775e2419351a43bf
   yabeda-prometheus (0.9.1) sha256=b87d80cae8cffbeb527c25d288eafa8eed9c1fb56cf49616db5c8611768cd5fd
-  yabeda-rails (0.10.0) sha256=0a85bd829961494f66241d20192368e5d042f836f91986a1eac02f8dcb04237c
+  yabeda-rails (0.11.0) sha256=afa2581bd44c8f419cb3f2bbf9f6fb40f817c30476f7caf5d1c55c48d69a5b29
   zeitwerk (2.7.3) sha256=b2e86b4a9b57d26ba68a15230dcc7fe6f040f06831ce64417b0621ad96ba3e85
 
 RUBY VERSION
