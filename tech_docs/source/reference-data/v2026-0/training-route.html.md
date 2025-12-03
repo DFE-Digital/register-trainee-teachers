@@ -1,0 +1,107 @@
+---
+title: Training route
+weight: 2
+source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2026_0.rb
+---
+
+<h1 id="training-route">Training route</h1>
+
+<p><a href="/reference-data/v2026-0/training-route/download">Download entries as a CSV file</a></p>
+
+<h2 id="overview">Overview</h2>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      CSV field name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      Training route
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      API field name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      training_route
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Description
+    </dt>
+    <dd class="govuk-summary-list__value">
+      Training route indicates which of various pathways into teaching the trainee is taking
+    </dd>
+  </div>
+</dl>
+
+<h2 id="reference-data">Reference data</h2>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">Label</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">Assessment only</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">["12"]</td>
+        <td class="govuk-table__cell">Provider-led postgrad</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">Early-years undergrad</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">["02"]</td>
+        <td class="govuk-table__cell">School direct tuition fee</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">["03"]</td>
+        <td class="govuk-table__cell">School direct salaried</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">["10"]</td>
+        <td class="govuk-table__cell">Postgrad teaching apprenticeship</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">Early years assessment only</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">Early years salaried</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">Early years postgrad</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">["11"]</td>
+        <td class="govuk-table__cell">Provider-led undergrad</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">["09"]</td>
+        <td class="govuk-table__cell">Opt-in undergrad</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">HPITT postgrad</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"></td>
+        <td class="govuk-table__cell">iQTS</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">["14"]</td>
+        <td class="govuk-table__cell">Teacher degree apprenticeship</td>
+      </tr>
+  </tbody>
+</table>

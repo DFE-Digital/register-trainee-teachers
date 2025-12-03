@@ -140,10 +140,9 @@ namespace :tech_docs do
         type = YAML.load_file(file_path)
         metadata = type.fetch("metadata", {})
         values = type.fetch("data", {})
-        puts metadata.fetch("name").inspect
         formatted_type_name = metadata.fetch("name").gsub("_", "-")
 
-        File.open("source/reference-data/#{temp_version_dir}/#{formatted_type_name}.html.md", "w") do |f|
+        File.open("source/reference-data/#{temp_version_dir}/#{formatted_type_name}.html.md", "w+") do |f|
           html = context.partial(
             "partials/reference_data/attribute_from_yaml", locals: {
               version: version_dir,
@@ -167,6 +166,16 @@ namespace :tech_docs do
           f.write(html)
         end
       end
+
+      FileUtils.cp(
+        "source/reference-data/#{version_dir}/index.html.md.erb",
+        "source/reference-data/#{temp_version_dir}",
+      )
+      FileUtils.rm_rf("source/reference-data/#{version_dir}")
+      FileUtils.mv(
+        "source/reference-data/#{temp_version_dir}",
+        "source/reference-data/#{version_dir}",
+      )
     end
   end
 end
