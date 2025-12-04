@@ -7,7 +7,7 @@
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-      CSV field name
+      Label
     </dt>
     <dd class="govuk-summary-list__value">
       <%= type.fetch("display_name") %>
@@ -15,7 +15,7 @@
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-      API field name
+      Name
     </dt>
     <dd class="govuk-summary-list__value">
       <%= type.fetch("name") %>
@@ -36,8 +36,14 @@
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">HESA code</th>
       <th scope="col" class="govuk-table__header">Label</th>
+      <th scope="col" class="govuk-table__header">Register ID</th>
+      <th scope="col" class="govuk-table__header">Register name</th>
+      <% if values.any? { |value| value.start_year.present? || value.end_year.present? } %>
+        <th scope="col" class="govuk-table__header">Start year</th>
+        <th scope="col" class="govuk-table__header">End year</th>
+      <% end %>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
@@ -45,6 +51,12 @@
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= value.hesa_code %></td>
         <td class="govuk-table__cell"><%= value.display_name %></td>
+        <td class="govuk-table__cell"><%= value.id %></td>
+        <td class="govuk-table__cell"><%= value.name %></td>
+        <% if values.any? { |value| value.start_year.present? || value.end_year.present? } %>
+          <td class="govuk-table__cell"><%= value.start_year %></td>
+          <td class="govuk-table__cell"><%= value.end_year %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
