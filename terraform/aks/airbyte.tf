@@ -68,6 +68,27 @@ module "airbyte" {
   use_azure = var.deploy_azure_backing_services
 }
 
+module "streams_update_job" {
+  source = "./vendor/modules/aks//aks/job_configuration"
+
+  count = var.airbyte_enabled ? 1 : 0
+
+  depends_on = [module.airbyte]
+
+  namespace    = var.namespace
+  environment  = local.app_name_suffix
+  service_name = var.service_name
+  docker_image = var.app_docker_image
+  commands     = ["/bin/sh"]
+  arguments    = ["-c", "rake dfe:analytics:airbyte_deploy_tasks"]
+  job_name     = "airbyte-stream-update"
+  enable_logit = true
+
+  config_map_ref = module.application_configuration.kubernetes_config_map_name
+  secret_ref     = module.airbyte_application_configuration[0].kubernetes_secret_name
+  cpu            = module.cluster_data.configuration_map.cpu_min
+}
+
 ## Airbyte module variables
 
 variable "airbyte_enabled" { default = false }

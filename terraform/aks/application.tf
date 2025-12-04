@@ -70,3 +70,18 @@ module "application_configuration" {
   config_variables      = local.app_env_values
   secret_variables      = local.app_secrets
 }
+
+module "airbyte_application_configuration" {
+
+  count = var.airbyte_enabled ? 1 : 0
+
+  source = "./vendor/modules/aks//aks/application_configuration"
+
+  namespace             = var.namespace
+  environment           = "${local.app_name_suffix}-ab"
+  azure_resource_prefix = var.azure_resource_prefix
+  service_short         = var.service_short
+  config_short          = var.config_short
+  config_variables      = local.app_env_values
+  secret_variables      = local.airbyte_app_secrets
+}
