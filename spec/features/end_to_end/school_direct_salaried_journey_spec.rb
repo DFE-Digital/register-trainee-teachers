@@ -17,7 +17,7 @@ feature "school-direct-salaried end-to-end journey" do
     and_the_trainee_id_is_complete
     and_the_placements_details_is_complete
     and_the_funding_details_is_complete
-    and_the_lead_and_employing_schools_section_is_complete
+    and_the_training_partner_and_employing_schools_section_is_complete
     and_the_draft_record_has_been_reviewed
     and_all_sections_are_complete
     when_i_submit_for_trn

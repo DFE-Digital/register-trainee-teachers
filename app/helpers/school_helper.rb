@@ -17,7 +17,7 @@ module SchoolHelper
 
     mappable_field(
       not_applicable ? t(:not_applicable) : school_detail(employing_school),
-      t("components.lead_partner_and_employing_school_details.employing_school_key"),
+      t("components.training_partner_and_employing_school_details.employing_school_key"),
       change_paths(:employing),
     )
   end

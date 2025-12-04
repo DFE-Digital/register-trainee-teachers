@@ -1,0 +1,19 @@
+<h1 class="govuk-heading-l govuk-!-margin-bottom-1">
+  <%= t("components.page_titles.search_training_partners.page_title_no_results") %>
+</h1>
+
+<div class="govuk-inset-text">
+  <p class="govuk-body"><%= t("components.page_titles.search_training_partners.sub_text_no_results") %>
+    <span class="govuk-!-font-weight-bold"><%= query %></span>.
+  </p>
+</div>
+
+<%= form.govuk_error_summary %>
+
+<%= form.hidden_field :lead_partner_id, value: :no_results_search_again %>
+
+<%= form.govuk_text_field :no_results_search_again_query,
+                       label: { text: t("components.page_titles.search_training_partners.search_hint") },
+                       width: "three-quarters" %>
+
+<%= form.govuk_submit t("components.page_titles.search_training_partners.search_button") %>

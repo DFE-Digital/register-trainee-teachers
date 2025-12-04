@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Funding
-  describe LeadPartnerPaymentSchedulesImporter do
+  describe TrainingPartnerPaymentSchedulesImporter do
     context "valid attributes" do
       let(:schedules_attributes) do
         {

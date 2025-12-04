@@ -7,16 +7,16 @@ describe FundingDataImporter do
     context 'when the funding_type is "lead_partner_trainee_summary"' do
       let(:funding_upload) { create(:funding_upload, :lead_partner_trainee_summary) }
 
-      it "calls the LeadPartnerTraineeSummariesImporter" do
+      it "calls the TrainingPartnerTraineeSummariesImporter" do
         importer = FundingDataImporter.new(funding_upload)
-        expect(Funding::Parsers::LeadPartnerTraineeSummaries).to receive(:to_attributes)
-        expect(Funding::LeadPartnerTraineeSummariesImporter).to receive(:call).with(attributes: anything)
+        expect(Funding::Parsers::TrainingPartnerTraineeSummaries).to receive(:to_attributes)
+        expect(Funding::TrainingPartnerTraineeSummariesImporter).to receive(:call).with(attributes: anything)
         importer.import_data
       end
 
-      it "sets the funding_upload status to failed if LeadPartnerTraineeSummariesImporter returns missing URNs" do
-        allow(Funding::Parsers::LeadPartnerTraineeSummaries).to receive(:to_attributes)
-        allow(Funding::LeadPartnerTraineeSummariesImporter).to receive(:call).and_return(%w[urn1 urn2])
+      it "sets the funding_upload status to failed if TrainingPartnerTraineeSummariesImporter returns missing URNs" do
+        allow(Funding::Parsers::TrainingPartnerTraineeSummaries).to receive(:to_attributes)
+        allow(Funding::TrainingPartnerTraineeSummariesImporter).to receive(:call).and_return(%w[urn1 urn2])
         importer = FundingDataImporter.new(funding_upload)
         importer.import_data
         expect(funding_upload.reload.failed?).to be true
@@ -26,16 +26,16 @@ describe FundingDataImporter do
     context 'when the funding_type is "lead_partner_payment_schedule"' do
       let(:funding_upload) { create(:funding_upload, :lead_partner_payment_schedules) }
 
-      it "calls the LeadPartnerPaymentSchedulesImporter" do
+      it "calls the TrainingPartnerPaymentSchedulesImporter" do
         importer = FundingDataImporter.new(funding_upload)
-        expect(Funding::Parsers::LeadPartnerPaymentSchedules).to receive(:to_attributes)
-        expect(Funding::LeadPartnerPaymentSchedulesImporter).to receive(:call).with(attributes: anything, first_predicted_month_index: funding_upload.month)
+        expect(Funding::Parsers::TrainingPartnerPaymentSchedules).to receive(:to_attributes)
+        expect(Funding::TrainingPartnerPaymentSchedulesImporter).to receive(:call).with(attributes: anything, first_predicted_month_index: funding_upload.month)
         importer.import_data
       end
 
-      it "sets the funding_upload status to failed if LeadPartnerPaymentSchedulesImporter returns missing URNs" do
-        allow(Funding::Parsers::LeadPartnerPaymentSchedules).to receive(:to_attributes)
-        allow(Funding::LeadPartnerPaymentSchedulesImporter).to receive(:call).and_return(%w[urn1 urn2])
+      it "sets the funding_upload status to failed if TrainingPartnerPaymentSchedulesImporter returns missing URNs" do
+        allow(Funding::Parsers::TrainingPartnerPaymentSchedules).to receive(:to_attributes)
+        allow(Funding::TrainingPartnerPaymentSchedulesImporter).to receive(:call).and_return(%w[urn1 urn2])
         importer = FundingDataImporter.new(funding_upload)
         importer.import_data
         expect(funding_upload.reload.failed?).to be true

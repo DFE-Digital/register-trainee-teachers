@@ -1,0 +1,27 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.training_partners.edit", has_errors: @training_partner_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with model: @training_partner_form, url: trainee_training_partners_details_path(@trainee) do |f| %>
+
+      <%= f.govuk_error_summary %>
+      <%= f.govuk_collection_radio_buttons :lead_partner_not_applicable,
+        @training_partner_form.training_partner_not_applicable_options,
+        :id,
+        :name,
+        legend: { text: t(".heading"), size: "l" },
+        hint: { text: t(".not_applicable_details.hint") }
+      %>
+
+      <%= f.govuk_submit t("continue") %>
+    <% end %>
+  </div>
+</div>
+
+<% unless @trainee.draft? %>
+  <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+<% end %>

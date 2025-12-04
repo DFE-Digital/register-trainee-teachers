@@ -5,7 +5,7 @@ module RecordDetails
     include SanitizeHelper
     include SummaryHelper
     include SchoolHelper
-    include LeadPartnerHelper
+    include TrainingPartnerHelper
 
     attr_reader :trainee,
                 :last_updated_event,
@@ -19,6 +19,8 @@ module RecordDetails
              :employing_school,
              :lead_partner_not_applicable?,
              :employing_school_not_applicable?, to: :trainee
+
+    alias_method :training_partner, :lead_partner
 
     def initialize(
       trainee:,
@@ -40,7 +42,7 @@ module RecordDetails
       rows = [provider_row]
       if trainee.requires_lead_partner?
         rows += [
-          lead_partner_row,
+          training_partner_row,
           employing_school_row,
         ]
       end
@@ -215,7 +217,7 @@ module RecordDetails
 
     def change_paths(school_type)
       {
-        lead: edit_trainee_lead_partners_details_path(trainee),
+        training_partner: edit_trainee_training_partners_details_path(trainee),
         employing: edit_trainee_employing_schools_details_path(trainee),
       }[school_type.to_sym]
     end

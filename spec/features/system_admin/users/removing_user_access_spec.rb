@@ -44,7 +44,7 @@ private
   end
 
   def and_i_choose_a_user_to_remove_access_under_lead_partners
-    admin_user_show_page.lead_partners.remove_access_links.first.click
+    admin_user_show_page.training_partners.remove_access_links.first.click
   end
 
   def and_i_confirm_remove_access_from_provider
@@ -52,7 +52,7 @@ private
   end
 
   def and_i_confirm_remove_access_from_lead_partner
-    admin_remove_lead_partner_access_page.submit.click
+    admin_remove_training_partner_access_page.submit.click
   end
 
   def then_the_provider_is_no_longer_listed_on_the_user_page

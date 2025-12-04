@@ -1,0 +1,56 @@
+<%= render PageTitle::View.new(i18n_key: "training_partners.index") %>
+
+<h1 class="govuk-heading-l">Training partners</h1>
+
+<%= render "system_admin/tab_nav" %>
+
+<%= register_form_with(
+  url: training_partners_path,
+  local: true,
+  method: :get,
+  html: { data: { module: "app-training-partners-autocomplete" } },
+) do |f| %>
+  <%= f.hidden_field :lead_partner_id, id: "training-partners-id" %>
+  <%= f.govuk_text_field(
+    :query,
+    form_group: { class: "govuk-form-group app-js-only" },
+    label: { text: "Search for a training partner", size: "s" },
+    hint: { text: "Search for a training partner by name, school postcode, school URN or training provider UKPRN" },
+    value: params[:query],
+    "data-field" => "training-partners-autocomplete",
+    width: "three-quarters",
+  )%>
+  <div id="training-partners-autocomplete-element" class="govuk-!-width-three-quarters"
+      data-system-admin-redirect-training-partner="true"
+      data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_training_partners_form[query]"></div>
+<% end %>
+
+<table class="govuk-table" summary="Training partners list">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Training partner name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">URN</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @training_partners.each do |training_partner| %>
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= govuk_link_to(training_partner.name, training_partner_path(training_partner)) %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= training_partner.urn %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render Paginator::View.new(scope: @training_partners) %>
