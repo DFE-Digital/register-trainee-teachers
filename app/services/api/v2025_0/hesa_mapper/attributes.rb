@@ -196,7 +196,7 @@ module Api
         end
 
         def study_mode
-          mapped_value = ::ReferenceData::TRAINEE_STUDY_MODES.find_by_hesa_code(params[:study_mode])&.name
+          mapped_value = ::ReferenceData::STUDY_MODES.find_by_hesa_code(params[:study_mode])&.name
 
           return InvalidValue.new(params[:study_mode]) if params[:study_mode].present? && mapped_value.nil?
 
