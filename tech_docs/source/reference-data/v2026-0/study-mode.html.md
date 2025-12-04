@@ -1,12 +1,12 @@
 ---
-title: Trainee study mode
+title: Study mode
 weight: 1
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2026_0.rb
 ---
 
-<h1 id="trainee-study-mode">Trainee study mode</h1>
+<h1 id="study-mode">Study mode</h1>
 
-<p><a href="/reference-data/v2026-0/trainee-study-mode/download">Download entries as a CSV file</a></p>
+<p><a href="/reference-data/v2026-0/study-mode/download">Download entries as a CSV file</a></p>
 
 <h2 id="overview">Overview</h2>
 
@@ -16,7 +16,7 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
       CSV field name
     </dt>
     <dd class="govuk-summary-list__value">
-      Trainee study mode
+      Study mode
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -24,7 +24,7 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
       API field name
     </dt>
     <dd class="govuk-summary-list__value">
-      trainee_study_mode
+      study_mode
     </dd>
   </div>
   <div class="govuk-summary-list__row">
@@ -32,7 +32,7 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
       Description
     </dt>
     <dd class="govuk-summary-list__value">
-      Trainee study mode indicates whether the trainee is studying full or part-time
+      Study mode indicates whether the trainee is studying full or part-time
     </dd>
   </div>
 </dl>
@@ -53,19 +53,19 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">64</td>
-        <td class="govuk-table__cell">Part-time</td>
+        <td class="govuk-table__cell">Dormant - previously part-time</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">01</td>
-        <td class="govuk-table__cell">Full-time</td>
+        <td class="govuk-table__cell">Full-time according to funding council definitions</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">02</td>
-        <td class="govuk-table__cell">Full-time</td>
+        <td class="govuk-table__cell">Other full-time</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">63</td>
-        <td class="govuk-table__cell">Full-time</td>
+        <td class="govuk-table__cell">Dormant - previously full-time</td>
       </tr>
   </tbody>
 </table>

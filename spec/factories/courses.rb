@@ -21,7 +21,7 @@ FactoryBot.define do
     qualification { %i[qts pgce_with_qts pgde_with_qts pgce pgde].sample }
     course_length { %w[OneYear TwoYears].sample }
     route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
-    study_mode { ReferenceData::TRAINEE_STUDY_MODES.names.sample }
+    study_mode { ReferenceData::STUDY_MODES.names.sample }
     uuid { SecureRandom.uuid }
     recruitment_cycle_year { current_academic_year }
 
