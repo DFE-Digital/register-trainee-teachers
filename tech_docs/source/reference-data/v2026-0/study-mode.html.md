@@ -13,7 +13,7 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-      CSV field name
+      Label
     </dt>
     <dd class="govuk-summary-list__value">
       Study mode
@@ -21,7 +21,7 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
   </div>
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
-      API field name
+      Name
     </dt>
     <dd class="govuk-summary-list__value">
       study_mode
@@ -42,30 +42,42 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">HESA code</th>
       <th scope="col" class="govuk-table__header">Label</th>
+      <th scope="col" class="govuk-table__header">Register ID</th>
+      <th scope="col" class="govuk-table__header">Register name</th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">31</td>
         <td class="govuk-table__cell">Part-time</td>
+        <td class="govuk-table__cell">0</td>
+        <td class="govuk-table__cell">part_time</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">64</td>
         <td class="govuk-table__cell">Dormant - previously part-time</td>
+        <td class="govuk-table__cell">0</td>
+        <td class="govuk-table__cell">part_time</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">01</td>
         <td class="govuk-table__cell">Full-time according to funding council definitions</td>
+        <td class="govuk-table__cell">1</td>
+        <td class="govuk-table__cell">full_time</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">02</td>
         <td class="govuk-table__cell">Other full-time</td>
+        <td class="govuk-table__cell">1</td>
+        <td class="govuk-table__cell">full_time</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">63</td>
         <td class="govuk-table__cell">Dormant - previously full-time</td>
+        <td class="govuk-table__cell">1</td>
+        <td class="govuk-table__cell">full_time</td>
       </tr>
   </tbody>
 </table>
