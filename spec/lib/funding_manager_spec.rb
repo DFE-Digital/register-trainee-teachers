@@ -190,7 +190,7 @@ describe FundingManager do
         end
       end
 
-      ReferenceData::TRAINING_ROUTES.names.reject { |x| x == :assessment_only }.map do |route|
+      ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.reject { |x| x == :assessment_only }.map do |route|
         context "and the #{route} route is not funded in another academic year" do
           let(:funding_method) { create(:funding_method, training_route: route, academic_cycle: previous_academic_cycle) }
 
@@ -250,7 +250,7 @@ describe FundingManager do
       end
     end
 
-    ReferenceData::TRAINING_ROUTES.names.reject { |x| x == :early_years_postgrad }.map do |route|
+    ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.reject { |x| x == :early_years_postgrad }.map do |route|
       let(:training_route) { route }
 
       context "training route #{route.to_s.humanize}" do

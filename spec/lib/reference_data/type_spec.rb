@@ -88,7 +88,7 @@ RSpec.describe ReferenceData::Type do
 
     context "filtered by year" do
       it "returns available names as strings" do
-        expect(type.names(year: 2022)).to contain_exactly(
+        expect(type.names(year: 2021)).to contain_exactly(
           "assessment_only",
           "early_years_undergrad",
           "school_direct_tuition_fee",
@@ -116,7 +116,7 @@ RSpec.describe ReferenceData::Type do
 
     context "filtered by year" do
       it "returns available hesa codes only" do
-        expect(type.hesa_codes(year: 2022)).to contain_exactly("02", "03", "09", "10", "11", "14")
+        expect(type.hesa_codes(year: 2021)).to contain_exactly("02", "03", "09", "10", "11", "14")
       end
     end
   end
