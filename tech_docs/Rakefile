@@ -7,8 +7,6 @@ require "kramdown"
 require "open3"
 require "config"
 
-require_relative "config/environment"
-
 namespace :tech_docs do
   desc "Build docs"
   task :build do
