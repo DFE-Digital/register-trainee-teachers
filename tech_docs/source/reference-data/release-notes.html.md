@@ -5,6 +5,10 @@ weight: 2
 
 # Release notes
 
+## v2026.0 — 1 January 2026
+
+Date published: 23 July 2025
+
 ## v2025.0 — 23 July 2025
 
 Date published: 23 July 2025

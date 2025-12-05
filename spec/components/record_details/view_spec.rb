@@ -19,7 +19,7 @@ module RecordDetails
         trn: Faker::Number.number(digits: 10),
         provider: provider,
         hesa_id: hesa_id,
-        study_mode: ::ReferenceData::TRAINEE_STUDY_MODES.find("part_time")&.id,
+        study_mode: ::ReferenceData::STUDY_MODES.find("part_time")&.id,
         itt_start_date: current_academic_cycle.start_date,
         itt_end_date: next_academic_cycle.end_date,
       )

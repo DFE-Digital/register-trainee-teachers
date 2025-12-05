@@ -5,6 +5,7 @@ require "yaml"
 require "middleman-core"
 require "kramdown"
 require "open3"
+require "active_support/core_ext/hash"
 
 namespace :tech_docs do
   desc "Build docs"
@@ -124,6 +125,94 @@ namespace :tech_docs do
         FileUtils.mv("source/reference-data/#{temp_version_dir}", "source/reference-data/#{version_dir}")
       end
     end
+
+    desc "Generate reference data docs from the Register reference data YAML files"
+    task :generate_from_yaml do
+      # TODO: The version dir should not be hardcoded
+      version_dir = "v2026-0"
+      temp_version_dir = "temp_#{version_dir}"
+
+      FileUtils.mkdir_p("source/reference-data/#{temp_version_dir}")
+
+      app = Middleman::Application.new
+      context = Middleman::TemplateContext.new(app, {})
+
+      hesa_value_labels = {}
+      Dir["#{TechDocsHelpers::RAILS_DIR}/config/locales/reference_data/*.yml"].each do |file_path|
+        labels = YAML.load_file(file_path, aliases: true) 
+        hesa_value_labels = hesa_value_labels.deep_merge(labels)
+      end
+      puts hesa_value_labels.dig("en", "reference_date", "training_routes")
+
+      Dir["#{TechDocsHelpers::RAILS_DIR}/config/reference_data/*.yml"].each_with_index do |file_path, index|
+        type = YAML.load_file(file_path)
+        metadata = type.fetch("metadata", {})
+        data = type.fetch("data", {})
+        formatted_type_name = metadata.fetch("name").gsub("_", "-")
+
+        values = []
+        data.each do |value|
+          hesa_codes = value.fetch("hesa_codes", [])
+          if hesa_codes.present?
+            hesa_codes.each do |code|
+              values << ReferenceDataValue.new(
+                hesa_code: code,
+                id: value.fetch("id"),
+                name: value.fetch("name"),
+                display_name: hesa_value_labels.dig("en", metadata.fetch("name"), code) || value.fetch("display_name"),
+                description: value.fetch("description", nil),
+                start_year: value.fetch("start_year", nil),
+                end_year: value.fetch("end_year", nil),
+              )
+            end
+          else
+            values << ReferenceDataValue.new(
+              hesa_code: "-",
+                id: value.fetch("id"),
+                name: value.fetch("name"),
+                display_name: value.fetch("display_name"),
+                description: value.fetch("description", nil),
+                start_year: value.fetch("start_year", nil),
+                end_year: value.fetch("end_year", nil),
+            )
+          end
+        end
+
+        File.open("source/reference-data/#{temp_version_dir}/#{formatted_type_name}.html.md", "w+") do |f|
+          html = context.partial(
+            "partials/reference_data/attribute_from_yaml", locals: {
+              version: version_dir,
+              formatted_type_name: formatted_type_name,
+              type: metadata,
+              values: values,
+            }
+          )
+
+          f.write(
+            <<~METADATA,
+              ---
+              title: #{metadata.fetch("display_name")}
+              weight: #{index + 1}
+              source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
+              ---
+
+            METADATA
+          )
+
+          f.write(html)
+        end
+      end
+
+      FileUtils.cp(
+        "source/reference-data/#{version_dir}/index.html.md.erb",
+        "source/reference-data/#{temp_version_dir}",
+      )
+      FileUtils.rm_rf("source/reference-data/#{version_dir}")
+      FileUtils.mv(
+        "source/reference-data/#{temp_version_dir}",
+        "source/reference-data/#{version_dir}",
+      )
+    end
   end
 end
 
@@ -191,3 +280,13 @@ module TechDocsHelpers
     FileUtils.mv("temp_source", "source")
   end
 end
+
+ReferenceDataValue = Struct.new(
+  :hesa_code,
+  :id,
+  :name,
+  :display_name,
+  :description,
+  :start_year,
+  :end_year,
+)
