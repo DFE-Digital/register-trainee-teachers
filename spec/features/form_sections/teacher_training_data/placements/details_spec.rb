@@ -87,6 +87,6 @@ private
   end
 
   def valid_training_routes
-    ReferenceData::TRAINING_ROUTES.names - %i[assessment_only early_years_assessment_only]
+    ReferenceData::TRAINING_ROUTES.names - %w[assessment_only early_years_assessment_only]
   end
 end
