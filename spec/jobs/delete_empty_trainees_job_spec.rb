@@ -8,7 +8,7 @@ describe DeleteEmptyTraineesJob do
   let(:provider) { create(:provider) }
 
   before do
-    Trainee.create(provider: provider, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
+    Trainee.create(provider: provider, training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name)
   end
 
   it "enqueues job" do

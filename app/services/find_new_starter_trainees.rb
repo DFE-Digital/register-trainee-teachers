@@ -2,8 +2,8 @@
 
 class FindNewStarterTrainees
   EXCLUDED_ROUTES = [
-    TRAINING_ROUTE_ENUMS[:assessment_only],
-    TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+    ReferenceData::TRAINING_ROUTES.assessment_only.name,
+    ReferenceData::TRAINING_ROUTES.early_years_assessment_only.name,
   ].freeze
 
   attr_reader :census_date

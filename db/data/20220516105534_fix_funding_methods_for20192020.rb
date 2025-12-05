@@ -3,7 +3,7 @@
 class FixFundingMethodsFor20192020 < ActiveRecord::Migration[6.1]
   UNDERGRAD_BURSARIES = [
     OpenStruct.new(
-      training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+      training_route: ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name,
       amount: 9_000,
       allocation_subjects: [
         AllocationSubjects::MATHEMATICS,
@@ -11,7 +11,7 @@ class FixFundingMethodsFor20192020 < ActiveRecord::Migration[6.1]
       ],
     ),
     OpenStruct.new(
-      training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+      training_route: ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name,
       amount: 9_000,
       allocation_subjects: [
         AllocationSubjects::MATHEMATICS,

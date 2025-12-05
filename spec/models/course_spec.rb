@@ -29,12 +29,12 @@ describe Course do
     it do
       expect(subject).to define_enum_for(:route)
         .with_values({
-          TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
-          TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
-          TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
-          TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
-          TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
-          TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
+          ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name => 1,
+          ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name => 3,
+          ReferenceData::TRAINING_ROUTES.school_direct_salaried.name => 4,
+          ReferenceData::TRAINING_ROUTES.pg_teaching_apprenticeship.name => 5,
+          ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name => 9,
+          ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name => 14,
         })
     end
 

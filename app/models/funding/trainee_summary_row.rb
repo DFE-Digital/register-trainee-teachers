@@ -43,15 +43,15 @@ module Funding
              inverse_of: :row
 
     enum :training_route, {
-      school_direct_salaried: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-      pg_teaching_apprenticeship: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
-      early_years_postgrad: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
-      early_years_salaried: TRAINING_ROUTE_ENUMS[:early_years_salaried],
-      provider_led_postgrad: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-      provider_led_undergrad: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
-      opt_in_undergrad: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
-      school_direct_tuition_fee: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-      teacher_degree_apprenticeship: TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
+      school_direct_salaried: ReferenceData::TRAINING_ROUTES.school_direct_salaried.name,
+      pg_teaching_apprenticeship: ReferenceData::TRAINING_ROUTES.pg_teaching_apprenticeship.name,
+      early_years_postgrad: ReferenceData::TRAINING_ROUTES.early_years_postgrad.name,
+      early_years_salaried: ReferenceData::TRAINING_ROUTES.early_years_salaried.name,
+      provider_led_postgrad: ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name,
+      provider_led_undergrad: ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name,
+      opt_in_undergrad: ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name,
+      school_direct_tuition_fee: ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name,
+      teacher_degree_apprenticeship: ReferenceData::TRAINING_ROUTES.teacher_degree_apprenticeship.name,
     }
 
     def route

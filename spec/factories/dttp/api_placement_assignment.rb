@@ -6,7 +6,7 @@ FactoryBot.define do
       dttp_id { SecureRandom.uuid }
       contact_dttp_id { SecureRandom.uuid }
       provider_dttp_id { SecureRandom.uuid }
-      enabled_training_routes { TRAINING_ROUTE_ENUMS.values - EARLY_YEARS_TRAINING_ROUTES.keys - ["hpitt_postgrad"] }
+      enabled_training_routes { ReferenceData::TRAINING_ROUTES.names - EARLY_YEARS_TRAINING_ROUTES.keys - ["hpitt_postgrad"] }
     end
     dfe_placementassignmentid { dttp_id }
     _dfe_contactid_value { contact_dttp_id }

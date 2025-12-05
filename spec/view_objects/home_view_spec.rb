@@ -143,7 +143,7 @@ describe HomeView do
       let(:trainees) do
         trainee_ids = [
           draft_trainee.id,
-          Trainee.create!(provider: draft_trainee.provider, training_route: TRAINING_ROUTE_ENUMS[:assessment_only]).id,
+          Trainee.create!(provider: draft_trainee.provider, training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name).id,
         ]
         Trainee.where(id: trainee_ids)
       end

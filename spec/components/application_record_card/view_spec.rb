@@ -97,7 +97,7 @@ module ApplicationRecordCard
         { state: :withdrawn, colour: "red", text: "Withdrawn" },
       ].each do |state_expectation|
         context "when state is #{state_expectation[:state]}" do
-          let(:trainee) { create(:trainee, state_expectation[:state], training_route: TRAINING_ROUTE_ENUMS[:assessment_only]) }
+          let(:trainee) { create(:trainee, state_expectation[:state], training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name) }
 
           it "renders '#{state_expectation[:text]}'" do
             expect(rendered_content).to have_css(".govuk-tag", text: state_expectation[:text])
@@ -122,7 +122,7 @@ module ApplicationRecordCard
           first_names: "Teddy",
           last_name: "Smith",
           course_subject_one: "Design",
-          training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+          training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name,
           provider_trainee_id: "132456",
           trn: "789456",
           trainee_start_date: DateTime.new(2020, 1, 2),
