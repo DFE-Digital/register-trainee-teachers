@@ -9,13 +9,13 @@ module SchoolData
     def initialize(csv_content:, download_record:)
       @csv_rows = CSV.parse(csv_content, headers: true)
       @download_record = download_record
-      @stats = { created: 0, updated: 0, lead_partners_updated: 0, deleted: 0, total_rows: 0, filtered_rows: 0 }
+      @stats = { created: 0, updated: 0, training_partners_updated: 0, deleted: 0, total_rows: 0, filtered_rows: 0 }
     end
 
     def call
       import_schools
       delete_schools
-      realign_lead_partner_names
+      realign_training_partner_names
       update_final_stats
       log_final_stats
 
@@ -103,14 +103,14 @@ module SchoolData
       end
     end
 
-    def realign_lead_partner_names
-      lead_partners = LeadPartner.school.joins(:school).includes(:school)
+    def realign_training_partner_names
+      training_partners = LeadPartner.school.joins(:school).includes(:school)
                                  .where("lead_partners.name != schools.name")
 
-      lead_partners.find_each do |lead_partner|
-        lead_partner.update!(name: lead_partner.school.name)
-        Rails.logger.info("Updated lead partner name from '#{lead_partner.name}' to '#{lead_partner.school.name}'")
-        @stats[:lead_partners_updated] += 1
+      training_partners.find_each do |training_partner|
+        training_partner.update!(name: training_partner.school.name)
+        Rails.logger.info("Updated lead partner name from '#{training_partner.name}' to '#{training_partner.school.name}'")
+        @stats[:training_partners_updated] += 1
       end
     end
 
@@ -121,7 +121,7 @@ module SchoolData
         schools_created: @stats[:created],
         schools_deleted: @stats[:deleted],
         schools_updated: @stats[:updated],
-        lead_partners_updated: @stats[:lead_partners_updated],
+        lead_partners_updated: @stats[:training_partners_updated],
       )
     end
 

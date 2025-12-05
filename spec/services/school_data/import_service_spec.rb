@@ -15,7 +15,7 @@ RSpec.describe SchoolData::ImportService do
       456789,Test Special School,7,MN7 8OP,,,TestLocality,2018-09-01,
       567890,Test Independent School,4,PQ9 0RS,TestPlace,,,2021-03-10,
       678901,Test Excluded School,29,QR1 2ST,TestTown,,,2020-06-01,
-      999888,School With Lead Partner,20,ST1 2AB,LeadTown,,,2022-01-01,
+      999888,School With Training Partner,20,ST1 2AB,TrainingTown,,,2022-01-01,
     CSV
   end
 
@@ -134,7 +134,7 @@ RSpec.describe SchoolData::ImportService do
         expect(Rails.logger).to receive(:info).with("Created school: 345678 - Test Secondary School")
         expect(Rails.logger).to receive(:info).with("Created school: 456789 - Test Special School")
         expect(Rails.logger).to receive(:info).with("Created school: 567890 - Test Independent School")
-        expect(Rails.logger).to receive(:info).with("Created school: 999888 - School With Lead Partner")
+        expect(Rails.logger).to receive(:info).with("Created school: 999888 - School With Training Partner")
         expect(Rails.logger).to receive(:info).with("Deleted school: 987645 - Removed from GIAS School")
 
         expect(Rails.logger).to receive(:info).with("Processed 7. Kept 6. Filtered out: 1")
@@ -143,31 +143,31 @@ RSpec.describe SchoolData::ImportService do
       end
     end
 
-    context "lead partner realignment" do
-      let!(:school_with_lead_partner) { create(:school, urn: "999888", name: "School With Lead Partner") }
-      let!(:lead_partner) { create(:lead_partner, :school, school: school_with_lead_partner, name: "Old Lead Partner Name") }
+    context "training partner realignment" do
+      let!(:school_with_training_partner) { create(:school, urn: "999888", name: "School With Training Partner") }
+      let!(:training_partner) { create(:lead_partner, :school, school: school_with_training_partner, name: "Old Training Partner Name") }
 
-      it "updates lead partner names to match school names" do
-        expect { subject }.to change { lead_partner.reload.name }
-          .from("Old Lead Partner Name").to("School With Lead Partner")
+      it "updates training partner names to match school names" do
+        expect { subject }.to change { training_partner.reload.name }
+          .from("Old Training Partner Name").to("School With Training Partner")
       end
 
-      it "tracks lead partner updates in statistics" do
+      it "tracks training partner updates in statistics" do
         result = subject
 
-        expect(result[:lead_partners_updated]).to eq(1)
+        expect(result[:training_partners_updated]).to eq(1)
 
         download_record.reload
         expect(download_record.lead_partners_updated).to eq(1)
       end
 
-      context "when lead partner already has correct name" do
-        let!(:lead_partner) { create(:lead_partner, :school, school: school_with_lead_partner, name: "School With Lead Partner") }
+      context "when training partner already has correct name" do
+        let!(:training_partner) { create(:lead_partner, :school, school: school_with_training_partner, name: "School With Training Partner") }
 
         it "does not count already-correct names as updates" do
           result = subject
 
-          expect(result[:lead_partners_updated]).to eq(0)
+          expect(result[:training_partners_updated]).to eq(0)
         end
       end
     end
