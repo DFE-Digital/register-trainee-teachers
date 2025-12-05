@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Tech Docs redirects" do
+RSpec.describe "Tech docs redirects" do
   %w[api-docs csv-docs reference-data].each do |path|
     describe "/#{path}/" do
       context "when the path is '/#{path}'" do
