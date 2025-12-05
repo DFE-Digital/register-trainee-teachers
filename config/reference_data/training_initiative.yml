@@ -1,0 +1,70 @@
+metadata:
+  source: "HESA"
+  name: "training_initiative"
+  display_name: "Training initiative"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: 0,
+    name: future_teaching_scholars
+    display_name: "Future teaching scholars"
+    description: ""
+    hesa_codes:
+  - id: 1,
+    name: maths_physics_chairs_programme_researchers_in_schools
+    display_name: ""
+    description: "Maths and physics chairs programme"
+    hesa_codes:
+      - "009"
+  - id: 2,
+    name: now_teach
+    display_name: "Now teach"
+    description: ""
+    hesa_codes:
+      - "026"
+  - id: 3,
+    name: transition_to_teach
+    display_name: "Transition to teach"
+    description: ""
+    hesa_codes:
+      - "025"
+  - id: 4,
+    name: no_initiative
+    display_name: "No initiative"
+    description: ""
+    hesa_codes:
+  - id: 5,
+    name: troops_to_teachers
+    display_name: "Troops to teachers"
+    description: ""
+    hesa_codes:
+  - id: 6,
+    name: veterans_teaching_undergraduate_bursary
+    display_name: "Veterans teaching undergraduate bursary"
+    description: ""
+    hesa_codes:
+  - id: 7,
+    name: international_relocation_payment
+    display_name: "International relocation payment"
+    description: ""
+    hesa_codes:
+      - "036"
+  - id: 8,
+    name: abridged_itt_course
+    display_name: "Abridged ITT course"
+    description: ""
+    hesa_codes:
+  - id: 9,
+    name: primary_mathematics_specialist
+    display_name: "Primary mathematics specialist"
+    description: ""
+    hesa_codes:
+  - id: 10,
+    name: additional_itt_place_for_pe_with_a_priority_subject
+    display_name: "Additional ITT place for PE with a priority subject"
+    description: ""
+    hesa_codes:
