@@ -1,0 +1,23 @@
+metadata:
+  source: "HESA"
+  name: "fund_code"
+  display_name: "Fund code"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "2"
+    name: "not_eligible"
+    display_name: "Not eligible for student finance"
+    description: "Part-time trainee"
+    hesa_codes:
+      - "2"
+  - id: "7"
+    name: "eligible"
+    display_name: "Eligible for student finance"
+    description: "Eligible for student finance (use this option if the trainee chooses not to receive the finance they are eligible for)"
+    hesa_codes:
+      - "7"
