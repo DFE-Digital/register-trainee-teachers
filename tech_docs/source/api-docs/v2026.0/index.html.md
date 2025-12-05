@@ -1,6 +1,7 @@
 ---
 title: v2026.0
 weight: 4
+hide_in_navigation: true
 ---
 
 # v2026.0

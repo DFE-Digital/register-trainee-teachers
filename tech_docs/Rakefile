@@ -85,6 +85,7 @@ namespace :tech_docs do
           ---
           title: #{version_dir}
           weight: #{index + 3}
+          hide_in_navigation: #{version_dir == 'v2026.0' ? true : false }
           ---
 
           # #{version_dir}
