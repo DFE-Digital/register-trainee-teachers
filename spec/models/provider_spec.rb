@@ -264,8 +264,8 @@ describe Provider do
     end
 
     context "when there are census and performance sign offs" do
-      let(:census_sign_off) { build(:sign_off, :census) }
-      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile) }
+      let(:census_sign_off) { build(:sign_off, :census, :previous_academic_cycle) }
+      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile, :current_academic_cycle) }
       let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off, census_sign_off]) }
 
       it "returns only the performance sign offs" do
@@ -326,8 +326,8 @@ describe Provider do
     end
 
     context "when there are census and performance sign offs" do
-      let(:census_sign_off) { build(:sign_off, :census) }
-      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile) }
+      let(:census_sign_off) { build(:sign_off, :census, :previous_academic_cycle) }
+      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile, :current_academic_cycle) }
       let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off, census_sign_off]) }
 
       it "returns only the performance sign offs" do
@@ -370,8 +370,8 @@ describe Provider do
     end
 
     context "when there are census and performance sign offs" do
-      let(:census_sign_off) { build(:sign_off, :census) }
-      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile) }
+      let(:census_sign_off) { build(:sign_off, :census, :previous_academic_cycle) }
+      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile, :current_academic_cycle) }
       let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off, census_sign_off]) }
 
       it "returns only the performance sign offs" do

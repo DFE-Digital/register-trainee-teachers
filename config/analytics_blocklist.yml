@@ -419,6 +419,7 @@ shared:
     - completed_at
     - lead_partners_updated
     - schools_created
+    - schools_deleted
     - schools_updated
     - started_at
     - status

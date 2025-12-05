@@ -2286,7 +2286,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
 
     let(:headers) { { Authorization: "Bearer #{token}", **json_headers } }
 
-    let(:start_academic_cycle) { create(:academic_cycle, :current) }
+    let(:start_academic_cycle) { academic_cycle }
     let(:end_academic_cycle) { create(:academic_cycle, next_cycle: true) }
 
     let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }

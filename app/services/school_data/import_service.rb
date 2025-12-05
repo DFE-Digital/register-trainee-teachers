@@ -7,14 +7,15 @@ module SchoolData
     EXCLUDED_ESTABLISHMENT_TYPES = [29].freeze
 
     def initialize(csv_content:, download_record:)
-      @csv_content = csv_content
+      @csv_rows = CSV.parse(csv_content, headers: true)
       @download_record = download_record
-      @stats = { created: 0, updated: 0, lead_partners_updated: 0, total_rows: 0, filtered_rows: 0 }
+      @stats = { created: 0, updated: 0, training_partners_updated: 0, deleted: 0, total_rows: 0, filtered_rows: 0 }
     end
 
     def call
       import_schools
-      realign_lead_partner_names
+      delete_schools
+      realign_training_partner_names
       update_final_stats
       log_final_stats
 
@@ -25,7 +26,7 @@ module SchoolData
 
     def import_schools
       School.transaction do
-        CSV.parse(@csv_content, headers: true) do |row|
+        @csv_rows.each do |row|
           @stats[:total_rows] += 1
           import_single_school(row)
         end
@@ -48,9 +49,11 @@ module SchoolData
       school.assign_attributes(attributes)
       if school.new_record?
         school.save!
+        Rails.logger.info("Created school: #{school.urn} - #{school.name}")
         @stats[:created] += 1
       elsif school.changed?
         school.save!
+        Rails.logger.info("Updated school: #{school.urn} - #{school.name}")
         @stats[:updated] += 1
       end
     end
@@ -59,6 +62,7 @@ module SchoolData
       {
         name: row["EstablishmentName"]&.strip,
         open_date: parse_date(row["OpenDate"]),
+        close_date: parse_date(row["CloseDate"]),
         town: extract_town(row),
         postcode: row["Postcode"]&.strip,
       }
@@ -82,13 +86,31 @@ module SchoolData
       nil
     end
 
-    def realign_lead_partner_names
-      lead_partners = LeadPartner.school.joins(:school).includes(:school)
+    def delete_schools
+      gias_schools = @csv_rows.map { |row| row["URN"]&.strip }.compact
+      # Only delete schools that are not associated with any trainees or funding records or placements
+      register_schools_to_delete = School.where.not(urn: gias_schools)
+                                         .where.missing(:employing_school_trainees,
+                                                        :lead_partner_trainees,
+                                                        :funding_payment_schedules,
+                                                        :funding_trainee_summaries,
+                                                        :placements)
+      @stats[:deleted] = register_schools_to_delete.count
+
+      register_schools_to_delete.find_each do |school|
+        Rails.logger.info("Deleted school: #{school.urn} - #{school.name}")
+        school.destroy!
+      end
+    end
+
+    def realign_training_partner_names
+      training_partners = LeadPartner.school.joins(:school).includes(:school)
                                  .where("lead_partners.name != schools.name")
 
-      lead_partners.find_each do |lead_partner|
-        lead_partner.update!(name: lead_partner.school.name)
-        @stats[:lead_partners_updated] += 1
+      training_partners.find_each do |training_partner|
+        training_partner.update!(name: training_partner.school.name)
+        Rails.logger.info("Updated lead partner name from '#{training_partner.name}' to '#{training_partner.school.name}'")
+        @stats[:training_partners_updated] += 1
       end
     end
 
@@ -97,8 +119,9 @@ module SchoolData
         status: :completed,
         completed_at: Time.current,
         schools_created: @stats[:created],
+        schools_deleted: @stats[:deleted],
         schools_updated: @stats[:updated],
-        lead_partners_updated: @stats[:lead_partners_updated],
+        lead_partners_updated: @stats[:training_partners_updated],
       )
     end
 
