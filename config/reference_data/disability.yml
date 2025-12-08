@@ -1,0 +1,67 @@
+metadata:
+  source: "HESA"
+  name: "disability"
+  display_name: "Disability"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "No known disability"
+    name: "no_known_disability"
+    display_name: "No known disability"
+    hesa_codes:
+      - "95"
+  - id: "Blind"
+    name: "blind"
+    display_name: "Blind"
+    hesa_codes:
+      - "58"
+  - id: "Deaf"
+    name: "deaf"
+    display_name: "Deaf"
+    hesa_codes:
+      - "57"
+  - id: "Development condition"
+    name: "development_condition"
+    display_name: "Development condition"
+    hesa_codes:
+      - "59"
+  - id: "Learning difficulty"
+    name: "learning_difficulty"
+    display_name: "Learning difficulty"
+    hesa_codes:
+      - "51"
+  - id: "Long-standing illness"
+    name: "long-standing_illness"
+    display_name: "Long-standing illness"
+    hesa_codes:
+      - "54"
+  - id: "Mental health condition"
+    name: "mental_health_condition"
+    display_name: "Mental health condition"
+    hesa_codes:
+      - "55"
+  - id: "Physical disability or mobility issue"
+    name: "physical_disability_or_mobility_issue"
+    display_name: "Physical disability or mobility issue"
+    hesa_codes:
+      - "56"
+  - id: "Social or communication impairment"
+    name: "social_or_communication_impairment"
+    display_name: "Social or communication impairment"
+    hesa_codes:
+      - "53"
+  - id: "Other"
+    name: "other"
+    display_name: "Other"
+    hesa_codes:
+      - "96"
+  - id: "Not provided"
+    name: "not_provided"
+    display_name: "Not provided"
+    hesa_codes:
+      - "98"
+      - "99"
