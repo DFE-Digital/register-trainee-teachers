@@ -5,6 +5,7 @@ module ReferenceData
   DISABILITIES = ReferenceData::Loader.instance.find(:disability)
   ETHNICITIES = ReferenceData::Loader.instance.find(:ethnicity)
   FUND_CODES = ReferenceData::Loader.instance.find(:fund_code)
+  ITT_AIMS = ReferenceData::Loader.instance.find(:itt_aim)
   SEXES = ReferenceData::Loader.instance.find(:sex)
   STUDY_MODES = ReferenceData::Loader.instance.find(:study_mode)
   TRAINING_ROUTES = ReferenceData::Loader.instance.find(:training_route)
