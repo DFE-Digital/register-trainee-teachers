@@ -37,7 +37,7 @@ namespace :tech_docs do
         version_dir = TechDocsHelpers.format_version(version)
         fields = TechDocsHelpers.fields(version)
 
-        FileUtils.mkdir_p("source/csv-docs/#{version_dir}/fields")
+        FileUtils.mkdir_p("source/csv-docs/#{version_dir}")
 
         # Create version index with hide_in_navigation for v2026.0
         File.write("source/csv-docs/#{version_dir}/index.html.md", <<~METADATA)
@@ -48,17 +48,6 @@ namespace :tech_docs do
           ---
 
           # #{version_dir}
-
-        METADATA
-
-        # Create fields index
-        File.write("source/csv-docs/#{version_dir}/fields/index.html.md", <<~METADATA)
-          ---
-          title: Fields
-          weight: 1
-          ---
-
-          # Fields
 
         METADATA
 
@@ -76,7 +65,7 @@ namespace :tech_docs do
             }
           )
 
-          File.open("source/csv-docs/#{version_dir}/fields/#{field['technical'].gsub('_', '-')}.html.md", "w") do |f|
+          File.open("source/csv-docs/#{version_dir}/#{field['technical'].gsub('_', '-')}.html.md", "w") do |f|
             f.write(
               <<~METADATA,
                 ---
@@ -92,8 +81,6 @@ namespace :tech_docs do
         end
       end
 
-      # Clean up old non-versioned fields directory if it exists
-      FileUtils.rm_rf("source/csv-docs/fields")
     end
   end
 
