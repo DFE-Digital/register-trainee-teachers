@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_01_153100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -28,7 +28,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)", name: "academic_cycles_date_range", using: :gist
+
+    t.exclusion_constraint "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone) WITH &&", using: :gist, name: "academic_cycles_date_range"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -306,9 +307,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
+    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
-    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -804,8 +805,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
@@ -826,6 +827,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
     t.integer "lead_partners_updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "schools_deleted"
     t.index ["started_at"], name: "index_school_data_downloads_on_started_at"
     t.index ["status"], name: "index_school_data_downloads_on_status"
   end
@@ -962,14 +964,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.boolean "applying_for_bursary"
     t.integer "training_initiative"
+    t.boolean "applying_for_bursary"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.integer "course_education_phase"
     t.boolean "applying_for_scholarship"
+    t.integer "course_education_phase"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_partner_not_applicable", default: false
@@ -1022,14 +1024,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_24_091459) do
   end
 
   create_table "trs_trn_requests", force: :cascade do |t|
-    t.bigint("trainee_id", null: false)
-    t.uuid("request_id", null: false)
-    t.jsonb("response")
-    t.integer("state", default: 0)
-    t.datetime("created_at", null: false)
-    t.datetime("updated_at", null: false)
-    t.index(["request_id"], name: "index_trs_trn_requests_on_request_id", unique: true)
-    t.index(["trainee_id"], name: "index_trs_trn_requests_on_trainee_id")
+    t.bigint "trainee_id", null: false
+    t.uuid "request_id", null: false
+    t.jsonb "response"
+    t.integer "state", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_trs_trn_requests_on_request_id", unique: true
+    t.index ["trainee_id"], name: "index_trs_trn_requests_on_trainee_id"
   end
 
   create_table "uploads", force: :cascade do |t|

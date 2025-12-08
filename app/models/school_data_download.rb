@@ -8,6 +8,7 @@
 #  completed_at          :datetime
 #  lead_partners_updated :integer
 #  schools_created       :integer
+#  schools_deleted       :integer
 #  schools_updated       :integer
 #  started_at            :datetime         not null
 #  status                :string           not null

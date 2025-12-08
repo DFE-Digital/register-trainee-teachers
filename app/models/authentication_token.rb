@@ -5,7 +5,7 @@
 # Table name: authentication_tokens
 #
 #  id            :bigint           not null, primary key
-#  expires_at    :date
+#  expires_at    :date             not null
 #  hashed_token  :string
 #  last_used_at  :datetime
 #  name          :string           not null

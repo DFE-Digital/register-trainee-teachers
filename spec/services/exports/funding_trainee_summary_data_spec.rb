@@ -10,10 +10,6 @@ module Exports
     let!(:tiered_bursary_amount) { create(:trainee_summary_row_amount, :with_tiered_bursary, row: trainee_summary_row) }
     let!(:empty_trainee_summary_row) { create(:trainee_summary_row, trainee_summary:) }
 
-    before do
-      create(:academic_cycle, :current)
-    end
-
     subject { described_class.new(trainee_summary, payable.name) }
 
     describe "#csv" do
