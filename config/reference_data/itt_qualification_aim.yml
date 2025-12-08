@@ -1,0 +1,71 @@
+metadata:
+  source: "HESA"
+  name: "itt_qualification_aim"
+  display_name: "Qualification aim"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "001"
+    name: "bed"
+    display_name: "BEd"
+    description: ""
+    hesa_codes:
+      - "001"
+  - id: "002"
+    name: "bed_hons"
+    display_name: "BEd (Hons)"
+    description: ""
+    hesa_codes:
+      - "002"
+  - id: "003"
+    name: "bsc"
+    display_name: "BSc"
+    description: ""
+    hesa_codes:
+      - "003"
+  - id: "004"
+    name: "bsc_hons"
+    display_name: "BSc (Hons)"
+    description: ""
+    hesa_codes:
+      - "004"
+  - id: "007"
+    name: "ba"
+    display_name: "BA"
+    description: ""
+    hesa_codes:
+      - "007"
+  - id: "020"
+    name: "postgraduate_certificate_in_education"
+    display_name: "Postgraduate Certificate in Education"
+    description: ""
+    hesa_codes:
+      - "020"
+  - id: "021"
+    name: "postgraduate_diploma_in_education"
+    display_name: "Postgraduate Diploma in Education"
+    description: ""
+    hesa_codes:
+      - "021"
+  - id: "028"
+    name: "undergraduate_master_of_teaching"
+    display_name: "Undergraduate Master of Teaching"
+    description: ""
+    hesa_codes:
+      - "028"
+  - id: "031"
+    name: "professional_graduate_certificate_in_education"
+    display_name: "Professional Graduate Certificate in Education"
+    description: ""
+    hesa_codes:
+      - "031"
+  - id: "032"
+    name: "masters_not_by_research"
+    display_name: "Masters, not by research"
+    description: ""
+    hesa_codes:
+      - "032"
