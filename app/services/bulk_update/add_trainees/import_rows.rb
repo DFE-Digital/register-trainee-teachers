@@ -6,6 +6,11 @@ module BulkUpdate
       include ServicePattern
       include ParseAddTraineeCsv
 
+      def self.fields_definition_path
+        version = module_parent_name.demodulize.underscore.insert(-2, "_")
+        Rails.root.join("app/views/bulk_update/add_trainees/reference_docs/#{version}/fields.yaml")
+      end
+
       attr_accessor :trainee_upload
 
       def initialize(trainee_upload)
