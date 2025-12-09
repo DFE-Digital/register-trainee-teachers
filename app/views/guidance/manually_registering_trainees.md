@@ -16,7 +16,7 @@ When you sign into Register you will see ‘Draft trainees’ and ‘Registered 
 * **‘Course not started yet’** - trainees who are registered but their course has not started
 * **‘In training’** - all trainees currently doing training, excluding those on courses that have not started or are deferred
 * **‘Currently deferred’**
-* **‘Awarded this year’** - all trainees awarded QTS or EYTS in the current academic year
+* **‘Gained this year’** - all trainees that gained QTS or EYTS in the current academic year
 * **‘Incomplete records’** - registered trainees that are missing data
 
 ## Get a teacher reference number (TRN)
