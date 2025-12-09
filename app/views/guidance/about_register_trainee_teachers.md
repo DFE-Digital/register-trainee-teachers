@@ -20,7 +20,7 @@ Accredited providers can use Register to perform tasks for their trainees, such 
 * withdrawing or deferring trainees from their course
 * adding trainee placement data
 * getting a teacher reference number (TRN)
-* recommending trainees for qualified teacher status (QTS) or early years teacher status (EYTS)
+* changing a trainees' status to qualified teacher status (QTS) or early years teacher status (EYTS)
 
 Accredited providers can view funding information for the current academic year for eligible trainees. From the main navigation bar under ‘Funding’, you will see monthly payments paid and predicted to be paid for scholarships and bursaries.
 
@@ -57,7 +57,7 @@ When you sign into Register you will see ‘Draft trainees’ and ‘Registered 
 * **‘Course not started yet’** - trainees who are registered but their course has not started
 * **‘In training’** - all trainees currently doing training, excluding those on courses that have not started or are deferred
 * **‘Currently deferred’**
-* **‘Awarded this year’** - all trainees awarded QTS or EYTS in the current academic year
+* **‘Gained this year’** - all trainees that gained QTS or EYTS in the current academic year
 * **‘Incomplete records’** - registered trainees that are missing data
 
 ## How trainee data is used in the initial teacher training (ITT) census publication
