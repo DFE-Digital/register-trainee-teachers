@@ -7,6 +7,7 @@ module ReferenceData
   FUND_CODES = ReferenceData::Loader.instance.find(:fund_code)
   ITT_AIMS = ReferenceData::Loader.instance.find(:itt_aim)
   ITT_QUALIFICATION_AIMS = ReferenceData::Loader.instance.find(:itt_qualification_aim)
+  NATIONALITIES = ReferenceData::Loader.instance.find(:nationality)
   SEXES = ReferenceData::Loader.instance.find(:sex)
   STUDY_MODES = ReferenceData::Loader.instance.find(:study_mode)
   TRAINING_ROUTES = ReferenceData::Loader.instance.find(:training_route)

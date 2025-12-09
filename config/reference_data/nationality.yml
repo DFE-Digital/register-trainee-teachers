@@ -1,0 +1,1126 @@
+metadata:
+  source: "HESA"
+  name: "nationality"
+  display_name: "Nationality"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+- id: AF
+  name: afghan
+  display_name: Afghan
+  hesa_codes:
+    - "AF"
+- id: AL
+  name: albanian
+  display_name: Albanian
+  hesa_codes:
+    - "AL"
+- id: DZ
+  name: algerian
+  display_name: Algerian
+  hesa_codes:
+    - "DZ"
+- id: US
+  name: american
+  display_name: American
+  hesa_codes:
+    - "US"
+- id: AD
+  name: andorran
+  display_name: Andorran
+  hesa_codes:
+    - "AD"
+- id: AO
+  name: angolan
+  display_name: Angolan
+  hesa_codes:
+    - "AO"
+- id: AI
+  name: anguillan
+  display_name: Anguillan
+  hesa_codes:
+    - "AI"
+- id: AR
+  name: argentine
+  display_name: Argentine
+  hesa_codes:
+    - "AR"
+- id: AM
+  name: armenian
+  display_name: Armenian
+  hesa_codes:
+    - "AM"
+- id: AU
+  name: australian
+  display_name: Australian
+  hesa_codes:
+    - "AU"
+- id: AT
+  name: austrian
+  display_name: Austrian
+  hesa_codes:
+    - "AT"
+- id: AZ
+  name: azerbaijani
+  display_name: Azerbaijani
+  hesa_codes:
+    - "AZ"
+- id: BS
+  name: bahamian
+  display_name: Bahamian
+  hesa_codes:
+    - "BS"
+- id: BH
+  name: bahraini
+  display_name: Bahraini
+  hesa_codes:
+    - "BH"
+- id: BD
+  name: bangladeshi
+  display_name: Bangladeshi
+  hesa_codes:
+    - "BD"
+- id: BB
+  name: barbadian
+  display_name: Barbadian
+  hesa_codes:
+    - "BB"
+- id: BY
+  name: belarusian
+  display_name: Belarusian
+  hesa_codes:
+    - "BY"
+- id: BE
+  name: belgian
+  display_name: Belgian
+  hesa_codes:
+    - "BE"
+- id: BZ
+  name: belizean
+  display_name: Belizean
+  hesa_codes:
+    - "BZ"
+- id: BJ
+  name: beninese
+  display_name: Beninese
+  hesa_codes:
+    - "BJ"
+- id: BM
+  name: bermudian
+  display_name: Bermudian
+  hesa_codes:
+    - "BM"
+- id: BT
+  name: bhutanese
+  display_name: Bhutanese
+  hesa_codes:
+    - "BT"
+- id: BO
+  name: bolivian
+  display_name: Bolivian
+  hesa_codes:
+    - "BO"
+- id: BW
+  name: botswanan
+  display_name: Botswanan
+  hesa_codes:
+    - "BW"
+- id: BR
+  name: brazilian
+  display_name: Brazilian
+  hesa_codes:
+    - "BR"
+- id: GB
+  name: british
+  display_name: British
+  hesa_codes:
+    - "GB"
+- id: VG
+  name: british virgin islander
+  display_name: British virgin islander
+  hesa_codes:
+    - "VG"
+- id: BN
+  name: bruneian
+  display_name: Bruneian
+  hesa_codes:
+    - "BN"
+- id: BG
+  name: bulgarian
+  display_name: Bulgarian
+  hesa_codes:
+    - "BG"
+- id: BF
+  name: burkinan
+  display_name: Burkinan
+  hesa_codes:
+    - "BF"
+- id: MM
+  name: burmese
+  display_name: Burmese
+  hesa_codes:
+    - "MM"
+- id: BI
+  name: burundian
+  display_name: Burundian
+  hesa_codes:
+    - "BI"
+- id: KH
+  name: cambodian
+  display_name: Cambodian
+  hesa_codes:
+    - "KH"
+- id: CM
+  name: cameroonian
+  display_name: Cameroonian
+  hesa_codes:
+    - "CM"
+- id: CA
+  name: canadian
+  display_name: Canadian
+  hesa_codes:
+    - "CA"
+- id: CV
+  name: cape verdean
+  display_name: Cape verdean
+  hesa_codes:
+    - "CV"
+- id: KY
+  name: cayman islander
+  display_name: Cayman islander
+  hesa_codes:
+    - "KY"
+- id: CF
+  name: central african
+  display_name: Central african
+  hesa_codes:
+    - "CF"
+- id: TD
+  name: chadian
+  display_name: Chadian
+  hesa_codes:
+    - "TD"
+- id: CL
+  name: chilean
+  display_name: Chilean
+  hesa_codes:
+    - "CL"
+- id: CN
+  name: chinese
+  display_name: Chinese
+  hesa_codes:
+    - "CN"
+- id: AG
+  name: citizen of antigua and barbuda
+  display_name: Citizen of antigua and barbuda
+  hesa_codes:
+    - "AG"
+- id: BA
+  name: citizen of bosnia and herzegovina
+  display_name: Citizen of bosnia and herzegovina
+  hesa_codes:
+    - "BA"
+- id: GW
+  name: citizen of guinea-bissau
+  display_name: Citizen of guinea-bissau
+  hesa_codes:
+    - "GW"
+- id: KI
+  name: citizen of kiribati
+  display_name: Citizen of kiribati
+  hesa_codes:
+    - "KI"
+- id: SC
+  name: citizen of seychelles
+  display_name: Citizen of seychelles
+  hesa_codes:
+    - "SC"
+- id: DO
+  name: citizen of the dominican republic
+  display_name: Citizen of the dominican republic
+  hesa_codes:
+    - "DO"
+- id: VU
+  name: citizen of vanuatu
+  display_name: Citizen of vanuatu
+  hesa_codes:
+    - "VU"
+- id: CO
+  name: colombian
+  display_name: Colombian
+  hesa_codes:
+    - "CO"
+- id: KM
+  name: comoran
+  display_name: Comoran
+  hesa_codes:
+    - "KM"
+- id: CG
+  name: congolese (congo)
+  display_name: Congolese (congo)
+  hesa_codes:
+    - "CG"
+- id: CD
+  name: congolese (drc)
+  display_name: Congolese (drc)
+  hesa_codes:
+    - "CD"
+- id: CK
+  name: cook islander
+  display_name: Cook islander
+  hesa_codes:
+    - "CK"
+- id: CR
+  name: costa rican
+  display_name: Costa rican
+  hesa_codes:
+    - "CR"
+- id: HR
+  name: croatian
+  display_name: Croatian
+  hesa_codes:
+    - "HR"
+- id: CU
+  name: cuban
+  display_name: Cuban
+  hesa_codes:
+    - "CU"
+- id: GB
+  name: cymraes
+  display_name: Cymraes
+  hesa_codes:
+    - "GB"
+- id: GB
+  name: cymro
+  display_name: Cymro
+  hesa_codes:
+    - "GB"
+- id: CY
+  name: cypriot
+  display_name: Cypriot
+  hesa_codes:
+    - "CY"
+- id: XB
+  name: cypriot (non european union)
+  display_name: Cypriot (non european union)
+  hesa_codes:
+    - "XB"
+- id: XA
+  name: cypriot (european union)
+  display_name: Cypriot (european union)
+  hesa_codes:
+    - "XA"
+- id: CZ
+  name: czech
+  display_name: Czech
+  hesa_codes:
+    - "CZ"
+- id: DK
+  name: danish
+  display_name: Danish
+  hesa_codes:
+    - "DK"
+- id: DJ
+  name: djiboutian
+  display_name: Djiboutian
+  hesa_codes:
+    - "DJ"
+- id: DM
+  name: dominican
+  display_name: Dominican
+  hesa_codes:
+    - "DM"
+- id: NL
+  name: dutch
+  display_name: Dutch
+  hesa_codes:
+    - "NL"
+- id: TL
+  name: east timorese
+  display_name: East timorese
+  hesa_codes:
+    - "TL"
+- id: EC
+  name: ecuadorean
+  display_name: Ecuadorean
+  hesa_codes:
+    - "EC"
+- id: EG
+  name: egyptian
+  display_name: Egyptian
+  hesa_codes:
+    - "EG"
+- id: AE
+  name: emirati
+  display_name: Emirati
+  hesa_codes:
+    - "AE"
+- id: GQ
+  name: equatorial guinean
+  display_name: Equatorial guinean
+  hesa_codes:
+    - "GQ"
+- id: ER
+  name: eritrean
+  display_name: Eritrean
+  hesa_codes:
+    - "ER"
+- id: EE
+  name: estonian
+  display_name: Estonian
+  hesa_codes:
+    - "EE"
+- id: ET
+  name: ethiopian
+  display_name: Ethiopian
+  hesa_codes:
+    - "ET"
+- id: FO
+  name: faroese
+  display_name: Faroese
+  hesa_codes:
+    - "FO"
+- id: FJ
+  name: fijian
+  display_name: Fijian
+  hesa_codes:
+    - "FJ"
+- id: PH
+  name: filipino
+  display_name: Filipino
+  hesa_codes:
+    - "PH"
+- id: FI
+  name: finnish
+  display_name: Finnish
+  hesa_codes:
+    - "FI"
+- id: FR
+  name: french
+  display_name: French
+  hesa_codes:
+    - "FR"
+- id: GA
+  name: gabonese
+  display_name: Gabonese
+  hesa_codes:
+    - "GA"
+- id: GM
+  name: gambian
+  display_name: Gambian
+  hesa_codes:
+    - "GM"
+- id: GE
+  name: georgian
+  display_name: Georgian
+  hesa_codes:
+    - "GE"
+- id: DE
+  name: german
+  display_name: German
+  hesa_codes:
+    - "DE"
+- id: GH
+  name: ghanaian
+  display_name: Ghanaian
+  hesa_codes:
+    - "GH"
+- id: GI
+  name: gibraltarian
+  display_name: Gibraltarian
+  hesa_codes:
+    - "GI"
+- id: GR
+  name: greek
+  display_name: Greek
+  hesa_codes:
+    - "GR"
+- id: GL
+  name: greenlandic
+  display_name: Greenlandic
+  hesa_codes:
+    - "GL"
+- id: GD
+  name: grenadian
+  display_name: Grenadian
+  hesa_codes:
+    - "GD"
+- id: GU
+  name: guamanian
+  display_name: Guamanian
+  hesa_codes:
+    - "GU"
+- id: GT
+  name: guatemalan
+  display_name: Guatemalan
+  hesa_codes:
+    - "GT"
+- id: GN
+  name: guinean
+  display_name: Guinean
+  hesa_codes:
+    - "GN"
+- id: GY
+  name: guyanese
+  display_name: Guyanese
+  hesa_codes:
+    - "GY"
+- id: HT
+  name: haitian
+  display_name: Haitian
+  hesa_codes:
+    - "HT"
+- id: HN
+  name: honduran
+  display_name: Honduran
+  hesa_codes:
+    - "HN"
+- id: HK
+  name: hong konger
+  display_name: Hong konger
+  hesa_codes:
+    - "HK"
+- id: HU
+  name: hungarian
+  display_name: Hungarian
+  hesa_codes:
+    - "HU"
+- id: IS
+  name: icelandic
+  display_name: Icelandic
+  hesa_codes:
+    - "IS"
+- id: IN
+  name: indian
+  display_name: Indian
+  hesa_codes:
+    - "IN"
+- id: ID
+  name: indonesian
+  display_name: Indonesian
+  hesa_codes:
+    - "ID"
+- id: IR
+  name: iranian
+  display_name: Iranian
+  hesa_codes:
+    - "IR"
+- id: IQ
+  name: iraqi
+  display_name: Iraqi
+  hesa_codes:
+    - "IQ"
+- id: IE
+  name: irish
+  display_name: Irish
+  hesa_codes:
+    - "IE"
+- id: IL
+  name: israeli
+  display_name: Israeli
+  hesa_codes:
+    - "IL"
+- id: IT
+  name: italian
+  display_name: Italian
+  hesa_codes:
+    - "IT"
+- id: CI
+  name: ivorian
+  display_name: Ivorian
+  hesa_codes:
+    - "CI"
+- id: JM
+  name: jamaican
+  display_name: Jamaican
+  hesa_codes:
+    - "JM"
+- id: JP
+  name: japanese
+  display_name: Japanese
+  hesa_codes:
+    - "JP"
+- id: JO
+  name: jordanian
+  display_name: Jordanian
+  hesa_codes:
+    - "JO"
+- id: KZ
+  name: kazakh
+  display_name: Kazakh
+  hesa_codes:
+    - "KZ"
+- id: KE
+  name: kenyan
+  display_name: Kenyan
+  hesa_codes:
+    - "KE"
+- id: KN
+  name: kittitian
+  display_name: Kittitian
+  hesa_codes:
+    - "KN"
+- id: XK
+  name: kosovan
+  display_name: Kosovan
+  hesa_codes:
+    - "XK"
+- id: KW
+  name: kuwaiti
+  display_name: Kuwaiti
+  hesa_codes:
+    - "KW"
+- id: KG
+  name: kyrgyz
+  display_name: Kyrgyz
+  hesa_codes:
+    - "KG"
+- id: LA
+  name: lao
+  display_name: Lao
+  hesa_codes:
+    - "LA"
+- id: LV
+  name: latvian
+  display_name: Latvian
+  hesa_codes:
+    - "LV"
+- id: LB
+  name: lebanese
+  display_name: Lebanese
+  hesa_codes:
+    - "LB"
+- id: LR
+  name: liberian
+  display_name: Liberian
+  hesa_codes:
+    - "LR"
+- id: LY
+  name: libyan
+  display_name: Libyan
+  hesa_codes:
+    - "LY"
+- id: LI
+  name: liechtenstein citizen
+  display_name: Liechtenstein citizen
+  hesa_codes:
+    - "LI"
+- id: LT
+  name: lithuanian
+  display_name: Lithuanian
+  hesa_codes:
+    - "LT"
+- id: LU
+  name: luxembourger
+  display_name: Luxembourger
+  hesa_codes:
+    - "LU"
+- id: MO
+  name: macanese
+  display_name: Macanese
+  hesa_codes:
+    - "MO"
+- id: MK
+  name: macedonian
+  display_name: Macedonian
+  hesa_codes:
+    - "MK"
+- id: MG
+  name: malagasy
+  display_name: Malagasy
+  hesa_codes:
+    - "MG"
+- id: MW
+  name: malawian
+  display_name: Malawian
+  hesa_codes:
+    - "MW"
+- id: MY
+  name: malaysian
+  display_name: Malaysian
+  hesa_codes:
+    - "MY"
+- id: MV
+  name: maldivian
+  display_name: Maldivian
+  hesa_codes:
+    - "MV"
+- id: ML
+  name: malian
+  display_name: Malian
+  hesa_codes:
+    - "ML"
+- id: MT
+  name: maltese
+  display_name: Maltese
+  hesa_codes:
+    - "MT"
+- id: MH
+  name: marshallese
+  display_name: Marshallese
+  hesa_codes:
+    - "MH"
+- id: MQ
+  name: martiniquais
+  display_name: Martiniquais
+  hesa_codes:
+    - "MQ"
+- id: MR
+  name: mauritanian
+  display_name: Mauritanian
+  hesa_codes:
+    - "MR"
+- id: MU
+  name: mauritian
+  display_name: Mauritian
+  hesa_codes:
+    - "MU"
+- id: MX
+  name: mexican
+  display_name: Mexican
+  hesa_codes:
+    - "MX"
+- id: FM
+  name: micronesian
+  display_name: Micronesian
+  hesa_codes:
+    - "FM"
+- id: MD
+  name: moldovan
+  display_name: Moldovan
+  hesa_codes:
+    - "MD"
+- id: MC
+  name: monegasque
+  display_name: Monegasque
+  hesa_codes:
+    - "MC"
+- id: MN
+  name: mongolian
+  display_name: Mongolian
+  hesa_codes:
+    - "MN"
+- id: ME
+  name: montenegrin
+  display_name: Montenegrin
+  hesa_codes:
+    - "ME"
+- id: MS
+  name: montserratian
+  display_name: Montserratian
+  hesa_codes:
+    - "MS"
+- id: MA
+  name: moroccan
+  display_name: Moroccan
+  hesa_codes:
+    - "MA"
+- id: LS
+  name: mosotho
+  display_name: Mosotho
+  hesa_codes:
+    - "LS"
+- id: MZ
+  name: mozambican
+  display_name: Mozambican
+  hesa_codes:
+    - "MZ"
+- id: NA
+  name: namibian
+  display_name: Namibian
+  hesa_codes:
+    - "NA"
+- id: NR
+  name: nauruan
+  display_name: Nauruan
+  hesa_codes:
+    - "NR"
+- id: NP
+  name: nepalese
+  display_name: Nepalese
+  hesa_codes:
+    - "NP"
+- id: NZ
+  name: new zealander
+  display_name: New zealander
+  hesa_codes:
+    - "NZ"
+- id: NI
+  name: nicaraguan
+  display_name: Nicaraguan
+  hesa_codes:
+    - "NI"
+- id: NG
+  name: nigerian
+  display_name: Nigerian
+  hesa_codes:
+    - "NG"
+- id: NE
+  name: nigerien
+  display_name: Nigerien
+  hesa_codes:
+    - "NE"
+- id: NU
+  name: niuean
+  display_name: Niuean
+  hesa_codes:
+    - "NU"
+- id: KP
+  name: north korean
+  display_name: North korean
+  hesa_codes:
+    - "KP"
+- id: NO
+  name: norwegian
+  display_name: Norwegian
+  hesa_codes:
+    - "NO"
+- id: OM
+  name: omani
+  display_name: Omani
+  hesa_codes:
+    - "OM"
+- id: PK
+  name: pakistani
+  display_name: Pakistani
+  hesa_codes:
+    - "PK"
+- id: PW
+  name: palauan
+  display_name: Palauan
+  hesa_codes:
+    - "PW"
+- id: PS
+  name: palestinian
+  display_name: Palestinian
+  hesa_codes:
+    - "PS"
+- id: PA
+  name: panamanian
+  display_name: Panamanian
+  hesa_codes:
+    - "PA"
+- id: PG
+  name: papua new guinean
+  display_name: Papua new guinean
+  hesa_codes:
+    - "PG"
+- id: PY
+  name: paraguayan
+  display_name: Paraguayan
+  hesa_codes:
+    - "PY"
+- id: PE
+  name: peruvian
+  display_name: Peruvian
+  hesa_codes:
+    - "PE"
+- id: PN
+  name: pitcairn islander
+  display_name: Pitcairn islander
+  hesa_codes:
+    - "PN"
+- id: PL
+  name: polish
+  display_name: Polish
+  hesa_codes:
+    - "PL"
+- id: PT
+  name: portuguese
+  display_name: Portuguese
+  hesa_codes:
+    - "PT"
+- id: GB
+  name: prydeinig
+  display_name: Prydeinig
+  hesa_codes:
+    - "GB"
+- id: PR
+  name: puerto rican
+  display_name: Puerto rican
+  hesa_codes:
+    - "PR"
+- id: QA
+  name: qatari
+  display_name: Qatari
+  hesa_codes:
+    - "QA"
+- id: RO
+  name: romanian
+  display_name: Romanian
+  hesa_codes:
+    - "RO"
+- id: RU
+  name: russian
+  display_name: Russian
+  hesa_codes:
+    - "RU"
+- id: RW
+  name: rwandan
+  display_name: Rwandan
+  hesa_codes:
+    - "RW"
+- id: SV
+  name: salvadorean
+  display_name: Salvadorean
+  hesa_codes:
+    - "SV"
+- id: SM
+  name: sammarinese
+  display_name: Sammarinese
+  hesa_codes:
+    - "SM"
+- id: WS
+  name: samoan
+  display_name: Samoan
+  hesa_codes:
+    - "WS"
+- id: ST
+  name: sao tomean
+  display_name: Sao tomean
+  hesa_codes:
+    - "ST"
+- id: SA
+  name: saudi arabian
+  display_name: Saudi arabian
+  hesa_codes:
+    - "SA"
+- id: SN
+  name: senegalese
+  display_name: Senegalese
+  hesa_codes:
+    - "SN"
+- id: RS
+  name: serbian
+  display_name: Serbian
+  hesa_codes:
+    - "RS"
+- id: SL
+  name: sierra leonean
+  display_name: Sierra leonean
+  hesa_codes:
+    - "SL"
+- id: SG
+  name: singaporean
+  display_name: Singaporean
+  hesa_codes:
+    - "SG"
+- id: SK
+  name: slovak
+  display_name: Slovak
+  hesa_codes:
+    - "SK"
+- id: SI
+  name: slovenian
+  display_name: Slovenian
+  hesa_codes:
+    - "SI"
+- id: SB
+  name: solomon islander
+  display_name: Solomon islander
+  hesa_codes:
+    - "SB"
+- id: SO
+  name: somali
+  display_name: Somali
+  hesa_codes:
+    - "SO"
+- id: ZA
+  name: south african
+  display_name: South african
+  hesa_codes:
+    - "ZA"
+- id: KR
+  name: south korean
+  display_name: South korean
+  hesa_codes:
+    - "KR"
+- id: SS
+  name: south sudanese
+  display_name: South sudanese
+  hesa_codes:
+    - "SS"
+- id: ES
+  name: spanish
+  display_name: Spanish
+  hesa_codes:
+    - "ES"
+- id: LK
+  name: sri lankan
+  display_name: Sri lankan
+  hesa_codes:
+    - "LK"
+- id: SH
+  name: st helenian
+  display_name: St helenian
+  hesa_codes:
+    - "SH"
+- id: LC
+  name: st lucian
+  display_name: St lucian
+  hesa_codes:
+    - "LC"
+- id:
+  name: stateless
+  display_name: Stateless
+  hesa_codes:
+    - ""
+- id: SD
+  name: sudanese
+  display_name: Sudanese
+  hesa_codes:
+    - "SD"
+- id: SR
+  name: surinamese
+  display_name: Surinamese
+  hesa_codes:
+    - "SR"
+- id: SZ
+  name: swazi
+  display_name: Swazi
+  hesa_codes:
+    - "SZ"
+- id: SE
+  name: swedish
+  display_name: Swedish
+  hesa_codes:
+    - "SE"
+- id: CH
+  name: swiss
+  display_name: Swiss
+  hesa_codes:
+    - "CH"
+- id: SY
+  name: syrian
+  display_name: Syrian
+  hesa_codes:
+    - "SY"
+- id: TW
+  name: taiwanese
+  display_name: Taiwanese
+  hesa_codes:
+    - "TW"
+- id: TJ
+  name: tajik
+  display_name: Tajik
+  hesa_codes:
+    - "TJ"
+- id: TZ
+  name: tanzanian
+  display_name: Tanzanian
+  hesa_codes:
+    - "TZ"
+- id: TH
+  name: thai
+  display_name: Thai
+  hesa_codes:
+    - "TH"
+- id: TG
+  name: togolese
+  display_name: Togolese
+  hesa_codes:
+    - "TG"
+- id: TO
+  name: tongan
+  display_name: Tongan
+  hesa_codes:
+    - "TO"
+- id: TT
+  name: trinidadian
+  display_name: Trinidadian
+  hesa_codes:
+    - "TT"
+- id: SH
+  name: tristanian
+  display_name: Tristanian
+  hesa_codes:
+    - "SH"
+- id: TN
+  name: tunisian
+  display_name: Tunisian
+  hesa_codes:
+    - "TN"
+- id: TR
+  name: turkish
+  display_name: Turkish
+  hesa_codes:
+    - "TR"
+- id: TM
+  name: turkmen
+  display_name: Turkmen
+  hesa_codes:
+    - "TM"
+- id: TC
+  name: turks and caicos islander
+  display_name: Turks and caicos islander
+  hesa_codes:
+    - "TC"
+- id: TV
+  name: tuvaluan
+  display_name: Tuvaluan
+  hesa_codes:
+    - "TV"
+- id: UG
+  name: ugandan
+  display_name: Ugandan
+  hesa_codes:
+    - "UG"
+- id: UA
+  name: ukrainian
+  display_name: Ukrainian
+  hesa_codes:
+    - "UA"
+- id: UY
+  name: uruguayan
+  display_name: Uruguayan
+  hesa_codes:
+    - "UY"
+- id: UZ
+  name: uzbek
+  display_name: Uzbek
+  hesa_codes:
+    - "UZ"
+- id: VA
+  name: vatican citizen
+  display_name: Vatican citizen
+  hesa_codes:
+    - "VA"
+- id: VE
+  name: venezuelan
+  display_name: Venezuelan
+  hesa_codes:
+    - "VE"
+- id: VN
+  name: vietnamese
+  display_name: Vietnamese
+  hesa_codes:
+    - "VN"
+- id: VC
+  name: vincentian
+  display_name: Vincentian
+  hesa_codes:
+    - "VC"
+- id: WF
+  name: wallisian
+  display_name: Wallisian
+  hesa_codes:
+    - "WF"
+- id: YE
+  name: yemeni
+  display_name: Yemeni
+  hesa_codes:
+    - "YE"
+- id: ZM
+  name: zambian
+  display_name: Zambian
+  hesa_codes:
+    - "ZM"
+- id: ZW
+  name: zimbabwean
+  display_name: Zimbabwean
+  hesa_codes:
+    - "ZW"
