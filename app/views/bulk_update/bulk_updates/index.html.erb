@@ -19,7 +19,7 @@
       <ul class="govuk-list govuk-list--bullet">
         <li>add new trainees</li>
         <li>add missing placement data</li>
-        <li>recommend trainees for QTS</li>
+        <li>choose trainees to gain QTS</li>
       </ul>
 
       <h2 class="govuk-heading-m">
@@ -61,13 +61,13 @@
 
     <% if can_bulk_recommend? %>
       <h2 class="govuk-heading-m">
-        Recommend trainees for QTS or EYTS
+        Choose trainees to gain QTS or EYTS
       </h2>
 
       <% if bulk_recommend_count.positive?  %>
         <p class="govuk-body">
-          You can bulk recommended <%= pluralize(bulk_recommend_count, 'trainee') %>. trainees for QTS or EYTS.
-          The DfE will award QTS or EYTS where appropriate within <span class="app-nowrap">3 working days</span>.
+          You can update the status of <%= pluralize(bulk_recommend_count, 'trainee') %>. trainees for QTS or EYTS.
+          Trainee statuses will be updated within <span class="app-nowrap">3 working days</span>.
         </p>
 
         <p class="govuk-body">
