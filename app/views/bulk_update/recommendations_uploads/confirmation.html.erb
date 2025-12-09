@@ -10,9 +10,8 @@
     </div>
 
     <p class="govuk-body">
-      The Department for Education will award
-      <%= qts_or_eyts(recommendations_upload.awardable_rows) %> within 3
-      working days.
+      The Department for Education will let trainees know of their change in status within 3-5 working days 
+      
     </p>
 
     <h2 class="govuk-heading-m">Next steps</h2>
@@ -23,7 +22,7 @@
       </p>
     <% else %>
       <p class="govuk-body">
-        You can recommend <%= bulk_recommend_count %> more
+        You can change the status of <%= bulk_recommend_count %> more
         <%= "trainees".pluralize(bulk_recommend_count) %>. You can now:
       </p>
 
