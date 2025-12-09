@@ -1,0 +1,91 @@
+metadata:
+  source: "HESA"
+  name: "degree_grade"
+  display_name: "Degree grade"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "8741765a-13d8-4550-a413-c5a860a59d25"
+    name: "first_class_honours"
+    display_name: First Class Honours
+    hesa_codes:
+      - "01"
+  - id: "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+    name: "upper_second_class_honours"
+    display_name: Upper Second Class Honours
+    hesa_codes:
+      - "02"
+  - id: "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+    name: "lower_second_class_honours"
+    display_name: Lower Second Class Honours
+    hesa_codes:
+      - "03"
+  - id: "7f08cd7c-96d2-4706-9148-32468a6d67f9"
+    name: "undivided_second_class_honours"
+    display_name: Undivided Second Class Honours
+    hesa_codes:
+      - "04"
+  - id: "3d57e5f7-7904-4895-a982-ed953fff3f94"
+    name: "third_class_honours"
+    display_name: Third Class Honours
+    hesa_codes:
+      - "05"
+  - id: "da6f57ae-7de0-4215-82df-52322129e91f"
+    name: "fourth_class_honours"
+    display_name: Fourth Class Honours
+    hesa_codes:
+      - "06"
+  - id: "684d4a75-16ea-4c96-9a40-37cee18f1dec"
+    name: "unclassified_honours"
+    display_name: Unclassified Honours
+    hesa_codes:
+      - "07"
+  - id: "171a98fc-280d-429a-9163-a380843adfce"
+    name: "aegrotat"
+    display_name: Aegrotat (Whether To Honours Or Pass)
+    hesa_codes:
+      - "08"
+  - id: "d2ffefd5-43f7-4c9e-aae5-341df5d880d0"
+    name: "pass_honours"
+    display_name: Pass - Degree Awarded Without Honours Following An Honours Course
+    hesa_codes:
+      - "09"
+  - id: "4d3cc9d3-81dd-4457-ae2b-ee0bd298c51e"
+    name: "orginary"
+    display_name: Ordinary (Including Divisions Of Ordinary, If Any) Degree Awarded After Following A Non-Honours Course
+    hesa_codes:
+      - "10"
+  - id: "2db26c4f-59d9-4431-8c92-4396d8e35b2d"
+    name: "general"
+    display_name: General Degree - Degree Awarded After Following A Non-Honours Course/Degree That Was Not Available To Be Classified
+    hesa_codes:
+      - "11"
+  - id: "1bb9f02f-da6a-4184-8db0-d43b14ccaf1d"
+    name: "distinction"
+    display_name: Distinction
+    hesa_codes:
+      - "12"
+  - id: "df874702-2bcc-4aab-adaa-2efdd3a8dec4"
+    name: "merit"
+    display_name: Merit
+    hesa_codes:
+      - "13"
+  - id: "aaba4427-287c-4610-a838-1970dd9090c1"
+    name: "pass"
+    display_name: Pass
+    hesa_codes:
+      - "14"
+  - id: "b1313412-7f49-42b1-9831-2aab9b0e5180"
+    name: "not_applicable"
+    display_name: Not Applicable
+    hesa_codes:
+      - "98"
+  - id: "cafff5b7-408b-47aa-a480-65068b9925cd"
+    name: "not_known"
+    display_name: Not Known
+    hesa_codes:
+      - "99"

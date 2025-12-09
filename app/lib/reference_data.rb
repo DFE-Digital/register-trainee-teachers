@@ -2,6 +2,7 @@
 
 module ReferenceData
   COURSE_AGE_RANGES = ReferenceData::Loader.instance.find(:course_age_range)
+  DEGREE_GRADES = ReferenceData::Loader.instance.find(:degree_grade)
   DISABILITIES = ReferenceData::Loader.instance.find(:disability)
   ETHNICITIES = ReferenceData::Loader.instance.find(:ethnicity)
   FUND_CODES = ReferenceData::Loader.instance.find(:fund_code)
