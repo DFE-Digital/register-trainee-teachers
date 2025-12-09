@@ -20,10 +20,10 @@
       </h1>
 
       <p class="govuk-body">
-        You cannot recommend a trainee for
-        <%= qts_or_eyts(recommendations_upload.error_rows) %> if there’s an
+        You cannot change the status of a trainee
+        <%= (recommendations_upload.error_rows) %> if there’s an
         error in their row in the CSV file. You need to fix the errors if you
-        want to recommend them.
+        want them to gain QTS or EYTS.
       </p>
 
       <ol class="govuk-list govuk-list--number">
@@ -36,7 +36,7 @@
         </li>
         <li>
           Fix the errors. If you cannot fix an error, you can delete the row and
-          the trainee will not be recommended.
+          the trainee will not gain QTS or EYTS.
         </li>
         <li>
           Upload the CSV file.
@@ -44,20 +44,20 @@
         </li>
       </ol>
 
-      <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
+      <%= f.govuk_submit "Upload file and check whose status will change" %>
     <% end %>
 
     <% if awardable_rows_count.positive? %>
       <p class="govuk-body">
         <%= govuk_link_to(
-          "Skip trainees with errors and check who you’ll recommend",
+          "Skip trainees with errors and check whose status will change",
           bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload)
           ) %>
       </p>
     <% end %>
 
     <p class="govuk-body">
-      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(recommendations_upload))%>
+      <%= govuk_link_to("Cancel bulk status change", cancel_bulk_update_recommendations_upload_path(recommendations_upload))%>
     </p>
   </div>
 </div>
