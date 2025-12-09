@@ -90,7 +90,8 @@ module SchoolData
       gias_schools = @csv_rows.map { |row| row["URN"]&.strip }.compact
       # Only delete schools that are not associated with any trainees or funding records or placements
       register_schools_to_delete = School.where.not(urn: gias_schools)
-                                         .where.missing(:employing_school_trainees,
+                                         .where.missing(:bulk_update_placement_rows,
+                                                        :employing_school_trainees,
                                                         :lead_partner_trainees,
                                                         :funding_payment_schedules,
                                                         :funding_trainee_summaries,
