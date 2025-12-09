@@ -8,24 +8,24 @@
   <div class="govuk-grid-column-full" >
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl">Bulk recommend</span>
-      Check who you’ll recommend for
-      <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
+      Check whose status will change
+      <%= (recommendations_upload.awardable_rows) %>
     </h1>
 
     <% @rows.tap do |awardable_rows| %>
       <% if awardable_rows.count <= @table_row_limit %>
         <%= render partial: "table", locals: {
           rows: awardable_rows,
-          caption: "Trainees you’ll recommend for #{qts_or_eyts(recommendations_upload.awardable_rows)}"
+          caption: "Trainees who will gain #{qts_or_eyts(recommendations_upload.awardable_rows)}"
         } %>
       <% else %>
         <%= govuk_accordion(html_attributes: {
                               id: "recommendations-upload-#{recommendations_upload.id}",
-                              "data-i18n.show-all-sections" => "Show all trainees you’ll recommend",
-                              "data-i18n.hide-all-sections" => "Hide all trainees you’ll recommend",
+                              "data-i18n.show-all-sections" => "Show all trainees with a status change",
+                              "data-i18n.hide-all-sections" => "Hide all trainees with a status change",
                             }) do |accordion|
           awardable_rows.each_slice(@table_row_limit).with_index do |(*rows), index|
-            heading_text = "#{"Trainee".pluralize(rows.count)} #{from_to((@table_row_limit*index) + 1, (@table_row_limit*index) + rows.count)} you’ll recommend for #{qts_or_eyts(recommendations_upload.awardable_rows)}"
+            heading_text = "#{"Trainee".pluralize(rows.count)} #{from_to((@table_row_limit*index) + 1, (@table_row_limit*index) + rows.count)} who will gain #{qts_or_eyts(recommendations_upload.awardable_rows)}"
 
             accordion.with_section(heading_text: heading_text) do
               render partial: "table", locals: { rows: rows, caption: heading_text }
@@ -43,10 +43,10 @@
       <%= f.govuk_submit("Recommend #{pluralize(awardable_rows_count, "trainee")} for #{qts_or_eyts(recommendations_upload.awardable_rows)}", id: "recommend") %>
     <% end %>
     <div class="govuk-body">
-      <%= govuk_link_to("Change who you’ll recommend", edit_bulk_update_recommendations_upload_path(recommendations_upload)) %>
+      <%= govuk_link_to("Change whose status is changing", edit_bulk_update_recommendations_upload_path(recommendations_upload)) %>
     </div>
     <div class="govuk-body">
-      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(recommendations_upload)) %>
+      <%= govuk_link_to("Cancel bulk status change", cancel_bulk_update_recommendations_upload_path(recommendations_upload)) %>
     </div>
   </div>
 </div>
