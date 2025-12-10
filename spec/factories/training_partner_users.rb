@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :lead_partner_user do
-    lead_partner
+  factory :training_partner_user do
+    training_partner
     user
   end
 end
