@@ -79,7 +79,7 @@ module Reports
                                        :start_academic_cycle,
                                        :provider,
                                        :withdrawal_reasons,
-                                       :lead_partner).each do |trainee| # rubocop:disable Rails/FindEach
+                                       :training_partner).each do |trainee| # rubocop:disable Rails/FindEach
         add_trainee_to_csv(trainee)
       end
     end
@@ -97,7 +97,7 @@ module Reports
         trainee_report.hesa_id,
         trainee_report.first_names,
         trainee_report.last_names,
-        trainee_report.lead_partner_name,
+        trainee_report.training_partner_name,
         trainee_report.qts_or_eyts,
         trainee_report.course_training_route,
         trainee_report.course_education_phase,
