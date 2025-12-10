@@ -2,7 +2,7 @@
 
 module TrainingRouteManageable
   delegate :award_type,
-           :requires_lead_partner?,
+           :requires_training_partner?,
            :requires_placements?,
            :requires_employing_school?,
            :early_years_route?,
