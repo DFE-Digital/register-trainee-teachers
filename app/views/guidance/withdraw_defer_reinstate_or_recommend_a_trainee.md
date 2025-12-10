@@ -34,7 +34,7 @@ You cannot defer or reinstate multiple trainees at the same time in Register. Yo
 
 ## Change the status of a trainee who has gained QTS or EYTS
 
-You should change a trainee's status for gaining QTS or EYTS as soon as they meet the requirement. They’ll need their teaching status certificate to apply for jobs at state schools.
+You should change a trainee’s status for gaining QTS or EYTS as soon as they meet the requirement. They’ll need their teaching status certificate to apply for jobs at state schools.
 
 You do not need to record in Register when a trainee got a PGCE or completed an undergraduate course. You just need to record when they gained QTS or EYTS.
 
