@@ -149,13 +149,13 @@ shared:
     - created_at
     - submitted_at
     - updated_at
-  lead_partner_users:
+  training_partner_users:
     - id
-    - lead_partner_id
+    - training_partner_id
     - user_id
     - created_at
     - updated_at
-  lead_partners:
+  training_partners:
     - id
     - urn
     - record_type
@@ -304,9 +304,9 @@ shared:
     - itt_end_date
     - itt_start_date
     - last_name
-    - lead_partner_id
+    - training_partner_id
     - placement_detail
-    - lead_partner_not_applicable
+    - training_partner_not_applicable
     - outcome_date
     - placement_assignment_dttp_id
     - progress
