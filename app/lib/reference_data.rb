@@ -8,6 +8,7 @@ module ReferenceData
   DISABILITIES = ReferenceData::Loader.instance.find(:disability)
   ETHNICITIES = ReferenceData::Loader.instance.find(:ethnicity)
   FUND_CODES = ReferenceData::Loader.instance.find(:fund_code)
+  INSTITUTIONS = ReferenceData::Loader.instance.find(:institution)
   ITT_AIMS = ReferenceData::Loader.instance.find(:itt_aim)
   ITT_QUALIFICATION_AIMS = ReferenceData::Loader.instance.find(:itt_qualification_aim)
   NATIONALITIES = ReferenceData::Loader.instance.find(:nationality)
