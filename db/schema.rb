@@ -241,7 +241,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.string "age_range"
     t.string "subject"
     t.bigint "matched_trainee_id"
-    t.string "lead_partner"
+    t.string "training_partner"
     t.index ["bulk_update_recommendations_upload_id"], name: "idx_bu_ru_rows_on_bu_recommendations_upload_id"
     t.index ["matched_trainee_id"], name: "idx_bu_recommendations_upload_rows_on_matched_trainee_id"
   end
@@ -307,9 +307,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
-    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
+    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -574,9 +574,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.string "cohort_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "lead_partner_urn"
+    t.string "training_partner_urn"
     t.string "training_route"
-    t.string "lead_partner_name"
+    t.string "training_partner_name"
     t.index ["funding_trainee_summary_id"], name: "index_trainee_summary_rows_on_trainee_summary_id"
   end
 
@@ -680,12 +680,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
-    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
+    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
-    t.string "lead_partner_urn"
+    t.string "training_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
 
@@ -721,33 +721,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.datetime "submitted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "lead_partner_users", force: :cascade do |t|
-    t.bigint "lead_partner_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lead_partner_id"], name: "index_lead_partner_users_on_lead_partner_id"
-    t.index ["user_id"], name: "index_lead_partner_users_on_user_id"
-  end
-
-  create_table "lead_partners", force: :cascade do |t|
-    t.citext "urn"
-    t.string "record_type", null: false
-    t.string "name"
-    t.citext "ukprn"
-    t.bigint "school_id"
-    t.bigint "provider_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "discarded_at"
-    t.index ["discarded_at"], name: "index_lead_partners_on_discarded_at"
-    t.index ["name"], name: "index_lead_partners_on_name"
-    t.index ["provider_id"], name: "index_lead_partners_on_provider_id", unique: true
-    t.index ["school_id"], name: "index_lead_partners_on_school_id", unique: true
-    t.index ["ukprn"], name: "index_lead_partners_on_ukprn", unique: true
-    t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
   end
 
   create_table "nationalisations", force: :cascade do |t|
@@ -805,8 +778,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
@@ -824,7 +797,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.datetime "completed_at"
     t.integer "schools_created"
     t.integer "schools_updated"
-    t.integer "lead_partners_updated"
+    t.integer "training_partners_updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "schools_deleted"
@@ -964,17 +937,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.integer "training_initiative"
     t.boolean "applying_for_bursary"
+    t.integer "training_initiative"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.boolean "applying_for_scholarship"
     t.integer "course_education_phase"
+    t.boolean "applying_for_scholarship"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
-    t.boolean "lead_partner_not_applicable", default: false
+    t.boolean "training_partner_not_applicable", default: false
     t.boolean "employing_school_not_applicable", default: false
     t.boolean "submission_ready", default: false
     t.integer "commencement_status"
@@ -995,7 +968,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.integer "placement_detail"
     t.integer "application_choice_id"
     t.text "provider_trainee_id"
-    t.bigint "lead_partner_id"
+    t.bigint "training_partner_id"
     t.string "defer_reason"
     t.tsvector "searchable"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
@@ -1011,7 +984,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
     t.index ["hesa_id"], name: "index_trainees_on_hesa_id"
     t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
-    t.index ["lead_partner_id"], name: "index_trainees_on_lead_partner_id"
     t.index ["placement_detail"], name: "index_trainees_on_placement_detail"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
@@ -1021,8 +993,36 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.index ["start_academic_cycle_id"], name: "index_trainees_on_start_academic_cycle_id"
     t.index ["state"], name: "index_trainees_on_state"
     t.index ["submission_ready"], name: "index_trainees_on_submission_ready"
+    t.index ["training_partner_id"], name: "index_trainees_on_training_partner_id"
     t.index ["training_route"], name: "index_trainees_on_training_route"
     t.index ["trn"], name: "index_trainees_on_trn"
+  end
+
+  create_table "training_partner_users", force: :cascade do |t|
+    t.bigint "training_partner_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["training_partner_id"], name: "index_training_partner_users_on_training_partner_id"
+    t.index ["user_id"], name: "index_training_partner_users_on_user_id"
+  end
+
+  create_table "training_partners", force: :cascade do |t|
+    t.citext "urn"
+    t.string "record_type", null: false
+    t.string "name"
+    t.citext "ukprn"
+    t.bigint "school_id"
+    t.bigint "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_training_partners_on_discarded_at"
+    t.index ["name"], name: "index_training_partners_on_name"
+    t.index ["provider_id"], name: "index_training_partners_on_provider_id", unique: true
+    t.index ["school_id"], name: "index_training_partners_on_school_id", unique: true
+    t.index ["ukprn"], name: "index_training_partners_on_ukprn", unique: true
+    t.index ["urn"], name: "index_training_partners_on_urn", unique: true
   end
 
   create_table "trs_trn_requests", force: :cascade do |t|
@@ -1101,10 +1101,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
   add_foreign_key "degrees", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
   add_foreign_key "hesa_trainee_details", "trainees"
-  add_foreign_key "lead_partner_users", "lead_partners"
-  add_foreign_key "lead_partner_users", "users"
-  add_foreign_key "lead_partners", "providers"
-  add_foreign_key "lead_partners", "schools"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
   add_foreign_key "potential_duplicate_trainees", "trainees"
@@ -1125,9 +1121,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
   add_foreign_key "trainees", "hesa_trn_submissions"
-  add_foreign_key "trainees", "lead_partners"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
+  add_foreign_key "trainees", "training_partners"
+  add_foreign_key "training_partner_users", "training_partners"
+  add_foreign_key "training_partner_users", "users"
+  add_foreign_key "training_partners", "providers"
+  add_foreign_key "training_partners", "schools"
   add_foreign_key "trs_trn_requests", "trainees"
   add_foreign_key "uploads", "users"
 end

@@ -136,8 +136,8 @@ class Trainee < ApplicationRecord
              inverse_of: :trainee,
              class_name: "Dttp::Trainee"
 
-  belongs_to :lead_partner, optional: true
-  has_one :lead_partner_school, through: :lead_partner, class_name: "School", source: :school
+  belongs_to :training_partner, optional: true
+  has_one :training_partner_school, through: :training_partner, class_name: "School", source: :school
 
   belongs_to :employing_school, optional: true, class_name: "School"
 
@@ -370,7 +370,7 @@ class Trainee < ApplicationRecord
   )
 
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
-  before_save :clear_lead_partner_id, if: :lead_partner_not_applicable?
+  before_save :clear_training_partner_id, if: :training_partner_not_applicable?
   before_save :set_submission_ready, if: :awaiting_action?
   before_save :set_academic_cycles
   before_save :update_searchable
@@ -598,8 +598,8 @@ private
     self.employing_school_id = nil
   end
 
-  def clear_lead_partner_id
-    self.lead_partner_id = nil
+  def clear_training_partner_id
+    self.training_partner_id = nil
   end
 
   def set_submission_ready

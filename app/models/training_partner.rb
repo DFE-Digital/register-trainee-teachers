@@ -29,7 +29,7 @@
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
 #
-class LeadPartner < ApplicationRecord
+class TrainingPartner < ApplicationRecord
   include Discard::Model
 
   RECORD_TYPES = [
@@ -42,8 +42,8 @@ class LeadPartner < ApplicationRecord
   belongs_to :school, optional: true
   belongs_to :provider, optional: true
 
-  has_many :lead_partner_users, inverse_of: :lead_partner
-  has_many :users, through: :lead_partner_users
+  has_many :training_partner_users, inverse_of: :training_partner
+  has_many :users, through: :training_partner_users
   has_many :trainees
 
   validates :urn, presence: true, if: -> { school? }, uniqueness: { case_sensitive: false, allow_nil: true }
