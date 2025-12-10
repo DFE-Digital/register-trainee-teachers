@@ -84,14 +84,14 @@ module Submissions
       end
 
       context "Trainee with missing placements" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_lead_partner, :with_employing_school) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_training_partner, :with_employing_school) }
 
         it "doesn't cause validation errors" do
           expect(subject.valid?).to be(true)
         end
       end
 
-      context "Trainee with a missing lead partner" do
+      context "Trainee with a missing training partner" do
         let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_employing_school) }
 
         it "doesn't cause validation errors" do
@@ -100,7 +100,7 @@ module Submissions
       end
 
       context "Trainee with a missing employing school" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_lead_partner) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_training_partner) }
 
         it "doesn't cause validation errors" do
           expect(subject.valid?).to be(true)

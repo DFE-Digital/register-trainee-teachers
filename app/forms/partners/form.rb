@@ -45,11 +45,11 @@ module Partners
     end
 
     def training_partner_not_selected?
-      training_partner_applicable? && lead_partner_id.to_i.zero?
+      training_partner_applicable? && training_partner_id.to_i.zero?
     end
 
     def no_results_searching_again?
-      lead_partner_id == "no_results_search_again"
+      training_partner_id == "no_results_search_again"
     end
 
     def training_partner_applicable?
@@ -57,7 +57,7 @@ module Partners
     end
 
     def training_partner_not_applicable?
-      ActiveModel::Type::Boolean.new.cast(lead_partner_not_applicable)
+      ActiveModel::Type::Boolean.new.cast(training_partner_not_applicable)
     end
 
   private
@@ -67,10 +67,10 @@ module Partners
     end
 
     def results_searching_again?
-      lead_partner_id == "results_search_again"
+      training_partner_id == "results_search_again"
     end
 
-    def lead_partner_not_applicable
+    def training_partner_not_applicable
       raise(NotImplementedError)
     end
 

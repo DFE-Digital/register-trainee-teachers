@@ -8,10 +8,10 @@ module Schools
 
     delegate :id, :persisted?, to: :trainee
 
-    validate :validate_lead_partner, if: -> { trainee.requires_lead_partner? }
+    validate :validate_training_partner, if: -> { trainee.requires_training_partner? }
     validate :validate_employing_school, if: -> { trainee.requires_employing_school? }
 
-    delegate :lead_partner_id, to: :training_partner_form
+    delegate :training_partner_id, to: :training_partner_form
     delegate :employing_school_id, to: :employing_school_form
 
     def initialize(trainee, non_search_validation: false)
@@ -39,13 +39,13 @@ module Schools
 
     def school_forms
       [
-        (training_partner_form if trainee.requires_lead_partner?),
+        (training_partner_form if trainee.requires_training_partner?),
         (employing_school_form if trainee.requires_employing_school?),
       ].compact
     end
 
-    def validate_lead_partner
-      errors.add(:lead_partner_id, :not_valid) unless training_partner_form.valid?
+    def validate_training_partner
+      errors.add(:training_partner_id, :not_valid) unless training_partner_form.valid?
     end
 
     def validate_employing_school
