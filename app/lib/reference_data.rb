@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module ReferenceData
+  COUNTRIES = ReferenceData::Loader.instance.find(:country)
   COURSE_AGE_RANGES = ReferenceData::Loader.instance.find(:course_age_range)
   DEGREE_GRADES = ReferenceData::Loader.instance.find(:degree_grade)
   DEGREE_TYPES = ReferenceData::Loader.instance.find(:degree_type)
