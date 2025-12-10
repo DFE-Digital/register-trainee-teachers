@@ -9,16 +9,16 @@ module Schools
     end
 
     def with_employing_school
-      render(View.new(data_model: mock_trainee(with_employing_school: true, route: TRAINING_ROUTE_ENUMS[:school_direct_salaried])))
+      render(View.new(data_model: mock_trainee(with_employing_school: true, route: ReferenceData::TRAINING_ROUTES.school_direct_salaried.name)))
     end
 
     def with_no_data
-      render(View.new(data_model: Trainee.new(id: 2, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])))
+      render(View.new(data_model: Trainee.new(id: 2, training_route: ReferenceData::TRAINING_ROUTES.assessment_only.name)))
     end
 
   private
 
-    def mock_trainee(with_employing_school: false, route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee])
+    def mock_trainee(with_employing_school: false, route: ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name)
       Trainee.new(
         id: 1,
         course_subject_one: "Primary",

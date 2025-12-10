@@ -275,7 +275,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: 2022))
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -285,7 +285,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: 2023))
                 .with_message(/has invalid reference data value/)
             end
 
@@ -294,7 +294,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+                "has invalid reference data value of '9'. Valid values are #{ReferenceData::TRAINING_ROUTES.hesa_codes.map { |v| "'#{v}'" }.sort.join(', ')}.",
               )
             end
           end
@@ -304,7 +304,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -318,7 +318,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -328,7 +328,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.excluding(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name))
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -342,7 +342,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).not_to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .in_array(ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.excluding(ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name))
             end
           end
         end
@@ -640,7 +640,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
       context "when training_route is present" do
         context "when requires_degree? is true" do
           before do
-            subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_postgrad]
+            subject.training_route = ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name
           end
 
           context "with empty degrees_attributes" do
@@ -670,7 +670,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
         context "when requires_degree? is false" do
           before do
-            subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_undergrad]
+            subject.training_route = ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name
             subject.degrees_attributes = []
           end
 

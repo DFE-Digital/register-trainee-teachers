@@ -48,7 +48,7 @@ REAL_PUBLISH_COURSES_WITH_SUBJECTS = {
   "Social Sciences" => ["Social sciences"],
 }.freeze
 
-HESA_TRAINING_ROUTES = Hesa::CodeSets::TrainingRoutes::MAPPING.values.freeze
+HESA_TRAINING_ROUTES = ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.freeze
 
 namespace :example_data do
   desc "Create personas, their providers and a selection of trainees"
@@ -144,7 +144,7 @@ namespace :example_data do
       end
 
       # Hpitt provider can only have trainees on the hpitt_postgrad route
-      enabled_routes = [TRAINING_ROUTE_ENUMS[:hpitt_postgrad]] if provider.hpitt_postgrad?
+      enabled_routes = [ReferenceData::TRAINING_ROUTES.hpitt_postgrad.name] if provider.hpitt_postgrad?
 
       nationalities = Nationality.all
 

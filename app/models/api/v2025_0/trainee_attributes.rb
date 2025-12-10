@@ -124,7 +124,7 @@ module Api
         :training_route,
         inclusion: {
           in: :valid_training_routes,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys) },
+          message: ->(object, data) { hesa_code_inclusion_message(value: data[:value], valid_values: object.valid_training_route_hesa_codes.sort) },
         },
         allow_blank: true,
         if: :valid_trainee_start_date?,
@@ -306,14 +306,14 @@ module Api
         errors
       end
 
+      def valid_training_route_hesa_codes
+        ReferenceData::TRAINING_ROUTES.hesa_codes(year: start_year)
+      end
+
     private
 
       def valid_training_routes
-        if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-        else
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values
-        end
+        ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: start_year)
       end
 
       def start_year

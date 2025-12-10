@@ -39,15 +39,15 @@ module CodeSets
 
     MAPPING = {
       # Postgraduate bursary
-      TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => { entity_id: POSTGRADUATE_BURSARY },
-      TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => { entity_id: POSTGRADUATE_BURSARY },
+      ReferenceData::TRAINING_ROUTES.provider_led_postgrad.name => { entity_id: POSTGRADUATE_BURSARY },
+      ReferenceData::TRAINING_ROUTES.school_direct_tuition_fee.name => { entity_id: POSTGRADUATE_BURSARY },
       # Undergraduate bursary
-      TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => { entity_id: UNDERGRADUATE_BURSARY },
-      TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => { entity_id: UNDERGRADUATE_BURSARY },
+      ReferenceData::TRAINING_ROUTES.provider_led_undergrad.name => { entity_id: UNDERGRADUATE_BURSARY },
+      ReferenceData::TRAINING_ROUTES.opt_in_undergrad.name => { entity_id: UNDERGRADUATE_BURSARY },
       # Grants
-      TRAINING_ROUTE_ENUMS[:early_years_salaried] => { entity_id: EARLY_YEARS_SALARIED },
-      TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => { entity_id: SCHOOL_DIRECT_SALARIED },
-      TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: SCHOOL_DIRECT_SALARIED },
+      ReferenceData::TRAINING_ROUTES.early_years_salaried.name => { entity_id: EARLY_YEARS_SALARIED },
+      ReferenceData::TRAINING_ROUTES.pg_teaching_apprenticeship.name => { entity_id: SCHOOL_DIRECT_SALARIED },
+      ReferenceData::TRAINING_ROUTES.school_direct_salaried.name => { entity_id: SCHOOL_DIRECT_SALARIED },
       # Tier one
       BURSARY_TIER_ENUMS[:tier_one] => { entity_id: NEW_TIER_ONE_BURSARY },
       # Tier two

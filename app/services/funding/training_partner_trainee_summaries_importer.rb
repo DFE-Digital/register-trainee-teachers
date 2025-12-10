@@ -4,8 +4,8 @@ module Funding
   class TrainingPartnerTraineeSummariesImporter < PayableTraineeSummariesImporter
     class SummaryRowMapper < PayableTraineeSummariesImporter::SummaryRowMapper
       TRAINING_ROUTES = {
-        "School Direct salaried" => TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-        "Post graduate teaching apprenticeship" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+        "School Direct salaried" => ReferenceData::TRAINING_ROUTES.school_direct_salaried.name,
+        "Post graduate teaching apprenticeship" => ReferenceData::TRAINING_ROUTES.pg_teaching_apprenticeship.name,
       }.freeze
 
     private

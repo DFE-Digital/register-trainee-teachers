@@ -62,9 +62,62 @@ RSpec.describe ReferenceData::Type do
     end
   end
 
+  describe "#names" do
+    subject(:type) { ReferenceData::Loader.instance.find("training_route") }
+
+    context "unfiltered" do
+      it "returns all names as strings" do
+        expect(type.names).to contain_exactly(
+          "assessment_only",
+          "provider_led_postgrad",
+          "early_years_undergrad",
+          "school_direct_tuition_fee",
+          "school_direct_salaried",
+          "pg_teaching_apprenticeship",
+          "early_years_assessment_only",
+          "early_years_salaried",
+          "early_years_postgrad",
+          "provider_led_undergrad",
+          "opt_in_undergrad",
+          "hpitt_postgrad",
+          "iqts",
+          "teacher_degree_apprenticeship",
+        )
+      end
+    end
+
+    context "filtered by year" do
+      it "returns available names as strings" do
+        expect(type.names(year: 2021)).to contain_exactly(
+          "assessment_only",
+          "early_years_undergrad",
+          "school_direct_tuition_fee",
+          "school_direct_salaried",
+          "pg_teaching_apprenticeship",
+          "early_years_assessment_only",
+          "early_years_salaried",
+          "early_years_postgrad",
+          "provider_led_undergrad",
+          "opt_in_undergrad",
+          "hpitt_postgrad",
+          "iqts",
+          "teacher_degree_apprenticeship",
+        )
+      end
+    end
+  end
+
   describe "#hesa_codes" do
+    subject(:type) { ReferenceData::Loader.instance.find("training_route") }
+
     it "returns all HESA codes as strings" do
-      expect(type.hesa_codes).to contain_exactly("31", "64", "01", "02", "63")
+      expect(type.hesa_codes).to contain_exactly("02", "03", "09", "10", "11", "12", "14")
+    end
+
+    context "filtered by year" do
+      it "returns available hesa codes only" do
+        expect(type.hesa_codes(year: 2021)).to contain_exactly("02", "03", "09", "10", "11", "14")
+      end
     end
   end
 

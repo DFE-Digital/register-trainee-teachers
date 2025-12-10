@@ -2,7 +2,7 @@
 
 SCHOLARSHIPS_2024_TO_2025 = [
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 30_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -12,7 +12,7 @@ SCHOLARSHIPS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    training_route: :provider_led_postgrad,
     amount: 27_000,
     allocation_subjects: [
       AllocationSubjects::FRENCH_LANGUAGE,
@@ -21,7 +21,7 @@ SCHOLARSHIPS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 30_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -31,7 +31,7 @@ SCHOLARSHIPS_2024_TO_2025 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    training_route: :school_direct_tuition_fee,
     amount: 27_000,
     allocation_subjects: [
       AllocationSubjects::FRENCH_LANGUAGE,
