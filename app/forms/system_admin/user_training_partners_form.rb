@@ -6,7 +6,7 @@ module SystemAdmin
 
     FIELDS = %i[
       query
-      lead_partner_id
+      training_partner_id
       search_results_found
       results_search_again_query
       no_results_search_again_query
@@ -14,7 +14,7 @@ module SystemAdmin
 
     QUERY_ERROR = I18n.t("activemodel.errors.models.system_admin/user_training_partners_form.attributes.query.length")
 
-    validates :lead_partner_id, presence: true, if: :partner_validation_required?
+    validates :training_partner_id, presence: true, if: :partner_validation_required?
 
     validates :query,
               presence: true,
@@ -44,8 +44,8 @@ module SystemAdmin
 
     def save
       if valid?
-        lead_partner = LeadPartner.find(lead_partner_id)
-        LeadPartnerUser.find_or_create_by!(lead_partner:, user:)
+        training_partner = TrainingPartner.find(training_partner_id)
+        TrainingPartnerUser.find_or_create_by!(training_partner:, user:)
       else
         false
       end
@@ -56,11 +56,11 @@ module SystemAdmin
     end
 
     def partner_not_selected?
-      lead_partner_id.to_i.zero?
+      training_partner_id.to_i.zero?
     end
 
     def no_results_searching_again?
-      lead_partner_id == "no_results_search_again"
+      training_partner_id == "no_results_search_again"
     end
 
   private
@@ -70,7 +70,7 @@ module SystemAdmin
     end
 
     def results_searching_again?
-      lead_partner_id == "results_search_again"
+      training_partner_id == "results_search_again"
     end
 
     def partner_validation_required?
