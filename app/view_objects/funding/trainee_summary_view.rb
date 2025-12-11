@@ -44,7 +44,7 @@ module Funding
         total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route: amount.row.route,
           subject: amount.row.subject,
-          lead_partner: format_lead_partner_string(amount),
+          training_partner: format_training_partner_string(amount),
           trainees: amount.number_of_trainees,
           amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
@@ -56,7 +56,7 @@ module Funding
         total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route: amount.row.route,
           subject: amount.row.subject,
-          lead_partner: format_lead_partner_string(amount),
+          training_partner: format_training_partner_string(amount),
           trainees: amount.number_of_trainees,
           amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
@@ -139,7 +139,7 @@ module Funding
       row.amounts.select(&:grant?)
     end
 
-    def format_lead_partner_string(amount)
+    def format_training_partner_string(amount)
       return "—" if amount.row.lead_school_name.nil?
 
       amount.row.lead_school_name
