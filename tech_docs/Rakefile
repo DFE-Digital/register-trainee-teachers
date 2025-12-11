@@ -146,6 +146,54 @@ namespace :tech_docs do
         end
       end
     end
+
+    desc "Generate reference data docs from the Register reference data YAML files"
+    task :generate_from_yaml do
+      # TODO: The version dir should not be hardcoded
+      version_dir = "v2026-0"
+
+      FileUtils.mkdir_p("source/reference-data/#{version_dir}")
+
+      File.write("source/reference-data/#{version_dir}/index.html.md.erb", <<~METADATA)
+        ---
+        title: #{version_dir}
+        weight: 3
+        hide_in_navigation: #{version_dir == 'v2026.0' ? true : false }
+        ---
+
+        # #{version_dir}
+
+      METADATA
+
+      app = Middleman::Application.new
+      context = Middleman::TemplateContext.new(app, {})
+
+      ReferenceDataHelper.new.each do |reference_data_type|
+        File.open("source/reference-data/#{version_dir}/#{reference_data_type.formatted_type_name}.html.md", "w+") do |f|
+          html = context.partial(
+            "partials/reference_data/attribute_from_yaml", locals: {
+              version: version_dir,
+              formatted_type_name: reference_data_type.formatted_type_name,
+              type: reference_data_type.metadata,
+              values: reference_data_type.values,
+            }
+          )
+
+          f.write(
+            <<~METADATA,
+              ---
+              title: #{reference_data_type.metadata.fetch("display_name")}
+              weight: #{index + 1}
+              source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
+              ---
+
+            METADATA
+          )
+
+          f.write(html)
+        end
+      end
+    end
   end
 end
 
@@ -220,3 +268,73 @@ module TechDocsHelpers
     FileUtils.mv("temp_source", "source")
   end
 end
+<<<<<<< HEAD
+=======
+
+class ReferenceDataHelper
+  ReferenceDataType = Struct.new(
+    :metadata,
+    :data,
+    :formatted_type_name,
+    :type_values,
+  )
+
+  ReferenceDataValue = Struct.new(
+    :hesa_code,
+    :id,
+    :name,
+    :display_name,
+    :description,
+    :start_year,
+    :end_year,
+  )
+
+  def each
+    hesa_value_labels = {}
+    Dir["#{TechDocsHelpers::RAILS_DIR}/config/locales/reference_data/*.yml"].each do |file_path|
+      labels = YAML.load_file(file_path, aliases: true)
+      hesa_value_labels = hesa_value_labels.deep_merge(labels)
+    end
+
+    Dir["#{TechDocsHelpers::RAILS_DIR}/config/reference_data/*.yml"].each_with_index do |file_path, index|
+      yaml = YAML.load_file(file_path)
+
+      ReferenceDataType.new.tap do |reference_data_type|
+        reference_data_type.metadata = yaml.fetch("metadata", {})
+        reference_data_type.data = yaml.fetch("data", {})
+        reference_data_type.formatted_type_name = reference_data_type.metadata.fetch("name").gsub("_", "-")
+        reference_data_type.type_values = []
+
+        reference_data_type.data.each do |value|
+          hesa_codes = value.fetch("hesa_codes", [])
+          if hesa_codes.present?
+            hesa_codes.each do |code|
+              reference_data_type.type_values << ReferenceDataValue.new(
+                hesa_code: code,
+                id: value.fetch("id"),
+                name: value.fetch("name"),
+                display_name: hesa_value_labels.dig("en", reference_data_type.metadata.fetch("name"), code) || value.fetch("display_name"),
+                description: value.fetch("description", nil),
+                start_year: value.fetch("start_year", nil),
+                end_year: value.fetch("end_year", nil),
+              )
+            end
+          else
+            reference_data_type.type_values << ReferenceDataValue.new(
+              hesa_code: "-",
+              id: value.fetch("id"),
+              name: value.fetch("name"),
+              display_name: value.fetch("display_name"),
+              description: value.fetch("description", nil),
+              start_year: value.fetch("start_year", nil),
+              end_year: value.fetch("end_year", nil),
+            )
+          end
+        end
+
+        yield
+      end
+    end
+  end
+end
+>>>>>>> c796f8cca (WIP)
