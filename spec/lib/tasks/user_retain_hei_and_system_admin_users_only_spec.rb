@@ -17,9 +17,9 @@ describe "user:retain_hei_and_system_admin_users_only" do
   let(:inactive_scitt_provider) { create(:provider, :scitt) }
   let(:unaccredited_scitt_provider) { create(:provider, :scitt, :unaccredited) }
 
-  let(:lead_partner_user_hei) { create(:lead_partner_user, lead_partner: build(:lead_partner, :hei)) }
-  let(:lead_partner_user_school) { create(:lead_partner_user, lead_partner: build(:lead_partner, :school)) }
-  let(:lead_partner_user_scitt) { create(:lead_partner_user, lead_partner: build(:lead_partner, :scitt)) }
+  let(:training_partner_user_hei) { create(:training_partner_user, lead_partner: build(:training_partner, :hei)) }
+  let(:training_partner_user_school) { create(:training_partner_user, lead_partner: build(:training_partner, :school)) }
+  let(:training_partner_user_scitt) { create(:training_partner_user, lead_partner: build(:training_partner, :scitt)) }
 
   before do
     active_hei_provider

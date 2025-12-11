@@ -5,11 +5,11 @@ require "rails_helper"
 feature "List users" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
-    let(:lead_partner) { create(:lead_partner, :school) }
+    let(:training_partner) { create(:training_partner, :school) }
     let(:provider) { create(:provider) }
 
     before do
-      user.lead_partners << lead_partner
+      user.training_partners << lead_partner
       user.providers << provider
       given_i_am_authenticated(user:)
     end

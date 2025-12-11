@@ -34,12 +34,12 @@ feature "viewing the payment schedule" do
   end
 
   context "when User is a LeadPartner School" do
-    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :school) }
+    let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :school) }
 
     background do
       given_i_am_authenticated_as_a_lead_partner_user(user:)
 
-      and_funding_data_exists(current_user.lead_partners.first.school)
+      and_funding_data_exists(current_user.training_partners.first.school)
     end
 
     scenario "viewing payments, predicted payments and payment breakdowns" do
@@ -64,12 +64,12 @@ feature "viewing the payment schedule" do
   end
 
   context "when User is a LeadPartner provider" do
-    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :hei) }
+    let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :hei) }
 
     background do
       given_i_am_authenticated_as_a_lead_partner_user(user:)
 
-      and_funding_data_exists(current_user.lead_partners.first.provider)
+      and_funding_data_exists(current_user.training_partners.first.provider)
     end
 
     scenario "viewing payments, predicted payments and payment breakdowns" do

@@ -15,8 +15,8 @@ RSpec.describe OrganisationSettingsPolicy, type: :policy do
   end
 
   context "when the User belongs to a LeadPartner" do
-    let(:lead_partner_user) { create(:user, :with_training_partner_organisation) }
-    let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
+    let(:training_partner_user) { create(:user, :with_training_partner_organisation) }
+    let(:training_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
 
     permissions :show? do
       it { is_expected.to permit(lead_partner_user_context) }

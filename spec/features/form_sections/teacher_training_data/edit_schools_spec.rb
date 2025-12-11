@@ -7,7 +7,7 @@ feature "edit schools spec" do
     before do
       given_i_am_authenticated
       given_a_school_direct_salaried_trainee_submitted_for_trn_exists
-      and_a_number_of_lead_partners_exist
+      and_a_number_of_training_partners_exist
       and_a_number_of_employing_schools_exist
       and_i_visit_the_trainee_record_page
     end
@@ -65,7 +65,7 @@ feature "edit schools spec" do
     before do
       given_i_am_authenticated
       given_a_school_direct_tuition_fee_trainee_submitted_for_trn_exists
-      and_a_number_of_lead_partners_exist
+      and_a_number_of_training_partners_exist
       and_a_number_of_employing_schools_exist
       and_i_visit_the_trainee_record_page
     end
@@ -148,8 +148,8 @@ private
     click(edit_training_partner_page.submit)
   end
 
-  def and_a_number_of_lead_partners_exist
-    @lead_partners = create_list(:lead_partner, 1, :school)
+  def and_a_number_of_training_partners_exist
+    @training_partners = create_list(:training_partner, 1, :school)
   end
 
   def and_a_number_of_employing_schools_exist
@@ -169,7 +169,7 @@ private
   end
 
   def my_lead_partner
-    @my_lead_partner ||= @lead_partners.sample
+    @my_training_partner ||= @training_partners.sample
   end
 
   def my_employing_school
@@ -180,7 +180,7 @@ private
     expect(confirm_schools_page).to be_displayed(id: trainee.slug)
   end
 
-  def then_i_am_redirected_to_the_lead_partners_page_filtered_by_my_query
+  def then_i_am_redirected_to_the_training_partners_page_filtered_by_my_query
     expect(training_partners_search_page).to be_displayed(trainee_id: trainee.slug, query: my_lead_partner_name)
   end
 
