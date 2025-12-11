@@ -48,7 +48,7 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
   end
 
   context "when the User belongs to a LeadPartner" do
-    let(:lead_partner_user) { create(:user, :with_lead_partner_organisation) }
+    let(:lead_partner_user) { create(:user, :with_training_partner_organisation) }
     let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
 
     permissions :index?, :create?, :new? do
@@ -95,8 +95,8 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     end
 
     context "when the User is a Lead Partner Provider" do
-      let!(:lead_partner) { create(:lead_partner, :hei) }
-      let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
+      let!(:lead_partner) { create(:training_partner, :hei) }
+      let!(:lead_partner_user) { create(:user, training_partners: [lead_partner]) }
       let!(:lead_partner_user_context) {
         UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
       }
@@ -112,8 +112,8 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     end
 
     context "when the User is a Lead Partner School" do
-      let!(:lead_partner) { create(:lead_partner, :school) }
-      let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
+      let!(:lead_partner) { create(:training_partner, :school) }
+      let!(:lead_partner_user) { create(:user, training_partners: [lead_partner]) }
       let!(:lead_partner_user_context) {
         UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
       }

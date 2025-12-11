@@ -64,14 +64,14 @@ feature "Organisation details" do
 
   context "when a User belongs to a Lead Partner organisation" do
     let(:accreditation_id) { nil }
-    let(:organisation) { create(:lead_partner, :hei) }
-    let(:user) { create(:user, lead_partners: [organisation]) }
+    let(:organisation) { create(:training_partner, :hei) }
+    let(:user) { create(:user, training_partners: [organisation]) }
     let!(:provider) { organisation.provider }
 
-    let!(:user_one) { create(:user, lead_partners: [organisation]) }
-    let!(:user_two) { create(:user, lead_partners: [organisation]) }
-    let!(:user_three) { create(:user, :with_lead_partner_organisation) }
-    let!(:discarded_user) { create(:user, lead_partners: [organisation], discarded_at: 1.day.ago) }
+    let!(:user_one) { create(:user, training_partners: [organisation]) }
+    let!(:user_two) { create(:user, training_partners: [organisation]) }
+    let!(:user_three) { create(:user, :with_training_partner_organisation) }
+    let!(:discarded_user) { create(:user, training_partners: [organisation], discarded_at: 1.day.ago) }
 
     before do
       given_i_have_clicked_on_the_organisation_name_link

@@ -39,10 +39,10 @@ module Personas
     end
 
     context "multiple lead partners" do
-      let(:persona) { create(:user, id: persona_id, lead_partners: create_list(:lead_partner, 2, :school)) }
+      let(:persona) { create(:user, id: persona_id, training_partners: create_list(:lead_partner, 2, :school)) }
 
       it "renders the all provider names" do
-        persona.lead_partners.each do |lead_partner|
+        persona.training_partners.each do |lead_partner|
           expect(component).to have_text(lead_partner.name)
         end
       end
