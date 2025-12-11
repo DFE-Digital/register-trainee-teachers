@@ -14,12 +14,12 @@ describe UserPolicy do
   let(:provider_admin_user) { create(:user, providers: [provider], system_admin: true) }
   let(:provider_admin_user_context) { UserWithOrganisationContext.new(user: provider_admin_user, session: {}) }
 
-  let(:lead_partner) { create(:lead_partner, :school) }
+  let(:lead_partner) { create(:training_partner, :school) }
 
-  let(:lead_partner_user) { create(:user, :with_lead_partner_organisation, lead_partners: [lead_partner]) }
+  let(:lead_partner_user) { create(:user, :with_training_partner_organisation, training_partners: [lead_partner]) }
   let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
 
-  let(:lead_partner_admin_user) { create(:user, :with_lead_partner_organisation, system_admin: true, lead_partners: [lead_partner]) }
+  let(:lead_partner_admin_user) { create(:user, :with_training_partner_organisation, system_admin: true, training_partners: [lead_partner]) }
   let(:lead_partner_admin_user_context) { UserWithOrganisationContext.new(user: lead_partner_admin_user, session: {}) }
 
   context "when drafts?, reports?" do
