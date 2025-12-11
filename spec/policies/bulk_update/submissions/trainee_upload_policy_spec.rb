@@ -68,7 +68,7 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
   end
 
   context "when the User's organisation is not a Provider" do
-    let(:user) { UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {}) }
+    let(:user) { UserWithOrganisationContext.new(user: create(:user, :with_training_partner_organisation), session: {}) }
 
     %i[pending validated failed in_progress succeeded cancelled].each do |status|
       context "when the upload is #{status}" do
