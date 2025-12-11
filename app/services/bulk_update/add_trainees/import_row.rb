@@ -67,7 +67,7 @@ module BulkUpdate
 
       def prepare_csv_attributes_for_api(attributes)
         attributes.transform_values!(&:presence)
-        attributes[:lead_partner_not_applicable] = attributes[:lead_partner_urn].blank?
+        attributes[:training_partner_not_applicable] = attributes[:lead_partner_urn].blank?
         prepare_degree_attributes(attributes)
         prepare_placement_attributes(attributes)
         prepare_record_source_attribute(attributes)
