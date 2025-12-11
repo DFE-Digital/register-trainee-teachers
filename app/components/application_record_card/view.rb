@@ -87,7 +87,7 @@ module ApplicationRecordCard
     end
 
     def show_provider?
-      current_user.system_admin? || current_user.lead_partner?
+      current_user.system_admin? || current_user.training_partner?
     end
 
     def show_record_source?

@@ -10,7 +10,7 @@
 <div class="record-details">
   <%= render RecordDetails::View.new(trainee: @trainee,
       last_updated_event: trainee.timeline.first,
-      show_provider: current_user.system_admin? || current_user.lead_partner?,
+      show_provider: current_user.system_admin? || current_user.training_partner?,
       show_record_source: current_user.system_admin?,
       editable: trainee_editable?,
       show_change_provider: current_user.system_admin?,

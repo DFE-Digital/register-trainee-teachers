@@ -9,7 +9,7 @@ module SchoolDetails
 
     def initialize(trainee:, has_errors: false, editable: false)
       @trainee = trainee
-      @training_partner = trainee.lead_partner
+      @training_partner = trainee.training_partner
       @employing_school = trainee.employing_school
       @has_errors = has_errors
       @editable = editable
@@ -17,7 +17,7 @@ module SchoolDetails
 
     def school_rows
       [
-        training_partner_row(not_applicable: trainee.lead_partner_not_applicable?),
+        training_partner_row(not_applicable: trainee.training_partner_not_applicable?),
         employing_school_row(not_applicable: trainee.employing_school_not_applicable?),
       ].compact
     end
