@@ -41,7 +41,6 @@
 #  itt_end_date                    :date
 #  itt_start_date                  :date
 #  last_name                       :text
-#  lead_partner_not_applicable     :boolean          default(FALSE)
 #  middle_names                    :text
 #  outcome_date                    :date
 #  placement_detail                :integer
@@ -59,6 +58,7 @@
 #  submitted_for_trn_at            :datetime
 #  trainee_start_date              :date
 #  training_initiative             :integer
+#  training_partner_not_applicable :boolean          default(FALSE)
 #  training_route                  :integer
 #  trn                             :string
 #  created_at                      :datetime         not null
@@ -72,11 +72,11 @@
 #  end_academic_cycle_id           :bigint
 #  hesa_id                         :string
 #  hesa_trn_submission_id          :bigint
-#  lead_partner_id                 :bigint
 #  placement_assignment_dttp_id    :uuid
 #  provider_id                     :bigint           not null
 #  provider_trainee_id             :text
 #  start_academic_cycle_id         :bigint
+#  training_partner_id             :bigint
 #
 # Indexes
 #
@@ -93,7 +93,6 @@
 #  index_trainees_on_ethnic_group                                  (ethnic_group)
 #  index_trainees_on_hesa_id                                       (hesa_id)
 #  index_trainees_on_hesa_trn_submission_id                        (hesa_trn_submission_id)
-#  index_trainees_on_lead_partner_id                               (lead_partner_id)
 #  index_trainees_on_placement_detail                              (placement_detail)
 #  index_trainees_on_progress                                      (progress) USING gin
 #  index_trainees_on_provider_id                                   (provider_id)
@@ -102,6 +101,7 @@
 #  index_trainees_on_start_academic_cycle_id                       (start_academic_cycle_id)
 #  index_trainees_on_state                                         (state)
 #  index_trainees_on_submission_ready                              (submission_ready)
+#  index_trainees_on_training_partner_id                           (training_partner_id)
 #  index_trainees_on_training_route                                (training_route)
 #  index_trainees_on_trn                                           (trn)
 #
@@ -112,9 +112,9 @@
 #  fk_rails_...  (employing_school_id => schools.id)
 #  fk_rails_...  (end_academic_cycle_id => academic_cycles.id)
 #  fk_rails_...  (hesa_trn_submission_id => hesa_trn_submissions.id)
-#  fk_rails_...  (lead_partner_id => lead_partners.id)
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
+#  fk_rails_...  (training_partner_id => training_partners.id)
 #
 class Trainee < ApplicationRecord
   self.ignored_columns += %w[trainee_id]

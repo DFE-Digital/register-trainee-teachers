@@ -4,16 +4,16 @@
 #
 # Table name: school_data_downloads
 #
-#  id                    :bigint           not null, primary key
-#  completed_at          :datetime
-#  lead_partners_updated :integer
-#  schools_created       :integer
-#  schools_deleted       :integer
-#  schools_updated       :integer
-#  started_at            :datetime         not null
-#  status                :string           not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
+#  id                        :bigint           not null, primary key
+#  completed_at              :datetime
+#  schools_created           :integer
+#  schools_deleted           :integer
+#  schools_updated           :integer
+#  started_at                :datetime         not null
+#  status                    :string           not null
+#  training_partners_updated :integer
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
 #
 # Indexes
 #
