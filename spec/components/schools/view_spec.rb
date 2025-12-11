@@ -6,7 +6,7 @@ module Schools
   describe View do
     include Rails.application.routes.url_helpers
 
-    let(:lead_partner) { create(:lead_partner, :school) }
+    let(:training_partner) { create(:training_partner, :school) }
     let(:employing_school) { create(:school, open_date: Time.zone.today) }
 
     before do

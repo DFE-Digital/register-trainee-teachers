@@ -20,7 +20,7 @@ module Funding
 
       it "calls set_lead_columns with the correct arguments" do
         expect(described_class.lead_school_column).to eq(:lead_school_urn)
-        expect(described_class.lead_partner_column).to eq(:lead_partner_urn)
+        expect(described_class.lead_partner_column).to eq(:training_partner_urn)
       end
     end
 

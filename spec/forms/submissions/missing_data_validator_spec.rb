@@ -133,7 +133,7 @@ module Submissions
                                                             :degree_ids,
                                                             :trainee_start_date,
                                                             :employing_school_id,
-                                                            :lead_partner_id)
+                                                            :training_partner_id)
         end
       end
     end

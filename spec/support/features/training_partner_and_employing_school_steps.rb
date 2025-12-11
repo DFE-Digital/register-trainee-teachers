@@ -42,7 +42,7 @@ module Features
     end
 
     def given_a_training_partner_exists_in_the_system
-      @training_partner = create(:lead_partner, :school)
+      @training_partner = create(:training_partner, :school)
     end
 
     def and_i_fill_in_my_training_partner

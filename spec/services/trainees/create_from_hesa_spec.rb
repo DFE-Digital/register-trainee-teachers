@@ -22,8 +22,8 @@ module Trainees
     let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
     let!(:second_disability) { create(:disability, name: second_disability_name) }
     let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
-    let(:former_accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys.sample }
-    let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn] }
+    let(:former_accredited_provider_ukprn) { described_class::TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys.sample }
+    let(:accredited_provider_ukprn) { described_class::TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn] }
     let(:school) { create(:school, urn: student_attributes[:lead_partner_urn]) }
     let(:duplicate_trainees) { [] }
 

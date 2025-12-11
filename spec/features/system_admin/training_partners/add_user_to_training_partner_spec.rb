@@ -9,8 +9,8 @@ feature "Add user to lead partners" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
 
-    let!(:school_lead_partner) { create(:lead_partner, :school, name: "Garibaldi School") }
-    let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "Bourbon University") }
+    let!(:school_lead_partner) { create(:training_partner, :school, name: "Garibaldi School") }
+    let!(:hei_lead_partner) { create(:training_partner, :hei, name: "Bourbon University") }
 
     before do
       given_i_am_authenticated(user:)
@@ -41,10 +41,10 @@ feature "Add user to lead partners" do
 
   context "as a system admin using the non-JS flow" do
     let(:user) { create(:user, system_admin: true) }
-    let!(:school_lead_partner) { create(:lead_partner, :school, name: "Garibaldi School") }
-    let!(:hei_lead_partner1) { create(:lead_partner, :hei, name: "Bourbon University") }
-    let!(:hei_lead_partner2) { create(:lead_partner, :hei, name: "Digestive University") }
-    let!(:discarded_lead_partner) { create(:lead_partner, :school, :discarded, name: "Discarded Uni") }
+    let!(:school_lead_partner) { create(:training_partner, :school, name: "Garibaldi School") }
+    let!(:hei_lead_partner1) { create(:training_partner, :hei, name: "Bourbon University") }
+    let!(:hei_lead_partner2) { create(:training_partner, :hei, name: "Digestive University") }
+    let!(:discarded_lead_partner) { create(:training_partner, :school, :discarded, name: "Discarded Uni") }
 
     before do
       given_i_am_authenticated(user:)

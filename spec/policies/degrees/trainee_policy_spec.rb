@@ -10,12 +10,12 @@ RSpec.describe Degrees::TraineePolicy, type: :policy do
   let(:unaccredited_provider_user) { user_with_organisation(create(:user, providers: [unaccredited_provider]), unaccredited_provider) }
   let(:read_only_provider_user) { user_with_organisation(create(:user, providers: [provider], read_only: true), provider) }
   let(:school) { create(:school) }
-  let(:lead_partner) { create(:training_partner, :school, school:) }
-  let(:lead_partner_user) { user_with_organisation(create(:user, providers: []), lead_partner) }
+  let(:training_partner) { create(:training_partner, :school, school:) }
+  let(:training_partner_user) { user_with_organisation(create(:user, providers: []), lead_partner) }
   let(:system_admin_user) { user_with_organisation(create(:user, :system_admin), nil) }
 
   let(:provider_trainee) { create(:trainee, provider:) }
-  let(:lead_partner_trainee) { create(:trainee, lead_partner:) }
+  let(:training_partner_trainee) { create(:trainee, lead_partner:) }
   let(:unaccredited_provider_trainee) { create(:trainee, provider: unaccredited_provider) }
 
   subject { described_class }

@@ -39,7 +39,7 @@ module Personas
     end
 
     context "multiple lead partners" do
-      let(:persona) { create(:user, id: persona_id, training_partners: create_list(:lead_partner, 2, :school)) }
+      let(:persona) { create(:user, id: persona_id, training_partners: create_list(:training_partner, 2, :school)) }
 
       it "renders the all provider names" do
         persona.training_partners.each do |lead_partner|

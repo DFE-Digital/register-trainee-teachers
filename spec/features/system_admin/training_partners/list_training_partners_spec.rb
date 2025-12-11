@@ -5,8 +5,8 @@ require "rails_helper"
 feature "List training partners" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
-    let!(:school_lead_partner) { create(:lead_partner, :school, name: "School Partner") }
-    let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "HEI Partner") }
+    let!(:school_lead_partner) { create(:training_partner, :school, name: "School Partner") }
+    let!(:hei_lead_partner) { create(:training_partner, :hei, name: "HEI Partner") }
 
     before do
       given_i_am_authenticated(user:)
@@ -15,7 +15,7 @@ feature "List training partners" do
     scenario "list training partners page" do
       when_i_visit_the_system_admin_page
       and_i_click_the_lead_partner_link
-      then_i_see_the_lead_partners_index_page
+      then_i_see_the_training_partners_index_page
       and_i_see_the_hei_lead_partner
       and_i_see_the_school_lead_partner
 
@@ -23,7 +23,7 @@ feature "List training partners" do
       then_i_see_the_school_lead_partner_detail_page
 
       when_i_click_the_back_button
-      then_i_see_the_lead_partners_index_page
+      then_i_see_the_training_partners_index_page
 
       when_i_click_the_hei_lead_partner
       then_i_see_the_hei_lead_partner_detail_page
@@ -38,7 +38,7 @@ feature "List training partners" do
     click_on "Training partners"
   end
 
-  def then_i_see_the_lead_partners_index_page
+  def then_i_see_the_training_partners_index_page
     expect(page).to have_current_path(training_partners_path)
   end
 

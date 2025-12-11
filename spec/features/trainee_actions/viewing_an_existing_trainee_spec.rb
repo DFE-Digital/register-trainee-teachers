@@ -41,7 +41,7 @@ feature "View trainees" do
   end
 
   context "when i am a lead partner user", feature_user_can_have_multiple_organisations: true do
-    let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, lead_partner: @current_user.lead_partners.first) }
+    let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, lead_partner: @current_user.training_partners.first) }
 
     background { given_i_am_authenticated_as_a_lead_partner_user }
 
@@ -68,7 +68,7 @@ feature "View trainees" do
       [{ "school_urn" => "138734" }, { "school_urn" => "139408" }]
     end
 
-    let(:trainee) { create(:trainee, :completed, :trn_received, hesa_id: "1234", lead_partner: @current_user.lead_partners.first) }
+    let(:trainee) { create(:trainee, :completed, :trn_received, hesa_id: "1234", lead_partner: @current_user.training_partners.first) }
 
     let!(:hesa_student) do
       create(
@@ -105,7 +105,7 @@ feature "View trainees" do
         :with_hesa_trainee_detail,
         hesa_id: "5678",
         record_source: :hesa_collection,
-        lead_partner: @current_user.lead_partners.first,
+        lead_partner: @current_user.training_partners.first,
       )
       trainee_with_fund_code.hesa_trainee_detail.update!(fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE)
 

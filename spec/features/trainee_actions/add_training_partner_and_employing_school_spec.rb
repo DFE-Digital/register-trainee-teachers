@@ -249,7 +249,7 @@ feature "add training partner and employing school" do
   alias_method :then_i_see_the_edit_lead_partner_details_page, :and_i_see_the_edit_lead_partner_details_page
 
   def given_training_partner_and_employing_school_exist_in_the_system
-    @training_partner = create(:lead_partner, :school)
+    @training_partner = create(:training_partner, :school)
     @employing_school = create(:school)
   end
 end

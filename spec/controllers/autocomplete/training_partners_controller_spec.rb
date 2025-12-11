@@ -9,7 +9,7 @@ module Autocomplete
 
       context "default response" do
         before do
-          create(:lead_partner, :hei)
+          create(:training_partner, :hei)
           get :index
         end
 
@@ -17,15 +17,15 @@ module Autocomplete
           expect(response).to have_http_status(:success)
         end
 
-        it "returns a list of lead_partners" do
+        it "returns a list of training_partners" do
           expect(json_response["training_partners"].size).to eq(1)
         end
       end
 
       context "querying" do
-        let!(:lead_partner) { create(:lead_partner, :school, name: "Sheffield School") }
-        let!(:lead_partner2) { create(:lead_partner, :school, name: "Cardiff College") }
-        let!(:lead_partner_hei) { create(:lead_partner, :hei, name: "Newbury University") }
+        let!(:training_partner) { create(:training_partner, :school, name: "Sheffield School") }
+        let!(:training_partner2) { create(:training_partner, :school, name: "Cardiff College") }
+        let!(:training_partner_hei) { create(:training_partner, :hei, name: "Newbury University") }
 
         context "invalid query" do
           before do
@@ -42,7 +42,7 @@ module Autocomplete
             get :index, params: { query: lead_partner.name }
           end
 
-          it "returns the lead_partners matching the query only" do
+          it "returns the training_partners matching the query only" do
             expect(json_response["training_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
           end
         end
@@ -52,7 +52,7 @@ module Autocomplete
             get :index, params: { query: lead_partner.urn }
           end
 
-          it "returns the lead_partners matching the query only" do
+          it "returns the training_partners matching the query only" do
             expect(json_response["training_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
           end
         end
@@ -62,7 +62,7 @@ module Autocomplete
             get :index, params: { query: lead_partner_hei.ukprn }
           end
 
-          it "returns the lead_partners matching the query only" do
+          it "returns the training_partners matching the query only" do
             expect(json_response["training_partners"]).to match([lead_partner_hei.as_json(only: %i[id name urn ukprn])])
           end
         end
@@ -70,7 +70,7 @@ module Autocomplete
 
       context "limiting" do
         before do
-          create_list(:lead_partner, 3, :hei)
+          create_list(:training_partner, 3, :hei)
           get :index, params: { limit: 2 }
         end
 
