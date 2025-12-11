@@ -168,14 +168,15 @@ namespace :tech_docs do
       app = Middleman::Application.new
       context = Middleman::TemplateContext.new(app, {})
 
-      ReferenceDataHelper.new.each do |reference_data_type|
+      ReferenceDataHelper.new.each_with_index do |reference_data_type, index|
         File.open("source/reference-data/#{version_dir}/#{reference_data_type.formatted_type_name}.html.md", "w+") do |f|
           html = context.partial(
             "partials/reference_data/attribute_from_yaml", locals: {
               version: version_dir,
               formatted_type_name: reference_data_type.formatted_type_name,
               type: reference_data_type.metadata,
-              values: reference_data_type.values,
+              values: reference_data_type.type_values,
+              index: index,
             }
           )
 
@@ -272,6 +273,8 @@ end
 =======
 
 class ReferenceDataHelper
+  include Enumerable
+
   ReferenceDataType = Struct.new(
     :metadata,
     :data,
@@ -332,7 +335,7 @@ class ReferenceDataHelper
           end
         end
 
-        yield
+        yield(reference_data_type)
       end
     end
   end
