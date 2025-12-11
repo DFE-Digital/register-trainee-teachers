@@ -10,7 +10,7 @@ RSpec.describe Degrees::TraineePolicy, type: :policy do
   let(:unaccredited_provider_user) { user_with_organisation(create(:user, providers: [unaccredited_provider]), unaccredited_provider) }
   let(:read_only_provider_user) { user_with_organisation(create(:user, providers: [provider], read_only: true), provider) }
   let(:school) { create(:school) }
-  let(:lead_partner) { create(:lead_partner, :school, school:) }
+  let(:lead_partner) { create(:training_partner, :school, school:) }
   let(:lead_partner_user) { user_with_organisation(create(:user, providers: []), lead_partner) }
   let(:system_admin_user) { user_with_organisation(create(:user, :system_admin), nil) }
 
