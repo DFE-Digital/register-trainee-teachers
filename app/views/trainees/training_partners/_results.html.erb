@@ -1,15 +1,15 @@
 <%= f.govuk_error_summary %>
 
-<%= f.hidden_field :lead_partner_id, value: nil %>
-<%= f.hidden_field :lead_partner_not_applicable, value: "false" %>
+<%= f.hidden_field :training_partner_id, value: nil %>
+<%= f.hidden_field :training_partner_not_applicable, value: "false" %>
 <%= f.hidden_field :search_results_found, value: "true" %>
 
 <%= render TraineeName::View.new(@trainee) %>
-<%= f.govuk_radio_buttons_fieldset :lead_partner_id,
+<%= f.govuk_radio_buttons_fieldset :training_partner_id,
   legend: { text: t("components.page_titles.trainees.training_partners.index"), tag: "h1", size: "l" },
-  hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} ‘#{query}’" } do %>
+  hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} '#{query}'" } do %>
     <% @training_partner_search.training_partners.each_with_index do |training_partner, index| %>
-      <%= f.govuk_radio_button :lead_partner_id, training_partner.id,
+      <%= f.govuk_radio_button :training_partner_id, training_partner.id,
                               checked: false,
                               label: { text: training_partner.name },
                               link_errors: index.zero?,
@@ -18,7 +18,7 @@
 
   <%= f.govuk_radio_divider %>
 
-  <%= f.govuk_radio_button :lead_partner_id,
+  <%= f.govuk_radio_button :training_partner_id,
                           :results_search_again,
                           label: { text: t("components.page_titles.search_schools.search_button") } do %>
     <%= f.govuk_text_field :results_search_again_query,

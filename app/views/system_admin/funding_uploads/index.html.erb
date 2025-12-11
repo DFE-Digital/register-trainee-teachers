@@ -44,15 +44,15 @@
       end
 
       table.with_body do |body|
-        body.with_row(html_attributes: { id: "lead_partner_trainee_summary" }) do |row|
-        row.with_cell(text: govuk_link_to("Upload trainee summary", new_funding_uploads_path(funding_type: :lead_partner_trainee_summary)))
-          row.with_cell(text: funding_upload_last_completed_for(@lead_partner_trainee_summary))
-          row.with_cell(text: funding_upload_month_for(@lead_partner_trainee_summary))
+        body.with_row(html_attributes: { id: "training_partner_trainee_summary" }) do |row|
+        row.with_cell(text: govuk_link_to("Upload trainee summary", new_funding_uploads_path(funding_type: :training_partner_trainee_summary)))
+          row.with_cell(text: funding_upload_last_completed_for(@training_partner_trainee_summary))
+          row.with_cell(text: funding_upload_month_for(@training_partner_trainee_summary))
         end
-        body.with_row(html_attributes: { id: "lead_partner_payment_schedule" }) do |row|
-          row.with_cell(text: govuk_link_to("Upload payment schedule", new_funding_uploads_path(funding_type: :lead_partner_payment_schedule)))
-          row.with_cell(text: funding_upload_last_completed_for(@lead_partner_payment_schedule))
-          row.with_cell(text: funding_upload_month_for(@lead_partner_payment_schedule))
+        body.with_row(html_attributes: { id: "training_partner_payment_schedule" }) do |row|
+          row.with_cell(text: govuk_link_to("Upload payment schedule", new_funding_uploads_path(funding_type: :training_partner_payment_schedule)))
+          row.with_cell(text: funding_upload_last_completed_for(@training_partner_payment_schedule))
+          row.with_cell(text: funding_upload_month_for(@training_partner_payment_schedule))
         end
       end
     end %>

@@ -1,13 +1,13 @@
 <%= form.govuk_error_summary %>
 
-<%= form.hidden_field :lead_partner_id, value: nil %>
+<%= form.hidden_field :training_partner_id, value: nil %>
 <%= form.hidden_field :search_results_found, value: "true" %>
 
-<%= form.govuk_radio_buttons_fieldset :lead_partner_id,
+<%= form.govuk_radio_buttons_fieldset :training_partner_id,
   legend: { text: t("components.page_titles.trainees.training_partners.index"), tag: "h1", size: "l" },
   hint: { text: "#{t('components.page_titles.search_training_partners.sub_text_results')} '#{query}'" } do %>
     <% @training_partner_search.training_partners.each_with_index do |training_partner, index| %>
-      <%= form.govuk_radio_button :lead_partner_id, training_partner.id,
+      <%= form.govuk_radio_button :training_partner_id, training_partner.id,
                               checked: false,
                               label: { text: training_partner.name },
                               link_errors: index.zero?,
@@ -16,7 +16,7 @@
 
   <%= form.govuk_radio_divider %>
 
-  <%= form.govuk_radio_button :lead_partner_id,
+  <%= form.govuk_radio_button :training_partner_id,
                           :results_search_again,
                           label: { text: t("components.page_titles.search_training_partners.search_button") } do %>
     <%= form.govuk_text_field :results_search_again_query,
