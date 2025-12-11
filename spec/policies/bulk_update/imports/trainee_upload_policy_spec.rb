@@ -44,7 +44,7 @@ RSpec.describe BulkUpdate::Imports::TraineeUploadPolicy, type: :policy do
   end
 
   context "when the User's organisation is not a Provider" do
-    let(:user) { UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {}) }
+    let(:user) { UserWithOrganisationContext.new(user: create(:user, :with_training_partner_organisation), session: {}) }
     let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
 
     %i[uploaded pending validated in_progress succeeded failed cancelled].each do |status|
