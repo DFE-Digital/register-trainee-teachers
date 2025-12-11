@@ -165,7 +165,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cgi (0.5.0)
+    cgi (0.5.1)
     charlock_holmes (0.7.9)
     chartkick (5.1.4)
     childprocess (5.1.0)
@@ -397,7 +397,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2025.0107)
     mini_mime (1.1.5)
-    minitest (5.26.2)
+    minitest (5.27.0)
     msgpack (1.8.0)
     multi_json (1.18.0)
     multi_xml (0.6.0)
@@ -598,7 +598,7 @@ GEM
     rspec-mocks (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-openapi (0.21.2)
+    rspec-openapi (0.21.4)
       actionpack (>= 5.2.0)
       rails-dom-testing
       rspec-core
@@ -946,7 +946,7 @@ CHECKSUMS
   byebug (12.0.0) sha256=d4a150d291cca40b66ec9ca31f754e93fed8aa266a17335f71bb0afa7fca1a1e
   canonical-rails (0.2.17) sha256=771a2bc71bb4742fe175a639b545ec597d166f46a498611387ab7d81eae43ceb
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cgi (0.5.0) sha256=fe99f65bb2c146e294372ebb27602adbc3b4c008e9ea7038c6bd48c1ec9759da
+  cgi (0.5.1) sha256=e93fcafc69b8a934fe1e6146121fa35430efa8b4a4047c4893764067036f18e9
   charlock_holmes (0.7.9) sha256=b49e8a11ce1921e2c5b65511bb864ae51720ce9bd1c336ccf0e89e6c8ae62db0
   chartkick (5.1.4) sha256=893b2b5e6321a917f4ada2db082e0cb81a247cdad014e0b0a37aeb9287c10be5
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
@@ -1045,7 +1045,7 @@ CHECKSUMS
   mime-types (3.6.0) sha256=6f71db957840ceae44211531eff3e2f7e0dd4645fefb5f535dbaeb6307ab6464
   mime-types-data (3.2025.0107) sha256=232a497cc68cfca58982685d47fb26f10ef2eb009c4d1c53a7e159d572743dca
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
-  minitest (5.26.2) sha256=f021118a6185b9ba9f5af71f2ba103ad770c75afde9f2ab8da512677c550cde3
+  minitest (5.27.0) sha256=2d3b17f8a36fe7801c1adcffdbc38233b938eb0b4966e97a6739055a45fa77d5
   msgpack (1.8.0) sha256=e64ce0212000d016809f5048b48eb3a65ffb169db22238fb4b72472fecb2d732
   multi_json (1.18.0) sha256=23f70cf73e2895a33e6d10f0ec955b28ef5627ca4bbad0f292e7d16f4675596f
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
@@ -1125,7 +1125,7 @@ CHECKSUMS
   rspec-core (3.13.6) sha256=a8823c6411667b60a8bca135364351dda34cd55e44ff94c4be4633b37d828b2d
   rspec-expectations (3.13.5) sha256=33a4d3a1d95060aea4c94e9f237030a8f9eae5615e9bd85718fe3a09e4b58836
   rspec-mocks (3.13.5) sha256=e4338a6f285ada9fe56f5893f5457783af8194f5d08884d17a87321d5195ea81
-  rspec-openapi (0.21.2) sha256=00a59d9efadf38252af5fba60896476ea319072ab5c78a567d6527aef112d7d6
+  rspec-openapi (0.21.4) sha256=dc413b7419bcfa66541c0b65c02cc9fe4349eeb74413bad8f6ccaddd0ce86e59
   rspec-rails (8.0.2) sha256=113139a53f5d068d4f48d1c29ad5f982013ed9b0daa69d7f7b266eda5d433ace
   rspec-retry (0.6.2) sha256=6101ba23a38809811ae3484acde4ab481c54d846ac66d5037ccb40131a60d858
   rspec-support (3.13.6) sha256=2e8de3702427eab064c9352fe74488cc12a1bfae887ad8b91cba480ec9f8afb2
