@@ -61,9 +61,9 @@
 
           <td class="govuk-table__cell">
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-              <% user.lead_partners.each do |lead_partner| %>
-                <%= govuk_link_to(lead_partner.name,
-                                  training_partner_path(lead_partner, context: :users),
+              <% user.training_partners.each do |training_partner| %>
+                <%= govuk_link_to(training_partner.name,
+                                  training_partner_path(training_partner, context: :users),
                                   class: "govuk-!-display-block") %>
               <% end %>
             </span>
