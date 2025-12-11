@@ -6,7 +6,7 @@ feature "TrainingPartnerSearch" do
   before do
     given_i_am_authenticated
     given_a_provider_led_postgrad_trainee_exists
-    and_a_number_of_lead_partners_exist
+    and_a_number_of_training_partners_exist
     and_i_visit_the_trainee_edit_training_partner_page
   end
 
@@ -27,13 +27,13 @@ feature "TrainingPartnerSearch" do
   scenario "choosing a lead partner without javascript" do
     and_i_fill_in_my_lead_partner_without_js
     and_i_continue
-    then_i_am_redirected_to_the_lead_partners_page_filtered_by_my_query
+    then_i_am_redirected_to_the_training_partners_page_filtered_by_my_query
   end
 
   scenario "when a lead partner is not selected", js: true do
     and_i_fill_in_my_lead_partner
     and_i_continue
-    then_i_am_redirected_to_the_lead_partners_page_filtered_by_my_query
+    then_i_am_redirected_to_the_training_partners_page_filtered_by_my_query
   end
 
 private
@@ -62,8 +62,8 @@ private
     click(edit_training_partner_page.submit)
   end
 
-  def and_a_number_of_lead_partners_exist
-    @lead_partners = create_list(:lead_partner, 5, :school)
+  def and_a_number_of_training_partners_exist
+    @training_partners = create_list(:training_partner, 5, :school)
   end
 
   def and_i_visit_the_trainee_edit_training_partner_page
@@ -79,14 +79,14 @@ private
   end
 
   def my_lead_partner
-    @my_lead_partner ||= @lead_partners.sample
+    @my_training_partner ||= @training_partners.sample
   end
 
   def then_i_am_redirected_to_the_confirm_lead_partner_page
     expect(confirm_schools_page).to be_displayed(id: trainee.slug)
   end
 
-  def then_i_am_redirected_to_the_lead_partners_page_filtered_by_my_query
+  def then_i_am_redirected_to_the_training_partners_page_filtered_by_my_query
     expect(training_partners_search_page).to be_displayed(trainee_id: trainee.slug, query: my_lead_partner_name)
   end
 end

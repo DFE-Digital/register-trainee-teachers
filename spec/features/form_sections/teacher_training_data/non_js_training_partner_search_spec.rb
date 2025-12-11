@@ -3,13 +3,13 @@
 require "rails_helper"
 
 feature "Non-JS lead partner search" do
-  let!(:discarded_lead_partner) { create(:lead_partner, :school, :discarded) }
+  let!(:discarded_lead_partner) { create(:training_partner, :school, :discarded) }
 
   before do
     given_i_am_authenticated
     given_a_school_direct_tuition_fee_trainee_exists
-    and_a_number_of_lead_partners_exists
-    and_i_am_on_the_lead_partners_page_filtered_by_my_query
+    and_a_number_of_training_partners_exists
+    and_i_am_on_the_training_partners_page_filtered_by_my_query
   end
 
   scenario "choosing a lead partner" do
@@ -56,11 +56,11 @@ private
     training_partners_search_page.continue.click
   end
 
-  def and_a_number_of_lead_partners_exists
-    @lead_partners = create_list(:lead_partner, 5, :school)
+  def and_a_number_of_training_partners_exists
+    @training_partners = create_list(:training_partner, 5, :school)
   end
 
-  def and_i_am_on_the_lead_partners_page_filtered_by_my_query
+  def and_i_am_on_the_training_partners_page_filtered_by_my_query
     training_partners_search_page.load(trainee_id: trainee.slug, query: query)
   end
 
@@ -73,6 +73,6 @@ private
   end
 
   def my_lead_partner
-    @my_lead_partner ||= @lead_partners.sample
+    @my_training_partner ||= @training_partners.sample
   end
 end

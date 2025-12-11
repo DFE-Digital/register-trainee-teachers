@@ -27,11 +27,11 @@ feature "Search users" do
     let(:user) { create(:user, first_name: "Bob", system_admin: true) }
     let!(:second_user) { create(:user, first_name: "Alice") }
     let(:provider) { create(:provider, name: "West Pudding University") }
-    let(:lead_partner) { create(:lead_partner, :school, name: "East Porridge School") }
+    let(:training_partner) { create(:training_partner, :school, name: "East Porridge School") }
 
     before do
       second_user.providers << provider
-      second_user.lead_partners << lead_partner
+      second_user.training_partners << lead_partner
       given_i_am_authenticated(user:)
     end
 

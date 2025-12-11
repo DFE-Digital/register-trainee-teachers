@@ -97,7 +97,7 @@ private
   end
 
   def lead_partner
-    @_lead_partner ||= multi_organisation_user.lead_partners.first
+    @_lead_partner ||= multi_organisation_user.training_partners.first
   end
 
   def provider_trainee

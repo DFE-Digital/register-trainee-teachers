@@ -15,7 +15,7 @@ describe TraineePersonalDetails::View do
   context "with a lead partner user" do
     let(:current_user) do
       UserWithOrganisationContext.new(
-        user: create(:user, :with_lead_partner_organisation), session: {},
+        user: create(:user, :with_training_partner_organisation), session: {},
       )
     end
 
