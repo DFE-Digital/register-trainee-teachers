@@ -20,7 +20,7 @@ module TeacherTrainingApi
               { "attributes" => provider1_attributes },
               { "attributes" => provider2_attributes },
               { "attributes" => school_attributes },
-              { "attributes" => lead_partner_attributes },
+              { "attributes" => training_partner_attributes },
               { "attributes" => missing_attributes },
             ],
             "links" => { "next" => nil },
@@ -30,20 +30,20 @@ module TeacherTrainingApi
         let(:provider1_attributes) { { "code" => provider1.code, "ukprn" => nil, "urn" => nil } }
         let(:provider2_attributes) { { "code" => nil, "ukprn" => provider2.ukprn, "urn" => nil } }
         let(:school_attributes) { { "code" => nil, "ukprn" => nil, "urn" => school.urn, "accredited_body" => false } }
-        let(:lead_partner_attributes) { { "code" => nil, "ukprn" => nil, "urn" => lead_partner.urn } }
+        let(:training_partner_attributes) { { "code" => nil, "ukprn" => nil, "urn" => training_partner.urn } }
         let(:missing_attributes) { { "code" => "M0M", "ukprn" => "12344321", "urn" => "54321", "accredited_body" => true } }
 
         let(:provider1) { create(:provider) }
         let(:provider2) { create(:provider) }
         let(:school) { create(:school) }
-        let(:lead_partner) { create(:lead_partner, :hei) }
+        let(:training_partner) { create(:training_partner, :hei) }
 
         it "returns the correct value for provider_matches" do
           expect(subject.provider_matches).to contain_exactly(provider1_attributes, provider2_attributes)
         end
 
-        it "returns the correct value for lead_partner_matches" do
-          expect(subject.lead_partner_matches).to contain_exactly(lead_partner_attributes)
+        it "returns the correct value for training_partner_matches" do
+          expect(subject.training_partner_matches).to contain_exactly(training_partner_attributes)
         end
 
         it "returns the correct value for missing" do

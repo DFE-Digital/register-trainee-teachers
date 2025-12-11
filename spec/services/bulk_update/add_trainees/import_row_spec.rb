@@ -99,13 +99,13 @@ module BulkUpdate
         context "when the row is valid and does NOT include placement or degree data" do
           let(:row) { parsed_csv.first }
 
-          let!(:lead_partner) { create(:lead_partner, :scitt, urn: nil) }
+          let!(:training_partner) { create(:training_partner, :scitt, urn: nil) }
 
-          it "creates a trainee record without a lead partner" do
+          it "creates a trainee record without a training partner" do
             expect { result }.to change { Trainee.count }.by(1)
 
             expect(result.success).to be(true)
-            expect(Trainee.last.lead_partner).to be_nil
+            expect(Trainee.last.training_partner).to be_nil
           end
 
           it "the record source is set to `CSV`" do

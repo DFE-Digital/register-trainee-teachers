@@ -14,7 +14,7 @@ module Api
 
       [
         ::Trainees::Filter.call(trainees:, filters:)
-          .includes(%i[published_course employing_school lead_partner placements degrees hesa_trainee_detail]),
+          .includes(%i[published_course employing_school training_partner placements degrees hesa_trainee_detail]),
         nil,
       ]
     end

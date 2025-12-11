@@ -40,8 +40,8 @@ module Trainees
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:provider, ukprn: accredited_provider_ukprn)
-      create(:lead_partner, :hei, ukprn: former_accredited_provider_ukprn)
-      create(:lead_partner, :school, school:)
+      create(:training_partner, :hei, ukprn: former_accredited_provider_ukprn)
+      create(:training_partner, :school, school:)
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
     end
@@ -93,21 +93,21 @@ module Trainees
       end
 
       it "updates the trainee's school and training details" do
-        expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_partner_urn])
+        expect(trainee.training_partner.urn).to eq(student_attributes[:lead_partner_urn])
         expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
       end
 
-      context "when lead_partner_not_applicable was previously set to true" do
+      context "when training_partner_not_applicable was previously set to true" do
         before do
-          trainee.update!(lead_partner_not_applicable: true, lead_partner_id: nil)
+          trainee.update!(training_partner_not_applicable: true, training_partner_id: nil)
           described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           trainee.reload
         end
 
-        it "updates the trainee's lead_partner and lead_partner_not_applicable state" do
-          expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_partner_urn])
-          expect(trainee.lead_partner_not_applicable).to be false
+        it "updates the trainee's lead_partner and training_partner_not_applicable state" do
+          expect(trainee.training_partner.urn).to eq(student_attributes[:lead_partner_urn])
+          expect(trainee.training_partner_not_applicable).to be false
         end
       end
 
@@ -116,7 +116,7 @@ module Trainees
 
         it "sets the correct accredited provider and lead partner" do
           expect(trainee.provider.ukprn).to eq(former_accredited_provider_ukprn)
-          expect(trainee.lead_partner.urn).to eq(school.urn)
+          expect(trainee.training_partner.urn).to eq(school.urn)
         end
       end
 
@@ -130,7 +130,7 @@ module Trainees
 
         it "sets the correct accredited provider and lead partner" do
           expect(trainee.provider.ukprn).to eq(accredited_provider_ukprn)
-          expect(trainee.lead_partner.ukprn).to eq(former_accredited_provider_ukprn)
+          expect(trainee.training_partner.ukprn).to eq(former_accredited_provider_ukprn)
         end
       end
 
@@ -174,7 +174,7 @@ module Trainees
         end
 
         it "marks the trainee's lead partner as not applicable" do
-          expect(trainee.lead_partner_not_applicable).to be(true)
+          expect(trainee.training_partner_not_applicable).to be(true)
         end
 
         it "marks the trainee's employing school as not applicable" do

@@ -75,7 +75,7 @@ module Trainees
           email: lookup("Email"),
           training_initiative: training_initiative,
           employing_school_id: employing_school_id,
-          lead_partner_id: lead_partner_id,
+          training_partner_id: training_partner_id,
         }.merge(ethnicity_and_disability_attributes)
          .merge(course_attributes)
          .merge(funding_attributes)
@@ -300,8 +300,8 @@ module Trainees
         School.find_by(urn: lookup("Employing school URN", "Employing school URN or UKPRN"))&.id
       end
 
-      def lead_partner_id
-        LeadPartner.find_by_ukprn_or_urn(
+      def training_partner_id
+        TrainingPartner.find_by_ukprn_or_urn(
           lookup("Lead Partner URN", "Lead Partner URN or UKPRN")&.strip,
         )&.id
       end
