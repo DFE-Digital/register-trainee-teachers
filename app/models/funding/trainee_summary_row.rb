@@ -6,12 +6,12 @@
 #
 #  id                         :bigint           not null, primary key
 #  cohort_level               :string
-#  lead_partner_name          :string
-#  lead_partner_urn           :string
 #  lead_school_name           :string
 #  lead_school_urn            :string
 #  route                      :string
 #  subject                    :string
+#  training_partner_name      :string
+#  training_partner_urn       :string
 #  training_route             :string
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
