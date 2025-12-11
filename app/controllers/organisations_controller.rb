@@ -5,7 +5,7 @@ class OrganisationsController < ApplicationController
 
   def index
     @providers = current_user.providers
-    @training_partners = current_user.lead_partners.includes(:school, :provider)
+    @training_partners = current_user.training_partners.includes(:school, :provider)
   end
 
   def show

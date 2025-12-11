@@ -8,8 +8,8 @@ module SystemAdmin
     helper_method :funding_type
 
     def index
-      @lead_partner_trainee_summary = FundingUpload.recently_processed_upload_for(:lead_partner_trainee_summary)
-      @lead_partner_payment_schedule = FundingUpload.recently_processed_upload_for(:lead_partner_payment_schedule)
+      @training_partner_trainee_summary = FundingUpload.recently_processed_upload_for(:training_partner_trainee_summary)
+      @training_partner_payment_schedule = FundingUpload.recently_processed_upload_for(:training_partner_payment_schedule)
       @provider_trainee_summary = FundingUpload.recently_processed_upload_for(:provider_trainee_summary)
       @provider_payment_schedule = FundingUpload.recently_processed_upload_for(:provider_payment_schedule)
     end
