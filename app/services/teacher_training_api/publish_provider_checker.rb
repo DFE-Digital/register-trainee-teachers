@@ -4,12 +4,12 @@ module TeacherTrainingApi
   class PublishProviderChecker
     include ServicePattern
 
-    attr_reader :recruitment_cycle_year, :provider_matches, :lead_partner_matches, :missing_accredited, :missing_unaccredited
+    attr_reader :recruitment_cycle_year, :provider_matches, :training_partner_matches, :missing_accredited, :missing_unaccredited
 
     def initialize(recruitment_cycle_year:)
       @recruitment_cycle_year = recruitment_cycle_year
       @provider_matches = []
-      @lead_partner_matches = []
+      @training_partner_matches = []
       @missing_accredited = []
       @missing_unaccredited = []
     end
@@ -32,7 +32,7 @@ module TeacherTrainingApi
     end
 
     def total_count
-      lead_partner_matches.count +
+      training_partner_matches.count +
         provider_matches.count +
         missing_accredited.count +
         missing_unaccredited.count
@@ -53,8 +53,8 @@ module TeacherTrainingApi
     end
 
     def match_unaccredited_provider(provider)
-      if lead_partner_matches?(provider)
-        lead_partner_matches << provider
+      if training_partner_matches?(provider)
+        training_partner_matches << provider
       elsif provider_matches?(provider)
         provider_matches << provider
       else
@@ -70,8 +70,8 @@ module TeacherTrainingApi
       Provider.find_by(code: provider["code"]).present? || Provider.find_by(ukprn: provider["ukprn"]).present?
     end
 
-    def lead_partner_matches?(provider)
-      LeadPartner.find_by(urn: provider["urn"]).present? || LeadPartner.find_by(ukprn: provider["ukprn"]).present?
+    def training_partner_matches?(provider)
+      TrainingPartner.find_by(urn: provider["urn"]).present? || TrainingPartner.find_by(ukprn: provider["ukprn"]).present?
     end
   end
 end
