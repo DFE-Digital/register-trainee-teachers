@@ -17,7 +17,7 @@ module Hesa
         course_subject_three: "F_SBJCA3",
         itt_end_date: "F_EXPECTEDENDDATE",
         employing_school_urn: "F_SDEMPLOY",
-        lead_partner_urn: "F_SDLEAD",
+        training_partner_urn: "F_SDLEAD",
         mode: "F_MODE",
         course_age_range: "F_ITTPHSC",
         training_initiative: "F_INITIATIVES1",
