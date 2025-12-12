@@ -14,16 +14,16 @@ RSpec.describe OrganisationSettingsPolicy, type: :policy do
     end
   end
 
-  context "when the User belongs to a LeadPartner" do
+  context "when the User belongs to a TrainingPartner" do
     let(:training_partner_user) { create(:user, :with_training_partner_organisation) }
-    let(:training_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
+    let(:training_partner_user_context) { UserWithOrganisationContext.new(user: training_partner_user, session: {}) }
 
     permissions :show? do
-      it { is_expected.to permit(lead_partner_user_context) }
+      it { is_expected.to permit(training_partner_user_context) }
     end
   end
 
-  context "when the User does not belong to either a Provider or LeadPartner" do
+  context "when the User does not belong to either a Provider or TrainingPartner" do
     let(:user_with_no_organisation) { create(:user, :with_no_organisation_in_db) }
     let(:user_with_no_organisation_context) { UserWithOrganisationContext.new(user: user_with_no_organisation, session: {}) }
 
