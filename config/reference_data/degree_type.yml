@@ -1,0 +1,417 @@
+metadata:
+  source: "HESA"
+  name: "degree_type"
+  display_name: "Degree type"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "db695652-c197-e711-80d8-005056ac45bb"
+    name: "ba"
+    display_name: "Bachelor of Arts"
+    hesa_codes:
+      - "51"
+  - id: "dd695652-c197-e711-80d8-005056ac45bb"
+    name: "baecon"
+    display_name: "Bachelor of Arts Economics"
+    hesa_codes:
+      - "52"
+  - id: "df695652-c197-e711-80d8-005056ac45bb"
+    name: "baarch"
+    display_name: "Bachelor of Arts in Architecture"
+    hesa_codes:
+      - "53"
+  - id: "e1695652-c197-e711-80d8-005056ac45bb"
+    name: "bao"
+    display_name: "Bachelor of the Art of Obstetrics"
+    hesa_codes:
+      - "54"
+  - id: "e3695652-c197-e711-80d8-005056ac45bb"
+    name: "baarch"
+    display_name: "Bachelor of Architecture"
+    hesa_codes:
+      - "55"
+  - id: "e5695652-c197-e711-80d8-005056ac45bb"
+    name: "basc"
+    display_name: "Bachelor of Applied Science"
+    hesa_codes:
+      - "56"
+  - id: "e7695652-c197-e711-80d8-005056ac45bb"
+    name: "bag"
+    display_name: "Bachelor of Agriculture"
+    hesa_codes:
+      - "57"
+  - id: "e9695652-c197-e711-80d8-005056ac45bb"
+    name: "bacc"
+    display_name: "Bachelor of Accountancy"
+    hesa_codes:
+      - "58"
+  - id: "eb695652-c197-e711-80d8-005056ac45bb"
+    name: "badmin"
+    display_name: "Bachelor of Administration"
+    hesa_codes:
+      - "59"
+  - id: "ed695652-c197-e711-80d8-005056ac45bb"
+    name: "bba"
+    display_name: "Bachelor of Business Administration"
+    hesa_codes:
+      - "60"
+  - id: "ef695652-c197-e711-80d8-005056ac45bb"
+    name: "bcs"
+    display_name: "Bachelor of Combined Studies"
+    hesa_codes:
+      - "61"
+  - id: "f1695652-c197-e711-80d8-005056ac45bb"
+    name: "bcomm"
+    display_name: "Bachelor of Commerce"
+    hesa_codes:
+      - "62"
+  - id: "f3695652-c197-e711-80d8-005056ac45bb"
+    name: "bd"
+    display_name: "Bachelor of Divinity"
+    hesa_codes:
+      - "63"
+  - id: "f5695652-c197-e711-80d8-005056ac45bb"
+    name: "bds"
+    display_name: "Bachelor of Dental Surgery"
+    hesa_codes:
+      - "64"
+  - id: "f7695652-c197-e711-80d8-005056ac45bb"
+    name: "beng"
+    display_name: "Bachelor of Engineering"
+    hesa_codes:
+      - "65"
+  - id: "f9695652-c197-e711-80d8-005056ac45bb"
+    name: "beng/bs"
+    display_name: "Bachelor of Engineering with Business Studies"
+    hesa_codes:
+      - "66"
+  - id: "fb695652-c197-e711-80d8-005056ac45bb"
+    name: "bfa"
+    display_name: "Bachelor of Fine Art"
+    hesa_codes:
+      - "67"
+  - id: "fd695652-c197-e711-80d8-005056ac45bb"
+    name: "bgs"
+    display_name: "Bachelor of General Studies"
+    hesa_codes:
+      - "68"
+  - id: "ff695652-c197-e711-80d8-005056ac45bb"
+    name: "bh"
+    display_name: "Bachelor of Humanities"
+    hesa_codes:
+      - "69"
+  - id: "016a5652-c197-e711-80d8-005056ac45bb"
+    name: "bhyg"
+    display_name: "Bachelor of Hygiene"
+    hesa_codes:
+      - "70"
+  - id: "036a5652-c197-e711-80d8-005056ac45bb"
+    name: "llb"
+    display_name: "Bachelor of Law"
+    hesa_codes:
+      - "71"
+  - id: "056a5652-c197-e711-80d8-005056ac45bb"
+    name: "blib"
+    display_name: "Bachelor of Librarianship"
+    hesa_codes:
+      - "72"
+  - id: "076a5652-c197-e711-80d8-005056ac45bb"
+    name: "bls"
+    display_name: "Bachelor of Librarianship and Information Studies"
+    hesa_codes:
+      - "73"
+  - id: "096a5652-c197-e711-80d8-005056ac45bb"
+    name: "blitt"
+    display_name: "Bachelor of Literature"
+    hesa_codes:
+      - "74"
+  - id: "0b6a5652-c197-e711-80d8-005056ac45bb"
+    name: "blecon"
+    display_name: "Bachelor of Land Economy"
+    hesa_codes:
+      - "75"
+  - id: "0d6a5652-c197-e711-80d8-005056ac45bb"
+    name: "bmedsc"
+    display_name: "Bachelor of Medical Science"
+    hesa_codes:
+      - "76"
+  - id: "0f6a5652-c197-e711-80d8-005056ac45bb"
+    name: "bm"
+    display_name: "Bachelor of Medicine"
+    hesa_codes:
+      - "77"
+  - id: "116a5652-c197-e711-80d8-005056ac45bb"
+    name: "bmet"
+    display_name: "Bachelor of Metallurgy"
+    hesa_codes:
+      - "78"
+  - id: "136a5652-c197-e711-80d8-005056ac45bb"
+    name: "bmet/eng"
+    display_name: "Bachelor of Metallurgy and Engineering"
+    hesa_codes:
+      - "79"
+  - id: "156a5652-c197-e711-80d8-005056ac45bb"
+    name: "bmus"
+    display_name: "Bachelor of Music"
+    hesa_codes:
+      - "80"
+  - id: "176a5652-c197-e711-80d8-005056ac45bb"
+    name: "bn"
+    display_name: "Bachelor of Nursing"
+    hesa_codes:
+      - "81"
+  - id: "196a5652-c197-e711-80d8-005056ac45bb"
+    name: "bpharm"
+    display_name: "Bachelor of Pharmacy"
+    hesa_codes:
+      - "82"
+  - id: "1b6a5652-c197-e711-80d8-005056ac45bb"
+    name: "bsc"
+    display_name: "Bachelor of Science"
+    hesa_codes:
+      - "83"
+  - id: "1d6a5652-c197-e711-80d8-005056ac45bb"
+    name: "bscecon"
+    display_name: "Bachelor of Science Economics"
+    hesa_codes:
+      - "84"
+  - id: "1f6a5652-c197-e711-80d8-005056ac45bb"
+    name: "bsceng"
+    display_name: "Bachelor of Science and Engineering"
+    hesa_codes:
+      - "85"
+  - id: "216a5652-c197-e711-80d8-005056ac45bb"
+    name: "bsctech"
+    display_name: "Bachelor of Science and Technology"
+    hesa_codes:
+      - "86"
+  - id: "236a5652-c197-e711-80d8-005056ac45bb"
+    name: "bsc ss"
+    display_name: "Bachelor of Science in Social Science"
+    hesa_codes:
+      - "87"
+  - id: "256a5652-c197-e711-80d8-005056ac45bb"
+    name: "bsc spt"
+    display_name: "Bachelor of Science in Speech Therapy"
+    hesa_codes:
+      - "88"
+  - id: "276a5652-c197-e711-80d8-005056ac45bb"
+    name: "bss"
+    display_name: "Bachelor of Social Science"
+    hesa_codes:
+      - "89"
+  - id: "296a5652-c197-e711-80d8-005056ac45bb"
+    name: "bs"
+    display_name: "Bachelor of Surgery"
+    hesa_codes:
+      - "90"
+  - id: "2b6a5652-c197-e711-80d8-005056ac45bb"
+    name: "bch"
+    display_name: "Bachelor of Chirurgiae"
+    hesa_codes:
+      - "91"
+  - id: "2d6a5652-c197-e711-80d8-005056ac45bb"
+    name: "btech"
+    display_name: "Bachelor of Technology"
+    hesa_codes:
+      - "92"
+  - id: "2f6a5652-c197-e711-80d8-005056ac45bb"
+    name: "btheol"
+    display_name: "Bachelor of Theology"
+    hesa_codes:
+      - "93"
+  - id: "316a5652-c197-e711-80d8-005056ac45bb"
+    name: "bvmed"
+    display_name: "Bachelor of Veterinary Medicine"
+    hesa_codes:
+      - "94"
+  - id: "336a5652-c197-e711-80d8-005056ac45bb"
+    name: "bvms"
+    display_name: "Bachelor of Veterinary Medicine and Surgery"
+    hesa_codes:
+      - "95"
+  - id: "356a5652-c197-e711-80d8-005056ac45bb"
+    name: "bvsc"
+    display_name: "Bachelor of Veterinary Science"
+    hesa_codes:
+      - "96"
+  - id: "376a5652-c197-e711-80d8-005056ac45bb"
+    name: "bed"
+    display_name: "Bachelor of Education Scotland and Northern Ireland"
+    hesa_codes:
+      - "97"
+  - id: "396a5652-c197-e711-80d8-005056ac45bb"
+    name: "bphil"
+    display_name: "Bachelor of Philosophy"
+    hesa_codes:
+      - "98"
+  - id: "c1695652-c197-e711-80d8-005056ac45bb"
+    name: "bed"
+    display_name: "BEd"
+    hesa_codes:
+      - "1"
+  - id: "c5695652-c197-e711-80d8-005056ac45bb"
+    name: "bsc_education"
+    display_name: "BSc/Education"
+    hesa_codes:
+      - "3"
+  - id: "c9695652-c197-e711-80d8-005056ac45bb"
+    name: "btech_education"
+    display_name: "BTech/Education"
+    hesa_codes:
+      - "5"
+  - id: "cd695652-c197-e711-80d8-005056ac45bb"
+    name: "ba_education"
+    display_name: "BA/Education"
+    hesa_codes:
+      - "7"
+  - id: "d1695652-c197-e711-80d8-005056ac45bb"
+    name: "ba_combined_studies_education_of_the_deaf"
+    display_name: "BA Combined Studies/Education of the Deaf"
+    hesa_codes:
+      - "9"
+  - id: "d5695652-c197-e711-80d8-005056ac45bb"
+    name: "ba_with_intercalated_pgce"
+    display_name: "BA with intercalated PGCE"
+    hesa_codes:
+      - "12"
+  - id: "3b6a5652-c197-e711-80d8-005056ac45bb"
+    name: "ma"
+    display_name: "Master of Arts"
+    hesa_codes:
+      - "200"
+  - id: "3d6a5652-c197-e711-80d8-005056ac45bb"
+    name: "mlib"
+    display_name: "Master of Librarianship"
+    hesa_codes:
+      - "201"
+  - id: "3f6a5652-c197-e711-80d8-005056ac45bb"
+    name: "mlitt"
+    display_name: "Master of Literature"
+    hesa_codes:
+      - "202"
+  - id: "416a5652-c197-e711-80d8-005056ac45bb"
+    name: "mmus"
+    display_name: "Master of Music"
+    hesa_codes:
+      - "203"
+  - id: "436a5652-c197-e711-80d8-005056ac45bb"
+    name: "mphil"
+    display_name: "Master of Philosophy"
+    hesa_codes:
+      - "204"
+  - id: "456a5652-c197-e711-80d8-005056ac45bb"
+    name: "msc"
+    display_name: "Master of Science"
+    hesa_codes:
+      - "205"
+  - id: "476a5652-c197-e711-80d8-005056ac45bb"
+    name: "mtheol"
+    display_name: "Master of Theology"
+    hesa_codes:
+      - "206"
+  - id: "496a5652-c197-e711-80d8-005056ac45bb"
+    name: "certificate_of_membership_of_cranfield_institute_of_technology"
+    display_name: "Certificate of Membership of Cranfield Institute of Technology"
+    hesa_codes:
+      - "207"
+  - id: "4b6a5652-c197-e711-80d8-005056ac45bb"
+    name: "med"
+    display_name: "Master of Education"
+    hesa_codes:
+      - "208"
+  - id: "4d6a5652-c197-e711-80d8-005056ac45bb"
+    name: "mbs"
+    display_name: "Master of Business Studies"
+    hesa_codes:
+      - "209"
+  - id: "4f6a5652-c197-e711-80d8-005056ac45bb"
+    name: "mss"
+    display_name: "Master of Social Studies"
+    hesa_codes:
+      - "210"
+  - id: "516a5652-c197-e711-80d8-005056ac45bb"
+    name: "meng"
+    display_name: "Master of Engineering"
+    hesa_codes:
+      - "211"
+  - id: "536a5652-c197-e711-80d8-005056ac45bb"
+    name: "mlaw"
+    display_name: "Master of Law"
+    hesa_codes:
+      - "212"
+  - id: "556a5652-c197-e711-80d8-005056ac45bb"
+    name: "mba"
+    display_name: "Master of Business Administration"
+    hesa_codes:
+      - "213"
+  - id: "576a5652-c197-e711-80d8-005056ac45bb"
+    name: "mchem"
+    display_name: "Master of Chemistry"
+    hesa_codes:
+      - "214"
+  - id: "596a5652-c197-e711-80d8-005056ac45bb"
+    name: "mphys"
+    display_name: "Master of Physics"
+    hesa_codes:
+      - "215"
+  - id: "5b6a5652-c197-e711-80d8-005056ac45bb"
+    name: "dd"
+    display_name: "Doctor of Divinity"
+    hesa_codes:
+      - "300"
+  - id: "5d6a5652-c197-e711-80d8-005056ac45bb"
+    name: "dcl"
+    display_name: "Doctor of Civil Law"
+    hesa_codes:
+      - "301"
+  - id: "5f6a5652-c197-e711-80d8-005056ac45bb"
+    name: "md"
+    display_name: "Doctor of Medicine"
+    hesa_codes:
+      - "302"
+  - id: "616a5652-c197-e711-80d8-005056ac45bb"
+    name: "dmu"
+    display_name: "Doctor of Music"
+    hesa_codes:
+      - "303"
+  - id: "636a5652-c197-e711-80d8-005056ac45bb"
+    name: "dsc"
+    display_name: "Doctor of Science"
+    hesa_codes:
+      - "304"
+  - id: "656a5652-c197-e711-80d8-005056ac45bb"
+    name: "dphil"
+    display_name: "Doctor of Philosophy"
+    hesa_codes:
+      - "305"
+  - id: "676a5652-c197-e711-80d8-005056ac45bb"
+    name: "phd"
+    display_name: "PhD"
+    hesa_codes:
+      - "306"
+  - id: "696a5652-c197-e711-80d8-005056ac45bb"
+    name: "first_degree"
+    display_name: "First Degree"
+    hesa_codes:
+      - "400"
+  - id: "6b6a5652-c197-e711-80d8-005056ac45bb"
+    name: "higher_degree_or_equivalent"
+    display_name: "Higher degree or equivalent"
+    hesa_codes:
+      - "401"
+  - id: "6d6a5652-c197-e711-80d8-005056ac45bb"
+    name: "degree_equivalent"
+    display_name: "Degree equivalent"
+    hesa_codes:
+      - "402"
+  - id: "6f6a5652-c197-e711-80d8-005056ac45bb"
+    name: "unknown"
+    display_name: "Unknown"
+    hesa_codes:
+      - "999"
+
