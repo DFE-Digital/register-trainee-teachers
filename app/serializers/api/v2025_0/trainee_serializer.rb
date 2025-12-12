@@ -185,11 +185,11 @@ module Api
       end
 
       def lead_partner_ukprn
-        @trainee.lead_partner&.ukprn
+        @trainee.training_partner&.ukprn
       end
 
       def lead_partner_urn
-        @trainee.lead_partner&.urn
+        @trainee.training_partner&.urn
       end
 
       def hesa_trainee_attributes

@@ -58,8 +58,8 @@ module Api
       end
 
       INTERNAL_ATTRIBUTES = {
-        lead_partner_id: {},
-        lead_partner_not_applicable: { type: :boolean, options: { default: false } },
+        training_partner_id: {},
+        training_partner_not_applicable: { type: :boolean, options: { default: false } },
         employing_school_id: {},
         employing_school_not_applicable: { type: :boolean, options: { default: false } },
         ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
@@ -151,7 +151,7 @@ module Api
 
       validates :trainee_disabilities_attributes, uniqueness: true
 
-      validate :validate_lead_partner, unless: :lead_partner_not_applicable
+      validate :validate_lead_partner, unless: :training_partner_not_applicable
       validate :validate_employing_school, unless: :employing_school_not_applicable
 
       def initialize(new_attributes = {})
@@ -454,8 +454,8 @@ module Api
       end
 
       def validate_lead_partner
-        if lead_partner_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
-          errors.add(:lead_partner_id, :invalid, value: lead_partner_id.to_s)
+        if training_partner_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+          errors.add(:lead_partner_id, :invalid, value: training_partner_id.to_s)
         end
       end
 
