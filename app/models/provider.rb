@@ -103,7 +103,8 @@ class Provider < ApplicationRecord
   end
 
   def without_required_placements
-    trainees.awarded.or(trainees.in_training)
+    trainees.kept.awarded
+      .or(trainees.kept.in_training)
       .where.not(trn: nil)
       .where(training_route: PLACEMENTS_ROUTES.keys)
       .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
