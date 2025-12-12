@@ -29,7 +29,7 @@ module Survey
 
     def embedded_data_for_distribution
       {
-        award_date: date_QTS_gained,
+        award_date: awarded_at,
         training_route: training_route,
       }
     end

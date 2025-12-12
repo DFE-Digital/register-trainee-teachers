@@ -9,7 +9,7 @@
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl">Bulk recommend</span>
       Check whose status will change
-      <%= (recommendations_upload.awardable_rows) %>
+      <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
     </h1>
 
     <% @rows.tap do |awardable_rows| %>
@@ -46,7 +46,7 @@
       <%= govuk_link_to("Change whose status is changing", edit_bulk_update_recommendations_upload_path(recommendations_upload)) %>
     </div>
     <div class="govuk-body">
-      <%= govuk_link_to("Cancel bulk status change", cancel_bulk_update_recommendations_upload_path(recommendations_upload)) %>
+      <%= govuk_link_to("Cancel the bulk status change", cancel_bulk_update_recommendations_upload_path(recommendations_upload)) %>
     </div>
   </div>
 </div>

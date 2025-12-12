@@ -11,7 +11,7 @@ module Reports
     HESA_ID = "HESA ID"
 
     IDENTIFIERS = [TRN, PROVIDER_TRAINEE_ID, HESA_ID].freeze
-    DATE        = "Date QTS or EYTS status changed"
+    DATE        = "Date QTS or EYTS standards met"
 
     # additional headers
     FIRST_NAME   = "First names"
