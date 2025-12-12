@@ -120,7 +120,7 @@ locals {
       BIGQUERY_AIRBYTE_DATASET                    = var.airbyte_enabled ? local.gcp_dataset_name : null
       AIRBYTE_SERVER_URL                          = var.airbyte_enabled ? "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}" : null
       BIGQUERY_HIDDEN_POLICY_TAG                  = var.airbyte_enabled ? "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766" : null
-      AIRBYTE_INTERNAL_DATASET                    = var.airbyte_enabled ? "${local.gcp_dataset_name}_internal" : null
+      #AIRBYTE_INTERNAL_DATASET                    = var.airbyte_enabled ? "${local.gcp_dataset_name}_internal" : null
     }
   )
 
@@ -136,8 +136,49 @@ locals {
       REDIS_CACHE_URL                                = module.redis-cache.url
       SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCESS_KEY = module.azure.storage_account_key
     },
-    var.snapshot_databases_to_deploy == 1 ? { ANALYSIS_DATABASE_URL = module.postgres_snapshot[0].url } : {}
+    var.snapshot_databases_to_deploy == 1 ? { ANALYSIS_DATABASE_URL = module.postgres_snapshot[0].url } : {},
   )
+
+  airbyte_app_secrets = merge(
+    local.app_secrets,
+    {
+    airbyte_configuration = var.airbyte_enabled ? jsonencode({
+      SOURCE_ID      = module.airbyte[0].airbyte_source_id
+      DESTINATION_ID = module.airbyte[0].airbyte_destination_id
+      CONNECTION_ID  = module.airbyte[0].airbyte_connection_id
+      WORKSPACE_ID   = data.azurerm_key_vault_secret.airbyte_workspace_id[0].value
+    }) : null
+    }
+  )
+
+  # airbyte_app_env_values = merge(
+  #   local.base_url_env_var,
+  #   local.app_config,
+  #   {
+  #     DB_SSLMODE                                  = var.db_sslmode
+  #     SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCOUNT = local.azure_tempdata_storage_account_name
+  #     BIGQUERY_AIRBYTE_DATASET                    = var.airbyte_enabled ? local.gcp_dataset_name : null
+  #     AIRBYTE_SERVER_URL                          = var.airbyte_enabled ? "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}" : null
+  #     BIGQUERY_HIDDEN_POLICY_TAG                  = var.airbyte_enabled ? "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766" : null
+  #     #AIRBYTE_INTERNAL_DATASET                    = var.airbyte_enabled ? "${local.gcp_dataset_name}_internal" : null
+  #   },
+  #   {
+  #   airbyte_configuration = jsonencode({
+  #     SOURCE_ID      = module.airbyte[0].airbyte_source_id
+  #     DESTINATION_ID = module.airbyte[0].airbyte_destination_id
+  #     CONNECTION_ID  = module.airbyte[0].airbyte_connection_id
+  #     WORKSPACE_ID   = data.azurerm_key_vault_secret.airbyte_workspace_id[0].value
+  #   })
+  #   }
+  # )
+
+  # airbyte_configuration = jsonencode({
+  #       SOURCE_ID      = var.use_azure == true ? airbyte_source_postgres.source_postgres[0].source_id : airbyte_source_postgres.source_postgres_container[0].source_id,
+  #       DESTINATION_ID = airbyte_destination_bigquery.destination_bigquery.destination_id,
+  #       CONNECTION_ID  = airbyte_connection.connection.connection_id,
+  #       WORKSPACE_ID   = var.workspace_id
+  #     })
+
   default_azure_tempdata_storage_account_name = replace("${var.azure_resource_prefix}${var.service_short}${local.app_name_suffix}tmp", "-", "")
   azure_tempdata_storage_account_name         = var.azure_tempdata_storage_account_name != null ? var.azure_tempdata_storage_account_name : local.default_azure_tempdata_storage_account_name
   azure_sanitised_storage_account_name        = "${var.azure_resource_prefix}${var.service_short}dbbkpsan${var.config_short}sa"
