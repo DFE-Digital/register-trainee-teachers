@@ -14,14 +14,14 @@ module Schools
     end
 
     context "when trainee is on a school direct salaried route" do
-      let(:trainee) { create(:trainee, lead_partner: lead_partner, employing_school: employing_school, training_route: 4) }
+      let(:trainee) { create(:trainee, training_partner: training_partner, employing_school: employing_school, training_route: 4) }
 
       describe "lead school" do
         it "renders" do
-          expect(rendered_content).to have_text(trainee.lead_partner.name)
-          expect(rendered_content).to have_text(trainee.lead_partner.urn)
-          expect(rendered_content).to have_text(trainee.lead_partner.school.town)
-          expect(rendered_content).to have_text(trainee.lead_partner.school.postcode)
+          expect(rendered_content).to have_text(trainee.training_partner.name)
+          expect(rendered_content).to have_text(trainee.training_partner.urn)
+          expect(rendered_content).to have_text(trainee.training_partner.school.town)
+          expect(rendered_content).to have_text(trainee.training_partner.school.postcode)
         end
 
         it "has correct change links" do
@@ -44,14 +44,14 @@ module Schools
     end
 
     context "when trainee is on a school direct tuition fee route" do
-      let(:trainee) { create(:trainee, lead_partner: lead_partner, employing_school: employing_school, training_route: 3) }
+      let(:trainee) { create(:trainee, training_partner: training_partner, employing_school: employing_school, training_route: 3) }
 
       describe "lead school" do
         it "renders" do
-          expect(rendered_content).to have_text(trainee.lead_partner.name)
-          expect(rendered_content).to have_text(trainee.lead_partner.urn)
-          expect(rendered_content).to have_text(trainee.lead_partner.school.town)
-          expect(rendered_content).to have_text(trainee.lead_partner.school.postcode)
+          expect(rendered_content).to have_text(trainee.training_partner.name)
+          expect(rendered_content).to have_text(trainee.training_partner.urn)
+          expect(rendered_content).to have_text(trainee.training_partner.school.town)
+          expect(rendered_content).to have_text(trainee.training_partner.school.postcode)
         end
 
         it "has correct change links" do
