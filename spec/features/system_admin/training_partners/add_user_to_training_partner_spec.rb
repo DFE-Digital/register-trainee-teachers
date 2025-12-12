@@ -9,8 +9,8 @@ feature "Add user to training partners" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
 
-    let!(:school_lead_partner) { create(:training_partner, :school, name: "Garibaldi School") }
-    let!(:hei_lead_partner) { create(:training_partner, :hei, name: "Bourbon University") }
+    let!(:school_training_partner) { create(:training_partner, :school, name: "Garibaldi School") }
+    let!(:hei_training_partner) { create(:training_partner, :hei, name: "Bourbon University") }
 
     before do
       given_i_am_authenticated(user:)
@@ -41,10 +41,10 @@ feature "Add user to training partners" do
 
   context "as a system admin using the non-JS flow" do
     let(:user) { create(:user, system_admin: true) }
-    let!(:school_lead_partner) { create(:training_partner, :school, name: "Garibaldi School") }
-    let!(:hei_lead_partner1) { create(:training_partner, :hei, name: "Bourbon University") }
-    let!(:hei_lead_partner2) { create(:training_partner, :hei, name: "Digestive University") }
-    let!(:discarded_lead_partner) { create(:training_partner, :school, :discarded, name: "Discarded Uni") }
+    let!(:school_training_partner) { create(:training_partner, :school, name: "Garibaldi School") }
+    let!(:hei_training_partner1) { create(:training_partner, :hei, name: "Bourbon University") }
+    let!(:hei_training_partner2) { create(:training_partner, :hei, name: "Digestive University") }
+    let!(:discarded_training_partner) { create(:training_partner, :school, :discarded, name: "Discarded Uni") }
 
     before do
       given_i_am_authenticated(user:)
@@ -55,7 +55,7 @@ feature "Add user to training partners" do
       and_i_click_the_training_partner_link
       then_i_see_the_add_to_training_partner_page
 
-      when_i_enter_a_training_partner_search_and_submit(name: discarded_lead_partner.name)
+      when_i_enter_a_training_partner_search_and_submit(name: discarded_training_partner.name)
       then_i_dont_see_matching_results
 
       when_i_enter_a_training_partner_search_and_submit(name: "Univ")
@@ -80,7 +80,7 @@ feature "Add user to training partners" do
   end
 
   def when_i_search_for_a_discarded_training_partner
-    fill_in "system-admin-user-training-partners-form-query-field", with: school_lead_partner.name
+    fill_in "system-admin-user-training-partners-form-query-field", with: school_training_partner.name
   end
 
   def then_i_dont_see_matching_results
@@ -88,8 +88,8 @@ feature "Add user to training partners" do
   end
 
   def when_i_select_a_training_partner
-    fill_in "system-admin-user-training-partners-form-query-field", with: school_lead_partner.name
-    first("input#training-partners-id", visible: false).set(school_lead_partner.id)
+    fill_in "system-admin-user-training-partners-form-query-field", with: school_training_partner.name
+    first("input#training-partners-id", visible: false).set(school_training_partner.id)
   end
 
   def and_i_click_the_submit_button
@@ -98,7 +98,7 @@ feature "Add user to training partners" do
 
   def then_i_see_the_user_added_to_the_training_partner
     expect(page).to have_content("Training partner added")
-    expect(page).to have_link("Garibaldi School", href: training_partner_path(school_lead_partner))
+    expect(page).to have_link("Garibaldi School", href: training_partner_path(school_training_partner))
   end
 
   def when_i_click_the_training_partner_link
@@ -106,7 +106,7 @@ feature "Add user to training partners" do
   end
 
   def then_i_see_the_training_partner_detail_page
-    expect(page).to have_current_path(training_partner_path(school_lead_partner))
+    expect(page).to have_current_path(training_partner_path(school_training_partner))
     expect(page).to have_content("Garibaldi School")
   end
 
@@ -121,7 +121,7 @@ feature "Add user to training partners" do
   end
 
   def then_i_see_the_remove_training_partner_page
-    expect(page).to have_current_path(edit_user_training_partner_accessions_path(user, school_lead_partner))
+    expect(page).to have_current_path(edit_user_training_partner_accessions_path(user, school_training_partner))
     expect(page).to have_content("Yes I’m sure – remove #{user.name}’s access to Garibaldi School")
   end
 
@@ -153,13 +153,13 @@ feature "Add user to training partners" do
   end
 
   def when_i_select_a_training_partner_from_search_results
-    choose(option: hei_lead_partner2.id)
+    choose(option: hei_training_partner2.id)
     click_on("Continue")
   end
 
   def then_i_see_the_user_added_to_the_hei_training_partner
     expect(page).to have_content("Training partner added")
-    expect(page).to have_link("Digestive University", href: training_partner_path(hei_lead_partner2))
+    expect(page).to have_link("Digestive University", href: training_partner_path(hei_training_partner2))
   end
 
   alias_method :when_i_enter_a_discarded_training_partner_search_and_submit, :when_i_enter_a_training_partner_search_and_submit
