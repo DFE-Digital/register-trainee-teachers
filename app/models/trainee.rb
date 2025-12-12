@@ -313,7 +313,7 @@ class Trainee < ApplicationRecord
 
   scope :course_not_yet_started, -> { where("itt_start_date > ?", Time.zone.now).where.not(state: %i[draft deferred withdrawn]) }
 
-  scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: Date.new..Time.zone.now) }
+  scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: ..Time.zone.now) }
 
   scope :with_apply_application, -> { apply_record }
 
