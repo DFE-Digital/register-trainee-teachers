@@ -3,17 +3,17 @@
 require "rails_helper"
 
 RSpec.describe ReferenceData::Type do
-  subject(:type) { ReferenceData::Loader.instance.find("trainee_study_mode") }
+  subject(:type) { ReferenceData::Loader.instance.find("study_mode") }
 
   describe "#name" do
     it "has the correct name value" do
-      expect(type.name).to eq("trainee_study_mode")
+      expect(type.name).to eq("study_mode")
     end
   end
 
   describe "#display_name" do
     it "has the correct display_name value" do
-      expect(type.display_name).to eq("Trainee study mode")
+      expect(type.display_name).to eq("Study mode")
     end
   end
 
