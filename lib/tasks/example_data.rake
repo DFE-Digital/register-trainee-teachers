@@ -75,8 +75,8 @@ namespace :example_data do
     # Create some schools
     employing_schools = FactoryBot.create_list(:school, 50)
 
-    # Create some lead partners
-    lead_partners = FactoryBot.create_list(:lead_partner, 50, :school)
+    # Create some training partners
+    training_partners = FactoryBot.create_list(:training_partner, 50, :school)
 
     # Create some subjects
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
@@ -116,11 +116,11 @@ namespace :example_data do
       FactoryBot.create(:authentication_token, provider:)
       FactoryBot.create(:authentication_token, :expired, provider:)
 
-      if persona_attributes[:lead_partner]
-        lead_partner = lead_partners.sample
-        LeadPartnerUser.create!(user: persona, lead_partner: lead_partner)
-        FactoryBot.create(:payment_schedule, :for_full_year, payable: lead_partner.school)
-        FactoryBot.create(:trainee_summary, :with_grant_rows, payable: lead_partner.school)
+      if persona_attributes[:training_partner]
+        training_partner = training_partners.sample
+        TrainingPartnerUser.create!(user: persona, training_partner: training_partner)
+        FactoryBot.create(:payment_schedule, :for_full_year, payable: training_partner.school)
+        FactoryBot.create(:trainee_summary, :with_grant_rows, payable: training_partner.school)
       end
 
       # For each of the course routes enabled...
@@ -312,7 +312,7 @@ namespace :example_data do
       .push(:assessment_only)
     enabled_course_routes = enabled_routes & TRAINING_ROUTES_FOR_COURSE.keys.map(&:to_sym)
 
-    lead_partners = FactoryBot.create_list(:lead_partner, 5, :school)
+    training_partners = FactoryBot.create_list(:training_partner, 5, :school)
 
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
 
@@ -339,9 +339,9 @@ namespace :example_data do
 
       FactoryBot.create(:authentication_token, provider:)
 
-      if persona_attributes[:lead_partner]
-        lead_partner = lead_partners.sample
-        LeadPartnerUser.create!(user: persona, lead_partner: lead_partner)
+      if persona_attributes[:training_partner]
+        training_partner = training_partners.sample
+        TrainingPartnerUser.create!(user: persona, training_partner: training_partner)
       end
 
       enabled_course_routes.each do |route|
