@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Api::V20250::TraineeSerializer do
-  let(:trainee) { create(:trainee, :with_lead_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
+  let(:trainee) { create(:trainee, :with_training_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
   let(:json) { described_class.new(trainee).as_hash }
 
   describe "serialization" do
@@ -128,12 +128,12 @@ RSpec.describe Api::V20250::TraineeSerializer do
     describe "lead partner attributes" do
       it "serializes the urn correctly" do
         expect(json[:lead_partner_urn]).not_to be_nil
-        expect(json[:lead_partner_urn]).to eq(trainee.lead_partner.urn)
+        expect(json[:lead_partner_urn]).to eq(trainee.training_partner.urn)
       end
 
       it "serializes the ukprn correctly" do
         expect(json[:lead_partner_ukprn]).not_to be_nil
-        expect(json[:lead_partner_ukprn]).to eq(trainee.lead_partner.ukprn)
+        expect(json[:lead_partner_ukprn]).to eq(trainee.training_partner.ukprn)
       end
     end
   end
