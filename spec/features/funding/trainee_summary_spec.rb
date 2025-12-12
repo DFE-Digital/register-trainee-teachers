@@ -11,8 +11,8 @@ feature "viewing the trainee summary", feature_funding: true do
     given_i_am_authenticated(user:)
   }
 
-  context "when User is a LeadPartner school" do
-    let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :school) }
+  context "when User is a TrainingPartner school" do
+    let(:user) { create(:user, :with_training_partner_organisation, training_partner_type: :school) }
     let(:summary) { create(:trainee_summary, payable: user.training_partners.first.school) }
     let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
 
@@ -35,8 +35,8 @@ feature "viewing the trainee summary", feature_funding: true do
     end
   end
 
-  context "when User is a LeadPartner provider" do
-    let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :hei) }
+  context "when User is a TrainingPartner provider" do
+    let(:user) { create(:user, :with_training_partner_organisation, training_partner_type: :hei) }
     let(:summary) { create(:trainee_summary, payable: user.training_partners.first.provider) }
     let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
 
