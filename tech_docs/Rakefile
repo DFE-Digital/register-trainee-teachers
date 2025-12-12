@@ -28,45 +28,59 @@ namespace :tech_docs do
   end
 
   namespace :csv do
-    desc "Generate CSV fields docs based on fields.yaml"
+    desc "Generate CSV fields docs for all versions"
     task :generate do
       app     = Middleman::Application.new
       context = Middleman::TemplateContext.new(app, {})
 
-      FileUtils.mkdir_p("source/csv-docs/temp_fields")
+      TechDocsHelpers.available_versions.each_with_index do |version, version_index|
+        version_dir = TechDocsHelpers.format_version(version)
+        fields = TechDocsHelpers.fields(version)
 
-      TechDocsHelpers.fields.each_with_index do |field, index|
-        html = context.partial(
-          "partials/csv_docs/field", locals: {
-            csv_field_name: field["field_name"],
-            column_number_in_csv_file: index,
-            api_field_name: field["technical"],
-            hesa_alignment: field["hesa_alignment"],
-            description: Kramdown::Document.new(field["description"]).to_html,
-            format: Kramdown::Document.new(field["format"]).to_html,
-            example: Kramdown::Document.new(field["example"]).to_html,
-            validation: Kramdown::Document.new(field["validation"]).to_html,
-          }
-        )
+        FileUtils.mkdir_p("source/csv-docs/#{version_dir}")
 
-        File.open("source/csv-docs/temp_fields/#{field['technical'].gsub('_', '-')}.html.md", "w") do |f|
-          f.write(
-            <<~METADATA,
-              ---
-              title: #{field['field_name']}
-              weight: #{index}
-              source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/views/bulk_update/add_trainees/reference_docs/fields.yaml
-              ---
+        # Create version index with hide_in_navigation for v2026.0
+        File.write("source/csv-docs/#{version_dir}/index.html.md", <<~METADATA)
+          ---
+          title: #{version_dir}
+          weight: #{version_index + 3}
+          hide_in_navigation: #{version_dir == 'v2026.0'}
+          ---
 
-            METADATA
+          # #{version_dir}
+
+        METADATA
+
+        fields.each_with_index do |field, index|
+          html = context.partial(
+            "partials/csv_docs/field", locals: {
+              csv_field_name: field["field_name"],
+              column_number_in_csv_file: index,
+              api_field_name: field["technical"],
+              hesa_alignment: field["hesa_alignment"],
+              description: Kramdown::Document.new(field["description"]).to_html,
+              format: Kramdown::Document.new(field["format"]).to_html,
+              example: Kramdown::Document.new(field["example"]).to_html,
+              validation: Kramdown::Document.new(field["validation"]).to_html,
+            }
           )
-          f.write(html)
+
+          File.open("source/csv-docs/#{version_dir}/#{field['technical'].gsub('_', '-')}.html.md", "w") do |f|
+            f.write(
+              <<~METADATA,
+                ---
+                title: #{field['field_name']}
+                weight: #{index}
+                source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/views/bulk_update/add_trainees/reference_docs/#{version_dir.tr('.', '_')}/fields.yaml
+                ---
+
+              METADATA
+            )
+            f.write(html)
+          end
         end
       end
 
-      FileUtils.cp("source/csv-docs/fields/index.html.md", "source/csv-docs/temp_fields")
-      FileUtils.rm_rf("source/csv-docs/fields")
-      FileUtils.mv("source/csv-docs/temp_fields", "source/csv-docs/fields")
     end
   end
 
@@ -85,7 +99,7 @@ namespace :tech_docs do
           ---
           title: #{version_dir}
           weight: #{index + 3}
-          hide_in_navigation: #{version_dir == 'v2026.0' ? true : false }
+          hide_in_navigation: #{version_dir == 'v2026.0'}
           ---
 
           # #{version_dir}
@@ -95,14 +109,16 @@ namespace :tech_docs do
         app     = Middleman::Application.new
         context = Middleman::TemplateContext.new(app, {})
 
+        fields = TechDocsHelpers.fields(version)
+
         data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, _values|
-          field_name = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"].downcase
+          field_name = fields.detect { |field| field["technical"] == attribute }["field_name"].downcase
           words      = Regexp.union(TechDocsHelpers::WORDS_TO_NUMBERS.keys)
           field_name.gsub(words, TechDocsHelpers::WORDS_TO_NUMBERS)
         end.to_h
 
         data.each_with_index do |(attribute, values), index|
-          field               = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }
+          field               = fields.detect { |field| field["technical"] == attribute }
           formatted_attribute = attribute.gsub("_", "-")
 
           File.open("source/reference-data/#{version_dir}/#{formatted_attribute}.html.md", "w") do |f|
@@ -164,10 +180,17 @@ module TechDocsHelpers
     end
   end
 
-  def self.fields
-    @fields ||= YAML.load_file(
-      File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
+  def self.fields(version)
+    version_dir = version.to_s.downcase.insert(-2, "_") # V20250 -> v2025_0
+    YAML.load_file(
+      File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/#{version_dir}/fields.yaml", __dir__),
     )
+  end
+
+  def self.available_versions
+    Dir.glob(File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/v*", __dir__))
+       .map { |path| File.basename(path).tr("_", "").upcase } # v2025_0 -> V20250
+       .sort
   end
 
   def self.format_version(version)

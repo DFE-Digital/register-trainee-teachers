@@ -70,4 +70,38 @@ RSpec.describe "Tech docs availability" do
       end
     end
   end
+
+  describe "/csv-docs" do
+    context "when allowed_versions excludes v2026.0" do
+      before do
+        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0])
+      end
+
+      it "returns 200 for v2025.0" do
+        get "/csv-docs/v2025.0/"
+
+        expect(response).to have_http_status(:success)
+      end
+
+      it "returns 404 for v2026.0" do
+        get "/csv-docs/v2026.0/"
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "when allowed_versions includes v2026.0" do
+      before do
+        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0 v2026.0])
+      end
+
+      %w[v2025.0 v2026.0].each do |version|
+        it "returns 200 for #{version}" do
+          get "/csv-docs/#{version}/"
+
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
+  end
 end

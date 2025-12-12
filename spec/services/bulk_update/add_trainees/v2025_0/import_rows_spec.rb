@@ -254,7 +254,7 @@ RSpec.describe BulkUpdate::AddTrainees::V20250::ImportRows do
   end
 
   describe "documentation cross-checks" do
-    let(:documentation_fields) { YAML.load_file(CsvFields::View::FIELD_DEFINITION_PATH) }
+    let(:documentation_fields) { YAML.load_file(BulkUpdate::AddTrainees::V20250::ImportRows.fields_definition_path) }
 
     BulkUpdate::AddTrainees::V20250::ImportRows::TRAINEE_HEADERS.each_value do |id|
       it "documents field with id #{id}" do

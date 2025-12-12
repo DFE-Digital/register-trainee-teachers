@@ -2,7 +2,7 @@
 
 module TechDocs
   class Availability
-    PATHS = %r{\A/(api-docs|reference-data)/(v[\d.]+-?\w*)}
+    PATHS = %r{\A/(api-docs|reference-data|csv-docs)/(v[\d.]+-?\w*)}
 
     def initialize(app)
       @app = app
