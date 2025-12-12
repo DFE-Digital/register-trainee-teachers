@@ -5,14 +5,14 @@ require "rails_helper"
 describe TrainingRouteManager do
   subject { described_class.new(trainee) }
 
-  describe "#requires_lead_partner?" do
+  describe "#requires_training_partner?" do
     %w[school_direct_tuition_fee school_direct_salaried teacher_degree_apprenticeship].each do |route|
       context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": true do
         context "with a school direct trainee" do
           let(:trainee) { build(:trainee, route.to_sym) }
 
           it "returns true" do
-            expect(subject.requires_lead_partner?).to be true
+            expect(subject.requires_training_partner?).to be true
           end
         end
 
@@ -21,7 +21,7 @@ describe TrainingRouteManager do
             let(:trainee) { build(:trainee) }
 
             it "returns false" do
-              expect(subject.requires_lead_partner?).to be false
+              expect(subject.requires_training_partner?).to be false
             end
           end
         end
