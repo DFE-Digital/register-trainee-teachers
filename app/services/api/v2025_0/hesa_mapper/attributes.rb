@@ -63,7 +63,7 @@ module Api
           .merge(ethnicity_and_disability_attributes)
           .merge(funding_attributes)
           .merge(training_initiative_attributes)
-          .merge(lead_partner_attributes)
+          .merge(training_partner_attributes)
           .merge(employing_school_attributes)
           .compact
           .merge(params_with_allowed_nil_values)
@@ -227,37 +227,37 @@ module Api
           ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:funding_method]]
         end
 
-        def lead_partner_attributes
+        def training_partner_attributes
           if params.key?(:lead_partner_urn)
-            lead_partner_from_urn
+            training_partner_from_urn
           elsif params.key?(:lead_partner_ukprn)
-            lead_partner_from_ukprn
+            training_partner_from_ukprn
           else
-            { lead_partner_not_applicable: true } unless update
+            { training_partner_not_applicable: true } unless update
           end
         end
 
-        def lead_partner_from_urn
-          lead_partner_id =
+        def training_partner_from_urn
+          training_partner_id =
             if params[:lead_partner_urn].present? && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
-              LeadPartner.find_by(urn: params[:lead_partner_urn])&.id || InvalidValue.new(params[:lead_partner_urn])
+              TrainingPartner.find_by(urn: params[:lead_partner_urn])&.id || InvalidValue.new(params[:lead_partner_urn])
             end
 
           {
-            lead_partner_id: lead_partner_id,
-            lead_partner_not_applicable: lead_partner_id.nil?,
+            training_partner_id: training_partner_id,
+            training_partner_not_applicable: training_partner_id.nil?,
           }
         end
 
-        def lead_partner_from_ukprn
-          lead_partner_id =
+        def training_partner_from_ukprn
+          training_partner_id =
             if params[:lead_partner_ukprn].present?
-              LeadPartner.find_by(ukprn: params[:lead_partner_ukprn])&.id || InvalidValue.new(params[:lead_partner_ukprn])
+              TrainingPartner.find_by(ukprn: params[:lead_partner_ukprn])&.id || InvalidValue.new(params[:lead_partner_ukprn])
             end
 
           {
-            lead_partner_id: lead_partner_id,
-            lead_partner_not_applicable: lead_partner_id.nil?,
+            training_partner_id: training_partner_id,
+            training_partner_not_applicable: training_partner_id.nil?,
           }
         end
 

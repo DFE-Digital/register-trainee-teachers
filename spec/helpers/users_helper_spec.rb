@@ -5,12 +5,12 @@ require "rails_helper"
 describe UsersHelper do
   include UsersHelper
 
-  describe "#lead_partner_user?" do
-    describe "lead partner user" do
-      let(:current_user) { double(UserWithOrganisationContext, lead_partner?: true) }
+  describe "#training_partner_user?" do
+    describe "training partner user" do
+      let(:current_user) { double(UserWithOrganisationContext, training_partner?: true) }
 
       it "returns true" do
-        expect(lead_partner_user?).to be(true)
+        expect(training_partner_user?).to be(true)
       end
     end
   end

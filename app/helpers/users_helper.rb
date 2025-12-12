@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module UsersHelper
-  def lead_partner_user?
-    defined?(current_user) && UserPolicy.new(current_user, nil).lead_partner_user?
+  def training_partner_user?
+    defined?(current_user) && UserPolicy.new(current_user, nil).training_partner_user?
   end
 
   def can_view_drafts?

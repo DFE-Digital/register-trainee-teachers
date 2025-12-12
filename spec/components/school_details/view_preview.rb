@@ -18,7 +18,7 @@ module SchoolDetails
       @mock_trainee ||= Trainee.new(
         id: 1,
         training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-        lead_partner_school: mock_school,
+        training_partner_school: mock_school,
         employing_school: with_employing ? mock_school : nil,
       )
     end

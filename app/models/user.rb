@@ -33,8 +33,8 @@ class User < ApplicationRecord
   has_many :provider_users, inverse_of: :user
   has_many :providers, through: :provider_users
 
-  has_many :lead_partner_users
-  has_many :lead_partners, through: :lead_partner_users
+  has_many :training_partner_users
+  has_many :training_partners, through: :training_partner_users
 
   has_many :submitted_bulk_update_trainee_uploads,
            class_name: "BulkUpdate::TraineeUpload",
@@ -58,7 +58,7 @@ class User < ApplicationRecord
 
   pg_search_scope :search,
                   against: %i[first_name last_name email],
-                  associated_against: { providers: [:name], lead_partners: [:name] },
+                  associated_against: { providers: [:name], training_partners: [:name] },
                   using: { trigram: { word_similarity: true } }
 
   def name

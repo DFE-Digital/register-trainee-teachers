@@ -50,7 +50,7 @@ module Submissions
         :personal_details, :contact_details, :diversity,
         *(:degrees if @trainee.requires_degree?),
         :course_details, :training_details,
-        *(:schools if trainee.requires_lead_partner?),
+        *(:schools if trainee.requires_training_partner?),
         *(:placements if trainee.requires_placements?),
         *(:funding if trainee.requires_funding?),
         *(:iqts_country if trainee.requires_iqts_country?)
@@ -62,7 +62,7 @@ module Submissions
         :course_details,
         :trainee_data,
         :training_details,
-        *(:schools if trainee.requires_lead_partner?),
+        *(:schools if trainee.requires_training_partner?),
         :funding,
         *(:placements if trainee.requires_placements?),
       ]

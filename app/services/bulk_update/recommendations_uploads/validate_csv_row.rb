@@ -39,7 +39,7 @@ module BulkUpdate
         provider_trainee_id
         first_names
         last_names
-        lead_partner
+        training_partner
         qts_or_eyts
         route
         phase
@@ -129,10 +129,10 @@ module BulkUpdate
         end
       end
 
-      def lead_partner
+      def training_partner
         return unless column_exists?(Reports::BulkRecommendReport::LEAD_PARTNER)
 
-        @messages << error_message(:lead_partner) if trainee.lead_partner_name&.downcase != row.lead_partner&.downcase
+        @messages << error_message(:training_partner) if trainee.training_partner_name&.downcase != row.lead_partner&.downcase
       end
 
       def qts_or_eyts

@@ -15,7 +15,7 @@ module TeacherTrainingApi
       )
 
       message = "[#{Rails.env}] Publish Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{checker.recruitment_cycle_year}:\n"
-      message << "Matching lead partners: #{checker.lead_partner_matches.count}\n"
+      message << "Matching training partners: #{checker.training_partner_matches.count}\n"
       message << "Matching providers: #{checker.provider_matches.count}\n"
       message << "Missing accredited providers: #{checker.missing_accredited.count}\n"
       output_missing_list(message, checker.missing_accredited)

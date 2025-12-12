@@ -10,7 +10,7 @@
             <%= t("funding.trainee_summary.column_headings.route_and_course")%>
           </th>
           <th scope="col" class="govuk-table__header govuk-!-width-one-third">
-            <%= t("funding.trainee_summary.column_headings.lead_partner")%>
+            <%= t("funding.trainee_summary.column_headings.training_partner")%>
           </th>
           <th scope="col" class="govuk-table__header govuk-table__header--numeric">
             <%= t("funding.trainee_summary.column_headings.trainees")%>
@@ -28,7 +28,7 @@
           <% next if scholarship_row[:total] == "—" %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= scholarship_row[:route] %><br><%= scholarship_row[:subject] %></td>
-            <td class="govuk-table__cell"><%= scholarship_row[:lead_partner] %></td>
+            <td class="govuk-table__cell"><%= scholarship_row[:training_partner] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= scholarship_row[:trainees] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= scholarship_row[:amount_per_trainee] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= scholarship_row[:total] %></td>

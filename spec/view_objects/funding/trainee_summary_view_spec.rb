@@ -85,7 +85,7 @@ module Funding
           {
             route: route,
             subject: "Maths",
-            lead_partner: "BAT Academy",
+            training_partner: "BAT Academy",
             trainees: maths_bursary_trainees,
             amount_per_trainee: "£2,000",
             total: "£4,000",
@@ -106,7 +106,7 @@ module Funding
           {
             route: route,
             subject: "Biology",
-            lead_partner: "Regminster College",
+            training_partner: "Regminster College",
             trainees: biology_scholarship_trainees,
             amount_per_trainee: "£2,000",
             total: "£8,000",
@@ -114,7 +114,7 @@ module Funding
           {
             route: route,
             subject: "Maths",
-            lead_partner: "BAT Academy",
+            training_partner: "BAT Academy",
             trainees: maths_scholarship_trainees,
             amount_per_trainee: "£5,000",
             total: "£15,000",

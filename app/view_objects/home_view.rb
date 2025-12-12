@@ -12,7 +12,7 @@ class HomeView
 
     create_badges
 
-    if !current_user.system_admin? && !current_user.lead_partner?
+    if !current_user.system_admin? && !current_user.training_partner?
       create_action_badges
     else
       badges << incomplete_badge

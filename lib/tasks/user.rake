@@ -11,6 +11,6 @@ namespace :user do
     user_ids = ProviderUser.with_active_hei_providers.pluck(:user_id) + User.where(system_admin: true).ids
     User.where.not(id: user_ids).update(dfe_sign_in_uid: nil)
 
-    LeadPartnerUser.delete_all
+    TrainingPartnerUser.delete_all
   end
 end

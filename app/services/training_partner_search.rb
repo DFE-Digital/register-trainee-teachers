@@ -26,15 +26,15 @@ class TrainingPartnerSearch
   end
 
   def all_training_partners
-    training_partners = LeadPartner.kept
+    training_partners = TrainingPartner.kept
     if query
       training_partners = training_partners
         .includes(:provider, :school)
-        .where("lead_partners.name ilike ?", "%#{query}%")
-        .or(LeadPartner.kept.where("lead_partners.urn ilike ?", "%#{query}%"))
-        .or(LeadPartner.kept.where("lead_partners.ukprn ilike ?", "%#{query}%"))
-        .or(LeadPartner.kept.where(id:
-          LeadPartner.kept.joins(:school).where(school: School.where("postcode ilike ?", "%#{query}%")).select(:id)))
+        .where("training_partners.name ilike ?", "%#{query}%")
+        .or(TrainingPartner.kept.where("training_partners.urn ilike ?", "%#{query}%"))
+        .or(TrainingPartner.kept.where("training_partners.ukprn ilike ?", "%#{query}%"))
+        .or(TrainingPartner.kept.where(id:
+          TrainingPartner.kept.joins(:school).where(school: School.where("postcode ilike ?", "%#{query}%")).select(:id)))
 
     end
     training_partners.reorder(:name)

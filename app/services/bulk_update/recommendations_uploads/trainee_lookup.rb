@@ -12,7 +12,7 @@ module BulkUpdate
           .kept
           .where.not(state: :draft)
           .includes(
-            :lead_partner,
+            :training_partner,
             :provider,
             :degrees,
             :apply_application,

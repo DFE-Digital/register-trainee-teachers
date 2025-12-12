@@ -41,7 +41,6 @@
 #  itt_qualification_aim        :string
 #  itt_start_date               :string
 #  last_name                    :string
-#  lead_partner_urn             :string
 #  mode                         :string
 #  nationality                  :string
 #  ni_number                    :string
@@ -58,6 +57,7 @@
 #  surname16                    :string
 #  trainee_start_date           :string
 #  training_initiative          :string
+#  training_partner_urn         :string
 #  training_route               :string
 #  trn                          :string
 #  ttcid                        :string

@@ -4,8 +4,8 @@ require "rails_helper"
 
 describe FundingDataImporter do
   describe "#import_data" do
-    context 'when the funding_type is "lead_partner_trainee_summary"' do
-      let(:funding_upload) { create(:funding_upload, :lead_partner_trainee_summary) }
+    context 'when the funding_type is "training_partner_trainee_summary"' do
+      let(:funding_upload) { create(:funding_upload, :training_partner_trainee_summary) }
 
       it "calls the TrainingPartnerTraineeSummariesImporter" do
         importer = FundingDataImporter.new(funding_upload)
@@ -23,8 +23,8 @@ describe FundingDataImporter do
       end
     end
 
-    context 'when the funding_type is "lead_partner_payment_schedule"' do
-      let(:funding_upload) { create(:funding_upload, :lead_partner_payment_schedules) }
+    context 'when the funding_type is "training_partner_payment_schedule"' do
+      let(:funding_upload) { create(:funding_upload, :training_partner_payment_schedules) }
 
       it "calls the TrainingPartnerPaymentSchedulesImporter" do
         importer = FundingDataImporter.new(funding_upload)
