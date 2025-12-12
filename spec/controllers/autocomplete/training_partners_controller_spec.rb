@@ -39,31 +39,31 @@ module Autocomplete
 
         context "valid query by name" do
           before do
-            get :index, params: { query: lead_partner.name }
+            get :index, params: { query: training_partner.name }
           end
 
           it "returns the training_partners matching the query only" do
-            expect(json_response["training_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
+            expect(json_response["training_partners"]).to match([training_partner.as_json(only: %i[id name urn ukprn])])
           end
         end
 
         context "valid query by urn" do
           before do
-            get :index, params: { query: lead_partner.urn }
+            get :index, params: { query: training_partner.urn }
           end
 
           it "returns the training_partners matching the query only" do
-            expect(json_response["training_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
+            expect(json_response["training_partners"]).to match([training_partner.as_json(only: %i[id name urn ukprn])])
           end
         end
 
         context "valid query by ukprn" do
           before do
-            get :index, params: { query: lead_partner_hei.ukprn }
+            get :index, params: { query: training_partner_hei.ukprn }
           end
 
           it "returns the training_partners matching the query only" do
-            expect(json_response["training_partners"]).to match([lead_partner_hei.as_json(only: %i[id name urn ukprn])])
+            expect(json_response["training_partners"]).to match([training_partner_hei.as_json(only: %i[id name urn ukprn])])
           end
         end
       end

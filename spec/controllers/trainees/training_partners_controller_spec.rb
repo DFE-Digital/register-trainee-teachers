@@ -8,7 +8,7 @@ describe Trainees::TrainingPartnersController do
 
     let(:params) do
       {
-        lead_partner_id: lead_partner.id,
+        training_partner_id: training_partner.id,
       }
     end
 
