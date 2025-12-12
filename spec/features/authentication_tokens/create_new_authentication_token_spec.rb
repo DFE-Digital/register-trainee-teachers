@@ -16,7 +16,7 @@ feature "create a new authentication token" do
   end
 
   scenario "when I am logged in as a lead partner the feature flag is on I CANNOT create a token", feature_token_management: true do
-    given_i_am_authenticated_as_a_lead_partner_user
+    given_i_am_authenticated_as_a_training_partner_user
     and_i_can_generate_an_authentication_token
 
     given_i_navigate_to_the_authentication_token_index_page
