@@ -310,13 +310,13 @@ describe TraineePolicy do
       end
     end
 
-    context "user in lead_partner context" do
+    context "user in training_partner context" do
       let(:is_training_partner?) { true }
       let(:school) { create(:school) }
       let(:training_partner) { create(:training_partner, :hei, school:) }
       let(:organisation) { training_partner }
 
-      context "where the trainee is associated with the lead partner" do
+      context "where the trainee is associated with the training partner" do
         let(:trainee) { create(:trainee, training_partner:) }
 
         it { is_expected.to contain_exactly(trainee) }
