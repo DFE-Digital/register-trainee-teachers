@@ -332,22 +332,22 @@ describe Trainee do
       end
     end
 
-    describe "clear_lead_partner_id" do
-      subject { create(:trainee, :with_lead_partner) }
+    describe "clear_training_partner_id" do
+      subject { create(:trainee, :with_training_partner) }
 
-      context "when lead_partner_not_applicable is true" do
-        it "changes lead_partner_id to nil" do
+      context "when training_partner_not_applicable is true" do
+        it "changes training_partner_id to nil" do
           expect {
-            subject.lead_partner_not_applicable = true
+            subject.training_partner_not_applicable = true
             subject.save!
           }.to change(subject, :training_partner_id).from(Integer).to nil
         end
       end
 
-      context "when lead_partner_not_applicable is false" do
-        it "does not change lead_partner_id" do
+      context "when training_partner_not_applicable is false" do
+        it "does not change training_partner_id" do
           expect {
-            subject.lead_partner_not_applicable = false
+            subject.training_partner_not_applicable = false
             subject.save!
           }.to not_change(subject, :training_partner_id)
         end

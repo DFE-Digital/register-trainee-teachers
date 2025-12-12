@@ -12,7 +12,7 @@ FactoryBot.define do
     end
 
     trait :training_partner_payment_schedules do
-      csv_data { Rails.root.join("spec/support/fixtures/lead_partner_payment_schedules.csv").read }
+      csv_data { Rails.root.join("spec/support/fixtures/training_partner_payment_schedules.csv").read }
       funding_type { :training_partner_payment_schedule }
     end
 
@@ -22,7 +22,7 @@ FactoryBot.define do
     end
 
     trait :training_partner_trainee_summaries do
-      csv_data { Rails.root.join("spec/support/fixtures/lead_partner_trainee_summaries.csv").read }
+      csv_data { Rails.root.join("spec/support/fixtures/training_partner_trainee_summaries.csv").read }
       funding_type { :training_partner_trainee_summary }
     end
 
@@ -37,12 +37,12 @@ FactoryBot.define do
     end
 
     trait :invalid_training_partner_trainee_summaries do
-      csv_data { Rails.root.join("spec/support/fixtures/invalid_lead_partner_trainee_summaries.csv").read }
+      csv_data { Rails.root.join("spec/support/fixtures/invalid_training_partner_trainee_summaries.csv").read }
       funding_type { :training_partner_trainee_summary }
     end
 
     trait :invalid_training_partner_payment_schedules do
-      csv_data { Rails.root.join("spec/support/fixtures/invalid_lead_partner_payment_schedules.csv").read }
+      csv_data { Rails.root.join("spec/support/fixtures/invalid_training_partner_payment_schedules.csv").read }
       funding_type { :training_partner_payment_schedule }
     end
   end
