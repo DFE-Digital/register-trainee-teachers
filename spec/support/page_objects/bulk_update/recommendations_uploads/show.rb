@@ -5,8 +5,8 @@ module PageObjects
     class Show < PageObjects::Base
       set_url "/bulk-update/recommend/{id}/upload-summary"
 
-      element :cancel_link, ".govuk-link", text: "Cancel bulk recommending trainees"
-      element :check_button, ".govuk-button", text: "Check who you’ll recommend"
+      element :cancel_link, ".govuk-link", text: "Cancel the bulk status change"
+      element :check_button, ".govuk-button", text: "Check who"
       element :recommend_button, ".govuk-button", text: "Recommend"
       element :review_errors_button, ".govuk-button", text: "Review errors"
     end

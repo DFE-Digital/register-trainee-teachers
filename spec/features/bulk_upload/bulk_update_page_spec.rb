@@ -63,7 +63,7 @@ private
   end
 
   def then_i_see_how_many_trainees_i_can_bulk_recommend
-    expect(page).to have_content("You can bulk recommended 2 trainees")
+    expect(page).to have_content("You can update the status of 2 trainees")
   end
 
   def and_i_see_the_placement_data_link
@@ -71,7 +71,7 @@ private
   end
 
   def then_i_see_the_bulk_recommend_link
-    expect(page).to have_link("Bulk recommend trainees for QTS or EYTS", href: new_bulk_update_recommendations_upload_path)
+    expect(page).to have_link("Change trainee status in bulk", href: new_bulk_update_recommendations_upload_path)
   end
 
   def then_i_do_not_see_the_bulk_placement_section
@@ -79,7 +79,7 @@ private
   end
 
   def then_i_do_not_see_the_bulk_recommend_link
-    expect(page).to have_content("You do not have any trainees who can be bulk recommended for qualified teacher status (QTS) or early years teacher status (EYTS)")
+    expect(page).to have_content("You do not have any trainees eligible for a QTS or EYTS status change at the moment")
   end
 
   def given_two_trainees_exist_to_recommend
