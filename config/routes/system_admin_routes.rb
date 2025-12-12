@@ -61,7 +61,7 @@ module SystemAdminRoutes
         end
 
         resources :training_partners, path: "training-partners", only: %i[index show] do
-          resources :users, controller: "lead_partners/users", only: %i[edit update]
+          resources :users, controller: "training_partners/users", only: %i[edit update]
         end
 
         resources :dttp_trainees, only: [:show], path: "dttp-trainees" do
