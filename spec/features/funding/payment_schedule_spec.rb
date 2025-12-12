@@ -33,8 +33,8 @@ feature "viewing the payment schedule" do
     end
   end
 
-  context "when User is a LeadPartner School" do
-    let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :school) }
+  context "when User is a TrainingPartner School" do
+    let(:user) { create(:user, :with_training_partner_organisation, training_partner_type: :school) }
 
     background do
       given_i_am_authenticated_as_a_training_partner_user(user:)
@@ -63,8 +63,8 @@ feature "viewing the payment schedule" do
     end
   end
 
-  context "when User is a LeadPartner provider" do
-    let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :hei) }
+  context "when User is a TrainingPartner provider" do
+    let(:user) { create(:user, :with_training_partner_organisation, training_partner_type: :hei) }
 
     background do
       given_i_am_authenticated_as_a_training_partner_user(user:)
