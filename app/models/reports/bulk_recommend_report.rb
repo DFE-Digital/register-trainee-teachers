@@ -14,9 +14,9 @@ module Reports
     DATE        = "Date QTS or EYTS standards met"
 
     # additional headers
-    FIRST_NAME   = "First names"
-    LAST_NAME    = "Last names"
-    LEAD_PARTNER = "Lead partner"
+    FIRST_NAME       = "First names"
+    LAST_NAME        = "Last names"
+    TRAINING_PARTNER = "Training partner"
     QTS_OR_EYTS  = "QTS or EYTS"
     ROUTE        = "Route"
     PHASE        = "Phase"
@@ -27,7 +27,7 @@ module Reports
       *IDENTIFIERS,
       FIRST_NAME,
       LAST_NAME,
-      LEAD_PARTNER,
+      TRAINING_PARTNER,
       QTS_OR_EYTS,
       ROUTE,
       PHASE,
