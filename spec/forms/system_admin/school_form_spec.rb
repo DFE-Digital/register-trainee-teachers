@@ -55,7 +55,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
       it "does not set the FormStore with the form attributes" do
         expect(school_form.stash).to be(false)
-        expect(school_form.errors).to contain_exactly("Lead partner is not included in the list")
+        expect(school_form.errors).to contain_exactly("Training partner is not included in the list")
       end
     end
   end

@@ -31,7 +31,7 @@ feature "Search users" do
 
     before do
       second_user.providers << provider
-      second_user.training_partners << lead_partner
+      second_user.training_partners << training_partner
       given_i_am_authenticated(user:)
     end
 
@@ -43,9 +43,9 @@ feature "Search users" do
       then_i_see_the_detail_page_for_the_second_user
     end
 
-    scenario "search users by lead partner name" do
+    scenario "search users by training partner name" do
       when_i_visit_the_user_index_page
-      when_i_enter_the_first_users_lead_partner_name_into_the_autocomplete
+      when_i_enter_the_first_users_training_partner_name_into_the_autocomplete
       and_click_on_the_first_user_in_the_autocomplete
       then_i_see_the_detail_page_for_the_second_user
     end
@@ -62,7 +62,7 @@ feature "Search users" do
     fill_in("search-field", with: second_user.last_name)
   end
 
-  def when_i_enter_the_first_users_lead_partner_name_into_the_autocomplete
+  def when_i_enter_the_first_users_training_partner_name_into_the_autocomplete
     fill_in("search-field", with: "East Porridge")
   end
 

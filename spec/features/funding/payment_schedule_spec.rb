@@ -37,7 +37,7 @@ feature "viewing the payment schedule" do
     let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :school) }
 
     background do
-      given_i_am_authenticated_as_a_lead_partner_user(user:)
+      given_i_am_authenticated_as_a_training_partner_user(user:)
 
       and_funding_data_exists(current_user.training_partners.first.school)
     end
@@ -67,7 +67,7 @@ feature "viewing the payment schedule" do
     let(:user) { create(:user, :with_training_partner_organisation, lead_partner_type: :hei) }
 
     background do
-      given_i_am_authenticated_as_a_lead_partner_user(user:)
+      given_i_am_authenticated_as_a_training_partner_user(user:)
 
       and_funding_data_exists(current_user.training_partners.first.provider)
     end
