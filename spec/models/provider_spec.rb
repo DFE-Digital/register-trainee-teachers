@@ -104,7 +104,7 @@ describe Provider do
     end
   end
 
-  describe "#without_required_placements" do
+  describe "#trainees_without_required_placements" do
     let!(:this_cycle) { create(:academic_cycle, :current) }
     let!(:last_cycle) { create(:academic_cycle, previous_cycle: true) }
     let(:provider) { create(:provider) }
@@ -129,11 +129,11 @@ describe Provider do
 
     context "when the trainee is in the current cycle" do
       it "pulls the correct trainee(s) back" do
-        expect(provider.without_required_placements).to contain_exactly(trainee)
+        expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
       end
 
       it "does not find trainees for other providers" do
-        expect(provider.without_required_placements).not_to include(other_provider_trainee)
+        expect(provider.trainees_without_required_placements).not_to include(other_provider_trainee)
       end
     end
 
@@ -142,7 +142,7 @@ describe Provider do
       let(:itt_end_date) { last_cycle.end_date }
 
       it "pulls the correct trainee(s) back" do
-        expect(provider.without_required_placements).to contain_exactly(trainee)
+        expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
       end
     end
 
@@ -158,7 +158,7 @@ describe Provider do
       let(:itt_end_date) { old_cycle.end_date }
 
       it "doesn't include the trainee" do
-        expect(provider.without_required_placements).to be_empty
+        expect(provider.trainees_without_required_placements).to be_empty
       end
     end
 
@@ -170,7 +170,7 @@ describe Provider do
       end
 
       it "pulls the correct trainee(s) back" do
-        expect(provider.without_required_placements).to contain_exactly(trainee)
+        expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
       end
     end
 
@@ -185,7 +185,7 @@ describe Provider do
       end
 
       it "doesn't include the trainee" do
-        expect(provider.without_required_placements).to be_empty
+        expect(provider.trainees_without_required_placements).to be_empty
       end
     end
 
@@ -200,7 +200,7 @@ describe Provider do
       end
 
       it "doesn't include the trainee" do
-        expect(provider.without_required_placements).to be_empty
+        expect(provider.trainees_without_required_placements).to be_empty
       end
     end
 
@@ -210,7 +210,7 @@ describe Provider do
       end
 
       it "pulls the correct trainee(s) back" do
-        expect(provider.without_required_placements).to contain_exactly(trainee)
+        expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
       end
     end
 
@@ -221,7 +221,7 @@ describe Provider do
       end
 
       it "doesn't include the trainee" do
-        expect(provider.without_required_placements).to be_empty
+        expect(provider.trainees_without_required_placements).to be_empty
       end
     end
   end

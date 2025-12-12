@@ -102,7 +102,7 @@ class Provider < ApplicationRecord
     "#{name} (#{code})"
   end
 
-  def without_required_placements
+  def trainees_without_required_placements
     trainees.kept.awarded
       .or(trainees.kept.in_training)
       .where.not(trn: nil)
