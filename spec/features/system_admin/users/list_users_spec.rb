@@ -9,7 +9,7 @@ feature "List users" do
     let(:provider) { create(:provider) }
 
     before do
-      user.training_partners << lead_partner
+      user.training_partners << training_partner
       user.providers << provider
       given_i_am_authenticated(user:)
     end
@@ -28,7 +28,7 @@ feature "List users" do
     expect(admin_users_index_page).to have_text(user.first_name)
     expect(admin_users_index_page).to have_text(user.last_name)
     expect(admin_users_index_page).to have_text(user.email)
-    expect(admin_users_index_page).to have_text(lead_partner.name)
+    expect(admin_users_index_page).to have_text(training_partner.name)
     expect(admin_users_index_page).to have_text(provider.name_and_code)
   end
 end

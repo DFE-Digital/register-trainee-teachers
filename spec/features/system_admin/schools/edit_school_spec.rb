@@ -6,7 +6,7 @@ feature "Editing a School" do
   let(:user) { create(:user, system_admin: true) }
 
   let!(:school) { create(:school, :closed, name: "Test 1") }
-  let(:school_form) { SystemAdmin::SchoolForm.new(school, params: { lead_partner: nil }) }
+  let(:school_form) { SystemAdmin::SchoolForm.new(school, params: { training_partner: nil }) }
 
   before do
     given_i_am_authenticated(user:)
@@ -14,87 +14,87 @@ feature "Editing a School" do
 
   scenario "A System Admin edits a School" do
     when_i_visit_the_training_partners_index_page
-    then_i_dont_see_the_school_as_a_lead_partner
+    then_i_dont_see_the_school_as_a_training_partner
 
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: "No")
+    and_i_see_the_list_of_schools(training_partner: "No")
     and_i_click_on_a_school_name
-    then_i_see_the_school_show_page(lead_partner: "No")
+    then_i_see_the_school_show_page(training_partner: "No")
 
     when_i_click_on_back
-    then_i_see_the_list_of_schools(lead_partner: "No")
+    then_i_see_the_list_of_schools(training_partner: "No")
 
     when_i_click_on_a_school_name
     and_i_click_on_change
-    and_i_see_the_school_edit_page(lead_partner: false)
-    and_i_edit_the_school(lead_partner: true)
+    and_i_see_the_school_edit_page(training_partner: false)
+    and_i_edit_the_school(training_partner: true)
     and_i_click_on_continue
-    then_i_see_the_confirm_school_details_page(lead_partner: "Yes")
+    then_i_see_the_confirm_school_details_page(training_partner: "Yes")
 
     when_i_click_on_back
-    then_i_see_the_school_edit_page(lead_partner: true)
+    then_i_see_the_school_edit_page(training_partner: true)
 
     when_i_click_on_continue
     and_i_click_on_confirm
-    then_i_see_the_school_show_page(lead_partner: "Yes")
+    then_i_see_the_school_show_page(training_partner: "Yes")
 
     when_i_click_on_back
-    then_i_see_the_list_of_schools(lead_partner: "Yes")
+    then_i_see_the_list_of_schools(training_partner: "Yes")
 
     when_i_visit_the_training_partners_index_page
-    then_i_see_the_school_as_a_lead_partner
+    then_i_see_the_school_as_a_training_partner
 
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: "Yes")
+    and_i_see_the_list_of_schools(training_partner: "Yes")
     and_i_click_on_a_school_name
-    and_i_see_the_school_show_page(lead_partner: "Yes")
+    and_i_see_the_school_show_page(training_partner: "Yes")
     and_i_click_on_change
-    and_i_see_the_school_edit_page(lead_partner: true)
-    and_i_edit_the_school(lead_partner: false)
+    and_i_see_the_school_edit_page(training_partner: true)
+    and_i_edit_the_school(training_partner: false)
     and_i_click_on_continue
-    and_i_see_the_confirm_school_details_page(lead_partner: "No")
+    and_i_see_the_confirm_school_details_page(training_partner: "No")
     and_i_click_on_confirm
-    then_i_see_the_school_show_page(lead_partner: "No")
+    then_i_see_the_school_show_page(training_partner: "No")
 
     when_i_visit_the_training_partners_index_page
-    then_i_dont_see_the_school_as_a_lead_partner
+    then_i_dont_see_the_school_as_a_training_partner
   end
 
   scenario "A System Admin cancels editing a School" do
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: "No")
+    and_i_see_the_list_of_schools(training_partner: "No")
     and_i_click_on_a_school_name
-    then_i_see_the_school_show_page(lead_partner: "No")
+    then_i_see_the_school_show_page(training_partner: "No")
 
     when_i_click_on_change
-    then_i_see_the_school_edit_page(lead_partner: false)
+    then_i_see_the_school_edit_page(training_partner: false)
 
     when_i_click_on_cancel
-    then_i_see_the_school_show_page(lead_partner: "No")
+    then_i_see_the_school_show_page(training_partner: "No")
 
     when_i_click_on_change
-    and_i_see_the_school_edit_page(lead_partner: false)
-    and_i_edit_the_school(lead_partner: true)
+    and_i_see_the_school_edit_page(training_partner: false)
+    and_i_edit_the_school(training_partner: true)
     and_i_click_on_continue
-    and_i_see_the_confirm_school_details_page(lead_partner: "Yes")
+    and_i_see_the_confirm_school_details_page(training_partner: "Yes")
     and_i_click_on_cancel
-    then_i_see_the_school_show_page(lead_partner: "No")
+    then_i_see_the_school_show_page(training_partner: "No")
 
     when_i_click_on_change
-    then_i_see_the_school_edit_page(lead_partner: false)
+    then_i_see_the_school_edit_page(training_partner: false)
 
     when_i_visit_the_school_index_page
-    then_i_see_the_list_of_schools(lead_partner: "No")
+    then_i_see_the_list_of_schools(training_partner: "No")
   end
 
   scenario "A System Admin edits a School and gets errors" do
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: "No")
+    and_i_see_the_list_of_schools(training_partner: "No")
     and_i_click_on_a_school_name
-    and_i_see_the_school_show_page(lead_partner: "No")
+    and_i_see_the_school_show_page(training_partner: "No")
     and_i_click_on_change
-    and_i_see_the_school_edit_page(lead_partner: false)
-    and_i_edit_the_school(lead_partner: true)
+    and_i_see_the_school_edit_page(training_partner: false)
+    and_i_edit_the_school(training_partner: true)
 
     allow(SystemAdmin::SchoolForm).to receive(:new).and_return(school_form)
 
@@ -105,9 +105,9 @@ feature "Editing a School" do
 
     edit_school_page.load(id: school.id)
 
-    and_i_edit_the_school(lead_partner: true)
+    and_i_edit_the_school(training_partner: true)
     and_i_click_on_continue
-    and_i_see_the_confirm_school_details_page(lead_partner: "Yes")
+    and_i_see_the_confirm_school_details_page(training_partner: "Yes")
 
     allow(SystemAdmin::SchoolForm).to receive(:new).and_return(school_form)
 
@@ -127,34 +127,34 @@ feature "Editing a School" do
     training_partners_index_page.load
   end
 
-  def then_i_dont_see_the_school_as_a_lead_partner
+  def then_i_dont_see_the_school_as_a_training_partner
     expect(training_partners_index_page).not_to have_text("Test 1")
   end
 
-  def then_i_see_the_school_as_a_lead_partner
+  def then_i_see_the_school_as_a_training_partner
     expect(training_partners_index_page).to have_text("Test 1")
   end
 
-  def and_i_see_the_list_of_schools(lead_partner:)
+  def and_i_see_the_list_of_schools(training_partner:)
     expect(schools_index_page).to have_text("Test 1")
     expect(schools_index_page).to have_text(school.urn)
     expect(schools_index_page).to have_text(school.town)
     expect(schools_index_page).to have_text(school.postcode)
-    expect(schools_index_page).to have_text(lead_partner)
+    expect(schools_index_page).to have_text(training_partner)
   end
 
   def and_i_click_on_a_school_name
     click_on "Test 1"
   end
 
-  def then_i_see_the_school_show_page(lead_partner:)
+  def then_i_see_the_school_show_page(training_partner:)
     expect(show_school_page).to have_text("Name Test 1")
     expect(show_school_page).to have_text("URN #{school.urn}")
     expect(show_school_page).to have_text("Town #{school.town}")
     expect(show_school_page).to have_text("Postcode #{school.postcode}")
     expect(show_school_page).to have_text("Open date #{school.open_date&.strftime('%d %B %Y')}")
     expect(show_school_page).to have_text("Close date #{school.close_date&.strftime('%d %B %Y')}")
-    expect(show_school_page).to have_text("Is a training partner? #{lead_partner} Change")
+    expect(show_school_page).to have_text("Is a training partner? #{training_partner} Change")
   end
 
   def when_i_click_on_cancel
@@ -169,20 +169,20 @@ feature "Editing a School" do
     first(:link, "Change").click
   end
 
-  def and_i_see_the_school_edit_page(lead_partner:)
+  def and_i_see_the_school_edit_page(training_partner:)
     expect(edit_school_page).to have_text("Edit - Test 1")
-    expect(edit_school_page).to have_training_partner_radio_button_checked(lead_partner)
+    expect(edit_school_page).to have_training_partner_radio_button_checked(training_partner)
   end
 
-  def and_i_edit_the_school(lead_partner:)
-    edit_school_page.select_radio_button(lead_partner)
+  def and_i_edit_the_school(training_partner:)
+    edit_school_page.select_radio_button(training_partner)
   end
 
   def and_i_click_on_continue
     edit_school_page.continue_button.click
   end
 
-  def then_i_see_the_confirm_school_details_page(lead_partner:)
+  def then_i_see_the_confirm_school_details_page(training_partner:)
     expect(confirm_school_details_page).to be_displayed
     expect(confirm_school_details_page).to have_text("Name Test 1")
     expect(confirm_school_details_page).to have_text("URN #{school.urn}")
@@ -190,7 +190,7 @@ feature "Editing a School" do
     expect(confirm_school_details_page).to have_text("Postcode #{school.postcode}")
     expect(confirm_school_details_page).to have_text("Open date #{school.open_date&.strftime('%d %B %Y')}")
     expect(confirm_school_details_page).to have_text("Close date #{school.close_date&.strftime('%d %B %Y')}")
-    expect(confirm_school_details_page).to have_text("Is a training partner? #{lead_partner} Change")
+    expect(confirm_school_details_page).to have_text("Is a training partner? #{training_partner} Change")
   end
 
   def when_i_click_on_confirm
