@@ -25,7 +25,7 @@ module Schools
         course_age_range: [3, 11],
         itt_start_date: Date.new(2020, 0o1, 28),
         training_route: route,
-        lead_partner_school: mock_school,
+        training_partner_school: mock_school,
         employing_school: with_employing_school ? mock_school : nil,
       )
     end
