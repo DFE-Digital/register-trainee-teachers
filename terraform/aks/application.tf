@@ -46,7 +46,7 @@ module "worker_application" {
   cluster_configuration_map = module.cluster_data.configuration_map
 
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
-  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+  kubernetes_secret_name     = var.airbyte_enabled ? module.airbyte_application_configuration[0].kubernetes_secret_name : module.application_configuration.kubernetes_secret_name
 
   docker_image    = var.app_docker_image
   command         = each.value.startup_command
