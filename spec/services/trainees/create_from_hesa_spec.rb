@@ -105,7 +105,7 @@ module Trainees
           trainee.reload
         end
 
-        it "updates the trainee's lead_partner and training_partner_not_applicable state" do
+        it "updates the trainee's training_partner and training_partner_not_applicable state" do
           expect(trainee.training_partner.urn).to eq(student_attributes[:lead_partner_urn])
           expect(trainee.training_partner_not_applicable).to be false
         end
@@ -114,7 +114,7 @@ module Trainees
       context "when ukprn is from a formerly accredited HEI in academic year 2022" do
         let(:hesa_stub_attributes) { { ukprn: former_accredited_provider_ukprn } }
 
-        it "sets the correct accredited provider and lead partner" do
+        it "sets the correct accredited provider and training partner" do
           expect(trainee.provider.ukprn).to eq(former_accredited_provider_ukprn)
           expect(trainee.training_partner.urn).to eq(school.urn)
         end
@@ -128,7 +128,7 @@ module Trainees
           }
         end
 
-        it "sets the correct accredited provider and lead partner" do
+        it "sets the correct accredited provider and training partner" do
           expect(trainee.provider.ukprn).to eq(accredited_provider_ukprn)
           expect(trainee.training_partner.ukprn).to eq(former_accredited_provider_ukprn)
         end
@@ -173,7 +173,7 @@ module Trainees
           }
         end
 
-        it "marks the trainee's lead partner as not applicable" do
+        it "marks the trainee's training partner as not applicable" do
           expect(trainee.training_partner_not_applicable).to be(true)
         end
 
