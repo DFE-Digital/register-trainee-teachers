@@ -150,7 +150,7 @@ namespace :tech_docs do
     desc "Generate reference data docs from the Register reference data YAML files"
     task :generate_from_yaml do
       # TODO: The version dir should not be hardcoded
-      version_dir = "v2026-0"
+      version_dir = "v2026.0"
 
       FileUtils.mkdir_p("source/reference-data/#{version_dir}")
 
