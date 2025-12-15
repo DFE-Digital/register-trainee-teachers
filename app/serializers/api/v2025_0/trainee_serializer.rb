@@ -26,8 +26,8 @@ module Api
         placement_detail
         dttp_update_sha
         dormancy_dttp_id
-        lead_partner_id
-        lead_partner_not_applicable
+        training_partner_id
+        training_partner_not_applicable
         employing_school_id
         employing_school_not_applicable
         course_allocation_subject_id
