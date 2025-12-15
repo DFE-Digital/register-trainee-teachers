@@ -32,13 +32,13 @@ describe UserWithOrganisationContext do
 
       it { is_expected.to eq(user.providers.first) }
 
-      context "user has a lead partner and a provider" do
+      context "user has a training partner and a provider" do
         let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider], training_partners: [school_training_partner]) }
 
         it { is_expected.to eq(user.providers.first) }
       end
 
-      context "user has only a lead partner" do
+      context "user has only a training partner" do
         let(:user) { create(:user, id: 1, first_name: "Dave", providers: [], training_partners: [school_training_partner]) }
 
         it "raises not authorised" do
@@ -61,8 +61,8 @@ describe UserWithOrganisationContext do
           it { is_expected.to eq(provider) }
         end
 
-        context "lead partner is set in the session" do
-          let(:session) { { current_organisation: { id: school_training_partner.id, type: "LeadPartner" } } }
+        context "training partner is set in the session" do
+          let(:session) { { current_organisation: { id: school_training_partner.id, type: "TrainingPartner" } } }
 
           it { is_expected.to eq(school_training_partner) }
         end
@@ -78,7 +78,7 @@ describe UserWithOrganisationContext do
         it { is_expected.to eq(provider) }
       end
 
-      context "user has only one lead partner" do
+      context "user has only one training partner" do
         let(:user) { create(:user, id: 1, providers: [], training_partners: [school_training_partner]) }
 
         it { is_expected.to eq(school_training_partner) }
@@ -149,8 +149,8 @@ describe UserWithOrganisationContext do
           it { is_expected.to be(false) }
         end
 
-        context "lead partner is set in the session" do
-          let(:session) { { current_organisation: { id: school_training_partner.id, type: "LeadPartner" } } }
+        context "training partner is set in the session" do
+          let(:session) { { current_organisation: { id: school_training_partner.id, type: "TrainingPartner" } } }
 
           it { is_expected.to be(true) }
         end
@@ -295,7 +295,7 @@ describe UserWithOrganisationContext do
       end
     end
 
-    context "when the organisation is a lead partner" do
+    context "when the organisation is a training partner" do
       let(:user) { create(:user, id: 1, first_name: "Dave", training_partners: [hei_training_partner]) }
 
       it { is_expected.to be false }
@@ -333,7 +333,7 @@ describe UserWithOrganisationContext do
       end
     end
 
-    context "when the organisation is a lead partner" do
+    context "when the organisation is a training partner" do
       let(:user) { create(:user, id: 1, first_name: "Dave", training_partners: [hei_training_partner]) }
 
       it { is_expected.to be false }
@@ -364,7 +364,7 @@ describe UserWithOrganisationContext do
         end
       end
 
-      context "and the provider is an previously-accredited HEI that is now a Lead Partner" do
+      context "and the provider is a previously-accredited HEI that is now a Training Partner" do
         let!(:hei_training_partner) { create(:training_partner, :hei, provider:) }
         let!(:provider) { create(:provider, :hei, :unaccredited) }
         let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider]) }
@@ -383,14 +383,14 @@ describe UserWithOrganisationContext do
       end
     end
 
-    context "when the organisation is a lead partner" do
-      context "and the lead partner is an HEI" do
+    context "when the organisation is a training partner" do
+      context "and the training partner is an HEI" do
         let(:user) { create(:user, id: 1, first_name: "Dave", providers: [], training_partners: [hei_training_partner]) }
 
         it { is_expected.to be false }
       end
 
-      context "and the lead partner is not an HEI" do
+      context "and the training partner is not an HEI" do
         let(:user) { create(:user, id: 1, first_name: "Dave", providers: [], training_partners: [school_training_partner]) }
 
         it { is_expected.to be false }
