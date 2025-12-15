@@ -44,7 +44,7 @@ If a trainee’s expected end date is not in the period covered by the CSV file,
 
 The CSV file has a blank column for you to fill in the date when trainees gained QTS or EYTS. This may be different to the date when they finish their course or get an academic qualification.
 
-You can only change the status of trainee's who gained QTS or EYTS in the past 12 months. If a trainee gained QTS or EYTS longer ago, you need to change their information separately from within their trainee record.
+You can only change the status of trainees who gained QTS or EYTS in the past 12 months. If a trainee gained QTS or EYTS longer ago, you need to change their information separately from within their trainee record.
 
 If a trainee has not met the requirements, you can choose to either:
 
