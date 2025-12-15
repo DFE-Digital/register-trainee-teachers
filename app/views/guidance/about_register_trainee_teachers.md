@@ -20,7 +20,7 @@ Accredited providers can use Register to perform tasks for their trainees, such 
 * withdrawing or deferring trainees from their course
 * adding trainee placement data
 * getting a teacher reference number (TRN)
-* changing a trainees’ status to qualified teacher status (QTS) or early years teacher status (EYTS)
+* changing a trainee’s status to qualified teacher status (QTS) or early years teacher status (EYTS)
 
 Accredited providers can view funding information for the current academic year for eligible trainees. From the main navigation bar under ‘Funding’, you will see monthly payments paid and predicted to be paid for scholarships and bursaries.
 
