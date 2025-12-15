@@ -22,7 +22,7 @@ module Api
     module ClassMethods
       def attribute_mappings
         self.csv_field_mappings ||= begin
-          fields = YAML.load_file(CsvFields::View::FIELD_DEFINITION_PATH)
+          fields = YAML.load_file("BulkUpdate::AddTrainees::#{module_parent_name.demodulize}::ImportRows".constantize.fields_definition_path)
           fields.to_h do |field|
             [field["technical"].to_sym, field["field_name"]]
           end
