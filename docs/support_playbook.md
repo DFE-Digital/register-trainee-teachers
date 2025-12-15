@@ -104,7 +104,7 @@ status: 400, body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1",
 status: 400, body: {"title":"Teacher has no incomplete ITT record", "status":400, "errorCode":10005}
 ```
 
-* If this error came from the chanign status fro QTS job, then the trainee might be stuck in change status for gaining QTS state
+* If this error came from the changing status for QTS job, then the trainee might be stuck in change status for gaining QTS state
 * If everything matches on TRS’s side (trainee details, the provider) then you may be able to just change the trainees’ QTS status on Register’s side
 * If any doubt then check with the provider
 * We’ve also seen this error on the withdraw job - cross-reference with TRS and check with provider if necessary to see what state the trainee should be in
