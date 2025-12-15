@@ -259,7 +259,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user) }
     end
 
-    context "when the user is a lead partner user" do
+    context "when the user is a training partner user" do
       it { is_expected.not_to permit(training_partner_user) }
     end
   end

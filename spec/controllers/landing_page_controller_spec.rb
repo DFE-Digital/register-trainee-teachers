@@ -27,7 +27,7 @@ describe LandingPageController do
       expect(response).to render_template("home")
     end
 
-    context "lead partner user" do
+    context "training partner user" do
       render_views
 
       before do
