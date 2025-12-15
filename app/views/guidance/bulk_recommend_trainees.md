@@ -71,6 +71,6 @@ If you skip the errors, you’ll only be able to change the status of trainees w
 
 ### 5. Submit your changes
 
-After you submit your changes, the Department for Education will let rrainees know of thier status changes within 3-5 working days.
+After you submit your changes, the Department for Education will let trainees know of their status changes within 3-5 working days.
 
 Trainees will be sent an email to tell them that their certificates are available to download from the Access your Teacher Qualifications service.
