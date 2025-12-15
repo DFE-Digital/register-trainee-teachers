@@ -130,9 +130,9 @@ module BulkUpdate
       end
 
       def training_partner
-        return unless column_exists?(Reports::BulkRecommendReport::LEAD_PARTNER)
+        return unless column_exists?(Reports::BulkRecommendReport::TRAINING_PARTNER)
 
-        @messages << error_message(:training_partner) if trainee.training_partner_name&.downcase != row.lead_partner&.downcase
+        @messages << error_message(:training_partner) if trainee.training_partner_name&.downcase != row.training_partner&.downcase
       end
 
       def qts_or_eyts
