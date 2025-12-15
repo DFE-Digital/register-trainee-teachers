@@ -142,10 +142,10 @@ module Trainees
 
       if training_partner_mapping_needed?
         attrs.merge!(training_partner: TrainingPartner.find_by(ukprn: hesa_trainee[:ukprn]), training_partner_not_applicable: false)
-      elsif hesa_trainee[:lead_partner_urn].blank? || hesa_trainee[:lead_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
+      elsif hesa_trainee[:training_partner_urn].blank? || hesa_trainee[:training_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
         attrs.merge!(training_partner_not_applicable: true)
       else
-        attrs.merge!(training_partner: TrainingPartner.find_by(urn: hesa_trainee[:lead_partner_urn]), training_partner_not_applicable: false)
+        attrs.merge!(training_partner: TrainingPartner.find_by(urn: hesa_trainee[:training_partner_urn]), training_partner_not_applicable: false)
       end
 
       attrs
