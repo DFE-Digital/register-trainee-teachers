@@ -1121,7 +1121,7 @@
         ]
       },
       {
-        "name": "lead_partner_users",
+        "name": "training_partner_users",
         "syncMode": "incremental_append",
         "cursorField": [
           "_ab_cdc_lsn"
@@ -1154,7 +1154,7 @@
           },
           {
             "fieldPath": [
-              "lead_partner_id"
+              "training_partner_id"
             ]
           },
           {
@@ -1175,7 +1175,7 @@
         ]
       },
       {
-        "name": "lead_partners",
+        "name": "training_partners",
         "syncMode": "incremental_append",
         "cursorField": [
           "_ab_cdc_lsn"
@@ -2255,7 +2255,7 @@
           },
           {
             "fieldPath": [
-              "lead_partner_id"
+              "training_partner_id"
             ]
           },
           {
@@ -2265,7 +2265,7 @@
           },
           {
             "fieldPath": [
-              "lead_partner_not_applicable"
+              "training_partner_not_applicable"
             ]
           },
           {
