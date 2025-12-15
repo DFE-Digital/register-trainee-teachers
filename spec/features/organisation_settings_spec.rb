@@ -62,7 +62,7 @@ feature "Organisation details" do
     end
   end
 
-  context "when a User belongs to a Lead Partner organisation" do
+  context "when a User belongs to a Training Partner organisation" do
     let(:accreditation_id) { nil }
     let(:organisation) { create(:training_partner, :hei) }
     let(:user) { create(:user, training_partners: [organisation]) }

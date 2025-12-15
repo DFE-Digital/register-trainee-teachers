@@ -15,7 +15,7 @@ feature "create a new authentication token" do
     then_i_see_a_not_found_message
   end
 
-  scenario "when I am logged in as a lead partner the feature flag is on I CANNOT create a token", feature_token_management: true do
+  scenario "when I am logged in as a training partner the feature flag is on I CANNOT create a token", feature_token_management: true do
     given_i_am_authenticated_as_a_training_partner_user
     and_i_can_generate_an_authentication_token
 
