@@ -13,7 +13,7 @@ RSpec.describe ReferenceData::Type do
 
   describe "#display_name" do
     it "has the correct display_name value" do
-      expect(type.display_name).to eq("Trainee study mode")
+      expect(type.display_name).to eq("Study mode")
     end
   end
 
