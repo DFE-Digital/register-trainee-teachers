@@ -39,7 +39,7 @@ module BulkUpdate
           "ITT End Date" => "itt_end_date",
           "Course Age Range" => "course_age_range",
           "Course Year" => "course_year",
-          "Lead Partner URN" => "lead_partner_urn",
+          "Lead Partner URN" => "training_partner_urn",
           "Employing School URN" => "employing_school_urn",
           "Trainee Start Date" => "trainee_start_date",
           "PG Apprenticeship Start Date" => "pg_apprenticeship_start_date",

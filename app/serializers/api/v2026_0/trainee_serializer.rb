@@ -174,8 +174,8 @@ module Api
       def lead_partner_and_employing_school_attributes
         {
           employing_school_urn:,
-          lead_partner_ukprn:,
-          lead_partner_urn:,
+          training_partner_ukprn:,
+          training_partner_urn:,
         }
       end
 
@@ -183,11 +183,11 @@ module Api
         @trainee.employing_school&.urn
       end
 
-      def lead_partner_ukprn
+      def training_partner_ukprn
         @trainee.training_partner&.ukprn
       end
 
-      def lead_partner_urn
+      def training_partner_urn
         @trainee.training_partner&.urn
       end
 
