@@ -1,7 +1,7 @@
 metadata:
   source: "HESA"
-  name: "trainee_study_mode"
-  display_name: "Trainee study mode"
+  name: "study_mode"
+  display_name: "Study mode"
   change_log:
     - date: "2025-11-19"
       change: "Initial version"
