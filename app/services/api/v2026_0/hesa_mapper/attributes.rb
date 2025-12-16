@@ -26,9 +26,7 @@ module Api
         VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
         DISABILITY_PARAM_REGEX = /\Adisability\d+\z/
 
-        InvalidValue = Struct.new(:original_value) do
-          delegate :to_s, to: :original_value
-        end
+        InvalidValue = Api::HesaMapper::Attributes::InvalidValue
 
         def self.disability_attributes(params)
           params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
@@ -59,14 +57,14 @@ module Api
             course_study_mode:,
             application_choice_id:,
           })
-            .merge(course_attributes)
-            .merge(ethnicity_and_disability_attributes)
-            .merge(funding_attributes)
-            .merge(training_initiative_attributes)
-            .merge(training_partner_attributes)
-            .merge(employing_school_attributes)
-            .compact
-            .merge(params_with_allowed_nil_values)
+          .merge(course_attributes)
+          .merge(ethnicity_and_disability_attributes)
+          .merge(funding_attributes)
+          .merge(training_initiative_attributes)
+          .merge(training_partner_attributes)
+          .merge(employing_school_attributes)
+          .compact
+          .merge(params_with_allowed_nil_values)
 
           if update && !disabilities?
             mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure, :disabilities)
