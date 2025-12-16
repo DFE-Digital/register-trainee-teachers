@@ -389,13 +389,13 @@ weight: 1
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>lead_partner_urn</code></dt>
+    <dt class="govuk-summary-list__key"><code>training_partner_urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string (limited to 6 characters)
       </p>
       <p class="govuk-body">
-        The Unique Reference Number (URN) of the lead partner for the trainee.
+        The Unique Reference Number (URN) of the training partner for the trainee.
         Examples:
       </p>
       <ul>
@@ -413,7 +413,7 @@ weight: 1
       <p class="govuk-body">
        Note: The system validates the provided URN against the Register database.
         If the URN is not found in Register, the request will not return an error but the
-        lead partner association may not be established correctly.
+        training partner association may not be established correctly.
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
@@ -421,15 +421,15 @@ weight: 1
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>lead_partner_ukprn</code></dt>
+    <dt class="govuk-summary-list__key"><code>training_partner_ukprn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string (limited to 8 characters)
       </p>
       <p class="govuk-body">
-        The UK Provider Reference Number (UKPRN) of the lead partner for the trainee. If
-        <code>lead_partner_urn</code> and <code>lead_partner_ukprn</code> are both provided,
-        the <code>lead_partner_urn</code> will be used.
+        The UK Provider Reference Number (UKPRN) of the training partner for the trainee. If
+        <code>training_partner_urn</code> and <code>training_partner_ukprn</code> are both provided,
+        the <code>training_partner_urn</code> will be used.
       </p>
       <p class="govuk-body">
         Example: <code>12345678</code>
