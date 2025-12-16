@@ -159,7 +159,7 @@ class ReferenceDataGenerator2025
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: #{version_dir == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA }
+      hide_in_navigation: #{version == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA }
       ---
 
       # #{version_dir}
