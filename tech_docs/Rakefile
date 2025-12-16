@@ -163,7 +163,6 @@ class ReferenceDataGenerator2025
       ---
 
       # #{version_dir}
-
     METADATA
 
     app     = Middleman::Application.new
