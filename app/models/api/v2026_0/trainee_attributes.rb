@@ -457,7 +457,7 @@ module Api
 
       def validate_lead_partner
         if training_partner_id.is_a?(Api::HesaMapper::Attributes::InvalidValue)
-          errors.add(:lead_partner_id, :invalid, value: training_partner_id.to_s)
+          errors.add(:training_partner_id, :invalid, value: training_partner_id.to_s)
         end
       end
 

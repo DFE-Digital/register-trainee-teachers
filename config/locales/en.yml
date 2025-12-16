@@ -2179,7 +2179,6 @@ en:
               csv:
                 future: Enter a year that is in the past, for example 2014
                 invalid: Enter a valid graduation year
-
         api/v20260/trainee_attributes:
           attributes:
             inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
@@ -2213,11 +2212,9 @@ en:
             hesa_id:
               length: must be 13 or 17 characters
             training_partner_id:
-              invalid: is invalid. The URN '%{value}' does not match any known lead partners
+              invalid: is invalid. The URN '%{value}' does not match any known training partners
               csv:
                 invalid: Lead Partner URN is invalid. The URN '%{value}' does not match any known lead partners
-            lead_partner_id:
-              invalid: is invalid. The URN '%{value}' does not match any known lead partners
             employing_school_id:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:
