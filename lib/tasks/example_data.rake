@@ -206,7 +206,7 @@ namespace :example_data do
                   course_subject_one: course_subject_one,
                   course_subject_two: course_subject_two,
                   course_subject_three: course_subject_three,
-                  study_mode: ReferenceData::TRAINEE_STUDY_MODES.find(course.study_mode)&.name || ReferenceData::TRAINEE_STUDY_MODES.sample.name,
+                  study_mode: ReferenceData::STUDY_MODES.find(course.study_mode)&.name || ReferenceData::STUDY_MODES.sample.name,
                   course_min_age: course.min_age,
                   course_max_age: course.max_age,
                   itt_start_date: course.published_start_date,

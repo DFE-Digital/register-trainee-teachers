@@ -54,7 +54,7 @@ module BulkUpdate
         previous_last_name: Faker::Name.last_name,
         nationality: "GB",
         training_route: with_degree ? "03" : "11",
-        study_mode: ReferenceData::TRAINEE_STUDY_MODES.hesa_codes.sample,
+        study_mode: ReferenceData::STUDY_MODES.hesa_codes.sample,
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.keys.sample,
         sex: Hesa::CodeSets::Sexes::MAPPING.keys.sample,
         course_age_range: Hesa::CodeSets::AgeRanges::MAPPING.keys.sample,

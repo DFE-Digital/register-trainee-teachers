@@ -7,7 +7,7 @@ class StudyModesForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
-  validates :study_mode, inclusion: { in: ReferenceData::TRAINEE_STUDY_MODES.names }, if: :requires_study_mode?
+  validates :study_mode, inclusion: { in: ReferenceData::STUDY_MODES.names }, if: :requires_study_mode?
 
   def stash
     form = CourseDetailsForm.new(trainee)

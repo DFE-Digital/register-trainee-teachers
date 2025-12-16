@@ -221,12 +221,12 @@ RSpec.describe Api::V20250::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:study_mode]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{ReferenceData::TRAINEE_STUDY_MODES.hesa_codes.map { |v| "'#{v}'" }.join(', ')}/)
+          expect(subject.errors[:study_mode]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{ReferenceData::STUDY_MODES.hesa_codes.map { |v| "'#{v}'" }.join(', ')}/)
         }
       end
 
       context "when included in the list of HESA study modes" do
-        ReferenceData::TRAINEE_STUDY_MODES.names.each do |study_mode|
+        ReferenceData::STUDY_MODES.names.each do |study_mode|
           subject { described_class.new(study_mode:) }
 
           it "is expected to allow #{study_mode}" do

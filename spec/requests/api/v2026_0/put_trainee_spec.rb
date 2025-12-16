@@ -2305,7 +2305,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           itt_start_date: start_academic_cycle.start_date,
           itt_end_date: end_academic_cycle.end_date,
           course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[course_subject],
-          study_mode: ReferenceData::TRAINEE_STUDY_MODES.full_time.hesa_codes.last,
+          study_mode: ReferenceData::STUDY_MODES.full_time.hesa_codes.last,
           degrees_attributes: [
             {
               grade: "02",

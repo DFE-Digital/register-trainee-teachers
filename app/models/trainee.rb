@@ -237,7 +237,7 @@ class Trainee < ApplicationRecord
     Diversities::ETHNIC_GROUP_ENUMS[:not_provided] => 5,
   }
 
-  enum :study_mode, ReferenceData::Loader.instance.enum_values_for(:trainee_study_mode)
+  enum :study_mode, ReferenceData::Loader.instance.enum_values_for(:study_mode)
 
   enum :course_education_phase, {
     COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,

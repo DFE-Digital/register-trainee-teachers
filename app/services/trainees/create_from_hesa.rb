@@ -281,7 +281,7 @@ module Trainees
 
     # This field indicates the mode the student was reported on for the DfE census in their first year.
     def study_mode
-      ReferenceData::TRAINEE_STUDY_MODES.find_by_hesa_code(hesa_trainee[:mode])&.id
+      ReferenceData::STUDY_MODES.find_by_hesa_code(hesa_trainee[:mode])&.id
     end
 
     def course_age_range
