@@ -58,8 +58,8 @@ RSpec.describe Api::V20260::TraineeSerializer do
         course_itt_start_date
         course_age_range
         employing_school_urn
-        lead_partner_urn
-        lead_partner_ukprn
+        training_partner_urn
+        training_partner_ukprn
         fund_code
         course_year
         itt_aim
@@ -125,15 +125,15 @@ RSpec.describe Api::V20260::TraineeSerializer do
       end
     end
 
-    describe "lead partner attributes" do
+    describe "training partner attributes" do
       it "serializes the urn correctly" do
-        expect(json[:lead_partner_urn]).not_to be_nil
-        expect(json[:lead_partner_urn]).to eq(trainee.training_partner.urn)
+        expect(json[:training_partner_urn]).not_to be_nil
+        expect(json[:training_partner_urn]).to eq(trainee.training_partner.urn)
       end
 
       it "serializes the ukprn correctly" do
-        expect(json[:lead_partner_ukprn]).not_to be_nil
-        expect(json[:lead_partner_ukprn]).to eq(trainee.training_partner.ukprn)
+        expect(json[:training_partner_ukprn]).not_to be_nil
+        expect(json[:training_partner_ukprn]).to eq(trainee.training_partner.ukprn)
       end
     end
   end
