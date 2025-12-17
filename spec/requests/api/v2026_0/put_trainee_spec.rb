@@ -689,7 +689,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
       end
     end
 
-    context "with lead_partner_and_employing_school_attributes" do
+    context "with training_partner_and_employing_school_attributes" do
       before do
         put(
           endpoint,
@@ -698,29 +698,29 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         )
       end
 
-      context "when lead_partner_urn is blank and employing_school_urn is not applicable" do
+      context "when training_partner_urn is blank and employing_school_urn is not applicable" do
         let(:params) do
           {
             data: data.merge(
-              lead_partner_urn: "",
+              training_partner_urn: "",
               employing_school_urn: "900020",
             ),
           }
         end
 
-        it "sets the lead_partner_urn to nil and employing_school_urn to nil" do
-          expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+        it "sets the training_partner_urn to nil and employing_school_urn to nil" do
+          expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
           expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
         end
 
-        it "sets the lead_partner_not_applicable and employing_school_not_applicable to true" do
+        it "sets the training_partner_not_applicable and employing_school_not_applicable to true" do
           trainee.reload
 
           expect(trainee.training_partner_not_applicable).to be(true)
           expect(trainee.employing_school_not_applicable).to be(true)
         end
 
-        context "with existing lead_partner_not_applicable and employing_school_not_applicable set to true" do
+        context "with existing training_partner_not_applicable and employing_school_not_applicable set to true" do
           let(:trainee) do
             create(
               :trainee,
@@ -732,12 +732,12 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             )
           end
 
-          it "does not change lead_partner_urn and employing_school_urn" do
-            expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+          it "does not change training_partner_urn and employing_school_urn" do
+            expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
             expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
           end
 
-          it "does not change lead_partner_not_applicable and employing_school_not_applicable" do
+          it "does not change training_partner_not_applicable and employing_school_not_applicable" do
             trainee.reload
 
             expect(trainee.training_partner_not_applicable).to be(true)
@@ -748,19 +748,19 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         context "with enhanced errors" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
-          it "sets the lead_partner_urn to nil and employing_school_urn to nil" do
-            expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+          it "sets the training_partner_urn to nil and employing_school_urn to nil" do
+            expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
             expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
           end
 
-          it "sets the lead_partner_not_applicable and employing_school_not_applicable to true" do
+          it "sets the training_partner_not_applicable and employing_school_not_applicable to true" do
             trainee.reload
 
             expect(trainee.training_partner_not_applicable).to be(true)
             expect(trainee.employing_school_not_applicable).to be(true)
           end
 
-          context "with existing lead_partner_not_applicable and employing_school_not_applicable set to true" do
+          context "with existing training_partner_not_applicable and employing_school_not_applicable set to true" do
             let(:trainee) do
               create(
                 :trainee,
@@ -772,12 +772,12 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               )
             end
 
-            it "does not change lead_partner_urn and employing_school_urn" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+            it "does not change training_partner_urn and employing_school_urn" do
+              expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
-            it "does not change lead_partner_not_applicable and employing_school_not_applicable" do
+            it "does not change training_partner_not_applicable and employing_school_not_applicable" do
               trainee.reload
 
               expect(trainee.training_partner_not_applicable).to be(true)
@@ -787,23 +787,23 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         end
       end
 
-      context "when lead_partner_urn is present" do
-        context "when lead_partner_urn is not an applicable school urn" do
+      context "when training_partner_urn is present" do
+        context "when training_partner_urn is not an applicable school urn" do
           let(:params) do
             {
               data: data.merge(
-                lead_partner_urn: "900020",
+                training_partner_urn: "900020",
                 employing_school_urn: "",
               ),
             }
           end
 
-          it "sets lead_partner_urn to nil and employing_school_urn to nil" do
-            expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+          it "sets training_partner_urn to nil and employing_school_urn to nil" do
+            expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
             expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
           end
 
-          it "sets lead_partner_not_applicable to true and employing_school_not_applicable to true" do
+          it "sets training_partner_not_applicable to true and employing_school_not_applicable to true" do
             trainee.reload
 
             expect(trainee.training_partner_not_applicable).to be(true)
@@ -811,25 +811,25 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           end
         end
 
-        context "when lead_partner_urn is a new urn" do
+        context "when training_partner_urn is a new urn" do
           let(:params) do
             {
               data: data.merge(
-                lead_partner_urn: new_training_partner.urn,
+                training_partner_urn: new_training_partner.urn,
                 employing_school_urn: "",
               ),
             }
           end
 
-          context "when lead_partner exists" do
+          context "when training_partner exists" do
             let(:new_training_partner) { create(:training_partner, :school) }
 
-            it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(new_training_partner.urn)
+            it "sets training_partner_urn to training_partner#urn and employing_school_urn to nil" do
+              expect(response.parsed_body[:data][:training_partner_urn]).to eq(new_training_partner.urn)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
-            it "sets lead_partner_not_applicable to false and employing_school_not_applicable to true" do
+            it "sets training_partner_not_applicable to false and employing_school_not_applicable to true" do
               trainee.reload
 
               expect(trainee.training_partner_not_applicable).to be(false)
@@ -837,10 +837,10 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             end
           end
 
-          context "when lead_partner does not exist" do
+          context "when training_partner does not exist" do
             let(:new_training_partner) { build(:training_partner, :school) }
 
-            it "sets lead_partner_urn to nil and lead_partner_not_applicable to true" do
+            it "sets training_partner_urn to nil and training_partner_not_applicable to true" do
               expect(response).to have_http_status(:unprocessable_entity)
             end
           end
@@ -850,18 +850,18 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           let(:params) do
             {
               data: data.merge(
-                lead_partner_urn: "900020",
+                training_partner_urn: "900020",
                 employing_school_urn: "900030",
               ),
             }
           end
 
-          it "sets lead_partner_urn to nil and employing_school_urn to nil" do
-            expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+          it "sets training_partner_urn to nil and employing_school_urn to nil" do
+            expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
             expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
           end
 
-          it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
+          it "sets training_partner_not_applicable and employing_school_not_applicable to true" do
             trainee.reload
 
             expect(trainee.training_partner_not_applicable).to be(true)
@@ -873,7 +873,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           let(:params) do
             {
               data: data.merge(
-                lead_partner_urn: "900020",
+                training_partner_urn: "900020",
                 employing_school_urn: new_employing_school.urn,
               ),
             }
@@ -882,12 +882,12 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           context "when employing_school exists" do
             let(:new_employing_school) { create(:school) }
 
-            it "sets lead_partner_urn to nil and employing_school_urn to employing_school#urn" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+            it "sets training_partner_urn to nil and employing_school_urn to employing_school#urn" do
+              expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
               expect(response.parsed_body[:data][:employing_school_urn]).to eq(new_employing_school.urn)
             end
 
-            it "sets lead_partner_not_applicable to true and employing_school_not_applicable to false" do
+            it "sets training_partner_not_applicable to true and employing_school_not_applicable to false" do
               trainee.reload
 
               expect(trainee.training_partner_not_applicable).to be(true)
@@ -908,22 +908,22 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         context "with enhanced errors" do
           let(:enhanced_errors) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
-          context "when lead_partner_urn is not an applicable school urn" do
+          context "when training_partner_urn is not an applicable school urn" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_partner_urn: "900020",
+                  training_partner_urn: "900020",
                   employing_school_urn: "",
                 ),
               }
             end
 
-            it "sets lead_partner_urn to nil and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+            it "sets training_partner_urn to nil and employing_school_urn to nil" do
+              expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
-            it "sets lead_partner_not_applicable to true and employing_school_not_applicable to true" do
+            it "sets training_partner_not_applicable to true and employing_school_not_applicable to true" do
               trainee.reload
 
               expect(trainee.training_partner_not_applicable).to be(true)
@@ -931,25 +931,25 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             end
           end
 
-          context "when lead_partner_urn is a new urn" do
+          context "when training_partner_urn is a new urn" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_partner_urn: new_training_partner.urn,
+                  training_partner_urn: new_training_partner.urn,
                   employing_school_urn: "",
                 ),
               }
             end
 
-            context "when lead_partner exists" do
+            context "when training_partner exists" do
               let(:new_training_partner) { create(:training_partner, :school) }
 
-              it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
-                expect(response.parsed_body[:data][:lead_partner_urn]).to eq(new_training_partner.urn)
+              it "sets training_partner_urn to training_partner#urn and employing_school_urn to nil" do
+                expect(response.parsed_body[:data][:training_partner_urn]).to eq(new_training_partner.urn)
                 expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
               end
 
-              it "sets lead_partner_not_applicable to false and employing_school_not_applicable to true" do
+              it "sets training_partner_not_applicable to false and employing_school_not_applicable to true" do
                 trainee.reload
 
                 expect(trainee.training_partner_not_applicable).to be(false)
@@ -957,13 +957,13 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               end
             end
 
-            context "when lead_partner does not exist" do
+            context "when training_partner does not exist" do
               let(:new_training_partner) { build(:training_partner, :school) }
 
               it "returns an error" do
                 expect(response).to have_http_status(:unprocessable_entity)
                 expect(response.parsed_body["errors"]).to include(
-                  "lead_partner_id is invalid. The URN '#{new_training_partner.urn}' does not match any known lead partners",
+                  "training_partner_id is invalid. The URN '#{new_training_partner.urn}' does not match any known training partners",
                 )
               end
             end
@@ -973,18 +973,18 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_partner_urn: "900020",
+                  training_partner_urn: "900020",
                   employing_school_urn: "900030",
                 ),
               }
             end
 
-            it "sets lead_partner_urn to nil and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+            it "sets training_partner_urn to nil and employing_school_urn to nil" do
+              expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
-            it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
+            it "sets training_partner_not_applicable and employing_school_not_applicable to true" do
               trainee.reload
 
               expect(trainee.training_partner_not_applicable).to be(true)
@@ -996,7 +996,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_partner_urn: "900020",
+                  training_partner_urn: "900020",
                   employing_school_urn: new_employing_school.urn,
                 ),
               }
@@ -1005,12 +1005,12 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             context "when employing_school exists" do
               let(:new_employing_school) { create(:school) }
 
-              it "sets lead_partner_urn to nil and employing_school_urn to employing_school#urn" do
-                expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
+              it "sets training_partner_urn to nil and employing_school_urn to employing_school#urn" do
+                expect(response.parsed_body[:data][:training_partner_urn]).to be_nil
                 expect(response.parsed_body[:data][:employing_school_urn]).to eq(new_employing_school.urn)
               end
 
-              it "sets lead_partner_not_applicable to true and employing_school_not_applicable to false" do
+              it "sets training_partner_not_applicable to true and employing_school_not_applicable to false" do
                 trainee.reload
 
                 expect(trainee.training_partner_not_applicable).to be(true)
@@ -1028,7 +1028,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
                 )
               end
 
-              it "leaves lead_partner_not_applicable and employing_school_not_applicable unchanged" do
+              it "leaves training_partner_not_applicable and employing_school_not_applicable unchanged" do
                 trainee.reload
 
                 expect(trainee.training_partner_not_applicable).to be(false)

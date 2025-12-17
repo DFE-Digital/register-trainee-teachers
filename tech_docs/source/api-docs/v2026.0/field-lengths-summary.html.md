@@ -138,11 +138,11 @@ weight: 7
       <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Trainee.properties.lead_partner_urn.maxLength</th>
+      <th scope="row" class="govuk-table__header">Trainee.properties.training_partner_urn.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Trainee.properties.lead_partner_ukprn.maxLength</th>
+      <th scope="row" class="govuk-table__header">Trainee.properties.training_partner_ukprn.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">8</td>
     </tr>
     <tr class="govuk-table__row">
