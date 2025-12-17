@@ -258,7 +258,7 @@ private
   end
 
   def and_i_remain_on_the_change_upload_page
-    expect(recommendations_checks_show_page).to have_text("Change which trainees status is changing QTS or EYTS")
+    expect(recommendations_checks_show_page).to have_text("Change which trainees’ status is changing QTS or EYTS")
   end
 
   def and_i_see_a_list_of_trainees_to_check
