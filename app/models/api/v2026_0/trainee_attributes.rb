@@ -95,8 +95,6 @@ module Api
       attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
 
-      alias_method :lead_partner_id, :training_partner_id
-
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
       validate { |record| EmailFormatValidator.new(record).validate }
@@ -153,7 +151,7 @@ module Api
 
       validates :trainee_disabilities_attributes, uniqueness: true
 
-      validate :validate_lead_partner, unless: :training_partner_not_applicable
+      validate :validate_training_partner, unless: :training_partner_not_applicable
       validate :validate_employing_school, unless: :employing_school_not_applicable
 
       def initialize(new_attributes = {})
@@ -455,7 +453,7 @@ module Api
         Time.zone.now.year.next
       end
 
-      def validate_lead_partner
+      def validate_training_partner
         if training_partner_id.is_a?(Api::HesaMapper::Attributes::InvalidValue)
           errors.add(:training_partner_id, :invalid, value: training_partner_id.to_s)
         end
