@@ -4,7 +4,7 @@ class FixTraineeWithWrongFundingsMethodForGrant < ActiveRecord::Migration[6.1]
   def up
     all_early_years_subject_specialisms = AllocationSubject.find_by(name: "Early years ITT").subject_specialisms.pluck(:name)
 
-    early_years_salaried = ReferenceData::TRAINING_ROUTES.early_years_salarie.named
+    early_years_salaried = ReferenceData::TRAINING_ROUTES.early_years_salaried.named
 
     Trainee.where(applying_for_bursary: true, training_route: early_years_salaried, course_subject_one: all_early_years_subject_specialisms)
       .update_all(applying_for_bursary: nil, applying_for_grant: true)
