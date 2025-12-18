@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ReferenceData::Value do
-  let(:study_modes) { ReferenceData::Loader.instance.find("study_mode") }
+  let(:study_modes) { ReferenceData::Loader.instance.find("trainee_study_mode") }
   let(:training_routes) { ReferenceData::Loader.instance.find("training_route") }
 
   describe "#hesa_code" do
