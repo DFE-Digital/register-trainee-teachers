@@ -109,7 +109,7 @@ class ReferenceDataGenerator2026
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: #{version_dir == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA}
+      hide_in_navigation: #{version == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA}
       ---
 
       # #{version_dir}
@@ -124,7 +124,8 @@ class ReferenceDataGenerator2026
         html = context.partial(
           "partials/reference_data/attribute_from_yaml", locals: {
             version: version_dir,
-            formatted_type_name: reference_data_type.name,
+            name: reference_data_type.metadata.fetch("name"),
+            formatted_type_name: reference_data_type.formatted_type_name,
             type: reference_data_type.metadata,
             values: reference_data_type.type_values,
             index: index,
@@ -169,13 +170,13 @@ class ReferenceDataGenerator2025
     context = Middleman::TemplateContext.new(app, {})
 
     data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, _values|
-      field_name = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"].downcase
+      field_name = TechDocsHelpers.fields(version).detect { |field| field["technical"] == attribute }["field_name"].downcase
       words      = Regexp.union(TechDocsHelpers::WORDS_TO_NUMBERS.keys)
       field_name.gsub(words, TechDocsHelpers::WORDS_TO_NUMBERS)
     end.to_h
 
     data.each_with_index do |(attribute, values), index|
-      field               = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }
+      field               = TechDocsHelpers.fields(version).detect { |field| field["technical"] == attribute }
       formatted_attribute = attribute.gsub("_", "-")
 
       File.open("source/reference-data/#{version_dir}/#{formatted_attribute}.html.md", "w") do |f|
@@ -221,7 +222,6 @@ module TechDocsHelpers
     "ten" => 10,
   }.freeze
   FIRST_VERSION_WITH_NEW_REFERENCE_DATA = "V20260"
-
 
   def self.runner(runner_code)
     command = <<~CMD
