@@ -177,35 +177,16 @@ private
   end
 
   def available_record_sources
-    sources = {
-      "manual" => records_contain_manual_source?,
-      "apply" => records_contain_apply_source?,
-      "dttp" => records_contain_dttp_source?,
-      "hesa" => records_contain_hesa_source?,
-    }.select { |_, value| value == true }.keys
-
-    sources.delete("dttp") unless current_user.system_admin?
-    sources
+    @available_record_sources ||= begin
+                                    sources = policy_scope(trainee_search_scope).group(:record_source).count.keys.compact
+                                    sources.delete("dttp") unless current_user.system_admin?
+                                    sources << "hesa" if (sources & Trainee::HESA_SOURCES).any?
+                                    sources - Trainee::HESA_SOURCES
+                                  end
   end
 
   def show_source_filters?
     available_record_sources.size > 1
-  end
-
-  def records_contain_manual_source?
-    policy_scope(trainee_search_scope).manual_record.size.positive?
-  end
-
-  def records_contain_dttp_source?
-    policy_scope(trainee_search_scope).dttp_record.size.positive?
-  end
-
-  def records_contain_apply_source?
-    policy_scope(trainee_search_scope).with_apply_application.size.positive?
-  end
-
-  def records_contain_hesa_source?
-    policy_scope(trainee_search_scope).imported_from_hesa.size.positive?
   end
 
   def save_filter
