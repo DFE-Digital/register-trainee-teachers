@@ -142,11 +142,11 @@ locals {
   airbyte_app_secrets = merge(
     local.app_secrets,
     {
-    airbyte_configuration = var.airbyte_enabled ? jsonencode({
+    AIRBYTE_CONFIGURATION = var.airbyte_enabled ? jsonencode({
       SOURCE_ID      = module.airbyte[0].airbyte_source_id
       DESTINATION_ID = module.airbyte[0].airbyte_destination_id
       CONNECTION_ID  = module.airbyte[0].airbyte_connection_id
-      WORKSPACE_ID   = data.azurerm_key_vault_secret.airbyte_workspace_id[0].value
+      #WORKSPACE_ID   = data.azurerm_key_vault_secret.airbyte_workspace_id[0].value
     }) : null
     }
   )
