@@ -270,7 +270,7 @@ describe Trainee do
           middle_names: "James",
           last_name: "Smith",
           provider_trainee_id: "25/26-1",
-          trn: "5120560"
+          trn: "5120560",
         )
       end
 

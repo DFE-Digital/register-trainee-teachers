@@ -178,11 +178,11 @@ private
 
   def available_record_sources
     @available_record_sources ||= begin
-                                    sources = policy_scope(trainee_search_scope).group(:record_source).count.keys.compact
-                                    sources.delete("dttp") unless current_user.system_admin?
-                                    sources << "hesa" if (sources & Trainee::HESA_SOURCES).any?
-                                    sources - Trainee::HESA_SOURCES
-                                  end
+      sources = policy_scope(trainee_search_scope).group(:record_source).count.keys.compact
+      sources.delete("dttp") unless current_user.system_admin?
+      sources << "hesa" if sources.intersect?(Trainee::HESA_SOURCES)
+      sources - Trainee::HESA_SOURCES
+    end
   end
 
   def show_source_filters?
