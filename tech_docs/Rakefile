@@ -124,7 +124,7 @@ class ReferenceDataGenerator2026
         html = context.partial(
           "partials/reference_data/attribute_from_yaml", locals: {
             version: version_dir,
-            formatted_type_name: reference_data_type.formatted_type_name,
+            formatted_type_name: reference_data_type.name,
             type: reference_data_type.metadata,
             values: reference_data_type.type_values,
             index: index,
@@ -278,8 +278,6 @@ module TechDocsHelpers
     FileUtils.mv("temp_source", "source")
   end
 end
-<<<<<<< HEAD
-=======
 
 class ReferenceDataHelper
   include Enumerable
@@ -349,4 +347,3 @@ class ReferenceDataHelper
     end
   end
 end
->>>>>>> c796f8cca (WIP)
