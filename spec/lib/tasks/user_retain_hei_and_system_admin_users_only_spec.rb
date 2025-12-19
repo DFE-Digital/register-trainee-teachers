@@ -17,9 +17,9 @@ describe "user:retain_hei_and_system_admin_users_only" do
   let(:inactive_scitt_provider) { create(:provider, :scitt) }
   let(:unaccredited_scitt_provider) { create(:provider, :scitt, :unaccredited) }
 
-  let(:lead_partner_user_hei) { create(:lead_partner_user, lead_partner: build(:lead_partner, :hei)) }
-  let(:lead_partner_user_school) { create(:lead_partner_user, lead_partner: build(:lead_partner, :school)) }
-  let(:lead_partner_user_scitt) { create(:lead_partner_user, lead_partner: build(:lead_partner, :scitt)) }
+  let(:training_partner_user_hei) { create(:training_partner_user, training_partner: build(:training_partner, :hei)) }
+  let(:training_partner_user_school) { create(:training_partner_user, training_partner: build(:training_partner, :school)) }
+  let(:training_partner_user_scitt) { create(:training_partner_user, training_partner: build(:training_partner, :scitt)) }
 
   before do
     active_hei_provider
@@ -27,9 +27,9 @@ describe "user:retain_hei_and_system_admin_users_only" do
 
     user_with_no_provider
 
-    lead_partner_user_hei
-    lead_partner_user_school
-    lead_partner_user_scitt
+    training_partner_user_hei
+    training_partner_user_school
+    training_partner_user_scitt
 
     inactive_hei_provider.discard
     unaccredited_hei_provider
@@ -47,11 +47,11 @@ describe "user:retain_hei_and_system_admin_users_only" do
 
     expect(user_with_no_provider.reload.dfe_sign_in_uid).to be_blank
 
-    expect(lead_partner_user_hei.user.reload.dfe_sign_in_uid).to be_blank
-    expect(lead_partner_user_school.user.reload.dfe_sign_in_uid).to be_blank
-    expect(lead_partner_user_scitt.user.reload.dfe_sign_in_uid).to be_blank
+    expect(training_partner_user_hei.user.reload.dfe_sign_in_uid).to be_blank
+    expect(training_partner_user_school.user.reload.dfe_sign_in_uid).to be_blank
+    expect(training_partner_user_scitt.user.reload.dfe_sign_in_uid).to be_blank
 
-    expect(LeadPartnerUser.all.reload.count).to be_zero
+    expect(TrainingPartnerUser.all.reload.count).to be_zero
     expect(ProviderUser.all.reload.count).to eq(1)
 
     expect(inactive_hei_provider.users.reload.pluck(:dfe_sign_in_uid).compact).to be_blank

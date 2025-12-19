@@ -9,7 +9,7 @@
     <%= register_form_with model: @training_partner_form, url: trainee_training_partners_details_path(@trainee) do |f| %>
 
       <%= f.govuk_error_summary %>
-      <%= f.govuk_collection_radio_buttons :lead_partner_not_applicable,
+      <%= f.govuk_collection_radio_buttons :training_partner_not_applicable,
         @training_partner_form.training_partner_not_applicable_options,
         :id,
         :name,

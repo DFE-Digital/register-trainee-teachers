@@ -22,9 +22,9 @@ module Trainees
     let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
     let!(:second_disability) { create(:disability, name: second_disability_name) }
     let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
-    let(:former_accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys.sample }
-    let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn] }
-    let(:school) { create(:school, urn: student_attributes[:lead_partner_urn]) }
+    let(:former_accredited_provider_ukprn) { described_class::TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys.sample }
+    let(:accredited_provider_ukprn) { described_class::TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn] }
+    let(:school) { create(:school, urn: student_attributes[:training_partner_urn]) }
     let(:duplicate_trainees) { [] }
 
     let!(:course_allocation_subject) do
@@ -40,8 +40,8 @@ module Trainees
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:provider, ukprn: accredited_provider_ukprn)
-      create(:lead_partner, :hei, ukprn: former_accredited_provider_ukprn)
-      create(:lead_partner, :school, school:)
+      create(:training_partner, :hei, ukprn: former_accredited_provider_ukprn)
+      create(:training_partner, :school, school:)
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
     end
@@ -93,30 +93,30 @@ module Trainees
       end
 
       it "updates the trainee's school and training details" do
-        expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_partner_urn])
+        expect(trainee.training_partner.urn).to eq(student_attributes[:training_partner_urn])
         expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
       end
 
-      context "when lead_partner_not_applicable was previously set to true" do
+      context "when training_partner_not_applicable was previously set to true" do
         before do
-          trainee.update!(lead_partner_not_applicable: true, lead_partner_id: nil)
+          trainee.update!(training_partner_not_applicable: true, training_partner_id: nil)
           described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           trainee.reload
         end
 
-        it "updates the trainee's lead_partner and lead_partner_not_applicable state" do
-          expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_partner_urn])
-          expect(trainee.lead_partner_not_applicable).to be false
+        it "updates the trainee's training_partner and training_partner_not_applicable state" do
+          expect(trainee.training_partner.urn).to eq(student_attributes[:training_partner_urn])
+          expect(trainee.training_partner_not_applicable).to be false
         end
       end
 
       context "when ukprn is from a formerly accredited HEI in academic year 2022" do
         let(:hesa_stub_attributes) { { ukprn: former_accredited_provider_ukprn } }
 
-        it "sets the correct accredited provider and lead partner" do
+        it "sets the correct accredited provider and training partner" do
           expect(trainee.provider.ukprn).to eq(former_accredited_provider_ukprn)
-          expect(trainee.lead_partner.urn).to eq(school.urn)
+          expect(trainee.training_partner.urn).to eq(school.urn)
         end
       end
 
@@ -128,9 +128,9 @@ module Trainees
           }
         end
 
-        it "sets the correct accredited provider and lead partner" do
+        it "sets the correct accredited provider and training partner" do
           expect(trainee.provider.ukprn).to eq(accredited_provider_ukprn)
-          expect(trainee.lead_partner.ukprn).to eq(former_accredited_provider_ukprn)
+          expect(trainee.training_partner.ukprn).to eq(former_accredited_provider_ukprn)
         end
       end
 
@@ -168,13 +168,13 @@ module Trainees
 
         let(:hesa_stub_attributes) do
           {
-            lead_partner_urn: not_applicable_or_not_available_hesa_code,
+            training_partner_urn: not_applicable_or_not_available_hesa_code,
             employing_school_urn: establishment_outside_england_and_wales_hesa_code,
           }
         end
 
-        it "marks the trainee's lead partner as not applicable" do
-          expect(trainee.lead_partner_not_applicable).to be(true)
+        it "marks the trainee's training partner as not applicable" do
+          expect(trainee.training_partner_not_applicable).to be(true)
         end
 
         it "marks the trainee's employing school as not applicable" do

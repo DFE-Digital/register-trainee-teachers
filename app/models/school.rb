@@ -26,12 +26,12 @@ class School < ApplicationRecord
 
   before_save :update_searchable
 
-  has_one :lead_partner
+  has_one :training_partner
 
   has_many :funding_payment_schedules, class_name: "Funding::PaymentSchedule", as: :payable
   has_many :funding_trainee_summaries, class_name: "Funding::TraineeSummary", as: :payable
 
-  has_many :lead_partner_trainees, class_name: "Trainee", through: :lead_partner, source: :trainees
+  has_many :training_partner_trainees, class_name: "Trainee", through: :training_partner, source: :trainees
   has_many :employing_school_trainees, class_name: "Trainee", foreign_key: :employing_school_id, inverse_of: :employing_school
 
   has_many :placements
@@ -51,8 +51,8 @@ class School < ApplicationRecord
   validates :urn, presence: true, uniqueness: true
   validates :name, presence: true
 
-  def lead_partner?
-    lead_partner.present? && lead_partner.undiscarded?
+  def training_partner?
+    training_partner.present? && training_partner.undiscarded?
   end
 
 private

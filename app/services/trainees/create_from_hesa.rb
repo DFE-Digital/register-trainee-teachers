@@ -14,8 +14,8 @@ module Trainees
 
     MIN_NUMBER_OF_DAYS_SUGGESTING_COURSE_CHANGE = 30
 
-    LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING_START_YEAR = 2024
-    LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING = {
+    TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING_START_YEAR = 2024
+    TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING = {
       "10006841" => "10000571", # University of Bolton => Bath Spa University
       "10000961" => "10000571", # Brunel University => Bath Spa University
       "10007146" => "10007851", # University of Greenwich => University of Derby
@@ -77,7 +77,7 @@ module Trainees
        .merge(course_attributes)
        .merge(submitted_for_trn_attributes)
        .merge(funding_attributes)
-       .merge(lead_partner_attributes)
+       .merge(training_partner_attributes)
        .merge(employing_school_attributes)
        .merge(training_initiative_attributes)
        .merge(apply_attributes)
@@ -124,8 +124,8 @@ module Trainees
     end
 
     def provider_attributes
-      provider = if lead_partner_mapping_needed?
-                   Provider.find_by(ukprn: LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[hesa_trainee[:ukprn]])
+      provider = if training_partner_mapping_needed?
+                   Provider.find_by(ukprn: TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[hesa_trainee[:ukprn]])
                  else
                    Provider.find_by(ukprn: hesa_trainee[:ukprn])
                  end
@@ -137,15 +137,15 @@ module Trainees
       { submitted_for_trn_at: Time.zone.now }
     end
 
-    def lead_partner_attributes
+    def training_partner_attributes
       attrs = {}
 
-      if lead_partner_mapping_needed?
-        attrs.merge!(lead_partner: LeadPartner.find_by(ukprn: hesa_trainee[:ukprn]), lead_partner_not_applicable: false)
-      elsif hesa_trainee[:lead_partner_urn].blank? || hesa_trainee[:lead_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
-        attrs.merge!(lead_partner_not_applicable: true)
+      if training_partner_mapping_needed?
+        attrs.merge!(training_partner: TrainingPartner.find_by(ukprn: hesa_trainee[:ukprn]), training_partner_not_applicable: false)
+      elsif hesa_trainee[:training_partner_urn].blank? || hesa_trainee[:training_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
+        attrs.merge!(training_partner_not_applicable: true)
       else
-        attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_partner_urn]), lead_partner_not_applicable: false)
+        attrs.merge!(training_partner: TrainingPartner.find_by(urn: hesa_trainee[:training_partner_urn]), training_partner_not_applicable: false)
       end
 
       attrs
@@ -340,9 +340,9 @@ module Trainees
       %i[awarded withdrawn].include?(trainee.state.to_sym)
     end
 
-    def lead_partner_mapping_needed?
-      hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys) &&
-        start_academic_year >= LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING_START_YEAR
+    def training_partner_mapping_needed?
+      hesa_trainee[:ukprn].in?(TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys) &&
+        start_academic_year >= TRAINING_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING_START_YEAR
     end
   end
 end

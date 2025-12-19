@@ -81,7 +81,7 @@ feature "bulk add trainees" do
 
   context "when the feature flag is on", feature_bulk_add_trainees: true do
     context "when the User is not a Provider" do
-      let(:user) { create(:user, :with_lead_partner_organisation) }
+      let(:user) { create(:user, :with_training_partner_organisation) }
 
       before do
         given_i_am_authenticated(user:)
@@ -395,7 +395,7 @@ feature "bulk add trainees" do
       end
 
       scenario "the bulk add trainees page is visible and I upload a file with lead partners" do
-        when_lead_partners_exist
+        when_training_partners_exist
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file_with_lead_partners
@@ -719,10 +719,10 @@ private
     end
   end
 
-  def when_lead_partners_exist
-    create(:lead_partner, :hei, name: "University of Sussex", urn: 133795)
-    create(:lead_partner, :hei, name: "University of Cumbria", urn: 135398)
-    create(:lead_partner, :scitt, name: "Leeds SCITT", urn: 133838)
+  def when_training_partners_exist
+    create(:training_partner, :hei, name: "University of Sussex", urn: 133795)
+    create(:training_partner, :hei, name: "University of Cumbria", urn: 135398)
+    create(:training_partner, :scitt, name: "Leeds SCITT", urn: 133838)
   end
 
   def when_an_upload_exist

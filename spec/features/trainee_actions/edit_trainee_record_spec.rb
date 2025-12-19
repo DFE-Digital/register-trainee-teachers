@@ -22,7 +22,7 @@ feature "edit trainee record" do
     scenario "viewing the trainee's school details,", "feature_routes.school_direct_salaried": true do
       given_a_trainee_exists(:school_direct_salaried)
       and_i_am_on_the_trainee_record_page
-      then_i_see_the_lead_partner_and_employing_school_details
+      then_i_see_the_training_partner_and_employing_school_details
     end
   end
 
@@ -79,7 +79,7 @@ feature "edit trainee record" do
     expect(record_page).to have_degree_detail
   end
 
-  def then_i_see_the_lead_partner_and_employing_school_details
+  def then_i_see_the_training_partner_and_employing_school_details
     expect(record_page).to have_school_detail
   end
 end

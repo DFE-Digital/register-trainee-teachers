@@ -140,7 +140,7 @@ shared:
     - age_range
     - subject
     - matched_trainee_id
-    - lead_partner
+    - training_partner
   bulk_update_recommendations_uploads:
     - id
     - created_at
@@ -299,9 +299,9 @@ shared:
     - cohort_level
     - created_at
     - updated_at
-    - lead_partner_urn
+    - training_partner_urn
     - training_route
-    - lead_partner_name
+    - training_partner_name
   funding_uploads:
     - id
     - month
@@ -385,7 +385,7 @@ shared:
     - itt_start_date
     - trainee_start_date
     - provider_trainee_id
-    - lead_partner_urn
+    - training_partner_urn
   hesa_trainee_details:
     - id
     - trainee_id
@@ -417,7 +417,7 @@ shared:
   school_data_downloads:
     - id
     - completed_at
-    - lead_partners_updated
+    - training_partners_updated
     - schools_created
     - schools_deleted
     - schools_updated

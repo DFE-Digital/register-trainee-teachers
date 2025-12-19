@@ -9,21 +9,21 @@ feature "add training partner and employing school" do
     given_i_am_authenticated
   end
 
-  scenario "add a lead partner and employing school", "feature_routes.school_direct_salaried": true do
+  scenario "add a training partner and employing school", "feature_routes.school_direct_salaried": true do
     given_training_partner_and_employing_school_exist_in_the_system
     given_a_trainee_exists(:school_direct_salaried)
     and_i_am_on_the_trainee_record_page
-    then_i_see_the_lead_partner_and_employing_school_details
-    when_i_click_on_the_lead_partner_and_employing_schools
-    and_i_see_the_edit_lead_partner_details_page
-    and_i_see_the_not_applicable_lead_partner_radio_option(false)
-    and_i_choose_the_not_applicable_lead_partner_option(false)
+    then_i_see_the_training_partner_and_employing_school_details
+    when_i_click_on_the_training_partner_and_employing_schools
+    and_i_see_the_edit_training_partner_details_page
+    and_i_see_the_not_applicable_training_partner_radio_option(false)
+    and_i_choose_the_not_applicable_training_partner_option(false)
     and_i_click_on_continue
-    then_i_see_the_lead_partner_edit_page
-    when_i_fill_in_my_lead_partner
+    then_i_see_the_training_partner_edit_page
+    when_i_fill_in_my_training_partner
     and_i_click_on_continue
-    then_i_see_the_lead_partner_search_page
-    when_i_choose_a_lead_partner
+    then_i_see_the_training_partner_search_page
+    when_i_choose_a_training_partner
     and_i_click_on_continue
     then_i_see_the_edit_employing_school_details_page
     and_i_see_the_not_applicable_employing_school_radio_option(false)
@@ -36,30 +36,30 @@ feature "add training partner and employing school" do
     when_i_choose_an_employing_school
     and_i_click_on_continue
     then_i_see_the_confirm_my_details_page
-    when_i_click_on_change_lead_partner
-    and_i_see_the_not_applicable_lead_partner_radio_option(false)
-    and_i_choose_the_not_applicable_lead_partner_option(true)
+    when_i_click_on_change_training_partner
+    and_i_see_the_not_applicable_training_partner_radio_option(false)
+    and_i_choose_the_not_applicable_training_partner_option(true)
     and_i_click_on_continue
     then_i_see_the_confirm_my_details_page
     when_i_confirm_my_details
     then_the_training_partner_and_employing_schools_section_is_marked_completed
   end
 
-  scenario "add a lead partner", "feature_routes.school_direct_salaried": true do
+  scenario "add a training partner", "feature_routes.school_direct_salaried": true do
     given_training_partner_and_employing_school_exist_in_the_system
     given_a_trainee_exists(:school_direct_salaried)
     and_i_am_on_the_trainee_record_page
-    then_i_see_the_lead_partner_and_employing_school_details
-    when_i_click_on_the_lead_partner_and_employing_schools
-    and_i_see_the_edit_lead_partner_details_page
-    and_i_see_the_not_applicable_lead_partner_radio_option(false)
-    and_i_choose_the_not_applicable_lead_partner_option(false)
+    then_i_see_the_training_partner_and_employing_school_details
+    when_i_click_on_the_training_partner_and_employing_schools
+    and_i_see_the_edit_training_partner_details_page
+    and_i_see_the_not_applicable_training_partner_radio_option(false)
+    and_i_choose_the_not_applicable_training_partner_option(false)
     and_i_click_on_continue
-    then_i_see_the_lead_partner_edit_page
-    when_i_fill_in_my_lead_partner
+    then_i_see_the_training_partner_edit_page
+    when_i_fill_in_my_training_partner
     and_i_click_on_continue
-    then_i_see_the_lead_partner_search_page
-    when_i_choose_a_lead_partner
+    then_i_see_the_training_partner_search_page
+    when_i_choose_a_training_partner
     and_i_click_on_continue
     then_i_see_the_edit_employing_school_details_page
     and_i_see_the_not_applicable_employing_school_radio_option(false)
@@ -78,16 +78,16 @@ feature "add training partner and employing school" do
     given_training_partner_and_employing_school_exist_in_the_system
     given_a_trainee_exists(:school_direct_salaried)
     and_i_am_on_the_trainee_record_page
-    then_i_see_the_lead_partner_and_employing_school_details
-    when_i_click_on_the_lead_partner_and_employing_schools
-    and_i_see_the_edit_lead_partner_details_page
-    and_i_see_the_not_applicable_lead_partner_radio_option(false)
-    and_i_choose_the_not_applicable_lead_partner_option(true)
+    then_i_see_the_training_partner_and_employing_school_details
+    when_i_click_on_the_training_partner_and_employing_schools
+    and_i_see_the_edit_training_partner_details_page
+    and_i_see_the_not_applicable_training_partner_radio_option(false)
+    and_i_choose_the_not_applicable_training_partner_option(true)
     and_i_click_on_continue
     then_i_see_the_edit_employing_school_details_page
-    when_i_try_to_visit_the_lead_partner_edit_page_by_url
-    then_i_see_the_edit_lead_partner_details_page
-    and_i_choose_the_not_applicable_lead_partner_option(true)
+    when_i_try_to_visit_the_training_partner_edit_page_by_url
+    then_i_see_the_edit_training_partner_details_page
+    and_i_choose_the_not_applicable_training_partner_option(true)
     and_i_click_on_continue
     and_i_see_the_not_applicable_employing_school_radio_option(false)
     and_i_choose_the_not_applicable_employing_school_option(false)
@@ -103,11 +103,11 @@ feature "add training partner and employing school" do
     then_the_training_partner_and_employing_schools_section_is_marked_completed
   end
 
-  def then_i_see_the_lead_partner_and_employing_school_details
+  def then_i_see_the_training_partner_and_employing_school_details
     expect(record_page).to have_school_detail
   end
 
-  def and_i_see_the_edit_lead_partner_details_page
+  def and_i_see_the_edit_training_partner_details_page
     expect(edit_trainee_training_partner_details_page).to be_displayed
     expect(edit_trainee_training_partner_details_page).to have_content(
       "Is there a training partner?",
@@ -117,11 +117,11 @@ feature "add training partner and employing school" do
     )
   end
 
-  def and_i_see_the_not_applicable_lead_partner_radio_option(value)
+  def and_i_see_the_not_applicable_training_partner_radio_option(value)
     expect(edit_trainee_training_partner_details_page).to have_training_partner_radio_button_checked(value)
   end
 
-  def and_i_choose_the_not_applicable_lead_partner_option(value)
+  def and_i_choose_the_not_applicable_training_partner_option(value)
     edit_trainee_training_partner_details_page.select_radio_button(value)
   end
 
@@ -129,7 +129,7 @@ feature "add training partner and employing school" do
     edit_trainee_training_partner_details_page.continue_button.click
   end
 
-  def then_i_see_the_lead_partner_edit_page
+  def then_i_see_the_training_partner_edit_page
     expect(edit_training_partner_page).to be_displayed
     expect(edit_training_partner_page).to have_content(
       "The training partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.",
@@ -153,23 +153,23 @@ feature "add training partner and employing school" do
     )
   end
 
-  def then_i_see_the_lead_partner_search_page
+  def then_i_see_the_training_partner_search_page
     expect(training_partners_search_page).to be_displayed
   end
 
-  def when_i_fill_in_my_lead_partner
+  def when_i_fill_in_my_training_partner
     edit_training_partner_page.training_partner.fill_in with: @training_partner.name.split.first
   end
 
-  def when_i_click_on_the_lead_partner_and_employing_schools
+  def when_i_click_on_the_training_partner_and_employing_schools
     review_draft_page.training_partner_and_employing_schools_section.link.click
   end
 
-  def when_i_type_the_lead_partner_name
+  def when_i_type_the_training_partner_name
     training_partners_search_page.choose_training_partner(id: @training_partner.id)
   end
 
-  def when_i_choose_a_lead_partner
+  def when_i_choose_a_training_partner
     training_partners_search_page.choose_training_partner(id: @training_partner.id)
   end
 
@@ -234,7 +234,7 @@ feature "add training partner and employing school" do
     expect(review_draft_page).to have_training_partner_and_employing_school_information_completed
   end
 
-  def when_i_click_on_change_lead_partner
+  def when_i_click_on_change_training_partner
     confirm_details_page.change.click
   end
 
@@ -242,14 +242,14 @@ feature "add training partner and employing school" do
     employing_schools_search_page.load(trainee_id: trainee.slug)
   end
 
-  def when_i_try_to_visit_the_lead_partner_edit_page_by_url
+  def when_i_try_to_visit_the_training_partner_edit_page_by_url
     edit_training_partner_page.load(trainee_id: trainee.slug)
   end
 
-  alias_method :then_i_see_the_edit_lead_partner_details_page, :and_i_see_the_edit_lead_partner_details_page
+  alias_method :then_i_see_the_edit_training_partner_details_page, :and_i_see_the_edit_training_partner_details_page
 
   def given_training_partner_and_employing_school_exist_in_the_system
-    @training_partner = create(:lead_partner, :school)
+    @training_partner = create(:training_partner, :school)
     @employing_school = create(:school)
   end
 end

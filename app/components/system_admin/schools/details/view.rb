@@ -5,7 +5,7 @@ module SystemAdmin
     module Details
       class View < ApplicationComponent
         attr_reader :school_entity
-        delegate :lead_partner?, to: :school_entity
+        delegate :training_partner?, to: :school_entity
 
         def initialize(school_entity)
           @school_entity = school_entity

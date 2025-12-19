@@ -21,7 +21,7 @@
       <%= render TaskList::View.new do |component|
             component.with_row(**row_helper(@trainee, :training_details))
 
-            if @trainee.requires_lead_partner?
+            if @trainee.requires_training_partner?
               component.with_row(**row_helper(@trainee, :training_partner_and_employing_school_details))
             end
 

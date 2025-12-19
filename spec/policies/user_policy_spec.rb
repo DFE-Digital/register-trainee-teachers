@@ -14,20 +14,20 @@ describe UserPolicy do
   let(:provider_admin_user) { create(:user, providers: [provider], system_admin: true) }
   let(:provider_admin_user_context) { UserWithOrganisationContext.new(user: provider_admin_user, session: {}) }
 
-  let(:lead_partner) { create(:lead_partner, :school) }
+  let(:training_partner) { create(:training_partner, :school) }
 
-  let(:lead_partner_user) { create(:user, :with_lead_partner_organisation, lead_partners: [lead_partner]) }
-  let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
+  let(:training_partner_user) { create(:user, :with_training_partner_organisation, training_partners: [training_partner]) }
+  let(:training_partner_user_context) { UserWithOrganisationContext.new(user: training_partner_user, session: {}) }
 
-  let(:lead_partner_admin_user) { create(:user, :with_lead_partner_organisation, system_admin: true, lead_partners: [lead_partner]) }
-  let(:lead_partner_admin_user_context) { UserWithOrganisationContext.new(user: lead_partner_admin_user, session: {}) }
+  let(:training_partner_admin_user) { create(:user, :with_training_partner_organisation, system_admin: true, training_partners: [training_partner]) }
+  let(:training_partner_admin_user_context) { UserWithOrganisationContext.new(user: training_partner_admin_user, session: {}) }
 
   context "when drafts?, reports?" do
     permissions :drafts?, :reports? do
       it { is_expected.to permit(provider_user_context) }
-      it { is_expected.to permit(lead_partner_admin_user_context) }
+      it { is_expected.to permit(training_partner_admin_user_context) }
 
-      it { is_expected.not_to permit(lead_partner_user_context) }
+      it { is_expected.not_to permit(training_partner_user_context) }
     end
   end
 
@@ -36,15 +36,15 @@ describe UserPolicy do
       it { is_expected.to permit(provider_user_context) }
 
       it { is_expected.not_to permit(provider_admin_user_context) }
-      it { is_expected.not_to permit(lead_partner_admin_user_context) }
-      it { is_expected.not_to permit(lead_partner_user_context) }
+      it { is_expected.not_to permit(training_partner_admin_user_context) }
+      it { is_expected.not_to permit(training_partner_user_context) }
     end
   end
 
-  context "when lead_partner_user?" do
-    permissions :lead_partner_user? do
-      it { is_expected.to permit(lead_partner_user_context) }
-      it { is_expected.to permit(lead_partner_admin_user_context) }
+  context "when training_partner_user?" do
+    permissions :training_partner_user? do
+      it { is_expected.to permit(training_partner_user_context) }
+      it { is_expected.to permit(training_partner_admin_user_context) }
 
       it { is_expected.not_to permit(provider_user_context) }
       it { is_expected.not_to permit(provider_admin_user_context) }
@@ -59,9 +59,9 @@ describe UserPolicy do
       it { is_expected.to permit(system_admin_user_context) }
 
       it { is_expected.not_to permit(provider_user_context) }
-      it { is_expected.not_to permit(lead_partner_user_context) }
+      it { is_expected.not_to permit(training_partner_user_context) }
       it { is_expected.not_to permit(provider_admin_user_context) }
-      it { is_expected.not_to permit(lead_partner_admin_user_context) }
+      it { is_expected.not_to permit(training_partner_admin_user_context) }
     end
   end
 
@@ -75,8 +75,8 @@ describe UserPolicy do
         it { is_expected.to permit(provider_user_context) }
         it { is_expected.to permit(provider_admin_user_context) }
 
-        it { is_expected.not_to permit(lead_partner_user_context) }
-        it { is_expected.not_to permit(lead_partner_admin_user_context) }
+        it { is_expected.not_to permit(training_partner_user_context) }
+        it { is_expected.not_to permit(training_partner_admin_user_context) }
       end
 
       context "outside performance profile sign off period" do
@@ -84,8 +84,8 @@ describe UserPolicy do
           allow(DetermineSignOffPeriod).to receive(:call).and_return(:outside_period)
         end
 
-        it { is_expected.not_to permit(lead_partner_user_context) }
-        it { is_expected.not_to permit(lead_partner_admin_user_context) }
+        it { is_expected.not_to permit(training_partner_user_context) }
+        it { is_expected.not_to permit(training_partner_admin_user_context) }
 
         it { is_expected.not_to permit(provider_user_context) }
         it { is_expected.not_to permit(provider_admin_user_context) }
@@ -104,8 +104,8 @@ describe UserPolicy do
           it { is_expected.not_to permit(provider_user_context) }
           it { is_expected.not_to permit(provider_admin_user_context) }
 
-          it { is_expected.not_to permit(lead_partner_user_context) }
-          it { is_expected.not_to permit(lead_partner_admin_user_context) }
+          it { is_expected.not_to permit(training_partner_user_context) }
+          it { is_expected.not_to permit(training_partner_admin_user_context) }
         end
 
         context "when the performance profile has been signed off" do
@@ -116,8 +116,8 @@ describe UserPolicy do
           it { is_expected.to permit(provider_user_context) }
           it { is_expected.to permit(provider_admin_user_context) }
 
-          it { is_expected.not_to permit(lead_partner_user_context) }
-          it { is_expected.not_to permit(lead_partner_admin_user_context) }
+          it { is_expected.not_to permit(training_partner_user_context) }
+          it { is_expected.not_to permit(training_partner_admin_user_context) }
         end
       end
 
@@ -127,8 +127,8 @@ describe UserPolicy do
           allow(DetermineSignOffPeriod).to receive(:call).and_return(:outside_period)
         end
 
-        it { is_expected.not_to permit(lead_partner_user_context) }
-        it { is_expected.not_to permit(lead_partner_admin_user_context) }
+        it { is_expected.not_to permit(training_partner_user_context) }
+        it { is_expected.not_to permit(training_partner_admin_user_context) }
 
         it { is_expected.not_to permit(provider_user_context) }
         it { is_expected.not_to permit(provider_admin_user_context) }

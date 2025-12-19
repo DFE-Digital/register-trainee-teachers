@@ -16,8 +16,8 @@ class TraineePolicy
     attr_reader :user, :scope
 
     def user_scope
-      if user.lead_partner?
-        lead_partner_scope
+      if user.training_partner?
+        training_partner_scope
       else
         provider_scope
       end
@@ -27,14 +27,14 @@ class TraineePolicy
       scope.where(provider_id: user.organisation.id).kept
     end
 
-    def lead_partner_scope
-      scope.where(lead_partner_id: user.organisation.id).kept
+    def training_partner_scope
+      scope.where(training_partner_id: user.organisation.id).kept
     end
   end
 
   attr_reader :user, :trainee, :training_route_manager
 
-  delegate :requires_lead_partner?,
+  delegate :requires_training_partner?,
            :requires_employing_school?,
            :requires_itt_start_date?,
            to: :training_route_manager
@@ -90,7 +90,7 @@ class TraineePolicy
   end
 
   def hide_progress_tag?
-    user.lead_partner?
+    user.training_partner?
   end
 
   def allow_actions?
@@ -120,7 +120,7 @@ private
   def read?
     user_is_system_admin? ||
       user_in_provider_context? ||
-      user_in_lead_partner_context?
+      user_in_training_partner_context?
   end
 
   def write?
@@ -141,10 +141,10 @@ private
     user&.read_only
   end
 
-  def user_in_lead_partner_context?
-    return false if trainee.lead_partner.nil?
+  def user_in_training_partner_context?
+    return false if trainee.training_partner.nil?
 
-    user&.organisation == trainee.lead_partner
+    user&.organisation == trainee.training_partner
   end
 
   def user_is_system_admin?

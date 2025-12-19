@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: lead_partners
+# Table name: training_partners
 #
 #  id           :bigint           not null, primary key
 #  discarded_at :datetime
@@ -17,19 +17,19 @@
 #
 # Indexes
 #
-#  index_lead_partners_on_discarded_at  (discarded_at)
-#  index_lead_partners_on_name          (name)
-#  index_lead_partners_on_provider_id   (provider_id) UNIQUE
-#  index_lead_partners_on_school_id     (school_id) UNIQUE
-#  index_lead_partners_on_ukprn         (ukprn) UNIQUE
-#  index_lead_partners_on_urn           (urn) UNIQUE
+#  index_training_partners_on_discarded_at  (discarded_at)
+#  index_training_partners_on_name          (name)
+#  index_training_partners_on_provider_id   (provider_id) UNIQUE
+#  index_training_partners_on_school_id     (school_id) UNIQUE
+#  index_training_partners_on_ukprn         (ukprn) UNIQUE
+#  index_training_partners_on_urn           (urn) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (school_id => schools.id)
 #
-class LeadPartner < ApplicationRecord
+class TrainingPartner < ApplicationRecord
   include Discard::Model
 
   RECORD_TYPES = [
@@ -42,8 +42,8 @@ class LeadPartner < ApplicationRecord
   belongs_to :school, optional: true
   belongs_to :provider, optional: true
 
-  has_many :lead_partner_users, inverse_of: :lead_partner
-  has_many :users, through: :lead_partner_users
+  has_many :training_partner_users, inverse_of: :training_partner
+  has_many :users, through: :training_partner_users
   has_many :trainees
 
   validates :urn, presence: true, if: -> { school? }, uniqueness: { case_sensitive: false, allow_nil: true }

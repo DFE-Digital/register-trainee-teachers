@@ -94,7 +94,7 @@ en:
           title: Grants breakdown
       column_headings:
         amount_per_trainee: Amount per trainee
-        lead_partner: Training partner
+        training_partner: Training partner
         payment_type: Payment type
         route_and_course: Route and course
         route: Route
@@ -109,7 +109,7 @@ en:
   schools:
     view:
       summary_title: Training partners
-      lead_partner: &lead_partner Training partner
+      training_partner: &training_partner Training partner
       employing_school: &employing_school Employing school
   record_details:
     view:
@@ -385,8 +385,8 @@ en:
         index: Upload funding information
         confirmation: File processed successfully
         new:
-          lead_partner_trainee_summary: Upload training partner trainee funding payments
-          lead_partner_payment_schedule: Upload training partner funding payments
+          training_partner_trainee_summary: Upload training partner trainee funding payments
+          training_partner_payment_schedule: Upload training partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
       pending_trns:
@@ -653,7 +653,7 @@ en:
         course_details: Course details
         training_details: Trainee ID
         placements: Placement details
-        lead_partner: School details
+        training_partner: School details
         trainee_data: Trainee data
         schools: Schools
         funding: Funding details
@@ -682,19 +682,19 @@ en:
       draft:
         schools:
           titles:
-            school_direct_tuition_fee: *lead_partner
-            iqts: *lead_partner
-            school_direct_salaried: &lead_partner_and_employing_school Training partner and employing school
-            pg_teaching_apprenticeship: *lead_partner_and_employing_school
-            provider_led_postgrad: *lead_partner_and_employing_school
-            provider_led_undergrad: *lead_partner_and_employing_school
-            early_years_salaried: *lead_partner_and_employing_school
-            early_years_undergrad: *lead_partner
-            teacher_degree_apprenticeship: *lead_partner_and_employing_school
+            school_direct_tuition_fee: *training_partner
+            iqts: *training_partner
+            school_direct_salaried: &training_partner_and_employing_school Training partner and employing school
+            pg_teaching_apprenticeship: *training_partner_and_employing_school
+            provider_led_postgrad: *training_partner_and_employing_school
+            provider_led_undergrad: *training_partner_and_employing_school
+            early_years_salaried: *training_partner_and_employing_school
+            early_years_undergrad: *training_partner
+            teacher_degree_apprenticeship: *training_partner_and_employing_school
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
-        lead_partner_user: "Associated with <strong>%{lead_partner_name}</strong> and can view trainees assigned to that training partner."
+        training_partner_user: "Associated with <strong>%{training_partner_name}</strong> and can view trainees assigned to that training partner."
     state_tag:
       trainee:
         state:
@@ -785,7 +785,7 @@ en:
         grade: *degree_path
         graduation_year: *degree_path
         country: *degree_path
-        lead_partner_id: &training_partner_path edit_trainee_training_partners_details_path
+        training_partner_id: &training_partner_path edit_trainee_training_partners_details_path
         employing_school_id: edit_trainee_employing_schools_details_path
         school_id: *training_partner_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
@@ -841,9 +841,9 @@ en:
         graduation_year: *graduation_year
         country: *country
         employing_school_id: *employing_school
-        school_id: *lead_partner
-        lead_partner_id: *lead_partner
-        partner_id: *lead_partner
+        school_id: *training_partner
+        training_partner_id: *training_partner
+        partner_id: *training_partner
         trainee_start_date: *trainee_start_date
         trainee_start_date_radio_option: Trainee’s start date
         provider_trainee_id: *provider_trainee_id
@@ -1375,7 +1375,7 @@ en:
   activerecord:
     models:
       provider: Accredited provider
-      lead_partner: Training partner
+      training_partner: Training partner
     attributes:
       trainee:
         record_sources:
@@ -1593,7 +1593,7 @@ en:
             query:
               blank: Enter a partner unique reference number (URN), name or postcode
               length: Enter at least two characters
-            lead_partner_id:
+            training_partner_id:
               blank: Select a training partner or search again
             results_search_again_query:
               blank: Enter a partner unique reference number (URN), name or postcode
@@ -1708,7 +1708,7 @@ en:
               provider_trainee_id: Provider trainee ID must match trainee record
               first_names: First name must match trainee record
               last_names: Last name must match trainee record
-              lead_partner: Lead partner must match trainee record
+              training_partner: Lead partner must match trainee record
               qts_or_eyts: QTS or EYTS must match trainee record
               route: Route must match trainee record
               phase: Phase must match trainee record
@@ -2022,7 +2022,7 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
         schools/form_validator:
           attributes:
-            lead_partner_id:
+            training_partner_id:
               not_valid: The training partner section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
@@ -2030,7 +2030,7 @@ en:
           attributes:
             query:
               blank: Enter a partner unique reference number (URN), name or postcode
-            lead_partner_id:
+            training_partner_id:
               blank: Select a training partner or search again
             results_search_again_query:
               blank: Enter a partner unique reference number (URN), name or postcode
@@ -2119,10 +2119,12 @@ en:
               ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
             hesa_id:
               length: must be 13 or 17 characters
-            lead_partner_id:
+            training_partner_id:
               invalid: is invalid. The URN '%{value}' does not match any known lead partners
               csv:
                 invalid: Lead Partner URN is invalid. The URN '%{value}' does not match any known lead partners
+            lead_partner_id:
+              invalid: is invalid. The URN '%{value}' does not match any known lead partners
             employing_school_id:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:
@@ -2248,8 +2250,8 @@ en:
           heading: Confirm deletion of trainee record
     funding_uploads:
       new:
-        lead_partner_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at training partners.
-        lead_partner_payment_schedule: You can upload a CSV file to make monthly funding payments available to training partners.
+        training_partner_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at training partners.
+        training_partner_payment_schedule: You can upload a CSV file to make monthly funding payments available to training partners.
         provider_trainee_summary: You can upload a CSV file to make monthly funding payments available to provider trainees.
         provider_payment_schedule: You can upload a CSV file to make monthly funding payments available to providers.
   api:

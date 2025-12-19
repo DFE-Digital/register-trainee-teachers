@@ -298,12 +298,12 @@ module Reports
       trainee.last_name
     end
 
-    def lead_partner_name
-      trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_partner&.name
+    def training_partner_name
+      trainee.training_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.training_partner&.name
     end
 
-    def lead_partner_urn
-      trainee.lead_partner&.urn
+    def training_partner_urn
+      trainee.training_partner&.urn
     end
 
     def nationality

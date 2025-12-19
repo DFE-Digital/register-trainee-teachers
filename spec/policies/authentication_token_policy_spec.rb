@@ -47,16 +47,16 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     end
   end
 
-  context "when the User belongs to a LeadPartner" do
-    let(:lead_partner_user) { create(:user, :with_lead_partner_organisation) }
-    let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
+  context "when the User belongs to a TrainingPartner" do
+    let(:training_partner_user) { create(:user, :with_training_partner_organisation) }
+    let(:training_partner_user_context) { UserWithOrganisationContext.new(user: training_partner_user, session: {}) }
 
     permissions :index?, :create?, :new? do
-      it { is_expected.not_to permit(lead_partner_user_context) }
+      it { is_expected.not_to permit(training_partner_user_context) }
     end
   end
 
-  context "when the User does not belong to either a Provider or LeadPartner" do
+  context "when the User does not belong to either a Provider or TrainingPartner" do
     let(:user_with_no_organisation) { create(:user, :with_no_organisation_in_db) }
     let(:user_with_no_organisation_context) { UserWithOrganisationContext.new(user: user_with_no_organisation, session: {}) }
 
@@ -94,34 +94,34 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
       end
     end
 
-    context "when the User is a Lead Partner Provider" do
-      let!(:lead_partner) { create(:lead_partner, :hei) }
-      let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
-      let!(:lead_partner_user_context) {
-        UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
+    context "when the User is a Training Partner Provider" do
+      let!(:training_partner) { create(:training_partner, :hei) }
+      let!(:training_partner_user) { create(:user, training_partners: [training_partner]) }
+      let!(:training_partner_user_context) {
+        UserWithOrganisationContext.new(user: training_partner_user, session: { current_organisation: { type: "TrainingPartner", id: training_partner.id } })
       }
 
-      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: lead_partner_user_context.organisation.provider) }
+      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: training_partner_user_context.organisation.provider) }
       let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
 
-      subject { described_class.new(lead_partner_user_context, AuthenticationToken) }
+      subject { described_class.new(training_partner_user_context, AuthenticationToken) }
 
       it "returns empty" do
         expect(subject.resolve).to be_empty
       end
     end
 
-    context "when the User is a Lead Partner School" do
-      let!(:lead_partner) { create(:lead_partner, :school) }
-      let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
-      let!(:lead_partner_user_context) {
-        UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
+    context "when the User is a Training Partner School" do
+      let!(:training_partner) { create(:training_partner, :school) }
+      let!(:training_partner_user) { create(:user, training_partners: [training_partner]) }
+      let!(:training_partner_user_context) {
+        UserWithOrganisationContext.new(user: training_partner_user, session: { current_organisation: { type: "TrainingPartner", id: training_partner.id } })
       }
 
-      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: lead_partner_user.providers.take) }
+      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: training_partner_user.providers.take) }
       let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
 
-      subject { described_class.new(lead_partner_user_context, AuthenticationToken) }
+      subject { described_class.new(training_partner_user_context, AuthenticationToken) }
 
       it "returns empty" do
         expect(subject.resolve).to be_empty

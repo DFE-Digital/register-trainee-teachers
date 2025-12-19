@@ -41,7 +41,7 @@ feature "performance profile banner" do
 
     context "lead provider user" do
       scenario "performance profile banner is not shown" do
-        given_i_am_authenticated_as_a_lead_partner_user
+        given_i_am_authenticated_as_a_training_partner_user
         when_i_am_on_the_root_page
         then_i_do_not_see_the_performance_profile_banner
       end

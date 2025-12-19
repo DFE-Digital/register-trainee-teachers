@@ -11,7 +11,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
       :in_progress,
       trainee_route_trait,
       :with_no_funding_hesa_trainee_detail,
-      :with_lead_partner,
+      :with_training_partner,
       :with_employing_school,
       :with_diversity_information,
       first_names: "Bob",
@@ -716,7 +716,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         it "sets the lead_partner_not_applicable and employing_school_not_applicable to true" do
           trainee.reload
 
-          expect(trainee.lead_partner_not_applicable).to be(true)
+          expect(trainee.training_partner_not_applicable).to be(true)
           expect(trainee.employing_school_not_applicable).to be(true)
         end
 
@@ -727,7 +727,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               :in_progress,
               :with_training_route,
               :with_no_funding_hesa_trainee_detail,
-              lead_partner_not_applicable: true,
+              training_partner_not_applicable: true,
               employing_school_not_applicable: true,
             )
           end
@@ -740,7 +740,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it "does not change lead_partner_not_applicable and employing_school_not_applicable" do
             trainee.reload
 
-            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.training_partner_not_applicable).to be(true)
             expect(trainee.employing_school_not_applicable).to be(true)
           end
         end
@@ -756,7 +756,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it "sets the lead_partner_not_applicable and employing_school_not_applicable to true" do
             trainee.reload
 
-            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.training_partner_not_applicable).to be(true)
             expect(trainee.employing_school_not_applicable).to be(true)
           end
 
@@ -767,7 +767,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
                 :in_progress,
                 :with_training_route,
                 :with_no_funding_hesa_trainee_detail,
-                lead_partner_not_applicable: true,
+                training_partner_not_applicable: true,
                 employing_school_not_applicable: true,
               )
             end
@@ -780,7 +780,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             it "does not change lead_partner_not_applicable and employing_school_not_applicable" do
               trainee.reload
 
-              expect(trainee.lead_partner_not_applicable).to be(true)
+              expect(trainee.training_partner_not_applicable).to be(true)
               expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
@@ -806,7 +806,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it "sets lead_partner_not_applicable to true and employing_school_not_applicable to true" do
             trainee.reload
 
-            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.training_partner_not_applicable).to be(true)
             expect(trainee.employing_school_not_applicable).to be(true)
           end
         end
@@ -815,30 +815,30 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           let(:params) do
             {
               data: data.merge(
-                lead_partner_urn: new_lead_partner.urn,
+                lead_partner_urn: new_training_partner.urn,
                 employing_school_urn: "",
               ),
             }
           end
 
           context "when lead_partner exists" do
-            let(:new_lead_partner) { create(:lead_partner, :school) }
+            let(:new_training_partner) { create(:training_partner, :school) }
 
             it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(new_lead_partner.urn)
+              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(new_training_partner.urn)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
             it "sets lead_partner_not_applicable to false and employing_school_not_applicable to true" do
               trainee.reload
 
-              expect(trainee.lead_partner_not_applicable).to be(false)
+              expect(trainee.training_partner_not_applicable).to be(false)
               expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
 
           context "when lead_partner does not exist" do
-            let(:new_lead_partner) { build(:lead_partner, :school) }
+            let(:new_training_partner) { build(:training_partner, :school) }
 
             it "sets lead_partner_urn to nil and lead_partner_not_applicable to true" do
               expect(response).to have_http_status(:unprocessable_entity)
@@ -864,7 +864,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
             trainee.reload
 
-            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.training_partner_not_applicable).to be(true)
             expect(trainee.employing_school_not_applicable).to be(true)
           end
         end
@@ -890,7 +890,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             it "sets lead_partner_not_applicable to true and employing_school_not_applicable to false" do
               trainee.reload
 
-              expect(trainee.lead_partner_not_applicable).to be(true)
+              expect(trainee.training_partner_not_applicable).to be(true)
               expect(trainee.employing_school_not_applicable).to be(false)
             end
           end
@@ -926,7 +926,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             it "sets lead_partner_not_applicable to true and employing_school_not_applicable to true" do
               trainee.reload
 
-              expect(trainee.lead_partner_not_applicable).to be(true)
+              expect(trainee.training_partner_not_applicable).to be(true)
               expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
@@ -935,35 +935,35 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_partner_urn: new_lead_partner.urn,
+                  lead_partner_urn: new_training_partner.urn,
                   employing_school_urn: "",
                 ),
               }
             end
 
             context "when lead_partner exists" do
-              let(:new_lead_partner) { create(:lead_partner, :school) }
+              let(:new_training_partner) { create(:training_partner, :school) }
 
               it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
-                expect(response.parsed_body[:data][:lead_partner_urn]).to eq(new_lead_partner.urn)
+                expect(response.parsed_body[:data][:lead_partner_urn]).to eq(new_training_partner.urn)
                 expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
               end
 
               it "sets lead_partner_not_applicable to false and employing_school_not_applicable to true" do
                 trainee.reload
 
-                expect(trainee.lead_partner_not_applicable).to be(false)
+                expect(trainee.training_partner_not_applicable).to be(false)
                 expect(trainee.employing_school_not_applicable).to be(true)
               end
             end
 
             context "when lead_partner does not exist" do
-              let(:new_lead_partner) { build(:lead_partner, :school) }
+              let(:new_training_partner) { build(:training_partner, :school) }
 
               it "returns an error" do
                 expect(response).to have_http_status(:unprocessable_entity)
                 expect(response.parsed_body["errors"]).to include(
-                  "lead_partner_id is invalid. The URN '#{new_lead_partner.urn}' does not match any known lead partners",
+                  "lead_partner_id is invalid. The URN '#{new_training_partner.urn}' does not match any known lead partners",
                 )
               end
             end
@@ -987,7 +987,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
               trainee.reload
 
-              expect(trainee.lead_partner_not_applicable).to be(true)
+              expect(trainee.training_partner_not_applicable).to be(true)
               expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
@@ -1013,7 +1013,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               it "sets lead_partner_not_applicable to true and employing_school_not_applicable to false" do
                 trainee.reload
 
-                expect(trainee.lead_partner_not_applicable).to be(true)
+                expect(trainee.training_partner_not_applicable).to be(true)
                 expect(trainee.employing_school_not_applicable).to be(false)
               end
             end
@@ -1031,7 +1031,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               it "leaves lead_partner_not_applicable and employing_school_not_applicable unchanged" do
                 trainee.reload
 
-                expect(trainee.lead_partner_not_applicable).to be(false)
+                expect(trainee.training_partner_not_applicable).to be(false)
                 expect(trainee.employing_school_not_applicable).to be(false)
               end
             end
@@ -1047,7 +1047,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         create(
           :trainee,
           :in_progress,
-          :with_lead_partner,
+          :with_training_partner,
           :with_employing_school,
           :with_training_route,
           :with_no_funding_hesa_trainee_detail,
@@ -1196,7 +1196,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         create(
           :trainee,
           :in_progress,
-          :with_lead_partner,
+          :with_training_partner,
           :with_employing_school,
           :with_training_route,
           :with_no_funding_hesa_trainee_detail,

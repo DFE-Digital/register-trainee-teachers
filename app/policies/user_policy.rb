@@ -14,15 +14,15 @@ class UserPolicy < ProviderPolicy
   end
 
   def bulk_recommend?
-    !user.system_admin? && !user.lead_partner?
+    !user.system_admin? && !user.training_partner?
   end
 
-  def lead_partner_user?
-    user.lead_partner?
+  def training_partner_user?
+    user.training_partner?
   end
 
   def can_access_claims_reports?
-    user.system_admin? && user.providers.empty? && user.lead_partners.empty?
+    user.system_admin? && user.providers.empty? && user.training_partners.empty?
   end
 
   def can_sign_off_performance_profile?

@@ -113,7 +113,7 @@ feature "performance profile sign off" do
 
     context "lead provider user" do
       scenario "unauthorized message is shown" do
-        given_i_am_authenticated_as_a_lead_partner_user
+        given_i_am_authenticated_as_a_training_partner_user
         when_i_visit_the_sign_off_your_performance_profile_page
         then_i_see_the_unauthorized_message
       end

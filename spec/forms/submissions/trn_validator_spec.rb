@@ -31,7 +31,7 @@ module Submissions
             personal_details: true,
             course_details: true,
             training_details: true,
-            lead_partner_and_employing_school_details: true,
+            training_partner_and_employing_school_details: true,
             funding: true,
             placements: true,
           }
@@ -44,12 +44,12 @@ module Submissions
 
         context "requires school" do
           context "trainee is on the school_direct_tuition_fee route" do
-            context "with lead and employing schools" do
+            context "with training partner and employing schools" do
               let(:trainee) do
                 create(
                   :trainee,
                   :school_direct_tuition_fee,
-                  :with_lead_partner,
+                  :with_training_partner,
                   :with_employing_school,
                   :with_placements,
                   :completed,
@@ -62,7 +62,7 @@ module Submissions
               end
             end
 
-            context "with no lead and employing school" do
+            context "with no training partner and employing school" do
               let(:trainee) do
                 create(
                   :trainee,
@@ -95,12 +95,12 @@ module Submissions
               end
             end
 
-            context "with only lead school" do
+            context "with only training partner" do
               let(:trainee) do
                 create(
                   :trainee,
                   :school_direct_tuition_fee,
-                  :with_lead_partner,
+                  :with_training_partner,
                   :with_placements,
                   :completed,
                   progress: progress.merge(schools: true),
@@ -115,12 +115,12 @@ module Submissions
 
           %i[school_direct_salaried pg_teaching_apprenticeship].each do |route|
             context "trainee is on the #{route} route" do
-              context "with lead and employing schools" do
+              context "with training partner and employing schools" do
                 let(:trainee) do
                   create(
                     :trainee,
                     route,
-                    :with_lead_partner,
+                    :with_training_partner,
                     :with_employing_school,
                     :completed,
                     :with_placements,
@@ -133,7 +133,7 @@ module Submissions
                 end
               end
 
-              context "with no lead and employing school" do
+              context "with no training partner and employing school" do
                 let(:trainee) do
                   create(
                     :trainee,
@@ -166,12 +166,12 @@ module Submissions
                 end
               end
 
-              context "with only lead school" do
+              context "with only training partner" do
                 let(:trainee) do
                   create(
                     :trainee,
                     route,
-                    :with_lead_partner,
+                    :with_training_partner,
                     :completed,
                     progress: progress.merge(schools: true),
                   )
@@ -236,7 +236,7 @@ module Submissions
         it_behaves_like "error"
 
         context "requires school but incomplete" do
-          let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_partner, progress: progress.merge(schools: false)) }
+          let(:trainee) { create(:trainee, :school_direct_salaried, :with_training_partner, progress: progress.merge(schools: false)) }
 
           it_behaves_like "error"
         end

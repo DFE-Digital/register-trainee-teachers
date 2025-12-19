@@ -11,7 +11,7 @@ module Autocomplete
           only: %i[id first_name last_name email],
           include: {
             providers: { only: [:name] },
-            lead_partners: { only: [:name] },
+            training_partners: { only: [:name] },
           },
         ),
       })
@@ -33,7 +33,7 @@ module Autocomplete
     end
 
     def filtered_users
-      UserSearch.call(**args, scope: User.kept.includes(%i[providers lead_partners])).users
+      UserSearch.call(**args, scope: User.kept.includes(%i[providers training_partners])).users
     end
   end
 end

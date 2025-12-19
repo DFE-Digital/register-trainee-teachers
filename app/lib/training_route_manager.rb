@@ -11,8 +11,8 @@ class TrainingRouteManager
     !undergrad_route?
   end
 
-  def requires_lead_partner?
-    LEAD_PARTNER_ROUTES.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
+  def requires_training_partner?
+    TRAINING_PARTNER_ROUTES.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
   end
 
   def requires_employing_school?
