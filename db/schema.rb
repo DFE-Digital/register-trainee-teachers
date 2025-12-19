@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_01_153100) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -997,6 +997,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_01_153100) do
     t.text "provider_trainee_id"
     t.bigint "lead_partner_id"
     t.string "defer_reason"
+    t.tsvector "searchable"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -1014,6 +1015,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_01_153100) do
     t.index ["placement_detail"], name: "index_trainees_on_placement_detail"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
+    t.index ["searchable"], name: "index_trainees_on_searchable", using: :gin
     t.index ["sex"], name: "index_trainees_on_sex"
     t.index ["slug"], name: "index_trainees_on_slug", unique: true
     t.index ["start_academic_cycle_id"], name: "index_trainees_on_start_academic_cycle_id"
