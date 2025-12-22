@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe Reports::BulkTraineeUploadReport do
   before do
+    stub_const("BulkUpdate::AddTrainees::Config::VERSION", "v2026.0")
     stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20260)
   end
 
