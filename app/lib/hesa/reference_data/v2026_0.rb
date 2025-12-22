@@ -27,6 +27,7 @@ module Hesa
         end.freeze
       end
 
+      # rubocop:disable Style/HashEachMethods
       def self.values_for(type)
         transformed_values = []
         type.values.each do |value|
@@ -41,6 +42,7 @@ module Hesa
         end.flatten
         transformed_values
       end
+      # rubocop:enable Style/HashEachMethods
     end
   end
 end
