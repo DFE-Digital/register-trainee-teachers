@@ -2,41 +2,22 @@
 
 require "rails_helper"
 
-feature "Reference data download", js: true do
+feature "Reference data download 2026", js: true do
   include FileHelper
 
-  background do
-    given_i_am_on_the_reference_data_page
-  end
-
   scenario "navigate to Reference data" do
-    when_i_click_on_the_v2026_0_link
-    and_i_click_on_the_course_age_range_link
-    and_i_see_the_course_age_range_data
-    and_i_click_on_the_download_entries_link
+    # 2026 reference data is hidden at the time of writing, otherwise we would navigate to it like in the 2025 test
+    when_i_click_on_the_download_entries_link
     then_i_receive_the_data_entries_as_a_file
   end
 
 private
 
-  def given_i_am_on_the_reference_data_page
-    reference_data_page.load
-  end
-
-  def when_i_click_on_the_v2026_0_link
-    reference_data_page.v20260_link.click
-  end
-
-  def and_i_click_on_the_course_age_range_link
-    reference_data_page.course_age_range_link.click
-  end
-
-  def and_i_see_the_course_age_range_data
-    expect(reference_data_page).to have_course_age_range_heading
-  end
-
-  def and_i_click_on_the_download_entries_link
-    reference_data_page.course_age_range_download_link.click
+  def when_i_click_on_the_download_entries_link
+    visit reference_datum_download_path(
+      reference_data_version: "v2026.0",
+      reference_datum_attribute: "course_age_range",
+    )
   end
 
   def then_i_receive_the_data_entries_as_a_file
