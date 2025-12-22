@@ -451,8 +451,8 @@ en:
         outcome_details:
           confirm_qts: Check QTS details
           confirm_eyts: Check EYTS details
-          recommended_qts: Trainee recommended for QTS
-          recommended_eyts: Trainee recommended for EYTS
+          recommended_qts: Trainee status changed
+          recommended_eyts: Trainee status changed
         personal_details:
           edit: Trainee personal details
         trainee_start_date:
@@ -589,8 +589,8 @@ en:
           draft: Trainee marked as draft
           submitted_for_trn: Trainee submitted for TRN
           trn_received: TRN received
-          recommended_for_qts: Trainee recommended for QTS
-          recommended_for_eyts: Trainee recommended for EYTS
+          recommended_for_qts: Trainee status changed
+          recommended_for_eyts: Trainee status changed
           withdrawn: Trainee withdrawn
           deferred: Trainee deferred
           qts_awarded: QTS awarded
