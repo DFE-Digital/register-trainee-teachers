@@ -5,7 +5,6 @@ module Hesa
     class V20260 < V20250
       def self.all
         {
-          # TODO: Handle hyphenated type names
           country: ::ReferenceData::COUNTRIES,
           course_age_range: ::ReferenceData::COURSE_AGE_RANGES,
           course_subject: ::ReferenceData::COURSE_SUBJECTS,
@@ -23,11 +22,24 @@ module Hesa
           study_mode: ::ReferenceData::STUDY_MODES,
           training_route: ::ReferenceData::TRAINING_ROUTES,
           training_initiative: ::ReferenceData::TRAINING_INITIATIVES,
-        }.to_h do |type_name, type|
-          # TODO: Flatten the hesa codes array
-          transformed_mapping = type.values.map { |value| [value.hesa_codes.first, value.display_name] }
-          [type_name, transformed_mapping.to_h]
+        }.transform_values do |type|
+          Hesa::ReferenceData::V20260.values_for(type).to_h
         end.freeze
+      end
+
+      def self.values_for(type)
+        transformed_values = []
+        type.values.each do |value|
+          hesa_codes = value.hesa_codes || []
+          if hesa_codes.present?
+            hesa_codes.each do |code|
+              transformed_values << [code, value.display_name]
+            end
+          else
+            transformed_values << ["-", value.display_name]
+          end
+        end.flatten
+        transformed_values
       end
     end
   end
