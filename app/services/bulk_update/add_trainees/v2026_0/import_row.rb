@@ -76,7 +76,7 @@ module BulkUpdate
         end
 
         def training_partner_urn_attribute
-          V20260::ImportRows::ALL_HEADERS["Lead Partner URN"].to_sym
+          V20260::ImportRows::ALL_HEADERS["Training Partner URN"].to_sym
         end
 
         def prepare_degree_attributes(attributes)

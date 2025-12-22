@@ -327,13 +327,13 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L28
   page_title: Course year
-- field_name: Lead Partner URN
+- field_name: Training Partner URN
   technical: training_partner_urn
   hesa_alignment: SDLEAD
   description: |-
-    This field collects the Unique Reference Number (URN) of the lead partner for the trainee.
+    This field collects the Unique Reference Number (URN) of the training partner for the trainee.
 
-    The system validates the provided URN against the Register database. If the URN is not found in Register, the lead partner may not be set correctly.
+    The system validates the provided URN against the Register database. If the URN is not found in Register, the training partner may not be set correctly.
   format: Must be a 6-digit number
   example: |-
     - `115795` - Cheltenham College
@@ -342,7 +342,7 @@
     - `900020` - Other establishment without a URN
     - `900030` - Not available
   validation: Optional
-  page_title: Lead partner URN
+  page_title: Training partner URN
 - field_name: Employing School URN
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY
