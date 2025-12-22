@@ -887,8 +887,8 @@ en:
         withdraw: withdraw
         reinstate: reinstate
         this_trainee: this trainee
-        recommend_for_award: Recommend trainee for QTS
-        recommend_for_eyts: Recommend trainee for EYTS
+        recommend_for_award: Change status of trainee
+        recommend_for_eyts: Change status of trainee
         status_summary:
           missing_fields: This trainee record requires additional details
           itt_not_started: The trainee’s ITT starts on %{itt_start_date}

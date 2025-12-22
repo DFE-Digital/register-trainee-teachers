@@ -19,7 +19,7 @@
 
     <%= register_form_with url: trainee_award_recommendations_path, method: :post, local: true do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
-      <%= f.govuk_submit "Recommend trainee for #{@trainee.award_type}" %>
+      <%= f.govuk_submit "Change status of trainee" %>
     <%- end -%>
   </div>
 </div>
