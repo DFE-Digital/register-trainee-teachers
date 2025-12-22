@@ -275,7 +275,7 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
   end
 
   describe "template CSV cross-checks" do
-    let(:file_path) { Rails.public_path.join("csv/bulk_create_trainee.csv") }
+    let(:file_path) { Rails.public_path.join("csv/v2026_0/bulk_create_trainee.csv") }
     let(:headers) { CSVSafe.new(File.open(file_path), headers: true, encoding: "UTF-8").read.headers }
 
     BulkUpdate::AddTrainees::V20260::ImportRows::ALL_HEADERS.each_key do |name|
