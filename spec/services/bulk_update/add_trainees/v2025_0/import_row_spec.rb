@@ -4,9 +4,9 @@ require "rails_helper"
 
 module BulkUpdate
   module AddTrainees
-    RSpec.describe ImportRow do
+    RSpec.describe V20250::ImportRow do
       let(:current_provider) { create(:provider) }
-      let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").read }
+      let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2025_0/five_trainees.csv").read }
       let(:parsed_csv) { CSV.parse(csv, headers: true) }
       let!(:nationality) { create(:nationality, :british) }
       let(:academic_cycle) { AcademicCycle.for_year(2024) || create(:academic_cycle, cycle_year: 2024) }
@@ -50,7 +50,7 @@ module BulkUpdate
         let(:result) { described_class.call(row:, current_provider:) }
 
         context "when the row is invalid" do
-          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_failed.csv").read }
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2025_0/five_trainees_with_failed.csv").read }
           let(:row) { parsed_csv[3] }
 
           it "does not create a trainee record" do
@@ -62,7 +62,7 @@ module BulkUpdate
         end
 
         context "when the row is invalid with customised field names" do
-          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_three_errors.csv").read }
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2025_0/five_trainees_with_three_errors.csv").read }
           let(:row) { parsed_csv[0] }
 
           it "does not create a trainee record" do
@@ -82,7 +82,7 @@ module BulkUpdate
         end
 
         context "when the row is a duplicate" do
-          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").read }
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2025_0/five_trainees.csv").read }
           let(:row) { parsed_csv.first }
 
           before { described_class.call(row:, current_provider:) }
@@ -116,7 +116,7 @@ module BulkUpdate
         end
 
         context "when the row is valid and includes placement data" do
-          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_placement.csv").read }
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2025_0/five_trainees_with_placement.csv").read }
 
           context "with a single placement" do
             let(:row) { parsed_csv[-1] }
@@ -167,7 +167,7 @@ module BulkUpdate
         end
 
         context "when the row is valid and includes degree data" do
-          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_degree.csv").read }
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2025_0/five_trainees_with_degree.csv").read }
           let(:row) { parsed_csv.first }
 
           it "creates a trainee and a degree record" do
@@ -180,7 +180,7 @@ module BulkUpdate
         end
 
         context "when the row is valid and includes disabilities data" do
-          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_disability.csv").read }
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2025_0/five_trainees_with_disability.csv").read }
           let(:row) { parsed_csv[0] }
 
           before do

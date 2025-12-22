@@ -3,6 +3,11 @@
 require "rails_helper"
 
 RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
+  before do
+    stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20260)
+    allow(Settings.bulk_update.add_trainees).to receive(:version).and_return("v2026.0")
+  end
+
   describe "#call" do
     let!(:nationality) { create(:nationality, :british) }
     let!(:academic_cycle) { create(:academic_cycle, :current) }
@@ -11,11 +16,11 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
       let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
       it "does not call the `ImportRow` service" do
-        allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call)
+        allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call)
 
         described_class.call(trainee_upload)
 
-        expect(BulkUpdate::AddTrainees::ImportRow).not_to have_received(:call)
+        expect(BulkUpdate::AddTrainees::V20260::ImportRow).not_to have_received(:call)
       end
     end
 
@@ -27,10 +32,10 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
           let(:trainee_upload) { create(:bulk_update_trainee_upload, :pending) }
 
           it "does not create any trainee records" do
-            allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_call_original
+            allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call).and_call_original
 
             expect(described_class.call(trainee_upload)).to be(true)
-            expect(BulkUpdate::AddTrainees::ImportRow).to have_received(:call).exactly(5).times
+            expect(BulkUpdate::AddTrainees::V20260::ImportRow).to have_received(:call).exactly(5).times
           end
 
           it "creates bulk_update_trainee_upload_rows records" do
@@ -71,12 +76,12 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
           let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows, status: :in_progress) }
 
           it "creates 5 trainee records" do
-            allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_call_original
+            allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call).and_call_original
             allow(Trainees::SubmitForTrn).to receive(:call).and_call_original
 
             expect(described_class.call(trainee_upload)).to be(true)
 
-            expect(BulkUpdate::AddTrainees::ImportRow).to have_received(:call).exactly(5).times
+            expect(BulkUpdate::AddTrainees::V20260::ImportRow).to have_received(:call).exactly(5).times
             expect(Trainees::SubmitForTrn).to have_received(:call).exactly(5).times
           end
 
@@ -88,7 +93,7 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
           context "when there is a database error" do
             before do
               allow(Trainees::SubmitForTrn).to receive(:call).and_call_original
-              allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_raise(ActiveRecord::ActiveRecordError)
+              allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call).and_raise(ActiveRecord::ActiveRecordError)
             end
 
             it "sets the status to `failed`" do
@@ -120,11 +125,11 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
           let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_blank_rows, :pending) }
 
           it "does not create any trainee records" do
-            allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_call_original
+            allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call).and_call_original
 
             expect(described_class.call(trainee_upload)).to be(true)
 
-            expect(BulkUpdate::AddTrainees::ImportRow).to have_received(:call).exactly(3).times
+            expect(BulkUpdate::AddTrainees::V20260::ImportRow).to have_received(:call).exactly(3).times
           end
 
           it "creates bulk_update_trainee_upload_rows records" do
@@ -154,11 +159,11 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
           let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_mixed_case_headers, :pending) }
 
           it "does not create any trainee records" do
-            allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_call_original
+            allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call).and_call_original
 
             expect(described_class.call(trainee_upload)).to be(true)
 
-            expect(BulkUpdate::AddTrainees::ImportRow).to have_received(:call).exactly(5).times
+            expect(BulkUpdate::AddTrainees::V20260::ImportRow).to have_received(:call).exactly(5).times
           end
 
           it "creates bulk_update_trainee_upload_rows records" do
@@ -188,16 +193,16 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
         before do
           trainee_upload.import!
 
-          allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_return(
-            BulkUpdate::AddTrainees::ImportRow::Result.new({}, true, []),
-            BulkUpdate::AddTrainees::ImportRow::Result.new({}, true, []),
-            BulkUpdate::AddTrainees::ImportRow::Result.new(
+          allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call).and_return(
+            BulkUpdate::AddTrainees::V20260::ImportRow::Result.new({}, true, []),
+            BulkUpdate::AddTrainees::V20260::ImportRow::Result.new({}, true, []),
+            BulkUpdate::AddTrainees::V20260::ImportRow::Result.new(
               nil,
               false,
               { errors: { funding: ["Funding type is required"], email: "Enter an email address" } },
             ),
-            BulkUpdate::AddTrainees::ImportRow::Result.new({}, true, []),
-            BulkUpdate::AddTrainees::ImportRow::Result.new(
+            BulkUpdate::AddTrainees::V20260::ImportRow::Result.new({}, true, []),
+            BulkUpdate::AddTrainees::V20260::ImportRow::Result.new(
               nil,
               false,
               ["Add at least one degree"],
@@ -208,7 +213,7 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
         it "does not create any trainee records" do
           expect(described_class.call(trainee_upload)).to be(false)
           expect(Trainee.count).to eq(@original_trainee_count)
-          expect(BulkUpdate::AddTrainees::ImportRow).to have_received(:call).exactly(5).times
+          expect(BulkUpdate::AddTrainees::V20260::ImportRow).to have_received(:call).exactly(5).times
         end
 
         it "sets the status to `failed`" do
@@ -233,7 +238,7 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
         let(:trainee_upload) { create(:bulk_update_trainee_upload, :pending) }
 
         before do
-          allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_raise(StandardError.new("Server on fire"))
+          allow(BulkUpdate::AddTrainees::V20260::ImportRow).to receive(:call).and_raise(StandardError.new("Server on fire"))
         end
 
         it "sets the status to `failed`" do

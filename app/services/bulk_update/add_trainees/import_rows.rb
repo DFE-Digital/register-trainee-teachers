@@ -43,7 +43,7 @@ module BulkUpdate
 
           ActiveRecord::Base.transaction(requires_new: true) do
             results = trainee_upload.trainee_upload_rows.map do |upload_row|
-              BulkUpdate::AddTrainees::ImportRow.call(
+              BulkUpdate::AddTrainees::VERSION::ImportRow.call(
                 row: upload_row.data,
                 current_provider: current_provider,
               )
@@ -122,7 +122,7 @@ module BulkUpdate
             user_id: trainee_upload.submitted_by_id,
           },
         )
-        BulkUpdate::AddTrainees::ImportRow::Result.new(
+        BulkUpdate::AddTrainees::VERSION::ImportRow::Result.new(
           nil,
           false,
           ["runtime failure: #{exception.message}"],
