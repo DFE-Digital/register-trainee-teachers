@@ -441,6 +441,7 @@ shared:
     - updated_at
     - additional_disability
   trainees:
+    - searchable
     - middle_names
     - ethnic_group
     - ethnic_background

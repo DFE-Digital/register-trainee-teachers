@@ -262,6 +262,23 @@ describe Trainee do
       end
     end
 
+    describe "searchable" do
+      let(:trainee) do
+        create(
+          :trainee,
+          first_names: "John",
+          middle_names: "James",
+          last_name: "Smith",
+          provider_trainee_id: "25/26-1",
+          trn: "5120560",
+        )
+      end
+
+      it "updates the tsvector column with relevant info when the trainee is updated" do
+        expect(trainee.searchable).to eq("'25/26-1':4 '5120560':5 'james':2 'john':1 'smith':3")
+      end
+    end
+
     describe "submission_ready" do
       context "when completion is trackable" do
         subject { create(:trainee, :completed, :draft) }

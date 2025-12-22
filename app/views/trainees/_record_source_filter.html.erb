@@ -5,7 +5,7 @@
         <%= t('components.filter.record_source') %>
       </legend>
       <div class="govuk-checkboxes govuk-checkboxes--small">
-          <% available_record_sources.map do |source| %>
+          <% available_record_sources.each do |source| %>
             <div class="govuk-checkboxes__item">
               <%= check_box_tag "record_source[]",
                                 source,

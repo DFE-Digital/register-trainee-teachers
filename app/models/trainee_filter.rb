@@ -29,7 +29,6 @@ private
       **training_route,
       **status,
       **subject,
-      **text_search,
       **record_source,
       **provider,
       **record_completions,

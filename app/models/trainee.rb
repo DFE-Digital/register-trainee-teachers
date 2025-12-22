@@ -297,7 +297,12 @@ class Trainee < ApplicationRecord
 
   pg_search_scope :with_name_provider_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name provider_trainee_id trn],
-                  using: { tsearch: { prefix: true } }
+                  using: {
+                    tsearch: {
+                      prefix: true,
+                      tsvector_column: "searchable",
+                    },
+                  }
 
   scope :ordered_by_updated_at, -> { order(updated_at: :desc) }
   scope :ordered_by_last_name, -> { order(last_name: :asc) }
@@ -368,6 +373,7 @@ class Trainee < ApplicationRecord
   before_save :clear_lead_partner_id, if: :lead_partner_not_applicable?
   before_save :set_submission_ready, if: :awaiting_action?
   before_save :set_academic_cycles
+  before_save :update_searchable
 
   after_touch :set_submission_ready
 
@@ -612,5 +618,30 @@ private
 
   def set_academic_cycles
     Trainees::SetAcademicCycles.call(trainee: self)
+  end
+
+  def update_searchable
+    ts_vector_value = [
+      first_names,
+      middle_names,
+      last_name,
+      provider_trainee_id,
+      trn,
+    ].compact.join(" ")
+
+    to_tsvector = Arel::Nodes::NamedFunction.new(
+      "TO_TSVECTOR", [
+        Arel::Nodes::Quoted.new("pg_catalog.simple"),
+        Arel::Nodes::Quoted.new(ts_vector_value),
+      ]
+    )
+
+    self.searchable =
+      ActiveRecord::Base
+        .connection
+        .execute(Arel::SelectManager.new.project(to_tsvector).to_sql)
+        .first
+        .values
+        .first
   end
 end

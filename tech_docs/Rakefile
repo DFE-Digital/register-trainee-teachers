@@ -80,7 +80,6 @@ namespace :tech_docs do
           end
         end
       end
-
     end
   end
 
