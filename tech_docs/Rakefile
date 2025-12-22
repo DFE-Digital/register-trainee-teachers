@@ -160,7 +160,7 @@ class ReferenceDataGenerator2025
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: #{version == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA }
+      hide_in_navigation: #{version == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA}
       ---
 
       # #{version_dir}
@@ -306,7 +306,7 @@ class ReferenceDataHelper
       hesa_value_labels = hesa_value_labels.deep_merge(labels)
     end
 
-    Dir["#{TechDocsHelpers::RAILS_DIR}/config/reference_data/*.yml"].each_with_index do |file_path, index|
+    Dir["#{TechDocsHelpers::RAILS_DIR}/config/reference_data/*.yml"].each_with_index do |file_path, _index|
       yaml = YAML.load_file(file_path)
 
       ReferenceDataType.new.tap do |reference_data_type|
