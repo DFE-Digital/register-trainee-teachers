@@ -6,18 +6,19 @@ feature "Reference data download 2026", js: true do
   include FileHelper
 
   scenario "navigate to Reference data" do
-    # 2026 reference data is hidden at the time of writing, otherwise we would navigate to it like in the 2025 test
-    when_i_click_on_the_download_entries_link
+    when_i_open_a_2026_0_reference_data_page
+    and_i_click_on_the_download_link
     then_i_receive_the_data_entries_as_a_file
   end
 
 private
 
-  def when_i_click_on_the_download_entries_link
-    visit reference_datum_download_path(
-      reference_data_version: "v2026.0",
-      reference_datum_attribute: "course_age_range",
-    )
+  def when_i_open_a_2026_0_reference_data_page
+    visit "/reference-data/v2026.0/course-age-range"
+  end
+
+  def and_i_click_on_the_download_link
+    click_link "Download entries as a CSV file"
   end
 
   def then_i_receive_the_data_entries_as_a_file
