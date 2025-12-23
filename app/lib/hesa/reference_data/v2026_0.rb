@@ -23,7 +23,7 @@ module Hesa
           training_route: ::ReferenceData::TRAINING_ROUTES,
           training_initiative: ::ReferenceData::TRAINING_INITIATIVES,
         }.transform_values do |type|
-          Hesa::ReferenceData::V20260.values_for(type).to_h
+          Hesa::ReferenceData::V20260.values_for(type)
         end.freeze
       end
 

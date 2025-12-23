@@ -45,10 +45,10 @@ private
   end
 
   def parsed_download_content
-    CSV.parse(download_content, headers: true).map(&:to_h)
+    CSV.parse(download_content, headers: true)
   end
 
   def parsed_course_age_range_file
-    CSV.parse(file_content("reference_data/v2025_0/course_age_range.csv"), headers: true).map(&:to_h)
+    CSV.parse(file_content("reference_data/v2025_0/course_age_range.csv"), headers: true)
   end
 end
