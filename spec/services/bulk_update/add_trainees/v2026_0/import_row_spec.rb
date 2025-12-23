@@ -7,6 +7,21 @@ module BulkUpdate
     RSpec.describe V20260::ImportRow do
       before do
         stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20260)
+        create(
+          :subject_specialism,
+          allocation_subject: allocation_subject,
+          name: "primary teaching",
+        )
+        create(
+          :funding_method_subject,
+          funding_method: undergrad_funding_rule,
+          allocation_subject: allocation_subject,
+        )
+        create(
+          :funding_method_subject,
+          funding_method: school_direct_funding_rule,
+          allocation_subject: allocation_subject,
+        )
       end
 
       let(:current_provider) { create(:provider) }
@@ -29,24 +44,6 @@ module BulkUpdate
           training_route: :school_direct_salaried,
           funding_type: :scholarship,
           academic_cycle: academic_cycle,
-        )
-      end
-
-      before do
-        create(
-          :subject_specialism,
-          allocation_subject: allocation_subject,
-          name: "primary teaching",
-        )
-        create(
-          :funding_method_subject,
-          funding_method: undergrad_funding_rule,
-          allocation_subject: allocation_subject,
-        )
-        create(
-          :funding_method_subject,
-          funding_method: school_direct_funding_rule,
-          allocation_subject: allocation_subject,
         )
       end
 
