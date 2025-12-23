@@ -397,11 +397,11 @@ feature "bulk add trainees" do
         then_i_can_see_the_new_trainees_with_a_disability
       end
 
-      scenario "the bulk add trainees page is visible and I upload a file with lead partners" do
+      scenario "the bulk add trainees page is visible and I upload a file with training partners" do
         when_training_partners_exist
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        and_i_attach_a_valid_file_with_lead_partners
+        and_i_attach_a_valid_file_with_training_partners
         and_i_click_the_upload_button
         and_i_click_on_continue_button
         and_the_send_csv_processing_first_stage_email_has_been_sent
@@ -967,8 +967,8 @@ private
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
-  def and_i_attach_a_valid_file_with_lead_partners
-    filename = "three_trainees_with_lead_partners.csv"
+  def and_i_attach_a_valid_file_with_training_partners
+    filename = "three_trainees_with_training_partners.csv"
 
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
