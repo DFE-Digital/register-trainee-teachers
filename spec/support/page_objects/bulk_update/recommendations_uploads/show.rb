@@ -7,7 +7,7 @@ module PageObjects
 
       element :cancel_link, ".govuk-link", text: "Cancel the bulk status change"
       element :check_button, ".govuk-button", text: "Check who"
-      element :recommend_button, ".govuk-button", text: "Recommend"
+      element :recommend_button, ".govuk-button", text: "Change status"
       element :review_errors_button, ".govuk-button", text: "Review errors"
     end
   end
