@@ -14,11 +14,12 @@ FileUtils.chdir APP_ROOT do
 
   puts "== Installing dependencies =="
   system("bundle check") || system!("bundle install")
-
-  # puts "\n== Copying sample files =="
-  # unless File.exist?("config/database.yml")
-  #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
-  # end
+  system!(
+    "cd tech_docs && (bundle check || bundle install) &&
+      bundle exec rake tech_docs:csv:generate &&
+      bundle exec rake tech_docs:reference_data:generate &&
+      bundle exec rake tech_docs:build"
+  )
 
   puts "\n== Preparing database =="
   system! "bin/rails db:prepare"
