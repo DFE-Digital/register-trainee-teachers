@@ -3,7 +3,33 @@
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
 
+class SuppressAssetErrors
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+  rescue ActionController::RoutingError => e
+    if env["PATH_INFO"] =~ %r{^/assets/.*\.(woff2?|ttf|svg|eot|json)$}
+      [200, { "Content-Type" => "text/plain" }, ["Asset not found (suppressed)"]]
+    else
+      raise(e)
+    end
+  end
+end
+
 Rails.application.configure do
+  config.middleware.insert_before(ActionDispatch::ShowExceptions, SuppressAssetErrors)
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.rails_logger = true
+    Bullet.raise = true
+    Bullet.unused_eager_loading_enable = false
+  end
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # While tests run files are not watched, reloading is not necessary.
@@ -43,11 +69,14 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
+  config.i18n.raise_on_missing_translations = true
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
+  # Allow generating absolute urls with routing url helpers.
+  Rails.application.routes.default_url_options[:host] = "localhost:3000"
+  #
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 end
