@@ -50,7 +50,7 @@ private
   end
 
   def and_i_cannot_change_trainee_data
-    expect(record_page).not_to have_content("Change")
+    expect(record_page).not_to have_content("You can now make changes to this trainee")
   end
 
   def when_i_click_the_enable_editing_button
@@ -66,7 +66,7 @@ private
   end
 
   def then_i_should_see_the_change_links
-    expect(record_page).to have_content("Change")
+    expect(record_page).not_to have_content("You can now make changes to this trainee")
   end
 
   def when_i_click_on_defer

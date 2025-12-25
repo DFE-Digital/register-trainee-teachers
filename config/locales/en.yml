@@ -451,8 +451,8 @@ en:
         outcome_details:
           confirm_qts: Check QTS details
           confirm_eyts: Check EYTS details
-          recommended_qts: Trainee recommended for QTS
-          recommended_eyts: Trainee recommended for EYTS
+          recommended_qts: Trainee status changed
+          recommended_eyts: Trainee status changed
         personal_details:
           edit: Trainee personal details
         trainee_start_date:
@@ -589,8 +589,8 @@ en:
           draft: Trainee marked as draft
           submitted_for_trn: Trainee submitted for TRN
           trn_received: TRN received
-          recommended_for_qts: Trainee recommended for QTS
-          recommended_for_eyts: Trainee recommended for EYTS
+          recommended_for_qts: Trainee status changed
+          recommended_for_eyts: Trainee status changed
           withdrawn: Trainee withdrawn
           deferred: Trainee deferred
           qts_awarded: QTS awarded
@@ -887,8 +887,8 @@ en:
         withdraw: withdraw
         reinstate: reinstate
         this_trainee: this trainee
-        recommend_for_award: Recommend trainee for QTS
-        recommend_for_eyts: Recommend trainee for EYTS
+        recommend_for_award: Change status of trainee
+        recommend_for_eyts: Change status of trainee
         status_summary:
           missing_fields: This trainee record requires additional details
           itt_not_started: The trainee’s ITT starts on %{itt_start_date}

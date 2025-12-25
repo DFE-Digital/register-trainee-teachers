@@ -57,7 +57,7 @@ title: Register trainee teachers data sharing agreement
   <li>assessing the impact of teacher recruitment campaigns</li>
   <li>calculation and allocation of funding for bursaries, scholarships and grants</li>
   <li>auditing of third party teaching suppliers</li>
-  <li>awarding of teacher status at the end of a trainee’s teacher training</li>
+  <li>gaining of teacher status at the end of a trainee’s teacher training</li>
   <li>creating a trainee’s teacher record once they qualify, which is used throughout their teaching career</li>
 </ul>
 <p class='govuk-body'>
@@ -187,7 +187,7 @@ title: Register trainee teachers data sharing agreement
 <p class='govuk-body'>
   Additionally, statistical analysis is done by the DfE to understand
   demographic trends in and performance of teacher recruitment. Once a
-  TRN is allocated for the trainee and a QTS or EYTS is awarded, these
+  TRN is allocated for the trainee and QTS or EYTS is gained, these
   are passed onto the providers for their student records. The data is
   also included in the trainee’s teacher record throughout their
   career.
@@ -233,7 +233,7 @@ title: Register trainee teachers data sharing agreement
   <li>assessing the impact of teacher recruitment campaigns</li>
   <li>calculation and allocation of funding for bursaries, scholarships and grants</li>
   <li>auditing of third party teacher training providers</li>
-  <li>awarding of teacher status at the end of a trainee’s teacher training</li>
+  <li>gaining of teacher status at the end of a trainee’s teacher training</li>
   <li>creating a trainee’s teacher record once they qualify, which is used throughout their teaching career</li>
 </ul>
 <h2 class='govuk-heading-m' id='#privacy-notices'>

@@ -34,7 +34,7 @@ feature "Recommending for QTS" do
   end
 
   def and_i_click_on_recommend_for_qts
-    click_on "Recommend trainee for QTS"
+    click_on "Change status of trainee"
   end
 
   def and_i_record_the_outcome_date
