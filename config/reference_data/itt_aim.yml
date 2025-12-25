@@ -1,0 +1,23 @@
+metadata:
+  source: "HESA"
+  name: "itt_aim"
+  display_name: "ITT Aim"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "201"
+    name: "professional_status_only"
+    display_name: "Professional status only"
+    description: ""
+    hesa_codes:
+      - "201"
+  - id: "202"
+    name: "both_professional_status_and_academic_award"
+    display_name: "Both professional status and academic award"
+    description: ""
+    hesa_codes:
+      - "202"
