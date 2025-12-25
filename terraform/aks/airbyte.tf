@@ -31,6 +31,13 @@ data "azurerm_key_vault_secret" "airbyte_replication_password" {
   name         = "AIRBYTE-REPLICATION-PASSWORD"
 }
 
+data "azurerm_key_vault_secret" "airbyte_bq_sa" {
+  count = var.airbyte_enabled ? 1 : 0
+
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+  name         = "AIRBYTE-BQ-SA"
+}
+
 module "airbyte" {
   source = "./vendor/modules/aks//aks/airbyte"
 
@@ -60,12 +67,36 @@ module "airbyte" {
   gcp_policy_tag_id = "6523652585511281766"
   gcp_keyring       = "bat-key-ring"
   gcp_key           = "bat-key"
+  gcp_bq_sa         = data.azurerm_key_vault_secret.airbyte_bq_sa[0].value
+
+  gcp_dataset_internal = "airbyte_internal"
 
   config_map_ref = module.application_configuration.kubernetes_config_map_name
   secret_ref     = module.application_configuration.kubernetes_secret_name
   cpu            = module.cluster_data.configuration_map.cpu_min
 
   use_azure = var.deploy_azure_backing_services
+}
+
+module "streams_update_job" {
+  source = "./vendor/modules/aks//aks/job_configuration"
+
+  count = var.airbyte_enabled ? 1 : 0
+
+  depends_on = [module.airbyte]
+
+  namespace    = var.namespace
+  environment  = local.app_name_suffix
+  service_name = var.service_name
+  docker_image = var.app_docker_image
+  commands     = ["/bin/sh"]
+  arguments    = ["-c", "rake dfe:analytics:airbyte_deploy_tasks"]
+  job_name     = "airbyte-stream-update"
+  enable_logit = true
+
+  config_map_ref = module.application_configuration.kubernetes_config_map_name
+  secret_ref     = module.airbyte_application_configuration[0].kubernetes_secret_name
+  cpu            = module.cluster_data.configuration_map.cpu_min
 }
 
 ## Airbyte module variables

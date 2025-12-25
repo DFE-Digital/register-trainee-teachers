@@ -46,7 +46,7 @@ module "worker_application" {
   cluster_configuration_map = module.cluster_data.configuration_map
 
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
-  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+  kubernetes_secret_name     = var.airbyte_enabled ? module.airbyte_application_configuration[0].kubernetes_secret_name : module.application_configuration.kubernetes_secret_name
 
   docker_image    = var.app_docker_image
   command         = each.value.startup_command
@@ -69,4 +69,19 @@ module "application_configuration" {
   config_short          = var.config_short
   config_variables      = local.app_env_values
   secret_variables      = local.app_secrets
+}
+
+module "airbyte_application_configuration" {
+
+  count = var.airbyte_enabled ? 1 : 0
+
+  source = "./vendor/modules/aks//aks/application_configuration"
+
+  namespace             = var.namespace
+  environment           = "${local.app_name_suffix}-ab"
+  azure_resource_prefix = var.azure_resource_prefix
+  service_short         = var.service_short
+  config_short          = var.config_short
+  config_variables      = local.app_env_values
+  secret_variables      = local.airbyte_app_secrets
 }
