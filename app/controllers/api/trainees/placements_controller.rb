@@ -66,8 +66,7 @@ module Api
       end
 
       def placement_params
-        params
-          .expect(data: [attributes_klass::ATTRIBUTES])
+        params.expect(data: attributes_klass::ATTRIBUTES)
       end
 
       def new_placement
