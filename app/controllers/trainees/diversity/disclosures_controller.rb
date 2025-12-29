@@ -24,7 +24,7 @@ module Trainees
       def disclosure_params
         return { diversity_disclosure: nil } if params[:diversities_disclosure_form].blank?
 
-        params.expect(diversities_disclosure_form: [*Diversities::DisclosureForm::FIELDS])
+        params.expect(diversities_disclosure_form: Diversities::DisclosureForm::FIELDS)
       end
 
       def step_wizard

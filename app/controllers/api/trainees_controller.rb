@@ -73,11 +73,11 @@ module Api
     def hesa_mapped_params
       hesa_mapper_class.call(
         params: params.expect(
-          data: [hesa_mapper_class::ATTRIBUTES + hesa_mapper_class.disability_attributes(params),
-                 trainee_attributes_service::ATTRIBUTES.keys + hesa_trainee_details_attributes_service::ATTRIBUTES,
-                 { placements_attributes: placements_attributes,
-                   degrees_attributes: degree_attributes,
-                   nationalisations_attributes: nationality_attributes }],
+          data: hesa_mapper_class::ATTRIBUTES + hesa_mapper_class.disability_attributes(params) +
+                 trainee_attributes_service::ATTRIBUTES.keys + hesa_trainee_details_attributes_service::ATTRIBUTES +
+                 [{ placements_attributes: [placements_attributes],
+                    degrees_attributes: [degree_attributes],
+                    nationalisations_attributes: nationality_attributes }],
         ),
       )
     end
@@ -85,11 +85,15 @@ module Api
     def hesa_mapped_params_for_update
       hesa_mapper_class.call(
         params: params.expect(
-          data: [hesa_mapper_class::ATTRIBUTES +
-          trainee_attributes_service::ATTRIBUTES.keys,
-                 hesa_mapper_class.disability_attributes(params),
-                 hesa_trainee_details_attributes_service::ATTRIBUTES],
-        ), update: true
+          data: hesa_mapper_class::ATTRIBUTES +
+          trainee_attributes_service::ATTRIBUTES.keys +
+          hesa_mapper_class.disability_attributes(params) +
+          hesa_trainee_details_attributes_service::ATTRIBUTES +
+          [{ placements_attributes: [placements_attributes],
+             degrees_attributes: [degree_attributes],
+             nationalisations_attributes: nationality_attributes }],
+        ),
+        update: true,
       )
     end
 

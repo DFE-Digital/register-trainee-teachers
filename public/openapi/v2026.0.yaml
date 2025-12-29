@@ -4857,7 +4857,7 @@ paths:
                 - errors
               example:
                 errors:
-                - 'Param is missing or the value is empty: data'
+                - 'Param is missing or the value is empty or invalid: data'
   "/api/{api_version}/trainees/{trainee_id}/placements":
     get:
       summary: index

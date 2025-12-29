@@ -31,8 +31,7 @@ module Trainees
 
     def trainee_params
       params.expect(
-        trainee_start_status_form: [*TraineeStartStatusForm::FIELDS,
-                                    *PARAM_CONVERSION.keys],
+        trainee_start_status_form: TraineeStartStatusForm::FIELDS + PARAM_CONVERSION.keys,
       ).transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end
