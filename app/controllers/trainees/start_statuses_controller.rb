@@ -30,9 +30,9 @@ module Trainees
   private
 
     def trainee_params
-      params.require(:trainee_start_status_form).permit(
-        *TraineeStartStatusForm::FIELDS,
-        *PARAM_CONVERSION.keys,
+      params.expect(
+        trainee_start_status_form: [*TraineeStartStatusForm::FIELDS,
+                                    *PARAM_CONVERSION.keys],
       ).transform_keys do |key|
         PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
       end

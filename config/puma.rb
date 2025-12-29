@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This configuration file will be evaluated by Puma. The top-level methods that
 #                                                                                                                                           0o
 # are invoked here are part of Puma's configuration DSL. For more information

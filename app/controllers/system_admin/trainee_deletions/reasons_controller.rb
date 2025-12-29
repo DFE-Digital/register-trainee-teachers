@@ -26,7 +26,7 @@ module SystemAdmin
       end
 
       def delete_params
-        params.require(:system_admin_delete_trainee_form).permit(:delete_reason, :additional_delete_reason, :ticket)
+        params.expect(system_admin_delete_trainee_form: %i[delete_reason additional_delete_reason ticket])
       end
 
       def authorize_delete

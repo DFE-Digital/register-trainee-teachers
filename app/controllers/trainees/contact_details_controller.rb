@@ -21,7 +21,7 @@ module Trainees
   private
 
     def contact_details_params
-      params.require(:contact_details_form).permit(*ContactDetailsForm::FIELDS)
+      params.expect(contact_details_form: [*ContactDetailsForm::FIELDS])
     end
 
     def relevant_redirect_path

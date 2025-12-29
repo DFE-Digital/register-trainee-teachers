@@ -9,7 +9,7 @@ module SystemAdmin
 
     def create
       @user = User.find(params[:user_id])
-      @provider = Provider.find_by(name: params.require(:provider).permit(:provider)[:provider])
+      @provider = Provider.find_by(name: params.expect(provider: [:provider])[:provider])
       ProviderUser.find_or_create_by!(provider: @provider, user: @user)
       redirect_to(user_path(@user), flash: { success: "Provider added" })
     end

@@ -93,7 +93,7 @@ module Trainees
     end
 
     def mark_as_completed_params
-      mark_as_completed_attributes = params.require(:confirm_detail_form).permit(:mark_as_completed)[:mark_as_completed]
+      mark_as_completed_attributes = params.expect(confirm_detail_form: [:mark_as_completed])[:mark_as_completed]
 
       ActiveModel::Type::Boolean.new.cast(mark_as_completed_attributes)
     end

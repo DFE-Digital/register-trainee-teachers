@@ -51,16 +51,16 @@ module Api
 
       def degree_params
         hesa_mapper_class.call(
-          params.require(:data).permit(
-            hesa_mapper_class::ATTRIBUTES,
+          params.expect(
+            data: [hesa_mapper_class::ATTRIBUTES],
           ),
         )
       end
 
       def degree_params_for_update
         hesa_mapper_class.call(
-          params.require(:data).permit(
-            hesa_mapper_class::ATTRIBUTES,
+          params.expect(
+            data: [hesa_mapper_class::ATTRIBUTES],
           ),
         ).slice(*map_param_keys_for_update)
       end

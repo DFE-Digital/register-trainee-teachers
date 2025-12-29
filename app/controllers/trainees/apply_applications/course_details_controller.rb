@@ -26,8 +26,8 @@ module Trainees
     private
 
       def review_course_params
-        params.require(:apply_applications_review_course_form).permit(
-          *::ApplyApplications::ReviewCourseForm::FIELDS,
+        params.expect(
+          apply_applications_review_course_form: [*::ApplyApplications::ReviewCourseForm::FIELDS],
         )
       end
 

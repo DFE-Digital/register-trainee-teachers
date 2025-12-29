@@ -26,7 +26,7 @@ module Trainees
       def disability_disclosure_params
         return { disability_disclosure: nil } if params[:diversities_disability_disclosure_form].blank?
 
-        params.require(:diversities_disability_disclosure_form).permit(*Diversities::DisabilityDisclosureForm::FIELDS)
+        params.expect(diversities_disability_disclosure_form: [*Diversities::DisabilityDisclosureForm::FIELDS])
       end
 
       def relevant_path

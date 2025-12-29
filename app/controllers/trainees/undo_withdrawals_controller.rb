@@ -34,8 +34,7 @@ module Trainees
 
     def trainee_params
       params
-        .require(:undo_withdrawal_form)
-        .permit(:comment, :ticket)
+        .expect(undo_withdrawal_form: %i[comment ticket])
     end
   end
 end

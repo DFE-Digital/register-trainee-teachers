@@ -37,7 +37,7 @@ module Trainees
     end
 
     def trainee_params
-      params.require(:training_routes_form).permit(:training_route, :context)
+      params.expect(training_routes_form: %i[training_route context])
     end
   end
 end

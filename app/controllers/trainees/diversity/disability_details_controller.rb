@@ -32,7 +32,7 @@ module Trainees
       def disability_detail_params
         return { disability_ids: nil } if params[:diversities_disability_detail_form].blank?
 
-        params.require(:diversities_disability_detail_form).permit(:additional_disability, disability_ids: [])
+        params.expect(diversities_disability_detail_form: [:additional_disability, { disability_ids: [] }])
       end
     end
   end
