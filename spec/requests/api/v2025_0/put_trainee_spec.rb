@@ -129,7 +129,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
       it "returns status code 422" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty: data")
+        expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty or invalid: data")
       end
 
       context "with enhanced errors" do
@@ -137,7 +137,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
         it "returns status code 422" do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty: data")
+          expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty or invalid: data")
         end
       end
     end

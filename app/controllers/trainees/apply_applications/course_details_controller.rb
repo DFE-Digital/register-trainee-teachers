@@ -27,7 +27,7 @@ module Trainees
 
       def review_course_params
         params.expect(
-          apply_applications_review_course_form: [*::ApplyApplications::ReviewCourseForm::FIELDS],
+          apply_applications_review_course_form: ::ApplyApplications::ReviewCourseForm::FIELDS,
         )
       end
 

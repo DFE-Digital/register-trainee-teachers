@@ -60,7 +60,7 @@ module Api
       def hesa_mapped_params
         hesa_mapper_class.call(
           params: params.expect(
-            data: [hesa_mapper_class::ATTRIBUTES, attributes_klass::ATTRIBUTES],
+            data: hesa_mapper_class::ATTRIBUTES + attributes_klass::ATTRIBUTES,
           ),
         )
       end

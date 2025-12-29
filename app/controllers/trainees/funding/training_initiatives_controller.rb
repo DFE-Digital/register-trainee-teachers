@@ -22,7 +22,7 @@ module Trainees
       def trainee_params
         return { training_initiative: nil } if params[:funding_training_initiatives_form].blank?
 
-        params.expect(funding_training_initiatives_form: [*::Funding::TrainingInitiativesForm::FIELDS])
+        params.expect(funding_training_initiatives_form: ::Funding::TrainingInitiativesForm::FIELDS)
       end
 
       def step_wizard
