@@ -26,8 +26,8 @@ module Trainees
       def ethnic_background_params
         return { ethnic_background: nil } if params[:diversities_ethnic_background_form].blank?
 
-        required_params = params.require(:diversities_ethnic_background_form).permit(
-          *Diversities::EthnicBackgroundForm::FIELDS,
+        required_params = params.expect(
+          diversities_ethnic_background_form: [*Diversities::EthnicBackgroundForm::FIELDS],
         )
 
         required_params[:additional_ethnic_background] = nil if background_is_different?(required_params)

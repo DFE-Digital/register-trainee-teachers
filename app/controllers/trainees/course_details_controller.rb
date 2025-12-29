@@ -45,7 +45,7 @@ module Trainees
     end
 
     def course_details_params
-      params.require(:course_details_form).permit(*CourseDetailsForm::FIELDS)
+      params.expect(course_details_form: [*CourseDetailsForm::FIELDS])
     end
 
     def course_date_params

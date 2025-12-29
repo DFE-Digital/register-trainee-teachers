@@ -25,8 +25,7 @@ module Trainees
 
       def trainee_params
         params
-          .require(:schools_employing_school_form)
-          .permit(:employing_school_not_applicable)
+          .expect(schools_employing_school_form: [:employing_school_not_applicable])
       end
     end
   end

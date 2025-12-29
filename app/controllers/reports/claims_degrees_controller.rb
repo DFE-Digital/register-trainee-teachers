@@ -41,8 +41,8 @@ module Reports
     def form_params
       return {} if params[:reports_claims_degrees_form].blank?
 
-      params.require(:reports_claims_degrees_form)
-            .permit(*DATE_FIELD_MAPPING.keys)
+      params
+            .expect(reports_claims_degrees_form: [*DATE_FIELD_MAPPING.keys])
             .transform_keys do |key|
               DATE_FIELD_MAPPING[key] || key
             end

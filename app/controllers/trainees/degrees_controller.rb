@@ -58,11 +58,11 @@ module Trainees
     end
 
     def degree_params
-      params.require(:degree).permit(DegreeForm::FIELDS.excluding(:slug, *DegreeForm::AUTOCOMPLETE_FIELDS))
+      params.expect(degree: [DegreeForm::FIELDS.excluding(:slug, *DegreeForm::AUTOCOMPLETE_FIELDS)])
     end
 
     def autocomplete_params
-      params.require(:degree).permit(DegreeForm::AUTOCOMPLETE_FIELDS)
+      params.expect(degree: [DegreeForm::AUTOCOMPLETE_FIELDS])
     end
 
     def set_degrees_form

@@ -19,8 +19,8 @@ module Trainees
   private
 
     def trainee_params
-      params.require(:outcome_date_form)
-        .permit(:date_string, *MultiDateForm::PARAM_CONVERSION.keys)
+      params
+        .expect(outcome_date_form: [:date_string, *MultiDateForm::PARAM_CONVERSION.keys])
         .transform_keys do |key|
           MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end

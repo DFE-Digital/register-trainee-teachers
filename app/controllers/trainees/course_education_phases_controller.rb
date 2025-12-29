@@ -19,7 +19,7 @@ module Trainees
   private
 
     def course_params
-      params.require(:course_education_phase_form).permit(*::CourseEducationPhaseForm::FIELDS)
+      params.expect(course_education_phase_form: [*::CourseEducationPhaseForm::FIELDS])
     end
   end
 end

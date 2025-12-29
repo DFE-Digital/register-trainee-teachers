@@ -26,7 +26,7 @@ module Trainees
   private
 
     def forbidden_deletes_params
-      params.require(:trainee_forbidden_delete_form).permit(:alternative_option)
+      params.expect(trainee_forbidden_delete_form: [:alternative_option])
     end
   end
 end

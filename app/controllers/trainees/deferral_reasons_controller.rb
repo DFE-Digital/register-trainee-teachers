@@ -19,8 +19,8 @@ module Trainees
   private
 
     def trainee_params
-      params.require(:deferral_form)
-        .permit(:defer_reason, :date_string, *MultiDateForm::PARAM_CONVERSION.keys)
+      params
+        .expect(deferral_form: [:defer_reason, :date_string, *MultiDateForm::PARAM_CONVERSION.keys])
         .transform_keys do |key|
           MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end

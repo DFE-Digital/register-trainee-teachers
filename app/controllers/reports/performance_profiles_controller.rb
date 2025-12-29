@@ -86,7 +86,7 @@ module Reports
     end
 
     def sign_off
-      params.require(:performance_profile_sign_off_form).permit(:sign_off)[:sign_off]
+      params.expect(performance_profile_sign_off_form: [:sign_off])[:sign_off]
     end
   end
 end
