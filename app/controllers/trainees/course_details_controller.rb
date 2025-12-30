@@ -22,7 +22,7 @@ module Trainees
       @course_details_form = CourseDetailsForm.new(
         trainee,
         user: current_user,
-        params: course_details_params.merge(course_date_params),
+        params: course_details_params,
       )
 
       if @course_details_form.stash_or_save!
@@ -45,14 +45,8 @@ module Trainees
     end
 
     def course_details_params
-      params.expect(course_details_form: CourseDetailsForm::FIELDS)
-    end
-
-    def course_date_params
-      params.require(:course_details_form).except(
-        *CourseDetailsForm::FIELDS,
-      ).permit(*date_conversion.keys)
-      .transform_keys { |key| date_conversion[key] }
+      params.expect(course_details_form: CourseDetailsForm::FIELDS + date_conversion.keys)
+        .transform_keys { |key| date_conversion[key] || key }
     end
 
     def redirect_to_confirm
