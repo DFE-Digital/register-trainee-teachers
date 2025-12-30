@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/integer/time"
+require Rails.root.join("config/initializers/redis")
+require_dependency Rails.root.join("app/lib/custom_log_formatter")
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -39,8 +41,7 @@ Rails.application.configure do
     redirect: { exclude: ->(request) { request.path.include?("ping") || request.path.include?("metrics") }, status: 307, port: 81 },
   }
 
-  # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/ping" } } }
+  # Use a different cache store in production.
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [:request_id]
@@ -56,7 +57,7 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
-  # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, { url: RedisSetting.new(ENV.fetch("VCAP_SERVICES", nil)).url }
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # config.active_job.queue_adapter = :resque
@@ -81,8 +82,25 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
+  # Send deprecation notices to registered listeners.
+  config.active_support.deprecation = :notify
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  ##################
+  # logging config #
+  ##################
+  config.rails_semantic_logger.add_file_appender = false
+  config.rails_semantic_logger.format = CustomLogFormatter.new
+  config.semantic_logger.add_appender(
+    io: $stdout,
+    level: config.log_level,
+    formatter: CustomLogFormatter.new,
+    filter: ->(log) { !log.message.to_s.include?("DfE::Analytics::SendEvents") },
+  )
+
+  config.active_record.logger = nil # Don't log SQL in production
 
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [:id]
