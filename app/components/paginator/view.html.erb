@@ -1,7 +1,9 @@
-<nav class="moj-pagination" role="navigation" aria-label="pagination">
-  <%= paginate scope, **paginate_configuration %>
+<div class="moj-pagination">
+  <nav class="govuk-pagination moj-pagination__pagination" role="navigation" aria-label="pagination">
+    <%= paginate scope, **paginate_configuration %>
 
+  </nav>
   <p class="moj-pagination__results govuk-body">
     Showing <strong><%= page_start %></strong> to <strong><%= page_end %></strong> of <strong><%= total %></strong> results
   </p>
-</nav>
+</div>
