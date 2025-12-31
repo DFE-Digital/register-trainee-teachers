@@ -149,11 +149,13 @@ private
   end
 
   def and_a_number_of_lead_partners_exist
-    @lead_partners = create_list(:lead_partner, 1, :school)
+    # Pick a name that won't clash with any other faker lead partner names to avoid picking the wrong lead partner
+    @lead_partners = create_list(:lead_partner, 1, :school, name: "Yyyyyyyyy Lead Partner")
   end
 
   def and_a_number_of_employing_schools_exist
-    @employing_schools = create_list(:school, 1)
+    # Pick a name that won't clash with any other faker school names to avoid picking the wrong school
+    @employing_schools = create_list(:school, 1, name: "Zzzzzzzz School")
   end
 
   def and_i_visit_the_trainee_record_page
@@ -173,7 +175,7 @@ private
   end
 
   def my_employing_school
-    @my_employing_school ||= @employing_schools.sample
+    @my_employing_school ||= @employing_schools.first
   end
 
   def then_i_am_redirected_to_the_confirm_lead_partner_page
