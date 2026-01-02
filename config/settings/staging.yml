@@ -23,11 +23,6 @@ features:
   import_applications_from_apply: false
   publish_course_details: true
   integrate_with_trs: false
-  hesa_trn_requests: false
-  hesa_import:
-    sync_collection: false
-    sync_trn_data: false
-    test_mode: true
   google:
     send_data_to_big_query: true
 
