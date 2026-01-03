@@ -297,6 +297,9 @@ class Trainee < ApplicationRecord
   COMPLETE_STATES = %w[recommended_for_award withdrawn awarded].freeze
   IN_TRAINING_STATES = %w[submitted_for_trn trn_received recommended_for_award].freeze
 
+  NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
+  HESA_USERNAME = "HESA"
+
   pg_search_scope :with_name_provider_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name provider_trainee_id trn],
                   using: {

@@ -50,7 +50,7 @@ class Placement < ApplicationRecord
   end
 
   def full_address
-    return if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.include?(urn)
+    return if Trainee::NOT_APPLICABLE_SCHOOL_URNS.include?(urn)
 
     full_address = if school.blank?
                      parts = [address, postcode].compact
@@ -64,6 +64,6 @@ class Placement < ApplicationRecord
   end
 
   def created_by_hesa?
-    audits.exists?(action: "create", username: Trainees::CreateFromHesa::USERNAME)
+    audits.exists?(action: "create", username: Trainee::HESA_USERNAME)
   end
 end

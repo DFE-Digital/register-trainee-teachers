@@ -19,7 +19,7 @@ describe PlacementsImportedFromHesa do
 
   context "when the trainee and all it's placements is imported from HESA but not all placements are" do
     let(:trainee) do
-      Audited.audit_class.as_user(Trainees::CreateFromHesa::USERNAME) do
+      Audited.audit_class.as_user(Trainee::USERNAME) do
         create(:trainee, :with_placements, :imported_from_hesa)
       end
     end
