@@ -11,7 +11,7 @@ module TimeHelpers
 
     if (months = months_between(from, datetime))
       "in #{months} month#{'s' if months != 1}"
-    elsif days >= 7 && days % 7 == 0
+    elsif days >= 7 && (days % 7).zero?
       weeks = days / 7
       "in #{weeks} week#{'s' if weeks != 1}"
     else

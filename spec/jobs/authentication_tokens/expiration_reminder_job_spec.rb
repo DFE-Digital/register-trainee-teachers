@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AuthenticationTokens::ExpirationReminderJob, type: :job do
+RSpec.describe AuthenticationTokens::ExpirationReminderJob do
   subject { described_class }
 
   describe "#perform" do

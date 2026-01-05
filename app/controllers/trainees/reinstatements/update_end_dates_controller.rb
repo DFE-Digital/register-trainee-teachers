@@ -31,9 +31,9 @@ module Trainees
 
       def trainee_params
         params.require(:itt_end_date_form).permit(:itt_end_date, :context, *PARAM_CONVERSION.keys)
-              .transform_keys do |key|
-          PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
-        end
+          .transform_keys do |key|
+            PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
+          end
       end
 
       def authorize_trainee
