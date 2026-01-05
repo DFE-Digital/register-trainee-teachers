@@ -19,13 +19,14 @@ RSpec.describe AuthenticationTokens::ExpirationReminderJob, type: :job do
     let!(:token_will_expire_in_two_weeks) { create(:authentication_token, expires_at: 2.weeks.from_now) }
 
     it "enqueues emails only for active tokens" do
-      [token_will_expire_tomorrow, token_will_expire_in_one_month, token_will_expire_in_one_week].each do |token|
-        expect(AuthenticationTokens::ExpirationReminderMailer).to receive(:generate).with(
-          authentication_token: token,
-        ).and_call_original
-      end
-
-      subject.perform_now
+      expect { subject.perform_now }
+        .to have_enqueued_mail(AuthenticationTokens::ExpirationReminderMailer, :generate)
+        .with(authentication_token: token_will_expire_tomorrow)
+        .and have_enqueued_mail(AuthenticationTokens::ExpirationReminderMailer, :generate)
+        .with(authentication_token: token_will_expire_in_one_week)
+        .and have_enqueued_mail(AuthenticationTokens::ExpirationReminderMailer, :generate)
+        .with(authentication_token: token_will_expire_in_one_month)
+        .and have_enqueued_mail(AuthenticationTokens::ExpirationReminderMailer, :generate).exactly(3).times
     end
   end
 end
