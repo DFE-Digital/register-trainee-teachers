@@ -117,7 +117,7 @@ GEM
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     awesome_print (1.9.2)
-    azure-blob (0.6.0)
+    azure-blob (0.7.0)
       rexml
     base32 (0.3.4)
     base64 (0.3.0)
@@ -927,7 +927,7 @@ CHECKSUMS
   audited (5.8.0) sha256=35cd63f9ee1eb2a1f773e7abf5915bb4e870b6338173e27c31e0e604e353f371
   auto_strip_attributes (2.6.0) sha256=a7e2e0cf744de2bcd947fd68014220702bcc88c81274c1cd9ce6f7316aae39b0
   awesome_print (1.9.2) sha256=e99b32b704acff16d768b3468680793ced40bfdc4537eb07e06a4be11133786e
-  azure-blob (0.6.0) sha256=07e5745ed0a6826b1300c8a0ec13f8b27207a9693fa37280a941c41ff351a71c
+  azure-blob (0.7.0) sha256=2562959feb99d7fcf38e087824fe1c6d45676e9437f956a74af46ff1fb5e44fa
   base32 (0.3.4) sha256=cb9810ab7c79862ed6ead254b3a44fa2535d088396cd412eef38bdc206055aba
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
