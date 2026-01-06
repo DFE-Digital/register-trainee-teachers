@@ -1,17 +1,16 @@
-<%= render PageTitle::View.new(text: "#{pluralize(awardable_rows_count, "trainee")} recommended for QTS or EYTS") %>
+<%= render PageTitle::View.new(text: "#{pluralize(awardable_rows_count, "trainee")} gained #{qts_or_eyts(recommendations_upload.awardable_rows)}") %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        <%= pluralize(awardable_rows_count, "trainee") %> recommended for
+        <%= pluralize(awardable_rows_count, "trainee") %> gained
         <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
       </h1>
     </div>
 
     <p class="govuk-body">
-      The Department for Education will let trainees know of their change in status within 3-5 working days 
-      
+      The Department for Education will let trainees know of their change in status within 3-5 working days
     </p>
 
     <h2 class="govuk-heading-m">Next steps</h2>
@@ -27,7 +26,7 @@
       </p>
 
       <ul class="govuk-list govuk-list--bullet">
-        <li><%= govuk_link_to("bulk recommend more trainees", new_bulk_update_recommendations_upload_path) %></li>
+        <li><%= govuk_link_to("bulk change status of more trainees", new_bulk_update_recommendations_upload_path) %></li>
         <li><%= govuk_link_to("view your list of registered trainees", trainees_path) %></li>
       </ul>
     <% end %>
