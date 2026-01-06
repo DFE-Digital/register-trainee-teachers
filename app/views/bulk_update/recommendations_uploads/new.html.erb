@@ -46,10 +46,6 @@
         <%= govuk_link_to("Download a prepopulated file", bulk_recommend_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
       </p>
 
-      <p class="govuk-body">
-        File name: <span class="app-nowrap"><%= organisation_filename_prepopulated %></span>
-      </p>
-
       <h4 class="govuk-heading-m">Empty template file</h4>
 
       <p class="govuk-body">
@@ -62,10 +58,6 @@
 
       <p class="govuk-body">
         <%= govuk_link_to("Download an empty template", bulk_recommend_empty_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
-      </p>
-
-      <p class="govuk-body">
-        File name: <span class="app-nowrap"><%= organisation_filename_empty %></span>
       </p>
 
       <h3 class="govuk-heading-m">
