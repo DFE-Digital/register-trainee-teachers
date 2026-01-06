@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Check whose status will change") %>
+<%= render PageTitle::View.new(text: "Check who you’ll recommend for #{qts_or_eyts(recommendations_upload.awardable_rows)}") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: back_url_for_check_page(recommendations_upload)) %>
@@ -9,7 +9,6 @@
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl">Bulk recommend</span>
       Check whose status will change
-      <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
     </h1>
 
     <% @rows.tap do |awardable_rows| %>
@@ -40,7 +39,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= register_form_with url: bulk_update_recommendations_upload_recommendations_path, method: :post, local: true do |f| %>
-      <%= f.govuk_submit("Change status of #{pluralize(awardable_rows_count, "trainee")}", id: "recommend") %>
+      <%= f.govuk_submit("Recommend #{pluralize(awardable_rows_count, "trainee")} for #{qts_or_eyts(recommendations_upload.awardable_rows)}", id: "recommend") %>
     <% end %>
     <div class="govuk-body">
       <%= govuk_link_to("Change whose status is changing", edit_bulk_update_recommendations_upload_path(recommendations_upload)) %>
