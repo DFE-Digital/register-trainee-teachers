@@ -61,5 +61,15 @@ describe Trainees::ConfirmReinstatementsController do
         } .from("deferred") .to("submitted_for_trn")
       end
     end
+
+    context "when the TRS feature flag is enabled", feature_integrate_with_trs: true do
+      let(:trn) { "1234567" }
+
+      it "sends an update to TRS" do
+        expect {
+          post :update, params: { trainee_id: trainee }
+        }.to have_enqueued_job(Trs::UpdateProfessionalStatusJob).with(trainee)
+      end
+    end
   end
 end
