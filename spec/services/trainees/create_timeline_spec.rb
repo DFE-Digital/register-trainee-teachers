@@ -74,7 +74,7 @@ module Trainees
 
         context "when a degree has been created and deleted via HESA" do
           before do
-            Audited.audit_class.as_user(::Trainee::HESA_USERNAME) do
+            Audited.audit_class.as_user(::User::HESA_USERNAME) do
               create(:degree, trainee:)
               trainee.reload.degrees.destroy_all
             end
