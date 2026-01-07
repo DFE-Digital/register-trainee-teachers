@@ -32,7 +32,7 @@ module SystemAdmin
     end
 
     def school_params
-      params.require(:school).permit(:lead_partner)
+      params.expect(school: [:lead_partner])
     end
   end
 end

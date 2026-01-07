@@ -25,8 +25,7 @@ module Trainees
 
       def trainee_params
         params
-          .require(:partners_training_partner_form)
-          .permit(:lead_partner_not_applicable)
+          .expect(partners_training_partner_form: [:lead_partner_not_applicable])
       end
 
       def step_wizard

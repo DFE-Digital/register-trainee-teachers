@@ -32,8 +32,7 @@ module SystemAdmin
 
       def update_params
         params
-          .require(:system_admin_change_accredited_provider_form)
-          .permit(:accredited_provider_id)
+          .expect(system_admin_change_accredited_provider_form: [:accredited_provider_id])
       end
 
       def relevant_redirect_path

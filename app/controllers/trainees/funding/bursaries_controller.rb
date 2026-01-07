@@ -23,9 +23,9 @@ module Trainees
 
       def form_params
         if params.key?(:funding_grant_and_tiered_bursary_form)
-          params.require(:funding_grant_and_tiered_bursary_form).permit(
-            :custom_applying_for_grant,
-            :custom_bursary_tier,
+          params.expect(
+            funding_grant_and_tiered_bursary_form: %i[custom_applying_for_grant
+                                                      custom_bursary_tier],
           )
         else
           bursary_params
@@ -35,8 +35,8 @@ module Trainees
       def bursary_params
         return { applying_for_bursary: nil } if params[:funding_bursary_form].blank?
 
-        params.require(:funding_bursary_form).permit(
-          :funding_type,
+        params.expect(
+          funding_bursary_form: [:funding_type],
         )
       end
 

@@ -21,7 +21,7 @@ module Trainees
   private
 
     def verification_params
-      params.require(:start_date_verification_form).permit(:trainee_has_started_course, :context)
+      params.expect(start_date_verification_form: %i[trainee_has_started_course context])
     end
 
     def relevant_redirect_path

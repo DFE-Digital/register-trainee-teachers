@@ -26,7 +26,7 @@ module Trainees
       def ethnic_group_param
         return { ethnic_group: nil } if params[:diversities_ethnic_group_form].blank?
 
-        params.require(:diversities_ethnic_group_form).permit(*Diversities::EthnicGroupForm::FIELDS)
+        params.expect(diversities_ethnic_group_form: Diversities::EthnicGroupForm::FIELDS)
       end
 
       def relevant_path
