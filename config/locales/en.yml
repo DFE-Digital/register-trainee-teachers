@@ -703,10 +703,10 @@ en:
           trn_received: TRN received
           withdrawn: Withdrawn
           deferred: Deferred
-          QTS_recommended_for_award: QTS recommended
-          EYTS_recommended_for_award: EYTS recommended
-          QTS_awarded: QTS awarded
-          EYTS_awarded: EYTS awarded
+          QTS_recommended_for_award: QTS pending
+          EYTS_recommended_for_award: EYTS pending
+          QTS_awarded: Holds QTS
+          EYTS_awarded: Holds EYTS
           incomplete: Incomplete
   apply_applications:
     trainee_data:
@@ -1425,10 +1425,10 @@ en:
           withdrawn: Withdrawn
           deferred: Deferred
           awarded: Qualification awarded
-          qts_recommended: QTS recommended
-          qts_awarded: QTS awarded
-          eyts_recommended: EYTS recommended
-          eyts_awarded: EYTS awarded
+          qts_recommended: QTS pending
+          qts_awarded: Holds QTS
+          eyts_recommended: EYTS pending
+          eyts_awarded: Holds EYTS
         statuses:
           course_not_yet_started: Course not started yet
           in_training: In training
