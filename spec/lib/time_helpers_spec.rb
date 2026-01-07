@@ -49,6 +49,10 @@ RSpec.describe TimeHelpers do
       it "returns 'in 2 months' for plural" do
         expect(in_exact_time(from + 2.months, from)).to eq("in 2 months")
       end
+
+      it "returns 'in 14 months' for plural" do
+        expect(in_exact_time(from + 14.months, from)).to eq("in 14 months")
+      end
     end
 
     context "when using default from time" do

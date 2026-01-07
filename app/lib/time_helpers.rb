@@ -10,18 +10,22 @@ module TimeHelpers
     days = (datetime - from).to_i
 
     if (months = months_between(from, datetime))
-      "in #{months} month#{'s' if months != 1}"
+      "in #{months} #{'month'.pluralize(months)}"
     elsif days >= 7 && (days % 7).zero?
       weeks = days / 7
-      "in #{weeks} week#{'s' if weeks != 1}"
+      "in #{weeks} #{'week'.pluralize(weeks)}"
     else
-      "in #{days} day#{'s' if days != 1}"
+      "in #{days} #{'day'.pluralize(days)}"
     end
   end
 
 private
 
   def months_between(from, datetime)
-    (1..12).find { |n| from + n.months == datetime }
+    months = ((datetime.year - from.year) * 12) + (datetime.month - from.month)
+
+    return if months < 1 || from + months.months != datetime
+
+    months
   end
 end
