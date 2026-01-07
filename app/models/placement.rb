@@ -50,7 +50,7 @@ class Placement < ApplicationRecord
   end
 
   def full_address
-    return if Trainee::NOT_APPLICABLE_SCHOOL_URNS.include?(urn)
+    return if School::NOT_APPLICABLE_SCHOOL_URNS.include?(urn)
 
     full_address = if school.blank?
                      parts = [address, postcode].compact

@@ -33,7 +33,7 @@ module Placements
       end
 
       context "when the school urn is among NOT_APPLICABLE_SCHOOL_URNS" do
-        let(:hesa_placement) { { school_urn: Trainee::NOT_APPLICABLE_SCHOOL_URNS.sample, placement_days: "160" } }
+        let(:hesa_placement) { { school_urn: School::NOT_APPLICABLE_SCHOOL_URNS.sample, placement_days: "160" } }
 
         it "creates the placement" do
           expect(trainee.placements.count).to eq(student_attributes[:placements].count)

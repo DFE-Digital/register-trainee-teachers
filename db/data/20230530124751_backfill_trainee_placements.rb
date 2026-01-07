@@ -13,10 +13,10 @@ class BackfillTraineePlacements < ActiveRecord::Migration[7.0]
           trainee.placements.find_or_create_by(school:)
         end
       else
-        # Else we must be getting a not applicable urn. See the list here: Trainee::NOT_APPLICABLE_SCHOOL_URNS
+        # Else we must be getting a not applicable urn. See the list here: School::NOT_APPLICABLE_SCHOOL_URNS
         hesa_urns.each do |urn|
           # Skip if the urn is not among Trainee::NOT_APPLICABLE_SCHOOL_URNS
-          next if Trainee::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
+          next if School::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
 
           trainee.placements.find_or_create_by(
             {
