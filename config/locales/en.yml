@@ -1434,7 +1434,7 @@ en:
           in_training: In training
           deferred: Deferred
           withdrawn: Withdrawn
-          awarded: Awarded
+          awarded: Holds QTS/EYTS
         training_initiatives:
           transition_to_teach: Transition to Teach
           troops_to_teachers: Troops to Teachers
