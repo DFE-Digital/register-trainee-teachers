@@ -42,7 +42,7 @@
       <%= f.govuk_submit("Recommend #{pluralize(awardable_rows_count, "trainee")} for #{qts_or_eyts(recommendations_upload.awardable_rows)}", id: "recommend") %>
     <% end %>
     <div class="govuk-body">
-      <%= govuk_link_to("Change whose status is changing", edit_bulk_update_recommendations_upload_path(recommendations_upload)) %>
+      <%= govuk_link_to("Edit who is selected for status change", edit_bulk_update_recommendations_upload_path(recommendations_upload)) %>
     </div>
     <div class="govuk-body">
       <%= govuk_link_to("Cancel the bulk status change", cancel_bulk_update_recommendations_upload_path(recommendations_upload)) %>
