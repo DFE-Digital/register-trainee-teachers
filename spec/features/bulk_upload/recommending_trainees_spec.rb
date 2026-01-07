@@ -217,7 +217,7 @@ private
   end
 
   def then_i_see_count_complete
-    expect(recommendations_upload_show_page).to have_text("Both trainees will be recommended")
+    expect(recommendations_upload_show_page).to have_text("Both trainees will gain QTS")
   end
 
   def then_i_see_count_missing_dates
@@ -276,6 +276,6 @@ private
   end
 
   def then_i_see_the_confirmation
-    expect(recommendations_upload_confirmation_page).to have_content("2 trainees recommended for QTS")
+    expect(recommendations_upload_confirmation_page).to have_content("2 trainees gained QTS")
   end
 end
