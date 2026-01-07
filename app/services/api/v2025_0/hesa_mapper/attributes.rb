@@ -22,7 +22,6 @@ module Api
           course_subject_three
         ].freeze
 
-        NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
         VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
         DISABILITY_PARAM_REGEX = /\Adisability\d+\z/
 
@@ -239,7 +238,7 @@ module Api
 
         def lead_partner_from_urn
           lead_partner_id =
-            if params[:lead_partner_urn].present? && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
+            if params[:lead_partner_urn].present? && !School::NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
               LeadPartner.find_by(urn: params[:lead_partner_urn])&.id || InvalidValue.new(params[:lead_partner_urn])
             end
 
@@ -262,7 +261,7 @@ module Api
         end
 
         def employing_school_attributes
-          if params.key?(:employing_school_urn) && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
+          if params.key?(:employing_school_urn) && !School::NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
             employing_school_id =
               if params[:employing_school_urn].present?
                 School.find_by(urn: params[:employing_school_urn])&.id || InvalidValue.new(params[:employing_school_urn])
@@ -271,7 +270,7 @@ module Api
               employing_school_id: employing_school_id,
               employing_school_not_applicable: employing_school_id.nil?,
             }
-          elsif params.key?(:employing_school_urn) && NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
+          elsif params.key?(:employing_school_urn) && School::NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
             {
               employing_school_id: nil,
               employing_school_not_applicable: true,
