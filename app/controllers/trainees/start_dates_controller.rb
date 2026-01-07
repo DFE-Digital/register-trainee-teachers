@@ -27,9 +27,9 @@ module Trainees
 
     def trainee_params
       params.require(:trainee_start_date_form).permit(:trainee_start_date, :context, *PARAM_CONVERSION.keys)
-            .transform_keys do |key|
-        PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
-      end
+        .transform_keys do |key|
+          PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
+        end
     end
 
     def relevant_redirect_path
