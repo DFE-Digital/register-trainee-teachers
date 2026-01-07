@@ -9,6 +9,7 @@ module AuthenticationTokens
 
       set_personalisation(
         first_name: authentication_token.created_by.first_name,
+        token_name: authentication_token.name,
         expires_in: in_exact_time(authentication_token.expires_at),
       )
 

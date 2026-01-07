@@ -22,5 +22,9 @@ describe AuthenticationTokens::ExpirationReminderMailer do
     it "includes the expiration period in the personalisation" do
       expect(mail.govuk_notify_personalisation[:expires_in]).to eq("in 1 month")
     end
+
+    it "includes the token name in the personalisation" do
+      expect(mail.govuk_notify_personalisation[:token_name]).to eq("test token")
+    end
   end
 end
