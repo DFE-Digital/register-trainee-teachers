@@ -61,6 +61,8 @@ class User < ApplicationRecord
                   associated_against: { providers: [:name], training_partners: [:name] },
                   using: { trigram: { word_similarity: true } }
 
+  HESA_USERNAME = "HESA"
+
   def name
     "#{first_name} #{last_name}"
   end

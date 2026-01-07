@@ -64,6 +64,6 @@ class Placement < ApplicationRecord
   end
 
   def created_by_hesa?
-    audits.exists?(action: "create", username: Trainee::HESA_USERNAME)
+    audits.exists?(action: "create", username: User::HESA_USERNAME)
   end
 end
