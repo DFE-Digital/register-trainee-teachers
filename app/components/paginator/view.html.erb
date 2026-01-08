@@ -1,6 +1,6 @@
 <div class="moj-pagination">
   <p class="moj-pagination__results govuk-body">
-    Showing <strong><%= page_start %></strong> to <strong><%= page_end %></strong> of <strong><%= total %></strong> results
+    Showing <strong><%= number_with_delimiter(page_start) %></strong> to <strong><%= number_with_delimiter(page_end) %></strong> of <strong><%= number_with_delimiter(total) %></strong> results
   </p>
   <nav class="govuk-pagination moj-pagination__pagination" role="navigation" aria-label="pagination">
     <%= paginate scope, **paginate_configuration %>
