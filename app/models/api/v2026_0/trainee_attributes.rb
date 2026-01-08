@@ -16,6 +16,7 @@ module Api
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
+      validate :course_subject_one_valid, if: :primary_education_phase?
       validate :course_subject_two_valid, if: :require_subject?
       validate :course_subject_three_valid, if: :require_subject?
       validate :itt_end_date_valid
@@ -217,10 +218,6 @@ module Api
 
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
-
-        if primary_education_phase? && !new_attributes.values.include?(HesaMapperConstants::INVALID) && primary_education_phase?
-          self.attributes = primary_course_subjects
-        end
       end
 
       def update_hesa_trainee_detail_attributes(new_attributes)
@@ -407,6 +404,12 @@ module Api
 
       def require_subject?
         EARLY_YEARS_TRAINING_ROUTES.exclude?(training_route)
+      end
+
+      def course_subject_one_valid
+        return if course_subject_one.blank? || course_subject_one == CourseSubjects::PRIMARY_TEACHING
+
+        errors.add(:course_subject_one, :invalid)
       end
 
       def course_subject_two_valid
