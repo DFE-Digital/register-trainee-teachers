@@ -1747,7 +1747,7 @@ paths:
                   ethnic_background: Not provided
                   additional_ethnic_background:
                   disability_disclosure: disability_not_provided
-                  course_subject_one: '100511'
+                  course_subject_one: '100346'
                   itt_start_date: '2025-08-01'
                   outcome_date:
                   itt_end_date: '2027-07-31'
@@ -1757,14 +1757,14 @@ paths:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-01'
                   reinstate_date:
-                  course_min_age: 7
-                  course_max_age: 11
-                  course_subject_two: '100346'
+                  course_min_age: 11
+                  course_max_age: 16
+                  course_subject_two:
                   course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '63'
-                  course_education_phase: primary
+                  course_education_phase: secondary
                   hesa_id: '0310261553101'
                   record_source: api
                   provider_trainee_id:
@@ -1775,7 +1775,7 @@ paths:
                   course_title:
                   course_level: undergrad
                   course_itt_start_date: '2025-08-01'
-                  course_age_range: '13915'
+                  course_age_range: '13918'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
@@ -2466,7 +2466,7 @@ paths:
                 itt_aim: '202'
                 itt_qualification_aim: '001'
                 course_year: '2012'
-                course_age_range: '13915'
+                course_age_range: '13918'
                 fund_code: '2'
                 funding_method: '6'
                 hesa_id: '0310261553101'
@@ -3162,7 +3162,7 @@ paths:
                   ethnic_background: Not provided
                   additional_ethnic_background:
                   disability_disclosure: disability_not_provided
-                  course_subject_one: '100511'
+                  course_subject_one: '100346'
                   itt_start_date: '2025-08-01'
                   outcome_date:
                   itt_end_date: '2027-07-31'
@@ -3172,14 +3172,14 @@ paths:
                   recommended_for_award_at:
                   trainee_start_date: '2025-08-01'
                   reinstate_date:
-                  course_min_age: 7
-                  course_max_age: 11
-                  course_subject_two: '100346'
+                  course_min_age: 11
+                  course_max_age: 16
+                  course_subject_two:
                   course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '63'
-                  course_education_phase: primary
+                  course_education_phase: secondary
                   hesa_id: '0310261553101'
                   record_source: api
                   provider_trainee_id:
@@ -3191,7 +3191,7 @@ paths:
                   course_title:
                   course_level: undergrad
                   course_itt_start_date: '2025-08-01'
-                  course_age_range: '13915'
+                  course_age_range: '13918'
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
@@ -3375,7 +3375,7 @@ paths:
                 errors:
                   funding_method:
                   - "'bursary' is not allowed when fund_code is '2' and course_subject_one
-                    is 'primary teaching'"
+                    is 'biology'"
       requestBody:
         content:
           application/json:
@@ -3408,8 +3408,6 @@ paths:
                     disability1:
                       type: string
                     disability2:
-                      type: string
-                    course_subject_one:
                       type: string
                     course_subject_two:
                       type: string
@@ -3465,7 +3463,6 @@ paths:
                 training_route:
                 disability1: '99'
                 disability2: '57'
-                course_subject_one: '100346'
                 course_subject_two: '101410'
                 course_subject_three: '100366'
                 fund_code: '2'
