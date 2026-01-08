@@ -117,7 +117,7 @@
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
 #
 class Trainee < ApplicationRecord
-  self.ignored_columns += %w[trainee_id]
+  self.ignored_columns += %w[trainee_id hesa_trn_submission_id]
 
   include Sluggable
   include Sourceable
@@ -153,7 +153,6 @@ class Trainee < ApplicationRecord
 
   belongs_to :start_academic_cycle, optional: true, class_name: "AcademicCycle"
   belongs_to :end_academic_cycle, optional: true, class_name: "AcademicCycle"
-  belongs_to :hesa_trn_submission, optional: true, class_name: "Hesa::TrnSubmission"
 
   has_one :hesa_trainee_detail, class_name: "Hesa::TraineeDetail"
   has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
