@@ -25,7 +25,3 @@ sign_off_period: census_period
 
 api:
   allowed_versions: [v2025.0-rc, v2025.0, v2026.0]
-
-bulk_update:
-  add_trainees:
-    version: v2026.0
