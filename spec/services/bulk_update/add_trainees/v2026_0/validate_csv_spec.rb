@@ -28,7 +28,7 @@ module BulkUpdate
       end
 
       context "given a CSV with missing columns" do
-        let(:file_path) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_missing_column.csv") }
+        let(:file_path) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2026_0/five_trainees_with_missing_column.csv") }
         let(:csv) { CSVSafe.new(File.open(file_path), headers: true).read }
 
         it { expect(record.errors.first&.message).to eq("Your file’s column names need to match the CSV template. Your file is missing the following columns: 'HESA ID' and 'Sex'") }
