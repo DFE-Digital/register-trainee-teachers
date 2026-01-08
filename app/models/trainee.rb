@@ -71,7 +71,6 @@
 #  employing_school_id             :bigint
 #  end_academic_cycle_id           :bigint
 #  hesa_id                         :string
-#  hesa_trn_submission_id          :bigint
 #  lead_partner_id                 :bigint
 #  placement_assignment_dttp_id    :uuid
 #  provider_id                     :bigint           not null
@@ -92,7 +91,6 @@
 #  index_trainees_on_end_academic_cycle_id                         (end_academic_cycle_id)
 #  index_trainees_on_ethnic_group                                  (ethnic_group)
 #  index_trainees_on_hesa_id                                       (hesa_id)
-#  index_trainees_on_hesa_trn_submission_id                        (hesa_trn_submission_id)
 #  index_trainees_on_lead_partner_id                               (lead_partner_id)
 #  index_trainees_on_placement_detail                              (placement_detail)
 #  index_trainees_on_progress                                      (progress) USING gin
@@ -111,7 +109,6 @@
 #  fk_rails_...  (course_allocation_subject_id => allocation_subjects.id)
 #  fk_rails_...  (employing_school_id => schools.id)
 #  fk_rails_...  (end_academic_cycle_id => academic_cycles.id)
-#  fk_rails_...  (hesa_trn_submission_id => hesa_trn_submissions.id)
 #  fk_rails_...  (lead_partner_id => lead_partners.id)
 #  fk_rails_...  (provider_id => providers.id)
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
