@@ -320,7 +320,6 @@ shared:
     - training_route
     - trn
     - updated_at
-    - hesa_trn_submission_id
     - hesa_editable
     - slug_sent_to_trs_at
     - application_choice_id
