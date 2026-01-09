@@ -639,7 +639,7 @@ en:
     trainee_status_card:
       course_not_started_yet: Course not started yet
       in_training: In training
-      awarded_this_year: Awarded this year
+      awarded_this_year: Hold QTS or EYTS this year
       deferred: Currently deferred
       incomplete: Incomplete records
       can_bulk_recommend_for_award: Trainees you can bulk change status for QTS or EYTS
