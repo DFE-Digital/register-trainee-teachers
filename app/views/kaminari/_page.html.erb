@@ -6,13 +6,12 @@
     total_pages:   total number of pages
     per_page:      number of items to fetch per page
     remote:        data-remote -%>
-<%# //NOSONAR -%><li class="moj-pagination__item<%= " moj-pagination__item--active" if page.current? %>">
-  <%= link_to_unless(
-      page.current?,
+<%# //NOSONAR -%><li class="govuk-pagination__item<%= " govuk-pagination__item--current" if page.current? %>">
+  <%= link_to(
       page,
       url,
       rel: page.rel,
       remote: remote,
-      class: "moj-pagination__link",
+      class: "govuk-link govuk-pagination__link",
     ) %>
 </li>
