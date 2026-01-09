@@ -642,7 +642,7 @@ en:
       awarded_this_year: Awarded this year
       deferred: Currently deferred
       incomplete: Incomplete records
-      can_bulk_recommend_for_award: Trainees you can bulk recommend for QTS or EYTS
+      can_bulk_recommend_for_award: Trainees you can bulk change status for QTS or EYTS
       can_complete: Records you can complete
     sections:
       titles:
@@ -1700,7 +1700,7 @@ en:
               hesa_id_format: HESA ID must be 13 or 17 numbers
               award_date_not_valid: Date QTS or EYTS standards met must be a valid date
               award_date_future: Date QTS or EYTS standards met must be today or in the past
-              award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk recommend - you can recommend the trainee separately in their trainee record
+              award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk changed status - you can change the trainee status separately in their trainee record
               date_standards_met: Date QTS or EYTS standards met must be after trainee’s ITT start date
               date_parse: Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023
               trn: TRN must match trainee record
