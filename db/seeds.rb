@@ -97,6 +97,12 @@ end
     scholarships: SCHOLARSHIPS_2025_TO_2026,
     grants: GRANTS_2025_TO_2026,
   },
+  {
+    academic_cycle: AcademicCycle.for_year(2026),
+    bursaries: BURSARIES_2026_TO_2027,
+    scholarships: SCHOLARSHIPS_2026_TO_2027,
+    grants: GRANTS_2026_TO_2027,
+  },
 ].each do |rule|
   rule[:bursaries].each do |b|
     bursary = FundingMethod.find_or_create_by!(training_route: b.training_route,
