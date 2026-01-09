@@ -13,7 +13,7 @@ Find out [how to withdraw, defer, reinstate or change the status of an individua
 You can change other trainee or course details in an individual trainee’s record. 
 {/inset-text}
 
-## How to bulk recommend trainees for QTS or EYTS
+## How to bulk change trainee status for QTS or EYTS
 
 1. Make sure you are signed into Register. Click into ‘Bulk updates’ in the main navigation.
 2. Download a CSV file listing the trainees eligible to gain QTS or EYTS.
