@@ -130,7 +130,7 @@ feature "recommending trainees" do
     end
   end
 
-  context "given multiple trainees exist to recommend with a discarded duplicate" do
+  context "given multiple trainees exist to change status with a discarded duplicate" do
     before do
       given_two_trainees_exist_to_recommend
       and_a_discarded_duplicate_trainee_exists

@@ -36,7 +36,7 @@ feature "bulk update page" do
       and_i_visit_the_bulk_update_page
     end
 
-    scenario "the bulk recommend section is visible" do
+    scenario "the bulk change status section is visible" do
       then_i_see_how_many_trainees_i_can_bulk_recommend
       then_i_see_the_bulk_recommend_link
     end
@@ -47,7 +47,7 @@ feature "bulk update page" do
       and_i_visit_the_bulk_update_page
     end
 
-    scenario "the bulk recommend section is visible" do
+    scenario "the bulk change status section is visible" do
       then_i_do_not_see_the_bulk_recommend_link
     end
   end

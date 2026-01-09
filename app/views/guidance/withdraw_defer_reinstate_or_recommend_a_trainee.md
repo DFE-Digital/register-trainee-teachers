@@ -1,6 +1,6 @@
 ---
-page_title: Withdraw, defer, reinstate or recommend a trainee for teaching standards
-title: Withdraw, defer, reinstate or recommend a trainee for QTS or EYTS
+page_title: Withdraw, defer, reinstate or change status of a trainee for teaching standards
+title: Withdraw, defer, reinstate or change status of a trainee for QTS or EYTS
 ---
 
 You must use Register trainee teachers (Register) to:

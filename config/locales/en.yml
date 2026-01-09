@@ -746,7 +746,7 @@ en:
       apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
     missing_data_banner_view:
       header:
-        default: "You need to give additional details before you can recommend the trainee for %{award_type}"
+        default: "You need to give additional details before you can change status of the trainee for %{award_type}"
         optional_only: "This trainee has missing information"
       missing_field_text: "%{missing_field}"
       missing_field_link:
@@ -1692,8 +1692,8 @@ en:
           recommendations_uploads:
             validate_trainee:
               multiple_trainees_trn_received: "%{count} trainee records with TRN received status have the same %{found_with} - contact becomingateacher@digital.education.gov.uk to fix this"
-              multiple_trainees_found_via: "%{count} trainee records have the same %{found_with} but none have TRN received status - you can only recommend trainees with TRN received status"
-              trainee_wrong_state: "The trainee has %{state} status - you can only recommend trainees with TRN received status"
+              multiple_trainees_found_via: "%{count} trainee records have the same %{found_with} but none have TRN received status - you can only change status of trainees with TRN received status"
+              trainee_wrong_state: "The trainee has %{state} status - you can only change status of trainees with TRN received status"
               no_trainee_matched: "%{id_available} must match a trainee record"
             validate_csv_row:
               trn_format: TRN must be 7 numbers

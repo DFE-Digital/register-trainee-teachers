@@ -46,7 +46,7 @@ Training partners access to Register is **view only**. For trainees starting tra
 * change trainee records
 * view draft trainee records
 * view a trainee’s diversity information
-* recommend for QTS or EYTS
+* change status for QTS or EYTS
 
 ## How trainees are grouped on the Register homepage
 

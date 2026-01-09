@@ -6050,7 +6050,7 @@ paths:
                 - error: NotFound
                   message: Trainee(s) not found
         '422':
-          description: does not recommend the trainee for a qts award
+          description: does not change status of the trainee for a qts award
           content:
             application/json:
               schema:

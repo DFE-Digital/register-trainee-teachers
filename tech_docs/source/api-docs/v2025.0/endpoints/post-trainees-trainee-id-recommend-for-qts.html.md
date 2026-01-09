@@ -5,7 +5,7 @@ weight: 11
 
 # `POST /trainees/{trainee_id}/recommend-for-qts`
 
-Recommend a trainee for a QTS Award.
+Change status of a trainee for a QTS Award.
 
 ## Request
 
