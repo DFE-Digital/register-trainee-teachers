@@ -42,7 +42,7 @@ module Placements
 
     def valid_unknown_school_urn?(urn)
       # Check if the urn is one of the HESA codes for not applicable school URNs
-      urn.in?(Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS)
+      urn.in?(School::NOT_APPLICABLE_SCHOOL_URNS)
     end
   end
 end

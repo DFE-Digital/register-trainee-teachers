@@ -46,7 +46,7 @@ module Api
         end
 
         def school_urn_applicable?(urn)
-          Api::V20250::HesaMapper::Attributes::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
+          School::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
         end
       end
     end
