@@ -1,0 +1,371 @@
+metadata:
+  source: "HESA"
+  name: "course_subject"
+  display_name: "Course subject"
+  description: "Course subject"
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "Ancient Hebrew"
+    name: "Ancient Hebrew"
+    display_name: "Ancient Hebrew Language"
+    hesa_codes:
+      - "101117"
+  - id: "applied biology"
+    name: "applied biology"
+    display_name: "Applied Biology"
+    hesa_codes:
+      - "100343"
+  - id: "applied chemistry"
+    name: "applied chemistry"
+    display_name: "Applied Chemistry"
+    hesa_codes:
+      - "101038"
+  - id: "applied computing"
+    name: "applied computing"
+    display_name: "Applied Computing"
+    hesa_codes:
+      - "100358"
+  - id: "applied physics"
+    name: "applied physics"
+    display_name: "Applied Physics"
+    hesa_codes:
+      - "101060"
+  - id: "Arabic languages"
+    name: "Arabic languages"
+    display_name: "Arabic Languages"
+    hesa_codes:
+      - "101192"
+  - id: "biology"
+    name: "biology"
+    display_name: "Biology"
+    hesa_codes:
+      - "100346"
+  - id: "business and management"
+    name: "business and management"
+    display_name: "Business And Management"
+    hesa_codes:
+      - "100078"
+  - id: "business studies"
+    name: "business studies"
+    display_name: "Business Studies"
+    hesa_codes:
+      - "100079"
+  - id: "chemistry"
+    name: "chemistry"
+    display_name: "Chemistry"
+    hesa_codes:
+      - "100417"
+  - id: "child development"
+    name: "child development"
+    display_name: "Childhood Studies"
+    hesa_codes:
+      - "100456"
+  - id: "Chinese languages"
+    name: "Chinese languages"
+    display_name: "Chinese Languages"
+    hesa_codes:
+      - "101165"
+  - id: "classical Greek studies"
+    name: "classical Greek studies"
+    display_name: "Classical Greek Studies"
+    hesa_codes:
+      - "101126"
+  - id: "classical studies"
+    name: "classical studies"
+    display_name: "Classical Studies"
+    hesa_codes:
+      - "100300"
+  - id: "computer science"
+    name: "computer science"
+    display_name: "Computer Science"
+    hesa_codes:
+      - "100366"
+  - id: "construction and the built environment"
+    name: "construction and the built environment"
+    display_name: "Construction And The Built Environment"
+    hesa_codes:
+      - "100150"
+  - id: "art and design"
+    name: "art and design"
+    display_name: "Creative Arts And Design"
+    hesa_codes:
+      - "101361"
+  - id: "dance"
+    name: "dance"
+    display_name: "Dance"
+    hesa_codes:
+      - "100068"
+  - id: "design"
+    name: "design"
+    display_name: "Design"
+    hesa_codes:
+      - "100048"
+  - id: "drama"
+    name: "drama"
+    display_name: "Drama"
+    hesa_codes:
+      - "100069"
+  - id: "early years teaching"
+    name: "early years teaching"
+    display_name: "Early Years Teaching"
+    hesa_codes:
+      - "100510"
+  - id: "economics"
+    name: "economics"
+    display_name: "Economics"
+    hesa_codes:
+      - "100450"
+  - id: "English as a second or other language"
+    name: "English as a second or other language"
+    display_name: "English as a second or other language"
+    hesa_codes:
+      - "101109"
+  - id: "English studies"
+    name: "English studies"
+    display_name: "English Studies"
+    hesa_codes:
+      - "100320"
+  - id: "environmental sciences"
+    name: "environmental sciences"
+    display_name: "Environmental Sciences"
+    hesa_codes:
+      - "100381"
+  - id: "food and beverage studies"
+    name: "food and beverage studies"
+    display_name: "Food And Beverage Studies"
+    hesa_codes:
+      - "101017"
+  - id: "French language"
+    name: "French language"
+    display_name: "French Language"
+    hesa_codes:
+      - "100321"
+  - id: "general or integrated engineering"
+    name: "general or integrated engineering"
+    display_name: "General Or Integrated Engineering"
+    hesa_codes:
+      - "100184"
+  - id: "general science"
+    name: "general science"
+    display_name: "General Science"
+    hesa_codes:
+      - "100390"
+  - id: "geography"
+    name: "geography"
+    display_name: "Geography"
+    hesa_codes:
+      - "100409"
+  - id: "German language"
+    name: "German language"
+    display_name: "German Language"
+    hesa_codes:
+      - "100323"
+  - id: "graphic design"
+    name: "graphic design"
+    display_name: "Graphic Design"
+    hesa_codes:
+      - "100061"
+  - id: "hair and beauty sciences"
+    name: "hair and beauty sciences"
+    display_name: "Hair And Beauty Sciences"
+    hesa_codes:
+      - "101373"
+  - id: "health and social care"
+    name: "health and social care"
+    display_name: "Health And Social Care"
+    hesa_codes:
+      - "100476"
+  - id: "health studies"
+    name: "health studies"
+    display_name: "Health Studies"
+    hesa_codes:
+      - "100473"
+  - id: "historical linguistics"
+    name: "historical linguistics"
+    display_name: "Historical Linguistics"
+    hesa_codes:
+      - "101410"
+  - id: "history"
+    name: "history"
+    display_name: "History"
+    hesa_codes:
+      - "100302"
+  - id: "hospitality"
+    name: "hospitality"
+    display_name: "Hospitality"
+    hesa_codes:
+      - "100891"
+  - id: "information technology"
+    name: "information technology"
+    display_name: "Information Technology"
+    hesa_codes:
+      - "100372"
+  - id: "Italian language"
+    name: "Italian language"
+    display_name: "Italian Language"
+    hesa_codes:
+      - "100326"
+  - id: "Latin language"
+    name: "Latin language"
+    display_name: "Latin Language"
+    hesa_codes:
+      - "101420"
+  - id: "law"
+    name: "law"
+    display_name: "Law"
+    hesa_codes:
+      - "100485"
+  - id: "manufacturing engineering"
+    name: "manufacturing engineering"
+    display_name: "Manufacturing Engineering"
+    hesa_codes:
+      - "100202"
+  - id: "materials science"
+    name: "materials science"
+    display_name: "Materials Science"
+    hesa_codes:
+      - "100225"
+  - id: "mathematics"
+    name: "mathematics"
+    display_name: "Mathematics"
+    hesa_codes:
+      - "100403"
+  - id: "media and communication studies"
+    name: "media and communication studies"
+    display_name: "Media And Communication Studies"
+    hesa_codes:
+      - "100444"
+  - id: "modern languages"
+    name: "modern languages"
+    display_name: "Modern Languages"
+    hesa_codes:
+      - "100329"
+  - id: "music education and teaching"
+    name: "music education and teaching"
+    display_name: "Music Education And Teaching"
+    hesa_codes:
+      - "100642"
+  - id: "performing arts"
+    name: "performing arts"
+    display_name: "Performing Arts"
+    hesa_codes:
+      - "100071"
+  - id: "philosophy"
+    name: "philosophy"
+    display_name: "Philosophy"
+    hesa_codes:
+      - "100337"
+  - id: "physics"
+    name: "physics"
+    display_name: "Physics"
+    hesa_codes:
+      - "100425"
+  - id: "Portuguese language"
+    name: "Portuguese language"
+    display_name: "Portuguese Language"
+    hesa_codes:
+      - "101142"
+  - id: "primary teaching"
+    name: "primary teaching"
+    display_name: "Primary Teaching"
+    hesa_codes:
+      - "100511"
+  - id: "product design"
+    name: "product design"
+    display_name: "Product Design"
+    hesa_codes:
+      - "100050"
+  - id: "production and manufacturing engineering"
+    name: "production and manufacturing engineering"
+    display_name: "Production And Manufacturing Engineering"
+    hesa_codes:
+      - "100209"
+  - id: "psychology"
+    name: "psychology"
+    display_name: "Psychology"
+    hesa_codes:
+      - "100497"
+  - id: "public services"
+    name: "public services"
+    display_name: "Public Services"
+    hesa_codes:
+      - "100091"
+  - id: "recreation and leisure studies"
+    name: "recreation and leisure studies"
+    display_name: "Recreation And Leisure Studies"
+    hesa_codes:
+      - "100893"
+  - id: "religious studies"
+    name: "religious studies"
+    display_name: "Religious Studies"
+    hesa_codes:
+      - "100339"
+  - id: "retail management"
+    name: "retail management"
+    display_name: "Retail Management"
+    hesa_codes:
+      - "100092"
+  - id: "Russian languages"
+    name: "Russian languages"
+    display_name: "Russian Languages"
+    hesa_codes:
+      - "100330"
+  - id: "social sciences"
+    name: "social sciences"
+    display_name: "Social Sciences"
+    hesa_codes:
+      - "100471"
+  - id: "Spanish language"
+    name: "Spanish language"
+    display_name: "Spanish Language"
+    hesa_codes:
+      - "100332"
+  - id: "sport and exercise sciences"
+    name: "sport and exercise sciences"
+    display_name: "Sport And Exercise Sciences"
+    hesa_codes:
+      - "100433"
+  - id: "sports management"
+    name: "sports management"
+    display_name: "Sports Management"
+    hesa_codes:
+      - "100097"
+  - id: "statistics"
+    name: "statistics"
+    display_name: "Statistics"
+    hesa_codes:
+      - "100406"
+  - id: "textiles technology"
+    name: "textiles technology"
+    display_name: "Textiles Technology"
+    hesa_codes:
+      - "100214"
+  - id: "travel and tourism"
+    name: "travel and tourism"
+    display_name: "Travel And Tourism"
+    hesa_codes:
+      - "100101"
+  - id: "UK government/parliamentary studies"
+    name: "UK government/parliamentary studies"
+    display_name: "UK Government/Parliamentary Studies"
+    hesa_codes:
+      - "100610"
+  - id: "Welsh language"
+    name: "Welsh language"
+    display_name: "Welsh Language"
+    hesa_codes:
+      - "100333"
+  - id: "Japanese language"
+    name: "Japanese language"
+    display_name: "Japanese Languages"
+    hesa_codes:
+      - "101169"
+  - id: "teaching English as a foreign language"
+    name: "teaching English as a foreign language"
+    display_name: "Teaching English As A Foreign Language"
+    hesa_codes:
+      - "100513"

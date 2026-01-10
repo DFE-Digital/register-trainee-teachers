@@ -1,0 +1,61 @@
+metadata:
+  source: "HESA"
+  name: "funding_method"
+  display_name: "Funding method"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "4"
+    name: "scholarship"
+    display_name: "Scholarship"
+    hesa_codes:
+      - "4"
+  - id: "6"
+    name: "scholarship"
+    display_name: "No bursary, scholarship or grant awarded"
+    hesa_codes:
+      - "6"
+  - id: "7"
+    name: "tier_one"
+    display_name: "Tier 1"
+    hesa_codes:
+      - "7"
+  - id: "8"
+    name: "tier_two"
+    display_name: "Tier 2"
+    hesa_codes:
+      - "8"
+  - id: "9"
+    name: "tier_three"
+    display_name: "Tier 3"
+    hesa_codes:
+      - "9"
+  - id: "B"
+    name: "undergraduate_bursary"
+    display_name: "Undergraduate bursary"
+    hesa_codes:
+      - "B"
+  - id: "Scholarship"
+    name: "scholarship"
+    display_name: "Scholarship"
+    hesa_codes:
+      - "4"
+  - id: "C"
+    name: "veteran_teaching_undergraduate_bursary"
+    display_name: "Veteran Teaching undergraduate bursary"
+    hesa_codes:
+      - "C"
+  - id: "D"
+    name: "postgraduate_bursary"
+    display_name: "Postgraduate bursary"
+    hesa_codes:
+      - "D"
+  - id: "E"
+    name: "grant"
+    display_name: "Grant"
+    hesa_codes:
+      - "E"

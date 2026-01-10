@@ -1,0 +1,132 @@
+metadata:
+  source: "HESA"
+  name: "ethnicity"
+  display_name: "Ethnicity"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: "Arab"
+    name: "Arab"
+    display_name: "Arab"
+    description: ""
+    hesa_codes:
+      - "180"
+  - id: "Bangladeshi"
+    name: "Bangladeshi"
+    display_name: "Bangladeshi"
+    description: ""
+    hesa_codes:
+      - "100"
+  - id: "Chinese"
+    name: "Chinese"
+    display_name: "Chinese"
+    description: ""
+    hesa_codes:
+      - "101"
+  - id: "Indian"
+    name: "Indian"
+    display_name: "Indian"
+    description: ""
+    hesa_codes:
+      - "103"
+  - id: "Pakistani"
+    name: "Pakistani"
+    display_name: "Pakistani"
+    description: ""
+    hesa_codes:
+      - "104"
+  - id: "Another Asian background"
+    name: "Another Asian background"
+    display_name: "Another Asian background"
+    description: ""
+    hesa_codes:
+      - "119"
+  - id: "African"
+    name: "African"
+    display_name: "African"
+    description: ""
+    hesa_codes:
+      - "120"
+  - id: "Caribbean"
+    name: "Caribbean"
+    display_name: "Caribbean"
+    description: ""
+    hesa_codes:
+      - "121"
+  - id: "Another Black background"
+    display_name: "Another Black background"
+    description: ""
+    name: "Another Black background"
+    hesa_codes:
+      - "139"
+  - id: "Asian and White"
+    name: "Asian and White"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "140"
+  - id: "Black African and White"
+    name: "Black African and White"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "141"
+  - id: "Black Caribbean and White"
+    name: "Black Caribbean and White"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "142"
+  - id: "Another Mixed background"
+    name: "Another Mixed background"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "159"
+  - id: "British, English, Northern Irish, Scottish, or Welsh"
+    name: "British, English, Northern Irish, Scottish, or Welsh"
+    hesa_codes:
+      - "160"
+  - id: "Traveller or Gypsy"
+    name: "Traveller or Gypsy"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "163"
+  - id: "Irish"
+    name: "Irish"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "166"
+  - id: "Roma"
+    name: "Roma"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "168"
+  - id: "Another White background"
+    name: "Another White background"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "179"
+  - id: "Another ethnic background"
+    name: "Another ethnic background"
+    display_name: ""
+    description: ""
+    hesa_codes:
+      - "899"
+  - id: "Not provided"
+    name: "Not provided"
+    display_name: "Not provided"
+    description: ""
+    hesa_codes:
+      - "997"
+      - "998"
+      - "999"
+
