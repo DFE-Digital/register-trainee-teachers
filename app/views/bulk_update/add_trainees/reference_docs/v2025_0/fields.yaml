@@ -310,7 +310,7 @@
   example:
     "`13916` for example is the code used for Accredited by the Department for Education (DfE)
     for the purpose of delivering initial teacher training programmes
-    to achieve Qualified Teacher Status (QTS): Ages 7-14"
+    to gain Qualified Teacher Status (QTS): Ages 7-14"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L29
   page_title: Course age range

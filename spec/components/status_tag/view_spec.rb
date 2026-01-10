@@ -11,7 +11,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :early_years_undergrad, :recommended_for_award) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("EYTS recommended")
+      expect(rendered_content).to have_text("EYTS pending")
     end
   end
 
@@ -19,7 +19,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :early_years_undergrad, :awarded) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("EYTS awarded")
+      expect(rendered_content).to have_text("Holds EYTS")
     end
   end
 
@@ -27,7 +27,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :teacher_degree_apprenticeship, :recommended_for_award) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("QTS recommended")
+      expect(rendered_content).to have_text("QTS pending")
     end
   end
 
@@ -35,7 +35,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :teacher_degree_apprenticeship, :awarded) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("QTS awarded")
+      expect(rendered_content).to have_text("Holds QTS")
     end
   end
 
@@ -43,7 +43,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :recommended_for_award) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("QTS recommended")
+      expect(rendered_content).to have_text("QTS pending")
     end
   end
 
@@ -51,7 +51,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :awarded) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("QTS awarded")
+      expect(rendered_content).to have_text("Holds QTS")
     end
   end
 

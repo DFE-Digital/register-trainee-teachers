@@ -60,11 +60,11 @@ private
   end
 
   def bulk_recommend_export_filename
-    "#{current_user.organisation.name.parameterize}-trainees-to-recommend-prepopulated.csv"
+    "#{current_user.organisation.name.parameterize}-trainees-to-change-status-prepopulated.csv"
   end
 
   def bulk_recommend_empty_export_filename
-    "#{current_user.organisation.name.parameterize}-trainees-to-recommend-empty.csv"
+    "#{current_user.organisation.name.parameterize}-trainees-to-change-status-empty.csv"
   end
 
   def census_date(year)

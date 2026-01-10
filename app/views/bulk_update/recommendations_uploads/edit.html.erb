@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Change who you’ll recommend for QTS or EYTS") %>
+<%= render PageTitle::View.new(text: "Change which trainees’ status is changing QTS or EYTS") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload)) %>
@@ -10,19 +10,18 @@
       <%= f.govuk_error_summary(presenter: ErrorSummaryShowAllMessagesPresenter) %>
 
       <h1 class="govuk-heading-l">
-        <span class="govuk-caption-xl">Bulk recommend</span>
-        Change who you’ll recommend for QTS or EYTS
+        <span class="govuk-caption-xl">Bulk change status</span>
+        Change which trainees’ status is changing QTS or EYTS
       </h1>
 
       <p class="govuk-body">
-        You can edit your CSV file to change which trainees you’ll recommend.
+        You can edit your CSV file to change which trainees are changing status.
       </p>
 
       <ol class="govuk-list govuk-list--number">
         <li>
-          To recommend a trainee, add the date when they met the QTS or EYTS
-          standards. If you remove the date then the trainee will not be
-          recommended.
+          To change a trainee's status, add the date when they gained QTS or EYTS.
+          If you remove the date then the trainee's status will not change.
         </li>
         <li>
           Upload the CSV file.
@@ -30,11 +29,11 @@
         </li>
       </ol>
 
-      <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
+      <%= f.govuk_submit "Upload file and check whose status has changed" %>
     <% end %>
 
     <p class="govuk-body">
-      <%= govuk_link_to("Return to check who you’ll recommend without making changes", bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload)) %>
+      <%= govuk_link_to("Return to check whose status is changing without making changes", bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload)) %>
     </p>
   </div>
 </div>
