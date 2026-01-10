@@ -280,7 +280,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
     end
 
     context "when updating with valid course_age_range" do
-      let(:data) { { course_age_range: } }
+      let(:data) { { course_age_range: course_age_range, course_subject_one: "100511" } }
 
       let(:course_age_range) { "13909" }
 
@@ -1718,7 +1718,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           )
         end
 
-        context "when '100511' is not present" do
+        context "when course_subject_one is not '100511' (primary teaching)" do
           let(:course_age_range) { "13914" }
           let(:params) do
             {
@@ -1731,33 +1731,21 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             }
           end
 
-          it "sets the correct subjects" do
-            trainee.reload
-
-            expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range])
-            expect(trainee.course_subject_one).to eq("primary teaching")
-            expect(trainee.course_subject_two).to eq("biology")
-            expect(trainee.course_subject_three).to eq("historical linguistics")
-
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
+          it "returns validation error for course_subject_one" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              "course_subject_one is invalid. It should be `100511` for the course_age_range provided",
+            )
           end
 
           context "with enhanced errors" do
             let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
-            it "sets the correct subjects" do
-              trainee.reload
-
-              expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range])
-              expect(trainee.course_subject_one).to eq("primary teaching")
-              expect(trainee.course_subject_two).to eq("biology")
-              expect(trainee.course_subject_three).to eq("historical linguistics")
-
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
-              expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
+            it "returns validation error for course_subject_one" do
+              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response.parsed_body[:errors]).to eq(
+                "course_subject_one" => ["is invalid. It should be `100511` for the course_age_range provided"],
+              )
             end
           end
         end
@@ -2323,7 +2311,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           itt_aim: "202",
           itt_qualification_aim: "001",
           course_year: "2012",
-          course_age_range: "13915",
+          course_age_range: "13918",
           fund_code: fund_code,
           funding_method: funding_method,
           hesa_id: "0310261553101",
@@ -2365,7 +2353,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         create(
           :hesa_student,
           hesa_id: trainee.hesa_id,
-          course_age_range: "13915",
+          course_age_range: "13918",
           fund_code: "7",
         )
 
@@ -2614,7 +2602,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               "Validation failed: 1 error prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is 'primary teaching'",
+              "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is '#{course_subject}'",
             )
           end
         end
@@ -2746,7 +2734,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               )
               expect(response.parsed_body["errors"]).to eq(
                 "funding_method" => [
-                  "'bursary' is not allowed when fund_code is '2' and course_subject_one is 'primary teaching'",
+                  "'bursary' is not allowed when fund_code is '2' and course_subject_one is '#{course_subject}'",
                 ],
               )
             end

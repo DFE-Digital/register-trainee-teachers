@@ -29,7 +29,7 @@ describe "Trainees API" do
           itt_aim: "202",
           itt_qualification_aim: "001",
           course_year: "2012",
-          course_age_range: "13915",
+          course_age_range: "13918",
           fund_code: Hesa::CodeSets::FundCodes::NOT_ELIGIBLE,
           funding_method: Hesa::CodeSets::BursaryLevels::NONE,
           hesa_id: "0310261553101",
