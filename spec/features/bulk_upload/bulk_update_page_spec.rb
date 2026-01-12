@@ -59,7 +59,7 @@ private
   end
 
   def then_i_see_how_many_trainees_i_can_bulk_update
-    expect(page).to have_content("You can bulk add missing placement data to 1 trainee record")
+    expect(page).to have_content("You have 1 trainee record who do not have at least two placements.")
   end
 
   def then_i_see_how_many_trainees_i_can_bulk_recommend

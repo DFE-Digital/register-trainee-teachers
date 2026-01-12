@@ -12,6 +12,7 @@ feature "bulk update page" do
   scenario "viewing and downloading the file" do
     then_i_see_how_many_trainees_i_can_bulk_update
     and_i_see_a_filename_of_the_file_i_need_to_download
+    and_i_see_the_placement_schools_section
     when_i_click_on_the_download_link
     then_i_receive_the_file
   end
@@ -34,11 +35,29 @@ feature "bulk update page" do
 private
 
   def then_i_see_how_many_trainees_i_can_bulk_update
-    expect(page).to have_content("2 that can be bulk updated")
+    expect(page).to have_content("You have 2 trainee records who do not have at least two placements")
   end
 
   def and_i_see_a_filename_of_the_file_i_need_to_download
     expect(page).to have_content("#{filename}-to-add-missing-prepopulated.csv")
+  end
+
+  def and_i_see_the_placement_schools_section
+    expect(page).to have_content(
+      "You can add a maximum of 5 placements per trainee. Enter the placement's URN in the placement columns.",
+    )
+    expect(page).to have_content(
+      "You can add or change trainees placement details by adding them to the end of the CSV file. Adding or changing any information in the CSV will over-write placements that are associated to a school in the Register service. If you leave a space blank in the CSV it will over-write any existing information you have entered",
+    )
+    expect(page).to have_content(
+      "You can find the URNs using Get information about schools (opens in a new tab).",
+    )
+    expect(page).to have_content(
+      "You cannot add information in bulk if the school or setting does not have a URN. Add those placements to the trainee record manually.",
+    )
+    expect(page).to have_content(
+      "If you do not have the information for a placement, leave the cell empty.",
+    )
   end
 
   def given_there_are_trainees_without_placements
