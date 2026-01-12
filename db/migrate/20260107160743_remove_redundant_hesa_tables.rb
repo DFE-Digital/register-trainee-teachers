@@ -9,16 +9,14 @@ class RemoveRedundantHesaTables < ActiveRecord::Migration[7.2]
     drop_table :hesa_trn_submissions do |t|
       t.text "payload"
       t.datetime "submitted_at", precision: nil
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
+      t.timestamps
     end
 
     drop_table :hesa_trn_requests do |t|
       t.string "collection_reference"
       t.integer "state"
       t.text "response_body"
-      t.datetime "created_at", null: false
-      t.datetime "updated_at", null: false
+      t.timestamps
     end
 
     drop_table :hesa_collection_requests do |t|
@@ -29,6 +27,7 @@ class RemoveRedundantHesaTables < ActiveRecord::Migration[7.2]
       t.datetime "updated_at", null: false
       t.integer "state"
       t.index ["state"], name: "index_hesa_collection_requests_on_state"
+      t.timestamps
     end
   end
 end
