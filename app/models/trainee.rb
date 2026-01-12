@@ -114,7 +114,7 @@
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
 #
 class Trainee < ApplicationRecord
-  self.ignored_columns += %w[trainee_id hesa_trn_submission_id]
+  self.ignored_columns += %w[trainee_id]
 
   include Sluggable
   include Sourceable
