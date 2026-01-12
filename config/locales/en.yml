@@ -238,7 +238,7 @@ en:
         trainee_chose_to_withdraw_another_reason: Another reason
         safeguarding_concerns: Safeguarding concerns
     award_details:
-        waiting_for_award: Waiting for award - met standards on %{recommended_for_award_at}
+        waiting_for_award: QTS/EYTS pending - met standards on %{recommended_for_award_at}
     confirmation:
       not_provided_from_hesa_update: Not provided from HESA update
       missing: missing
@@ -587,8 +587,8 @@ en:
           recommended_for_eyts: Trainee status changed
           withdrawn: Trainee withdrawn
           deferred: Trainee deferred
-          qts_awarded: QTS awarded
-          eyts_awarded: EYTS awarded
+          qts_awarded: Holds QTS
+          eyts_awarded: Holds EYTS
           reinstated: Trainee reinstated
           course_uuid: Course updated
           course_max_age: Course age range updated
@@ -1418,7 +1418,7 @@ en:
           recommended_for_award: QTS/EYTS pending
           withdrawn: Withdrawn
           deferred: Deferred
-          awarded: Qualification awarded
+          awarded: Holds QTS/EYTS
           qts_recommended: QTS pending
           qts_awarded: Holds QTS
           eyts_recommended: EYTS pending
