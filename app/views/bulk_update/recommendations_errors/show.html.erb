@@ -20,8 +20,8 @@
       </h1>
 
       <p class="govuk-body">
-        You cannot change the status of a trainee
-        <%= (recommendations_upload.error_rows) %> if there’s an
+        You cannot change the status of a trainee for
+        <%= qts_or_eyts(recommendations_upload.error_rows) %> if there’s an
         error in their row in the CSV file. You need to fix the errors if you
         want them to gain QTS or EYTS.
       </p>
