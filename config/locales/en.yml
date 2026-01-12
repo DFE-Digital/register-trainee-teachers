@@ -130,9 +130,6 @@ en:
         csv: Added with bulk CSV upload
       trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
-      progress_date_prefix:
-        recommended_for_award: "Recommended: "
-        awarded: "Awarded: "
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
@@ -357,9 +354,6 @@ en:
     invalid_data_text:
       static_text: The trainee entered ‘%{query}’, which was not recognised. You need to search for the closest match.
     record_details:
-      progress_date_prefix:
-        recommended_for_award: "Recommended: "
-        awarded: "Awarded: "
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
