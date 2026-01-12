@@ -1,0 +1,221 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+# rubocop:disable RSpec/SpecFilePathFormat
+RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::FundingMethod do
+  subject { described_class }
+
+  around do |example|
+    Timecop.freeze(Date.new(year, 5, 1)) { example.run }
+  end
+
+  let(:year) { 2026 }
+  let!(:current_academic_cycle) { create(:academic_cycle, cycle_year: year) }
+
+  let(:course_subject_one) { "mathematics" }
+  let(:training_route) { :provider_led_postgrad }
+  let(:funding_method) { Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY }
+  let(:course_allocation_subject_id) { nil }
+  let(:trainee_start_date) { Date.new(year, 10, 1).iso8601 }
+  let(:trainee_attributes) do
+    Api::V20260::TraineeAttributes.new(
+      training_route:,
+      course_subject_one:,
+      course_allocation_subject_id:,
+      trainee_start_date:,
+    )
+  end
+  let(:hesa_trainee_detail_attributes) do
+    Api::V20260::HesaTraineeDetailAttributes.new(
+      { trainee_attributes:, fund_code:, funding_method: },
+      record_source: "api",
+    )
+  end
+
+  describe ".call" do
+    context "when the fund_code is NOT eligible and funding_method is blank" do
+      let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+      let(:funding_method) { nil }
+
+      it "returns true" do
+        expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+      end
+
+      it "returns no error details" do
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+      end
+    end
+
+    context "when the fund_code is NOT eligible and funding_method is NONE" do
+      let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+      let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
+
+      it "returns true" do
+        expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+      end
+
+      it "returns no error details" do
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+      end
+    end
+
+    context "when the fund_code is NOT eligible and funding_method is set" do
+      let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+
+      it "returns false" do
+        expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+      end
+
+      it "returns error details" do
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to eq(
+          {
+            academic_cycle: "2026 to 2027",
+            fund_code: "2",
+            funding_type: "bursary",
+            training_route: "provider_led_postgrad",
+            subject: "mathematics",
+          },
+        )
+      end
+    end
+
+    context "when the fund_code is eligible" do
+      let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+
+      context "when there is no matching funding rule" do
+        it "returns false" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+        end
+      end
+
+      context "when training_route is an InvalidValue" do
+        let(:training_route) { Api::V20260::HesaMapper::Attributes::InvalidValue.new("invalid_route") }
+
+        it "returns false" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+        end
+      end
+
+      context "when funding_method is NONE" do
+        let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
+
+        it "returns true" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+        end
+      end
+
+      context "when funding_method is an invalid value" do
+        let(:funding_method) { "not-a-funding-method" }
+
+        it "returns true" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+        end
+      end
+
+      context "when there is a matching funding rule" do
+        let(:allocation_subject) { create(:allocation_subject) }
+        let!(:subject_specialism) do
+          create(
+            :subject_specialism,
+            allocation_subject: allocation_subject,
+            name: course_subject_one,
+          )
+        end
+        let(:funding_rule) do
+          create(
+            :funding_method,
+            training_route: :provider_led_postgrad,
+            funding_type: :bursary,
+            academic_cycle: current_academic_cycle,
+          )
+        end
+        let!(:funding_method_subject) do
+          create(
+            :funding_method_subject,
+            funding_method: funding_rule,
+            allocation_subject: allocation_subject,
+          )
+        end
+
+        it "returns true" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+        end
+
+        context "when the start date is invalid" do
+          let(:trainee_start_date) { "not a date" }
+
+          it "returns false after falling back to current cycle" do
+            expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+          end
+        end
+      end
+
+      context "when there is a matching funding rule and fund_code is ineligible but this is a special case subject" do
+        let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+        let(:course_subject_one) { "Physics" }
+        let(:allocation_subject) { create(:allocation_subject, name: course_subject_one) }
+        let(:course_allocation_subject_id) { allocation_subject.id }
+        let!(:subject_specialism) do
+          create(
+            :subject_specialism,
+            allocation_subject: allocation_subject,
+            name: course_subject_one,
+          )
+        end
+        let(:funding_rule) do
+          create(
+            :funding_method,
+            training_route: :provider_led_postgrad,
+            funding_type: :bursary,
+            academic_cycle: current_academic_cycle,
+          )
+        end
+        let!(:funding_method_subject) do
+          create(
+            :funding_method_subject,
+            funding_method: funding_rule,
+            allocation_subject: allocation_subject,
+          )
+        end
+
+        it "returns true" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+        end
+
+        context "when the course academic year is not 2026-27" do
+          let(:year) { 2024 }
+
+          it "returns false" do
+            expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+          end
+        end
+
+        context "when the course is not one of the special cases" do
+          let(:course_subject_one) { "Chemistry" }
+
+          it "returns false" do
+            expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+          end
+        end
+      end
+    end
+  end
+end
+# rubocop:enable RSpec/SpecFilePathFormat

@@ -29,7 +29,7 @@ module Api
             AllocationSubjects::PHYSICS,
           ].freeze
 
-          FUND_CODE_EXCEPTIONS_START_YEAR = 2025
+          FUND_CODE_EXCEPTIONS_START_YEARS = [2025, 2026].freeze
 
           attr_reader :hesa_trainee_detail_attributes
 
@@ -64,7 +64,7 @@ module Api
           end
 
           def fund_code_exception?
-            academic_cycle.start_year == FUND_CODE_EXCEPTIONS_START_YEAR &&
+            academic_cycle.start_year.in?(FUND_CODE_EXCEPTIONS_START_YEARS) &&
               fund_code_exception_allocation_subject_ids.include?(course_allocation_subject_id)
           end
 
