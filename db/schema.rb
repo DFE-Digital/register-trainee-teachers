@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_07_160743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -592,16 +592,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.index ["status"], name: "index_funding_uploads_on_status"
   end
 
-  create_table "hesa_collection_requests", force: :cascade do |t|
-    t.string "collection_reference"
-    t.datetime "requested_at", precision: nil
-    t.text "response_body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "state"
-    t.index ["state"], name: "index_hesa_collection_requests_on_state"
-  end
-
   create_table "hesa_metadata", force: :cascade do |t|
     t.bigint "trainee_id"
     t.integer "study_length"
@@ -706,21 +696,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.string "fund_code"
     t.jsonb "hesa_disabilities", default: {}
     t.index ["trainee_id"], name: "index_hesa_trainee_details_on_trainee_id"
-  end
-
-  create_table "hesa_trn_requests", force: :cascade do |t|
-    t.string "collection_reference"
-    t.integer "state"
-    t.text "response_body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "hesa_trn_submissions", force: :cascade do |t|
-    t.text "payload"
-    t.datetime "submitted_at", precision: nil
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "lead_partner_users", force: :cascade do |t|
@@ -988,7 +963,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.bigint "start_academic_cycle_id"
     t.bigint "end_academic_cycle_id"
     t.string "record_source"
-    t.bigint "hesa_trn_submission_id"
     t.string "iqts_country"
     t.boolean "hesa_editable", default: false
     t.datetime "slug_sent_to_dqt_at"
@@ -1010,7 +984,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.index ["end_academic_cycle_id"], name: "index_trainees_on_end_academic_cycle_id"
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
     t.index ["hesa_id"], name: "index_trainees_on_hesa_id"
-    t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
     t.index ["lead_partner_id"], name: "index_trainees_on_lead_partner_id"
     t.index ["placement_detail"], name: "index_trainees_on_placement_detail"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
@@ -1124,7 +1097,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
   add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
-  add_foreign_key "trainees", "hesa_trn_submissions"
   add_foreign_key "trainees", "lead_partners"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
