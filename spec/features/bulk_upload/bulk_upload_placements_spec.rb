@@ -3,6 +3,8 @@
 require "rails_helper"
 
 feature "bulk update page" do
+  include ActiveJob::TestHelper
+
   before do
     given_i_am_authenticated
     given_there_are_trainees_without_placements
@@ -17,9 +19,12 @@ feature "bulk update page" do
     then_i_receive_the_file
   end
 
-  scenario "uploading the file" do
+  scenario "uploading the file creates placements for trainees" do
+    given_there_is_a_trainee_with_matching_trn
+    and_there_are_schools_for_the_placements
     when_i_upload_the_file
     then_i_see_a_success_message
+    and_the_trainee_has_two_placements_via_ui
   end
 
   scenario "uploading an un-readable file" do
@@ -102,5 +107,28 @@ private
 
   def then_i_see_an_error_message
     expect(page).to have_content("There was an issue uploading your CSV file")
+  end
+
+  def given_there_is_a_trainee_with_matching_trn
+    @trainee_with_placements = create(
+      :trainee,
+      :without_required_placements,
+      trn: "1234567",
+      provider: current_user.organisation,
+    )
+  end
+
+  def and_there_are_schools_for_the_placements
+    @school1 = create(:school, urn: "100000", name: "Test School 1")
+    @school2 = create(:school, urn: "100001", name: "Test School 2")
+  end
+
+  def and_the_trainee_has_two_placements_via_ui
+    perform_enqueued_jobs
+
+    visit trainee_path(@trainee_with_placements)
+
+    expect(page).to have_content("Test School 1")
+    expect(page).to have_content("Test School 2")
   end
 end
