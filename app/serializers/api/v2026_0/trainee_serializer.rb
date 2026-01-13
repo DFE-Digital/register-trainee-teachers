@@ -17,6 +17,7 @@ module Api
         slug
         slug_sent_to_dqt_at
         state
+        searchable
         submission_ready
         progress
         provider_id
