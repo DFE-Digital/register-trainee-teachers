@@ -20,10 +20,10 @@ module BulkUpdate
           it "creates the rows with the correct row numbers" do
             expect(bulk_placement.rows.pluck(:trn, :csv_row_number, :urn)).to eql(
               [
-                ["1234567", 3, "7823614827346"],
-                ["1234567", 3, "7823614827346"],
-                ["7654321", 4, "8721398474987"],
-                ["7654321", 4, "273489724897"],
+                ["1234567", 3, "100000"],
+                ["1234567", 3, "100001"],
+                ["7654321", 4, "100002"],
+                ["7654321", 4, "100003"],
               ],
             )
           end

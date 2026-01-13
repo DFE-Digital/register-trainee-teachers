@@ -30,5 +30,4 @@ URNs must be 6 digits long.
 
 
 If you do not know the placement school’s URN, leave the cell empty."
-1234567,29/08/2023,100000,100001,,,
-7654321,28/08/2023,100002,100003,,,
+1234567,29/08/2023,100000,100001,100002,100003,100004

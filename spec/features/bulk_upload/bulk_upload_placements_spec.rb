@@ -27,6 +27,14 @@ feature "bulk update page" do
     and_the_trainee_has_two_placements_via_ui
   end
 
+  scenario "uploading a file with 5 placements creates all 5 placements" do
+    given_there_is_a_trainee_with_matching_trn
+    and_there_are_five_schools_for_the_placements
+    when_i_upload_the_file_with_five_placements
+    then_i_see_a_success_message
+    and_the_trainee_has_five_placements_via_ui
+  end
+
   scenario "uploading an un-readable file" do
     when_i_upload_the_unreadable_file
     then_i_see_an_error_message
@@ -119,8 +127,8 @@ private
   end
 
   def and_there_are_schools_for_the_placements
-    @school1 = create(:school, urn: "100000", name: "Test School 1")
-    @school2 = create(:school, urn: "100001", name: "Test School 2")
+    create(:school, urn: "100000", name: "Test School 1")
+    create(:school, urn: "100001", name: "Test School 2")
   end
 
   def and_the_trainee_has_two_placements_via_ui
@@ -130,5 +138,30 @@ private
 
     expect(page).to have_content("Test School 1")
     expect(page).to have_content("Test School 2")
+  end
+
+  def and_there_are_five_schools_for_the_placements
+    create(:school, urn: "100000", name: "Test School 1")
+    create(:school, urn: "100001", name: "Test School 2")
+    create(:school, urn: "100002", name: "Test School 3")
+    create(:school, urn: "100003", name: "Test School 4")
+    create(:school, urn: "100004", name: "Test School 5")
+  end
+
+  def when_i_upload_the_file_with_five_placements
+    attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/complete-with-five-placements.csv"))
+    click_on "Upload records"
+  end
+
+  def and_the_trainee_has_five_placements_via_ui
+    perform_enqueued_jobs
+
+    visit trainee_path(@trainee_with_placements)
+
+    expect(page).to have_content("Test School 1")
+    expect(page).to have_content("Test School 2")
+    expect(page).to have_content("Test School 3")
+    expect(page).to have_content("Test School 4")
+    expect(page).to have_content("Test School 5")
   end
 end
