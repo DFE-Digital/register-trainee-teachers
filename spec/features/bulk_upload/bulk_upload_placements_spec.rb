@@ -14,9 +14,15 @@ feature "bulk update page" do
   scenario "viewing and downloading the file" do
     then_i_see_how_many_trainees_i_can_bulk_update
     and_i_see_a_filename_of_the_file_i_need_to_download
+    and_i_see_the_blank_template_link
     and_i_see_the_placement_schools_section
     when_i_click_on_the_download_link
     then_i_receive_the_file
+  end
+
+  scenario "downloading the blank template" do
+    when_i_click_on_the_blank_template_link
+    then_i_receive_the_blank_template
   end
 
   scenario "uploading the file creates placements for trainees" do
@@ -92,6 +98,20 @@ private
   def then_i_receive_the_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
     expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"#{filename}-to-add-missing-prepopulated.csv\"")
+  end
+
+  def and_i_see_the_blank_template_link
+    expect(page).to have_link("Download a blank template")
+    expect(page).to have_content("blank-performance-profile.csv")
+  end
+
+  def when_i_click_on_the_blank_template_link
+    click_on "Download a blank template"
+  end
+
+  def then_i_receive_the_blank_template
+    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"blank-performance-profile.csv\"")
   end
 
   def when_i_upload_the_file

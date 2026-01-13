@@ -35,6 +35,12 @@
 
       <p class="govuk-hint">File name: <span class="app-nowrap"><%= organisation_filename %></span></p>
 
+      <p class="govuk-body">
+        <%= govuk_link_to("Download a blank template", new_bulk_update_placements_path(format: :csv, blank: true), class: "govuk-link--no-visited-state") %>
+      </p>
+
+      <p class="govuk-hint">File name: <span class="app-nowrap">blank-performance-profile.csv</span></p>
+
       <h2 class="govuk-heading-m">
         2. Add missing details
       </h2>

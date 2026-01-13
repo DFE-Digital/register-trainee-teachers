@@ -11,11 +11,19 @@ module BulkUpdate
         end
 
         format.csv do
-          send_data(
-            Exports::BulkPlacementExport.call(bulk_placements),
-            filename: organisation_filename,
-            disposition: :attachment,
-          )
+          if params[:blank]
+            send_data(
+              Exports::BlankPlacementExport.call,
+              filename: "blank-performance-profile.csv",
+              disposition: :attachment,
+            )
+          else
+            send_data(
+              Exports::BulkPlacementExport.call(bulk_placements),
+              filename: organisation_filename,
+              disposition: :attachment,
+            )
+          end
         end
       end
     end
