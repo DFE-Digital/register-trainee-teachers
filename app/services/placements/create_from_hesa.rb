@@ -38,8 +38,8 @@ module Placements
 
     def handle_not_applicable_urns(urns)
       urns.each do |urn|
-        # Skip if the not applicable urns are not among Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS
-        next if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
+        # Skip if the not applicable urns are not among School::NOT_APPLICABLE_SCHOOL_URNS
+        next if School::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
 
         trainee.placements.find_or_create_by(
           {
