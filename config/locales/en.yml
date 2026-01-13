@@ -1190,7 +1190,7 @@ en:
     language_specialisms:
       edit:
         heading: Which language specialisms has the trainee chosen to study?
-        hint: These language specialisms are recorded on the trainee’s QTS award.
+        hint: These language specialisms are documented on the trainee’s QTS record.
         additional_hint: Choose up to three.
     course_details:
       edit:
