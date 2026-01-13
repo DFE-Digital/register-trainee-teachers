@@ -2087,7 +2087,7 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/v20250/trainee_attributes: &v20250_trainee_attributes
+        api/v20250/trainee_attributes:
           attributes:
             inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
             inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
@@ -2179,9 +2179,46 @@ en:
               csv:
                 future: Enter a year that is in the past, for example 2014
                 invalid: Enter a valid graduation year
-
         api/v20260/trainee_attributes:
-          <<: *v20250_trainee_attributes
+          attributes:
+            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
+            inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
+            trainee_start_date:
+              future: must be in the past
+            date_of_birth:
+              future: must be in the past
+              under16: cannot be less than 16 years ago
+            itt_start_date:
+              future: must not be more than one year in the future
+            itt_end_date:
+              before_or_same_as_start_date: must be after itt_start_date
+              csv:
+                before_or_same_as_start_date: must be after ITT start date
+            course_subject_two:
+              duplicate: &api_duplicate_course_subjects might contain duplicate values
+              csv:
+                duplicate: &csv_duplicate_course_subjects Course subject fields contain duplicate values
+            course_subject_three:
+              duplicate: *api_duplicate_course_subjects
+              csv:
+                duplicate: *csv_duplicate_course_subjects
+            degrees_attributes:
+              blank: degrees_attributes must be entered if specifying a postgraduate training_route
+              duplicate: degrees_attributes contains duplicate degrees
+              csv:
+                blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
+            training_initiative:
+              ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
+            hesa_id:
+              length: must be 13 or 17 characters
+            training_partner_id:
+              invalid: is invalid. The URN '%{value}' does not match any known training partners
+              csv:
+                invalid: Lead Partner URN is invalid. The URN '%{value}' does not match any known lead partners
+            employing_school_id:
+              invalid: is invalid. The URN '%{value}' does not match any known schools
+              csv:
+                invalid: Employing School URN is invalid. The URN '%{value}' does not match any known schools
         api/v20260/withdrawal_attributes:
           <<: *v20250_withdrawal_attributes
         api/v20260/hesa_trainee_detail_attributes:

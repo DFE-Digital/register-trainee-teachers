@@ -385,7 +385,7 @@ module Api
       end
 
       def set_course_allocation_subject_id
-        return course_subject_one if course_subject_one.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+        return course_subject_one if course_subject_one.is_a?(Api::HesaMapper::Attributes::InvalidValue)
 
         self.course_allocation_subject_id ||=
           SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject&.id
@@ -456,13 +456,13 @@ module Api
       end
 
       def validate_lead_partner
-        if training_partner_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+        if training_partner_id.is_a?(Api::HesaMapper::Attributes::InvalidValue)
           errors.add(:lead_partner_id, :invalid, value: training_partner_id.to_s)
         end
       end
 
       def validate_employing_school
-        if employing_school_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+        if employing_school_id.is_a?(Api::HesaMapper::Attributes::InvalidValue)
           errors.add(:employing_school_id, :invalid, value: employing_school_id.to_s)
         end
       end

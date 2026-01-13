@@ -40,7 +40,7 @@ private
   end
 
   def course_allocation_subject
-    return nil if course_subject_one.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+    return nil if course_subject_one.is_a?(Api::HesaMapper::Attributes::InvalidValue)
 
     SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
   end

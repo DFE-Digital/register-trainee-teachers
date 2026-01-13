@@ -328,7 +328,7 @@
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L28
   page_title: Course year
 - field_name: Lead Partner URN
-  technical: lead_partner_urn
+  technical: training_partner_urn
   hesa_alignment: SDLEAD
   description: |-
     This field collects the Unique Reference Number (URN) of the lead partner for the trainee.

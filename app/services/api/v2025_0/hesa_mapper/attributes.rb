@@ -26,9 +26,7 @@ module Api
         VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
         DISABILITY_PARAM_REGEX = /\Adisability\d+\z/
 
-        InvalidValue = Struct.new(:original_value) do
-          delegate :to_s, to: :original_value
-        end
+        InvalidValue = Api::HesaMapper::Attributes::InvalidValue
 
         def self.disability_attributes(params)
           params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
