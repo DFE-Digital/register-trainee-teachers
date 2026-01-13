@@ -4,7 +4,7 @@ module BulkUpdate
   module AddTrainees
     module V20250
       class ImportRows < BulkUpdate::AddTrainees::ImportRows
-        EMPTY_CSV_TEMPLATE_PATH = "/csv/bulk_create_trainee.csv"
+        EMPTY_CSV_TEMPLATE_PATH = "/csv/v2025_0/bulk_create_trainee.csv"
 
         TRAINEE_HEADERS = {
           "Provider Trainee ID" => "provider_trainee_id",

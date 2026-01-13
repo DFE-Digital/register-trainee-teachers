@@ -2214,7 +2214,7 @@ en:
             training_partner_id:
               invalid: is invalid. The URN '%{value}' does not match any known training partners
               csv:
-                invalid: Lead Partner URN is invalid. The URN '%{value}' does not match any known lead partners
+                invalid: Training Partner URN is invalid. The URN '%{value}' does not match any known training partners
             employing_school_id:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:

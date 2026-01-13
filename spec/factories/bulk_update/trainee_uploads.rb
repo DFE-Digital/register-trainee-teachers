@@ -6,7 +6,8 @@ FactoryBot.define do
     version { BulkUpdate::BulkAddTraineesUploadForm::VERSION }
 
     after(:build) do |upload|
-      file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").open
+      version_path = upload.version.tr(".", "_")
+      file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/#{version_path}/five_trainees.csv").open
 
       upload.file.attach(
         io: file,
@@ -21,7 +22,8 @@ FactoryBot.define do
 
     trait(:with_errors) do
       after(:build) do |upload|
-        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_failed.csv").open
+        version_path = upload.version.tr(".", "_")
+        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/#{version_path}/five_trainees_with_failed.csv").open
 
         upload.file.attach(
           io: file,
@@ -32,7 +34,8 @@ FactoryBot.define do
 
     trait(:with_blank_rows) do
       after(:build) do |upload|
-        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/three_trainees_with_blank_rows.csv").open
+        version_path = upload.version.tr(".", "_")
+        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/#{version_path}/three_trainees_with_blank_rows.csv").open
 
         upload.file.attach(
           io: file,
@@ -43,7 +46,8 @@ FactoryBot.define do
 
     trait(:with_mixed_case_headers) do
       after(:build) do |upload|
-        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_mixed_case_headers.csv").open
+        version_path = upload.version.tr(".", "_")
+        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/#{version_path}/five_trainees_with_mixed_case_headers.csv").open
 
         upload.file.attach(
           io: file,
