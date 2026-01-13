@@ -20,7 +20,7 @@ module Funding
 
       it "calls set_lead_columns with the correct arguments" do
         expect(described_class.lead_school_column).to eq(:lead_school_urn)
-        expect(described_class.lead_partner_column).to eq(:lead_partner_urn)
+        expect(described_class.training_partner_column).to eq(:training_partner_urn)
       end
     end
 
@@ -75,11 +75,11 @@ module Funding
         end
       end
 
-      it "syncs the lead school name and lead partner name" do
+      it "syncs the lead school name and training partner name" do
         row = create(:trainee_summary_row, trainee_summary:)
         row.update(lead_school_name: "School")
-        expect(row.lead_partner_name).to eq("School")
-        row.update(lead_partner_name: "Partner")
+        expect(row.training_partner_name).to eq("School")
+        row.update(training_partner_name: "Partner")
         expect(row.lead_school_name).to eq("Partner")
       end
     end

@@ -91,7 +91,7 @@ module SchoolData
       # Only delete schools that are not associated with any trainees or funding records or placements
       register_schools_to_delete = School.where.not(urn: gias_schools)
                                          .where.missing(:employing_school_trainees,
-                                                        :lead_partner_trainees,
+                                                        :training_partner_trainees,
                                                         :funding_payment_schedules,
                                                         :funding_trainee_summaries,
                                                         :placements)
@@ -104,12 +104,12 @@ module SchoolData
     end
 
     def realign_training_partner_names
-      training_partners = LeadPartner.school.joins(:school).includes(:school)
-                                 .where("lead_partners.name != schools.name")
+      training_partners = TrainingPartner.school.joins(:school).includes(:school)
+                                 .where("training_partners.name != schools.name")
 
       training_partners.find_each do |training_partner|
         training_partner.update!(name: training_partner.school.name)
-        Rails.logger.info("Updated lead partner name from '#{training_partner.name}' to '#{training_partner.school.name}'")
+        Rails.logger.info("Updated training partner name from '#{training_partner.name}' to '#{training_partner.school.name}'")
         @stats[:training_partners_updated] += 1
       end
     end
@@ -121,7 +121,7 @@ module SchoolData
         schools_created: @stats[:created],
         schools_deleted: @stats[:deleted],
         schools_updated: @stats[:updated],
-        lead_partners_updated: @stats[:training_partners_updated],
+        training_partners_updated: @stats[:training_partners_updated],
       )
     end
 

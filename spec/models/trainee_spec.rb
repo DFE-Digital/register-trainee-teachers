@@ -173,8 +173,8 @@ describe Trainee do
   context "associations" do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:apply_application).optional }
-    it { is_expected.to have_one(:lead_partner_school).through(:lead_partner) }
-    it { is_expected.to belong_to(:lead_partner).optional }
+    it { is_expected.to have_one(:training_partner_school).through(:training_partner) }
+    it { is_expected.to belong_to(:training_partner).optional }
     it { is_expected.to belong_to(:employing_school).class_name("School").optional }
     it { is_expected.to have_one(:trs_trn_request).dependent(:destroy) }
     it { is_expected.to have_many(:degrees).dependent(:destroy) }
@@ -332,24 +332,24 @@ describe Trainee do
       end
     end
 
-    describe "clear_lead_partner_id" do
-      subject { create(:trainee, :with_lead_partner) }
+    describe "clear_training_partner_id" do
+      subject { create(:trainee, :with_training_partner) }
 
-      context "when lead_partner_not_applicable is true" do
-        it "changes lead_partner_id to nil" do
+      context "when training_partner_not_applicable is true" do
+        it "changes training_partner_id to nil" do
           expect {
-            subject.lead_partner_not_applicable = true
+            subject.training_partner_not_applicable = true
             subject.save!
-          }.to change(subject, :lead_partner_id).from(Integer).to nil
+          }.to change(subject, :training_partner_id).from(Integer).to nil
         end
       end
 
-      context "when lead_partner_not_applicable is false" do
-        it "does not change lead_partner_id" do
+      context "when training_partner_not_applicable is false" do
+        it "does not change training_partner_id" do
           expect {
-            subject.lead_partner_not_applicable = false
+            subject.training_partner_not_applicable = false
             subject.save!
-          }.to not_change(subject, :lead_partner_id)
+          }.to not_change(subject, :training_partner_id)
         end
       end
     end

@@ -51,8 +51,8 @@ describe User do
   describe "associations" do
     it { is_expected.to have_many(:providers) }
     it { is_expected.to have_many(:provider_users) }
-    it { is_expected.to have_many(:lead_partner_users) }
-    it { is_expected.to have_many(:lead_partners).through(:lead_partner_users) }
+    it { is_expected.to have_many(:training_partner_users) }
+    it { is_expected.to have_many(:training_partners).through(:training_partner_users) }
 
     it do
       expect(subject).to have_many(:submitted_bulk_update_trainee_uploads)

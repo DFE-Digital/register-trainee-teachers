@@ -22,8 +22,8 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       then_i_can_see_trainees_belonging_to_that_provider
     end
 
-    scenario "settings lead partner context" do
-      when_i_click_on_a_lead_partner_link
+    scenario "settings training partner context" do
+      when_i_click_on_a_training_partner_link
       then_i_am_redirected_to_the_start_page
     end
   end
@@ -64,8 +64,8 @@ private
     organisations_index_page.provider_links.find { |link| link.text == provider.name_and_code }.click
   end
 
-  def when_i_click_on_a_lead_partner_link
-    organisations_index_page.training_partner_links.find { |link| link.text == lead_partner.name }.click
+  def when_i_click_on_a_training_partner_link
+    organisations_index_page.training_partner_links.find { |link| link.text == training_partner.name }.click
   end
 
   def then_i_am_redirected_to_the_start_page
@@ -96,8 +96,8 @@ private
     @_provider ||= multi_organisation_user.providers.first
   end
 
-  def lead_partner
-    @_lead_partner ||= multi_organisation_user.lead_partners.first
+  def training_partner
+    @_training_partner ||= multi_organisation_user.training_partners.first
   end
 
   def provider_trainee

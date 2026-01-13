@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe LeadPartnerUser do
+RSpec.describe TrainingPartnerUser do
   describe "associations" do
-    it { is_expected.to belong_to(:lead_partner) }
+    it { is_expected.to belong_to(:training_partner) }
     it { is_expected.to belong_to(:user) }
   end
 end

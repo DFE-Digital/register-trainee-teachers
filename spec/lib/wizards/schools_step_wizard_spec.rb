@@ -15,8 +15,8 @@ module Wizards
         end
       end
 
-      context "when theres a lead partner but no employing school" do
-        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_partner) }
+      context "when theres a training partner but no employing school" do
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_training_partner) }
 
         it "returns the employing school step" do
           expect(subject.start_point).to eq "/trainees/#{trainee.slug}/employing-schools/edit"
@@ -24,7 +24,7 @@ module Wizards
       end
 
       context "when all the forms are complete" do
-        let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_partner, :with_employing_school) }
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_training_partner, :with_employing_school) }
 
         it "returns nil" do
           expect(subject.start_point).to be_nil

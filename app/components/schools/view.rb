@@ -34,7 +34,7 @@ module Schools
       if data_model.is_a?(Schools::FormValidator)
         data_model.training_partner_form.training_partner_not_applicable?
       else
-        data_model.lead_partner_not_applicable?
+        data_model.training_partner_not_applicable?
       end
     end
 
@@ -65,9 +65,9 @@ module Schools
     end
 
     def fetch_training_partner
-      return data_model.lead_partner if data_model.respond_to?(:lead_partner)
+      return data_model.training_partner if data_model.respond_to?(:training_partner)
 
-      fetch_training_partner_record(data_model.lead_partner_id)
+      fetch_training_partner_record(data_model.training_partner_id)
     end
 
     def fetch_employing_school
@@ -85,7 +85,7 @@ module Schools
     def fetch_training_partner_record(id)
       return if id.blank?
 
-      LeadPartner.find(id)
+      TrainingPartner.find(id)
     end
   end
 end

@@ -55,7 +55,7 @@ FactoryBot.define do
     trait :for_export do
       awarded
       with_tiered_bursary
-      with_lead_partner
+      with_training_partner
       with_employing_school
       imported_from_hesa
       with_nationalities
@@ -72,7 +72,7 @@ FactoryBot.define do
     trait :bulk_recommend do
       submitted_for_trn
       trn_received
-      with_lead_partner
+      with_training_partner
       with_primary_course_details
     end
 
@@ -575,23 +575,23 @@ FactoryBot.define do
       end
     end
 
-    trait :with_lead_partner do
+    trait :with_training_partner do
       transient do
         record_type { :school }
       end
 
       after(:create) do |trainee, evaluator|
-        FactoryBot.create(:lead_partner, evaluator.record_type, trainees: [trainee])
+        FactoryBot.create(:training_partner, evaluator.record_type, trainees: [trainee])
       end
     end
 
-    trait :with_lead_partner_scitt do
+    trait :with_training_partner_scitt do
       transient do
         record_type { :scitt }
       end
 
       after(:create) do |trainee, evaluator|
-        FactoryBot.create(:lead_partner, evaluator.record_type, trainees: [trainee])
+        FactoryBot.create(:training_partner, evaluator.record_type, trainees: [trainee])
       end
     end
 

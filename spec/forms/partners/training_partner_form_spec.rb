@@ -6,8 +6,8 @@ module Partners
   describe TrainingPartnerForm, type: :model do
     let(:trainee) { create(:trainee) }
     let(:form_store) { class_double(FormStore) }
-    let(:lead_partner_id) { create(:lead_partner, :school).id }
-    let(:params) { { "lead_partner_id" => lead_partner_id } }
+    let(:training_partner_id) { create(:training_partner, :school).id }
+    let(:params) { { "training_partner_id" => training_partner_id } }
 
     subject { described_class.new(trainee, params: params, store: form_store) }
 
@@ -26,19 +26,19 @@ module Partners
     end
 
     context "when searching again" do
-      let(:params) { { "results_search_again_query" => "a", "lead_partner_id" => "results_search_again" } }
+      let(:params) { { "results_search_again_query" => "a", "training_partner_id" => "results_search_again" } }
 
       it "returns an error against the search again query" do
         expect(subject.errors[:results_search_again_query]).to include(I18n.t("activemodel.errors.models.training_partner_form.attributes.query.length", count: 2))
       end
     end
 
-    context "with no lead partner chosen and no query provided" do
-      let(:params) { { "results_search_again_query" => "", "lead_partner_id" => "", "search_results_found" => "true" } }
+    context "with no training partner chosen and no query provided" do
+      let(:params) { { "results_search_again_query" => "", "training_partner_id" => "", "search_results_found" => "true" } }
 
       it "returns an error" do
-        expect(subject.errors[:lead_partner_id]).to include(
-          I18n.t("activemodel.errors.models.partners/training_partner_form.attributes.lead_partner_id.blank"),
+        expect(subject.errors[:training_partner_id]).to include(
+          I18n.t("activemodel.errors.models.partners/training_partner_form.attributes.training_partner_id.blank"),
         )
       end
     end
@@ -53,12 +53,12 @@ module Partners
 
     describe "#save!" do
       before do
-        allow(form_store).to receive(:get).and_return({ "lead_partner_id" => lead_partner_id })
+        allow(form_store).to receive(:get).and_return({ "training_partner_id" => training_partner_id })
         allow(form_store).to receive(:set).with(trainee.id, :training_partner, nil)
       end
 
       it "takes any data from the form store and saves it to the database" do
-        expect { subject.save! }.to change(trainee, :lead_partner_id).to(lead_partner_id)
+        expect { subject.save! }.to change(trainee, :training_partner_id).to(training_partner_id)
       end
     end
   end

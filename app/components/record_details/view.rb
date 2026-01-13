@@ -15,12 +15,10 @@ module RecordDetails
                 :editable,
                 :show_change_provider
 
-    delegate :lead_partner,
+    delegate :training_partner,
              :employing_school,
-             :lead_partner_not_applicable?,
+             :training_partner_not_applicable?,
              :employing_school_not_applicable?, to: :trainee
-
-    alias_method :training_partner, :lead_partner
 
     def initialize(
       trainee:,
@@ -40,7 +38,7 @@ module RecordDetails
 
     def record_detail_rows
       rows = [provider_row]
-      if trainee.requires_lead_partner?
+      if trainee.requires_training_partner?
         rows += [
           training_partner_row,
           employing_school_row,

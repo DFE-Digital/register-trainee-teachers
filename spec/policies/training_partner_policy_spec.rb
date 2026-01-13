@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe LeadPartnerPolicy do
+describe TrainingPartnerPolicy do
   let(:system_admin_user) { build(:user, :system_admin) }
   let(:other_user) { create(:user) }
 
@@ -13,18 +13,18 @@ describe LeadPartnerPolicy do
     it { is_expected.not_to permit(other_user) }
   end
 
-  describe LeadPartnerPolicy::Scope do
-    let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "AAA") }
-    let!(:school_lead_partner) { create(:lead_partner, :school, name: "BBB") }
+  describe TrainingPartnerPolicy::Scope do
+    let!(:hei_training_partner) { create(:training_partner, :hei, name: "AAA") }
+    let!(:school_training_partner) { create(:training_partner, :school, name: "BBB") }
 
-    subject { described_class.new(user, LeadPartner).resolve }
+    subject { described_class.new(user, TrainingPartner).resolve }
 
     context "ordered by name" do
       let(:user) { system_admin_user }
 
       it { expect(subject.size).to be(2) }
-      it { expect(subject[0]).to eq(hei_lead_partner) }
-      it { expect(subject[1]).to eq(school_lead_partner) }
+      it { expect(subject[0]).to eq(hei_training_partner) }
+      it { expect(subject[1]).to eq(school_training_partner) }
     end
   end
 end

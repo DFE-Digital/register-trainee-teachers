@@ -41,7 +41,7 @@ module Hesa
             disability9: nil,
             bursary_level: "6",
             employing_school_urn: "115795",
-            lead_partner_urn: "115795",
+            training_partner_urn: "115795",
             training_route: "02",
             nationality: "NZ",
             hesa_updated_at: "17/10/2016 14:27:04",

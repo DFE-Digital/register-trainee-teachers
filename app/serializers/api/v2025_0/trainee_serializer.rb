@@ -26,8 +26,8 @@ module Api
         placement_detail
         dttp_update_sha
         dormancy_dttp_id
-        lead_partner_id
-        lead_partner_not_applicable
+        training_partner_id
+        training_partner_not_applicable
         employing_school_id
         employing_school_not_applicable
         course_allocation_subject_id
@@ -185,11 +185,11 @@ module Api
       end
 
       def lead_partner_ukprn
-        @trainee.lead_partner&.ukprn
+        @trainee.training_partner&.ukprn
       end
 
       def lead_partner_urn
-        @trainee.lead_partner&.urn
+        @trainee.training_partner&.urn
       end
 
       def hesa_trainee_attributes

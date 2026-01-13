@@ -59,7 +59,7 @@
 
 <h2 class="govuk-heading-m">Training partners</h2>
 
-<% if @user.lead_partners.any? %>
+<% if @user.training_partners.any? %>
   <div class="govuk-grid-row">
     <div class ="govuk-grid-column-full">
       <table id="training-partners" class="govuk-table">
@@ -71,14 +71,14 @@
           </tr>
         </thead>
         <tbody class="govuk-table__body">
-        <% @user.lead_partners.each do |lead_partner| %>
+        <% @user.training_partners.each do |training_partner| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-              <%= govuk_link_to lead_partner.name, training_partner_path(lead_partner), class: "lead-partner" %>
+              <%= govuk_link_to training_partner.name, training_partner_path(training_partner), class: "training-partner" %>
             </td>
             <td class="govuk-table__cell">
-              <%= govuk_link_to "Remove<span class=\"govuk-visually-hidden\"> access to #{lead_partner.name}</span>".html_safe,
-                                edit_user_training_partner_accessions_path(@user, lead_partner),
+              <%= govuk_link_to "Remove<span class=\"govuk-visually-hidden\"> access to #{training_partner.name}</span>".html_safe,
+                                edit_user_training_partner_accessions_path(@user, training_partner),
                                 class: 'remove-access' %>
             </td>
           </tr>

@@ -287,12 +287,12 @@ describe Exports::ExportTraineesToFileService, type: :model do
         expect(trainee_csv_row["trainee_start_date"]).to eq(trainee_report.trainee_start_date)
       end
 
-      it "includes the lead_partner_name in the csv" do
-        expect(trainee_csv_row["lead_partner_name"]).to eq(trainee_report.lead_partner_name)
+      it "includes the training_partner_name in the csv" do
+        expect(trainee_csv_row["training_partner_name"]).to eq(trainee_report.training_partner_name)
       end
 
-      it "includes the lead_partner_urn in the csv" do
-        expect(trainee_csv_row["lead_partner_urn"]).to eq(trainee_report.lead_partner_urn)
+      it "includes the training_partner_urn in the csv" do
+        expect(trainee_csv_row["training_partner_urn"]).to eq(trainee_report.training_partner_urn)
       end
 
       it "includes the employing_school_name in the csv" do

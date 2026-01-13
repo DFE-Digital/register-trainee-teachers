@@ -33,9 +33,9 @@ describe HomeView do
       end
     end
 
-    context "when current_user is a lead_partner user" do
+    context "when current_user is a training_partner user" do
       let(:current_user) do
-        UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {})
+        UserWithOrganisationContext.new(user: create(:user, :with_training_partner_organisation), session: {})
       end
 
       it "returns nil" do
@@ -43,7 +43,7 @@ describe HomeView do
       end
     end
 
-    context "when current_user is non system_admin user or non lead_partner user" do
+    context "when current_user is non system_admin user or non training_partner user" do
       let(:current_user) do
         UserWithOrganisationContext.new(user: create(:user), session: {})
       end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LeadPartnerPolicy
+class TrainingPartnerPolicy
   class Scope
     attr_reader :user, :scope
 
@@ -20,9 +20,9 @@ class LeadPartnerPolicy
 
   attr_reader :user
 
-  def initialize(user, lead_partner)
+  def initialize(user, training_partner)
     @user = user
-    @lead_partner = lead_partner
+    @training_partner = training_partner
   end
 
   def show?

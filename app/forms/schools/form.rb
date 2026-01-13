@@ -45,7 +45,7 @@ module Schools
     end
 
     def training_partner_not_selected?
-      partner_applicable? && lead_partner_id.to_i.zero?
+      partner_applicable? && training_partner_id.to_i.zero?
     end
 
     def no_results_searching_again?

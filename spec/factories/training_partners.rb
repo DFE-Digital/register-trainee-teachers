@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :lead_partner do
+  factory :training_partner do
     name { school&.name || provider&.name }
     urn { Faker::Number.unique.number(digits: 6) }
 
     trait :school do
-      record_type { LeadPartner::SCHOOL }
+      record_type { TrainingPartner::SCHOOL }
       school
 
       before(:create) do |record|
@@ -15,13 +15,13 @@ FactoryBot.define do
     end
 
     trait :hei do
-      record_type { LeadPartner::HEI }
+      record_type { TrainingPartner::HEI }
       provider factory: %i[provider unaccredited]
       ukprn { Faker::Number.number(digits: 8) }
     end
 
     trait :scitt do
-      record_type { LeadPartner::SCITT }
+      record_type { TrainingPartner::SCITT }
       provider factory: %i[provider unaccredited]
       ukprn { Faker::Number.number(digits: 8) }
     end

@@ -4,7 +4,7 @@ module Submissions
   class MissingDataValidator < BaseValidator
     class_attribute :extra_validators, instance_writer: false, default: {}
 
-    OPTIONAL_FIELDS = %i[placements lead_partner_id employing_school_id].freeze
+    OPTIONAL_FIELDS = %i[placements training_partner_id employing_school_id].freeze
 
     class << self
       def missing_data_validator(name, options)

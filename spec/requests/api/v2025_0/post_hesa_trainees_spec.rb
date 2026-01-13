@@ -205,13 +205,13 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       expect(parsed_body[:applying_for_grant]).to be_nil
     end
 
-    it "sets the correct lead partner and employing school attributes" do
+    it "sets the correct training partner and employing school attributes" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       trainee = Trainee.last
 
-      expect(trainee.lead_partner_not_applicable).to be(true)
-      expect(trainee.lead_partner_id).to be_nil
+      expect(trainee.training_partner_not_applicable).to be(true)
+      expect(trainee.training_partner_id).to be_nil
       expect(trainee.employing_school_not_applicable).to be(true)
       expect(trainee.employing_school_id).to be_nil
     end
@@ -439,40 +439,40 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           expect(response.parsed_body[:employing_school_urn]).to be_nil
         end
 
-        it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
+        it "sets training_partner_not_applicable and employing_school_not_applicable to true" do
           trainee = Trainee.last
 
-          expect(trainee.lead_partner_not_applicable).to be(true)
+          expect(trainee.training_partner_not_applicable).to be(true)
           expect(trainee.employing_school_not_applicable).to be(true)
         end
       end
 
       context "when lead_partner_urn is blank and lead_partner_ukprn is present and valid" do
-        let(:lead_partner) { create(:lead_partner, :scitt) }
+        let(:training_partner) { create(:training_partner, :scitt) }
         let(:params) do
           {
             data: data.merge(
-              lead_partner_ukprn: lead_partner.ukprn,
+              lead_partner_ukprn: training_partner.ukprn,
               employing_school_urn: "",
             ),
           }
         end
 
         it "sets lead_partner_ukprn to lead_partner#ukprn and employing_school_urn to nil" do
-          expect(response.parsed_body[:data][:lead_partner_ukprn]).to eq(lead_partner.ukprn)
+          expect(response.parsed_body[:data][:lead_partner_ukprn]).to eq(training_partner.ukprn)
           expect(response.parsed_body[:data][:lead_partner_ukprn]).not_to be_nil
           expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
         end
 
-        it "sets lead_partner_not_applicable to false" do
+        it "sets training_partner_not_applicable to false" do
           trainee = Trainee.last
 
-          expect(trainee.lead_partner_not_applicable).to be(false)
+          expect(trainee.training_partner_not_applicable).to be(false)
         end
       end
 
       context "when lead_partner_urn is blank and lead_partner_ukprn is present but invalid" do
-        let(:lead_partner) { create(:lead_partner, :scitt) }
+        let(:training_partner) { create(:training_partner, :scitt) }
         let(:params) do
           {
             data: data.merge(
@@ -511,7 +511,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it "sets lead_partner_not_applicable to true" do
             trainee = Trainee.last
 
-            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.training_partner_not_applicable).to be(true)
           end
         end
 
@@ -539,34 +539,34 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           let(:params) do
             {
               data: data.merge(
-                lead_partner_urn: lead_partner.urn,
+                lead_partner_urn: training_partner.urn,
                 employing_school_urn: "",
               ),
             }
           end
 
           context "when lead_partner exists" do
-            let(:lead_partner) { create(:lead_partner, :school) }
+            let(:training_partner) { create(:training_partner, :school) }
 
             it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(lead_partner.urn)
+              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(training_partner.urn)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
             it "sets lead_partner_not_applicable to false" do
               trainee = Trainee.last
 
-              expect(trainee.lead_partner_not_applicable).to be(false)
+              expect(trainee.training_partner_not_applicable).to be(false)
             end
           end
 
           context "when lead_partner does not exist" do
-            let(:lead_partner) { build(:school) }
+            let(:training_partner) { build(:school) }
 
             it "returns unprocessible entity HTTP code and a validation error message" do
               expect(response).to have_http_status(:unprocessable_entity)
               expect(response.parsed_body["errors"]).to include(
-                "lead_partner_id is invalid. The URN '#{lead_partner.urn}' does not match any known lead partners",
+                "lead_partner_id is invalid. The URN '#{training_partner.urn}' does not match any known lead partners",
               )
             end
           end
@@ -642,14 +642,14 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_partner_urn: lead_partner.urn,
+                  lead_partner_urn: training_partner.urn,
                   employing_school_urn: employing_school.urn,
                   training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]],
                 ),
               }
             end
 
-            let(:lead_partner) { create(:lead_partner, :school) }
+            let(:training_partner) { create(:training_partner, :school) }
             let(:employing_school) { create(:school) }
 
             it "sets employing_school_urn to employing_school#urn" do
@@ -663,7 +663,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             end
 
             it "sets lead_partner_urn to lead_partner#urn" do
-              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(lead_partner.urn)
+              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(training_partner.urn)
             end
           end
         end
