@@ -210,11 +210,19 @@ module Api
         end
 
         def course_attributes
-          attributes = super
-
-          attributes[:course_allocation_subject_id] = attributes.delete(:course_allocation_subject)&.id
-
-          attributes
+          {
+            course_education_phase: course_education_phase,
+            course_subject_one: course_subject_one,
+            course_subject_two: course_subject_two,
+            course_subject_three: course_subject_three,
+            course_min_age: course_min_age,
+            course_max_age: course_max_age,
+            study_mode: study_mode,
+            itt_start_date: itt_start_date,
+            itt_end_date: itt_end_date,
+            trainee_start_date: trainee_start_date,
+            course_allocation_subject_id: course_allocation_subject&.id,
+          }
         end
 
         def funding_attributes
