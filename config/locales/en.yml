@@ -238,6 +238,7 @@ en:
         trainee_chose_to_withdraw_another_reason: Another reason
         safeguarding_concerns: Safeguarding concerns
     award_details:
+        holds_award: Holds QTS/EYTS since %{awarded_at}
         waiting_for_award: QTS/EYTS pending since %{recommended_for_award_at}
     confirmation:
       not_provided_from_hesa_update: Not provided from HESA update
