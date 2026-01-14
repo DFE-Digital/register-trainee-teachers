@@ -6,14 +6,17 @@ module BulkUpdate
   module Placements
     RSpec.describe ImportRow do
       describe "#call" do
-        let(:placement_row) { create(:bulk_update_placement_row, trn: trainee.trn, urn: school.urn) }
+        let(:bulk_update_placement) { create(:bulk_update_placement, provider: trainee.provider) }
+        let(:placement_row) { create(:bulk_update_placement_row, trn: trainee.trn, urn: school.urn, bulk_update_placement: bulk_update_placement) }
         let(:service) { described_class.call(placement_row) }
         let(:trainee) { create(:trainee, :trn_received) }
+        let(:create_dupe_trainee) { create(:trainee, :trn_received, :without_placements, trn: trainee.trn) }
         let(:school) { create(:school) }
 
         before do
           allow(ValidateRow).to receive(:new).and_return(validator)
           allow(placement_row).to receive(:can_be_imported?).and_return(can_be_imported)
+          create_dupe_trainee
         end
 
         context "when the row can be imported and is valid" do
@@ -31,6 +34,11 @@ module BulkUpdate
             expect(placement.school_id).to eq(school.id)
             expect(placement.attributes[:urn]).to be_nil
             expect(placement.attributes[:name]).to be_nil
+          end
+
+          it "updates the correct trainee placement" do
+            expect { service }.to change { trainee.placements.count }.by(1)
+            expect(create_dupe_trainee.placements.count).to eq(0)
           end
         end
 

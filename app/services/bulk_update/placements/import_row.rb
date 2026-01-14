@@ -44,8 +44,12 @@ module BulkUpdate
         @school ||= validator.school
       end
 
+      def provider
+        placement_row.bulk_update_placement.provider
+      end
+
       def trainee
-        @trainee ||= Trainee.find_by_trn(placement_row.trn)
+        @trainee ||= provider.trainees.find_by_trn(placement_row.trn)
       end
 
       def validator
