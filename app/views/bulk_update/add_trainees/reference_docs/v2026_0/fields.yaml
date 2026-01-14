@@ -235,7 +235,7 @@
   description: |-
     First subject of the ITT course.
 
-    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, Course Subject One must be "Primary Teaching" (HESA code `100511`). A validation error will be returned if a different subject is provided. Where trainees study a primary specialism, a valid HECoS code should be used in course_subject_two or course_subject_three.
+    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, Course Subject One must be “Primary Teaching” (HESA code `100511`). A validation error will be returned if a different subject is provided. Where trainees study a primary specialism, a valid HECoS code should be used in course_subject_two or course_subject_three.
   format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-one.html)"
   example: "`100511` for primary courses, `100048` for secondary (design as a subject)"
   validation: Mandatory
