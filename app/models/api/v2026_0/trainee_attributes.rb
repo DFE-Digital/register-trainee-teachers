@@ -16,7 +16,7 @@ module Api
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
-      validate :course_subject_one_valid, if: :primary_education_phase?
+      validate :course_subject_one_is_primary, if: :primary_education_phase?
       validate :course_subject_two_valid, if: :require_subject?
       validate :course_subject_three_valid, if: :require_subject?
       validate :itt_end_date_valid
@@ -406,7 +406,7 @@ module Api
         EARLY_YEARS_TRAINING_ROUTES.exclude?(training_route)
       end
 
-      def course_subject_one_valid
+      def course_subject_one_is_primary
         return if course_subject_one.blank? || course_subject_one == CourseSubjects::PRIMARY_TEACHING
 
         errors.add(:course_subject_one, :invalid)
