@@ -1385,6 +1385,7 @@ en:
           hesa: Imported from HESA
           manual: Added manually
           api: Added with API
+          csv: Added with CSV
         provider_trainee_id: *provider_trainee_id
         training_routes:
           assessment_only: Assessment only
