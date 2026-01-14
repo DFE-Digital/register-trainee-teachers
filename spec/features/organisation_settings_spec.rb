@@ -14,7 +14,7 @@ feature "Organisation details" do
   let!(:token_five) { create(:authentication_token, name: "Token 5", created_by: user) }
 
   context "when a User belongs to a Provider organisation" do
-    let(:accreditation_id) { Faker::Number.unique.number(digits: 4) }
+    let(:accreditation_id) { "2345" }
     let(:organisation) { create(:provider, accreditation_id:) }
     let(:user) { create(:user, providers: [organisation]) }
     let(:provider) { organisation }
