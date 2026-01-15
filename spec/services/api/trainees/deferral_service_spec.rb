@@ -28,7 +28,7 @@ RSpec.describe Api::Trainees::DeferralService do
         expect(trainee.trainee_start_date).to eq(TraineeStartStatusForm.new(trainee).trainee_start_date)
       end
 
-      it "calls Trainees::Update to trigger TRS/DQT updates" do
+      it "calls Trainees::Update to trigger TRS updates" do
         expect(Trainees::Update).to receive(:call).with(trainee:)
         subject.call(params, trainee)
       end
