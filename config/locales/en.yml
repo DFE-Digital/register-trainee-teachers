@@ -2194,6 +2194,8 @@ en:
               before_or_same_as_start_date: must be after itt_start_date
               csv:
                 before_or_same_as_start_date: must be after ITT start date
+            course_subject_one:
+              invalid: is invalid. It should be `100511` for the course_age_range provided
             course_subject_two:
               duplicate: &api_duplicate_course_subjects might contain duplicate values
               csv:
