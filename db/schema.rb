@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_14_115229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -964,7 +964,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
     t.bigint "hesa_trn_submission_id"
     t.string "iqts_country"
     t.boolean "hesa_editable", default: false
-    t.datetime "slug_sent_to_dqt_at"
+    t.datetime "slug_sent_to_trs_at"
     t.integer "placement_detail"
     t.integer "application_choice_id"
     t.text "provider_trainee_id"
