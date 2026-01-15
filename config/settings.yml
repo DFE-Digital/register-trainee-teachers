@@ -29,10 +29,6 @@ hesa:
   username: <get from secrets>
   password: <get from secrets>
 
-dqt:
-  base_url: https://teacher-qualifications-api.education.gov.uk/
-  api_key: <get from secrets>
-
 trs:
   base_url: https://teacher-qualifications-api.education.gov.uk
   api_key: <get from secrets>
