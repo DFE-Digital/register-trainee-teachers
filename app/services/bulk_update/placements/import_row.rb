@@ -5,9 +5,10 @@ module BulkUpdate
     class ImportRow
       include ServicePattern
 
-      def initialize(placement_row)
+      def initialize(placement_row, trainee)
         @placement_row = placement_row
         @urn           = placement_row.urn
+        @trainee       = trainee
       end
 
       def call
@@ -25,12 +26,12 @@ module BulkUpdate
 
     private
 
-      attr_reader :placement_row, :urn
+      attr_reader :placement_row, :urn, :trainee
 
       def create_placement
         placement_row.update(school: school, state: :imported)
 
-        ::Placement.create(trainee:, school:)
+        trainee.placements.create(school:)
       end
 
       def record_errors
@@ -42,14 +43,6 @@ module BulkUpdate
 
       def school
         @school ||= validator.school
-      end
-
-      def provider
-        placement_row.bulk_update_placement.provider
-      end
-
-      def trainee
-        @trainee ||= provider.trainees.find_by_trn(placement_row.trn)
       end
 
       def validator
