@@ -14,7 +14,7 @@ module SystemAdmin
           redirect_to(pending_trns_path, flash: { success: "TRN requested successfully for #{trainee_name(trainee)}" })
         end
       rescue Trs::Client::HttpError => e
-        redirect_to(pending_trns_path, dqt_error: "API error: #{e.inspect}")
+        redirect_to(pending_trns_path, trs_error: "API error: #{e.inspect}")
       end
 
     private

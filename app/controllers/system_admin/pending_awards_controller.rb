@@ -2,7 +2,7 @@
 
 module SystemAdmin
   class PendingAwardsController < ApplicationController
-    add_flash_types :dqt_error
+    add_flash_types :trs_error
     helper_method :sort_by_items
     before_action :redirect_to_default_sort, only: :index
 

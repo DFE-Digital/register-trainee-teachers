@@ -33,8 +33,6 @@ features:
   hesa_import:
     sync_collection: false
     sync_trn_data: false
-  dqt_import:
-    sync_teachers: true
   duplicate_checking: true
   school_data_auto_import: true
   maintenance_banner: false

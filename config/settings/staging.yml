@@ -31,8 +31,6 @@ features:
     sync_collection: false
     sync_trn_data: false
     test_mode: true
-  dqt_import:
-    sync_teachers: false
   google:
     send_data_to_big_query: true
 
