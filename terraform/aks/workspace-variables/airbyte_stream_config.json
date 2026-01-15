@@ -2370,7 +2370,7 @@
           },
           {
             "fieldPath": [
-              "slug_sent_to_dqt_at"
+              "slug_sent_to_trs_at"
             ]
           },
           {
