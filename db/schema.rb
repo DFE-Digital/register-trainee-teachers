@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_14_115229) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_15_110603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -360,36 +360,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_14_115229) do
     t.datetime "updated_at", null: false
     t.uuid "uuid"
     t.index ["name"], name: "index_disabilities_on_name", unique: true
-  end
-
-  create_table "dqt_teacher_trainings", force: :cascade do |t|
-    t.bigint "dqt_teacher_id"
-    t.string "programme_start_date"
-    t.string "programme_end_date"
-    t.string "programme_type"
-    t.string "result"
-    t.string "provider_ukprn"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "hesa_id"
-    t.boolean "active"
-    t.index ["dqt_teacher_id"], name: "index_dqt_teacher_trainings_on_dqt_teacher_id"
-  end
-
-  create_table "dqt_teachers", force: :cascade do |t|
-    t.string "trn"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "date_of_birth"
-    t.string "qts_date"
-    t.string "eyts_date"
-    t.string "early_years_status_name"
-    t.string "early_years_status_value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "hesa_id"
-    t.boolean "allowed_pii_updates", default: false, null: false
-    t.index ["allowed_pii_updates"], name: "index_dqt_teachers_on_allowed_pii_updates"
   end
 
   create_table "dttp_accounts", force: :cascade do |t|
