@@ -5,7 +5,7 @@ module PageObjects
     set_url "/"
 
     element :organisation_name, ".govuk-caption-l"
-    element :page_heading, ".govuk-heading-l"
+    element :page_heading, ".govuk-heading-l.app-start-page-banner__heading"
 
     element :sign_in, ".app-start-page-banner__button"
 
