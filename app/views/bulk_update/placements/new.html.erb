@@ -30,16 +30,16 @@
       </h2>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Download trainees with missing details", new_bulk_update_placements_path(format: :csv), class: "govuk-link--no-visited-state") %>
+        <%= govuk_link_to("Bulk add placements prepopulated", new_bulk_update_placements_path(format: :csv), class: "govuk-link--no-visited-state") %>
       </p>
 
-      <p class="govuk-hint">File name: <span class="app-nowrap"><%= organisation_filename %></span></p>
+      <p class="govuk-hint">File name: <span class="app-nowrap"><%= prepopulated_template_filename %></span></p>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Download a blank template", new_bulk_update_placements_path(format: :csv, blank: true), class: "govuk-link--no-visited-state") %>
+        <%= govuk_link_to("Bulk add placements blank", new_bulk_update_placements_path(format: :csv, blank: true), class: "govuk-link--no-visited-state") %>
       </p>
 
-      <p class="govuk-hint">File name: <span class="app-nowrap">blank-performance-profile.csv</span></p>
+      <p class="govuk-hint">File name: <span class="app-nowrap"><%= blank_template_filename %></span></p>
 
       <h2 class="govuk-heading-m">
         2. Add missing details

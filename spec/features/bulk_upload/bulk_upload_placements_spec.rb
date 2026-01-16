@@ -58,7 +58,7 @@ private
   end
 
   def and_i_see_a_filename_of_the_file_i_need_to_download
-    expect(page).to have_content("#{filename}-to-add-missing-prepopulated.csv")
+    expect(page).to have_content("bulk-add-placements-prepopulated.csv")
   end
 
   def and_i_see_the_placement_schools_section
@@ -87,31 +87,27 @@ private
     visit new_bulk_update_placements_path
   end
 
-  def filename
-    current_user.organisation.name.parameterize
-  end
-
   def when_i_click_on_the_download_link
-    click_on "Download trainees with missing details"
+    click_on "Bulk add placements prepopulated"
   end
 
   def then_i_receive_the_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"#{filename}-to-add-missing-prepopulated.csv\"")
+    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"bulk-add-placements-prepopulated.csv\"")
   end
 
   def and_i_see_the_blank_template_link
-    expect(page).to have_link("Download a blank template")
-    expect(page).to have_content("blank-performance-profile.csv")
+    expect(page).to have_link("Bulk add placements blank")
+    expect(page).to have_content("bulk-add-placements-blank.csv")
   end
 
   def when_i_click_on_the_blank_template_link
-    click_on "Download a blank template"
+    click_on "Bulk add placements blank"
   end
 
   def then_i_receive_the_blank_template
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"blank-performance-profile.csv\"")
+    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"bulk-add-placements-blank.csv\"")
   end
 
   def when_i_upload_the_file
