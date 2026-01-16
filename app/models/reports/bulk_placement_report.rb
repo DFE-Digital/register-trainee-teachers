@@ -13,16 +13,16 @@ module Reports
 
     EXPORT_HEADERS = [*HEADERS, *OPTIONAL_HEADERS].freeze
 
-    PLACEMENT_GUIDANCE = "URNs must be 6 digits long.\n\n\nIf you do not know the placement school's URN, leave the cell empty."
+    PLACEMENT_GUIDANCE = "If you do not know the placement school's URN, leave the cell empty."
 
     GUIDANCE = [
       "Do not change this column",
       "Do not change this column",
-      "The URN of the trainee's first placement school.\n\n\n#{PLACEMENT_GUIDANCE}",
-      "The URN of the trainee's second placement school.\n\n\n#{PLACEMENT_GUIDANCE}",
-      "The URN of the trainee's third placement school.\n\n\n#{PLACEMENT_GUIDANCE}",
-      "The URN of the trainee's fourth placement school.\n\n\n#{PLACEMENT_GUIDANCE}",
-      "The URN of the trainee's fifth placement school.\n\n\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's first placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's second placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's third placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's fourth placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's fifth placement school.\n#{PLACEMENT_GUIDANCE}",
     ].freeze
 
     ADDED_MANUALLY = "ADDED MANUALLY"
