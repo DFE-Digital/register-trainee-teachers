@@ -47,11 +47,16 @@
       </h2>
 
       <p class="govuk-body">
-        You can bulk add missing placement data to <%= pluralize(bulk_placements_count, "trainee record") %>. Add school placement URNs for 2 to 5 school or setting placements.
+        You have
+        <%= pluralize(bulk_placements_count, "trainee record") %>
+        who do not have at least two placements.
       </p>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Bulk add missing placement data to trainee records", new_bulk_update_placements_path) %>
+        <%= govuk_link_to(
+          "Bulk add missing placement data to trainee records",
+          new_bulk_update_placements_path,
+        ) %>
       </p>
 
       <p class="govuk-body">
