@@ -51,7 +51,7 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
           course_subject_two
           course_subject_three
           error_message
-          dqt
+          trs
         ],
       )
 
@@ -66,14 +66,14 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
       expect(error_message).to include("10005")
     end
 
-    context "with dqt status" do
+    context "with trs status" do
       subject { described_class.new(dead_set:) }
 
-      context "without dqt teacher" do
-        let(:dqt_teacher) { nil }
+      context "without trs data" do
+        let(:trs_data) { nil }
 
         it "returns nil" do
-          expect(csv[0]["dqt"]).to be_nil
+          expect(csv[0]["trs"]).to be_nil
         end
       end
     end

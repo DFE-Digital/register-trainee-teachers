@@ -33,7 +33,7 @@ module Trs
           described_class.perform_now(trainee)
         end
 
-        it "updates the trainee without calling DQT again" do
+        it "updates the trainee without calling TRS again" do
           allow(Trainees::Update).to receive(:call)
           expect(Trainees::Update).to receive(:call).with(trainee: trainee, update_trs: false)
           described_class.perform_now(trainee)

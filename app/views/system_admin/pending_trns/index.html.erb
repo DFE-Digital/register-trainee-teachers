@@ -9,8 +9,8 @@
   <div class ="govuk-grid-column-full">
     <%= render "system_admin/tab_nav" %>
 
-    <%= render ErrorSummary::View.new(renderable: dqt_error.present?) do %>
-      <%= dqt_error %>
+    <%= render ErrorSummary::View.new(renderable: trs_error.present?) do %>
+      <%= trs_error %>
     <% end %>
 
     <%= render SortBy::View.new(items: sort_by_items) %>
@@ -25,7 +25,7 @@
               <%= tag.p("#{pluralize(trainee.trs_trn_request.days_waiting, "day")} waiting") %>
 
               <%= govuk_details(summary_text: "Request Details") do %>
-                <%= content_tag(:pre, formatted_dqt_trn_response(trainee.trs_trn_request.response))  %>
+                <%= content_tag(:pre, formatted_trs_trn_response(trainee.trs_trn_request.response))  %>
               <% end %>
             <% end %>
 

@@ -3,15 +3,15 @@
 require "rails_helper"
 
 module Support
-  describe DqtHelper do
-    include DqtHelper
+  describe TrsHelper do
+    include TrsHelper
 
-    describe "#formatted_dqt_trn_response" do
+    describe "#formatted_trs_trn_response" do
       let(:response) { nil }
 
       context "when `response` is nil" do
         it "returns nil" do
-          expect(helper.formatted_dqt_trn_response(response)).to be_nil
+          expect(helper.formatted_trs_trn_response(response)).to be_nil
         end
       end
 
@@ -23,7 +23,7 @@ module Support
         end
 
         it "returns formatted error" do
-          expect(helper.formatted_dqt_trn_response(response)).to eq(
+          expect(helper.formatted_trs_trn_response(response)).to eq(
             JSON.pretty_generate({
               error: {
                 status: 404,
@@ -43,7 +43,7 @@ module Support
         end
 
         it "returns formatted error" do
-          expect(helper.formatted_dqt_trn_response(response)).to eq(
+          expect(helper.formatted_trs_trn_response(response)).to eq(
             JSON.pretty_generate({
               error: {
                 status: 404,

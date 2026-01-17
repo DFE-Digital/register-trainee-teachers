@@ -1,9 +1,6 @@
 # The url for this app, also used by `dfe_sign_in`
 base_url: https://sandbox.register-trainee-teachers.service.gov.uk
 
-dqt:
-  base_url: https://preprod.teacher-qualifications-api.education.gov.uk
-
 trs:
   base_url: https://preprod.teacher-qualifications-api.education.gov.uk/
 

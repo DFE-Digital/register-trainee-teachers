@@ -5,7 +5,7 @@ module SystemAdmin
     class BaseController < ApplicationController
       include TraineeHelper
 
-      add_flash_types :dqt_error
+      add_flash_types :trs_error
       before_action :load_trainee
 
     private

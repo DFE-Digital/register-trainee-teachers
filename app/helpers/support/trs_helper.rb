@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Support
-  module DqtHelper
-    def formatted_dqt_trn_response(response)
+  module TrsHelper
+    def formatted_trs_trn_response(response)
       return if response.nil?
 
       result = if response["error"]
