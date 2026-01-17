@@ -112,7 +112,7 @@
           <%= t("views.trainees.index.filters.type_of_training") %>
         </legend>
         <div class="govuk-checkboxes govuk-checkboxes--small">
-          <% training_routes.map do |training_route, _| %>
+          <% training_routes.sort_by { |training_route, _| label_for("training_route", training_route) }.each do |training_route, _| %>
             <div class="govuk-checkboxes__item">
               <%= check_box_tag "training_route[]", training_route, checked?(filters, :training_route, training_route), id: "training_route-#{training_route}", class: "govuk-checkboxes__input" %>
               <%= label_tag "training_route-#{training_route}", label_for("training_route", training_route), class: "govuk-label govuk-checkboxes__label" %>
