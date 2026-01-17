@@ -26,7 +26,7 @@ private
   end
 
   def files
-    Dir.glob("app/{models,serializers,services}/api/#{old_version}/**/*.rb")
+    Dir.glob("app/{models,serializers,services,validators}/api/#{old_version}/**/*.rb")
   end
 
   def new_file_path(file)
