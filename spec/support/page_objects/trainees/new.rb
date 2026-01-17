@@ -5,7 +5,7 @@ module PageObjects
     class New < PageObjects::Base
       set_url "/trainees/new"
 
-      element :page_heading, ".govuk-heading-xl"
+      element :page_heading, ".govuk-heading-l"
 
       element :assessment_only, "#trainee-training-route-assessment-only-field"
       element :provider_led_postgrad, "#trainee-training-route-provider-led-postgrad-field"

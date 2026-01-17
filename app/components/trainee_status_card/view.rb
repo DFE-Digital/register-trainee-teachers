@@ -16,7 +16,7 @@ module TraineeStatusCard
     def initialize(status:, count:, target:)
       @status = status
       @target = target
-      @count = count
+      @count = count.to_fs(:delimited)
     end
 
     def state_name

@@ -12,7 +12,7 @@ module PageObjects
 
       set_url "/trainees/{id}/training-routes/edit"
 
-      element :page_heading, ".govuk-heading-xl"
+      element :page_heading, ".govuk-heading-l"
 
       element :assessment_only, "#training-routes-form-training-route-assessment-only-field"
 
