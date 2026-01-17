@@ -130,9 +130,6 @@ en:
         csv: Added with bulk CSV upload
       trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
-      progress_date_prefix:
-        recommended_for_award: "Recommended: "
-        awarded: "Awarded: "
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
@@ -241,7 +238,8 @@ en:
         trainee_chose_to_withdraw_another_reason: Another reason
         safeguarding_concerns: Safeguarding concerns
     award_details:
-        waiting_for_award: Waiting for award - met standards on %{recommended_for_award_at}
+        holds_award: Holds QTS/EYTS since %{awarded_at}
+        waiting_for_award: QTS/EYTS pending since %{recommended_for_award_at}
     confirmation:
       not_provided_from_hesa_update: Not provided from HESA update
       missing: missing
@@ -357,9 +355,6 @@ en:
     invalid_data_text:
       static_text: The trainee entered ‘%{query}’, which was not recognised. You need to search for the closest match.
     record_details:
-      progress_date_prefix:
-        recommended_for_award: "Recommended: "
-        awarded: "Awarded: "
       status_date_prefix:
         deferred: "Deferral date: "
         withdrawn: "Withdrawal date: "
@@ -451,8 +446,8 @@ en:
         outcome_details:
           confirm_qts: Check QTS details
           confirm_eyts: Check EYTS details
-          recommended_qts: Trainee recommended for QTS
-          recommended_eyts: Trainee recommended for EYTS
+          recommended_qts: Trainee status changed
+          recommended_eyts: Trainee status changed
         personal_details:
           edit: Trainee personal details
         trainee_start_date:
@@ -589,12 +584,12 @@ en:
           draft: Trainee marked as draft
           submitted_for_trn: Trainee submitted for TRN
           trn_received: TRN received
-          recommended_for_qts: Trainee recommended for QTS
-          recommended_for_eyts: Trainee recommended for EYTS
+          recommended_for_qts: Trainee status changed
+          recommended_for_eyts: Trainee status changed
           withdrawn: Trainee withdrawn
           deferred: Trainee deferred
-          qts_awarded: QTS awarded
-          eyts_awarded: EYTS awarded
+          qts_awarded: Holds QTS
+          eyts_awarded: Holds EYTS
           reinstated: Trainee reinstated
           course_uuid: Course updated
           course_max_age: Course age range updated
@@ -639,10 +634,10 @@ en:
     trainee_status_card:
       course_not_started_yet: Course not started yet
       in_training: In training
-      awarded_this_year: Awarded this year
+      awarded_this_year: Hold QTS or EYTS this year
       deferred: Currently deferred
       incomplete: Incomplete records
-      can_bulk_recommend_for_award: Trainees you can bulk recommend for QTS or EYTS
+      can_bulk_recommend_for_award: Trainees you can bulk change status for QTS or EYTS
       can_complete: Records you can complete
     sections:
       titles:
@@ -703,10 +698,10 @@ en:
           trn_received: TRN received
           withdrawn: Withdrawn
           deferred: Deferred
-          QTS_recommended_for_award: QTS recommended
-          EYTS_recommended_for_award: EYTS recommended
-          QTS_awarded: QTS awarded
-          EYTS_awarded: EYTS awarded
+          QTS_recommended_for_award: QTS pending
+          EYTS_recommended_for_award: EYTS pending
+          QTS_awarded: Holds QTS
+          EYTS_awarded: Holds EYTS
           incomplete: Incomplete
   apply_applications:
     trainee_data:
@@ -746,7 +741,7 @@ en:
       apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
     missing_data_banner_view:
       header:
-        default: "You need to give additional details before you can recommend the trainee for %{award_type}"
+        default: "You need to give additional details before you can change status of the trainee for %{award_type}"
         optional_only: "This trainee has missing information"
       missing_field_text: "%{missing_field}"
       missing_field_link:
@@ -887,8 +882,8 @@ en:
         withdraw: withdraw
         reinstate: reinstate
         this_trainee: this trainee
-        recommend_for_award: Recommend trainee for QTS
-        recommend_for_eyts: Recommend trainee for EYTS
+        recommend_for_award: Change status of trainee
+        recommend_for_eyts: Change status of trainee
         status_summary:
           missing_fields: This trainee record requires additional details
           itt_not_started: The trainee’s ITT starts on %{itt_start_date}
@@ -1196,7 +1191,7 @@ en:
     language_specialisms:
       edit:
         heading: Which language specialisms has the trainee chosen to study?
-        hint: These language specialisms are recorded on the trainee’s QTS award.
+        hint: These language specialisms are documented on the trainee’s QTS record.
         additional_hint: Choose up to three.
     course_details:
       edit:
@@ -1422,20 +1417,20 @@ en:
           apply_draft: Apply Draft
           submitted_for_trn: Pending TRN
           trn_received: TRN received
-          recommended_for_award: Qualification recommended
+          recommended_for_award: QTS/EYTS pending
           withdrawn: Withdrawn
           deferred: Deferred
-          awarded: Qualification awarded
-          qts_recommended: QTS recommended
-          qts_awarded: QTS awarded
-          eyts_recommended: EYTS recommended
-          eyts_awarded: EYTS awarded
+          awarded: Holds QTS/EYTS
+          qts_recommended: QTS pending
+          qts_awarded: Holds QTS
+          eyts_recommended: EYTS pending
+          eyts_awarded: Holds EYTS
         statuses:
           course_not_yet_started: Course not started yet
           in_training: In training
           deferred: Deferred
           withdrawn: Withdrawn
-          awarded: Awarded
+          awarded: Holds QTS/EYTS
         training_initiatives:
           transition_to_teach: Transition to Teach
           troops_to_teachers: Troops to Teachers
@@ -1693,15 +1688,15 @@ en:
           recommendations_uploads:
             validate_trainee:
               multiple_trainees_trn_received: "%{count} trainee records with TRN received status have the same %{found_with} - contact becomingateacher@digital.education.gov.uk to fix this"
-              multiple_trainees_found_via: "%{count} trainee records have the same %{found_with} but none have TRN received status - you can only recommend trainees with TRN received status"
-              trainee_wrong_state: "The trainee has %{state} status - you can only recommend trainees with TRN received status"
+              multiple_trainees_found_via: "%{count} trainee records have the same %{found_with} but none have TRN received status - you can only change status of trainees with TRN received status"
+              trainee_wrong_state: "The trainee has %{state} status - you can only change status of trainees with TRN received status"
               no_trainee_matched: "%{id_available} must match a trainee record"
             validate_csv_row:
               trn_format: TRN must be 7 numbers
               hesa_id_format: HESA ID must be 13 or 17 numbers
               award_date_not_valid: Date QTS or EYTS standards met must be a valid date
               award_date_future: Date QTS or EYTS standards met must be today or in the past
-              award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk recommend - you can recommend the trainee separately in their trainee record
+              award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk changed status - you can change the trainee status separately in their trainee record
               date_standards_met: Date QTS or EYTS standards met must be after trainee’s ITT start date
               date_parse: Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023
               trn: TRN must match trainee record

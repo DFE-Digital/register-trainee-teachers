@@ -8,12 +8,12 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        <%= trainee_name(@trainee) %> recommended for <%= @trainee.award_type %>
+        <%= trainee_name(@trainee) %> gained <%= @trainee.award_type %>
       </h1>
     </div>
     <h2 class="govuk-heading-m">Getting <%= @trainee.award_type %> status</h2>
     <p class="govuk-body">
-      The Department for Education will award <%= @trainee.award_type %> where appropriate within 3
+      The Department for Education will email trainees <%= @trainee.award_type %> within 3-5
       working days.
     </p>
 

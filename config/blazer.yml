@@ -31,10 +31,10 @@ data_sources:
         0: "Draft",
         1: "Pending TRN",
         2: "TRN Received",
-        3: "Recommended for award",
+        3: "QTS/EYTS pending",
         4: "Withdrawn",
         5: "Deferred",
-        6: "Awarded"
+        6: "Holds QTS/EYTS"
       }
       training_route: {
         0: "Assessment only",
@@ -75,10 +75,10 @@ data_sources:
         0: "Draft",
         1: "Pending TRN",
         2: "TRN Received",
-        3: "Recommended for award",
+        3: "QTS/EYTS pending",
         4: "Withdrawn",
         5: "Deferred",
-        6: "Awarded"
+        6: "Holds QTS/EYTS"
       }
       trainee_study_mode: {
         0: "Part time",

@@ -61,7 +61,7 @@ RSpec.describe "POST /api/v2025.0/trainees/:trainee_id/recommend-for-qts" do
         )
       end
 
-      it "does not recommend the trainee for a qts award" do
+      it "does not change status of the trainee for a qts award" do
         post "/api/v2025.0/trainees/#{trainee.slug}/recommend-for-qts",
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
@@ -77,7 +77,7 @@ RSpec.describe "POST /api/v2025.0/trainees/:trainee_id/recommend-for-qts" do
       end
     end
 
-    it "does not recommend the trainee for a qts award" do
+    it "does not change status of the trainee for a qts award" do
       post "/api/v2025.0/trainees/#{trainee.slug}/recommend-for-qts",
            headers: { authorization: "Bearer #{token}" },
            params: { data: { qts_standards_met_date: nil } }, as: :json
