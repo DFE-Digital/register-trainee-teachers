@@ -1,0 +1,25 @@
+metadata:
+  source: "HESA"
+  name: "study_mode"
+  display_name: "Study mode"
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: 0
+    name: "part_time"
+    display_name: "Part-time"
+    description: "Part-time"
+    hesa_codes:
+      - "31"
+      - "64"
+  - id: 1
+    name: "full_time"
+    display_name: "Full-time"
+    description: "Full-time"
+    hesa_codes:
+      - "01"
+      - "02"
+      - "63"
