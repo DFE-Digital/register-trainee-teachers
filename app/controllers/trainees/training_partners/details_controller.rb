@@ -24,9 +24,7 @@ module Trainees
     private
 
       def trainee_params
-        params
-          .require(:partners_training_partner_form)
-          .permit(:training_partner_not_applicable)
+        params.expect(partners_training_partner_form: [:training_partner_not_applicable])
       end
 
       def step_wizard

@@ -36,6 +36,6 @@ module SystemAdmin
 
     def funding_type = params[:funding_type] || @funding_upload_form.funding_type
 
-    def funding_upload_params = params.require(:system_admin_funding_upload_form).permit(:funding_type, :month, :file)
+    def funding_upload_params = params.expect(system_admin_funding_upload_form: %i[funding_type month file])
   end
 end

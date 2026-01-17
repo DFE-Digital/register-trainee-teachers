@@ -24,7 +24,7 @@ module Trainees
       end
 
       def locale_code_params
-        params.require(:degree).permit(:locale_code) if params.dig(:degree, :locale_code).present?
+        params.expect(degree: [:locale_code]) if params.dig(:degree, :locale_code).present?
       end
     end
   end

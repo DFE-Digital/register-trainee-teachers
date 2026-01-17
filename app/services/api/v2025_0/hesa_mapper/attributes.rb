@@ -29,7 +29,7 @@ module Api
         InvalidValue = Api::HesaMapper::Attributes::InvalidValue
 
         def self.disability_attributes(params)
-          params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
+          (params[:data] || {}).keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
         end
 
         def initialize(params:, update: false)

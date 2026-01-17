@@ -2,20 +2,7 @@
 
 require_relative "boot"
 
-require "rails"
-require "active_model/railtie"
-require "active_job/railtie"
-require "active_record/railtie"
-require "active_storage/engine"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "action_mailbox/engine"
-require "action_text/engine"
-require "action_view/railtie"
-require "action_cable/engine"
-require "sprockets/railtie"
-require "rails/test_unit/railtie"
-require "govuk/components"
+require "rails/all"
 
 Dir[File.expand_path("../app/middleware/**/*.rb", __dir__)].each do |file|
   require file
@@ -27,8 +14,9 @@ Bundler.require(*Rails.groups)
 
 module RegisterTraineeTeachers
   class Application < Rails::Application
-    config.load_defaults(7.1)
-
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults(8.0)
+    #
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -43,7 +31,6 @@ module RegisterTraineeTeachers
     config.middleware.use(Rack::Deflater)
     config.middleware.insert_before(ActionDispatch::Static, TechDocs::TrailingSlashRedirect)
     config.middleware.insert_before(ActionDispatch::Static, TechDocs::Availability)
-
     config.active_job.queue_adapter = :sidekiq
 
     # Configure session store to use ActiveRecord.
@@ -73,5 +60,18 @@ module RegisterTraineeTeachers
 
     config.log_tags = [:request_id]
     config.log_level = Settings.log_level
+
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
   end
 end

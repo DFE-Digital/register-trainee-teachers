@@ -43,8 +43,8 @@ module Trainees
       end
 
       def course_params
-        params.require(:apply_applications_confirm_course_form)
-              .permit(*::ApplyApplications::ConfirmCourseForm::FIELDS)
+        params
+              .expect(apply_applications_confirm_course_form: [*::ApplyApplications::ConfirmCourseForm::FIELDS])
       end
 
       def course_uuid
