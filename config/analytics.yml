@@ -149,6 +149,11 @@ shared:
     - created_at
     - submitted_at
     - updated_at
+  new_partner_users:
+    - id
+    - description
+    - created_at
+    - updated_at
   training_partner_users:
     - id
     - training_partner_id
