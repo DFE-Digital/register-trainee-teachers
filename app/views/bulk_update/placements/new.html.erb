@@ -20,22 +20,26 @@
       </p>
 
       <p class="govuk-body">
-        You have trainee records that need additional details:
+        You have
+        <%= pluralize(bulk_placements_count, "trainee record") %>
+        who do not have at least two placements
       </p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li><%= bulk_placements_count %> that can be bulk updated</li>
-      </ul>
 
       <h2 class="govuk-heading-m">
         1. Export a template file
       </h2>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Download trainees with missing details", new_bulk_update_placements_path(format: :csv), class: "govuk-link--no-visited-state") %>
+        <%= govuk_link_to("Bulk add placements prepopulated", new_bulk_update_placements_path(format: :csv), class: "govuk-link--no-visited-state") %>
       </p>
 
-      <p class="govuk-hint">File name: <span class="app-nowrap"><%= organisation_filename %></span></p>
+      <p class="govuk-hint">File name: <span class="app-nowrap"><%= prepopulated_template_filename %></span></p>
+
+      <p class="govuk-body">
+        <%= govuk_link_to("Bulk add placements blank", new_bulk_update_placements_path(format: :csv, blank: true), class: "govuk-link--no-visited-state") %>
+      </p>
+
+      <p class="govuk-hint">File name: <span class="app-nowrap"><%= blank_template_filename %></span></p>
 
       <h2 class="govuk-heading-m">
         2. Add missing details
@@ -52,7 +56,11 @@
       <h3 class="govuk-heading-s">Placement schools</h3>
 
       <p class="govuk-body">
-        In the columns <span class="app-nowrap">‘Placement 1 URN’</span> and <span class="app-nowrap">‘Placement 2 URN’</span> add the school’s URN.
+        You can add a maximum of 5 placements per trainee. Enter the placement's URN in the placement columns.
+      </p>
+
+      <p class="govuk-body">
+        You can add or change trainees placement details by adding them to the end of the CSV file. Adding or changing any information in the CSV will over-write placements that are associated to a school in the Register service. If you leave a space blank in the CSV it will over-write any existing information you have entered
       </p>
 
       <p class="govuk-body">
@@ -61,10 +69,6 @@
 
       <p class="govuk-body">
         You cannot add information in bulk if the school or setting does not have a URN. Add those placements to the trainee record manually.
-      </p>
-
-      <p class="govuk-body">
-        You can add a maximum of 5 placements per trainee.
       </p>
 
       <p class="govuk-body">
