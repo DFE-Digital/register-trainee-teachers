@@ -10,7 +10,6 @@ module BulkUpdate
     subject { described_class.call(recommendations_upload:) }
 
     before do
-      allow(::Trainees::FindDuplicatesOfHesaTrainee).to receive(:call).and_return([])
       allow(::Trainees::UpdateIttDataInTra).to receive(:call)
     end
 

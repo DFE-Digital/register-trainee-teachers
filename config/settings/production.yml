@@ -31,7 +31,6 @@ features:
   integrate_with_trs: true
   dqt_import:
     sync_teachers: true
-  duplicate_checking: true
   school_data_auto_import: true
   maintenance_banner: false
 environment:
