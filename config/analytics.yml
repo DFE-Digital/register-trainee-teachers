@@ -149,6 +149,12 @@ shared:
     - created_at
     - submitted_at
     - updated_at
+  new_groups:
+    - id
+    - description
+    - email
+    - created_at
+    - updated_at
   new_partner_users:
     - id
     - description
