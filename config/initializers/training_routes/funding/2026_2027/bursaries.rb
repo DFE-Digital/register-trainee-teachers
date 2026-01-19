@@ -7,41 +7,31 @@ BURSARIES_2026_TO_2027 = [
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
       AllocationSubjects::COMPUTING,
-      AllocationSubjects::MATHEMATICS,
-      AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::FRENCH_LANGUAGE,
       AllocationSubjects::GERMAN_LANGUAGE,
-      AllocationSubjects::SPANISH_LANGUAGE,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::PHYSICS,
+      AllocationSubjects::SPANISH_LANGUAGE,
     ],
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 5_000,
     allocation_subjects: [
-      AllocationSubjects::ENGLISH,
+      AllocationSubjects::BIOLOGY,
+      AllocationSubjects::GEOGRAPHY,
     ],
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-    amount: 10_000,
-    allocation_subjects: [
-      AllocationSubjects::ART_AND_DESIGN,
-      AllocationSubjects::MUSIC,
-      AllocationSubjects::RELIGIOUS_EDUCATION,
-    ],
-  ),
-  OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-    amount: 26_000,
+    amount: 20_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
-      AllocationSubjects::BIOLOGY,
       AllocationSubjects::DESIGN_AND_TECHNOLOGY,
-      AllocationSubjects::GEOGRAPHY,
-      AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::FRENCH_LANGUAGE,
       AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::MODERN_LANGUAGES,
       AllocationSubjects::SPANISH_LANGUAGE,
     ],
   ),
@@ -59,8 +49,8 @@ BURSARIES_2026_TO_2027 = [
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
     amount: 9_000,
     allocation_subjects: [
+      AllocationSubjects::ENGLISH,
       AllocationSubjects::MATHEMATICS,
-      AllocationSubjects::PHYSICS,
     ],
   ),
 ].freeze
