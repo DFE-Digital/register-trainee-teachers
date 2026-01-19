@@ -1010,7 +1010,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
         end
 
-        context "when '100511' is not present" do
+        context "when course_subject_one is not '100511' (primary teaching)" do
           let(:params) do
             {
               data: data.merge(
@@ -1021,16 +1021,22 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
             }
           end
 
-          it "sets the correct subjects" do
-            trainee = Trainee.last
+          it "returns validation error for course_subject_one" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              "course_subject_one is invalid. It should be `100511` for the course_age_range provided",
+            )
+          end
 
-            expect(trainee.course_subject_one).to eq("primary teaching")
-            expect(trainee.course_subject_two).to eq("biology")
-            expect(trainee.course_subject_three).to eq("historical linguistics")
+          context "with enhanced errors" do
+            let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
+            it "returns validation error for course_subject_one" do
+              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response.parsed_body[:errors]).to eq(
+                "course_subject_one" => ["is invalid. It should be `100511` for the course_age_range provided"],
+              )
+            end
           end
         end
 

@@ -14,11 +14,11 @@
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --load-path=. --quiet-deps"
   },
   "dependencies": {
-    "@hotwired/turbo-rails": "^8.0.20",
+    "@hotwired/turbo-rails": "^8.0.21",
     "@ministryofjustice/frontend": "^8.0.0",
     "accessible-autocomplete": "^3.0.1",
     "govuk-country-and-territory-autocomplete": "^2.0.0",
-    "govuk-frontend": "^5.13.0",
+    "govuk-frontend": "^5.14.0",
     "jquery": "^3.7.1",
     "rails-ujs": "^5.2.8",
     "sass": "^1.97.2",

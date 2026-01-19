@@ -183,6 +183,52 @@ RSpec.describe Api::V20260::TraineeAttributes do
           end
         end
       end
+
+      context "with a primary education phase" do
+        subject { described_class.new(course_max_age: 11) }
+
+        it "is valid when primary teaching" do
+          subject.course_subject_one = "primary teaching"
+
+          subject.validate
+
+          expect(subject.errors[:course_subject_one]).to be_empty
+        end
+
+        it "is invalid when not primary teaching" do
+          subject.course_subject_one = "historical linguistics"
+
+          subject.validate
+
+          expect(subject.errors[:course_subject_one]).to contain_exactly(
+            "is invalid. It should be `100511` for the course_age_range provided",
+          )
+        end
+
+        context "when empty" do
+          before do
+            subject.course_subject_one = ""
+          end
+
+          it {
+            subject.validate
+
+            expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
+          }
+        end
+
+        context "when nil" do
+          before do
+            subject.course_subject_one = nil
+          end
+
+          it {
+            subject.validate
+
+            expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
+          }
+        end
+      end
     end
 
     %i[course_subject_two course_subject_three].each do |course_subject|
