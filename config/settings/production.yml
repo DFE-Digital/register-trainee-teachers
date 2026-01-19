@@ -26,7 +26,6 @@ features:
   google:
     send_data_to_big_query: true
   integrate_with_trs: true
-  duplicate_checking: true
   school_data_auto_import: true
   maintenance_banner: false
 environment:
