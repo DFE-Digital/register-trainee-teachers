@@ -152,6 +152,7 @@ shared:
   new_partner_users:
     - id
     - description
+    - email
     - created_at
     - updated_at
   training_partner_users:

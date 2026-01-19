@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_18_143540) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_19_104658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -743,6 +743,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_18_143540) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
   end
 
   create_table "placements", force: :cascade do |t|

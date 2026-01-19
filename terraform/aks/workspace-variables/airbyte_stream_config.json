@@ -1159,6 +1159,11 @@
           },
           {
             "fieldPath": [
+              "email"
+            ]
+          },
+          {
+            "fieldPath": [
               "created_at"
             ]
           },
