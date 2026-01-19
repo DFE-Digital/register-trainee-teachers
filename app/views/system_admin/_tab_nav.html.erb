@@ -8,7 +8,6 @@
   { name: "Dead jobs", url: dead_jobs_path },
   { name: "Pending TRN", url: pending_trns_path },
   { name: "Pending awards", url: pending_awards_path },
-  ({ name: "Duplicate HESA trainees", url: duplicate_hesa_trainees_path } if FeatureService.enabled?("duplicate_checking")),
   { name: "Duplicate Apply applications", url: duplicate_apply_applications_path },
   ({ name: "Funding", url: funding_uploads_path } if FeatureService.enabled?("funding_uploads")),
 ], size: :compact) %>

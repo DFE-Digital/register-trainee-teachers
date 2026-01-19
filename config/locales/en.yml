@@ -374,8 +374,6 @@ en:
         show: Dead Jobs
       duplicate_apply_applications:
         index: Duplicate Apply applications
-      duplicate_hesa_trainees:
-        index: Duplicate HESA trainees
       funding_uploads:
         index: Upload funding information
         confirmation: File processed successfully
