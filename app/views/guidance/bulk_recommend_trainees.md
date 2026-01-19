@@ -10,7 +10,7 @@ You cannot use this process to record other training outcomes or to change train
 
 Find out [how to withdraw, defer, reinstate or change the status of an individual trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).
 
-You can change other trainee or course details in an individual trainee’s record. 
+You can change other trainee or course details in an individual trainee’s record.
 {/inset-text}
 
 ## How to bulk change trainee status for QTS or EYTS
@@ -28,17 +28,11 @@ Once you have signed into Register, you can [access the bulk status change featu
 
 ### 2. Download a CSV file listing trainees eligible to gain QTS or EYTS
 
-The CSV file includes data for all trainees who have both a teacher reference number (TRN) and either:
-
-- an expected end date in the past 6 months or the next 6 months
-- no expected end date
+The downloaded CSV file will include trainees that have an expected end date in the past 6 months or the next 6 months.
 
 The CSV file does not include trainees who have deferred or withdrawn.
 
-If a trainee’s expected end date is not in the period covered by the CSV file, you can choose to either:
-
-- update their expected end date so that it’s in the past 6 months or the next 6 months
-- change their QTS or EYTS status from within their individual trainee record
+You can change a trainee’s status to having gained QTS or EYTS from within their individual trainee record.
 
 ### 3. Fill in the date when each trainee gained QTS or EYTS
 
