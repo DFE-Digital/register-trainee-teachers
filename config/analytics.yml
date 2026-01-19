@@ -155,6 +155,11 @@ shared:
     - email
     - created_at
     - updated_at
+  new_schools:
+    - id
+    - description
+    - created_at
+    - updated_at
   training_partner_users:
     - id
     - training_partner_id
