@@ -286,6 +286,24 @@ namespace :example_data do
       end
     end
 
+    # Create trainees from each record source to ensure all filter options are visible
+    first_provider = Provider.first
+    if first_provider
+      %i[created_from_api created_from_csv with_apply_application].each do |source_trait|
+        2.times do
+          FactoryBot.create(
+            :trainee,
+            :assessment_only,
+            :submitted_for_trn,
+            source_trait,
+            provider: first_provider,
+            nationalities: [Nationality.first],
+            degrees: [FactoryBot.build(:degree, :uk_degree_with_details)],
+          )
+        end
+      end
+    end
+
     # We don't want all trainees having the same update date on the index page
     Audited.audit_class.find_each do |audit|
       random_date = rand(100).days.ago
@@ -387,6 +405,22 @@ namespace :example_data do
             FormStore.clear_all(trainee.id)
           end
         end
+      end
+    end
+
+    # Create trainees from each record source to ensure all filter options are visible
+    first_provider = Provider.first
+    if first_provider
+      %i[created_from_api created_from_csv with_apply_application].each do |source_trait|
+        FactoryBot.create(
+          :trainee,
+          :assessment_only,
+          :submitted_for_trn,
+          source_trait,
+          provider: first_provider,
+          nationalities: [Nationality.first],
+          degrees: [FactoryBot.build(:degree, :uk_degree_with_details)],
+        )
       end
     end
   end

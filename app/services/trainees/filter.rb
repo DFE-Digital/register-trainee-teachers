@@ -63,6 +63,8 @@ module Trainees
         "manual" => :manual_record,
         "apply" => :with_apply_application,
         "hesa" => :imported_from_hesa,
+        "api" => :api_record,
+        "csv" => :csv_record,
       }
       scoped_trainees = trainees
 

@@ -4,7 +4,7 @@ class TraineeFilter
   AWARD_STATES = %w[qts_recommended qts_awarded eyts_recommended eyts_awarded].freeze
   STATUSES = %w[course_not_yet_started in_training deferred awarded withdrawn].freeze
 
-  RECORD_SOURCES = %w[apply manual dttp hesa].freeze
+  RECORD_SOURCES = %w[apply manual dttp hesa api csv].freeze
 
   def initialize(params:)
     @params = params
