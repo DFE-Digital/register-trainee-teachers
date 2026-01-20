@@ -1,0 +1,41 @@
+metadata:
+  source: "HESA"
+  name: "sex"
+  display_name: "Sex"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: 0
+    name: "male"
+    display_name: "Male"
+    description: ""
+    hesa_codes:
+      - "10"
+  - id: 1
+    name: "female"
+    display_name: "Female"
+    description: ""
+    hesa_codes:
+      - "11"
+  - id: 2
+    name: "other"
+    display_name: "Other"
+    description: ""
+    hesa_codes:
+      - "12"
+  - id: 3
+    name: "prefer_not_to_say"
+    display_name: "Prefer not to say"
+    description: ""
+    hesa_codes:
+      - "96"
+  - id: 4
+    name: "sex_not_provided"
+    display_name: "Sex not provided"
+    description: ""
+    hesa_codes:
+      - "99"
