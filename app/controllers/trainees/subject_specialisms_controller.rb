@@ -44,8 +44,7 @@ module Trainees
       return {} if params[:subject_specialism_form].blank?
 
       params
-        .require(:subject_specialism_form)
-        .permit(course_subject_attribute_name, course_subject_attribute_name => [])
+        .expect(subject_specialism_form: [course_subject_attribute_name, { course_subject_attribute_name => [] }])
         .transform_values(&:first)
     end
 

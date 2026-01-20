@@ -22,7 +22,7 @@ module Trainees
       def placement_detail_params
         return { placement_detail: nil } if params[:placement_detail_form].blank?
 
-        params.require(:placement_detail_form).permit(*PlacementDetailForm::FIELDS)
+        params.expect(placement_detail_form: PlacementDetailForm::FIELDS)
       end
 
       def next_step

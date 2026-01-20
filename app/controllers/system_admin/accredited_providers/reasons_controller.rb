@@ -30,8 +30,7 @@ module SystemAdmin
 
       def update_params
         params
-          .require(:system_admin_change_accredited_provider_form)
-          .permit(:audit_comment, :zendesk_ticket_url)
+          .expect(system_admin_change_accredited_provider_form: %i[audit_comment zendesk_ticket_url])
       end
 
       def relevant_redirect_path

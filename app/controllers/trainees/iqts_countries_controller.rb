@@ -19,7 +19,7 @@ module Trainees
   private
 
     def iqts_countries_params
-      params.require(:iqts_country_form).permit(:iqts_country, :iqts_country_raw)
+      params.expect(iqts_country_form: %i[iqts_country iqts_country_raw])
     end
   end
 end

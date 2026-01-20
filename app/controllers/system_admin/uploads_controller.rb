@@ -47,7 +47,7 @@ module SystemAdmin
     end
 
     def upload_params
-      params.require(:upload).permit(:file).merge(
+      params.expect(upload: [:file]).merge(
         user: current_user,
         name: params.dig(:upload, :file)&.original_filename,
       )

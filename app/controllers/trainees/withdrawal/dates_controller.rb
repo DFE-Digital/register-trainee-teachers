@@ -28,8 +28,7 @@ module Trainees
 
       def form_params
         params
-          .require(form_param_key)
-          .permit(attribute_names, *MultiDateForm::PARAM_CONVERSION.keys)
+          .expect(form_param_key => [attribute_names, *MultiDateForm::PARAM_CONVERSION.keys])
           .transform_keys do |key|
             MultiDateForm::PARAM_CONVERSION.fetch(key, key)
           end

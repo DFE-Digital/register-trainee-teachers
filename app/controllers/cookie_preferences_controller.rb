@@ -20,6 +20,6 @@ class CookiePreferencesController < ApplicationController
 private
 
   def cookie_preferences_params
-    params.require(:cookie_preferences_form).permit(:consent)
+    params.expect(cookie_preferences_form: [:consent])
   end
 end
