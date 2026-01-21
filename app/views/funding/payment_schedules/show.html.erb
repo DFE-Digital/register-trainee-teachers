@@ -5,7 +5,7 @@
 <%- if @payment_schedule_view.any? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-3">
-      <h1 class="govuk-heading-l"><%= t('funding.payment_schedule.heading', start_year: @start_year, end_year: @end_year) %></h1>
+      <h1 class="govuk-heading-m"><%= t('funding.payment_schedule.heading', start_year: @start_year, end_year: @end_year) %></h1>
       <p class="govuk-body"><%= t('funding.payment_schedule.last_updated_at', date: @payment_schedule_view.last_updated_at) %></p>
       <p class="govuk-body app-export-link-container">
         <span class="no-wrap">
@@ -21,7 +21,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <table id="payments" class="govuk-table">
-        <caption class="govuk-table__caption govuk-table__caption--m govuk-!-margin-bottom-3">
+        <caption class="govuk-table__caption govuk-caption-s govuk-!-margin-bottom-3">
           <%= t('funding.payment_schedule.payments_table_caption', month_and_year: Time.zone.now.strftime("%B %Y")) %>
         </caption>
         <thead class="govuk-table__head">
@@ -43,7 +43,7 @@
       </table>
       <%- if @payment_schedule_view.predicted_payments.any? %>
         <table id="predicted-payments" class="govuk-table">
-          <caption class="govuk-table__caption govuk-table__caption--m govuk-!-margin-bottom-3">
+          <caption class="govuk-table__caption govuk-caption-s govuk-!-margin-bottom-3">
             <%= t('funding.payment_schedule.predicted_payments_table_caption') %>
           </caption>
           <thead class="govuk-table__head">
@@ -64,10 +64,14 @@
           </tbody>
         </table>
       <%- end -%>
-      <h2 class="govuk-heading-m"><%= t('funding.payment_schedule.payment_breakdown') %></h2>
+      <h2 class="govuk-heading-s"><%= t('funding.payment_schedule.payment_breakdown') %></h2>
       <%= govuk_accordion do |accordion|
         @payment_schedule_view.payment_breakdown.each do |month_breakdown|
-          accordion.with_section(heading_text: month_breakdown.title, expanded: month_breakdown.last_actual_month?) do
+          accordion.with_section(
+            heading_text: month_breakdown.title,
+            expanded: month_breakdown.last_actual_month?,
+            classes: ["payment-schedule-accordion"],
+          ) do
             render partial: "funding/payment_schedules/month_breakdown", locals: { month_breakdown: month_breakdown }
           end
         end

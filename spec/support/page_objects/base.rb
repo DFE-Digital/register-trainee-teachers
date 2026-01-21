@@ -56,7 +56,7 @@ module PageObjects
   class ServiceUpdates < PageObjects::Base
     set_url "/service-updates"
 
-    element :page_heading, ".govuk-heading-xl"
+    element :page_heading, ".govuk-heading-l"
   end
 
   class Guidance < PageObjects::Base
@@ -68,6 +68,6 @@ module PageObjects
   class Cookies < PageObjects::Base
     set_url "/cookies"
 
-    element :page_heading, ".govuk-heading-xl"
+    element :page_heading, ".govuk-heading-l"
   end
 end

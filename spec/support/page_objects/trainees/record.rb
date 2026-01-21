@@ -9,7 +9,7 @@ module PageObjects
       element :personal_details_tab, "a", text: "Personal details and education"
       element :admin_tab, "a", text: "Admin"
 
-      element :trainee_name, ".govuk-heading-xl"
+      element :trainee_name, ".govuk-heading-l"
       element :trn_status, ".govuk-tag.trainee-status", match: :first
 
       element :add_degree, ".degree-details .govuk-button"

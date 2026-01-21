@@ -3,7 +3,7 @@
 module PageObjects
   module Trainees
     class Base < PageObjects::Base
-      element :page_heading, ".govuk-heading-xl"
+      element :page_heading, ".govuk-heading-l"
 
       element :add_trainee_link, "a", text: "Create a trainee record"
 
