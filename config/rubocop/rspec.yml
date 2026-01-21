@@ -57,3 +57,6 @@ RSpec/NoExpectationExample:
 # This enables `let` names like `thing1` and `thing2`
 RSpec/IndexedLet:
   Enabled: false
+
+RSpec/Output:
+  Enabled: false
