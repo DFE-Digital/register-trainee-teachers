@@ -36,7 +36,7 @@ describe TraineeAbout::View do
       let(:current_user) { create(:user, :system_admin) }
 
       it "renders the correct text on the button" do
-        expect(rendered_content).to have_text("Recommend trainee for QTS")
+        expect(rendered_content).to have_text("Change status of trainee")
       end
     end
 
@@ -46,7 +46,7 @@ describe TraineeAbout::View do
       let(:trainee) { create(:trainee, :trn_received, early_years_trainees.sample) }
 
       it "renders the correct text on the button" do
-        expect(rendered_content).to have_text("Recommend trainee for EYTS")
+        expect(rendered_content).to have_text("Change status of trainee")
       end
     end
   end

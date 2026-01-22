@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Survey
-  # Service for sending QTS award surveys to trainees
+  # Service for sending QTS surveys to trainees
   class Award < Base
     delegate :awarded_at, to: :trainee
 
@@ -24,7 +24,7 @@ module Survey
     end
 
     def subject
-      "QTS Award Survey"
+      "QTS Survey"
     end
 
     def embedded_data_for_distribution

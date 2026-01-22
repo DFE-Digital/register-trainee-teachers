@@ -148,11 +148,11 @@ feature "Recording a training outcome" do
   end
 
   def then_i_dont_see_the_recommend_for_qts_button
-    expect(record_page).not_to have_content("Recommend trainee for QTS")
+    expect(record_page).not_to have_content("Change status of trainee")
   end
 
   def and_i_see_additional_details_have_to_be_provided(*details)
-    expect(record_page).to have_content("You need to give additional details before you can recommend the trainee for QTS")
+    expect(record_page).to have_content("You need to give additional details before you can change status of the trainee for QTS")
     expect(record_page).to have_content("You need to enter:")
 
     details.each do |detail|

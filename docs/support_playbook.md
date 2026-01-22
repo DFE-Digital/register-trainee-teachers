@@ -96,7 +96,7 @@ status: 400, body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1",
 ```
 
 * There might be a trainee state mismatch here between TRS and Register
-* We’ve seen this error when a trainee has been withdrawn on TRS and awarded on Register
+* We’ve seen this error when a trainee has been withdrawn on TRS and awarded QTS on Register
 * We have some known examples of trainees like this so it’s worth checking with our support team to see if there are existing comms about the trainee
 * In this case you might need to check with the provider what the state of the record should be
 
@@ -104,8 +104,8 @@ status: 400, body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1",
 status: 400, body: {"title":"Teacher has no incomplete ITT record", "status":400, "errorCode":10005}
 ```
 
-* If this error came from the award job, then the trainee might be stuck in recommended for award state
-* If everything matches on TRS’s side (trainee details, the provider) then you may be able to just award the trainee on Register’s side
+* If this error came from the changing status for QTS job, then the trainee might be stuck in change status for gaining QTS state
+* If everything matches on TRS’s side (trainee details, the provider) then you may be able to just change the trainees’ QTS status on Register’s side
 * If any doubt then check with the provider
 * We’ve also seen this error on the withdraw job - cross-reference with TRS and check with provider if necessary to see what state the trainee should be in
 
@@ -163,9 +163,9 @@ status: 503, body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.6.4",
 
 ## Incorrectly awarded trainee
 
-If a trainee has incorrectly been recommended for award in register this will also impact TRS.
+If a trainee has incorrectly had their status changed for QTS or EYTS in register this will also impact TRS.
 
-In this scenario we must also contact TRS to fix the trainee award status and update the trainee status in register.
+In this scenario we must also contact TRS to fix the trainee status change and update the trainee status in register.
 
 ```ruby
 trainee = Trainee.find_by(slug: "limax")

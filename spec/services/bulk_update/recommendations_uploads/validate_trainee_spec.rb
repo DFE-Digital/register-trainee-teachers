@@ -57,7 +57,7 @@ module BulkUpdate
             end
 
             describe "#messages" do
-              it { expect(service.messages).to eql ["The trainee has withdrawn status - you can only recommend trainees with TRN received status"] }
+              it { expect(service.messages).to eql ["The trainee has withdrawn status - you can only change status of trainees with TRN received status"] }
             end
 
             describe "#trainee" do
@@ -73,7 +73,7 @@ module BulkUpdate
             end
 
             describe "#messages" do
-              it { expect(service.messages).to eql ["The trainee has QTS recommended status - you can only recommend trainees with TRN received status"] }
+              it { expect(service.messages).to eql ["The trainee has QTS recommended status - you can only change status of trainees with TRN received status"] }
             end
 
             describe "#trainee" do
@@ -89,7 +89,7 @@ module BulkUpdate
             end
 
             describe "#messages" do
-              it { expect(service.messages).to eql ["The trainee has pending TRN status - you can only recommend trainees with TRN received status"] }
+              it { expect(service.messages).to eql ["The trainee has pending TRN status - you can only change status of trainees with TRN received status"] }
             end
 
             describe "#trainee" do
@@ -202,7 +202,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["2 trainee records have the same TRN but none have TRN received status - you can only recommend trainees with TRN received status"] }
+            it { expect(service.messages).to eql ["2 trainee records have the same TRN but none have TRN received status - you can only change status of trainees with TRN received status"] }
           end
 
           describe "#trainee" do

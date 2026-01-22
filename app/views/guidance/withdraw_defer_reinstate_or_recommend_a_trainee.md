@@ -1,12 +1,12 @@
 ---
-page_title: Withdraw, defer, reinstate or recommend a trainee for teaching standards
-title: Withdraw, defer, reinstate or recommend a trainee for QTS or EYTS
+page_title: Withdraw, defer, reinstate or change status of a trainee for teaching standards
+title: Withdraw, defer, reinstate or change status of a trainee for QTS or EYTS
 ---
 
 You must use Register trainee teachers (Register) to:
 
 - withdraw a trainee from teacher training
-- recommend a trainee for qualified teacher status (QTS) or early years teacher status (EYTS)
+- tell us if a trainee had gained qualified teacher status (QTS) or early years teacher status (EYTS)
 
 ## Withdraw a trainee from teacher training
 
@@ -32,14 +32,12 @@ You can give more detail about why the trainee deferred, helping the Department 
 
 You cannot defer or reinstate multiple trainees at the same time in Register. You can do so using the Register API if you’re an accredited HEI provider.
 
-## Recommend a trainee for QTS or EYTS
+## Change the status of a trainee who has gained QTS or EYTS
 
-You should recommend a trainee for QTS or EYTS as soon as they meet the teaching standards. They’ll need their teaching status certificate to apply for jobs at state schools.
+You should change a trainee’s status for gaining QTS or EYTS as soon as they meet the requirement. They’ll need their teaching status certificate to apply for jobs at state schools.
 
-You do not need to record in Register when a trainee got a PGCE or completed an undergraduate course. You just need to record when they met the standards for QTS or EYTS.
+You do not need to record in Register when a trainee got a PGCE or completed an undergraduate course. You just need to record when they gained QTS or EYTS.
 
-You can sign into Register to recommend a trainee for QTS or EYTS from within their trainee record. You can also recommend multiple trainees at the same time. Find out [how to bulk recommend trainees for QTS or EYTS](/guidance/bulk-recommend-trainees).
+You can sign into Register to change a trainee’s QTS or EYTS status from within their trainee record. You can also change the status of multiple trainees at the same time. Find out [how to change trainee status for QTS or EYTS in bulk](/guidance/bulk-recommend-trainees).
 
-After you recommend a trainee for QTS or EYTS, the Teaching Regulation Agency (TRA) will award them with teaching status within 3 working days.
-
-The DfE will later send an email to the trainees to tell them that their certificates are available to download from the Access your Teacher Qualifications service. 
+The DfE will send an email within 3-5 working days to the trainees telling them that their certificates are available to download from the Access your Teacher Qualifications service. 
