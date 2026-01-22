@@ -137,7 +137,7 @@ runs:
     - name: Generate example data
       shell: bash
       if: inputs.environment == 'review'
-      run: kubectl -n ${{ env.namespace }} exec deployment/register-${APP_NAME} -- /bin/sh -c "cd /app && bundle exec rails db:seed example_data:generate"
+      run: kubectl -n ${{ env.namespace }} exec deployment/register-${APP_NAME} -- /bin/sh -c "cd /app && echo 'Not loading review seeds'"
 
     - name: Delete redis queues for productiondata
       shell: bash
