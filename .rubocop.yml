@@ -6,7 +6,6 @@ require:
 
 plugins:
   - rubocop-capybara
-
   - rubocop-factory_bot
   - rubocop-rails
   - rubocop-rspec
@@ -102,15 +101,6 @@ Style/OpenStructUse:
     - "db/data/**/*"
     - "spec/**/*"
 
-Rails/UnknownEnv:
-  Environments:
-    - productiondata
-    - sandbox
-    - production
-    - development
-    - test
-    - review
-
 Metrics/CollectionLiteralLength:
   Exclude:
     - "app/lib/code_sets/**/*"
@@ -118,41 +108,10 @@ Metrics/CollectionLiteralLength:
     - "config/initializers/subjects/**/*"
     - "db/data/**/*"
 
-Rails/FindEach:
-  Exclude:
-    - "spec/services/trainees/create_from_apply_spec.rb"
-    - "db/data/20230612133512_backfill_disability_uuids_from_dfe_reference_gem.rb"
-
-Rails/RedundantActiveRecordAllMethod:
-  Exclude:
-    - "spec/models/service_update_spec.rb"
-    - "spec/lib/dqt/params/update_spec.rb"
-    - "app/lib/dfe_reference/degrees_query.rb"
-    - "app/services/degrees/fix_to_match_reference_data.rb"
-    - "spec/factories/degrees.rb"
-    - "spec/lib/dfe_reference/degrees_query_spec.rb"
-    - "spec/lib/dqt/params/trn_request_spec.rb"
-    - "spec/lib/dqt/params/update_spec.rb"
-    - "spec/models/degree_spec.rb"
-
-Rails/FilePath:
-  Exclude:
-    - "spec/data_migrations/**/*"
-    - "spec/models/api/**/*"
-    - "spec/services/api/**/*"
-    - "spec/requests/api/**/*"
-    - "spec/serializers/api/**/*"
-
 RSpec/SpecFilePathFormat:
   Exclude:
     - "spec/data_migrations/**/*"
-    - "spec/models/api/**/*"
-    - "spec/services/api/**/*"
-    - "spec/services/bulk_update/add_trainees/**/*"
-    - "spec/forms/bulk_update/v20*/**/*"
-    - "spec/models/reports/v20*/**/*"
-    - "spec/requests/api/**/*"
-    - "spec/serializers/api/**/*"
+    - "spec/**/v20*/**/*"
 
 Capybara/NegationMatcher:
   EnforcedStyle: not_to
