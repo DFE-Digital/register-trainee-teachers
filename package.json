@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "type": "module",
   "scripts": {
@@ -45,5 +45,5 @@
     "extends": "stylelint-config-gds/scss"
   },
   "license": "MIT",
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@4.9.1"
 }
