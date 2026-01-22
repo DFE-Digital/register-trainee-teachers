@@ -1,3 +1,9 @@
+# This template builds 3 images, to optimise caching:
+# rails-build: builds gems and node modules
+# middleman-build: builds the Middleman static docs site
+# rails-app: runs the actual app
+
+# Build rails-build image
 FROM ruby:3.4.2-alpine3.20 AS rails-build
 
 ENV BUNDLE_PATH=/usr/local/bundle
@@ -5,12 +11,14 @@ ENV APP_HOME=/app
 
 WORKDIR $APP_HOME
 
+# Add the timezone (rails-build image) as it's not configured by default in Alpine
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
 
 COPY .tool-versions Gemfile Gemfile.lock ./
 
+# Install gems and remove gem cache
 RUN apk add --update --no-cache --virtual build-dependencies \
     build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev && \
     apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib && \
@@ -24,9 +32,15 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependencies
 
+# Install corepack and enable yarn
+RUN yarn global add corepack
+RUN corepack enable && corepack prepare yarn@4.9.1 --activate
+
+# Install node packages defined in package.json
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
 
+# Copy all files to /app (except what is defined in .dockerignore)
 COPY . .
 
 # Precompile bootsnap code for faster boot times
@@ -37,6 +51,7 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
 ###
 
+# Build Middleman docs image
 FROM ruby:3.4.2-alpine3.20 AS middleman-build
 
 ENV BUNDLE_PATH=/usr/local/bundle
@@ -70,7 +85,8 @@ RUN bundle exec rake tech_docs:build
 
 ###
 
-FROM ruby:3.4.2-alpine3.20
+# Build final rails-app image
+FROM ruby:3.4.2-alpine3.20 AS rails-app
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
 
