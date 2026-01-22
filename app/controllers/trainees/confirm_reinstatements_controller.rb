@@ -12,6 +12,9 @@ module Trainees
       if (reinstatement_form.save! && itt_end_date_form.save!) || trainee.starts_course_in_the_future?
         trainee.trn.present? ? trainee.receive_trn! : trainee.submit_for_trn!
         flash[:success] = I18n.t("flash.trainee_reinstated")
+
+        Trainees::UpdateIttDataInTra.call(trainee:)
+
         redirect_to(trainee_path(trainee))
       end
     end

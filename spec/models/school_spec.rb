@@ -6,7 +6,7 @@ describe School do
   describe "associations" do
     it { is_expected.to have_many(:funding_payment_schedules) }
     it { is_expected.to have_many(:funding_trainee_summaries) }
-    it { is_expected.to have_many(:lead_partner_trainees) }
+    it { is_expected.to have_many(:training_partner_trainees) }
     it { is_expected.to have_many(:employing_school_trainees) }
   end
 

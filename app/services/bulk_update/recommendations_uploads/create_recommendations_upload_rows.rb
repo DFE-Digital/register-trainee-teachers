@@ -52,7 +52,7 @@ module BulkUpdate
           age_range: row.age_range,
           first_names: row.first_names,
           last_names: row.last_names,
-          lead_partner: row.lead_partner,
+          training_partner: row.training_partner,
           phase: row.phase,
           qts_or_eyts: row.qts_or_eyts,
           route: row.route,

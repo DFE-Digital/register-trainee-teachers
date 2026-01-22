@@ -57,6 +57,7 @@ module Trainees
       end
     end
 
+    # rubocop:disable Rails/StrongParametersExpect
     def degree_params
       params.require(:degree).permit(DegreeForm::FIELDS.excluding(:slug, *DegreeForm::AUTOCOMPLETE_FIELDS))
     end
@@ -64,6 +65,7 @@ module Trainees
     def autocomplete_params
       params.require(:degree).permit(DegreeForm::AUTOCOMPLETE_FIELDS)
     end
+    # rubocop:enable Rails/StrongParametersExpect
 
     def set_degrees_form
       @degrees_form = DegreesForm.new(trainee)

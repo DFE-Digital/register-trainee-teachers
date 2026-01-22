@@ -84,7 +84,7 @@ feature "bulk add trainees" do
 
   context "when the feature flag is on", feature_bulk_add_trainees: true do
     context "when the User is not a Provider" do
-      let(:user) { create(:user, :with_lead_partner_organisation) }
+      let(:user) { create(:user, :with_training_partner_organisation) }
 
       before do
         given_i_am_authenticated(user:)
@@ -397,11 +397,11 @@ feature "bulk add trainees" do
         then_i_can_see_the_new_trainees_with_a_disability
       end
 
-      scenario "the bulk add trainees page is visible and I upload a file with lead partners" do
-        when_lead_partners_exist
+      scenario "the bulk add trainees page is visible and I upload a file with training partners" do
+        when_training_partners_exist
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        and_i_attach_a_valid_file_with_lead_partners
+        and_i_attach_a_valid_file_with_training_partners
         and_i_click_the_upload_button
         and_i_click_on_continue_button
         and_the_send_csv_processing_first_stage_email_has_been_sent
@@ -722,10 +722,10 @@ private
     end
   end
 
-  def when_lead_partners_exist
-    create(:lead_partner, :hei, name: "University of Sussex", urn: 133795)
-    create(:lead_partner, :hei, name: "University of Cumbria", urn: 135398)
-    create(:lead_partner, :scitt, name: "Leeds SCITT", urn: 133838)
+  def when_training_partners_exist
+    create(:training_partner, :hei, name: "University of Sussex", urn: 133795)
+    create(:training_partner, :hei, name: "University of Cumbria", urn: 135398)
+    create(:training_partner, :scitt, name: "Leeds SCITT", urn: 133838)
   end
 
   def when_an_upload_exist
@@ -928,53 +928,53 @@ private
   def and_i_attach_a_file_with_a_mixed_encoding_in_the_headers
     filename = "mixed_headers_encoding.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
   def when_i_attach_a_file_with_a_mixed_encoding_in_the_rows
     filename = "mixed_rows_encoding.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
   def when_i_attach_a_valid_file
     filename = "five_trainees.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
   def when_i_attach_a_file_with_an_unparseable_date
     filename = "five_trainees_with_unparseable_date.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
   def and_i_attach_a_valid_file_with_placements
     filename = "five_trainees_with_placement.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
   def and_i_attach_a_valid_file_with_a_degree
     filename = "five_trainees_with_degree.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
   def and_i_attach_a_valid_file_with_a_disability
     filename = "five_trainees_with_disability.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
-  def and_i_attach_a_valid_file_with_lead_partners
-    filename = "three_trainees_with_lead_partners.csv"
+  def and_i_attach_a_valid_file_with_training_partners
+    filename = "three_trainees_with_training_partners.csv"
 
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/v2026_0/#{filename}"), filename)
   end
 
   def when_i_attach_a_file_with_invalid_rows
-    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_failed.csv").read
+    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2026_0/five_trainees_with_failed.csv").read
     and_i_attach_a_file(csv)
   end
 
@@ -1277,10 +1277,10 @@ private
   end
 
   def when_an_unexpected_duplicate_error_is_setup
-    file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv")
+    file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2026_0/five_trainees.csv")
     row  = CSV.read(file, headers: true)[-1]
 
-    BulkUpdate::AddTrainees::ImportRow.call(
+    BulkUpdate::AddTrainees::V20260::ImportRow.call(
       row: row,
       current_provider: BulkUpdate::TraineeUpload.last.provider,
     )
@@ -1329,11 +1329,11 @@ private
   end
 
   def file_with_two_failed_content
-    file_content("bulk_update/trainee_uploads/failed_with_failed.csv")
+    file_content("bulk_update/trainee_uploads/v2026_0/failed_with_failed.csv")
   end
 
   def empty_file_with_headers_content
-    file_content("bulk_update/trainee_uploads/empty_file_with_headers.csv")
+    file_content("bulk_update/trainee_uploads/v2026_0/empty_file_with_headers.csv")
   end
 
   def and_i_click_on_continue_button

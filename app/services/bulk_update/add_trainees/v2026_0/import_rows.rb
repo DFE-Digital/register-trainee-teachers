@@ -4,7 +4,7 @@ module BulkUpdate
   module AddTrainees
     module V20260
       class ImportRows < BulkUpdate::AddTrainees::ImportRows
-        EMPTY_CSV_TEMPLATE_PATH = "/csv/bulk_create_trainee.csv"
+        EMPTY_CSV_TEMPLATE_PATH = "/csv/v2026_0/bulk_create_trainee.csv"
 
         TRAINEE_HEADERS = {
           "Provider Trainee ID" => "provider_trainee_id",
@@ -39,7 +39,7 @@ module BulkUpdate
           "ITT End Date" => "itt_end_date",
           "Course Age Range" => "course_age_range",
           "Course Year" => "course_year",
-          "Lead Partner URN" => "lead_partner_urn",
+          "Training Partner URN" => "training_partner_urn",
           "Employing School URN" => "employing_school_urn",
           "Trainee Start Date" => "trainee_start_date",
           "PG Apprenticeship Start Date" => "pg_apprenticeship_start_date",

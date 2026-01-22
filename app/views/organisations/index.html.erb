@@ -23,7 +23,7 @@
         <%- @training_partners.each do |training_partner| -%>
           <li class="govuk-!-margin-bottom-2">
             <%= govuk_link_to training_partner.name,
-              organisation_path(id: training_partner.id, type: "LeadPartner"),
+              organisation_path(id: training_partner.id, type: "TrainingPartner"),
               class: "training-partner-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
           </li>
         <%- end -%>

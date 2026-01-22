@@ -12,10 +12,10 @@ describe TraineePersonalDetails::View do
     allow(TraineePolicy).to receive(:new).and_return(policy)
   end
 
-  context "with a lead partner user" do
+  context "with a training partner user" do
     let(:current_user) do
       UserWithOrganisationContext.new(
-        user: create(:user, :with_lead_partner_organisation), session: {},
+        user: create(:user, :with_training_partner_organisation), session: {},
       )
     end
 

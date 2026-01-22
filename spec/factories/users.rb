@@ -25,21 +25,21 @@ FactoryBot.define do
 
     trait :with_multiple_organisations do
       providers { [build(:provider), build(:provider)] }
-      lead_partners { [build(:lead_partner, :school), build(:lead_partner, :school)] }
+      training_partners { [build(:training_partner, :school), build(:training_partner, :school)] }
     end
 
-    trait :with_lead_partner_organisation do
+    trait :with_training_partner_organisation do
       transient do
-        lead_partner_type { :school }
+        training_partner_type { :school }
       end
 
       providers { [] }
-      lead_partners { [build(:lead_partner, lead_partner_type)] }
+      training_partners { [build(:training_partner, training_partner_type)] }
     end
 
     trait :with_no_organisation_in_db do
       providers { [] }
-      lead_partners { [] }
+      training_partners { [] }
     end
 
     trait :with_otp_secret do

@@ -31,7 +31,7 @@ module BulkUpdate
 
         clear_placements!(trainees.first)
 
-        import_rows(rows)
+        import_rows(rows, trainees.first)
       end
 
       def find_trainees(trn)
@@ -59,9 +59,9 @@ module BulkUpdate
         trainee.placements.with_school.destroy_all
       end
 
-      def import_rows(rows)
+      def import_rows(rows, trainee)
         rows.each do |row|
-          ImportRow.call(row)
+          ImportRow.call(row, trainee)
         rescue StandardError => e
           row.failed!
           row.row_errors.create(message: "runtime failure: #{e.message}")

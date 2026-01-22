@@ -20,15 +20,23 @@ describe Exports::BulkPlacementExport, type: :model do
         "Trainee ITT start date",
         "Placement 1 URN",
         "Placement 2 URN",
+        "Placement 3 URN",
+        "Placement 4 URN",
+        "Placement 5 URN",
       ]
     end
+
+    let(:placement_guidance) { "If you do not know the placement school's URN, leave the cell empty." }
 
     let(:expected_guidance) do
       [
         "Do not change this column",
         "Do not change this column",
-        "The URN of the trainee’s first placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
-        "The URN of the trainee’s second placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
+        "The URN of the trainee's first placement school.\n#{placement_guidance}",
+        "The URN of the trainee's second placement school.\n#{placement_guidance}",
+        "The URN of the trainee's third placement school.\n#{placement_guidance}",
+        "The URN of the trainee's fourth placement school.\n#{placement_guidance}",
+        "The URN of the trainee's fifth placement school.\n#{placement_guidance}",
       ]
     end
 

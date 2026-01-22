@@ -5,9 +5,9 @@ module ApplicationRecordCard
     [true, false].each do |system_admin|
       suffice = system_admin ? "_as_system_admin" : ""
       user = if system_admin
-               Struct.new(:system_admin?, :lead_partner?).new(true, false)
+               Struct.new(:system_admin?, :training_partner?).new(true, false)
              else
-               Struct.new(:system_admin?, :lead_partner?).new(false, false)
+               Struct.new(:system_admin?, :training_partner?).new(false, false)
              end
       define_method "single_card#{suffice}" do
         render(ApplicationRecordCard::View.new(record: mock_trainee, current_user: user))

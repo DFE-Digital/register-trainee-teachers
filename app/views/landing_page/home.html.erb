@@ -5,14 +5,14 @@
     <% if current_user.organisation %>
       <span class="govuk-caption-l"><%= current_user.organisation.name_and_code %></span>
     <% end %>
-    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
   </div>
 </div>
 
-<% unless lead_partner_user? %>
+<% unless training_partner_user? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
+      <h2 class="govuk-heading-m"><%= t(".draft_heading") %></h2>
       <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
         <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
           <li>
@@ -50,7 +50,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-l"><%= t(".registered_heading") %></h2>
+    <h2 class="govuk-heading-m"><%= t(".registered_heading") %></h2>
   </div>
   <%= render "badges" %>
 </div>
@@ -61,7 +61,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-m">
       <%= t(".available_to_do_heading") %>
     </h2>
   </div>
@@ -74,7 +74,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h2 class="govuk-heading-l">How to use this service</h2>
+    <h2 class="govuk-heading-m">How to use this service</h2>
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to(
@@ -108,7 +108,7 @@
 
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
 
-    <h2 class="govuk-heading-l">News and feedback</h2>
+    <h2 class="govuk-heading-m">News and feedback</h2>
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to("View news and updates",

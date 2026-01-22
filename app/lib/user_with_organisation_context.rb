@@ -36,13 +36,13 @@ class UserWithOrganisationContext < SimpleDelegator
 
     return if session[:current_organisation].blank?
 
-    lead_partner_or_provider
+    training_partner_or_provider
   end
 
   def multiple_organisations?
     return false unless FeatureService.enabled?(:user_can_have_multiple_organisations)
 
-    (user.lead_partners + user.providers).many?
+    (user.training_partners + user.providers).many?
   end
 
   def organisation?
@@ -57,14 +57,14 @@ class UserWithOrganisationContext < SimpleDelegator
     provider? && organisation.accredited?
   end
 
-  def lead_partner?
-    organisation.is_a?(LeadPartner)
+  def training_partner?
+    organisation.is_a?(TrainingPartner)
   end
 
   def no_organisation?
     return false unless FeatureService.enabled?(:user_can_have_multiple_organisations)
 
-    user.providers.none? && user.lead_partners.none? && !user.system_admin?
+    user.providers.none? && user.training_partners.none? && !user.system_admin?
   end
 
   def hei_provider?
@@ -75,10 +75,10 @@ class UserWithOrganisationContext < SimpleDelegator
     accredited_provider? && organisation.hei?
   end
 
-  # HEI Lead Partners are all previously-accredited Providers. They should be signed in as
+  # HEI Training Partners are all previously-accredited Providers. They should be signed in as
   # their previously-accredited Provider in order to use bulk update trainee uploads.
-  def accredited_hei_provider_or_hei_lead_partner?
-    accredited_hei_provider? || LeadPartner.hei.find_by(provider: organisation).present?
+  def accredited_hei_provider_or_hei_training_partner?
+    accredited_hei_provider? || TrainingPartner.hei.find_by(provider: organisation).present?
   end
 
 private
@@ -93,24 +93,24 @@ private
     session[:current_organisation][:id]
   end
 
-  def lead_partner_or_provider
-    @_lead_partner_or_provider ||= {
-      "LeadPartner" => user.lead_partners.find_by(id: organisation_id),
+  def training_partner_or_provider
+    @_training_partner_or_provider ||= {
+      "TrainingPartner" => user.training_partners.find_by(id: organisation_id),
       "Provider" => user.providers.find_by(id: organisation_id),
     }[organisation_type]
   end
 
   def single_organisation
-    if user_only_has_lead_partner? &&
+    if user_only_has_training_partner? &&
         !FeatureService.enabled?(:user_can_have_multiple_organisations)
 
       raise(Pundit::NotAuthorizedError)
     end
 
-    user.providers.first || user.lead_partners.first
+    user.providers.first || user.training_partners.first
   end
 
-  def user_only_has_lead_partner?
-    !user.system_admin && user.providers.empty? && user.lead_partners.present?
+  def user_only_has_training_partner?
+    !user.system_admin && user.providers.empty? && user.training_partners.present?
   end
 end

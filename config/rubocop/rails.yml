@@ -92,14 +92,14 @@ Rails/WhereNot:
 
 Rails/UnknownEnv:
   Environments:
-    - production
     - development
     - test
-    - pentest
-    - rollover
-    - qa_pass
-    - research
     - review
+    - staging
+    - qa
+    - sandbox
+    - productiondata
+    - production
 
 Rails/CreateTableWithTimestamps:
   Exclude:
@@ -108,3 +108,28 @@ Rails/CreateTableWithTimestamps:
 Rails/Exit:
   Exclude:
     - spec/**/*
+
+Rails/FindEach:
+  Exclude:
+    - "spec/services/trainees/create_from_apply_spec.rb"
+    - "db/data/20230612133512_backfill_disability_uuids_from_dfe_reference_gem.rb"
+
+Rails/RedundantActiveRecordAllMethod:
+  Exclude:
+    - "spec/models/service_update_spec.rb"
+    - "spec/lib/dqt/params/update_spec.rb"
+    - "app/lib/dfe_reference/degrees_query.rb"
+    - "app/services/degrees/fix_to_match_reference_data.rb"
+    - "spec/factories/degrees.rb"
+    - "spec/lib/dfe_reference/degrees_query_spec.rb"
+    - "spec/lib/dqt/params/trn_request_spec.rb"
+    - "spec/lib/dqt/params/update_spec.rb"
+    - "spec/models/degree_spec.rb"
+
+Rails/FilePath:
+  Exclude:
+    - "spec/data_migrations/**/*"
+    - "spec/models/api/**/*"
+    - "spec/services/api/**/*"
+    - "spec/requests/api/**/*"
+    - "spec/serializers/api/**/*"

@@ -9,12 +9,12 @@
 #  csv_row_number                        :integer
 #  first_names                           :string
 #  last_names                            :string
-#  lead_partner                          :string
 #  phase                                 :string
 #  qts_or_eyts                           :string
 #  route                                 :string
 #  standards_met_at                      :date
 #  subject                               :string
+#  training_partner                      :string
 #  trn                                   :string
 #  created_at                            :datetime         not null
 #  updated_at                            :datetime         not null

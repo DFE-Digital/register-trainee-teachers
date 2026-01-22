@@ -4,11 +4,11 @@ require "rails_helper"
 
 describe Trainees::TrainingPartnersController do
   describe "#update" do
-    let(:lead_partner) { create(:lead_partner, :school) }
+    let(:training_partner) { create(:training_partner, :school) }
 
     let(:params) do
       {
-        lead_partner_id: lead_partner.id,
+        training_partner_id: training_partner.id,
       }
     end
 

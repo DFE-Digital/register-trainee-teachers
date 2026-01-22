@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.4.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 7.2"
+gem "rails", "~> 8.0"
 gem "sprockets-rails"
 gem "turbo-rails"
 
@@ -14,7 +14,7 @@ gem "turbo-rails"
 gem "pg", "~> 1.6"
 
 # Use Puma as the app server
-gem "puma", "~> 7.1"
+gem "puma", "~> 7.2"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -64,7 +64,7 @@ gem "uk_postcode"
 
 gem "config", "~> 5.6"
 
-gem "httparty", "~> 0.23"
+gem "httparty", "~> 0.24"
 
 # Wrap jsonb columns with activemodel-like classes
 gem "store_model", "~> 4.4"
@@ -123,7 +123,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.8.6"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.12"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.13"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
@@ -186,7 +186,7 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "listen", ">= 3.0.5", "< 3.10"
+  gem "listen", ">= 3.0.5", "< 3.11"
   # gem "web-console", ">= 3.3.0"
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

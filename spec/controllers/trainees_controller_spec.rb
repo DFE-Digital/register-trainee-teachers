@@ -63,8 +63,8 @@ describe TraineesController do
         end
       end
 
-      context "with a lead partner user" do
-        let(:user) { build_current_user(user: create(:user, :with_lead_partner_organisation)) }
+      context "with a training partner user" do
+        let(:user) { build_current_user(user: create(:user, :with_training_partner_organisation)) }
 
         it "returns a forbidden response" do
           enable_features(:user_can_have_multiple_organisations)

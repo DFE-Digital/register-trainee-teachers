@@ -136,7 +136,14 @@ locals {
       REDIS_CACHE_URL                                = module.redis-cache.url
       SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCESS_KEY = module.azure.storage_account_key
     },
-    var.snapshot_databases_to_deploy == 1 ? { ANALYSIS_DATABASE_URL = module.postgres_snapshot[0].url } : {}
+    var.snapshot_databases_to_deploy == 1 ? { ANALYSIS_DATABASE_URL = module.postgres_snapshot[0].url } : {},
+    {
+        AIRBYTE_CONFIGURATION = var.airbyte_enabled ? jsonencode({
+         SOURCE_ID      = module.airbyte[0].airbyte_source_id
+         DESTINATION_ID = module.airbyte[0].airbyte_destination_id
+         CONNECTION_ID  = module.airbyte[0].airbyte_connection_id
+     }) : null
+    }
   )
   default_azure_tempdata_storage_account_name = replace("${var.azure_resource_prefix}${var.service_short}${local.app_name_suffix}tmp", "-", "")
   azure_tempdata_storage_account_name         = var.azure_tempdata_storage_account_name != null ? var.azure_tempdata_storage_account_name : local.default_azure_tempdata_storage_account_name

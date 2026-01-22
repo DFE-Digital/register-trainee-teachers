@@ -14,7 +14,7 @@ feature "Organisation details" do
   let!(:token_five) { create(:authentication_token, name: "Token 5", created_by: user) }
 
   context "when a User belongs to a Provider organisation" do
-    let(:accreditation_id) { Faker::Number.unique.number(digits: 4) }
+    let(:accreditation_id) { "2345" }
     let(:organisation) { create(:provider, accreditation_id:) }
     let(:user) { create(:user, providers: [organisation]) }
     let(:provider) { organisation }
@@ -62,16 +62,16 @@ feature "Organisation details" do
     end
   end
 
-  context "when a User belongs to a Lead Partner organisation" do
+  context "when a User belongs to a Training Partner organisation" do
     let(:accreditation_id) { nil }
-    let(:organisation) { create(:lead_partner, :hei) }
-    let(:user) { create(:user, lead_partners: [organisation]) }
+    let(:organisation) { create(:training_partner, :hei) }
+    let(:user) { create(:user, training_partners: [organisation]) }
     let!(:provider) { organisation.provider }
 
-    let!(:user_one) { create(:user, lead_partners: [organisation]) }
-    let!(:user_two) { create(:user, lead_partners: [organisation]) }
-    let!(:user_three) { create(:user, :with_lead_partner_organisation) }
-    let!(:discarded_user) { create(:user, lead_partners: [organisation], discarded_at: 1.day.ago) }
+    let!(:user_one) { create(:user, training_partners: [organisation]) }
+    let!(:user_two) { create(:user, training_partners: [organisation]) }
+    let!(:user_three) { create(:user, :with_training_partner_organisation) }
+    let!(:discarded_user) { create(:user, training_partners: [organisation], discarded_at: 1.day.ago) }
 
     before do
       given_i_have_clicked_on_the_organisation_name_link

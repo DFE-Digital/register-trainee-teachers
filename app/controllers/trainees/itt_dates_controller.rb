@@ -34,8 +34,8 @@ module Trainees
   private
 
     def itt_dates_params
-      params.require(:itt_dates_form)
-            .permit(*IttDatesForm::FIELDS, *DATE_CONVERSION)
+      params
+            .expect(itt_dates_form: [*IttDatesForm::FIELDS, *DATE_CONVERSION])
             .transform_keys { |key| DATE_CONVERSION.fetch(key, key) }
     end
 

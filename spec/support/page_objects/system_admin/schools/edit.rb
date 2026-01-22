@@ -11,7 +11,7 @@ module PageObjects
         element :back_link, ".govuk-back-link", text: "Back"
         element :cancel_link, ".govuk-link", text: "Cancel and return to record"
 
-        elements :training_partner_radio_buttons, 'input[type="radio"][name="school[lead_partner]"]'
+        elements :training_partner_radio_buttons, 'input[type="radio"][name="school[training_partner]"]'
 
         def has_training_partner_radio_button_checked?(value)
           radio_button(value).checked?

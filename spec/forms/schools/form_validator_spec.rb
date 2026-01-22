@@ -9,7 +9,7 @@ module Schools
     describe "validations" do
       context "with a school_direct_tuition_fee trainee", "feature_routes.school_direct_tuition_fee": true do
         let(:trainee) { build(:trainee, :school_direct_tuition_fee) }
-        let(:training_partner_form) { instance_double(Partners::TrainingPartnerForm, fields: nil, lead_partner_id: nil) }
+        let(:training_partner_form) { instance_double(Partners::TrainingPartnerForm, fields: nil, training_partner_id: nil) }
 
         before do
           allow(Partners::TrainingPartnerForm).to receive(:new).and_return(training_partner_form)
@@ -28,12 +28,12 @@ module Schools
             allow(training_partner_form).to receive(:valid?).and_return(false)
           end
 
-          it "returns an error for the lead_partner_id key" do
+          it "returns an error for the training_partner_id key" do
             subject.valid?
 
-            expect(subject.errors[:lead_partner_id]).to include(
+            expect(subject.errors[:training_partner_id]).to include(
               I18n.t(
-                "activemodel.errors.models.schools/form_validator.attributes.lead_partner_id.not_valid",
+                "activemodel.errors.models.schools/form_validator.attributes.training_partner_id.not_valid",
               ),
             )
           end
@@ -42,7 +42,7 @@ module Schools
 
       context "with a school_direct_salaried trainee", "feature_routes.school_direct_salaried": true do
         let(:trainee) { build(:trainee, :school_direct_salaried) }
-        let(:training_partner_form) { instance_double(Partners::TrainingPartnerForm, fields: nil, lead_partner_id: nil) }
+        let(:training_partner_form) { instance_double(Partners::TrainingPartnerForm, fields: nil, training_partner_id: nil) }
         let(:employing_school_form) { instance_double(Schools::EmployingSchoolForm, fields: nil, employing_school_id: nil) }
 
         before do
@@ -90,12 +90,12 @@ module Schools
               allow(employing_school_form).to receive(:valid?).and_return(true)
             end
 
-            it "returns an error for the lead_partner_id key" do
+            it "returns an error for the training_partner_id key" do
               subject.valid?
 
-              expect(subject.errors[:lead_partner_id]).to include(
+              expect(subject.errors[:training_partner_id]).to include(
                 I18n.t(
-                  "activemodel.errors.models.schools/form_validator.attributes.lead_partner_id.not_valid",
+                  "activemodel.errors.models.schools/form_validator.attributes.training_partner_id.not_valid",
                 ),
               )
             end
@@ -106,7 +106,7 @@ module Schools
               allow(employing_school_form).to receive(:valid?).and_return(false)
             end
 
-            it "returns errors for the lead_partner_id and the employing_school_id key" do
+            it "returns errors for the training_partner_id and the employing_school_id key" do
               subject.valid?
 
               expect(subject.errors[:employing_school_id]).to include(
@@ -114,9 +114,9 @@ module Schools
                   "activemodel.errors.models.schools/form_validator.attributes.employing_school_id.not_valid",
                 ),
               )
-              expect(subject.errors[:lead_partner_id]).to include(
+              expect(subject.errors[:training_partner_id]).to include(
                 I18n.t(
-                  "activemodel.errors.models.schools/form_validator.attributes.lead_partner_id.not_valid",
+                  "activemodel.errors.models.schools/form_validator.attributes.training_partner_id.not_valid",
                 ),
               )
             end
@@ -138,9 +138,9 @@ module Schools
             instance_double(
               Partners::TrainingPartnerForm,
               fields: nil,
-              lead_partner_id: nil,
+              training_partner_id: nil,
               non_search_validation: true,
-              errors: double(attribute_names: [:lead_partner_id]),
+              errors: double(attribute_names: [:training_partner_id]),
             )
           end
 
@@ -149,7 +149,7 @@ module Schools
             allow(training_partner_form).to receive(:valid?).and_return(false)
           end
 
-          it { is_expected.to include([:lead_partner_id]) }
+          it { is_expected.to include([:training_partner_id]) }
 
           context "with invalid TrainingPartnerForm and EmployingSchoolForm form", "feature_routes.school_direct_salaried": true, "feature_routes.school_direct_tuition_fee": true do
             let(:employing_school_form) do
@@ -169,7 +169,7 @@ module Schools
               allow(employing_school_form).to receive(:valid?).and_return(false)
             end
 
-            it { is_expected.to include(%i[lead_partner_id employing_school_id]) }
+            it { is_expected.to include(%i[training_partner_id employing_school_id]) }
           end
         end
       end

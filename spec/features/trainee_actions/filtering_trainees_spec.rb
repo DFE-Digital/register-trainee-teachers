@@ -41,10 +41,6 @@ feature "Filtering trainees" do
       then_all_registered_trainees_are_visible
     end
 
-    scenario "can filter by record source" do
-      then_the_record_source_filter_is_visible
-    end
-
     scenario "can filter by status" do
       when_i_filter_by_in_training_status
       then_only_the_in_training_trainee_is_visible
@@ -95,6 +91,23 @@ feature "Filtering trainees" do
 
       scenario "can filter by record source" do
         then_i_should_see_record_source_filter
+      end
+
+      scenario "can filter trainees by each record source" do
+        when_i_filter_by_record_source("dttp")
+        then_only_the_dttp_trainees_are_visible
+
+        when_i_filter_by_record_source("hesa")
+        then_only_the_hesa_trainees_are_visible
+
+        when_i_filter_by_record_source("manual")
+        then_only_the_manual_trainees_are_visible
+
+        when_i_filter_by_record_source("api")
+        then_only_the_api_trainees_are_visible
+
+        when_i_filter_by_record_source("csv")
+        then_only_the_csv_trainees_are_visible
       end
 
       scenario "when all trainees are from a single source" do
@@ -188,6 +201,10 @@ private
     @primary_trainee ||= create(:trainee, :submitted_for_trn, course_age_range: DfE::ReferenceData::AgeRanges::THREE_TO_EIGHT)
     @apply_non_draft_trainee ||= create(:trainee, :submitted_for_trn, :with_apply_application)
     @dttp_import_trainee ||= create(:trainee, :submitted_for_trn, :created_from_dttp)
+    @hesa_trainee ||= create(:trainee, :submitted_for_trn, :imported_from_hesa)
+    @manual_trainee ||= create(:trainee, :submitted_for_trn, :created_manually)
+    @api_trainee ||= create(:trainee, :submitted_for_trn, :created_from_api)
+    @csv_trainee ||= create(:trainee, :submitted_for_trn, :created_from_csv)
     Trainee.update_all(provider_id: @current_user.organisation.id)
   end
 
@@ -411,6 +428,66 @@ private
   def then_only_the_trainee_imported_from_dttp_is_visible
     expect(trainee_index_page).to have_text(full_name(@dttp_import_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@apply_non_draft_trainee))
+  end
+
+  def when_i_filter_by_record_source(source)
+    uncheck_all_record_source_filters
+    checkbox = case source
+               when "dttp"
+                 trainee_index_page.imported_from_dttp_checkbox
+               when "hesa"
+                 trainee_index_page.record_source_hesa_checkbox
+               when "manual"
+                 trainee_index_page.record_source_manual_checkbox
+               when "api"
+                 trainee_index_page.record_source_api_checkbox
+               when "csv"
+                 trainee_index_page.record_source_csv_checkbox
+               end
+    checkbox.click
+    trainee_index_page.apply_filters.click
+  end
+
+  def uncheck_all_record_source_filters
+    [
+      trainee_index_page.imported_from_dttp_checkbox,
+      trainee_index_page.record_source_hesa_checkbox,
+      trainee_index_page.record_source_manual_checkbox,
+      trainee_index_page.record_source_api_checkbox,
+      trainee_index_page.record_source_csv_checkbox,
+    ].each do |checkbox|
+      checkbox.click if checkbox.checked?
+    end
+  end
+
+  def then_only_the_dttp_trainees_are_visible
+    expect(trainee_index_page).to have_text(full_name(@dttp_import_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@hesa_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@api_trainee))
+  end
+
+  def then_only_the_hesa_trainees_are_visible
+    expect(trainee_index_page).to have_text(full_name(@hesa_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@dttp_import_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@api_trainee))
+  end
+
+  def then_only_the_manual_trainees_are_visible
+    expect(trainee_index_page).to have_text(full_name(@manual_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@hesa_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@api_trainee))
+  end
+
+  def then_only_the_api_trainees_are_visible
+    expect(trainee_index_page).to have_text(full_name(@api_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@hesa_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@dttp_import_trainee))
+  end
+
+  def then_only_the_csv_trainees_are_visible
+    expect(trainee_index_page).to have_text(full_name(@csv_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@hesa_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@api_trainee))
   end
 
   def full_name(trainee)

@@ -8,8 +8,8 @@ module SystemAdmin
     helper_method :funding_type
 
     def index
-      @lead_partner_trainee_summary = FundingUpload.recently_processed_upload_for(:lead_partner_trainee_summary)
-      @lead_partner_payment_schedule = FundingUpload.recently_processed_upload_for(:lead_partner_payment_schedule)
+      @training_partner_trainee_summary = FundingUpload.recently_processed_upload_for(:training_partner_trainee_summary)
+      @training_partner_payment_schedule = FundingUpload.recently_processed_upload_for(:training_partner_payment_schedule)
       @provider_trainee_summary = FundingUpload.recently_processed_upload_for(:provider_trainee_summary)
       @provider_payment_schedule = FundingUpload.recently_processed_upload_for(:provider_payment_schedule)
     end
@@ -36,6 +36,6 @@ module SystemAdmin
 
     def funding_type = params[:funding_type] || @funding_upload_form.funding_type
 
-    def funding_upload_params = params.require(:system_admin_funding_upload_form).permit(:funding_type, :month, :file)
+    def funding_upload_params = params.expect(system_admin_funding_upload_form: %i[funding_type month file])
   end
 end

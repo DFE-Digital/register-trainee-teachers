@@ -1,28 +1,9 @@
-TRN,Trainee ITT start date,Placement 1 URN,Placement 2 URN
-Do not change this column,"When the trainee started their ITT.
-
-
-Must be written DD/MM/YYYY.
-
-
-For example, if the trainee started their ITT on 20 September 2021, write '20/09/2021'.
-
-
-The date must be in the past.
-
-
-If you do not know the trainee’s ITT start date, leave the cell empty.","The URN of the trainee’s first placement school.
-
-
-URNs must be 6 digits long.
-
-
-If you do not know the placement school’s URN, leave the cell empty.","The URN of the trainee’s second placement school.
-
-
-URNs must be 6 digits long.
-
-
-If you do not know the placement school’s URN, leave the cell empty."
-1234567,2023-08-29,7823614827346,7823614827346
-7654321,2023-08-28,8721398474987,273489724897
+TRN,Trainee ITT start date,Placement 1 URN,Placement 2 URN,Placement 3 URN,Placement 4 URN,Placement 5 URN
+Do not change this column,Do not change this column,"The URN of the trainee's first placement school.
+If you do not know the placement school's URN, leave the cell empty.","The URN of the trainee's second placement school.
+If you do not know the placement school's URN, leave the cell empty.","The URN of the trainee's third placement school.
+If you do not know the placement school's URN, leave the cell empty.","The URN of the trainee's fourth placement school.
+If you do not know the placement school's URN, leave the cell empty.","The URN of the trainee's fifth placement school.
+If you do not know the placement school's URN, leave the cell empty."
+1234567,29/08/2023,100000,100001,,,
+7654321,28/08/2023,100002,100003,,,

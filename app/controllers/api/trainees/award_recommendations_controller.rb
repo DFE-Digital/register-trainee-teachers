@@ -22,7 +22,7 @@ module Api
       end
 
       def award_recommendation_params
-        params.require(:data).permit(:qts_standards_met_date)
+        params.expect(data: [:qts_standards_met_date])
       end
 
       def model = :trainee

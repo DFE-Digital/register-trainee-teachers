@@ -11,14 +11,22 @@ module Reports
       *PLACEMENT_HEADERS,
     ].freeze
 
+    EXPORT_HEADERS = [*HEADERS, *OPTIONAL_HEADERS].freeze
+
+    PLACEMENT_GUIDANCE = "If you do not know the placement school's URN, leave the cell empty."
+
     GUIDANCE = [
       "Do not change this column",
       "Do not change this column",
-      "The URN of the trainee’s first placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
-      "The URN of the trainee’s second placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
+      "The URN of the trainee's first placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's second placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's third placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's fourth placement school.\n#{PLACEMENT_GUIDANCE}",
+      "The URN of the trainee's fifth placement school.\n#{PLACEMENT_GUIDANCE}",
     ].freeze
 
     ADDED_MANUALLY = "ADDED MANUALLY"
+    PLACEMENT_POSITIONS = %i[first second third fourth fifth].freeze
 
     def initialize(csv, scope:)
       @csv = csv
@@ -30,7 +38,7 @@ module Reports
   private
 
     def add_headers
-      csv << HEADERS
+      csv << EXPORT_HEADERS
       csv << GUIDANCE
     end
 
@@ -44,9 +52,12 @@ module Reports
       csv << [
         trainee.trn,
         trainee.itt_start_date.to_fs(:govuk_slash),
-        placement(trainee, :first),
-        placement(trainee, :second),
+        *placement_urns(trainee),
       ].map { |value| CsvValueSanitiser.new(value).sanitise }
+    end
+
+    def placement_urns(trainee)
+      PLACEMENT_POSITIONS.map { |position| placement(trainee, position) }
     end
 
     def placement(trainee, position)

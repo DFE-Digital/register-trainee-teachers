@@ -54,8 +54,8 @@ private
 
   def and_there_are_four_funding_upload_links
     expected_links = [
-      { text: "Upload trainee summary", href: funding_type_url_for("lead_partner_trainee_summary") },
-      { text: "Upload payment schedule", href: funding_type_url_for("lead_partner_payment_schedule") },
+      { text: "Upload trainee summary", href: funding_type_url_for("training_partner_trainee_summary") },
+      { text: "Upload payment schedule", href: funding_type_url_for("training_partner_payment_schedule") },
       { text: "Upload trainee summary", href: funding_type_url_for("provider_trainee_summary") },
       { text: "Upload payment schedule", href: funding_type_url_for("provider_payment_schedule") },
     ]

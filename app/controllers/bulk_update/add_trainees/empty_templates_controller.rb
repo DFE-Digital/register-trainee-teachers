@@ -11,7 +11,7 @@ module BulkUpdate
         respond_to do |format|
           format.csv do
             send_file(
-              Rails.public_path.join("csv/#{FILE}"),
+              Rails.public_path.join("csv/#{version}/#{FILE}"),
               filename: filename,
               disposition: :attachment,
             )
@@ -21,8 +21,12 @@ module BulkUpdate
 
     private
 
+      def version
+        BulkUpdate::BulkAddTraineesUploadForm::VERSION.tr(".", "_")
+      end
+
       def filename
-        "#{BulkUpdate::BulkAddTraineesUploadForm::VERSION.tr('.', '_')}_#{FILE}"
+        "#{version}_#{FILE}"
       end
     end
   end

@@ -19,11 +19,11 @@ module Submissions
     validator :course_details, form: "CourseDetailsForm"
     validator :training_details, form: "TrainingDetailsForm"
     validator :trainee_data, form: "ApplyApplications::TraineeDataForm", if: :apply_application_and_draft?
-    validator :schools, form: "Schools::FormValidator", if: :requires_lead_partner?
+    validator :schools, form: "Schools::FormValidator", if: :requires_training_partner?
     validator :funding, form: "Funding::FormValidator", if: :requires_funding?
     validator :iqts_country, form: "IqtsCountryForm", if: :requires_iqts_country?
 
-    delegate :requires_lead_partner?, :requires_degree?, :apply_application?,
+    delegate :requires_training_partner?, :requires_degree?, :apply_application?,
              :requires_funding?, :requires_iqts_country?, :requires_placements?, to: :trainee
 
     validate :submission_ready

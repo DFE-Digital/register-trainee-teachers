@@ -14,9 +14,9 @@ module Reports
     DATE        = "Date QTS or EYTS standards met"
 
     # additional headers
-    FIRST_NAME   = "First names"
-    LAST_NAME    = "Last names"
-    LEAD_PARTNER = "Lead partner"
+    FIRST_NAME       = "First names"
+    LAST_NAME        = "Last names"
+    TRAINING_PARTNER = "Training partner"
     QTS_OR_EYTS  = "QTS or EYTS"
     ROUTE        = "Route"
     PHASE        = "Phase"
@@ -27,7 +27,7 @@ module Reports
       *IDENTIFIERS,
       FIRST_NAME,
       LAST_NAME,
-      LEAD_PARTNER,
+      TRAINING_PARTNER,
       QTS_OR_EYTS,
       ROUTE,
       PHASE,
@@ -79,7 +79,7 @@ module Reports
                                        :start_academic_cycle,
                                        :provider,
                                        :withdrawal_reasons,
-                                       :lead_partner).each do |trainee| # rubocop:disable Rails/FindEach
+                                       :training_partner).each do |trainee| # rubocop:disable Rails/FindEach
         add_trainee_to_csv(trainee)
       end
     end
@@ -97,7 +97,7 @@ module Reports
         trainee_report.hesa_id,
         trainee_report.first_names,
         trainee_report.last_names,
-        trainee_report.lead_partner_name,
+        trainee_report.training_partner_name,
         trainee_report.qts_or_eyts,
         trainee_report.course_training_route,
         trainee_report.course_education_phase,

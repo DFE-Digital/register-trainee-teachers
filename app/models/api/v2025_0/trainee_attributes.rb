@@ -58,8 +58,8 @@ module Api
       end
 
       INTERNAL_ATTRIBUTES = {
-        lead_partner_id: {},
-        lead_partner_not_applicable: { type: :boolean, options: { default: false } },
+        training_partner_id: {},
+        training_partner_not_applicable: { type: :boolean, options: { default: false } },
         employing_school_id: {},
         employing_school_not_applicable: { type: :boolean, options: { default: false } },
         ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
@@ -94,6 +94,8 @@ module Api
       attribute :nationalisations_attributes, array: true, default: -> { [] }
       attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
+
+      alias_method :lead_partner_id, :training_partner_id
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
@@ -151,7 +153,7 @@ module Api
 
       validates :trainee_disabilities_attributes, uniqueness: true
 
-      validate :validate_lead_partner, unless: :lead_partner_not_applicable
+      validate :validate_lead_partner, unless: :training_partner_not_applicable
       validate :validate_employing_school, unless: :employing_school_not_applicable
 
       def initialize(new_attributes = {})
@@ -383,7 +385,7 @@ module Api
       end
 
       def set_course_allocation_subject_id
-        return course_subject_one if course_subject_one.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+        return course_subject_one if course_subject_one.is_a?(Api::HesaMapper::Attributes::InvalidValue)
 
         self.course_allocation_subject_id ||=
           SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject&.id
@@ -454,13 +456,13 @@ module Api
       end
 
       def validate_lead_partner
-        if lead_partner_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
-          errors.add(:lead_partner_id, :invalid, value: lead_partner_id.to_s)
+        if training_partner_id.is_a?(Api::HesaMapper::Attributes::InvalidValue)
+          errors.add(:lead_partner_id, :invalid, value: training_partner_id.to_s)
         end
       end
 
       def validate_employing_school
-        if employing_school_id.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+        if employing_school_id.is_a?(Api::HesaMapper::Attributes::InvalidValue)
           errors.add(:employing_school_id, :invalid, value: employing_school_id.to_s)
         end
       end

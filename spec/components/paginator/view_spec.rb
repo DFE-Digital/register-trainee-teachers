@@ -48,6 +48,12 @@ module Paginator
           expect(rendered_content(current_page: 2, total_count: 59).text).to include "Showing 26 to 50 of 59"
         end
       end
+
+      context "when the total count exceeds 1000" do
+        it "renders correct summary message with delimited numbers" do
+          expect(rendered_content(current_page: 91, total_count: 2345).text).to include "Showing 2,251 to 2,275 of 2,345"
+        end
+      end
     end
 
     describe "#paginate_configuration" do

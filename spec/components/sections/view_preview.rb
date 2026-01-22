@@ -54,7 +54,7 @@ module Sections
         additional_ethnic_background: "additional_ethnic_background",
         course_subject_one: "subject",
         training_route: TRAINING_ROUTE_ENUMS[training_route(section)],
-        lead_partner_school: School.new(id: 1),
+        training_partner_school: School.new(id: 1),
         degrees: [Degree.new(id: 1, locale_code: :uk)],
         training_initiative: ROUTE_INITIATIVES_ENUMS[:now_teach],
         applying_for_bursary: true,

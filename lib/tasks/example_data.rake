@@ -75,8 +75,8 @@ namespace :example_data do
     # Create some schools
     employing_schools = FactoryBot.create_list(:school, 50)
 
-    # Create some lead partners
-    lead_partners = FactoryBot.create_list(:lead_partner, 50, :school)
+    # Create some training partners
+    training_partners = FactoryBot.create_list(:training_partner, 50, :school)
 
     # Create some subjects
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
@@ -116,11 +116,11 @@ namespace :example_data do
       FactoryBot.create(:authentication_token, provider:)
       FactoryBot.create(:authentication_token, :expired, provider:)
 
-      if persona_attributes[:lead_partner]
-        lead_partner = lead_partners.sample
-        LeadPartnerUser.create!(user: persona, lead_partner: lead_partner)
-        FactoryBot.create(:payment_schedule, :for_full_year, payable: lead_partner.school)
-        FactoryBot.create(:trainee_summary, :with_grant_rows, payable: lead_partner.school)
+      if persona_attributes[:training_partner]
+        training_partner = training_partners.sample
+        TrainingPartnerUser.create!(user: persona, training_partner: training_partner)
+        FactoryBot.create(:payment_schedule, :for_full_year, payable: training_partner.school)
+        FactoryBot.create(:trainee_summary, :with_grant_rows, payable: training_partner.school)
       end
 
       # For each of the course routes enabled...
@@ -286,6 +286,24 @@ namespace :example_data do
       end
     end
 
+    # Create trainees from each record source to ensure all filter options are visible
+    first_provider = Provider.first
+    if first_provider
+      %i[created_from_api created_from_csv with_apply_application].each do |source_trait|
+        2.times do
+          FactoryBot.create(
+            :trainee,
+            :assessment_only,
+            :submitted_for_trn,
+            source_trait,
+            provider: first_provider,
+            nationalities: [Nationality.first],
+            degrees: [FactoryBot.build(:degree, :uk_degree_with_details)],
+          )
+        end
+      end
+    end
+
     # We don't want all trainees having the same update date on the index page
     Audited.audit_class.find_each do |audit|
       random_date = rand(100).days.ago
@@ -312,7 +330,7 @@ namespace :example_data do
       .push(:assessment_only)
     enabled_course_routes = enabled_routes & TRAINING_ROUTES_FOR_COURSE.keys.map(&:to_sym)
 
-    lead_partners = FactoryBot.create_list(:lead_partner, 5, :school)
+    training_partners = FactoryBot.create_list(:training_partner, 5, :school)
 
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
 
@@ -339,9 +357,9 @@ namespace :example_data do
 
       FactoryBot.create(:authentication_token, provider:)
 
-      if persona_attributes[:lead_partner]
-        lead_partner = lead_partners.sample
-        LeadPartnerUser.create!(user: persona, lead_partner: lead_partner)
+      if persona_attributes[:training_partner]
+        training_partner = training_partners.sample
+        TrainingPartnerUser.create!(user: persona, training_partner: training_partner)
       end
 
       enabled_course_routes.each do |route|
@@ -387,6 +405,22 @@ namespace :example_data do
             FormStore.clear_all(trainee.id)
           end
         end
+      end
+    end
+
+    # Create trainees from each record source to ensure all filter options are visible
+    first_provider = Provider.first
+    if first_provider
+      %i[created_from_api created_from_csv with_apply_application].each do |source_trait|
+        FactoryBot.create(
+          :trainee,
+          :assessment_only,
+          :submitted_for_trn,
+          source_trait,
+          provider: first_provider,
+          nationalities: [Nationality.first],
+          degrees: [FactoryBot.build(:degree, :uk_degree_with_details)],
+        )
       end
     end
   end

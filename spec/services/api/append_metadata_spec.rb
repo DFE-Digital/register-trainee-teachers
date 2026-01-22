@@ -8,7 +8,7 @@ RSpec.describe Api::AppendMetadata do
   it { is_expected.to include ServicePattern }
 
   describe "#call" do
-    let(:trainees) { Trainee.includes(%i[provider degrees hesa_trainee_detail published_course employing_school lead_partner nationalities withdrawal_reasons]).page(1).per(25) }
+    let(:trainees) { Trainee.includes(%i[provider degrees hesa_trainee_detail published_course employing_school training_partner nationalities withdrawal_reasons]).page(1).per(25) }
     let(:serializer_klass) { Api::V20250::TraineeSerializer }
 
     before { create_list(:trainee, 2, :with_hesa_trainee_detail) }

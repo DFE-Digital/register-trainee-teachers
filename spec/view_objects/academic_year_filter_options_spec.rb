@@ -6,7 +6,7 @@ describe AcademicYearFilterOptions do
   let(:current_year_string) { "#{academic_cycle.label} (current year)" }
 
   let(:current_user) do
-    double(lead_partner?: false, provider?: true, organisation: trainee.provider, system_admin?: false)
+    double(training_partner?: false, provider?: true, organisation: trainee.provider, system_admin?: false)
   end
 
   let(:trainee) { create(:trainee, :trn_received, start_academic_cycle: academic_cycle) }

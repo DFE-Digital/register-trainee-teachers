@@ -51,17 +51,17 @@ module Trainees
     end
 
     def personal_details_params
-      params.require(:personal_details_form).permit(
-        *PersonalDetailsForm::FIELDS,
-        *DOB_CONVERSION.keys,
-        :other,
-        :other_nationality1,
-        :other_nationality1_raw,
-        :other_nationality2,
-        :other_nationality2_raw,
-        :other_nationality3,
-        :other_nationality3_raw,
-        nationality_names: [],
+      params.expect(
+        personal_details_form: [*PersonalDetailsForm::FIELDS,
+                                *DOB_CONVERSION.keys,
+                                :other,
+                                :other_nationality1,
+                                :other_nationality1_raw,
+                                :other_nationality2,
+                                :other_nationality2_raw,
+                                :other_nationality3,
+                                :other_nationality3_raw,
+                                { nationality_names: [] }],
       ).transform_keys do |key|
         DOB_CONVERSION.keys.include?(key) ? DOB_CONVERSION[key] : key
       end

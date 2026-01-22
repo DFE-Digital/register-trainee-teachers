@@ -45,9 +45,9 @@ private
   end
 
   def token_params
-    params.require(:authentication_token_form).permit(:name, *PARAM_CONVERSION.keys)
-          .transform_keys do |key|
-      PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
-    end
+    params.expect(authentication_token_form: [:name, *PARAM_CONVERSION.keys])
+      .transform_keys do |key|
+        PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
+      end
   end
 end

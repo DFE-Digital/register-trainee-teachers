@@ -15,6 +15,10 @@ remove_duplicate_dead_jobs:
   queue: default
 
 # Jobs that run once a day at a specific time, sorted by their running time
+authentication_tokens_expiration_reminder:
+  cron: "0 0 * * *" # Every day at 00:00 (midnight).
+  class: "AuthenticationTokens::ExpirationReminderJob"
+  queue: default
 expire_authentication_tokens:
   cron: "0 0 * * *" # Every day at 00:00 (midnight).
   class: "AuthenticationTokens::ExpireTokensJob"

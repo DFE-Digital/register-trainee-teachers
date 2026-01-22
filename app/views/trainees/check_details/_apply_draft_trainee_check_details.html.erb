@@ -12,7 +12,7 @@
 
 <%= render Sections::View.new(trainee: @trainee, form: @form, section: :training_details, editable: @trainee_editable) %>
 
-<% if @trainee.requires_lead_partner? %>
+<% if @trainee.requires_training_partner? %>
   <%= render Sections::View.new(trainee: @trainee, form: @form, section: :schools, editable: @trainee_editable) %>
 <% end %>
 

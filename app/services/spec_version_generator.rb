@@ -31,7 +31,13 @@ private
   end
 
   def spec_files
-    Dir.glob("spec/requests/api/#{convert_version_to_dir(old_version)}/**/*.rb")
+    spec_directories.flat_map do |dir|
+      Dir.glob("#{dir}/api/#{convert_version_to_dir(old_version)}/**/*.rb")
+    end
+  end
+
+  def spec_directories
+    %w[spec/requests spec/models spec/serializers]
   end
 
   def new_file_path(file)

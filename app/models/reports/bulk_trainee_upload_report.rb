@@ -4,10 +4,6 @@ module Reports
   class BulkTraineeUploadReport < TemplateClassCsv
     include ActionView::Helpers::TextHelper
 
-    HEADERS = (
-      BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys +
-      ["Validation results", "Errors"]).freeze
-
     def initialize(csv, scope:)
       @csv = csv
       @scope = scope
@@ -17,8 +13,12 @@ module Reports
 
   private
 
+    def headers
+      @headers ||= BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys + ["Validation results", "Errors"]
+    end
+
     def add_headers
-      csv << HEADERS
+      csv << headers
     end
 
     def add_report_rows
@@ -33,7 +33,7 @@ module Reports
         "Errors" => row.row_errors.pluck(:message).join(";\n").presence,
       )
 
-      csv << (HEADERS.map do |key|
+      csv << (headers.map do |key|
         AddTraineeCsvValueSanitiser.new(key, data[key]).sanitise
       end)
     end

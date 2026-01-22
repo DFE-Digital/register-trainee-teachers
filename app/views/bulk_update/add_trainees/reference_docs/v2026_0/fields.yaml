@@ -233,13 +233,13 @@
   technical: course_subject_one
   hesa_alignment: SBJCA
   description: |-
-    First subject of the ITT course
+    First subject of the ITT course.
 
-    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, we expect Course Subject One to be “Primary Teaching”. We will automatically apply HESA code 100511 if you have not already done so. Any subjects provided in the trainee details will be shifted to course_subject_two and course_subject_three.  Where trainees study a primary specialism, a valid HECoS code should be used in this field.
+    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, Course Subject One must be “Primary Teaching” (HESA code `100511`). A validation error will be returned if a different subject is provided. Where trainees study a primary specialism, a valid HECoS code should be used in course_subject_two or course_subject_three.
   format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-one.html)"
-  example: "`100048` for example is the code used for design as a subject"
+  example: "`100511` for primary courses, `100048` for secondary (design as a subject)"
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/validate_publish_course_form.rb#L13
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_0/trainee_attributes.rb
   page_title: Course subject one
 - field_name: Course Subject Two
   technical: course_subject_two
@@ -247,7 +247,7 @@
   description: |-
     Second subject of the ITT course.
 
-    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, we expect Course Subject One to be “Primary Teaching”. We will automatically apply HESA code 100511 if you have not already done so. Any subjects provided in the trainee details will be shifted to course_subject_two and course_subject_three.  Where trainees study a primary specialism, a valid HECoS code should be used in this field.
+    Notes\: For primary courses (course maximum age 11 or less), this field can be used to specify a primary specialism subject. A valid HECoS code should be used in this field.
   format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-two.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
@@ -258,7 +258,7 @@
   description: |-
     Third subject of the ITT course.
 
-    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, we expect Course Subject One to be “Primary Teaching”. We will automatically apply HESA code 100511 if you have not already done so. Any subjects provided in the trainee details will be shifted to course_subject_two and course_subject_three.  Where trainees study a primary specialism, a valid HECoS code should be used in this field.
+    Notes\: For primary courses (course maximum age 11 or less), this field can be used to specify an additional primary specialism subject. A valid HECoS code should be used in this field.
   format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-three.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
@@ -327,13 +327,13 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L28
   page_title: Course year
-- field_name: Lead Partner URN
-  technical: lead_partner_urn
+- field_name: Training Partner URN
+  technical: training_partner_urn
   hesa_alignment: SDLEAD
   description: |-
-    This field collects the Unique Reference Number (URN) of the lead partner for the trainee.
+    This field collects the Unique Reference Number (URN) of the training partner for the trainee.
 
-    The system validates the provided URN against the Register database. If the URN is not found in Register, the lead partner may not be set correctly.
+    The system validates the provided URN against the Register database. If the URN is not found in Register, the training partner may not be set correctly.
   format: Must be a 6-digit number
   example: |-
     - `115795` - Cheltenham College
@@ -342,7 +342,7 @@
     - `900020` - Other establishment without a URN
     - `900030` - Not available
   validation: Optional
-  page_title: Lead partner URN
+  page_title: Training partner URN
 - field_name: Employing School URN
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY

@@ -31,7 +31,7 @@ module Exports
                                                  :degrees, :disabilities,
                                                  :employing_school,
                                                  :end_academic_cycle,
-                                                 :lead_partner,
+                                                 :training_partner,
                                                  { nationalisations: :nationality },
                                                  :nationalities,
                                                  :provider,

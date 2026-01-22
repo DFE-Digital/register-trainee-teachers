@@ -10,7 +10,7 @@ FactoryBot.define do
       completed_at { 5.minutes.from_now }
       schools_created { 100 }
       schools_updated { 200 }
-      lead_partners_updated { 50 }
+      training_partners_updated { 50 }
     end
 
     trait :failed do

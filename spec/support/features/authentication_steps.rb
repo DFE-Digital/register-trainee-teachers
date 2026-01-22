@@ -15,7 +15,7 @@ module Features
       given_i_am_authenticated(user: create(:user, :hei))
     end
 
-    def given_i_am_authenticated_as_a_lead_partner_user(user: create(:user, :with_lead_partner_organisation))
+    def given_i_am_authenticated_as_a_training_partner_user(user: create(:user, :with_training_partner_organisation))
       given_i_am_authenticated(user:)
     end
 

@@ -2,7 +2,7 @@
   <%= render PersonalDetails::View.new(
     data_model: trainee,
     editable: trainee_editable?,
-    minimal: lead_partner_user?,
+    minimal: training_partner_user?,
   ) %>
 </div>
 
@@ -10,7 +10,7 @@
   <%= render ContactDetails::View.new(data_model: trainee, editable: trainee_editable?) %>
 </div>
 
-<% unless lead_partner_user? %>
+<% unless training_partner_user? %>
   <div class="diversity-details">
     <%= render Diversity::View.new(data_model: trainee, editable: trainee_editable?) %>
   </div>

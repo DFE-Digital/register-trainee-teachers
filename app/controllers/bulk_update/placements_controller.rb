@@ -2,7 +2,7 @@
 
 module BulkUpdate
   class PlacementsController < ApplicationController
-    helper_method :bulk_placements_count, :organisation_filename
+    helper_method :bulk_placements_count, :prepopulated_template_filename, :blank_template_filename
 
     def new
       respond_to do |format|
@@ -11,11 +11,19 @@ module BulkUpdate
         end
 
         format.csv do
-          send_data(
-            Exports::BulkPlacementExport.call(bulk_placements),
-            filename: organisation_filename,
-            disposition: :attachment,
-          )
+          if params[:blank]
+            send_data(
+              Exports::BlankPlacementExport.call,
+              filename: blank_template_filename,
+              disposition: :attachment,
+            )
+          else
+            send_data(
+              Exports::BulkPlacementExport.call(bulk_placements),
+              filename: prepopulated_template_filename,
+              disposition: :attachment,
+            )
+          end
         end
       end
     end
@@ -46,12 +54,16 @@ module BulkUpdate
       @bulk_placements_count ||= bulk_placements.count
     end
 
-    def organisation_filename
-      "#{organisation.name.parameterize}-to-add-missing-prepopulated.csv"
-    end
-
     def bulk_placements
       @bulk_placements ||= current_user.organisation.trainees_without_required_placements.includes(:placements)
+    end
+
+    def prepopulated_template_filename
+      "bulk-add-placements-prepopulated.csv"
+    end
+
+    def blank_template_filename
+      "bulk-add-placements-blank.csv"
     end
   end
 end

@@ -7,7 +7,7 @@ module PageObjects
         class Edit < PageObjects::Base
           set_url "/trainees/{trainee_id}/training-partners/details/edit"
 
-          elements :training_partner_radio_buttons, 'input[type="radio"][name="partners_training_partner_form[lead_partner_not_applicable]"]'
+          elements :training_partner_radio_buttons, 'input[type="radio"][name="partners_training_partner_form[training_partner_not_applicable]"]'
           element :continue_button, 'button.govuk-button[type="submit"]'
 
           def has_training_partner_radio_button_checked?(value)

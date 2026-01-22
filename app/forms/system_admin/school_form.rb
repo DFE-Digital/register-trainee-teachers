@@ -5,12 +5,12 @@ module SystemAdmin
     include ActiveModel::Model
     include ActiveModel::Attributes
 
-    LEAD_PARTNER_OPTION = Struct.new(:id, :name)
+    TRAINING_PARTNER_OPTION = Struct.new(:id, :name)
 
-    private_constant :LEAD_PARTNER_OPTION
+    private_constant :TRAINING_PARTNER_OPTION
 
-    attribute :lead_partner, :boolean
-    alias lead_partner? lead_partner
+    attribute :training_partner, :boolean
+    alias training_partner? training_partner
 
     delegate :name,
              :urn,
@@ -22,7 +22,7 @@ module SystemAdmin
 
     attr_reader :school
 
-    validates :lead_partner, inclusion: [true, false]
+    validates :training_partner, inclusion: [true, false]
 
     def self.model_name
       ActiveModel::Name.new(School)
@@ -35,7 +35,7 @@ module SystemAdmin
 
       super(
         compute_attributes.reverse_merge(
-          lead_partner: school.lead_partner?,
+          training_partner: school.training_partner?,
         )
       )
     end
@@ -50,12 +50,12 @@ module SystemAdmin
       return false unless valid?
 
       ActiveRecord::Base.transaction do
-        if lead_partner
-          find_or_create_lead_partner!.tap do |school_lead_partner|
-            school_lead_partner.undiscard! if school_lead_partner.discarded?
+        if training_partner
+          find_or_create_training_partner!.tap do |school_training_partner|
+            school_training_partner.undiscard! if school_training_partner.discarded?
           end
-        elsif school.lead_partner&.undiscarded?
-          school.lead_partner.discard!
+        elsif school.training_partner&.undiscarded?
+          school.training_partner.discard!
         end
 
         school.save!
@@ -66,9 +66,9 @@ module SystemAdmin
       store.clear_all(school.id)
     end
 
-    def lead_partner_options
+    def training_partner_options
       [true, false].map do |value|
-        LEAD_PARTNER_OPTION.new(id: value, name: value ? "Yes" : "No")
+        TRAINING_PARTNER_OPTION.new(id: value, name: value ? "Yes" : "No")
       end
     end
 
@@ -76,10 +76,10 @@ module SystemAdmin
 
     attr_reader :params, :store
 
-    def find_or_create_lead_partner!
-      LeadPartner.find_or_create_by!(school_id: school.id, urn: school.urn) do |lp|
-        lp.name        = school.name
-        lp.record_type = LeadPartner::SCHOOL
+    def find_or_create_training_partner!
+      TrainingPartner.find_or_create_by!(school_id: school.id, urn: school.urn) do |tp|
+        tp.name        = school.name
+        tp.record_type = TrainingPartner::SCHOOL
       end
     end
 

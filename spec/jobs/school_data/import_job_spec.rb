@@ -8,7 +8,7 @@ RSpec.describe SchoolData::ImportJob do
   subject(:job) { described_class.new }
 
   let(:csv_content) { "URN,EstablishmentName\n123456,Test School" }
-  let(:mock_import_result) { { created: 10, updated: 5, lead_partners_updated: 2 } }
+  let(:mock_import_result) { { created: 10, updated: 5, training_partners_updated: 2 } }
 
   describe "#perform" do
     context "when feature flag is disabled", feature_school_data_auto_import: false do

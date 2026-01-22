@@ -28,7 +28,7 @@ module Trainees
 
     def trainee_params
       params.fetch(:partners_training_partner_form, {})
-            .permit(:lead_partner_id,
+            .permit(:training_partner_id,
                     *Partners::TrainingPartnerForm::NON_TRAINEE_FIELDS)
     end
 
@@ -59,7 +59,7 @@ module Trainees
     end
 
     def authorize_trainee
-      authorize(trainee, :requires_lead_partner?)
+      authorize(trainee, :requires_training_partner?)
     end
 
     def step_wizard
@@ -67,7 +67,7 @@ module Trainees
     end
 
     def validate_form_completeness
-      return if trainee.lead_partner_id.blank?
+      return if trainee.training_partner_id.blank?
       return if user_came_from_backlink?
 
       redirect_to(step_wizard.start_point) if step_wizard.start_point.present?

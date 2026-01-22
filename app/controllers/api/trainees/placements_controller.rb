@@ -59,15 +59,14 @@ module Api
 
       def hesa_mapped_params
         hesa_mapper_class.call(
-          params: params.require(:data).permit(
-            hesa_mapper_class::ATTRIBUTES, attributes_klass::ATTRIBUTES
+          params: params.expect(
+            data: hesa_mapper_class::ATTRIBUTES + attributes_klass::ATTRIBUTES,
           ),
         )
       end
 
       def placement_params
-        params.require(:data)
-          .permit(attributes_klass::ATTRIBUTES)
+        params.expect(data: attributes_klass::ATTRIBUTES)
       end
 
       def new_placement
