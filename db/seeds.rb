@@ -126,8 +126,15 @@ end
                                                       funding_type: FUNDING_TYPE_ENUMS[:grant],
                                                       academic_cycle: rule[:academic_cycle])
     s.allocation_subjects.map do |subject|
-      allocation_subject = AllocationSubject.find_by!(name: subject)
+      allocation_subject = AllocationSubject.find_by!(name: subject)j
       funding_method.funding_method_subjects.find_or_create_by!(allocation_subject:)
     end
   end
 end
+
+NewGroup.reset_column_information
+NewGroup.create!(description: "First group", email: "first@group.com")
+NewGroup.create!(description: "Second group", email: "second@group.com")
+NewGroup.create!(description: "Third group", email: "third@group.com")
+
+NewSchool.create!(description: "School 1")

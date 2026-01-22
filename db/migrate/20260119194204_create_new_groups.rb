@@ -14,10 +14,6 @@ class CreateNewGroups < ActiveRecord::Migration[7.2]
     end
 
     safety_assured do
-      NewGroup.reset_column_information
-      NewGroup.create!(description: "First group", email: "first@group.com")
-      NewGroup.create!(description: "Second group", email: "second@group.com")
-      NewGroup.create!(description: "Third group", email: "third@group.com")
     end
   end
 end
