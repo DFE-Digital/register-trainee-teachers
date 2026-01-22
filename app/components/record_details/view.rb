@@ -177,12 +177,6 @@ module RecordDetails
       trainee.updated_at.to_fs(:govuk)
     end
 
-    def progress_date
-      return unless trainee_progress_date
-
-      I18n.t("record_details.view.progress_date_prefix.#{trainee.state}") + date_for_summary_view(trainee_progress_date)
-    end
-
     def status_date
       if trainee.itt_not_yet_started?
         return I18n.t("deferral_details.view.deferred_before_itt_started").html_safe if trainee.starts_course_in_the_future?

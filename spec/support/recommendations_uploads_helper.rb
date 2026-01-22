@@ -2,7 +2,7 @@
 
 module RecommendationsUploadHelper
   def create_recommendations_upload_csv!(trainees: Trainee.all, overwrite: [], write_to_disk: false, columns_to_delete: [])
-    # use bulk recommend export to generate a CSV using the same CSV args that are
+    # use bulk change status export to generate a CSV using the same CSV args that are
     # used to read it in the upload form
     csv = CSV.parse(
       ::Exports::BulkRecommendExport.call(trainees).to_s,

@@ -130,7 +130,7 @@ feature "recommending trainees" do
     end
   end
 
-  context "given multiple trainees exist to recommend with a discarded duplicate" do
+  context "given multiple trainees exist to change status with a discarded duplicate" do
     before do
       given_two_trainees_exist_to_recommend
       and_a_discarded_duplicate_trainee_exists
@@ -184,7 +184,7 @@ private
   end
 
   def then_i_see_the_option_to_download_the_empty_template
-    expect(recommendations_upload_page).to have_link("Download an empty template file to recommend trainees for QTS or EYTS")
+    expect(recommendations_upload_page).to have_link("Download an empty template")
   end
 
   def and_i_upload_a_csv(csv_path)
@@ -217,12 +217,12 @@ private
   end
 
   def then_i_see_count_complete
-    expect(recommendations_upload_show_page).to have_text("Both trainees will be recommended")
+    expect(recommendations_upload_show_page).to have_text("Both trainees will gain QTS")
   end
 
   def then_i_see_count_missing_dates
-    expect(recommendations_upload_show_page).to have_text("1 trainee who will be recommended")
-    expect(recommendations_upload_show_page).to have_text("1 trainee who will not be recommended")
+    expect(recommendations_upload_show_page).to have_text("1 trainee who will gain")
+    expect(recommendations_upload_show_page).to have_text("1 trainee who will not change status")
   end
 
   def then_i_see_the_form_to_change_upload
@@ -246,16 +246,19 @@ private
   end
 
   def when_i_submit_form_with_no_file_attached
-    recommendations_checks_show_page.upload_button.click
+    recommendations_upload_fix_errors_page.upload_button.click
   end
-  alias and_i_submit_form_with_no_file when_i_submit_form_with_no_file_attached
+
+  def and_i_submit_form_with_no_file
+    edit_recommendations_upload_page.upload_button.click
+  end
 
   def then_i_see_validation_errors
     expect(recommendations_checks_show_page).to have_text("Select a CSV file")
   end
 
   def and_i_remain_on_the_change_upload_page
-    expect(recommendations_checks_show_page).to have_text("Change who you’ll recommend for QTS or EYTS")
+    expect(recommendations_checks_show_page).to have_text("Change which trainees’ status is changing QTS or EYTS")
   end
 
   def and_i_see_a_list_of_trainees_to_check
@@ -273,6 +276,6 @@ private
   end
 
   def then_i_see_the_confirmation
-    expect(recommendations_upload_confirmation_page).to have_content("2 trainees recommended for QTS")
+    expect(recommendations_upload_confirmation_page).to have_content("2 trainees gained QTS")
   end
 end

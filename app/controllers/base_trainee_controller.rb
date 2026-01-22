@@ -78,9 +78,9 @@ private
 
   def total_trainees_count
     if filtered_trainees_count == unfiltered_trainees_count
-      filtered_trainees_count.to_s
+      filtered_trainees_count.to_fs(:delimited)
     else
-      "#{filtered_trainees_count} of #{unfiltered_trainees_count}"
+      "#{filtered_trainees_count.to_fs(:delimited)} of #{unfiltered_trainees_count.to_fs(:delimited)}"
     end
   end
 

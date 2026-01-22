@@ -25,14 +25,14 @@ module RecordHeader
       end
 
       it "renders the trainee name" do
-        expect(component.find(".govuk-heading-xl")).to have_text("Dave Hendricks Smith")
+        expect(component.find(".govuk-heading-l")).to have_text("Dave Hendricks Smith")
       end
 
       context "where a name is nil" do
         let(:middle_names) { nil }
 
         it "renders the trainee name" do
-          expect(component.find(".govuk-heading-xl")).to have_text("Dave Smith")
+          expect(component.find(".govuk-heading-l")).to have_text("Dave Smith")
         end
       end
 
@@ -40,7 +40,7 @@ module RecordHeader
         let(:middle_names) { "" }
 
         it "renders the trainee name" do
-          expect(component.find(".govuk-heading-xl")).to have_text("Dave Smith")
+          expect(component.find(".govuk-heading-l")).to have_text("Dave Smith")
         end
       end
     end

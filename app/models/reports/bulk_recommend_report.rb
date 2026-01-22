@@ -3,7 +3,7 @@
 module Reports
   class BulkRecommendReport < TemplateClassCsv
     DO_NOT_EDIT   = "Do not edit"
-    DATE_GUIDANCE = "For example, 20/7/2022\nDelete row if the trainee has not met the standards"
+    DATE_GUIDANCE = "For example, 20/7/2022\nDelete row if the trainee's QTS or EYTS status is not changing"
 
     # required headers
     TRN = "TRN"

@@ -37,7 +37,7 @@ yet live but is available for testing.
 * `application_id` is now supported
 * New `POST /trainees/{trainee_id}/withdraw` endpoint to withdraw a trainee
 * New `POST /trainees/{trainee_id}/defer` endpoint to defer a trainee
-* New `POST /trainees/{trainee_id}/recommend-for-qts` endpoint to recommend a trainee for QTS
+* New `POST /trainees/{trainee_id}/recommend-for-qts` endpoint to changed status of a trainee for QTS
 * Changes for ITT Reform 2024. These include support for lead partners and changes to the validation rules
 * Better duplicate checks for degrees and placements
 * Improved error messages for validation errors

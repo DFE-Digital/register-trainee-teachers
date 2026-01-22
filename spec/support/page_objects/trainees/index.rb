@@ -3,7 +3,7 @@
 module PageObjects
   module Trainees
     class Base < PageObjects::Base
-      element :page_heading, ".govuk-heading-xl"
+      element :page_heading, ".govuk-heading-l"
 
       element :add_trainee_link, "a", text: "Create a trainee record"
 
@@ -22,6 +22,10 @@ module PageObjects
       element :assessment_only_checkbox, "#training_route-assessment_only"
       element :imported_from_apply_checkbox, "#record_source-apply"
       element :imported_from_dttp_checkbox, "#record_source-dttp"
+      element :record_source_manual_checkbox, "#record_source-manual"
+      element :record_source_hesa_checkbox, "#record_source-hesa"
+      element :record_source_api_checkbox, "#record_source-api"
+      element :record_source_csv_checkbox, "#record_source-csv"
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
       element :subject, "#subject"
       element :provider_filter, "#provider"

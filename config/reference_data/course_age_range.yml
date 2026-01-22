@@ -1,0 +1,147 @@
+metadata:
+  source: "HESA"
+  name: "course_age_range"
+  display_name: "Course age range"
+  description: ""
+  change_log:
+    - date: "2025-11-19"
+      change: "Initial version"
+      author: "Register team"
+
+data:
+  - id: [3, 11]
+    name: three_to_eleven
+    display_name: "Three to eleven"
+    description: ""
+    hesa_codes:
+      - "13912"
+  - id: [5, 11]
+    name: five_to_eleven
+    display_name: "Five to eleven"
+    description: ""
+    hesa_codes:
+      - "13914"
+  - id: [11, 16]
+    name: eleven_to_sixteen
+    display_name: "Eleven to sixteen"
+    description: ""
+    hesa_codes:
+      - "13918"
+  - id: [11, 18]
+    name: eleven_to_eighteen
+    display_name: "Eleven to eighteen"
+    description: ""
+  - id: [11, 18]
+    name: eleven_to_nineteen
+    display_name: "Eleven to nineteen"
+    description: ""
+    hesa_codes:
+      - "13919"
+  - id: [0, 5]
+    name: zero_to_five
+    display_name: "Zero to five"
+    description: ""
+  - id: [2, 7]
+    name: two_to_seven
+    display_name: "Two to seven"
+    description: ""
+  - id: [2, 11]
+    name: two_to_eleven
+    display_name: "Two to eleven"
+    description: ""
+  - id: [2, 19]
+    name: two_to_nineteen
+    display_name: "Two to nineteen"
+    description: ""
+  - id: [3, 7]
+    name: three_to_seven
+    display_name: "Three to seven"
+    description: ""
+    hesa_codes:
+      - "13909"
+  - id: [3, 8]
+    name: three_to_eight
+    display_name: "Three to eight"
+    description: ""
+  - id: [3, 9]
+    name: three_to_nine
+    display_name: "Three to nine"
+    description: ""
+    hesa_codes:
+      - "13911"
+  - id: [3, 16]
+    name: three_to_sixteen
+    display_name: "Three to sixteen"
+    description: ""
+  - id: [4, 11]
+    name: four_to_eleven
+    display_name: "Four to eleven"
+    description: ""
+  - id: [4, 19]
+    name: four_to_nineteen
+    display_name: "Four to nineteen"
+    description: ""
+  - id: [5, 9]
+    name: five_to_nine
+    display_name: "Five to nine"
+    description: ""
+    hesa_codes:
+      - "13913"
+  - id: [5, 14]
+    name: five_to_fourteen
+    display_name: "Five to fourteen"
+    description: ""
+  - id: [5, 18]
+    name: five_to_eighteen
+    display_name: "Five to eighteen"
+    description: ""
+  - id: [7, 11]
+    name: seven_to_eleven
+    display_name: "Seven to eleven"
+    description: ""
+    hesa_codes:
+      - "13915"
+  - id: [7, 14]
+    name: seven_to_fourteen
+    display_name: "Seven to fourteen"
+    description: ""
+    hesa_codes:
+      - "13916"
+  - id: [7, 16]
+    name: seven_to_sixteen
+    display_name: "Seven to sixteen"
+    description: ""
+  - id: [7, 18]
+    name: seven_to_eighteen
+    display_name: "Seven to eighteen"
+    description: ""
+  - id: [9, 13]
+    name: nine_to_thirteen
+    display_name: "Nine to thirteen"
+    description: ""
+  - id: [9, 14]
+    name: nine_to_fourteen
+    display_name: "Nine to fourteen"
+    description: ""
+    hesa_codes:
+      - "13917"
+  - id: [9, 16]
+    name: nine_to_sixteen
+    display_name: "Nine to sixteen"
+    description: ""
+  - id: [11, 19]
+    name: eleven_to_nineteen
+    display_name: "Eleven to nineteen"
+    description: ""
+  - id: [13, 18]
+    name: thirteen_to_eighteen
+    display_name: "Thirteen to eighteen"
+    description: ""
+  - id: [14, 18]
+    name: fourteen_to_eighteen
+    display_name: "Fourteen to eighteen"
+    description: ""
+  - id: [14, 19]
+    name: fourteen_to_nineteen
+    display_name: "Fourteen to nineteen"
+    description: ""

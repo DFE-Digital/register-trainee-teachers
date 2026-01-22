@@ -12,7 +12,10 @@ module AwardDetails
 
     def award_date
       if trainee.awarded_at.present?
-        date_for_summary_view(trainee.awarded_at)
+        I18n.t(
+          "components.award_details.holds_award",
+          awarded_at: date_for_summary_view(trainee.awarded_at),
+        )
       elsif trainee.recommended_for_award?
         I18n.t(
           "components.award_details.waiting_for_award",

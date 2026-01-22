@@ -8,3 +8,9 @@
     align-items: center;
   }
 }
+
+.govuk-accordion__section.payment-schedule-accordion {
+  .govuk-accordion__section-heading-text {
+    @include govuk-font($size: 19, $weight: bold);
+  }
+}

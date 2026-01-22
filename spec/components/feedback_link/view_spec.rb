@@ -10,7 +10,7 @@ module FeedbackLink
       before do
         render_inline(described_class.new(enabled: enabled,
                                           feedback_link_url: "https://www.google.com",
-                                          feedback_type_text: "recommend a trainee for QTS"))
+                                          feedback_type_text: "change status of a trainee for QTS"))
       end
 
       context "when enabled" do
