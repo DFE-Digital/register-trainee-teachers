@@ -2,9 +2,9 @@
 
 class FundingManager
   BURSARY_TIER_AMOUNTS = {
-    tier_one: 5000,
-    tier_two: 4000,
-    tier_three: 2000,
+    tier_one: 5_000,
+    tier_two: 4_000,
+    tier_three: 2_000,
   }.with_indifferent_access.freeze
 
   def initialize(trainee)

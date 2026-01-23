@@ -218,7 +218,7 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::GRANT }
     let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:school_direct_salaried]] }
-    let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::MUSIC_EDUCATION_AND_TEACHING] }
+    let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PHYSICS] }
 
     it "creates a trainee with a grant" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
