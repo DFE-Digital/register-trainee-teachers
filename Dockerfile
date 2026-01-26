@@ -38,7 +38,7 @@ RUN corepack enable && corepack prepare yarn@4.9.1 --activate
 
 # Install node packages defined in package.json
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
 # Copy all files to /app (except what is defined in .dockerignore)
 COPY . .

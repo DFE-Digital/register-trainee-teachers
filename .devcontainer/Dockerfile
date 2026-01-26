@@ -39,7 +39,7 @@ RUN corepack enable && corepack prepare yarn@4.9.1 --activate
 
 # Install node packages defined in package.json
 COPY ../package.json ../yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
 # Ensure PATH is set properly in shell
 RUN echo 'export PATH=/usr/local/bin:$PATH' > /root/.ashrc
