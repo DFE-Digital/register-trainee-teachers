@@ -100,11 +100,11 @@ module Api
         end
 
         def degrees_attributes
-          params[:degrees_attributes]&.map { |degree| Api::V20250::HesaMapper::DegreeAttributes.call(degree) }
+          params[:degrees_attributes]&.map { |degree| Api::V20260::HesaMapper::DegreeAttributes.call(degree) }
         end
 
         def placements_attributes
-          params[:placements_attributes]&.map { |placement| Api::V20250::HesaMapper::PlacementAttributes.new(placement).call }
+          params[:placements_attributes]&.map { |placement| Api::V20260::HesaMapper::PlacementAttributes.new(placement).call }
         end
 
         def sex

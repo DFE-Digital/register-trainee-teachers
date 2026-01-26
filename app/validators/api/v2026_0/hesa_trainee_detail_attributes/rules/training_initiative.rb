@@ -42,7 +42,7 @@ module Api
             training_initiative.blank? ||
               training_initiative.to_s == "no_initiative" ||
               training_initiative == ROUTE_INITIATIVES_ENUMS[:no_initiative] ||
-              training_initiative.is_a?(Api::V20250::HesaMapper::Attributes::InvalidValue)
+              training_initiative.is_a?(Api::V20260::HesaMapper::Attributes::InvalidValue)
           end
 
           def error_details
