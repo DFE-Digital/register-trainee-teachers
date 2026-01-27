@@ -323,7 +323,7 @@ en:
         date: Date the trainee withdrew
         reason: Why the trainee withdrew
         details: Details about why the trainee withdrew
-        avoidable: Could the Department of Education have done anything to avoid the candidate withdawning?
+        avoidable: Could the Department of Education have done anything to avoid the candidate withdrawing?
     training_partner_and_employing_school_details:
       summary_title: Schools
       training_partner_key: Training partner

@@ -12,8 +12,8 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
   let(:course_age_range) { "13918" }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:trainee_start_date) { itt_start_date }
-  let(:itt_start_date) { "2024-10-01" }
-  let(:itt_end_date) { "2025-08-01" }
+  let(:itt_start_date) { "2026-10-01" }
+  let(:itt_end_date) { "2027-08-01" }
   let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
   let(:disability1) { "58" }
   let(:disability2) { "57" }
@@ -62,7 +62,7 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
       funding_method: funding_method,
       hesa_id: "0310261553101",
       provider_trainee_id: "99157234/2/01",
-      pg_apprenticeship_start_date: "2024-03-11",
+      pg_apprenticeship_start_date: "2026-03-11",
     }
   end
 
@@ -118,7 +118,7 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body[:errors]).to contain_exactly(
-        "funding_method 'scholarship' is not allowed when training_route is 'provider_led_postgrad' and course_subject_one is 'psychology' in academic cycle '2024 to 2025'",
+        "funding_method 'scholarship' is not allowed when training_route is 'provider_led_postgrad' and course_subject_one is 'psychology' in academic cycle '2026 to 2027'",
       )
     end
   end
@@ -218,7 +218,7 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::GRANT }
     let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:school_direct_salaried]] }
-    let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::MUSIC_EDUCATION_AND_TEACHING] }
+    let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PHYSICS] }
 
     it "creates a trainee with a grant" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
