@@ -68,8 +68,8 @@ module Api
             training_route: training_route,
             nationality: nationality,
             training_initiative: training_initiative,
-            withdraw_date: @trainee.current_withdrawal&.date&.iso8601,
-            withdraw_reasons: withdraw_reasons,
+            withdrawal_date: @trainee.current_withdrawal&.date&.iso8601,
+            withdrawal_reasons: withdrawal_reasons,
             withdrawal_trigger: @trainee.current_withdrawal&.trigger,
             withdrawal_future_interest: @trainee.current_withdrawal&.future_interest,
             withdrawal_another_reason: @trainee.current_withdrawal&.another_reason,
@@ -221,7 +221,7 @@ module Api
         ::Hesa::CodeSets::Sexes::MAPPING.key(::Trainee.sexes[@trainee.sex])
       end
 
-      def withdraw_reasons
+      def withdrawal_reasons
         @trainee.current_withdrawal_reasons&.map(&:name)
       end
 

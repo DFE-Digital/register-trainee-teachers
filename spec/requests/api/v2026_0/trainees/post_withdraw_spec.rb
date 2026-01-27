@@ -25,14 +25,14 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
     context "with a withdrawable trainee" do
       let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received, provider:) }
       let(:reason) { create(:withdrawal_reason, :provider) }
-      let(:withdraw_date) { Time.zone.today.iso8601 }
+      let(:withdrawal_date) { Time.zone.today.iso8601 }
       let(:trigger) { "provider" }
       let(:future_interest) { "no" }
       let(:params) do
         {
           data: {
             reasons: [reason.name],
-            withdraw_date: withdraw_date,
+            withdrawal_date: withdrawal_date,
             trigger: trigger,
             future_interest: future_interest,
           },
@@ -49,8 +49,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         expect(response).to have_http_status(:ok)
 
         expect(response.parsed_body.dig(:data, :trainee_id)).to eql(trainee_id)
-        expect(response.parsed_body.dig(:data, :withdraw_reasons)).to include(reason.name)
-        expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+        expect(response.parsed_body.dig(:data, :withdrawal_reasons)).to include(reason.name)
+        expect(response.parsed_body.dig(:data, :withdrawal_date)).to eq(withdrawal_date)
         expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
         expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
       end
@@ -92,8 +92,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
           params: params.to_json,
         )
 
-        expect(response.parsed_body.dig(:data, :withdraw_reasons)).to contain_exactly(reason.name)
-        expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+        expect(response.parsed_body.dig(:data, :withdrawal_reasons)).to contain_exactly(reason.name)
+        expect(response.parsed_body.dig(:data, :withdrawal_date)).to eq(withdrawal_date)
         expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
         expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
         expect(response.parsed_body.dig(:data, :withdrawal_another_reason)).to be_nil
@@ -137,8 +137,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             params: params.to_json,
           )
 
-          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to contain_exactly(reason.name)
-          expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+          expect(response.parsed_body.dig(:data, :withdrawal_reasons)).to contain_exactly(reason.name)
+          expect(response.parsed_body.dig(:data, :withdrawal_date)).to eq(withdrawal_date)
           expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
           expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
           expect(response.parsed_body.dig(:data, :withdrawal_another_reason)).to eq("Another test reason")
@@ -183,8 +183,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             params: params.to_json,
           )
 
-          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to contain_exactly(reason.name)
-          expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+          expect(response.parsed_body.dig(:data, :withdrawal_reasons)).to contain_exactly(reason.name)
+          expect(response.parsed_body.dig(:data, :withdrawal_date)).to eq(withdrawal_date)
           expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
           expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
           expect(response.parsed_body.dig(:data, :withdrawal_another_reason)).to be_nil
@@ -193,11 +193,11 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       end
 
       context "with invalid params" do
-        context "with empty withdraw_date" do
+        context "with empty withdrawal_date" do
           let(:params) do
             super().deep_merge(
               data: {
-                withdraw_date: nil,
+                withdrawal_date: nil,
               },
             )
           end
@@ -212,22 +212,22 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             expect(response.parsed_body[:errors]).to contain_exactly(
-              { error: "UnprocessableEntity", message: "withdraw_date Choose a withdrawal date" },
+              { error: "UnprocessableEntity", message: "withdrawal_date Choose a withdrawal date" },
             )
           end
 
           it "did not change the trainee" do
             expect {
               post "/api/v2026.0/trainees/#{trainee_id}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
-            }.not_to change(trainee, :withdraw_date)
+            }.not_to change { trainee.reload.current_withdrawal&.date }
           end
         end
 
-        context "with invalid withdraw_date" do
+        context "with invalid withdrawal_date" do
           let(:params) do
             super().deep_merge(
               data: {
-                withdraw_date: trainee.itt_start_date - 1.day,
+                withdrawal_date: trainee.itt_start_date - 1.day,
               },
             )
           end
@@ -242,7 +242,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             expect(response.parsed_body[:errors]).to contain_exactly(
-              { error: "UnprocessableEntity", message: "withdraw_date must be after itt_start_date" },
+              { error: "UnprocessableEntity", message: "withdrawal_date must be after itt_start_date" },
             )
           end
         end
@@ -266,7 +266,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             expect(response.parsed_body[:errors]).to contain_exactly(
-              { error: "UnprocessableEntity", message: "withdraw_date Choose a withdrawal date" },
+              { error: "UnprocessableEntity", message: "withdrawal_date Choose a withdrawal date" },
               { error: "UnprocessableEntity", message: "reasons entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger" },
               { error: "UnprocessableEntity", message: "future_interest is not included in the list" },
               { error: "UnprocessableEntity", message: "trigger is not included in the list" },
@@ -284,7 +284,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         {
           data: {
             reasons: [reason.name],
-            withdraw_date: Time.zone.now.to_s,
+            withdrawal_date: Time.zone.now.to_s,
             trigger: "provider",
             future_interest: "no",
           },
@@ -304,7 +304,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       it "did not change the trainee" do
         expect {
           post "/api/v2026.0/trainees/#{trainee_id}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
-        }.not_to change(trainee, :withdraw_date)
+        }.not_to change { trainee.reload.current_withdrawal&.date }
       end
     end
   end

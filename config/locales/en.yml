@@ -2206,9 +2206,13 @@ en:
             course_subject_1:
               invalid: is invalid. It should be `100511` for the course_age_range provided
             course_subject_2:
-              duplicate: might contain duplicate values
+              duplicate: *api_duplicate_course_subjects
+              csv:
+                duplicate: *csv_duplicate_course_subjects
             course_subject_3:
-              duplicate: might contain duplicate values
+              duplicate: *api_duplicate_course_subjects
+              csv:
+                duplicate: *csv_duplicate_course_subjects
             degrees_attributes:
               blank: degrees_attributes must be entered if specifying a postgraduate training_route
               duplicate: degrees_attributes contains duplicate degrees
@@ -2231,7 +2235,7 @@ en:
             reasons:
               inclusion: Choose one or more reasons why the trainee withdrew from the course
               invalid: entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger
-            withdraw_date:
+            withdrawal_date:
               blank: Choose a withdrawal date
               invalid: Choose a valid withdrawal date
               not_before_itt_start_date: must be after itt_start_date

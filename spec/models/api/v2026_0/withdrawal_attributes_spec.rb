@@ -14,15 +14,15 @@ RSpec.describe Api::V20260::WithdrawalAttributes do
     it { is_expected.to validate_inclusion_of(:trigger).in_array(%w[provider trainee]).with_message("is not included in the list") }
     it { is_expected.to validate_inclusion_of(:future_interest).in_array(%w[yes no unknown]).with_message("is not included in the list") }
 
-    context "withdraw_date" do
+    context "withdrawal_date" do
       context "blank date" do
         before do
-          subject.withdraw_date = nil
+          subject.withdrawal_date = nil
           subject.validate
         end
 
         it "is blank" do
-          expect(subject.errors[:withdraw_date]).to contain_exactly(
+          expect(subject.errors[:withdrawal_date]).to contain_exactly(
             "Choose a withdrawal date",
           )
         end
@@ -30,12 +30,12 @@ RSpec.describe Api::V20260::WithdrawalAttributes do
 
       context "invalid date" do
         before do
-          subject.withdraw_date = "14/11/23"
+          subject.withdrawal_date = "14/11/23"
           subject.validate
         end
 
         it "is invalid" do
-          expect(subject.errors[:withdraw_date]).to contain_exactly(
+          expect(subject.errors[:withdrawal_date]).to contain_exactly(
             "Choose a valid withdrawal date",
           )
         end

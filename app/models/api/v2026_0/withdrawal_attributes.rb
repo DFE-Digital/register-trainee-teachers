@@ -10,7 +10,7 @@ module Api
 
       include DatesHelper
 
-      validate :withdraw_date_valid
+      validate :withdrawal_date_valid
       validate :withdrawal_reasons_valid?, unless: -> { reasons.nil? }
       validate :withdrawal_reasons_provided?
       validates :trigger, inclusion: { in: TraineeWithdrawal.triggers.keys }
@@ -22,7 +22,7 @@ module Api
 
       ATTRIBUTES = %i[
         reasons
-        withdraw_date
+        withdrawal_date
         trigger
         future_interest
         another_reason
@@ -44,25 +44,25 @@ module Api
       def attributes_to_save
         attributes
           .symbolize_keys
-          .except(:record_source, :reasons)
-          .merge(withdrawal_reasons:)
+          .except(:record_source, :reasons, :withdrawal_date)
+          .merge(withdrawal_reasons:, withdraw_date: withdrawal_date)
       end
 
     private
 
-      def withdraw_date_valid
-        if withdraw_date.blank?
-          errors.add(:withdraw_date, :blank)
-        elsif parsed_withdraw_date.blank?
-          errors.add(:withdraw_date, :invalid)
-        elsif date_before_itt_start_date?(parsed_withdraw_date, trainee.itt_start_date)
-          errors.add(:withdraw_date, :not_before_itt_start_date)
+      def withdrawal_date_valid
+        if withdrawal_date.blank?
+          errors.add(:withdrawal_date, :blank)
+        elsif parsed_withdrawal_date.blank?
+          errors.add(:withdrawal_date, :invalid)
+        elsif date_before_itt_start_date?(parsed_withdrawal_date, trainee.itt_start_date)
+          errors.add(:withdrawal_date, :not_before_itt_start_date)
         end
       end
 
-      def parsed_withdraw_date
+      def parsed_withdrawal_date
         parsed_date = begin
-          DateTime.iso8601(withdraw_date)
+          DateTime.iso8601(withdrawal_date)
         rescue StandardError
           ArgumentError
         end
