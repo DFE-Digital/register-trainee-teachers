@@ -207,7 +207,7 @@ describe PlacementsForm, type: :model do
     end
   end
 
-  describe "#save!", feature_integrate_with_dqt: true do
+  describe "#save!", feature_integrate_with_trs: true do
     let(:placement_form1) { instance_double(PlacementForm) }
     let(:placement_form2) { instance_double(PlacementForm) }
 
@@ -222,7 +222,7 @@ describe PlacementsForm, type: :model do
       expect(subject.save!).to be_present
     end
 
-    it "does not send and update to DQT" do
+    it "does not send an update to TRS" do
       expect(Trainees::Update).not_to receive(:call)
       subject.save!
     end

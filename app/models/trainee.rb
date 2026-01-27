@@ -49,9 +49,10 @@
 #  record_source                   :string
 #  region                          :string
 #  reinstate_date                  :date
+#  searchable                      :tsvector
 #  sex                             :integer
 #  slug                            :citext           not null
-#  slug_sent_to_dqt_at             :datetime
+#  slug_sent_to_trs_at             :datetime
 #  state                           :integer          default("draft")
 #  study_mode                      :integer
 #  submission_ready                :boolean          default(FALSE)
@@ -96,6 +97,7 @@
 #  index_trainees_on_placement_detail                              (placement_detail)
 #  index_trainees_on_progress                                      (progress) USING gin
 #  index_trainees_on_provider_id                                   (provider_id)
+#  index_trainees_on_searchable                                    (searchable) USING gin
 #  index_trainees_on_sex                                           (sex)
 #  index_trainees_on_slug                                          (slug) UNIQUE
 #  index_trainees_on_start_academic_cycle_id                       (start_academic_cycle_id)

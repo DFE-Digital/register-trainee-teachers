@@ -12,9 +12,6 @@ dfe_sign_in:
   # URL of the users profile
   profile: https://profile.signin.education.gov.uk
 
-dqt:
-  base_url: https://teacher-qualifications-api.education.gov.uk/
-
 trs:
   base_url: https://teacher-qualifications-api.education.gov.uk/
 
@@ -33,8 +30,6 @@ features:
   hesa_import:
     sync_collection: false
     sync_trn_data: false
-  dqt_import:
-    sync_teachers: true
   duplicate_checking: true
   school_data_auto_import: true
   maintenance_banner: false

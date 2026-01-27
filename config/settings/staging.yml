@@ -12,9 +12,6 @@ dfe_sign_in:
   # URL of the users profile
   profile: https://pp-profile.signin.education.gov.uk
 
-dqt:
-  base_url: https://preprod.teacher-qualifications-api.education.gov.uk
-
 trs:
   base_url: https://preprod.teacher-qualifications-api.education.gov.uk/
 
@@ -31,8 +28,6 @@ features:
     sync_collection: false
     sync_trn_data: false
     test_mode: true
-  dqt_import:
-    sync_teachers: false
   google:
     send_data_to_big_query: true
 

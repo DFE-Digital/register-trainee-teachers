@@ -327,7 +327,7 @@ shared:
     - updated_at
     - hesa_trn_submission_id
     - hesa_editable
-    - slug_sent_to_dqt_at
+    - slug_sent_to_trs_at
     - application_choice_id
   trs_trn_requests:
     - id

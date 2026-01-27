@@ -36,7 +36,7 @@ module Api
         trainee.attributes = trainee_attributes
         success = trainee.defer!
 
-        # Call Trainees::Update to trigger TRS/DQT updates after successful deferral
+        # Call Trainees::Update to trigger TRS updates after successful deferral
         ::Trainees::Update.call(trainee:) if success
 
         [success, nil]

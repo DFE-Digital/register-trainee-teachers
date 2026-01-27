@@ -5,9 +5,6 @@ dttp:
   scope: https://dttp.crm4.dynamics.com/.default
   api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
 
-dqt:
-  base_url: https://preprod.teacher-qualifications-api.education.gov.uk
-
 trs:
   base_url: https://preprod.teacher-qualifications-api.education.gov.uk/
 

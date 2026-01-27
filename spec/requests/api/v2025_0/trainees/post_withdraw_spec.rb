@@ -65,7 +65,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         } .to change { trainee.reload.state }.from("trn_received").to("withdrawn")
       end
 
-      it "calls the dqt withdraw service", openapi: false do
+      it "calls the trs withdraw service", openapi: false do
         expect(Trainees::Withdraw).to receive(:call).with(trainee:).at_least(:once)
 
         post(
