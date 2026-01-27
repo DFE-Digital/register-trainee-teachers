@@ -29,7 +29,7 @@ module DeadJobs
     end
 
     def name
-      @name ||= identifier.titleize.gsub(/Trs/i, &:upcase)
+      @name ||= identifier.titleize.gsub(/Dqt|Trs/i, &:upcase)
     end
 
     def identifier
