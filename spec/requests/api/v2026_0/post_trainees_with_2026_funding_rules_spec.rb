@@ -35,7 +35,7 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
       training_route: training_route,
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
-      course_subject_one: course_subject_one,
+      course_subject_1: course_subject_one,
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
       disability1: disability1,
       disability2: disability2,
@@ -103,11 +103,11 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body[:errors]).to contain_exactly("funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is 'mathematics'")
+      expect(response.parsed_body[:errors]).to contain_exactly("funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_1 is 'mathematics'")
     end
   end
 
-  context "when the request is invalid because no funding exists for the combination of academic_cycle, funding_method, course_subject_one, and training_route" do
+  context "when the request is invalid because no funding exists for the combination of academic_cycle, funding_method, course_subject_1, and training_route" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::SCHOLARSHIP }
     let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]] }
@@ -118,7 +118,7 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body[:errors]).to contain_exactly(
-        "funding_method 'scholarship' is not allowed when training_route is 'provider_led_postgrad' and course_subject_one is 'psychology' in academic cycle '2026 to 2027'",
+        "funding_method 'scholarship' is not allowed when training_route is 'provider_led_postgrad' and course_subject_1 is 'psychology' in academic cycle '2026 to 2027'",
       )
     end
   end

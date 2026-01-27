@@ -1533,6 +1533,9 @@ en:
         application_choice_id: application_id
       api/v20260/trainee_attributes:
         application_choice_id: application_id
+        course_subject_one: course_subject_1
+        course_subject_two: course_subject_2
+        course_subject_three: course_subject_3
       course_details_form:
         itt_start_date: &itt_start_date ITT start date
         itt_end_date: &itt_end_date Expected end date
@@ -2150,8 +2153,8 @@ en:
               csv:
                 not_eligible_fund_code: "'%{funding_type}' is not allowed when Fund Code is '%{fund_code}' and Course Subject One is '%{subject}'"
                 ineligible: "'%{funding_type}' is not allowed when Training Route is '%{training_route}' and Course Subject One is '%{subject}' in academic cycle '%{academic_cycle}'"
-              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_one is '%{subject}'"
-              ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_one is '%{subject}' in academic cycle '%{academic_cycle}'"
+              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_1 is '%{subject}'"
+              ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_1 is '%{subject}' in academic cycle '%{academic_cycle}'"
             itt_aim:
               ineligible: *ineligible
             itt_qualification_aim:
@@ -2200,6 +2203,12 @@ en:
               duplicate: *api_duplicate_course_subjects
               csv:
                 duplicate: *csv_duplicate_course_subjects
+            course_subject_1:
+              invalid: is invalid. It should be `100511` for the course_age_range provided
+            course_subject_2:
+              duplicate: might contain duplicate values
+            course_subject_3:
+              duplicate: might contain duplicate values
             degrees_attributes:
               blank: degrees_attributes must be entered if specifying a postgraduate training_route
               duplicate: degrees_attributes contains duplicate degrees
@@ -2220,7 +2229,21 @@ en:
         api/v20260/withdrawal_attributes:
           <<: *v20250_withdrawal_attributes
         api/v20260/hesa_trainee_detail_attributes:
-          <<: *v20250_hesa_trainee_detail_attributes
+          attributes:
+            fund_code:
+              ineligible: is not valid for this trainee
+            funding_method:
+              csv:
+                not_eligible_fund_code: "'%{funding_type}' is not allowed when Fund Code is '%{fund_code}' and Course Subject 1 is '%{subject}'"
+                ineligible: "'%{funding_type}' is not allowed when Training Route is '%{training_route}' and Course Subject 1 is '%{subject}' in academic cycle '%{academic_cycle}'"
+              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_1 is '%{subject}'"
+              ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_1 is '%{subject}' in academic cycle '%{academic_cycle}'"
+            itt_aim:
+              ineligible: is not valid for this trainee
+            itt_qualification_aim:
+              blank: must be entered if 202 selected for itt_aim
+              csv:
+                blank: must be entered if 202 selected for ITT Aim
         api/v20260/degree_attributes:
           <<: *v20250_degree_attributes
         api/create_trainee:

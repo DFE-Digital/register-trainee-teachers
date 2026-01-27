@@ -280,7 +280,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
     end
 
     context "when updating with valid course_age_range" do
-      let(:data) { { course_age_range: course_age_range, course_subject_one: "100511" } }
+      let(:data) { { course_age_range: course_age_range, course_subject_1: "100511" } }
 
       let(:course_age_range) { "13909" }
 
@@ -1718,33 +1718,33 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           )
         end
 
-        context "when course_subject_one is not '100511' (primary teaching)" do
+        context "when course_subject_1 is not '100511' (primary teaching)" do
           let(:course_age_range) { "13914" }
           let(:params) do
             {
               data: {
-                course_subject_one: "100346",
-                course_subject_two: "101410",
-                course_subject_three: "100366",
+                course_subject_1: "100346",
+                course_subject_2: "101410",
+                course_subject_3: "100366",
                 course_age_range: course_age_range,
               },
             }
           end
 
-          it "returns validation error for course_subject_one" do
+          it "returns validation error for course_subject_1" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to contain_exactly(
-              "course_subject_one is invalid. It should be `100511` for the course_age_range provided",
+              "course_subject_1 is invalid. It should be `100511` for the course_age_range provided",
             )
           end
 
           context "with enhanced errors" do
             let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
-            it "returns validation error for course_subject_one" do
+            it "returns validation error for course_subject_1" do
               expect(response).to have_http_status(:unprocessable_entity)
               expect(response.parsed_body[:errors]).to eq(
-                "course_subject_one" => ["is invalid. It should be `100511` for the course_age_range provided"],
+                "course_subject_1" => ["is invalid. It should be `100511` for the course_age_range provided"],
               )
             end
           end
@@ -1754,9 +1754,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           let(:params) do
             {
               data: {
-                course_subject_one: "100511",
-                course_subject_two: "101410",
-                course_subject_three: "100366",
+                course_subject_1: "100511",
+                course_subject_2: "101410",
+                course_subject_3: "100366",
               },
             }
           end
@@ -1768,9 +1768,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             expect(trainee.course_subject_two).to eq("historical linguistics")
             expect(trainee.course_subject_three).to eq("computer science")
 
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+            expect(response.parsed_body[:data][:course_subject_1]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_2]).to eq("101410")
+            expect(response.parsed_body[:data][:course_subject_3]).to eq("100366")
           end
 
           context "with enhanced errors" do
@@ -1783,15 +1783,15 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               expect(trainee.course_subject_two).to eq("historical linguistics")
               expect(trainee.course_subject_three).to eq("computer science")
 
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-              expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+              expect(response.parsed_body[:data][:course_subject_1]).to eq("100511")
+              expect(response.parsed_body[:data][:course_subject_2]).to eq("101410")
+              expect(response.parsed_body[:data][:course_subject_3]).to eq("100366")
             end
           end
         end
       end
 
-      context "when course_subject_two or course_subject_three are being unset" do
+      context "when course_subject_2 or course_subject_3 are being unset" do
         before do
           trainee.update(course_subject_one: "biology",
                          course_subject_two: "historical linguistics",
@@ -1808,9 +1808,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           let(:params) do
             {
               data: {
-                course_subject_one: "100511",
-                course_subject_two: nil,
-                course_subject_three: nil,
+                course_subject_1: "100511",
+                course_subject_2: nil,
+                course_subject_3: nil,
               },
             }
           end
@@ -1822,9 +1822,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             expect(trainee.course_subject_two).to be_nil
             expect(trainee.course_subject_three).to be_nil
 
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to be_nil
-            expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_1]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_2]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_3]).to be_nil
           end
 
           context "with enhanced errors" do
@@ -1837,9 +1837,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               expect(trainee.course_subject_two).to be_nil
               expect(trainee.course_subject_three).to be_nil
 
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to be_nil
-              expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+              expect(response.parsed_body[:data][:course_subject_1]).to eq("100511")
+              expect(response.parsed_body[:data][:course_subject_2]).to be_nil
+              expect(response.parsed_body[:data][:course_subject_3]).to be_nil
             end
           end
         end
@@ -1848,9 +1848,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           let(:params) do
             {
               data: {
-                course_subject_one: "100511",
-                course_subject_two: "",
-                course_subject_three: "",
+                course_subject_1: "100511",
+                course_subject_2: "",
+                course_subject_3: "",
               },
             }
           end
@@ -1862,9 +1862,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             expect(trainee.course_subject_two).to be_nil
             expect(trainee.course_subject_three).to be_nil
 
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to be_nil
-            expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_1]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_2]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_3]).to be_nil
           end
 
           context "with enhanced errors" do
@@ -1877,9 +1877,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               expect(trainee.course_subject_two).to be_nil
               expect(trainee.course_subject_three).to be_nil
 
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to be_nil
-              expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+              expect(response.parsed_body[:data][:course_subject_1]).to eq("100511")
+              expect(response.parsed_body[:data][:course_subject_2]).to be_nil
+              expect(response.parsed_body[:data][:course_subject_3]).to be_nil
             end
           end
         end
@@ -1889,9 +1889,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         let(:params) do
           {
             data: {
-              course_subject_one: "100346",
-              course_subject_two: "101410",
-              course_subject_three: "100366",
+              course_subject_1: "100346",
+              course_subject_2: "101410",
+              course_subject_3: "100366",
             },
           }
         end
@@ -1911,9 +1911,9 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           expect(trainee.course_subject_two).to eq("historical linguistics")
           expect(trainee.course_subject_three).to eq("computer science")
 
-          expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
-          expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-          expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+          expect(response.parsed_body[:data][:course_subject_1]).to eq("100346")
+          expect(response.parsed_body[:data][:course_subject_2]).to eq("101410")
+          expect(response.parsed_body[:data][:course_subject_3]).to eq("100366")
         end
 
         context "with enhanced errors" do
@@ -1926,17 +1926,17 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             expect(trainee.course_subject_two).to eq("historical linguistics")
             expect(trainee.course_subject_three).to eq("computer science")
 
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+            expect(response.parsed_body[:data][:course_subject_1]).to eq("100346")
+            expect(response.parsed_body[:data][:course_subject_2]).to eq("101410")
+            expect(response.parsed_body[:data][:course_subject_3]).to eq("100366")
           end
         end
       end
 
-      context "when course_subject_one has invalid reference data values" do
-        let(:course_subject_one) { "chemistry" }
+      context "when course_subject_1 has invalid reference data values" do
+        let(:course_subject_1) { "chemistry" }
         let(:params) do
-          { data: { course_subject_one: } }
+          { data: { course_subject_1: } }
         end
 
         before do
@@ -1950,7 +1950,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            /course_subject_one has invalid reference data value of 'chemistry'/,
+            /course_subject_1 has invalid reference data value of 'chemistry'/,
           )
         end
 
@@ -1960,16 +1960,16 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it "return status code 422 with a meaningful error message" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"]).to include(
-              "course_subject_one" => [/has invalid reference data value of 'chemistry'/],
+              "course_subject_1" => [/has invalid reference data value of 'chemistry'/],
             )
           end
         end
       end
 
-      context "when course_subject_two has invalid reference data values" do
-        let(:course_subject_two) { "child development" }
+      context "when course_subject_2 has invalid reference data values" do
+        let(:course_subject_2) { "child development" }
         let(:params) do
-          { data: { course_subject_two: } }
+          { data: { course_subject_2: } }
         end
 
         before do
@@ -1983,7 +1983,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            /course_subject_two has invalid reference data value of/,
+            /course_subject_2 has invalid reference data value of/,
           )
         end
 
@@ -1993,16 +1993,16 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it "return status code 422 with a meaningful error message" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"]).to include(
-              "course_subject_two" => [/has invalid reference data value of/],
+              "course_subject_2" => [/has invalid reference data value of/],
             )
           end
         end
       end
 
-      context "when course_subject_three has invalid reference data values" do
-        let(:course_subject_three) { "classical studies" }
+      context "when course_subject_3 has invalid reference data values" do
+        let(:course_subject_3) { "classical studies" }
         let(:params) do
-          { data: { course_subject_three: } }
+          { data: { course_subject_3: } }
         end
 
         before do
@@ -2016,7 +2016,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            /course_subject_three has invalid reference data value of/,
+            /course_subject_3 has invalid reference data value of/,
           )
         end
 
@@ -2026,7 +2026,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           it "return status code 422 with a meaningful error message" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"]).to include(
-              "course_subject_three" => [/has invalid reference data value of/],
+              "course_subject_3" => [/has invalid reference data value of/],
             )
           end
         end
@@ -2292,7 +2292,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
           itt_start_date: start_academic_cycle.start_date,
           itt_end_date: end_academic_cycle.end_date,
-          course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[course_subject],
+          course_subject_1: Hesa::CodeSets::CourseSubjects::MAPPING.invert[course_subject],
           study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
           degrees_attributes: [
             {
@@ -2602,7 +2602,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               "Validation failed: 1 error prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is '#{course_subject}'",
+              "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_1 is '#{course_subject}'",
             )
           end
         end
@@ -2734,7 +2734,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               )
               expect(response.parsed_body["errors"]).to eq(
                 "funding_method" => [
-                  "'bursary' is not allowed when fund_code is '2' and course_subject_one is '#{course_subject}'",
+                  "'bursary' is not allowed when fund_code is '2' and course_subject_1 is '#{course_subject}'",
                 ],
               )
             end

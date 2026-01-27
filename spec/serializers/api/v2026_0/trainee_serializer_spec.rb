@@ -43,9 +43,9 @@ RSpec.describe Api::V20260::TraineeSerializer do
         reinstate_date
         course_min_age
         course_max_age
-        course_subject_one
-        course_subject_two
-        course_subject_three
+        course_subject_1
+        course_subject_2
+        course_subject_3
         awarded_at
         training_initiative
         study_mode

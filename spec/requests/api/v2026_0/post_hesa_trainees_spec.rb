@@ -41,7 +41,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       },
     ]
   }
-  let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY] }
+  let(:course_subject_1) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY] }
 
   let(:endpoint) { "/api/v2026.0/trainees" }
   let!(:academic_cycle) { create(:academic_cycle, :current) }
@@ -59,7 +59,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
       trainee_start_date: trainee_start_date,
-      course_subject_one: course_subject_one,
+      course_subject_1: course_subject_1,
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
       disability1: disability1,
       disability2: disability2,
@@ -936,7 +936,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
     end
 
     context "with course subjects" do
-      context "when there course_subject_two is a duplicate" do
+      context "when there course_subject_2 is a duplicate" do
         before do
           post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
         end
@@ -944,8 +944,8 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         let(:params) do
           {
             data: data.merge(
-              course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
-              course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+              course_subject_1: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+              course_subject_2: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
             ),
           }
         end
@@ -953,7 +953,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "course_subject_two might contain duplicate values",
+            "course_subject_2 might contain duplicate values",
           )
         end
 
@@ -963,13 +963,13 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           it do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
-              "course_subject_two" => ["might contain duplicate values"],
+              "course_subject_2" => ["might contain duplicate values"],
             )
           end
         end
       end
 
-      context "when there course_subject_three is a duplicate" do
+      context "when there course_subject_3 is a duplicate" do
         before do
           post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
         end
@@ -977,9 +977,9 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         let(:params) do
           {
             data: data.merge(
-              course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PRIMARY_TEACHING],
-              course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
-              course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+              course_subject_1: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PRIMARY_TEACHING],
+              course_subject_2: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+              course_subject_3: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
             ),
           }
         end
@@ -987,7 +987,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "course_subject_three might contain duplicate values",
+            "course_subject_3 might contain duplicate values",
           )
         end
 
@@ -997,7 +997,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           it do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
-              "course_subject_three" => ["might contain duplicate values"],
+              "course_subject_3" => ["might contain duplicate values"],
             )
           end
         end
@@ -1010,31 +1010,31 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
         end
 
-        context "when course_subject_one is not '100511' (primary teaching)" do
+        context "when course_subject_1 is not '100511' (primary teaching)" do
           let(:params) do
             {
               data: data.merge(
-                course_subject_one: "100346",
-                course_subject_two: "101410",
-                course_subject_three: "100366",
+                course_subject_1: "100346",
+                course_subject_2: "101410",
+                course_subject_3: "100366",
               ),
             }
           end
 
-          it "returns validation error for course_subject_one" do
+          it "returns validation error for course_subject_1" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to contain_exactly(
-              "course_subject_one is invalid. It should be `100511` for the course_age_range provided",
+              "course_subject_1 is invalid. It should be `100511` for the course_age_range provided",
             )
           end
 
           context "with enhanced errors" do
             let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
-            it "returns validation error for course_subject_one" do
+            it "returns validation error for course_subject_1" do
               expect(response).to have_http_status(:unprocessable_entity)
               expect(response.parsed_body[:errors]).to eq(
-                "course_subject_one" => ["is invalid. It should be `100511` for the course_age_range provided"],
+                "course_subject_1" => ["is invalid. It should be `100511` for the course_age_range provided"],
               )
             end
           end
@@ -1044,9 +1044,9 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           let(:params) do
             {
               data: data.merge(
-                course_subject_one: "100511",
-                course_subject_two: "101410",
-                course_subject_three: "100366",
+                course_subject_1: "100511",
+                course_subject_2: "101410",
+                course_subject_3: "100366",
               ),
             }
           end
@@ -1058,9 +1058,9 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
             expect(trainee.course_subject_two).to eq("historical linguistics")
             expect(trainee.course_subject_three).to eq("computer science")
 
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+            expect(response.parsed_body[:data][:course_subject_1]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_2]).to eq("101410")
+            expect(response.parsed_body[:data][:course_subject_3]).to eq("100366")
           end
         end
       end
@@ -1070,9 +1070,9 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         let(:params) do
           {
             data: data.merge(
-              course_subject_one: "100346",
-              course_subject_two: "101410",
-              course_subject_three: "100366",
+              course_subject_1: "100346",
+              course_subject_2: "101410",
+              course_subject_3: "100366",
             ),
           }
         end
@@ -1088,9 +1088,9 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           expect(trainee.course_subject_two).to eq("historical linguistics")
           expect(trainee.course_subject_three).to eq("computer science")
 
-          expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
-          expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-          expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+          expect(response.parsed_body[:data][:course_subject_1]).to eq("100346")
+          expect(response.parsed_body[:data][:course_subject_2]).to eq("101410")
+          expect(response.parsed_body[:data][:course_subject_3]).to eq("100366")
         end
       end
     end
@@ -1320,7 +1320,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
 
-      expect(response.parsed_body["errors"]).to contain_exactly("first_names can't be blank", "last_name can't be blank", "date_of_birth can't be blank", "sex can't be blank", "training_route can't be blank", "itt_start_date can't be blank", "itt_end_date can't be blank", "course_subject_one can't be blank", "study_mode can't be blank", "hesa_id can't be blank", "email Enter an email address in the correct format, like name@example.com", "itt_aim can't be blank", "itt_qualification_aim must be entered if 202 selected for itt_aim", "course_year can't be blank", "course_age_range can't be blank", "fund_code can't be blank", "funding_method can't be blank")
+      expect(response.parsed_body["errors"]).to contain_exactly("first_names can't be blank", "last_name can't be blank", "date_of_birth can't be blank", "sex can't be blank", "training_route can't be blank", "itt_start_date can't be blank", "itt_end_date can't be blank", "course_subject_1 can't be blank", "study_mode can't be blank", "hesa_id can't be blank", "email Enter an email address in the correct format, like name@example.com", "itt_aim can't be blank", "itt_qualification_aim must be entered if 202 selected for itt_aim", "course_year can't be blank", "course_age_range can't be blank", "fund_code can't be blank", "funding_method can't be blank")
     end
 
     context "with enhanced errors" do
@@ -1336,7 +1336,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           "training_route" => ["can't be blank"],
           "itt_start_date" => ["can't be blank"],
           "itt_end_date" => ["can't be blank"],
-          "course_subject_one" => ["can't be blank"],
+          "course_subject_1" => ["can't be blank"],
           "study_mode" => ["can't be blank"],
           "hesa_id" => ["can't be blank"],
           "email" => ["Enter an email address in the correct format, like name@example.com"],
@@ -1512,16 +1512,16 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       end
     end
 
-    context "when course_subject_one has invalid reference data values" do
-      let(:course_subject_one) { "chemistry" }
+    context "when course_subject_1 has invalid reference data values" do
+      let(:course_subject_1) { "chemistry" }
       let(:params) do
-        { data: data.merge({ course_subject_one: }) }
+        { data: data.merge({ course_subject_1: }) }
       end
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /course_subject_one has invalid reference data value of 'chemistry'/,
+          /course_subject_1 has invalid reference data value of 'chemistry'/,
         )
       end
 
@@ -1531,22 +1531,22 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "course_subject_one" => [/has invalid reference data value of 'chemistry'/],
+            "course_subject_1" => [/has invalid reference data value of 'chemistry'/],
           )
         end
       end
     end
 
-    context "when course_subject_two has invalid reference data values" do
-      let(:course_subject_two) { "child development" }
+    context "when course_subject_2 has invalid reference data values" do
+      let(:course_subject_2) { "child development" }
       let(:params) do
-        { data: data.merge({ course_subject_two: }) }
+        { data: data.merge({ course_subject_2: }) }
       end
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /course_subject_two has invalid reference data value of/,
+          /course_subject_2 has invalid reference data value of/,
         )
       end
 
@@ -1556,22 +1556,22 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "course_subject_two" => [/has invalid reference data value of/],
+            "course_subject_2" => [/has invalid reference data value of/],
           )
         end
       end
     end
 
-    context "when course_subject_three has invalid reference data values" do
-      let(:course_subject_three) { "classical studies" }
+    context "when course_subject_3 has invalid reference data values" do
+      let(:course_subject_3) { "classical studies" }
       let(:params) do
-        { data: data.merge({ course_subject_three: }) }
+        { data: data.merge({ course_subject_3: }) }
       end
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /course_subject_three has invalid reference data value of/,
+          /course_subject_3 has invalid reference data value of/,
         )
       end
 
@@ -1581,7 +1581,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "course_subject_three" => [/has invalid reference data value of/],
+            "course_subject_3" => [/has invalid reference data value of/],
           )
         end
       end
@@ -1909,7 +1909,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]]
       params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
       params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
-      params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY]
+      params[:data][:course_subject_1] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY]
 
       post "/api/v2026.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
@@ -1920,7 +1920,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is 'biology'",
+        "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_1 is 'biology'",
       )
     end
 
@@ -1934,7 +1934,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         )
         expect(response.parsed_body["errors"]).to eq(
           "funding_method" => [
-            "'bursary' is not allowed when fund_code is '2' and course_subject_one is 'biology'",
+            "'bursary' is not allowed when fund_code is '2' and course_subject_1 is 'biology'",
           ],
         )
       end
@@ -1954,7 +1954,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]]
       params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
       params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
-      params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::FRENCH_LANGUAGE]
+      params[:data][:course_subject_1] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::FRENCH_LANGUAGE]
       funding_rule = create(
         :funding_method,
         training_route: :provider_led_postgrad,

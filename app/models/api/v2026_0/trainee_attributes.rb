@@ -39,9 +39,6 @@ module Api
         diversity_disclosure: {},
         ethnicity: {},
         disability_disclosure: {},
-        course_subject_one: {},
-        course_subject_two: {},
-        course_subject_three: {},
         course_allocation_subject_id: {},
         study_mode: {},
         application_choice_id: {},
@@ -59,6 +56,9 @@ module Api
       end
 
       INTERNAL_ATTRIBUTES = {
+        course_subject_one: {},
+        course_subject_two: {},
+        course_subject_three: {},
         training_partner_id: {},
         training_partner_not_applicable: { type: :boolean, options: { default: false } },
         employing_school_id: {},
