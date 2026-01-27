@@ -132,16 +132,21 @@ read-cluster-config:
 terraform-plan: deploy-plan
 
 deploy-plan: terraform-init
+	az account set -s $(AZ_SUBSCRIPTION) > /dev/null 2>&1; \
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
 	terraform -chdir=terraform/$(PLATFORM) plan -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS}
 
 terraform-apply: deploy
 
 deploy: terraform-init
+	az account set -s $(AZ_SUBSCRIPTION) > /dev/null 2>&1; \
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
 	terraform -chdir=terraform/$(PLATFORM) apply -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS} $(AUTO_APPROVE)
 
 terraform-destroy: destroy
 
 destroy: terraform-init
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
 	terraform -chdir=terraform/$(PLATFORM) destroy -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS} $(AUTO_APPROVE)
 
 terraform-init:
@@ -149,8 +154,9 @@ terraform-init:
 	$(eval export TF_VAR_app_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
 
 	az account set -s $(AZ_SUBSCRIPTION) && az account show
-	rm -rf terraform/$(PLATFORM)/vendor/modules/aks
-	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/$(PLATFORM)/vendor/modules/aks
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
+	rm -rf terraform/$(PLATFORM)/vendor/modules/aks; \
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/$(PLATFORM)/vendor/modules/aks; \
 	terraform -chdir=terraform/$(PLATFORM) init -reconfigure -upgrade -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
 get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
@@ -181,28 +187,32 @@ domains:
 	$(eval include global_config/register-domain.sh)
 
 domains-infra-init: domains set-azure-account
-	rm -rf terraform/custom_domains/infrastructure/vendor/modules/domains
-	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/custom_domains/infrastructure/vendor/modules/domains
-
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
+	rm -rf terraform/custom_domains/infrastructure/vendor/modules/domains; \
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/custom_domains/infrastructure/vendor/modules/domains; \
 	terraform -chdir=terraform/custom_domains/infrastructure init -reconfigure -upgrade \
 		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
 
 domains-infra-plan: domains-infra-init # make domains-infra-plan
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
 	terraform -chdir=terraform/custom_domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
 
 domains-infra-apply: domains-infra-init # make domains-infra-apply
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
 	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
 domains-init: domains set-azure-account
-	rm -rf terraform/custom_domains/environment_domains/vendor/modules/domains
-	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/custom_domains/environment_domains/vendor/modules/domains
-
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
+	rm -rf terraform/custom_domains/environment_domains/vendor/modules/domains; \
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/custom_domains/environment_domains/vendor/modules/domains; \
 	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}_backend.tfvars
 
 domains-plan: domains-init  # make qa domains-plan
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
 	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
 
 domains-apply: domains-init # make qa domains-apply
+	export ARM_SUBSCRIPTION_ID=$$(az account show --query id -o tsv); \
 	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
 domains-destroy: domains-init # make qa domains-destroy
