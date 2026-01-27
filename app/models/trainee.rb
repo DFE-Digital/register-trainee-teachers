@@ -52,7 +52,7 @@
 #  searchable                      :tsvector
 #  sex                             :integer
 #  slug                            :citext           not null
-#  slug_sent_to_dqt_at             :datetime
+#  slug_sent_to_trs_at             :datetime
 #  state                           :integer          default("draft")
 #  study_mode                      :integer
 #  submission_ready                :boolean          default(FALSE)

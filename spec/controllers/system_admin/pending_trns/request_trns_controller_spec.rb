@@ -58,7 +58,7 @@ RSpec.describe SystemAdmin::PendingTrns::RequestTrnsController do
         patch :update, params: { id: trainee.slug }
 
         expect(response).to redirect_to(pending_trns_path)
-        expect(flash[:dqt_error]).to include("API error")
+        expect(flash[:trs_error]).to include("API error")
       end
     end
 

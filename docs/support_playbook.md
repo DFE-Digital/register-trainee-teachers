@@ -147,7 +147,7 @@ If there is no issue, we can kick off another polling job with a timeout in the
 future:
 
 ```ruby
-Trs::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+Trs::RetrieveTrnJob.perform_later(t.trs_trn_request, Date.today + 4.days)
 ```
 
 ### 500 error
@@ -188,7 +188,7 @@ Register support may need to communicate with the trainee and provider to ensure
 #### Inspect jobs in a queue
 
 ```ruby
-trs_queue = Sidekiq::Queue.new("dqt")
+trs_queue = Sidekiq::Queue.new("trs")
 trs_queue.select { 1.value.include? "122803" } # select jobs containing user id value 122803
 ```
 

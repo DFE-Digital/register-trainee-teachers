@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_20_092937) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_20_092259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
@@ -325,9 +325,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_20_092937) do
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
-  end
-
   create_table "degrees", force: :cascade do |t|
     t.integer "locale_code", null: false
     t.string "uk_degree"
@@ -360,36 +357,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_20_092937) do
     t.datetime "updated_at", null: false
     t.uuid "uuid"
     t.index ["name"], name: "index_disabilities_on_name", unique: true
-  end
-
-  create_table "dqt_teacher_trainings", force: :cascade do |t|
-    t.bigint "dqt_teacher_id"
-    t.string "programme_start_date"
-    t.string "programme_end_date"
-    t.string "programme_type"
-    t.string "result"
-    t.string "provider_ukprn"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "hesa_id"
-    t.boolean "active"
-    t.index ["dqt_teacher_id"], name: "index_dqt_teacher_trainings_on_dqt_teacher_id"
-  end
-
-  create_table "dqt_teachers", force: :cascade do |t|
-    t.string "trn"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "date_of_birth"
-    t.string "qts_date"
-    t.string "eyts_date"
-    t.string "early_years_status_name"
-    t.string "early_years_status_value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "hesa_id"
-    t.boolean "allowed_pii_updates", default: false, null: false
-    t.index ["allowed_pii_updates"], name: "index_dqt_teachers_on_allowed_pii_updates"
   end
 
   create_table "dttp_accounts", force: :cascade do |t|
@@ -990,7 +957,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_20_092937) do
     t.bigint "hesa_trn_submission_id"
     t.string "iqts_country"
     t.boolean "hesa_editable", default: false
-    t.datetime "slug_sent_to_dqt_at"
+    t.datetime "slug_sent_to_trs_at"
     t.integer "placement_detail"
     t.integer "application_choice_id"
     t.text "provider_trainee_id"
