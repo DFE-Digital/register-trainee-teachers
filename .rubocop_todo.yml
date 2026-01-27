@@ -78,13 +78,11 @@ RSpec/SpecFilePathFormat:
     - 'spec/helpers/degree_helper_spec.rb'
     - 'spec/models/dfe_sign_in_user_spec.rb'
 
-# Offense count: 5
+# Offense count: 3
 RSpec/StubbedMock:
   Exclude:
     - 'spec/helpers/course_details_helper_spec.rb'
     - 'spec/models/trainee_spec.rb'
-    - 'spec/services/dqt/recommend_for_award_spec.rb'
-    - 'spec/services/dqt/withdraw_trainee_spec.rb'
     - 'spec/services/hesa/upload_trn_file_spec.rb'
 
 # Offense count: 9

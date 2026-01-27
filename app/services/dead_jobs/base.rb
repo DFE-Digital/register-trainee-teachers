@@ -29,7 +29,7 @@ module DeadJobs
     end
 
     def name
-      @name ||= identifier.titleize.gsub(/(Dqt|Trs)/i, &:upcase)
+      @name ||= identifier.titleize.gsub(/Dqt|Trs/i, &:upcase)
     end
 
     def identifier
@@ -71,7 +71,7 @@ module DeadJobs
         course_subject_two: trainee.course_subject_two,
         course_subject_three: trainee.course_subject_three,
         error_message: dead_job_error_message(trainee.id),
-        dqt: nil,
+        trs: nil,
       }
     end
 

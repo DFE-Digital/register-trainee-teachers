@@ -2,7 +2,7 @@
 
 module Trs
   class RetrieveTrnJob < Trs::BaseJob
-    queue_as :dqt
+    queue_as :trs
     retry_on Client::HttpError
     include NotifyOnTimeout
 
