@@ -2153,8 +2153,8 @@ en:
               csv:
                 not_eligible_fund_code: "'%{funding_type}' is not allowed when Fund Code is '%{fund_code}' and Course Subject One is '%{subject}'"
                 ineligible: "'%{funding_type}' is not allowed when Training Route is '%{training_route}' and Course Subject One is '%{subject}' in academic cycle '%{academic_cycle}'"
-              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_1 is '%{subject}'"
-              ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_1 is '%{subject}' in academic cycle '%{academic_cycle}'"
+              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_one is '%{subject}'"
+              ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_one is '%{subject}' in academic cycle '%{academic_cycle}'"
             itt_aim:
               ineligible: *ineligible
             itt_qualification_aim:
