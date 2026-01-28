@@ -55,7 +55,9 @@ paths:
         in: query
         required: false
         schema:
-          type: string
+          oneOf:
+          - type: string
+          - type: integer
         example: not-a-number
       - name: api_version
         in: path
@@ -205,10 +207,6 @@ paths:
                           type: string
                           nullable: true
                         employing_school_urn:
-                          nullable: true
-                        lead_partner_ukprn:
-                          nullable: true
-                        lead_partner_urn:
                           nullable: true
                         previous_last_name:
                           type: string
@@ -1520,12 +1518,6 @@ paths:
                       employing_school_urn:
                         nullable: true
                         type: string
-                      lead_partner_ukprn:
-                        nullable: true
-                        type: string
-                      lead_partner_urn:
-                        nullable: true
-                        type: string
                       previous_last_name:
                         nullable: true
                         type: string
@@ -1777,8 +1769,6 @@ paths:
                   course_itt_start_date: '2025-08-01'
                   course_age_range: '13918'
                   employing_school_urn:
-                  lead_partner_ukprn:
-                  lead_partner_urn:
                   previous_last_name:
                   itt_aim: '202'
                   course_year: 2012
@@ -1802,7 +1792,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: Js3NCBPRFACKUNgFhgxXE9H8
+                    placement_id: trc851f38r6s3dsZ1UbjUSXD
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -1818,9 +1808,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: RcC8FQPqQQEmcrq5CrbB75g6
+                    degree_id: 3rHCTdE6n2apEcqGdbqLJPgE
                   state: submitted_for_trn
-                  trainee_id: GJTi4JZCv4N18j7151qtXbxC
+                  trainee_id: KcRdfNLkMFs7Rzf6L96KGfE9
                   application_id:
                   disability1: '58'
                   disability2: '57'
@@ -1938,10 +1928,6 @@ paths:
                         course_age_range:
                           nullable: true
                         employing_school_urn:
-                          nullable: true
-                        lead_partner_ukprn:
-                          nullable: true
-                        lead_partner_urn:
                           nullable: true
                         nationality:
                           nullable: true
@@ -2310,7 +2296,7 @@ paths:
                 errors:
                 - funding_method 'scholarship' is not allowed when training_route
                   is 'provider_led_postgrad' and course_subject_one is 'psychology'
-                  in academic cycle '2024 to 2025'
+                  in academic cycle '2026 to 2027'
       requestBody:
         content:
           application/json:
@@ -2410,11 +2396,7 @@ paths:
                       type: string
                     application_id:
                       type: integer
-                    lead_partner_ukprn:
-                      type: string
                     employing_school_urn:
-                      type: string
-                    lead_partner_urn:
                       type: string
                     course_subject_two:
                       type: string
@@ -2483,11 +2465,9 @@ paths:
                 placements_attributes:
                 - urn: '900020'
                 provider_trainee_id: 99157234/2/01
-                pg_apprenticeship_start_date: '2024-03-11'
+                pg_apprenticeship_start_date: '2026-03-11'
                 application_id: 6916785
-                lead_partner_ukprn: '65782432'
                 employing_school_urn: '883876'
-                lead_partner_urn: '314842'
                 course_subject_two: '101410'
                 course_subject_three: '100366'
                 ethnicity: '142'
@@ -2509,7 +2489,9 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          oneOf:
+          - type: integer
+          - type: string
         example: nonexistent
       responses:
         '200':
@@ -2832,7 +2814,7 @@ paths:
         required: true
         schema:
           type: string
-        example: Mz9mk1rubeVnBaRAAZiMVbBP
+        example: rfpdFvNcG76B35roner3XQ1w
       responses:
         '200':
           description: does not update the degrees
@@ -3218,7 +3200,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: B2SCkBd5vpTx1Sn7wvVxsXGC
+                    placement_id: tkWsM5jqsCCiUGLfGC8EHAtb
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3234,9 +3216,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: XynP5or3puCAyfT1py3jE9KG
+                    degree_id: f5qYD7bYKFMyXd9KLSkxaWcD
                   state: submitted_for_trn
-                  trainee_id: G7oAhX8FFTfkvngTV7eaBDfD
+                  trainee_id: kSMv1NPsHxZERvoDbWWt35dg
                   application_id:
                   disability2: '57'
         '401':
@@ -3393,6 +3375,8 @@ paths:
                       type: string
                     course_age_range:
                       type: string
+                    course_subject_one:
+                      type: string
                     training_partner_urn:
                       type: string
                     employing_school_urn:
@@ -3455,7 +3439,8 @@ paths:
                 first_names: Alice
                 provider_trainee_id: 99157234/2/01
                 nationality: FR
-                course_age_range: '13914'
+                course_age_range: '13909'
+                course_subject_one: '100346'
                 training_partner_urn: '900020'
                 employing_school_urn: '555071'
                 ethnicity:
@@ -4094,7 +4079,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: WqjRxFubmzr8ub43FfYRxNJd
+                  degree_id: PUWzRifvTU63KH6uH3zv7EpJ
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4995,7 +4980,7 @@ paths:
                   postcode: Z1 9GG
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: Lv1byNugoi1TgG7U3QVFDC7g
+                  placement_id: T66ec2Phei96Q6UN2mMLNtsZ
         '404':
           description: does not create a new placement and returns a 404 status (not_found)
             status
