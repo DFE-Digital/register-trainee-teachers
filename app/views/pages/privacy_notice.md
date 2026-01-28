@@ -13,6 +13,10 @@ title: Register trainee teachers (Register) privacy notice
   For the purposes of relevant data protection legislation, <a class="govuk-link" taget="_blank" href="https://www.gov.uk/government/organisations/department-for-education/about/personal-information-charter?">the DfE is the data controller for personal data</a> processed by DfE.
 </p>
 
+<p class="govuk-body">
+  Jisc is an independent data controller. Our contractual arrangement with Jisc ended on 31 October 2025. They may continue to process your personal data after this date in accordance with their own legal obligations and data retention policies. <a class="govuk-link" taget="_blank" href="https://www.hesa.ac.uk/about/regulation/data-protection/notices">Find out more about how Jisc processes your personal data as an independent controller</a>.
+</p>
+
 <h2 class="govuk-heading-m">
   Purpose and lawful basis for processing
 </h2>
