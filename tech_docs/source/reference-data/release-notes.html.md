@@ -5,9 +5,11 @@ weight: 2
 
 # Release notes
 
-## v2025.0 — 23 July 2025
+## v2026.0 — 30 January 2026
 
-Date published: 23 July 2025
+All reference data items remain unchanged from v2025.0. All existing values remain valid and supported.
+
+## v2025.0 — 23 July 2025
 
 ### Overview
 
@@ -18,7 +20,7 @@ It includes:
 <ul class="govuk-list govuk-list--bullet">
   <li>new data values</li>
   <li>removed values</li>
-  <li>updated labels</li>
+  <li>updated values</li>
   <li>values that are not currently supported</li>
   <li>confirmation of unchanged data items</li>
 </ul>
