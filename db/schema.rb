@@ -16,7 +16,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_18_132249) do
   enable_extension "citext"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
