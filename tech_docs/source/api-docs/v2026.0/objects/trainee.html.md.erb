@@ -264,9 +264,7 @@ weight: 1
       <p class="govuk-body">
         Notes:
         Where the course maximum age is 11 or less as stated in <code>course_age_range</code>,
-        we expect <code>course_subject_1</code> to be “Primary Teaching”. We will automatically apply HESA code <code>100511</code> if you have not already done so.
-        Any subjects provided in the trainee details will be shifted to <code>course_subject_2</code> and <code>course_subject_3</code>.
-        Where trainees study a primary specialism, a valid HECoS code should be used in this field.
+        we expect <code>course_subject_1</code> to be “Primary Teaching”. We will return an error if this is not set to HESA code <code>100511</code>.
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
