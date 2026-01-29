@@ -50,6 +50,7 @@
 #  record_source                   :string
 #  region                          :string
 #  reinstate_date                  :date
+#  searchable                      :tsvector
 #  sex                             :integer
 #  slug                            :citext           not null
 #  slug_sent_to_dqt_at             :datetime
@@ -71,7 +72,6 @@
 #  employing_school_id             :bigint
 #  end_academic_cycle_id           :bigint
 #  hesa_id                         :string
-#  hesa_trn_submission_id          :bigint
 #  lead_partner_id                 :bigint
 #  placement_assignment_dttp_id    :uuid
 #  provider_id                     :bigint           not null
@@ -97,6 +97,7 @@
 #  index_trainees_on_placement_detail                              (placement_detail)
 #  index_trainees_on_progress                                      (progress) USING gin
 #  index_trainees_on_provider_id                                   (provider_id)
+#  index_trainees_on_searchable                                    (searchable) USING gin
 #  index_trainees_on_sex                                           (sex)
 #  index_trainees_on_slug                                          (slug) UNIQUE
 #  index_trainees_on_start_academic_cycle_id                       (start_academic_cycle_id)
@@ -183,8 +184,6 @@ class Trainee < ApplicationRecord
   has_many :withdrawal_reasons, through: :trainee_withdrawal_reasons
   # Going forward, withdrawal_reasons belong to a trainee's withdrawal record within "trainee_withdrawals"
   has_many :trainee_withdrawals, dependent: :destroy
-
-  has_many :potential_duplicate_trainees, dependent: :destroy
 
   attribute :progress, Progress.to_type
 
@@ -346,7 +345,6 @@ class Trainee < ApplicationRecord
         start_academic_cycle_id: trainee.start_academic_cycle_id,
       )
   }
-  scope :not_marked_as_duplicate, -> { where.not(id: PotentialDuplicateTrainee.select(:trainee_id)) }
 
   audited associated_with: :provider
   has_associated_audits
