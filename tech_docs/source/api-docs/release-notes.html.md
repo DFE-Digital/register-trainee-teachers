@@ -5,6 +5,31 @@ weight: 2
 
 # Release notes
 
+## v2026.0 — 30 January 2026
+
+First release of the 2026 version of the Register API.
+
+This is available for testing in the [sandbox environment](https://sandbox.register-trainee-teachers.service.gov.uk/).
+
+### Changes
+
+* Terminology change from 'Lead Partner' to 'Training Partner'. Changes have been made to field names, error messages, and documentation throughout the API.
+* Field name changes:
+
+  | Previous field name | New field name |
+  |---|---|
+  | `lead_partner_urn` | `training_partner_urn` |
+  | `lead_partner_ukprn` | `training_partner_ukprn` |
+  | `course_subject_one` | `course_subject_1` |
+  | `course_subject_two` | `course_subject_2` |
+  | `course_subject_three` | `course_subject_3` |
+  | `withdraw_date` | `withdrawal_date` |
+  | `withdraw_reasons` | `withdrawal_reasons` |
+
+* Handling of course subject for primary courses:
+  * An error will be returned if the age range is primary (max age 11 or less) but the `course_subject_1` is not `100511` (Primary Teaching)
+* Funding rules have been updated to include the 2026 to 2027 academic year funding.
+
 ## v2025.0 — 1 September 2025
 
 First release of the 2025.0 version of the Register API.
