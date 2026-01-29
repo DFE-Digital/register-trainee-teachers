@@ -26,8 +26,8 @@ resource "azurerm_storage_account" "tempdata" {
 
 resource "azurerm_storage_container" "tempdata" {
   count = var.deploy_temp_data_storage_account ? 1 : 0
-  name                  = "tempdata"
-  storage_account_name  = resource.azurerm_storage_account.tempdata[0].name
+  name                 = "tempdata"
+  storage_account_id   = azurerm_storage_account.tempdata[0].id
   container_access_type = "private"
 }
 
@@ -60,8 +60,8 @@ resource "azurerm_storage_account" "sanitised_uploads" {
 resource "azurerm_storage_container" "sanitised_uploads" {
   count                 = var.enable_sanitised_storage ? 1 : 0
 
-  name                  = "database-backup"
-  storage_account_name  = azurerm_storage_account.sanitised_uploads[0].name
+  name                 = "database-backup"
+  storage_account_id   = azurerm_storage_account.sanitised_uploads[0].id
   container_access_type = "private"
 }
 
