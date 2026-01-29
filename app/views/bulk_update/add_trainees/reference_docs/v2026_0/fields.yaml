@@ -1,5 +1,5 @@
 ---
-- field_name: Provider Trainee ID
+- field_name: provider_trainee_id
   technical: provider_trainee_id
   hesa_alignment: OWNSTU
   description: Provider’s own internal identifier for the student.
@@ -8,7 +8,7 @@
   validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/training_details_form.rb#L7
   page_title: Provider trainee ID
-- field_name: Application ID
+- field_name: application_id
   technical: application_id
   hesa_alignment: APPLYAPPLICATIONID
   description:
@@ -17,7 +17,7 @@
   format: Limited to 7 digit numbers.
   example: "`123456`"
   validation: Optional - but should be included for all trainees with an application in the Apply service
-- field_name: HESA ID
+- field_name: hesa_id
   technical: hesa_id
   hesa_alignment: HUSID
   description: The HESA unique student identifier for the trainee.
@@ -28,7 +28,7 @@
   example: "`12100071451234560`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L72
-- field_name: First Names
+- field_name: first_names
   technical: first_names
   hesa_alignment: FNAMES
   description: This field records the forenames of the student
@@ -37,7 +37,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L62
   page_title: First names
-- field_name: Last Name
+- field_name: last_name
   technical: last_name
   hesa_alignment: SURNAME
   description: This field is the student’s family name.
@@ -46,7 +46,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L63
   page_title: Last name
-- field_name: Previous Last Name
+- field_name: previous_last_name
   technical: previous_last_name
   hesa_alignment: PSURNAME
   description:
@@ -56,7 +56,7 @@
   example: "`Jordan-Smith`"
   validation: Optional
   page_title: Previous last name
-- field_name: Date of Birth
+- field_name: date_of_birth
   technical: date_of_birth
   hesa_alignment: BIRTHDTE
   description: This field records the date of birth of the student.
@@ -65,7 +65,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L64
   page_title: Date of birth
-- field_name: NI Number
+- field_name: ni_number
   technical: ni_number
   hesa_alignment: NIN
   description: This field describes the trainee’s National Insurance number.
@@ -77,7 +77,7 @@
   example: "`BX586745C`"
   validation: Optional
   page_title: NI number
-- field_name: Sex
+- field_name: sex
   technical: sex
   hesa_alignment: SEXID
   description: This field records the gender of the student.
@@ -86,7 +86,7 @@
     `10`
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L65
-- field_name: Email
+- field_name: email
   technical: email
   hesa_alignment: NQTEMAIL
   description: |-
@@ -97,14 +97,14 @@
   example: "`jane.smith@example.com`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L87
-- field_name: Nationality
+- field_name: nationality
   technical: nationality
   hesa_alignment: NATION
   description: This field defines the country of legal nationality.
   format: "[Nationality reference codes](/reference-data/v2025.0/nationality.html)"
   example: "`GB`"
   validation: Optional
-- field_name: Ethnicity
+- field_name: ethnicity
   technical: ethnicity
   hesa_alignment: ETHNIC
   description: This field records a student’s ethnicity.
@@ -112,7 +112,7 @@
   example:
     "`103` for example is the code to use if the ethnicity is Asian - Indian or Indian British."
   validation: Optional
-- field_name: Disability 1
+- field_name: disability_1
   technical: disability1
   hesa_alignment: DISABLE
   description:
@@ -121,7 +121,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability1.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 2
+- field_name: disability_2
   technical: disability2
   hesa_alignment: DISABLE
   description:
@@ -130,7 +130,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability2.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 3
+- field_name: disability_3
   technical: disability3
   hesa_alignment: DISABLE
   description:
@@ -139,7 +139,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability3.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 4
+- field_name: disability_4
   technical: disability4
   hesa_alignment: DISABLE
   description:
@@ -148,7 +148,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability4.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 5
+- field_name: disability_5
   technical: disability5
   hesa_alignment: DISABLE
   description:
@@ -157,7 +157,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability5.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 6
+- field_name: disability_6
   technical: disability6
   hesa_alignment: DISABLE
   description:
@@ -166,7 +166,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability6.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 7
+- field_name: disability_7
   technical: disability7
   hesa_alignment: DISABLE
   description:
@@ -175,7 +175,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability7.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 8
+- field_name: disability_8
   technical: disability8
   hesa_alignment: DISABLE
   description:
@@ -184,7 +184,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability8.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: Disability 9
+- field_name: disability_9
   technical: disability9
   hesa_alignment: DISABLE
   description:
@@ -193,7 +193,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability9.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: ITT Aim
+- field_name: itt_aim
   technical: itt_aim
   hesa_alignment: ITTAIM
   description:
@@ -206,7 +206,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L26
   page_title: ITT aim
-- field_name: Training Route
+- field_name: training_route
   technical: training_route
   hesa_alignment: ENTRYRTE
   description:
@@ -217,7 +217,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/trainee.rb#L213-L215
   page_title: Training route
-- field_name: Qualification Aim
+- field_name: itt_qualification_aim
   technical: itt_qualification_aim
   hesa_alignment: QLAIM
   description: This field describes the qualification aim of the Initial Teacher
@@ -229,7 +229,7 @@
   validation: "Conditional - mandatory if ITT Aim is `202`"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L41
   page_title: Qualification aim
-- field_name: Course Subject One
+- field_name: course_subject_1
   technical: course_subject_1
   hesa_alignment: SBJCA
   description: |-
@@ -241,7 +241,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_0/trainee_attributes.rb
   page_title: Course subject one
-- field_name: Course Subject Two
+- field_name: course_subject_2
   technical: course_subject_2
   hesa_alignment: SBJCA
   description: |-
@@ -252,7 +252,7 @@
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
   page_title: Course subject two
-- field_name: Course Subject Three
+- field_name: course_subject_3
   technical: course_subject_3
   hesa_alignment: SBJCA
   description: |-
@@ -263,7 +263,7 @@
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
   page_title: Course subject three
-- field_name: Study Mode
+- field_name: study_mode
   technical: study_mode
   hesa_alignment: MODE
   description:
@@ -274,7 +274,7 @@
   validation: "Conditional - mandatory when the training route is not Assessment only or Early years assessment only"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
   page_title: Study mode
-- field_name: ITT Start Date
+- field_name: itt_start_date
   technical: itt_start_date
   hesa_alignment: ITTSTARTDATE
   description:
@@ -285,7 +285,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L67
   page_title: ITT start date
-- field_name: ITT End Date
+- field_name: itt_end_date
   technical: itt_end_date
   hesa_alignment: EXPECTEDENDDATE
   description: The end date of the Initial Teacher Training part of their course. Includes planned assessment periods, or planned
@@ -295,7 +295,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L68
   page_title: ITT end date
-- field_name: Course Age Range
+- field_name: course_age_range
   technical: course_age_range
   hesa_alignment: ITTPHSC
   description: This field describes in more detail the student’s initial teacher
@@ -314,7 +314,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L29
   page_title: Course age range
-- field_name: Course Year
+- field_name: course_year
   technical: course_year
   hesa_alignment: YEARPRG
   description: The year number of the course that the trainee is currently studying.
@@ -327,7 +327,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L28
   page_title: Course year
-- field_name: Training Partner URN
+- field_name: training_partner_urn
   technical: training_partner_urn
   hesa_alignment: SDLEAD
   description: |-
@@ -343,7 +343,7 @@
     - `900030` - Not available
   validation: Optional
   page_title: Training partner URN
-- field_name: Employing School URN
+- field_name: employing_school_urn
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY
   description:
@@ -357,7 +357,7 @@
     - `900030` - Not available
   validation: Optional
   page_title: Employing school URN
-- field_name: Trainee Start Date
+- field_name: trainee_start_date
   technical: trainee_start_date
   hesa_alignment: TRAINEESTARTDATE
   description: |-
@@ -371,7 +371,7 @@
   example: "`2024-09-01`"
   validation: Optional
   page_title: Trainee start date
-- field_name: PG Apprenticeship Start Date
+- field_name: pg_apprenticeship_start_date
   technical: pg_apprenticeship_start_date
   hesa_alignment: PGAPPSTDT
   description: |-
@@ -383,7 +383,7 @@
   example: "`2024-09-01`"
   validation: Optional
   page_title: PG apprenticeship start date
-- field_name: Placement 1 URN
+- field_name: placement_1_urn
   technical: placement_urn1
   hesa_alignment: PLMNTSCH
   description: This field describes a school where a trainee is undertaking a placement.
@@ -394,7 +394,7 @@
     - `900020` - Other establishment without a URN
     - `900030` - Not available
   validation: Optional
-- field_name: Placement 2 URN
+- field_name: placement_2_urn
   technical: placement_urn2
   hesa_alignment: PLMNTSCH
   description: This field describes a school where a trainee is undertaking a placement.
@@ -405,7 +405,7 @@
     - `900020` - Other establishment without a URN
     - `900030` - Not available
   validation: Optional
-- field_name: Placement 3 URN
+- field_name: placement_3_urn
   technical: placement_urn3
   hesa_alignment: PLMNTSCH
   description: This field describes a school where a trainee is undertaking a placement.
@@ -416,7 +416,7 @@
     - `900020` - Other establishment without a URN
     - `900030` - Not available
   validation: Optional
-- field_name: Fund Code
+- field_name: fund_code
   technical: fund_code
   hesa_alignment: FUNDCODE
   description: "This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body. NOTE: Use `7` if the trainee chooses not to receive finance they are eligible for."
@@ -425,7 +425,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L66
   page_title: Fund code
-- field_name: Funding Method
+- field_name: funding_method
   technical: funding_method
   hesa_alignment: BURSLEV
   description:
@@ -439,7 +439,7 @@
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L31
   page_title: Funding method
-- field_name: Training Initiative
+- field_name: training_initiative
   technical: training_initiative
   hesa_alignment: INITIATIVES
   description:
@@ -452,7 +452,7 @@
   validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
   page_title: Training initiative
-- field_name: Additional Training Initiative
+- field_name: additional_training_initiative
   technical: additional_training_initiative
   hesa_alignment: INITIATIVES
   description: The secondary training initiative that the trainee is on.
@@ -484,7 +484,7 @@
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L42
   page_title: Non-UK degree type
-- field_name: Degree Subject
+- field_name: degree_subject
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student’s previous degree. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1.
@@ -517,7 +517,7 @@
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L33
   page_title: Degree graduation year
-- field_name: Awarding Institution
+- field_name: awarding_institution
   technical: institution
   hesa_alignment: DEGEST
   description:

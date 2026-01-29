@@ -2217,7 +2217,7 @@ en:
               blank: degrees_attributes must be entered if specifying a postgraduate training_route
               duplicate: degrees_attributes contains duplicate degrees
               csv:
-                blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
+                blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate training_route
             training_initiative:
               ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
             hesa_id:
@@ -2253,8 +2253,8 @@ en:
               ineligible: is not valid for this trainee
             funding_method:
               csv:
-                not_eligible_fund_code: "'%{funding_type}' is not allowed when Fund Code is '%{fund_code}' and Course Subject 1 is '%{subject}'"
-                ineligible: "'%{funding_type}' is not allowed when Training Route is '%{training_route}' and Course Subject 1 is '%{subject}' in academic cycle '%{academic_cycle}'"
+                not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_1 is '%{subject}'"
+                ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_1 is '%{subject}' in academic cycle '%{academic_cycle}'"
               not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_1 is '%{subject}'"
               ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_1 is '%{subject}' in academic cycle '%{academic_cycle}'"
             itt_aim:
@@ -2262,7 +2262,7 @@ en:
             itt_qualification_aim:
               blank: must be entered if 202 selected for itt_aim
               csv:
-                blank: must be entered if 202 selected for ITT Aim
+                blank: must be entered if 202 selected for itt_aim
         api/v20260/degree_attributes:
           <<: *v20250_degree_attributes
         api/create_trainee:

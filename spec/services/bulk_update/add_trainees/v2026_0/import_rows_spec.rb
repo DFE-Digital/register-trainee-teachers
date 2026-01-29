@@ -176,9 +176,9 @@ RSpec.describe BulkUpdate::AddTrainees::V20260::ImportRows do
           it "converts rows to standard case" do
             described_class.call(trainee_upload)
             first_row = BulkUpdate::TraineeUploadRow.first
-            expect(first_row.data["First Names"]).to eq("Spencer")
-            expect(first_row.data["Last Name"]).to eq("Murphy")
-            expect(first_row.data["Email"]).to eq("Spencer.Murphy@example.com")
+            expect(first_row.data["first_names"]).to eq("Spencer")
+            expect(first_row.data["last_name"]).to eq("Murphy")
+            expect(first_row.data["email"]).to eq("Spencer.Murphy@example.com")
           end
 
           it "sets the status to `validated`" do
