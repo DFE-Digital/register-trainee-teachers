@@ -1,5 +1,9 @@
 # <%= csv_field_name %>
 
+<% if defined?(show_preview_warning) && show_preview_warning %>
+<%= partial "partials/preview_warning", locals: { version: version } %>
+<% end %>
+
 <section class="app-summary-card govuk-!-margin-bottom-6" id="summary-card-provider_trainee_id">
   <div class="app-summary-card__body">
     <dl class="govuk-summary-list">
