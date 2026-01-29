@@ -6,7 +6,6 @@ You’ll need to have the libraries below to be able to develop the application 
 
 - [Ruby](https://www.ruby-lang.org/en/)
 - [Node.js](https://nodejs.org/en/)
-- [Yarn](https://yarnpkg.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Redis](https://redis.io/)
 - [ChromeDriver](https://chromedriver.chromium.org/)
@@ -26,7 +25,7 @@ Install the plugins and versions specified in `.tool-versions`
 ```bash
 asdf plugin add ruby
 asdf plugin add nodejs
-asdf plugin add yarn
+...
 asdf install
 ```
 
