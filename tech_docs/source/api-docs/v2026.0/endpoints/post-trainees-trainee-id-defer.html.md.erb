@@ -1,22 +1,69 @@
 ---
-title: DELETE /trainees/{trainee_id}/placements/{placement_id}
-weight: 17
+title: POST /trainees/{trainee_id}/defer
+weight: 12
 ---
 
-# `DELETE /trainees/{trainee_id}/placements/{placement_id}`
+# `POST /trainees/{trainee_id}/defer`
 
-Deletes an existing placement for this trainee.
+<%= partial "partials/v2026_preview_warning" %>
+
+Defer a trainee.
 
 ## Request
 
-    DELETE /api/v2026.0/trainees/{trainee_id}/placements/{placement_id}
+    POST /api/v2026.0/trainees/{trainee_id}/defer
 
 ## Parameters
 
-| **Parameter** | **In**  | **Type** | **Required** | **Description** |
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
-| **placement_id** | path | string | true | The unique ID of the placement |
+
+## Request body
+
+Deferral details
+
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>defer_date</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, required
+    </p>
+    <p class="govuk-body">
+      The date when the Trainee deferred. Dates should be in ISO 8601 format.
+    </p>
+    <p class="govuk-body">
+      Example: <code>2000-01-01</code>
+    </p>
+  </dd>
+</div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>defer_reason</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string (limited to 500 characters)
+    </p>
+    <p class="govuk-body">
+      The reason that the Trainee deferred.
+    </p>
+    <p class="govuk-body">
+      Example: <code>Cannot attend course</code>
+    </p>
+  </dd>
+</div>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">Example request body</summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "defer_date": "2024-06-17",
+        "defer_reason": "The trainee's circumstances changed so they want to defer"
+      }
+    }</pre>
+  </div>
+</details>
 
 ## Possible responses
 
@@ -48,16 +95,11 @@ Deletes an existing placement for this trainee.
         "itt_end_date": "2023-10-17",
         "trn": "6440650",
         "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-        "state": "deferred",
+        "state": "recommended_for_award",
         "withdraw_date": null,
-        "withdrawal_future_interest": null,
-        "withdrawal_trigger": null,
-        "withdrawal_reasons": null,
-        "withdrawal_another_reason": null,
-        "withdrawal_safeguarding_concern_reasons": null,
-        "defer_date": "2023-10-17",
+        "defer_date": "2024-06-17",
         "defer_reason": null,
-        "recommended_for_award_at": null,
+        "recommended_for_award_at": nil,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
         "course_min_age": 5,
@@ -88,6 +130,11 @@ Deletes an existing placement for this trainee.
         "record_source": "api",
         "iqts_country": null,
         "hesa_editable": true,
+        "withdrawal_future_interest": null,
+        "withdrawal_trigger": null,
+        "withdrawal_reasons": null,
+        "withdrawal_another_reason": null,
+        "withdrawal_safeguarding_concern_reasons": null,
         "placement_detail": null,
         "ukprn": "10000571",
         "ethnicity": "120",
@@ -160,7 +207,22 @@ Deletes an existing placement for this trainee.
       "errors": [
         {
           "error": "NotFound",
-          "message": "Placement(s) not found"
+          "message": "Trainee(s) not found"
+        }
+      ]
+    }</pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "UnprocessableEntity",
+          "message": "Defer date can't be blank"
         }
       ]
     }</pre>
