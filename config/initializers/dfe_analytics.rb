@@ -54,7 +54,7 @@ DfE::Analytics.configure do |config|
   # use a new version of the BigQuery streaming APIs.
   config.azure_federated_auth = true
 
-  if Rails.env.in?(%w[development review qa])
+  if Rails.env.in?(%w[development review qa staging])
     # Path of airbyte stream config file relative to the App root (Rails.root)
     config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
 
