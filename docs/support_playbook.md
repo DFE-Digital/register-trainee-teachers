@@ -160,6 +160,7 @@ May indicate that TRS is down.
 
 ```json
 status: 503, body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.6.4","title":"Service Unavailable","status":503,"traceId":"00-d25977e8c3bea5a9d8fcfd2041e1e4ae-229da0abb1de21bc-00"}
+```
 
 ## Incorrectly awarded trainee
 
