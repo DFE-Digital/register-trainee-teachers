@@ -8,7 +8,6 @@ module Reports
       @trainee = trainee
     end
 
-    # rubocop:disable Naming/VariableNumber
     delegate :country,
              :grade,
              :graduation_year,
