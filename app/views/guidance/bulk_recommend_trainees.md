@@ -10,7 +10,7 @@ You cannot use this process to record other training outcomes or to change train
 
 Find out [how to withdraw, defer, reinstate or recommend an individual trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).
 
-You can change other trainee or course details in an individual trainee’s record. You can also use the Higher Education Statistics Agency (HESA) service if you have access to it.
+You can change other trainee or course details in an individual trainee’s record.
 {/inset-text}
 
 ## How to bulk recommend trainees for QTS or EYTS
