@@ -47,6 +47,7 @@ module PageObjects
     element :page_heading, "h1"
 
     element :v20250_link, "a", text: "v2025.0"
+    element :v20260_link, "a", text: "v2026.0"
 
     element :course_age_range_link, "a", text: "Course age range"
     element :course_age_range_heading, "h1", text: "Course age range"
