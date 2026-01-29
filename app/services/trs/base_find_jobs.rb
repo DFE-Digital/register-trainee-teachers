@@ -6,7 +6,7 @@ module Trs
 
     def call
       sidekiq_class.new
-      .select { |job| job.item["wrapped"] == "Dqt::RecommendForAwardJob" }
+      .select { |job| job.item["wrapped"] == "Trs::UpdateProfessionalStatusJob" }
       .sort_by { |job| job.item["enqueued_at"] }
       .to_h do |job|
         [

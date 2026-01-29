@@ -15,7 +15,7 @@ module Api
         hesa_updated_at
         hesa_editable
         slug
-        slug_sent_to_dqt_at
+        slug_sent_to_trs_at
         state
         searchable
         submission_ready

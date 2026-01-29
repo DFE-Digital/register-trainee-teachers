@@ -120,7 +120,7 @@ describe OutcomeDateForm, type: :model do
         )
       end
 
-      it "skips update trainee on DQT API" do
+      it "skips update trainee on TRS API" do
         expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
         expect { subject.save! }.not_to have_enqueued_job(Trs::UpdateTraineeJob)
       end

@@ -29,10 +29,6 @@ hesa:
   username: <get from secrets>
   password: <get from secrets>
 
-dqt:
-  base_url: https://teacher-qualifications-api.education.gov.uk/
-  api_key: <get from secrets>
-
 trs:
   base_url: https://teacher-qualifications-api.education.gov.uk
   api_key: <get from secrets>
@@ -87,8 +83,6 @@ features:
     test_mode: false
     sync_collection: false
     sync_trn_data: false
-  dqt_import:
-    sync_teachers: false
   # For the 3 months prior to an academic cycle, we're not sure
   # which year the user wants courses listed for. This feature
   # makes sure the correct year is selected before listing courses.

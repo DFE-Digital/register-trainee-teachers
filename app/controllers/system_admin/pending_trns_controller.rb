@@ -3,7 +3,7 @@
 module SystemAdmin
   class PendingTrnsController < ApplicationController
     helper_method :sort_by_items, :sorted_trainees
-    add_flash_types :dqt_error
+    add_flash_types :trs_error
     before_action :redirect_to_default_sort, only: :index
 
     def index
