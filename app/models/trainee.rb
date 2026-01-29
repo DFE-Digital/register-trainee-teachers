@@ -183,8 +183,6 @@ class Trainee < ApplicationRecord
   # Going forward, withdrawal_reasons belong to a trainee's withdrawal record within "trainee_withdrawals"
   has_many :trainee_withdrawals, dependent: :destroy
 
-  has_many :potential_duplicate_trainees, dependent: :destroy
-
   attribute :progress, Progress.to_type
 
   delegate :update_training_route!, to: :route_data_manager
@@ -345,7 +343,6 @@ class Trainee < ApplicationRecord
         start_academic_cycle_id: trainee.start_academic_cycle_id,
       )
   }
-  scope :not_marked_as_duplicate, -> { where.not(id: PotentialDuplicateTrainee.select(:trainee_id)) }
 
   audited associated_with: :provider
   has_associated_audits
