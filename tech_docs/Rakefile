@@ -92,64 +92,125 @@ namespace :tech_docs do
       version_runner_code = "print Hesa::ReferenceData.constants"
 
       TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.reverse_each.with_index do |version, index|
-        data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
-        version_dir       = TechDocsHelpers.format_version(version)
-
-        FileUtils.mkdir_p("source/reference-data/#{version_dir}")
-
-        is_preview = TechDocsHelpers.preview_version?(version_dir)
-        content = <<~CONTENT
-          ---
-          title: #{version_dir}
-          weight: #{index + 3}
-          hide_in_navigation: #{is_preview}
-          ---
-
-          # #{version_dir}
-        CONTENT
-        content += "\n<%= partial \"partials/preview_warning\", locals: { version: \"#{version_dir}\" } %>\n" if is_preview
-        File.write("source/reference-data/#{version_dir}/index.html.md.erb", content)
-
-        app     = Middleman::Application.new
-        context = Middleman::TemplateContext.new(app, {})
-
-        fields = TechDocsHelpers.fields(version)
-
-        data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, _values|
-          field_name = fields.detect { |field| field["technical"] == attribute }["field_name"].downcase
-          words      = Regexp.union(TechDocsHelpers::WORDS_TO_NUMBERS.keys)
-          field_name.gsub(words, TechDocsHelpers::WORDS_TO_NUMBERS)
-        end.to_h
-
-        data.each_with_index do |(attribute, values), index|
-          field               = fields.detect { |field| field["technical"] == attribute }
-          formatted_attribute = attribute.gsub("_", "-")
-
-          File.open("source/reference-data/#{version_dir}/#{formatted_attribute}.html.md.erb", "w") do |f|
-            html = context.partial(
-              "partials/reference_data/attribute", locals: {
-                attribute: formatted_attribute,
-                version: version_dir,
-                field: field,
-                values: values,
-                show_preview_warning: is_preview,
-              }
-            )
-
-            f.write(
-              <<~METADATA,
-                ---
-                title: #{field['page_title'] || field['field_name']}
-                weight: #{index + 1}
-                source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
-                ---
-
-              METADATA
-            )
-
-            f.write(html)
-          end
+        if version < TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA
+          ReferenceDataGenerator2025.generate(version, index)
+        else
+          ReferenceDataGenerator2026.generate(version, index)
         end
+      end
+    end
+  end
+end
+
+class ReferenceDataGenerator2026
+  def self.generate(version, index)
+    version_dir = TechDocsHelpers.format_version(version)
+    is_preview = TechDocsHelpers.preview_version?(version_dir)
+
+    FileUtils.mkdir_p("source/reference-data/#{version_dir}")
+
+    content = <<~CONTENT
+      ---
+      title: #{version_dir}
+      weight: #{index + 3}
+      hide_in_navigation: #{is_preview}
+      ---
+
+      # #{version_dir}
+    CONTENT
+    content += "\n<%= partial \"partials/preview_warning\", locals: { version: \"#{version_dir}\" } %>\n" if is_preview
+    File.write("source/reference-data/#{version_dir}/index.html.md.erb", content)
+
+    app = Middleman::Application.new
+    context = Middleman::TemplateContext.new(app, {})
+
+    ReferenceDataHelper.new.each_with_index do |reference_data_type, index|
+      File.open("source/reference-data/#{version_dir}/#{reference_data_type.formatted_type_name}.html.md.erb", "w+") do |f|
+        html = context.partial(
+          "partials/reference_data/attribute_from_yaml", locals: {
+            version: version_dir,
+            name: reference_data_type.metadata.fetch("name"),
+            formatted_type_name: reference_data_type.formatted_type_name,
+            type: reference_data_type.metadata,
+            values: reference_data_type.type_values,
+            index: index,
+            show_preview_warning: is_preview,
+          }
+        )
+
+        f.write(
+          <<~METADATA,
+            ---
+            title: #{reference_data_type.metadata.fetch('display_name')}
+            weight: #{index + 1}
+            source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
+            ---
+
+          METADATA
+        )
+
+        f.write(html)
+      end
+    end
+  end
+end
+
+class ReferenceDataGenerator2025
+  def self.generate(version, index)
+    data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
+    version_dir       = TechDocsHelpers.format_version(version)
+    is_preview = TechDocsHelpers.preview_version?(version_dir)
+
+    FileUtils.mkdir_p("source/reference-data/#{version_dir}")
+
+    content = <<~CONTENT
+      ---
+      title: #{version_dir}
+      weight: #{index + 3}
+      hide_in_navigation: #{is_preview}
+      ---
+
+      # #{version_dir}
+    CONTENT
+    content += "\n<%= partial \"partials/preview_warning\", locals: { version: \"#{version_dir}\" } %>\n" if is_preview
+    File.write("source/reference-data/#{version_dir}/index.html.md.erb", content)
+
+    app     = Middleman::Application.new
+    context = Middleman::TemplateContext.new(app, {})
+
+    data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, _values|
+      field_name = TechDocsHelpers.fields(version).detect { |field| field["technical"] == attribute }["field_name"].downcase
+      words      = Regexp.union(TechDocsHelpers::WORDS_TO_NUMBERS.keys)
+      field_name.gsub(words, TechDocsHelpers::WORDS_TO_NUMBERS)
+    end.to_h
+
+    data.each_with_index do |(attribute, values), index|
+      field               = TechDocsHelpers.fields(version).detect { |field| field["technical"] == attribute }
+      formatted_attribute = attribute.gsub("_", "-")
+
+      File.open("source/reference-data/#{version_dir}/#{formatted_attribute}.html.md.erb", "w") do |f|
+        html = context.partial(
+          "partials/reference_data/attribute", locals: {
+            attribute: formatted_attribute,
+            version: version_dir,
+            field: field,
+            values: values,
+            show_preview_warning: is_preview,
+          }
+        )
+
+        f.write(
+          <<~METADATA,
+            ---
+            title: #{field['page_title'] || field['field_name']}
+            weight: #{index + 1}
+            source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
+            ---
+
+          METADATA
+        )
+
+        f.write(html)
       end
     end
   end
@@ -171,6 +232,7 @@ module TechDocsHelpers
     "nine" => 9,
     "ten" => 10,
   }.freeze
+  FIRST_VERSION_WITH_NEW_REFERENCE_DATA = "V20260"
 
   def self.runner(runner_code)
     command = <<~CMD
@@ -229,5 +291,74 @@ module TechDocsHelpers
 
     FileUtils.rm_rf("source")
     FileUtils.mv("temp_source", "source")
+  end
+end
+
+class ReferenceDataHelper
+  include Enumerable
+
+  ReferenceDataType = Struct.new(
+    :metadata,
+    :data,
+    :formatted_type_name,
+    :type_values,
+  )
+
+  ReferenceDataValue = Struct.new(
+    :hesa_code,
+    :id,
+    :name,
+    :display_name,
+    :description,
+    :start_year,
+    :end_year,
+  )
+
+  def each
+    hesa_value_labels = {}
+    Dir["#{TechDocsHelpers::RAILS_DIR}/config/locales/reference_data/*.yml"].each do |file_path|
+      labels = YAML.load_file(file_path, aliases: true)
+      hesa_value_labels = hesa_value_labels.deep_merge(labels)
+    end
+
+    Dir["#{TechDocsHelpers::RAILS_DIR}/config/reference_data/*.yml"].each_with_index do |file_path, _index|
+      yaml = YAML.load_file(file_path)
+
+      ReferenceDataType.new.tap do |reference_data_type|
+        reference_data_type.metadata = yaml.fetch("metadata", {})
+        reference_data_type.data = yaml.fetch("data", {})
+        reference_data_type.formatted_type_name = reference_data_type.metadata.fetch("name").gsub("_", "-")
+        reference_data_type.type_values = []
+
+        reference_data_type.data.each do |value|
+          hesa_codes = value.fetch("hesa_codes", [])
+          if hesa_codes.present?
+            hesa_codes.each do |code|
+              reference_data_type.type_values << ReferenceDataValue.new(
+                hesa_code: code,
+                id: value.fetch("id"),
+                name: value.fetch("name"),
+                display_name: hesa_value_labels.dig("en", reference_data_type.metadata.fetch("name"), code) || value.fetch("display_name"),
+                description: value.fetch("description", nil),
+                start_year: value.fetch("start_year", nil),
+                end_year: value.fetch("end_year", nil),
+              )
+            end
+          else
+            reference_data_type.type_values << ReferenceDataValue.new(
+              hesa_code: "-",
+              id: value.fetch("id"),
+              name: value.fetch("name"),
+              display_name: value.fetch("display_name"),
+              description: value.fetch("description", nil),
+              start_year: value.fetch("start_year", nil),
+              end_year: value.fetch("end_year", nil),
+            )
+          end
+        end
+
+        yield(reference_data_type)
+      end
+    end
   end
 end

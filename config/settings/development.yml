@@ -24,4 +24,3 @@ blazer_database_url: postgresql://localhost/register_trainee_teacher_data_develo
 
 api:
   allowed_versions: [v2025.0-rc, v2025.0, v2026.0]
-

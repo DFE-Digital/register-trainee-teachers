@@ -3,7 +3,6 @@
 :queues:
   - high_priority
   - default
-  - dqt
   - trs
   - apply
   - hesa
