@@ -65,42 +65,42 @@ module BulkUpdate
           "degree_country" => "country",
         }.freeze
 
-        PREFIXED_HEADERS = [
-          "hesa_id",
-          "date_of_birth",
-          "sex",
-          "ethnicity",
-          "disability1",
-          "disability2",
-          "disability3",
-          "disability4",
-          "disability5",
-          "disability6",
-          "disability7",
-          "disability8",
-          "disability9",
-          "itt_aim",
-          "training_route",
-          "itt_qualification_aim",
-          "course_subject_1",
-          "course_subject_2",
-          "course_subject_3",
-          "study_mode",
-          "itt_start_date",
-          "itt_end_date",
-          "course_age_range",
-          "trainee_start_date",
-          "pg_apprenticeship_start_date",
-          "fund_code",
-          "funding_method",
-          "training_initiative",
-          "additional_training_initiative",
-          "uk_degree",
-          "non_uk_degree",
-          "degree_subject",
-          "degree_grade",
-          "degree_graduation_year",
-          "awarding_institution",
+        PREFIXED_HEADERS = %w[
+          hesa_id
+          date_of_birth
+          sex
+          ethnicity
+          disability1
+          disability2
+          disability3
+          disability4
+          disability5
+          disability6
+          disability7
+          disability8
+          disability9
+          itt_aim
+          training_route
+          itt_qualification_aim
+          course_subject_1
+          course_subject_2
+          course_subject_3
+          study_mode
+          itt_start_date
+          itt_end_date
+          course_age_range
+          trainee_start_date
+          pg_apprenticeship_start_date
+          fund_code
+          funding_method
+          training_initiative
+          additional_training_initiative
+          uk_degree
+          non_uk_degree
+          degree_subject
+          degree_grade
+          degree_graduation_year
+          awarding_institution
         ].freeze
 
         ALL_HEADERS = TRAINEE_HEADERS.merge(PLACEMENT_HEADERS).merge(DEGREE_HEADERS)

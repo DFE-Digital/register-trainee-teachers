@@ -45,7 +45,7 @@ module Api
         attributes
           .symbolize_keys
           .except(:record_source, :reasons, :withdrawal_date)
-          .merge(withdrawal_reasons:, withdraw_date: withdrawal_date)
+          .merge(withdrawal_reasons: withdrawal_reasons, withdraw_date: withdrawal_date)
       end
 
     private
