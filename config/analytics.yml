@@ -183,12 +183,6 @@ shared:
     - created_at
     - updated_at
     - slug
-  potential_duplicate_trainees:
-    - id
-    - group_id
-    - trainee_id
-    - created_at
-    - updated_at
   provider_users:
     - created_at
     - id
