@@ -112,7 +112,7 @@
   example:
     "`103` for example is the code to use if the ethnicity is Asian - Indian or Indian British."
   validation: Optional
-- field_name: disability_1
+- field_name: disability1
   technical: disability1
   hesa_alignment: DISABLE
   description:
@@ -121,7 +121,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability1.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_2
+- field_name: disability2
   technical: disability2
   hesa_alignment: DISABLE
   description:
@@ -130,7 +130,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability2.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_3
+- field_name: disability3
   technical: disability3
   hesa_alignment: DISABLE
   description:
@@ -139,7 +139,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability3.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_4
+- field_name: disability4
   technical: disability4
   hesa_alignment: DISABLE
   description:
@@ -148,7 +148,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability4.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_5
+- field_name: disability5
   technical: disability5
   hesa_alignment: DISABLE
   description:
@@ -157,7 +157,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability5.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_6
+- field_name: disability6
   technical: disability6
   hesa_alignment: DISABLE
   description:
@@ -166,7 +166,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability6.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_7
+- field_name: disability7
   technical: disability7
   hesa_alignment: DISABLE
   description:
@@ -175,7 +175,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability7.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_8
+- field_name: disability8
   technical: disability8
   hesa_alignment: DISABLE
   description:
@@ -184,7 +184,7 @@
   format: "[Disability reference codes](/reference-data/v2025.0/disability8.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
-- field_name: disability_9
+- field_name: disability9
   technical: disability9
   hesa_alignment: DISABLE
   description:
@@ -493,7 +493,7 @@
   validation: Conditional - mandatory if specifying a degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L34
   page_title: Degree subject
-- field_name: Degree grade
+- field_name: degree_grade
   technical: grade
   hesa_alignment: DEGCLSS
   description: The grade of the degree.
@@ -502,7 +502,7 @@
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L38
   page_title: Degree grade
-- field_name: Degree graduation year
+- field_name: degree_graduation_year
   technical: graduation_year
   hesa_alignment: DEGENDDT
   description: The year of graduation.
@@ -528,7 +528,7 @@
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L36
   page_title: Awarding institution
-- field_name: Degree country
+- field_name: degree_country
   technical: country
   hesa_alignment: DEGCTRY
   description:
