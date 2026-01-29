@@ -9,6 +9,8 @@ weight: 2
 
 All reference data items remain unchanged from v2025.0. All existing values remain valid and supported.
 
+Documentation has been updated to reduce duplication and include some additional information.
+
 ## v2025.0 — 23 July 2025
 
 ### Overview
