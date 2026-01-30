@@ -76,8 +76,8 @@
 
     <h3 class="govuk-heading-s">School centred initial teacher training (SCITT) providers</h3>
     <p class="govuk-body">
-      If you notice a mistake, and the trainee is shown in this service as gained QTS or EYTS or withdrawn,
-      you should email <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>.
+      If you notice a mistake and the trainee is shown in this service as holding QTS or EYTS, you should email
+      <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>.
       Only the Becoming a Teacher team can edit this record for you.
     </p>
     <p class="govuk-body">
@@ -88,8 +88,8 @@
 
     <h3 class="govuk-heading-s">Higher education institution (HEI) providers </h3>
     <p class="govuk-body">
-      If you notice a mistake, and the trainee is shown in this service as gained QTS or EYTS or withdrawn,
-      you should email <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>.
+      If you notice a mistake and the trainee is shown in this service as holding QTS or EYTS, you should email
+      <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>.
       Only the Becoming a Teacher team can edit this record for you.
     </p>
     <p class="govuk-body">
@@ -99,16 +99,10 @@
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        make the change through the Higher Education Statistics Agency (HESA)
-        if the trainee was registered through HESA and is in the 2023 to 2024
-        initial teacher training (ITT) collection
+        make the change using the Register API if you have this set up and the trainee was registered through HESA
       </li>
       <li>
-        email <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>
-        if the trainee was registered through HESA but is not in the 2023 to 2024 ITT collection
-      </li>
-      <li>
-        make the change in this service if the trainee was not registered through HESA
+        make the change in this service if you can't use the Register API, or if the trainee was not registered through HESA
       </li>
     </ul>
 
