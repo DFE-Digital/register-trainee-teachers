@@ -47,19 +47,6 @@ Enhanced-Errors: true
 
 ### Response Format
 
-**Standard errors (default)**
-
-Errors are returned as an array of strings:
-
-<pre class="json-code-sample">
-{
-  "message": "Validation failed: 2 errors prohibited this trainee from being saved",
-  "errors": [
-    "first_names is too long (maximum is 60 characters)",
-    "email Enter an email address in the correct format, like name@example.com"
-  ]
-}</pre>
-
 **Enhanced errors**
 
 With `Enhanced-Errors: true`, errors are grouped by attribute:
@@ -71,4 +58,17 @@ With `Enhanced-Errors: true`, errors are grouped by attribute:
     "first_names": ["is too long (maximum is 60 characters)"],
     "email": ["Enter an email address in the correct format, like name@example.com"]
   }
+}</pre>
+
+**Standard errors (default)**
+
+Errors are returned as an array of strings:
+
+<pre class="json-code-sample">
+{
+  "message": "Validation failed: 2 errors prohibited this trainee from being saved",
+  "errors": [
+    "first_names is too long (maximum is 60 characters)",
+    "email Enter an email address in the correct format, like name@example.com"
+  ]
 }</pre>
