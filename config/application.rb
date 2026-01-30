@@ -30,7 +30,8 @@ module RegisterTraineeTeachers
 
     config.middleware.use(Rack::Deflater)
     config.middleware.insert_before(ActionDispatch::Static, TechDocs::TrailingSlashRedirect)
-    config.middleware.insert_before(ActionDispatch::Static, TechDocs::Availability)
+    # Use the TechDocs::Availability middleware to restrict access to new docs versions that are not yet released.
+    # config.middleware.insert_before(ActionDispatch::Static, TechDocs::Availability)
     config.active_job.queue_adapter = :sidekiq
 
     # Configure session store to use ActiveRecord.

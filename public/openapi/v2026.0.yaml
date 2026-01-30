@@ -44,7 +44,7 @@ paths:
                 status: ok
                 version:
                   requested: v2026.0
-                  latest: v2025.0
+                  latest: v2026.0
   "/api/{api_version}/trainees":
     get:
       summary: index
