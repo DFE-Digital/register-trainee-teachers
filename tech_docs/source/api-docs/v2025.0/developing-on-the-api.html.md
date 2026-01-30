@@ -27,7 +27,7 @@ API requests are rate limited to prevent abuse and ensure fair usage across all 
 
 ## Enhanced Errors
 
-By default, validation errors are returned as an array of strings with the attribute name embedded in each message. You can opt into enhanced error responses which group errors by attribute name, making it easier to programmatically map errors to form fields.
+By default, validation errors are returned as an array of strings with the attribute name embedded in each message. You can opt into enhanced error responses which group errors by attribute name, making it easier to programmatically map errors to fields.
 
 ### Scope
 
