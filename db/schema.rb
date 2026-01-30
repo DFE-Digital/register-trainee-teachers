@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_15_110603) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_20_092259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
@@ -323,9 +323,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_15_110603) do
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code"
     t.index ["recruitment_cycle_year"], name: "index_courses_on_recruitment_cycle_year"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
-  end
-
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -707,6 +704,32 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_15_110603) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_nationalities_on_name", unique: true
+  end
+
+  create_table "new_groups", force: :cascade do |t|
+    t.string "description"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "new_partner_users", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email"
+  end
+
+  create_table "new_schools", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "new_trainees", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "placements", force: :cascade do |t|
