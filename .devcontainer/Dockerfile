@@ -1,11 +1,12 @@
 FROM ruby:3.4.2-alpine3.20
 
-ENV APP_HOME /app
+ENV APP_HOME=/app
 RUN mkdir -p $APP_HOME
+
 WORKDIR $APP_HOME
 
-# Set timezone
-RUN apk add --no-cache tzdata \
+# Add the timezone (rails-build image) as it's not configured by default in Alpine
+RUN apk add --update --no-cache tzdata \
   && cp /usr/share/zoneinfo/Europe/London /etc/localtime \
   && echo "Europe/London" > /etc/timezone
 
@@ -13,11 +14,11 @@ RUN apk add --no-cache tzdata \
 COPY ../.tool-versions ../Gemfile ../Gemfile.lock ./
 
 # Install build deps (temporary) + runtime deps
-RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --update --no-cache --virtual build-dependencies \
       build-base \
       postgresql-dev \
       git \
-  && apk add --no-cache \
+  && apk add --update --no-cache \
       libpq \
       yarn \
       shared-mime-info \
@@ -30,11 +31,15 @@ RUN apk add --no-cache --virtual .build-deps \
       libxslt-dev \
   && bundle install --jobs=4 \
   && rm -rf /usr/local/bundle/cache \
-  && apk del .build-deps
+  && apk del build-dependencies
 
-# Install JS deps
+# Install corepack and enable yarn
+RUN yarn global add corepack
+RUN corepack enable && corepack prepare yarn@4.9.1 --activate
+
+# Install node packages defined in package.json
 COPY ../package.json ../yarn.lock ./
-RUN yarn install --frozen-lockfile --ignore-scripts
+RUN yarn install --immutable
 
 # Ensure PATH is set properly in shell
 RUN echo 'export PATH=/usr/local/bin:$PATH' > /root/.ashrc

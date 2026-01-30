@@ -12,12 +12,6 @@ Run setup:
 ./bin/setup
 ```
 
-Run yarn:
-
-```bash
-yarn install
-```
-
 Add a file to config/settings called development.local.yml containing the following:
 
 ```yml

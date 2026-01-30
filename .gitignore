@@ -35,6 +35,7 @@
 yarn-debug.log*
 .yarn-integrity
 .yarn/*
+!.yarn/releases
 .jest-cache
 .env
 .env.*
