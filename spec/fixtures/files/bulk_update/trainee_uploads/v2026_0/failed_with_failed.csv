@@ -2,13 +2,13 @@ provider_trainee_id,application_id,hesa_id,first_names,last_name,previous_last_n
 24/25-76,,'7722480827494,Aundrea,Kub,Bruen,'2002-04-03,,'11,Aundrea.Kub@example.com,GB,,,,,,,,,,,'202,'11,'021,'100409,,,'31,'2024-10-01,'2026-07-26,'13918,2024,,,'2024-10-01,'2024-08-10,'2,'6,,,,,,,,,,,,,Validation passed,
 24/25-79,,'1996761576407,,Wintheiser,Roob,'1999-04-19,,'11,Bess.Wintheiser@example.com,GB,,'58,'58,,,,,,,,'201,'13,'008,'100366,,,'31,'2024-10-01,'2026-07-12,'13918,2024,,,'2024-10-01,'2024-08-16,'2,'6,,,,,,,,,,'2004-01-01,,MX,5 errors found,"first_names can't be blank;
 degree_subject must be entered if specifying a previous UK degree or non-UK degree;
-Non-UK degree type must be entered if specifying a previous non-UK degree;
+non_uk_degree must be entered if specifying a previous non-UK degree;
 training_route has invalid reference data value of '13'. Valid values are '02', '03', '09', '10', '11', '12', '14'.;
 Trainee disabilities attributes contain duplicate values"
 24/25-82,,'5205630693043,Abel,Hills,Halvorson,'2002-01-07,,'10,Abel.Hills@example.com,GB,,,,,,,,,,,'202,'11,'032,'100358,,,'01,'2024-10-01,'2025-07-14,'13918,2024,,,'2024-10-01,'2024-08-13,'2,'6,,,,,,,,,,,,,Validation passed,
 24/25-85,,'7982579851416,Richie,Welch,Christiansen,'1993-04-19,,'99,Richie.Welch@example.com,GB,,,,,,,,,,,'202,'13,,'100302,,,'01,'2024-10-01,'2023-07-03,'13918,2024,,,'2024-10-01,'2024-08-16,'2,'6,,,,,,,,'100184,,,,,6 errors found,"itt_end_date must be after ITT start date;
 degree_graduation_year must be entered if specifying a previous UK degree or non-UK degree;
-UK degree type must be entered if specifying a previous UK degree;
+uk_degree must be entered if specifying a previous UK degree;
 degree_grade must be entered if specifying a previous UK degree or non-UK degree;
 itt_qualification_aim must be entered if 202 selected for itt_aim;
 training_route has invalid reference data value of '13'. Valid values are '02', '03', '09', '10', '11', '12', '14'."
