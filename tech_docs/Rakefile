@@ -44,7 +44,7 @@ namespace :tech_docs do
           ---
           title: #{version_dir}
           weight: #{version_index + 3}
-          hide_in_navigation: #{is_preview}
+          hide_in_navigation: false
           ---
 
           # #{version_dir}
@@ -113,7 +113,7 @@ class ReferenceDataGenerator2026
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: #{is_preview}
+      hide_in_navigation: false
       ---
 
       # #{version_dir}
@@ -167,7 +167,7 @@ class ReferenceDataGenerator2025
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: #{is_preview}
+      hide_in_navigation: false
       ---
 
       # #{version_dir}
