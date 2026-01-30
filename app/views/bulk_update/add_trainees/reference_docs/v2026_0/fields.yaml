@@ -461,7 +461,7 @@
   example: "`026`"
   validation: Optional
   page_title: Additional training initiative
-- field_name: UK degree type
+- field_name: uk_degree
   technical: uk_degree
   hesa_alignment: DEGTYPE
   description: |-
@@ -475,7 +475,7 @@
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L37
   page_title: UK degree type
-- field_name: Non-UK degree type
+- field_name: non_uk_degree
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description: The type of non-UK degree.
