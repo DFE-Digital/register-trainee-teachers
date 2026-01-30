@@ -1001,7 +1001,7 @@ private
                 "The selected file is empty"
               elsif headers_encoding
                 "Your file’s column names need to match the CSV template. " \
-                  "Your file is missing the following columns: 'Application ID'. " \
+                  "Your file is missing the following columns: 'application_id'. " \
                   "Your file has the following extra columns: 'Ápplication ID'"
               else
                 "Select a CSV file"

@@ -15,12 +15,15 @@ module Api
           training_partner_urn
           training_partner_ukprn
           application_id
+          course_subject_1
+          course_subject_2
+          course_subject_3
         ].freeze
 
-        ALLOWED_NIL_PARAMS = %w[
-          course_subject_two
-          course_subject_three
-        ].freeze
+        ALLOWED_NIL_PARAMS = {
+          "course_subject_2" => :course_subject_two,
+          "course_subject_3" => :course_subject_three,
+        }.freeze
 
         NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
         VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
@@ -176,15 +179,15 @@ module Api
         end
 
         def course_subject_one
-          course_subject_name(:course_subject_one)
+          course_subject_name(:course_subject_1)
         end
 
         def course_subject_two
-          course_subject_name(:course_subject_two)
+          course_subject_name(:course_subject_2)
         end
 
         def course_subject_three
-          course_subject_name(:course_subject_three)
+          course_subject_name(:course_subject_3)
         end
 
         def course_education_phase
@@ -310,10 +313,8 @@ module Api
         end
 
         def params_with_allowed_nil_values
-          # rubocop:disable Rails/IndexWith
-          # disabled this cop as it's suggesting a replacement method that does not do what's needed here
-          (ALLOWED_NIL_PARAMS & params.select { |_k, v| v.blank? }.keys).to_h { |key| [key, nil] }
-          # rubocop:enable Rails/IndexWith
+          blank_param_keys = params.select { |_k, v| v.blank? }.keys.map(&:to_s)
+          ALLOWED_NIL_PARAMS.slice(*blank_param_keys).values.index_with(nil)
         end
       end
     end

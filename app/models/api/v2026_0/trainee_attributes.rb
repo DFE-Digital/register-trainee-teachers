@@ -39,9 +39,6 @@ module Api
         diversity_disclosure: {},
         ethnicity: {},
         disability_disclosure: {},
-        course_subject_one: {},
-        course_subject_two: {},
-        course_subject_three: {},
         course_allocation_subject_id: {},
         study_mode: {},
         application_choice_id: {},
@@ -59,6 +56,9 @@ module Api
       end
 
       INTERNAL_ATTRIBUTES = {
+        course_subject_one: {},
+        course_subject_two: {},
+        course_subject_three: {},
         training_partner_id: {},
         training_partner_not_applicable: { type: :boolean, options: { default: false } },
         employing_school_id: {},
@@ -71,6 +71,10 @@ module Api
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end
+
+      alias_method :course_subject_1, :course_subject_one
+      alias_method :course_subject_2, :course_subject_two
+      alias_method :course_subject_3, :course_subject_three
 
       REQUIRED_ATTRIBUTES = %i[
         first_names
@@ -409,19 +413,19 @@ module Api
       def course_subject_one_is_primary
         return if course_subject_one.blank? || course_subject_one == CourseSubjects::PRIMARY_TEACHING
 
-        errors.add(:course_subject_one, :invalid)
+        errors.add(:course_subject_1, :invalid)
       end
 
       def course_subject_two_valid
         return if course_subject_two.nil?
 
-        errors.add(:course_subject_two, :duplicate) if course_subject_one == course_subject_two
+        errors.add(:course_subject_2, :duplicate) if course_subject_one == course_subject_two
       end
 
       def course_subject_three_valid
         return if course_subject_three.nil?
 
-        errors.add(:course_subject_three, :duplicate) if [course_subject_one, course_subject_two].include?(course_subject_three)
+        errors.add(:course_subject_3, :duplicate) if [course_subject_one, course_subject_two].include?(course_subject_three)
       end
 
       def itt_end_date_valid

@@ -14,6 +14,7 @@ module Hesa
           disability: ::ReferenceData::DISABILITIES,
           ethnicity: ::ReferenceData::ETHNICITIES,
           fund_code: ::ReferenceData::FUND_CODES,
+          funding_method: ::ReferenceData::FUNDING_METHODS,
           institution: ::ReferenceData::INSTITUTIONS,
           itt_aim: ::ReferenceData::ITT_AIMS,
           nationality: ::ReferenceData::NATIONALITIES,

@@ -200,7 +200,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
           subject.validate
 
-          expect(subject.errors[:course_subject_one]).to contain_exactly(
+          expect(subject.errors[:course_subject_1]).to contain_exactly(
             "is invalid. It should be `100511` for the course_age_range provided",
           )
         end

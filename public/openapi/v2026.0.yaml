@@ -55,7 +55,9 @@ paths:
         in: query
         required: false
         schema:
-          type: string
+          oneOf:
+          - type: integer
+          - type: string
         example: not-a-number
       - name: api_version
         in: path
@@ -140,8 +142,6 @@ paths:
                           nullable: true
                         disability_disclosure:
                           nullable: true
-                        course_subject_one:
-                          type: string
                         itt_start_date:
                           type: string
                         outcome_date:
@@ -166,10 +166,6 @@ paths:
                           type: integer
                         course_max_age:
                           type: integer
-                        course_subject_two:
-                          nullable: true
-                        course_subject_three:
-                          nullable: true
                         awarded_at:
                           nullable: true
                         training_initiative:
@@ -206,9 +202,9 @@ paths:
                           nullable: true
                         employing_school_urn:
                           nullable: true
-                        lead_partner_ukprn:
+                        training_partner_ukprn:
                           nullable: true
-                        lead_partner_urn:
+                        training_partner_urn:
                           nullable: true
                         previous_last_name:
                           type: string
@@ -237,11 +233,17 @@ paths:
                         fund_code:
                           type: string
                           nullable: true
+                        course_subject_1:
+                          type: string
+                        course_subject_2:
+                          nullable: true
+                        course_subject_3:
+                          nullable: true
                         nationality:
                           type: string
-                        withdraw_date:
+                        withdrawal_date:
                           nullable: true
-                        withdraw_reasons:
+                        withdrawal_reasons:
                           nullable: true
                         withdrawal_trigger:
                           nullable: true
@@ -315,10 +317,6 @@ paths:
                           type: string
                         application_id:
                           nullable: true
-                        training_partner_ukprn:
-                          nullable: true
-                        training_partner_urn:
-                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -334,7 +332,6 @@ paths:
                       - ethnic_background
                       - additional_ethnic_background
                       - disability_disclosure
-                      - course_subject_one
                       - itt_start_date
                       - outcome_date
                       - itt_end_date
@@ -346,8 +343,6 @@ paths:
                       - reinstate_date
                       - course_min_age
                       - course_max_age
-                      - course_subject_two
-                      - course_subject_three
                       - awarded_at
                       - training_initiative
                       - study_mode
@@ -364,9 +359,14 @@ paths:
                       - course_itt_start_date
                       - course_age_range
                       - employing_school_urn
+                      - training_partner_ukprn
+                      - training_partner_urn
+                      - course_subject_1
+                      - course_subject_2
+                      - course_subject_3
                       - nationality
-                      - withdraw_date
-                      - withdraw_reasons
+                      - withdrawal_date
+                      - withdrawal_reasons
                       - withdrawal_trigger
                       - withdrawal_future_interest
                       - withdrawal_another_reason
@@ -411,7 +411,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-30'
                   outcome_date:
                   itt_end_date: '2026-07-26'
@@ -423,8 +422,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative: '009'
                   study_mode:
@@ -443,9 +440,12 @@ paths:
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -484,7 +484,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-04'
                   outcome_date:
                   itt_end_date: '2026-07-27'
@@ -496,8 +495,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode:
@@ -516,9 +513,12 @@ paths:
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -557,7 +557,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-31'
                   outcome_date:
                   itt_end_date: '2026-07-18'
@@ -569,8 +568,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '01'
@@ -598,9 +595,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '007'
                   fund_code: '2'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -639,7 +639,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-25'
                   outcome_date:
                   itt_end_date: '2027-07-06'
@@ -651,8 +650,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative: '026'
                   study_mode: '01'
@@ -680,9 +677,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '007'
                   fund_code: '7'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -721,7 +721,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-26'
                   outcome_date:
                   itt_end_date: '2027-07-08'
@@ -733,8 +732,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative: '025'
                   study_mode: '01'
@@ -762,9 +759,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '008'
                   fund_code: '2'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -803,7 +803,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-07'
                   outcome_date:
                   itt_end_date: '2027-07-19'
@@ -815,8 +814,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '01'
@@ -844,9 +841,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '020'
                   fund_code: '2'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -885,7 +885,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-09'
                   outcome_date:
                   itt_end_date: '2027-07-10'
@@ -897,8 +896,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '01'
@@ -926,9 +923,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '008'
                   fund_code: '7'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -967,7 +967,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-16'
                   outcome_date:
                   itt_end_date: '2026-07-31'
@@ -979,8 +978,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '01'
@@ -1008,9 +1005,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '002'
                   fund_code: '2'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -1049,7 +1049,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-31'
                   outcome_date:
                   itt_end_date: '2026-07-20'
@@ -1061,8 +1060,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative: '036'
                   study_mode: '01'
@@ -1090,9 +1087,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '008'
                   fund_code: '7'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -1131,7 +1131,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-03'
                   outcome_date:
                   itt_end_date: '2027-07-11'
@@ -1143,8 +1142,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative: '036'
                   study_mode: '01'
@@ -1172,9 +1169,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '020'
                   fund_code: '2'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -1213,7 +1213,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-19'
                   outcome_date:
                   itt_end_date: '2027-07-23'
@@ -1225,8 +1224,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative: '009'
                   study_mode: '01'
@@ -1254,9 +1251,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '004'
                   fund_code: '7'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -1295,7 +1295,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100403'
                   itt_start_date: '2025-08-08'
                   outcome_date:
                   itt_end_date: '2026-07-01'
@@ -1307,8 +1306,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '01'
@@ -1336,9 +1333,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '001'
                   fund_code: '2'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: VE
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -1456,8 +1456,6 @@ paths:
                         nullable: true
                       disability_disclosure:
                         type: string
-                      course_subject_one:
-                        type: string
                       itt_start_date:
                         type: string
                       outcome_date:
@@ -1480,12 +1478,6 @@ paths:
                         type: integer
                       course_max_age:
                         type: integer
-                      course_subject_two:
-                        type: string
-                        nullable: true
-                      course_subject_three:
-                        nullable: true
-                        type: string
                       awarded_at:
                         nullable: true
                       training_initiative:
@@ -1520,10 +1512,10 @@ paths:
                       employing_school_urn:
                         nullable: true
                         type: string
-                      lead_partner_ukprn:
+                      training_partner_ukprn:
                         nullable: true
                         type: string
-                      lead_partner_urn:
+                      training_partner_urn:
                         nullable: true
                         type: string
                       previous_last_name:
@@ -1546,11 +1538,19 @@ paths:
                         type: string
                       fund_code:
                         type: string
+                      course_subject_1:
+                        type: string
+                      course_subject_2:
+                        nullable: true
+                        type: string
+                      course_subject_3:
+                        nullable: true
+                        type: string
                       nationality:
                         type: string
-                      withdraw_date:
+                      withdrawal_date:
                         nullable: true
-                      withdraw_reasons:
+                      withdrawal_reasons:
                         nullable: true
                       withdrawal_trigger:
                         nullable: true
@@ -1657,12 +1657,6 @@ paths:
                         type: string
                       disability2:
                         type: string
-                      training_partner_ukprn:
-                        nullable: true
-                        type: string
-                      training_partner_urn:
-                        nullable: true
-                        type: string
                     required:
                     - first_names
                     - last_name
@@ -1678,7 +1672,6 @@ paths:
                     - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
-                    - course_subject_one
                     - itt_start_date
                     - outcome_date
                     - itt_end_date
@@ -1690,8 +1683,6 @@ paths:
                     - reinstate_date
                     - course_min_age
                     - course_max_age
-                    - course_subject_two
-                    - course_subject_three
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -1708,6 +1699,8 @@ paths:
                     - course_itt_start_date
                     - course_age_range
                     - employing_school_urn
+                    - training_partner_ukprn
+                    - training_partner_urn
                     - previous_last_name
                     - itt_aim
                     - course_year
@@ -1717,9 +1710,12 @@ paths:
                     - additional_training_initiative
                     - itt_qualification_aim
                     - fund_code
+                    - course_subject_1
+                    - course_subject_2
+                    - course_subject_3
                     - nationality
-                    - withdraw_date
-                    - withdraw_reasons
+                    - withdrawal_date
+                    - withdrawal_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
@@ -1747,7 +1743,6 @@ paths:
                   ethnic_background: Not provided
                   additional_ethnic_background:
                   disability_disclosure: disability_not_provided
-                  course_subject_one: '100346'
                   itt_start_date: '2025-08-01'
                   outcome_date:
                   itt_end_date: '2027-07-31'
@@ -1759,8 +1754,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '63'
@@ -1777,8 +1770,8 @@ paths:
                   course_itt_start_date: '2025-08-01'
                   course_age_range: '13918'
                   employing_school_urn:
-                  lead_partner_ukprn:
-                  lead_partner_urn:
+                  training_partner_ukprn:
+                  training_partner_urn:
                   previous_last_name:
                   itt_aim: '202'
                   course_year: 2012
@@ -1788,9 +1781,12 @@ paths:
                   additional_training_initiative:
                   itt_qualification_aim: '001'
                   fund_code: '2'
+                  course_subject_1: '100346'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: GB
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -1802,7 +1798,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: Js3NCBPRFACKUNgFhgxXE9H8
+                    placement_id: T7AWujDLtzo3NNbkoWFreBnj
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -1818,14 +1814,12 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: RcC8FQPqQQEmcrq5CrbB75g6
+                    degree_id: Ewud1rsDmsZarnSZzNJJ2edi
                   state: submitted_for_trn
-                  trainee_id: GJTi4JZCv4N18j7151qtXbxC
+                  trainee_id: RpQVhqq7KLGr63zEKH8ZVDtd
                   application_id:
                   disability1: '58'
                   disability2: '57'
-                  training_partner_ukprn:
-                  training_partner_urn:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
@@ -1879,8 +1873,6 @@ paths:
                           nullable: true
                         disability_disclosure:
                           nullable: true
-                        course_subject_one:
-                          type: string
                         itt_start_date:
                           type: string
                         outcome_date:
@@ -1903,10 +1895,6 @@ paths:
                           type: integer
                         course_max_age:
                           type: integer
-                        course_subject_two:
-                          nullable: true
-                        course_subject_three:
-                          nullable: true
                         awarded_at:
                           nullable: true
                         training_initiative:
@@ -1939,15 +1927,21 @@ paths:
                           nullable: true
                         employing_school_urn:
                           nullable: true
-                        lead_partner_ukprn:
+                        training_partner_ukprn:
                           nullable: true
-                        lead_partner_urn:
+                        training_partner_urn:
+                          nullable: true
+                        course_subject_1:
+                          type: string
+                        course_subject_2:
+                          nullable: true
+                        course_subject_3:
                           nullable: true
                         nationality:
                           nullable: true
-                        withdraw_date:
+                        withdrawal_date:
                           nullable: true
-                        withdraw_reasons:
+                        withdrawal_reasons:
                           nullable: true
                         withdrawal_trigger:
                           nullable: true
@@ -2017,10 +2011,6 @@ paths:
                           type: string
                         application_id:
                           nullable: true
-                        training_partner_ukprn:
-                          nullable: true
-                        training_partner_urn:
-                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -2036,7 +2026,6 @@ paths:
                       - ethnic_background
                       - additional_ethnic_background
                       - disability_disclosure
-                      - course_subject_one
                       - itt_start_date
                       - outcome_date
                       - itt_end_date
@@ -2048,8 +2037,6 @@ paths:
                       - reinstate_date
                       - course_min_age
                       - course_max_age
-                      - course_subject_two
-                      - course_subject_three
                       - awarded_at
                       - training_initiative
                       - study_mode
@@ -2066,9 +2053,14 @@ paths:
                       - course_itt_start_date
                       - course_age_range
                       - employing_school_urn
+                      - training_partner_ukprn
+                      - training_partner_urn
+                      - course_subject_1
+                      - course_subject_2
+                      - course_subject_3
                       - nationality
-                      - withdraw_date
-                      - withdraw_reasons
+                      - withdrawal_date
+                      - withdrawal_reasons
                       - withdrawal_trigger
                       - withdrawal_future_interest
                       - withdrawal_another_reason
@@ -2100,7 +2092,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one: '100346'
                   itt_start_date: '2026-01-01'
                   outcome_date:
                   itt_end_date: '2028-07-18'
@@ -2112,8 +2103,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode:
@@ -2132,9 +2121,12 @@ paths:
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
+                  course_subject_1: '100346'
+                  course_subject_2:
+                  course_subject_3:
                   nationality:
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -2209,11 +2201,15 @@ paths:
                         type: array
                         items:
                           type: string
-                      course_subject_two:
+                      course_subject_2:
                         type: array
                         items:
                           type: string
-                      course_subject_three:
+                      course_subject_3:
+                        type: array
+                        items:
+                          type: string
+                      course_subject_1:
                         type: array
                         items:
                           type: string
@@ -2242,10 +2238,6 @@ paths:
                         items:
                           type: string
                       sex:
-                        type: array
-                        items:
-                          type: string
-                      course_subject_one:
                         type: array
                         items:
                           type: string
@@ -2309,8 +2301,8 @@ paths:
                   being saved'
                 errors:
                 - funding_method 'scholarship' is not allowed when training_route
-                  is 'provider_led_postgrad' and course_subject_one is 'psychology'
-                  in academic cycle '2024 to 2025'
+                  is 'provider_led_postgrad' and course_subject_1 is 'psychology'
+                  in academic cycle '2026 to 2027'
       requestBody:
         content:
           application/json:
@@ -2342,7 +2334,7 @@ paths:
                       type: string
                     diversity_disclosure:
                       type: string
-                    course_subject_one:
+                    course_subject_1:
                       type: string
                     study_mode:
                       type: string
@@ -2410,21 +2402,17 @@ paths:
                       type: string
                     application_id:
                       type: integer
-                    lead_partner_ukprn:
+                    training_partner_ukprn:
                       type: string
                     employing_school_urn:
                       type: string
-                    lead_partner_urn:
+                    training_partner_urn:
                       type: string
-                    course_subject_two:
+                    course_subject_2:
                       type: string
-                    course_subject_three:
+                    course_subject_3:
                       type: string
                     ethnicity:
-                      type: string
-                    training_partner_ukprn:
-                      type: string
-                    training_partner_urn:
                       type: string
                   required:
                   - first_names
@@ -2436,7 +2424,7 @@ paths:
                   - training_route
                   - itt_start_date
                   - itt_end_date
-                  - course_subject_one
+                  - course_subject_1
                   - study_mode
                   - itt_aim
                   - itt_qualification_aim
@@ -2460,7 +2448,7 @@ paths:
                 itt_start_date: '2025-08-01'
                 itt_end_date: '2027-07-31'
                 diversity_disclosure: diversity_disclosed
-                course_subject_one: '100346'
+                course_subject_1: '100346'
                 study_mode: '63'
                 nationality: GB
                 itt_aim: '202'
@@ -2483,16 +2471,14 @@ paths:
                 placements_attributes:
                 - urn: '900020'
                 provider_trainee_id: 99157234/2/01
-                pg_apprenticeship_start_date: '2024-03-11'
+                pg_apprenticeship_start_date: '2026-03-11'
                 application_id: 6916785
-                lead_partner_ukprn: '65782432'
-                employing_school_urn: '883876'
-                lead_partner_urn: '314842'
-                course_subject_two: '101410'
-                course_subject_three: '100366'
-                ethnicity: '142'
                 training_partner_ukprn: '29542999'
+                employing_school_urn: '883876'
                 training_partner_urn: '660776'
+                course_subject_2: '101410'
+                course_subject_3: '100366'
+                ethnicity: '142'
   "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
@@ -2509,7 +2495,9 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          oneOf:
+          - type: integer
+          - type: string
         example: nonexistent
       responses:
         '200':
@@ -2547,8 +2535,6 @@ paths:
                     nullable: true
                   disability_disclosure:
                     nullable: true
-                  course_subject_one:
-                    nullable: true
                   itt_start_date:
                     nullable: true
                   outcome_date:
@@ -2570,10 +2556,6 @@ paths:
                   course_min_age:
                     nullable: true
                   course_max_age:
-                    nullable: true
-                  course_subject_two:
-                    nullable: true
-                  course_subject_three:
                     nullable: true
                   awarded_at:
                     nullable: true
@@ -2629,11 +2611,17 @@ paths:
                     type: string
                   fund_code:
                     type: string
+                  course_subject_1:
+                    nullable: true
+                  course_subject_2:
+                    nullable: true
+                  course_subject_3:
+                    nullable: true
                   nationality:
                     nullable: true
-                  withdraw_date:
+                  withdrawal_date:
                     nullable: true
-                  withdraw_reasons:
+                  withdrawal_reasons:
                     nullable: true
                   withdrawal_trigger:
                     nullable: true
@@ -2670,7 +2658,6 @@ paths:
                 - ethnic_background
                 - additional_ethnic_background
                 - disability_disclosure
-                - course_subject_one
                 - itt_start_date
                 - outcome_date
                 - itt_end_date
@@ -2682,8 +2669,6 @@ paths:
                 - reinstate_date
                 - course_min_age
                 - course_max_age
-                - course_subject_two
-                - course_subject_three
                 - awarded_at
                 - training_initiative
                 - study_mode
@@ -2711,9 +2696,12 @@ paths:
                 - additional_training_initiative
                 - itt_qualification_aim
                 - fund_code
+                - course_subject_1
+                - course_subject_2
+                - course_subject_3
                 - nationality
-                - withdraw_date
-                - withdraw_reasons
+                - withdrawal_date
+                - withdrawal_reasons
                 - withdrawal_trigger
                 - withdrawal_future_interest
                 - withdrawal_another_reason
@@ -2738,7 +2726,6 @@ paths:
                 ethnic_background:
                 additional_ethnic_background:
                 disability_disclosure:
-                course_subject_one:
                 itt_start_date:
                 outcome_date:
                 itt_end_date:
@@ -2750,8 +2737,6 @@ paths:
                 reinstate_date:
                 course_min_age:
                 course_max_age:
-                course_subject_two:
-                course_subject_three:
                 awarded_at:
                 training_initiative:
                 study_mode: '01'
@@ -2779,9 +2764,12 @@ paths:
                 additional_training_initiative: '026'
                 itt_qualification_aim: '003'
                 fund_code: '2'
+                course_subject_1:
+                course_subject_2:
+                course_subject_3:
                 nationality:
-                withdraw_date:
-                withdraw_reasons:
+                withdrawal_date:
+                withdrawal_reasons:
                 withdrawal_trigger:
                 withdrawal_future_interest:
                 withdrawal_another_reason:
@@ -2832,7 +2820,7 @@ paths:
         required: true
         schema:
           type: string
-        example: Mz9mk1rubeVnBaRAAZiMVbBP
+        example: yEkBQXtmbtmMTfN6LpfWfaaU
       responses:
         '200':
           description: does not update the degrees
@@ -2876,8 +2864,6 @@ paths:
                       disability_disclosure:
                         type: string
                         nullable: true
-                      course_subject_one:
-                        type: string
                       itt_start_date:
                         type: string
                       outcome_date:
@@ -2901,12 +2887,6 @@ paths:
                         type: integer
                       course_max_age:
                         type: integer
-                      course_subject_two:
-                        nullable: true
-                        type: string
-                      course_subject_three:
-                        nullable: true
-                        type: string
                       awarded_at:
                         nullable: true
                       training_initiative:
@@ -2972,12 +2952,20 @@ paths:
                         type: string
                       fund_code:
                         type: string
+                      course_subject_1:
+                        type: string
+                      course_subject_2:
+                        nullable: true
+                        type: string
+                      course_subject_3:
+                        nullable: true
+                        type: string
                       nationality:
                         nullable: true
                         type: string
-                      withdraw_date:
+                      withdrawal_date:
                         nullable: true
-                      withdraw_reasons:
+                      withdrawal_reasons:
                         nullable: true
                       withdrawal_trigger:
                         nullable: true
@@ -3091,7 +3079,6 @@ paths:
                     - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
-                    - course_subject_one
                     - itt_start_date
                     - outcome_date
                     - itt_end_date
@@ -3103,8 +3090,6 @@ paths:
                     - reinstate_date
                     - course_min_age
                     - course_max_age
-                    - course_subject_two
-                    - course_subject_three
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -3132,9 +3117,12 @@ paths:
                     - additional_training_initiative
                     - itt_qualification_aim
                     - fund_code
+                    - course_subject_1
+                    - course_subject_2
+                    - course_subject_3
                     - nationality
-                    - withdraw_date
-                    - withdraw_reasons
+                    - withdrawal_date
+                    - withdrawal_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
@@ -3162,7 +3150,6 @@ paths:
                   ethnic_background: Not provided
                   additional_ethnic_background:
                   disability_disclosure: disability_not_provided
-                  course_subject_one: '100346'
                   itt_start_date: '2025-08-01'
                   outcome_date:
                   itt_end_date: '2027-07-31'
@@ -3174,8 +3161,6 @@ paths:
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '63'
@@ -3204,9 +3189,12 @@ paths:
                   additional_training_initiative:
                   itt_qualification_aim: '001'
                   fund_code: '2'
+                  course_subject_1: '100346'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: GB
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -3218,7 +3206,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: B2SCkBd5vpTx1Sn7wvVxsXGC
+                    placement_id: iLFXaEQNmz3wRfu31vG7KjRg
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3234,9 +3222,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: XynP5or3puCAyfT1py3jE9KG
+                    degree_id: Yz6jcMZ8WnAEa5RmgDE4fQQc
                   state: submitted_for_trn
-                  trainee_id: G7oAhX8FFTfkvngTV7eaBDfD
+                  trainee_id: o7SqRvcwxapBhe5jQkTQ1YHb
                   application_id:
                   disability2: '57'
         '401':
@@ -3335,15 +3323,15 @@ paths:
                         type: array
                         items:
                           type: string
-                      course_subject_one:
+                      course_subject_1:
                         type: array
                         items:
                           type: string
-                      course_subject_two:
+                      course_subject_2:
                         type: array
                         items:
                           type: string
-                      course_subject_three:
+                      course_subject_3:
                         type: array
                         items:
                           type: string
@@ -3374,7 +3362,7 @@ paths:
                   being saved'
                 errors:
                   funding_method:
-                  - "'bursary' is not allowed when fund_code is '2' and course_subject_one
+                  - "'bursary' is not allowed when fund_code is '2' and course_subject_1
                     is 'biology'"
       requestBody:
         content:
@@ -3393,6 +3381,8 @@ paths:
                       type: string
                     course_age_range:
                       type: string
+                    course_subject_1:
+                      type: string
                     training_partner_urn:
                       type: string
                     employing_school_urn:
@@ -3409,10 +3399,10 @@ paths:
                       type: string
                     disability2:
                       type: string
-                    course_subject_two:
+                    course_subject_2:
                       type: string
                       nullable: true
-                    course_subject_three:
+                    course_subject_3:
                       type: string
                       nullable: true
                     fund_code:
@@ -3455,7 +3445,8 @@ paths:
                 first_names: Alice
                 provider_trainee_id: 99157234/2/01
                 nationality: FR
-                course_age_range: '13914'
+                course_age_range: '13909'
+                course_subject_1: '100346'
                 training_partner_urn: '900020'
                 employing_school_urn: '555071'
                 ethnicity:
@@ -3463,8 +3454,8 @@ paths:
                 training_route:
                 disability1: '99'
                 disability2: '57'
-                course_subject_two: '101410'
-                course_subject_three: '100366'
+                course_subject_2: '101410'
+                course_subject_3: '100366'
                 fund_code: '2'
                 course_year: '2015'
                 funding_method: '6'
@@ -3546,12 +3537,6 @@ paths:
                         type: string
                       hesa_id:
                         nullable: true
-                      course_subject_one:
-                        type: string
-                      course_subject_two:
-                        nullable: true
-                      course_subject_three:
-                        nullable: true
                       record_source:
                         type: string
                       date_of_birth:
@@ -3616,11 +3601,17 @@ paths:
                         nullable: true
                       training_partner_urn:
                         nullable: true
+                      course_subject_1:
+                        type: string
+                      course_subject_2:
+                        nullable: true
+                      course_subject_3:
+                        nullable: true
                       nationality:
                         type: string
-                      withdraw_date:
+                      withdrawal_date:
                         nullable: true
-                      withdraw_reasons:
+                      withdrawal_reasons:
                         nullable: true
                       withdrawal_trigger:
                         nullable: true
@@ -3702,9 +3693,6 @@ paths:
                     - additional_ethnic_background
                     - trn
                     - hesa_id
-                    - course_subject_one
-                    - course_subject_two
-                    - course_subject_three
                     - record_source
                     - date_of_birth
                     - created_at
@@ -3737,9 +3725,12 @@ paths:
                     - employing_school_urn
                     - training_partner_ukprn
                     - training_partner_urn
+                    - course_subject_1
+                    - course_subject_2
+                    - course_subject_3
                     - nationality
-                    - withdraw_date
-                    - withdraw_reasons
+                    - withdrawal_date
+                    - withdrawal_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
@@ -3764,9 +3755,6 @@ paths:
                   additional_ethnic_background:
                   trn: '6560417'
                   hesa_id:
-                  course_subject_one: '100403'
-                  course_subject_two:
-                  course_subject_three:
                   record_source: manual
                   date_of_birth: '2004-05-15'
                   created_at: '2025-09-15T12:34:56.000Z'
@@ -3799,9 +3787,12 @@ paths:
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: FR
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -4094,7 +4085,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: WqjRxFubmzr8ub43FfYRxNJd
+                  degree_id: kwZBLho24ziT2UP3hJvamvWn
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4316,8 +4307,6 @@ paths:
                         nullable: true
                       disability_disclosure:
                         nullable: true
-                      course_subject_one:
-                        nullable: true
                       itt_start_date:
                         nullable: true
                       outcome_date:
@@ -4339,10 +4328,6 @@ paths:
                       course_min_age:
                         nullable: true
                       course_max_age:
-                        nullable: true
-                      course_subject_two:
-                        nullable: true
-                      course_subject_three:
                         nullable: true
                       awarded_at:
                         nullable: true
@@ -4380,11 +4365,17 @@ paths:
                         nullable: true
                       training_partner_urn:
                         nullable: true
+                      course_subject_1:
+                        nullable: true
+                      course_subject_2:
+                        nullable: true
+                      course_subject_3:
+                        nullable: true
                       nationality:
                         nullable: true
-                      withdraw_date:
+                      withdrawal_date:
                         nullable: true
-                      withdraw_reasons:
+                      withdrawal_reasons:
                         nullable: true
                       withdrawal_trigger:
                         nullable: true
@@ -4421,7 +4412,6 @@ paths:
                     - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
-                    - course_subject_one
                     - itt_start_date
                     - outcome_date
                     - itt_end_date
@@ -4433,8 +4423,6 @@ paths:
                     - reinstate_date
                     - course_min_age
                     - course_max_age
-                    - course_subject_two
-                    - course_subject_three
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -4453,9 +4441,12 @@ paths:
                     - employing_school_urn
                     - training_partner_ukprn
                     - training_partner_urn
+                    - course_subject_1
+                    - course_subject_2
+                    - course_subject_3
                     - nationality
-                    - withdraw_date
-                    - withdraw_reasons
+                    - withdrawal_date
+                    - withdrawal_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
@@ -4483,7 +4474,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one:
                   itt_start_date:
                   outcome_date:
                   itt_end_date:
@@ -4495,8 +4485,6 @@ paths:
                   reinstate_date:
                   course_min_age:
                   course_max_age:
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode:
@@ -4515,9 +4503,12 @@ paths:
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
+                  course_subject_1:
+                  course_subject_2:
+                  course_subject_3:
                   nationality:
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -4995,7 +4986,7 @@ paths:
                   postcode: Z1 9GG
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: Lv1byNugoi1TgG7U3QVFDC7g
+                  placement_id: MiiyuDFvtaJvrsK4Q4t77Kxh
         '404':
           description: does not create a new placement and returns a 404 status (not_found)
             status
@@ -5111,8 +5102,6 @@ paths:
                         nullable: true
                       disability_disclosure:
                         nullable: true
-                      course_subject_one:
-                        nullable: true
                       itt_start_date:
                         nullable: true
                       outcome_date:
@@ -5134,10 +5123,6 @@ paths:
                       course_min_age:
                         nullable: true
                       course_max_age:
-                        nullable: true
-                      course_subject_two:
-                        nullable: true
-                      course_subject_three:
                         nullable: true
                       awarded_at:
                         nullable: true
@@ -5193,11 +5178,17 @@ paths:
                         type: string
                       fund_code:
                         type: string
+                      course_subject_1:
+                        nullable: true
+                      course_subject_2:
+                        nullable: true
+                      course_subject_3:
+                        nullable: true
                       nationality:
                         nullable: true
-                      withdraw_date:
+                      withdrawal_date:
                         nullable: true
-                      withdraw_reasons:
+                      withdrawal_reasons:
                         nullable: true
                       withdrawal_trigger:
                         nullable: true
@@ -5258,7 +5249,6 @@ paths:
                     - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
-                    - course_subject_one
                     - itt_start_date
                     - outcome_date
                     - itt_end_date
@@ -5270,8 +5260,6 @@ paths:
                     - reinstate_date
                     - course_min_age
                     - course_max_age
-                    - course_subject_two
-                    - course_subject_three
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -5299,9 +5287,12 @@ paths:
                     - additional_training_initiative
                     - itt_qualification_aim
                     - fund_code
+                    - course_subject_1
+                    - course_subject_2
+                    - course_subject_3
                     - nationality
-                    - withdraw_date
-                    - withdraw_reasons
+                    - withdrawal_date
+                    - withdrawal_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
@@ -5329,7 +5320,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
-                  course_subject_one:
                   itt_start_date:
                   outcome_date:
                   itt_end_date:
@@ -5341,8 +5331,6 @@ paths:
                   reinstate_date:
                   course_min_age:
                   course_max_age:
-                  course_subject_two:
-                  course_subject_three:
                   awarded_at:
                   training_initiative:
                   study_mode: '01'
@@ -5370,9 +5358,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '001'
                   fund_code: '2'
+                  course_subject_1:
+                  course_subject_2:
+                  course_subject_3:
                   nationality:
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -5715,12 +5706,6 @@ paths:
                         type: string
                       hesa_id:
                         nullable: true
-                      course_subject_one:
-                        type: string
-                      course_subject_two:
-                        nullable: true
-                      course_subject_three:
-                        nullable: true
                       date_of_birth:
                         type: string
                       created_at:
@@ -5787,11 +5772,17 @@ paths:
                         nullable: true
                       training_partner_urn:
                         nullable: true
+                      course_subject_1:
+                        type: string
+                      course_subject_2:
+                        nullable: true
+                      course_subject_3:
+                        nullable: true
                       nationality:
                         type: string
-                      withdraw_date:
+                      withdrawal_date:
                         nullable: true
-                      withdraw_reasons:
+                      withdrawal_reasons:
                         nullable: true
                       withdrawal_trigger:
                         nullable: true
@@ -5872,9 +5863,6 @@ paths:
                     - additional_ethnic_background
                     - trn
                     - hesa_id
-                    - course_subject_one
-                    - course_subject_two
-                    - course_subject_three
                     - date_of_birth
                     - created_at
                     - updated_at
@@ -5908,9 +5896,12 @@ paths:
                     - employing_school_urn
                     - training_partner_ukprn
                     - training_partner_urn
+                    - course_subject_1
+                    - course_subject_2
+                    - course_subject_3
                     - nationality
-                    - withdraw_date
-                    - withdraw_reasons
+                    - withdrawal_date
+                    - withdrawal_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
@@ -5934,9 +5925,6 @@ paths:
                   additional_ethnic_background:
                   trn: '1074222'
                   hesa_id:
-                  course_subject_one: '100403'
-                  course_subject_two:
-                  course_subject_three:
                   date_of_birth: '1996-07-15'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
@@ -5970,9 +5958,12 @@ paths:
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: BN
-                  withdraw_date:
-                  withdraw_reasons:
+                  withdrawal_date:
+                  withdrawal_reasons:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
@@ -6092,12 +6083,6 @@ paths:
                         type: string
                       hesa_id:
                         type: string
-                      course_subject_one:
-                        type: string
-                      course_subject_two:
-                        nullable: true
-                      course_subject_three:
-                        nullable: true
                       record_source:
                         type: string
                       date_of_birth:
@@ -6187,11 +6172,17 @@ paths:
                         type: string
                       fund_code:
                         type: string
+                      course_subject_1:
+                        type: string
+                      course_subject_2:
+                        nullable: true
+                      course_subject_3:
+                        nullable: true
                       nationality:
                         type: string
-                      withdraw_date:
+                      withdrawal_date:
                         type: string
-                      withdraw_reasons:
+                      withdrawal_reasons:
                         type: array
                         items:
                           type: string
@@ -6274,9 +6265,6 @@ paths:
                     - additional_ethnic_background
                     - trn
                     - hesa_id
-                    - course_subject_one
-                    - course_subject_two
-                    - course_subject_three
                     - record_source
                     - date_of_birth
                     - created_at
@@ -6321,9 +6309,12 @@ paths:
                     - additional_training_initiative
                     - itt_qualification_aim
                     - fund_code
+                    - course_subject_1
+                    - course_subject_2
+                    - course_subject_3
                     - nationality
-                    - withdraw_date
-                    - withdraw_reasons
+                    - withdrawal_date
+                    - withdrawal_reasons
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdrawal_another_reason
@@ -6345,9 +6336,6 @@ paths:
                   additional_ethnic_background:
                   trn: '7461965'
                   hesa_id: '1153726388024'
-                  course_subject_one: '100403'
-                  course_subject_two:
-                  course_subject_three:
                   record_source: manual
                   date_of_birth: '1992-11-26'
                   created_at: '2025-09-15T12:34:56.000Z'
@@ -6392,9 +6380,12 @@ paths:
                   additional_training_initiative: '026'
                   itt_qualification_aim: '028'
                   fund_code: '2'
+                  course_subject_1: '100403'
+                  course_subject_2:
+                  course_subject_3:
                   nationality: CY
-                  withdraw_date: '2025-09-15'
-                  withdraw_reasons:
+                  withdrawal_date: '2025-09-15'
+                  withdrawal_reasons:
                   - safeguarding_concerns
                   withdrawal_trigger: provider
                   withdrawal_future_interest: 'no'
@@ -6497,7 +6488,7 @@ paths:
                       type: array
                       items:
                         type: string
-                    withdraw_date:
+                    withdrawal_date:
                       type: string
                     trigger:
                       type: string
@@ -6509,7 +6500,7 @@ paths:
                       type: string
                   required:
                   - reasons
-                  - withdraw_date
+                  - withdrawal_date
                   - trigger
                   - future_interest
               required:
@@ -6518,7 +6509,7 @@ paths:
               data:
                 reasons:
                 - safeguarding_concerns
-                withdraw_date: '2025-09-15'
+                withdrawal_date: '2025-09-15'
                 trigger: provider
                 future_interest: 'no'
                 another_reason: Another test reason

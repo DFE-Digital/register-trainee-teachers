@@ -42,6 +42,9 @@ module Api
         applying_for_grant
         applying_for_scholarship
         bursary_tier
+        course_subject_one
+        course_subject_two
+        course_subject_three
       ].freeze
 
       def initialize(trainee)
@@ -59,14 +62,14 @@ module Api
             hesa_trainee_attributes,
             sex: sex,
             study_mode: course_study_mode,
-            course_subject_one: course_subject_one,
-            course_subject_two: course_subject_two,
-            course_subject_three: course_subject_three,
+            course_subject_1: course_subject_1,
+            course_subject_2: course_subject_2,
+            course_subject_3: course_subject_3,
             training_route: training_route,
             nationality: nationality,
             training_initiative: training_initiative,
-            withdraw_date: @trainee.current_withdrawal&.date&.iso8601,
-            withdraw_reasons: withdraw_reasons,
+            withdrawal_date: @trainee.current_withdrawal&.date&.iso8601,
+            withdrawal_reasons: withdrawal_reasons,
             withdrawal_trigger: @trainee.current_withdrawal&.trigger,
             withdrawal_future_interest: @trainee.current_withdrawal&.future_interest,
             withdrawal_another_reason: @trainee.current_withdrawal&.another_reason,
@@ -144,15 +147,15 @@ module Api
         @trainee.published_course&.name
       end
 
-      def course_subject_one
+      def course_subject_1
         ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_one)
       end
 
-      def course_subject_two
+      def course_subject_2
         ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_two)
       end
 
-      def course_subject_three
+      def course_subject_3
         ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_three)
       end
 
@@ -218,7 +221,7 @@ module Api
         ::Hesa::CodeSets::Sexes::MAPPING.key(::Trainee.sexes[@trainee.sex])
       end
 
-      def withdraw_reasons
+      def withdrawal_reasons
         @trainee.current_withdrawal_reasons&.map(&:name)
       end
 

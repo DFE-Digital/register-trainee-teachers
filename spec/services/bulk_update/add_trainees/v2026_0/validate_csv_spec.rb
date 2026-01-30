@@ -31,7 +31,7 @@ module BulkUpdate
         let(:file_path) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2026_0/five_trainees_with_missing_column.csv") }
         let(:csv) { CSVSafe.new(File.open(file_path), headers: true).read }
 
-        it { expect(record.errors.first&.message).to eq("Your file’s column names need to match the CSV template. Your file is missing the following columns: 'HESA ID' and 'Sex'") }
+        it { expect(record.errors.first&.message).to eq("Your file’s column names need to match the CSV template. Your file is missing the following columns: 'hesa_id' and 'sex'") }
       end
 
       context "given a CSV with the correct columns in the 'wrong' order" do
@@ -45,7 +45,7 @@ module BulkUpdate
 
       context "given a CSV with the correct columns except one that is an empty string" do
         let(:file_content) do
-          "#{BulkUpdate::AddTrainees::V20260::ImportRows::ALL_HEADERS.keys.join(',').gsub('First Names', '')}\nfoo,bar,baz"
+          "#{BulkUpdate::AddTrainees::V20260::ImportRows::ALL_HEADERS.keys.join(',').gsub('first_names', '')}\nfoo,bar,baz"
         end
         let(:csv) { CSVSafe.new(file_content, headers: true).read }
 

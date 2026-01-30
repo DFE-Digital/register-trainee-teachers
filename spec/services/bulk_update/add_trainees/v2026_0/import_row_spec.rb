@@ -6,6 +6,7 @@ module BulkUpdate
   module AddTrainees
     RSpec.describe V20260::ImportRow do
       before do
+        stub_const("BulkUpdate::AddTrainees::Config::VERSION", "v2026.0")
         stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20260)
         create(
           :subject_specialism,
@@ -72,13 +73,13 @@ module BulkUpdate
             expect(result.success).to be(false)
             expect(result.error_type).to eq(:validation)
 
-            expect(result.errors).to include("Degree graduation year Enter a valid graduation year")
-            expect(result.errors).to include("Degree graduation year Enter a year that is in the past, for example 2014")
-            expect(result.errors).to include("Degree grade must be entered if specifying a previous UK degree or non-UK degree")
-            expect(result.errors).to include("ITT Start Date can't be blank")
-            expect(result.errors).to include("Date of Birth can't be blank")
-            expect(result.errors).to include(/ITT Aim has invalid reference data value of '.*'/)
-            expect(result.errors).to include(/Qualification Aim has invalid reference data value of '.*'/)
+            expect(result.errors).to include("degree_graduation_year Enter a valid graduation year")
+            expect(result.errors).to include("degree_graduation_year Enter a year that is in the past, for example 2014")
+            expect(result.errors).to include("degree_grade must be entered if specifying a previous UK degree or non-UK degree")
+            expect(result.errors).to include("itt_start_date can't be blank")
+            expect(result.errors).to include("date_of_birth can't be blank")
+            expect(result.errors).to include(/itt_aim has invalid reference data value of '.*'/)
+            expect(result.errors).to include(/itt_qualification_aim has invalid reference data value of '.*'/)
           end
         end
 
