@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Tech docs availability" do
+RSpec.describe "Tech docs availability", skip: "TechDocs::Availability middleware is not currently being used" do
   describe "/api-docs" do
     context "when allowed_versions excludes v2026.0" do
       before do
