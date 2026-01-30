@@ -1,37 +1,110 @@
 ---
-title: POST /trainees/{trainee_id}/recommend-for-qts
-weight: 11
+title: POST /trainees/{trainee_id}/withdraw
+weight: 13
 ---
 
-# `POST /trainees/{trainee_id}/recommend-for-qts`
+# `POST /trainees/{trainee_id}/withdraw`
 
-Change status of a trainee for a QTS Award.
+<%= preview_warning_if_needed %>
+
+Withdraw a trainee.
 
 ## Request
 
-    POST /api/v2026.0/trainees/{trainee_id}/recommend-for-qts
+    POST /api/v2026.0/trainees/{trainee_id}/withdraw
 
 ## Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
 ## Request body
 
-Recommendation details
+Withdraw details
 
 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-  <dt class="govuk-summary-list__key"><code>qts_standards_met_date</code></dt>
+  <dt class="govuk-summary-list__key"><code>trigger</code></dt>
   <dd class="govuk-summary-list__value">
     <p class="govuk-body">
       string, required
     </p>
     <p class="govuk-body">
-      The date when the Trainee met the QTS standards. Dates should be in ISO 8601 format.
+      The party who initiated the withdrawal. Must be either <code>provider</code> or <code>trainee</code>.
     </p>
     <p class="govuk-body">
-      Example: <code>2000-01-01</code>
+      Example: <code>provider</code>
+    </p>
+  </dd>
+</div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>future_interest</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, required
+    </p>
+    <p class="govuk-body">
+      Whether the trainee would be interested in resuming training in the future. Must be either <code>yes</code>, <code>no</code> or <code>unknown</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>no</code>
+    </p>
+  </dd>
+  </div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>withdraw_date</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, required
+    </p>
+    <p class="govuk-body">
+      The date that the trainee is withdrawing from the course.
+    </p>
+    <p class="govuk-body">
+      Example: <code>2025-02-03</code>
+    </p>
+  </dd>
+  </div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>reasons</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      array, required
+    </p>
+    <p class="govuk-body">
+      The reason(s) for the withdrawal. Valid values with trigger <code>trainee</code> are <code>unacceptable_behaviour</code>, <code>did_not_make_progress</code>, <code>lack_of_progress_during_placements</code>, <code>trainee_workload_issues</code>, <code>not_meeting_qts_standards</code>, <code>change_in_personal_or_health_circumstances</code>, <code>does_not_want_to_become_a_teacher</code>, <code>never_intended_to_obtain_qts</code>, <code>moved_to_different_itt_course</code>, <code>trainee_chose_to_withdraw_another_reason</code>, <code>safeguarding_concerns</code>.
+      Valid values with trigger <code>provider</code> are <code>record_added_in_error</code>, <code>mandatory_reasons</code>, <code>stopped_responding_to_messages</code>, <code>unacceptable_behaviour</code>, <code>lack_of_progress_during_placements</code>, <code>did_not_make_progress</code>, <code>not_meeting_qts_standards</code>, <code>had_to_withdraw_trainee_another_reason</code>, <code>safeguarding_concerns</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>[`unacceptable_behaviour`]</code>
+    </p>
+  </dd>
+</div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>another_reason</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, conditional
+    </p>
+    <p class="govuk-body">
+       The reason a trainee withdrew if the other values do not sufficiently describe why the trainee withdrew. Required if <code>reasons</code> include <code>trainee_chose_to_withdraw_another_reason</code> or <code>had_to_withdraw_trainee_another_reason</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>Bespoke reason</code>
+    </p>
+  </dd>
+</div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>safeguarding_concern_reasons</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, conditional
+    </p>
+    <p class="govuk-body">
+       More information about the safeguarding concern that caused a trainee to be withdrawn. Required if <code>reasons</code> is <code>safeguarding_concerns</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>Detail about the safeguarding concerns</code>
     </p>
   </dd>
 </div>
@@ -42,7 +115,16 @@ Recommendation details
     <pre class="json-code-sample">
     {
       "data": {
-        "qts_standards_met_date": "2024-06-17"
+        "trigger": "provider,
+        "future_interest": "no",
+        "withdraw_date": "2025-03-05",
+        "reasons": [
+          "unacceptable_behavior",
+          "had_to_withdraw_trainee_another_reason",
+          "safeguarding_concerns"
+        ],
+        "another_reason": "Bespoke reason",
+        "safeguarding_concern_reasons": "Reasons for safeguarding concern"
       }
     }</pre>
   </div>
@@ -51,7 +133,7 @@ Recommendation details
 ## Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 202<span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -78,11 +160,11 @@ Recommendation details
         "itt_end_date": "2023-10-17",
         "trn": "6440650",
         "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-        "state": "recommended_for_award",
+        "state": "deferred",
         "withdraw_date": null,
         "defer_date": "2023-10-17",
         "defer_reason": null,
-        "recommended_for_award_at": "2024-06-17T09:05:48Z",
+        "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
         "course_min_age": 5,
@@ -116,8 +198,6 @@ Recommendation details
         "withdrawal_future_interest": null,
         "withdrawal_trigger": null,
         "withdrawal_reasons": null,
-        "withdrawal_another_reason": null,
-        "withdrawal_safeguarding_concern_reasons": null,
         "placement_detail": null,
         "ukprn": "10000571",
         "ethnicity": "120",
@@ -125,7 +205,7 @@ Recommendation details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": "13914",
+        "course_age_range": null,
         "employing_school_urn": null,
         "training_partner_ukprn": null,
         "training_partner_urn": null,
@@ -205,7 +285,7 @@ Recommendation details
       "errors": [
         {
           "error": "UnprocessableEntity",
-          "message": "Qts standards met date can't be blank"
+          "message": "Withdraw date Choose a withdrawal date"
         }
       ]
     }</pre>

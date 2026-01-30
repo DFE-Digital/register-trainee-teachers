@@ -39,17 +39,18 @@ namespace :tech_docs do
 
         FileUtils.mkdir_p("source/csv-docs/#{version_dir}")
 
-        # Create version index with hide_in_navigation for v2026.0
-        File.write("source/csv-docs/#{version_dir}/index.html.md", <<~METADATA)
+        is_preview = TechDocsHelpers.preview_version?(version_dir)
+        content = <<~CONTENT
           ---
           title: #{version_dir}
           weight: #{version_index + 3}
-          hide_in_navigation: #{version_dir == 'v2026.0'}
+          hide_in_navigation: #{is_preview}
           ---
 
           # #{version_dir}
-
-        METADATA
+        CONTENT
+        content += "\n<%= partial \"partials/preview_warning\", locals: { version: \"#{version_dir}\" } %>\n" if is_preview
+        File.write("source/csv-docs/#{version_dir}/index.html.md.erb", content)
 
         fields.each_with_index do |field, index|
           html = context.partial(
@@ -62,10 +63,12 @@ namespace :tech_docs do
               format: Kramdown::Document.new(field["format"]).to_html,
               example: Kramdown::Document.new(field["example"]).to_html,
               validation: Kramdown::Document.new(field["validation"]).to_html,
+              version: version_dir,
+              show_preview_warning: is_preview,
             }
           )
 
-          File.open("source/csv-docs/#{version_dir}/#{field['technical'].gsub('_', '-')}.html.md", "w") do |f|
+          File.open("source/csv-docs/#{version_dir}/#{field['technical'].gsub('_', '-')}.html.md.erb", "w") do |f|
             f.write(
               <<~METADATA,
                 ---
@@ -102,25 +105,27 @@ end
 class ReferenceDataGenerator2026
   def self.generate(version, index)
     version_dir = TechDocsHelpers.format_version(version)
+    is_preview = TechDocsHelpers.preview_version?(version_dir)
 
     FileUtils.mkdir_p("source/reference-data/#{version_dir}")
 
-    File.write("source/reference-data/#{version_dir}/index.html.md.erb", <<~METADATA)
+    content = <<~CONTENT
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: #{version == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA}
+      hide_in_navigation: #{is_preview}
       ---
 
       # #{version_dir}
-
-    METADATA
+    CONTENT
+    content += "\n<%= partial \"partials/preview_warning\", locals: { version: \"#{version_dir}\" } %>\n" if is_preview
+    File.write("source/reference-data/#{version_dir}/index.html.md.erb", content)
 
     app = Middleman::Application.new
     context = Middleman::TemplateContext.new(app, {})
 
     ReferenceDataHelper.new.each_with_index do |reference_data_type, index|
-      File.open("source/reference-data/#{version_dir}/#{reference_data_type.formatted_type_name}.html.md", "w+") do |f|
+      File.open("source/reference-data/#{version_dir}/#{reference_data_type.formatted_type_name}.html.md.erb", "w+") do |f|
         html = context.partial(
           "partials/reference_data/attribute_from_yaml", locals: {
             version: version_dir,
@@ -129,6 +134,7 @@ class ReferenceDataGenerator2026
             type: reference_data_type.metadata,
             values: reference_data_type.type_values,
             index: index,
+            show_preview_warning: is_preview,
           }
         )
 
@@ -153,18 +159,21 @@ class ReferenceDataGenerator2025
   def self.generate(version, index)
     data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
     version_dir       = TechDocsHelpers.format_version(version)
+    is_preview = TechDocsHelpers.preview_version?(version_dir)
 
     FileUtils.mkdir_p("source/reference-data/#{version_dir}")
 
-    File.write("source/reference-data/#{version_dir}/index.html.md.erb", <<~METADATA)
+    content = <<~CONTENT
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: #{version == TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA}
+      hide_in_navigation: #{is_preview}
       ---
 
       # #{version_dir}
-    METADATA
+    CONTENT
+    content += "\n<%= partial \"partials/preview_warning\", locals: { version: \"#{version_dir}\" } %>\n" if is_preview
+    File.write("source/reference-data/#{version_dir}/index.html.md.erb", content)
 
     app     = Middleman::Application.new
     context = Middleman::TemplateContext.new(app, {})
@@ -179,13 +188,14 @@ class ReferenceDataGenerator2025
       field               = TechDocsHelpers.fields(version).detect { |field| field["technical"] == attribute }
       formatted_attribute = attribute.gsub("_", "-")
 
-      File.open("source/reference-data/#{version_dir}/#{formatted_attribute}.html.md", "w") do |f|
+      File.open("source/reference-data/#{version_dir}/#{formatted_attribute}.html.md.erb", "w") do |f|
         html = context.partial(
           "partials/reference_data/attribute", locals: {
             attribute: formatted_attribute,
             version: version_dir,
             field: field,
             values: values,
+            show_preview_warning: is_preview,
           }
         )
 
@@ -209,6 +219,7 @@ end
 module TechDocsHelpers
   RAILS_DIR     = File.expand_path("../", __dir__)
   RAILS_GEMFILE = File.join(RAILS_DIR, "Gemfile")
+  CONFIG        = YAML.load_file(File.expand_path("config/tech-docs.yml", __dir__))
   WORDS_TO_NUMBERS = {
     "one" => 1,
     "two" => 2,
@@ -261,6 +272,10 @@ module TechDocsHelpers
     else
       raise("Invalid version format")
     end
+  end
+
+  def self.preview_version?(version_dir)
+    CONFIG.fetch("preview_versions", []).include?(version_dir)
   end
 
   def self.build(source)

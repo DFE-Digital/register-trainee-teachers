@@ -1,5 +1,9 @@
 # <%= type.fetch("display_name") %>
 
+<% if defined?(show_preview_warning) && show_preview_warning %>
+<%= partial "partials/preview_warning", locals: { version: version } %>
+<% end %>
+
 <%= link_to "Download entries as a CSV file", "/reference-data/#{version}/#{name}/download" %>
 
 ## Overview
