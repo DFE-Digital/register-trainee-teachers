@@ -5,6 +5,7 @@ module Api
     def self.included(base)
       base.extend(ClassMethods)
       base.class_attribute(:csv_field_mappings)
+      base.class_attribute(:csv_field_mappings_version)
     end
 
     NESTED_CSV_ATTRIBUTE_NAMES = {
@@ -21,12 +22,19 @@ module Api
 
     module ClassMethods
       def attribute_mappings
-        self.csv_field_mappings ||= begin
-          fields = YAML.load_file("BulkUpdate::AddTrainees::#{module_parent_name.demodulize}::ImportRows".constantize.fields_definition_path)
-          fields.to_h do |field|
-            [field["technical"].to_sym, field["field_name"]]
+        version = module_parent_name.demodulize
+
+        if csv_field_mappings.blank? || csv_field_mappings_version != version
+          self.csv_field_mappings_version = version
+          self.csv_field_mappings = begin
+            fields = YAML.load_file("BulkUpdate::AddTrainees::#{version}::ImportRows".constantize.fields_definition_path)
+            fields.to_h do |field|
+              [field["technical"].to_sym, field["field_name"]]
+            end
           end
         end
+
+        csv_field_mappings
       end
 
       def human_attribute_name(attr, options = {})
