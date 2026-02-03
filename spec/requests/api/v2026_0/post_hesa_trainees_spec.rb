@@ -1738,6 +1738,52 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         end
       end
     end
+
+    context "when course_year is not an integer" do
+      let(:params) do
+        { data: data.merge({ course_year: "abc" }) }
+      end
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("course_year is not a valid course year")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include(
+            "course_year" => ["is not a valid course year"],
+          )
+        end
+      end
+    end
+
+    context "when additional_training_initiative has invalid reference data values" do
+      let(:params) do
+        { data: data.merge({ additional_training_initiative: "now_teach" }) }
+      end
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include(
+          /additional_training_initiative has invalid reference data value of 'now_teach'/,
+        )
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include(
+            "additional_training_initiative" => [/has invalid reference data value of 'now_teach'/],
+          )
+        end
+      end
+    end
   end
 
   context "when a placement has invalid reference data values" do

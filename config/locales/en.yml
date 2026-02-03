@@ -2263,6 +2263,9 @@ en:
               blank: must be entered if 202 selected for itt_aim
               csv:
                 blank: must be entered if 202 selected for itt_aim
+            course_year:
+              not_a_number: is not a valid course year
+              not_an_integer: is not a valid course year
         api/v20260/degree_attributes:
           <<: *v20250_degree_attributes
         api/create_trainee:
