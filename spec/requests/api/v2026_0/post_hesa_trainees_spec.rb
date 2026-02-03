@@ -316,9 +316,11 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             expect(response.parsed_body[:errors]).to eq(
-              "non_uk_degree" => ["must be entered if specifying a previous non-UK degree"],
-              "subject" => ["must be entered if specifying a previous UK degree or non-UK degree"],
-              "graduation_year" => ["must be entered if specifying a previous UK degree or non-UK degree"],
+              "degrees_attributes" => {
+                "non_uk_degree" => ["must be entered if specifying a previous non-UK degree"],
+                "subject" => ["must be entered if specifying a previous UK degree or non-UK degree"],
+                "graduation_year" => ["must be entered if specifying a previous UK degree or non-UK degree"],
+              },
             )
           end
         end
@@ -789,7 +791,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
           expect(response.parsed_body[:errors]).to eq(
-            "graduation_year" => ["is invalid"],
+            "degrees_attributes" => { "graduation_year" => ["is invalid"] },
           )
         end
       end
@@ -813,7 +815,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
           expect(response.parsed_body[:errors]).to eq(
-            "graduation_year" => ["is invalid"],
+            "degrees_attributes" => { "graduation_year" => ["is invalid"] },
           )
         end
       end
@@ -1756,7 +1758,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          "placements_attributes" => ["name can't be blank"],
+          "placements_attributes" => { "name" => ["can't be blank"] },
         )
       end
     end
@@ -1801,10 +1803,12 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 2 errors prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include(
-          "graduation_year" => [
-            "must be in the past, for example 2014",
-            "is invalid",
-          ],
+          "degrees_attributes" => {
+            "graduation_year" => [
+              "must be in the past, for example 2014",
+              "is invalid",
+            ],
+          },
         )
       end
     end
@@ -1832,8 +1836,10 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["message"]).to eq("Validation failed: 3 errors prohibited this trainee from being saved")
           expect(response.parsed_body["errors"]).to match(
-            "graduation_year" => ["must be in the past, for example 2014", "is invalid"],
-            "uk_degree" => [/has invalid reference data value of 'Bachelor of Arts'./],
+            "degrees_attributes" => {
+              "graduation_year" => ["must be in the past, for example 2014", "is invalid"],
+              "uk_degree" => [/has invalid reference data value of 'Bachelor of Arts'./],
+            },
           )
         end
       end
@@ -1898,7 +1904,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include(
-          "uk_degree" => ["must be entered if specifying a previous UK degree"],
+          "degrees_attributes" => { "uk_degree" => ["must be entered if specifying a previous UK degree"] },
         )
       end
     end
