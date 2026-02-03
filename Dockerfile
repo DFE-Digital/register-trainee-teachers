@@ -4,7 +4,7 @@
 # rails-app: runs the actual app
 
 # Build rails-build image
-FROM ruby:3.4.2-alpine3.20 AS rails-build
+FROM ruby:3.4.8-alpine3.23 AS rails-build
 
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
@@ -52,7 +52,7 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 ###
 
 # Build Middleman docs image
-FROM ruby:3.4.2-alpine3.20 AS middleman-build
+FROM ruby:3.4.8-alpine3.23 AS middleman-build
 
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
@@ -86,7 +86,7 @@ RUN bundle exec rake tech_docs:build
 ###
 
 # Build final rails-app image
-FROM ruby:3.4.2-alpine3.20 AS rails-app
+FROM ruby:3.4.8-alpine3.23 AS rails-app
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
 
