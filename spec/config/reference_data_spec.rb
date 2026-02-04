@@ -77,6 +77,5 @@ RSpec.describe "Reference data integrity" do
       expect(non_empty).to eq(non_empty.sort_by(&:to_i))
       expect(codes.last(empty_count)).to all(be_empty)
     end
-
   end
 end
