@@ -2,7 +2,14 @@
 
 module Api
   module V20260
-    class UpdateTraineeService < Api::V20250::UpdateTraineeService
+    class UpdateTraineeService
+      include ServicePattern
+
+      def initialize(trainee:, attributes:)
+        @trainee = trainee
+        @attributes = attributes
+      end
+
       def call
         trainee_attributes_validation = TraineeAttributesValidation.new(trainee_attributes:)
         attributes_to_save = attributes.deep_attributes.with_indifferent_access
@@ -18,6 +25,29 @@ module Api
           [trainee.save, trainee]
         end
       end
+
+      TraineeAttributesValidation = Struct.new(:trainee_attributes) do
+        def errors_count = validation_errors.count
+        def all_errors = validation_errors
+        def invalid? = !errors_count.zero?
+
+        def validation_errors
+          trainee_errors.compact.flatten.map(&:strip)
+        end
+
+        def trainee_errors
+          @trainee_errors ||= begin
+            trainee_attributes.validate
+            trainee_attributes.errors&.full_messages
+          end
+        end
+      end
+
+    private
+
+      attr_reader :trainee, :attributes
+
+      alias_method :trainee_attributes, :attributes
     end
   end
 end
