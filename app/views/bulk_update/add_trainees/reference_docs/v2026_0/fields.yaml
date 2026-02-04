@@ -292,8 +292,8 @@
     writing-up periods. Update this field if there’s a change, for example, resits, agreed breaks or transferring between courses.
   format: YYYY-MM-DD
   example: "`2025-03-11`"
-  validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L68
+  validation: Mandatory. Must be within the last 10 years and within the next 5 years.
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_0/trainee_attributes.rb#L437
   page_title: ITT end date
 - field_name: course_age_range
   technical: course_age_range
