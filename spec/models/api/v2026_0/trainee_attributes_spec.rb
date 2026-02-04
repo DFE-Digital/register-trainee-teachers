@@ -538,6 +538,32 @@ RSpec.describe Api::V20260::TraineeAttributes do
           expect(subject.errors[:itt_end_date]).to contain_exactly("is invalid")
         end
       end
+
+      context "when more than 10 years in the past" do
+        before do
+          subject.itt_start_date = 12.years.ago.to_date.iso8601
+          subject.itt_end_date = 11.years.ago.to_date.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_end_date]).to contain_exactly("must be within the last 10 years")
+        end
+      end
+
+      context "when more than 5 years in the future" do
+        before do
+          subject.itt_start_date = Time.zone.today.iso8601
+          subject.itt_end_date = 6.years.from_now.to_date.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_end_date]).to contain_exactly("must be within the next 5 years")
+        end
+      end
     end
 
     describe "trainee_start_date" do

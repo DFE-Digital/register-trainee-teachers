@@ -576,6 +576,36 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
     end
 
+    it "returns status code 422 with an `itt_end_date` too old and the trainee is not updated" do
+      original_itt_end_date = trainee.itt_end_date
+
+      put(
+        "/api/v2026.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { itt_end_date: 11.years.ago.to_date.iso8601 } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be within the last 10 years")
+      expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+    end
+
+    it "returns status code 422 with an `itt_end_date` too far in future and the trainee is not updated" do
+      original_itt_end_date = trainee.itt_end_date
+
+      put(
+        "/api/v2026.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { itt_end_date: 6.years.from_now.to_date.iso8601 } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be within the next 5 years")
+      expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+    end
+
     it "returns status code 422 with an invalid `trainee_start_date` and the trainee is not updated" do
       put(
         "/api/v2026.0/trainees/#{trainee.slug}",
@@ -655,6 +685,42 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           "itt_end_date" => ["must be after itt_start_date"],
         )
         expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
+        expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+      end
+
+      it "returns status code 422 with an `itt_end_date` too old and the trainee is not updated" do
+        original_itt_end_date = trainee.itt_end_date
+
+        put(
+          "/api/v2026.0/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: { itt_end_date: 11.years.ago.to_date.iso8601 } },
+          as: :json,
+        )
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body).to have_key("errors")
+        expect(response.parsed_body[:errors]).to eq(
+          "itt_end_date" => ["must be within the last 10 years"],
+        )
+        expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+      end
+
+      it "returns status code 422 with an `itt_end_date` too far in future and the trainee is not updated" do
+        original_itt_end_date = trainee.itt_end_date
+
+        put(
+          "/api/v2026.0/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: { itt_end_date: 6.years.from_now.to_date.iso8601 } },
+          as: :json,
+        )
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body).to have_key("errors")
+        expect(response.parsed_body[:errors]).to eq(
+          "itt_end_date" => ["must be within the next 5 years"],
+        )
         expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
       end
 
