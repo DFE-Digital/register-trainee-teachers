@@ -745,6 +745,54 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       end
     end
 
+    context "when `itt_end_date` is too old" do
+      let(:itt_end_date) { 11.years.ago.to_date.iso8601 }
+
+      before do
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      it "does not create a trainee record and returns a 422 status with meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("itt_end_date must be within the last 10 years")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "does not create a trainee record and returns a 422 status with meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "itt_end_date" => ["must be within the last 10 years"],
+          )
+        end
+      end
+    end
+
+    context "when `itt_end_date` is too far in future" do
+      let(:itt_end_date) { 6.years.from_now.to_date.iso8601 }
+
+      before do
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      it "does not create a trainee record and returns a 422 status with meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("itt_end_date must be within the next 5 years")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "does not create a trainee record and returns a 422 status with meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "itt_end_date" => ["must be within the next 5 years"],
+          )
+        end
+      end
+    end
+
     context "when graduation_year is in 'yyyy-mm-dd' format" do
       let(:graduation_year) { "2003-01-01" }
 

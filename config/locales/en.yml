@@ -2191,6 +2191,8 @@ en:
               future: must not be more than one year in the future
             itt_end_date:
               before_or_same_as_start_date: must be after itt_start_date
+              too_old: must be within the last 10 years
+              future: must be within the next 5 years
               csv:
                 before_or_same_as_start_date: must be after ITT start date
             course_subject_one:
