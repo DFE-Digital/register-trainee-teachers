@@ -26,10 +26,6 @@ features:
   google:
     send_data_to_big_query: true
   integrate_with_trs: true
-  hesa_trn_requests: false
-  hesa_import:
-    sync_collection: false
-    sync_trn_data: false
   duplicate_checking: true
   school_data_auto_import: true
   maintenance_banner: false

@@ -51,6 +51,8 @@ class School < ApplicationRecord
   validates :urn, presence: true, uniqueness: true
   validates :name, presence: true
 
+  NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
+
   def training_partner?
     training_partner.present? && training_partner.undiscarded?
   end
