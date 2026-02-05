@@ -207,9 +207,9 @@ RSpec.describe Placement do
       end
     end
 
-    context "when the school urn is among the Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS" do
+    context "when the school urn is among the School::NOT_APPLICABLE_SCHOOL_URNS" do
       subject {
-        create(:placement, urn: Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.sample)
+        create(:placement, urn: School::NOT_APPLICABLE_SCHOOL_URNS.sample)
       }
 
       it "returns no address" do

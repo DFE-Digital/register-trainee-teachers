@@ -23,7 +23,7 @@ FactoryBot.define do
 
     trait :not_applicable_school do
       school { nil }
-      urn { Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.sample }
+      urn { School::NOT_APPLICABLE_SCHOOL_URNS.sample }
       name { I18n.t("components.placement_detail.magic_urn.#{urn}") }
       address { nil }
       postcode { nil }
