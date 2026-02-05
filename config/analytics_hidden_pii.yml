@@ -1,4 +1,8 @@
 shared:
+  new_groups:
+    - email
+  new_partner_users:
+    - email
   trainees:
     - first_names
     - last_name
