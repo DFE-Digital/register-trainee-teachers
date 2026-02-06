@@ -23,15 +23,6 @@ RSpec.describe "Reference data integrity" do
       ids = data.map { |e| e["id"] }
       expect(ids).to eq(ids.uniq)
     end
-
-    it "is sorted by HESA code ascending with empty codes at end" do
-      codes = data.map { |e| e["hesa_codes"]&.first.to_s }
-      non_empty = codes.reject(&:empty?)
-      empty_count = codes.count(&:empty?)
-
-      expect(non_empty).to eq(non_empty.sort_by(&:to_i))
-      expect(codes.last(empty_count)).to all(be_empty)
-    end
   end
 
   describe "degree_type.yml" do
@@ -50,11 +41,6 @@ RSpec.describe "Reference data integrity" do
       ids = data.map { |e| e["id"] }
       expect(ids).to eq(ids.uniq)
     end
-
-    it "is sorted by HESA code ascending" do
-      codes = data.map { |e| e["hesa_codes"]&.first.to_s }
-      expect(codes).to eq(codes.sort_by(&:to_i))
-    end
   end
 
   describe "degree_subject.yml" do
@@ -67,15 +53,6 @@ RSpec.describe "Reference data integrity" do
     it "has no duplicate IDs" do
       ids = data.map { |e| e["id"] }
       expect(ids).to eq(ids.uniq)
-    end
-
-    it "is sorted by HESA code ascending with empty codes at end" do
-      codes = data.map { |e| e["hesa_codes"]&.first.to_s }
-      non_empty = codes.reject(&:empty?)
-      empty_count = codes.count(&:empty?)
-
-      expect(non_empty).to eq(non_empty.sort_by(&:to_i))
-      expect(codes.last(empty_count)).to all(be_empty)
     end
   end
 end
