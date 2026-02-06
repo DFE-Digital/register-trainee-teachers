@@ -50,6 +50,11 @@ RSpec.describe "Reference data integrity" do
       expect(data.count).to eq(1094)
     end
 
+    it "has HESA codes as 6 digits" do
+      codes = data.flat_map { |e| e["hesa_codes"] }.compact.reject(&:empty?)
+      expect(codes).to all(match(/^\d{6}$/))
+    end
+
     it "has no duplicate IDs" do
       ids = data.map { |e| e["id"] }
       expect(ids).to eq(ids.uniq)
