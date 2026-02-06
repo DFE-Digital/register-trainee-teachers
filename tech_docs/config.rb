@@ -17,7 +17,7 @@ helpers do
     version = current_page.path.match(%r{v\d{4}\.\d})&.[](0)
     return unless version && TECH_DOCS_CONFIG.fetch("preview_versions", []).include?(version)
 
-    partial "partials/preview_warning", locals: { version: version }
+    partial("partials/preview_warning", locals: { version: })
   end
 end
 

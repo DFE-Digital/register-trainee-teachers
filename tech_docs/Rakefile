@@ -357,6 +357,8 @@ class ReferenceDataHelper
           end
         end
 
+        reference_data_type.type_values.sort_by! { |v| [v.hesa_code == "-" ? 1 : 0, v.hesa_code] }
+
         yield(reference_data_type)
       end
     end
