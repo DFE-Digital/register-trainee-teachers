@@ -316,9 +316,11 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
 
             expect(response.parsed_body[:errors]).to eq(
-              "non_uk_degree" => ["must be entered if specifying a previous non-UK degree"],
-              "subject" => ["must be entered if specifying a previous UK degree or non-UK degree"],
-              "graduation_year" => ["must be entered if specifying a previous UK degree or non-UK degree"],
+              "degrees_attributes" => {
+                "non_uk_degree" => ["must be entered if specifying a previous non-UK degree"],
+                "subject" => ["must be entered if specifying a previous UK degree or non-UK degree"],
+                "graduation_year" => ["must be entered if specifying a previous UK degree or non-UK degree"],
+              },
             )
           end
         end
@@ -743,6 +745,54 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       end
     end
 
+    context "when `itt_end_date` is too old" do
+      let(:itt_end_date) { 11.years.ago.to_date.iso8601 }
+
+      before do
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      it "does not create a trainee record and returns a 422 status with meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("itt_end_date must be within the last 10 years")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "does not create a trainee record and returns a 422 status with meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "itt_end_date" => ["must be within the last 10 years"],
+          )
+        end
+      end
+    end
+
+    context "when `itt_end_date` is too far in future" do
+      let(:itt_end_date) { 6.years.from_now.to_date.iso8601 }
+
+      before do
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      it "does not create a trainee record and returns a 422 status with meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("itt_end_date must be within the next 5 years")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "does not create a trainee record and returns a 422 status with meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "itt_end_date" => ["must be within the next 5 years"],
+          )
+        end
+      end
+    end
+
     context "when graduation_year is in 'yyyy-mm-dd' format" do
       let(:graduation_year) { "2003-01-01" }
 
@@ -789,7 +839,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
           expect(response.parsed_body[:errors]).to eq(
-            "graduation_year" => ["is invalid"],
+            "degrees_attributes" => { "graduation_year" => ["is invalid"] },
           )
         end
       end
@@ -813,7 +863,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
           expect(response.parsed_body[:errors]).to eq(
-            "graduation_year" => ["is invalid"],
+            "degrees_attributes" => { "graduation_year" => ["is invalid"] },
           )
         end
       end
@@ -1736,6 +1786,52 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         end
       end
     end
+
+    context "when course_year is not an integer" do
+      let(:params) do
+        { data: data.merge({ course_year: "abc" }) }
+      end
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("course_year is not a valid course year")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include(
+            "course_year" => ["is not a valid course year"],
+          )
+        end
+      end
+    end
+
+    context "when additional_training_initiative has invalid reference data values" do
+      let(:params) do
+        { data: data.merge({ additional_training_initiative: "now_teach" }) }
+      end
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include(
+          /additional_training_initiative has invalid reference data value of 'now_teach'/,
+        )
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include(
+            "additional_training_initiative" => [/has invalid reference data value of 'now_teach'/],
+          )
+        end
+      end
+    end
   end
 
   context "when a placement has invalid reference data values" do
@@ -1756,7 +1852,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          "placements_attributes" => ["name can't be blank"],
+          "placements_attributes" => { "name" => ["can't be blank"] },
         )
       end
     end
@@ -1801,10 +1897,12 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 2 errors prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include(
-          "graduation_year" => [
-            "must be in the past, for example 2014",
-            "is invalid",
-          ],
+          "degrees_attributes" => {
+            "graduation_year" => [
+              "must be in the past, for example 2014",
+              "is invalid",
+            ],
+          },
         )
       end
     end
@@ -1832,8 +1930,10 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["message"]).to eq("Validation failed: 3 errors prohibited this trainee from being saved")
           expect(response.parsed_body["errors"]).to match(
-            "graduation_year" => ["must be in the past, for example 2014", "is invalid"],
-            "uk_degree" => [/has invalid reference data value of 'Bachelor of Arts'./],
+            "degrees_attributes" => {
+              "graduation_year" => ["must be in the past, for example 2014", "is invalid"],
+              "uk_degree" => [/has invalid reference data value of 'Bachelor of Arts'./],
+            },
           )
         end
       end
@@ -1898,7 +1998,7 @@ describe "`POST /api/v2026.0/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include(
-          "uk_degree" => ["must be entered if specifying a previous UK degree"],
+          "degrees_attributes" => { "uk_degree" => ["must be entered if specifying a previous UK degree"] },
         )
       end
     end

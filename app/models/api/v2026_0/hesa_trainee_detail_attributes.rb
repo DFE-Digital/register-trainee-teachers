@@ -67,6 +67,14 @@ module Api
         in: Hesa::CodeSets::FundCodes::MAPPING.keys,
       }, allow_blank: true
 
+      validates :course_year,
+                numericality: { only_integer: true },
+                allow_blank: true
+
+      validates :additional_training_initiative, api_inclusion: {
+        in: Hesa::CodeSets::TrainingInitiatives::MAPPING.keys,
+      }, allow_blank: true
+
       def initialize(attributes = {}, record_source: nil, **kwargs)
         # Handle both calling patterns:
         # new(hash, record_source: value) and new(keyword: value)

@@ -321,7 +321,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]))
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -331,7 +331,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]))
                 .with_message(/has invalid reference data value/)
             end
 
@@ -350,7 +350,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]))
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -364,7 +364,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]))
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -374,7 +374,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad], TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]))
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -388,7 +388,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
             it do
               expect(subject).not_to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad], TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]))
             end
           end
         end
@@ -536,6 +536,32 @@ RSpec.describe Api::V20260::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:itt_end_date]).to contain_exactly("is invalid")
+        end
+      end
+
+      context "when more than 10 years in the past" do
+        before do
+          subject.itt_start_date = 12.years.ago.to_date.iso8601
+          subject.itt_end_date = 11.years.ago.to_date.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_end_date]).to contain_exactly("must be within the last 10 years")
+        end
+      end
+
+      context "when more than 5 years in the future" do
+        before do
+          subject.itt_start_date = Time.zone.today.iso8601
+          subject.itt_end_date = 6.years.from_now.to_date.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_end_date]).to contain_exactly("must be within the next 5 years")
         end
       end
     end

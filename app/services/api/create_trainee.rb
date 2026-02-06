@@ -27,9 +27,9 @@ module Api
       end
 
       trainee = current_provider.trainees.build(trainee_attributes.deep_attributes)
-      validator = Submissions::ApiTrnValidator.new(trainee:)
+      validator = trn_validator(trainee)
 
-      if validator.all_errors.empty? && trainee.save
+      if validator_valid?(validator) && trainee.save
         ::Trainees::SubmitForTrn.call(trainee:) if submit_for_trn
 
         success_response(trainee)
@@ -40,6 +40,18 @@ module Api
 
   private
 
+    def trn_validator(trainee)
+      return nil if version == "v2026.0"
+
+      Submissions::ApiTrnValidator.new(trainee:)
+    end
+
+    def validator_valid?(validator)
+      return true if validator.nil?
+
+      validator.all_errors.empty?
+    end
+
     def duplicate_trainees
       @duplicate_trainees ||= FindDuplicateTrainees.call(
         current_provider:,
@@ -48,8 +60,8 @@ module Api
       )
     end
 
-    def save_errors_response(trn_validator, trainee)
-      validation_errors = trn_validator.all_errors.presence || trainee.errors.full_messages
+    def save_errors_response(validator, trainee)
+      validation_errors = validator&.all_errors.presence || trainee.errors.full_messages
 
       validation_error_response(validation_errors)
     end

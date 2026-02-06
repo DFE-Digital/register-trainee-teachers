@@ -17,10 +17,12 @@ RSpec.describe Api::V20260::EnhancedErrorsSerializer do
 
     it "returns enhanced errors" do
       expect(subject.as_hash).to eq(
-        "graduation_year" => [
-          "must be in the past, for example 2014",
-          "is invalid",
-        ],
+        "degrees_attributes" => {
+          "graduation_year" => [
+            "must be in the past, for example 2014",
+            "is invalid",
+          ],
+        },
         "itt_start_date" => ["is invalid"],
         "trainee_start_date" => ["is invalid"],
       )

@@ -92,7 +92,11 @@ module Api
 
       PROVIDER_LED_POSTGRAD_START_YEAR = 2022
 
-      private_constant :PROVIDER_LED_POSTGRAD_START_YEAR
+      OBSOLETE_TRAINING_ROUTES = [
+        TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+      ].freeze
+
+      private_constant :PROVIDER_LED_POSTGRAD_START_YEAR, :OBSOLETE_TRAINING_ROUTES
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
@@ -310,11 +314,13 @@ module Api
     private
 
       def valid_training_routes
-        if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-        else
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values
-        end
+        routes = if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
+                   Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+                 else
+                   Hesa::CodeSets::TrainingRoutes::MAPPING.values
+                 end
+
+        routes - OBSOLETE_TRAINING_ROUTES
       end
 
       def start_year
@@ -432,9 +438,15 @@ module Api
         return if !valid_date_string?(itt_start_date) || !valid_date_string?(itt_end_date)
 
         parsed_itt_start_date = itt_start_date.is_a?(String) ? Date.iso8601(itt_start_date) : itt_start_date
-        parsed_itt_end_date   = itt_end_date.is_a?(String) ? Date.iso8601(itt_end_date) : itt_end_date
+        parsed_itt_end_date = itt_end_date.is_a?(String) ? Date.iso8601(itt_end_date) : itt_end_date
 
-        errors.add(:itt_end_date, :before_or_same_as_start_date) if parsed_itt_start_date >= parsed_itt_end_date
+        if parsed_itt_end_date.year > Time.zone.now.year.next + 4
+          errors.add(:itt_end_date, :future)
+        elsif parsed_itt_end_date < 10.years.ago
+          errors.add(:itt_end_date, :too_old)
+        elsif parsed_itt_start_date >= parsed_itt_end_date
+          errors.add(:itt_end_date, :before_or_same_as_start_date)
+        end
       end
 
       def validate_itt_start_and_end_dates
