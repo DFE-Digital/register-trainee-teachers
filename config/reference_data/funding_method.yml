@@ -39,11 +39,6 @@ data:
     display_name: "Undergraduate bursary"
     hesa_codes:
       - "B"
-  - id: "Scholarship"
-    name: "scholarship"
-    display_name: "Scholarship"
-    hesa_codes:
-      - "4"
   - id: "C"
     name: "veteran_teaching_undergraduate_bursary"
     display_name: "Veteran Teaching undergraduate bursary"

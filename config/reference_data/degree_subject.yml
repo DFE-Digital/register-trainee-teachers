@@ -13,7 +13,7 @@ data:
     name: "accountancy"
     display_name: "Accountancy"
     hesa_codes:
-      - ""
+      - "100104"
   - id: "937f70f0-5dce-e911-a985-000d3ab79618"
     name: "accounting"
     display_name: "Accounting"
