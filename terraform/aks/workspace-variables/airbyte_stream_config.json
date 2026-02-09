@@ -1072,55 +1072,6 @@
         ]
       },
       {
-        "name": "hesa_trn_submissions",
-        "syncMode": "incremental_append",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "submitted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
-            ]
-          }
-        ]
-      },
-      {
         "name": "training_partner_users",
         "syncMode": "incremental_append",
         "cursorField": [
@@ -2356,11 +2307,6 @@
           {
             "fieldPath": [
               "updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "hesa_trn_submission_id"
             ]
           },
           {

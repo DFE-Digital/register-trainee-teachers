@@ -144,11 +144,6 @@ shared:
     - trainee_id
     - updated_at
     - year_of_course
-  hesa_trn_submissions:
-    - id
-    - created_at
-    - submitted_at
-    - updated_at
   training_partner_users:
     - id
     - training_partner_id
@@ -325,7 +320,6 @@ shared:
     - training_route
     - trn
     - updated_at
-    - hesa_trn_submission_id
     - hesa_editable
     - slug_sent_to_trs_at
     - application_choice_id
