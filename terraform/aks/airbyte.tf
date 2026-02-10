@@ -31,6 +31,13 @@ data "azurerm_key_vault_secret" "airbyte_replication_password" {
   name         = "AIRBYTE-REPLICATION-PASSWORD"
 }
 
+data "azurerm_key_vault_secret" "airbyte_bq_sa" {
+  count = var.airbyte_enabled ? 1 : 0
+
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+  name         = "AIRBYTE-BQ-SA"
+}
+
 module "airbyte" {
   source = "./vendor/modules/aks//aks/airbyte"
 
@@ -66,6 +73,7 @@ module "airbyte" {
   cpu            = module.cluster_data.configuration_map.cpu_min
 
   use_azure = var.deploy_azure_backing_services
+  gcp_bq_sa = data.azurerm_key_vault_secret.airbyte_bq_sa[0].value
 }
 
 ## Airbyte module variables
