@@ -284,14 +284,6 @@ shared:
     - csv_data
     - created_at
     - updated_at
-  hesa_collection_requests:
-    - id
-    - collection_reference
-    - requested_at
-    - response_body
-    - created_at
-    - updated_at
-    - state
   hesa_students:
     - id
     - hesa_id
@@ -377,15 +369,6 @@ shared:
     - itt_qualification_aim
     - fund_code
     - hesa_disabilities
-  hesa_trn_requests:
-    - id
-    - collection_reference
-    - state
-    - response_body
-    - created_at
-    - updated_at
-  hesa_trn_submissions:
-    - payload
   providers:
     - searchable
   school_data_downloads:
