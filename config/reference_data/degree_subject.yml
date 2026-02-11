@@ -13,7 +13,7 @@ data:
     name: "accountancy"
     display_name: "Accountancy"
     hesa_codes:
-      - ""
+      - "100104"
   - id: "937f70f0-5dce-e911-a985-000d3ab79618"
     name: "accounting"
     display_name: "Accounting"
@@ -5469,3 +5469,13 @@ data:
     display_name: "Zoology"
     hesa_codes:
       - "100356"
+  - id: "e84cefde-c18f-478d-8649-a0e5e795d318"
+    name: "not_applicable"
+    display_name: "Not Applicable"
+    hesa_codes:
+      - "999998"
+  - id: "208373a5-8bff-41c8-8b13-3d1d0b34e36e"
+    name: "not_known"
+    display_name: "Not Known"
+    hesa_codes:
+      - "999999"
