@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "22.x"
+    "node": "24.13.0"
   },
   "type": "module",
   "scripts": {
