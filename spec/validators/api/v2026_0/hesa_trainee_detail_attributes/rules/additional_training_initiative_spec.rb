@@ -6,27 +6,26 @@ require "rails_helper"
 RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::AdditionalTrainingInitiative do
   subject { described_class }
 
-  it { is_expected.to be < Api::V20260::HesaTraineeDetailAttributes::Rules::TrainingInitiative }
-
-  let(:year) { 2026 }
-  let!(:current_academic_cycle) { create(:academic_cycle, cycle_year: year) }
-
-  let(:trainee_attributes) do
-    Api::V20260::TraineeAttributes.new(
-      training_initiative: nil,
-      trainee_start_date: Date.new(year, 12, 1).iso8601,
-    )
-  end
   let(:hesa_trainee_detail_attributes) do
     Api::V20260::HesaTraineeDetailAttributes.new(
       { additional_training_initiative:, trainee_attributes: },
       record_source: "api",
     )
   end
+  let(:trainee_attributes) do
+    Api::V20260::TraineeAttributes.new(
+      training_initiative: nil,
+      trainee_start_date: Date.new(year, 12, 1).iso8601,
+    )
+  end
+  let!(:current_academic_cycle) { create(:academic_cycle, cycle_year: year) }
+  let(:year) { 2026 }
 
   around do |example|
     Timecop.freeze(Date.new(year, 5, 1)) { example.run }
   end
+
+  it { is_expected.to be < Api::V20260::HesaTraineeDetailAttributes::Rules::TrainingInitiative }
 
   describe ".call" do
     context "when `additional_training_initiative` is blank" do
