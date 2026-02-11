@@ -2265,6 +2265,8 @@ en:
               blank: must be entered if 202 selected for itt_aim
               csv:
                 blank: must be entered if 202 selected for itt_aim
+            additional_training_initiative:
+              ineligible: "'%{additional_training_initiative}' is not available in academic cycle '%{academic_cycle}'"
             course_year:
               not_a_number: is not a valid course year
               not_an_integer: is not a valid course year
