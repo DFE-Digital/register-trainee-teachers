@@ -10,8 +10,7 @@ module Api
 
           attr_reader :hesa_trainee_detail_attributes
 
-          delegate :additional_training_initiative,
-                   :trainee_attributes, to: :hesa_trainee_detail_attributes
+          delegate :trainee_attributes, to: :hesa_trainee_detail_attributes
           delegate :training_initiative, to: :trainee_attributes
 
           def initialize(hesa_trainee_detail_attributes)
@@ -19,30 +18,32 @@ module Api
           end
 
           def call
-            return ValidationResult.new(true) if no_training_initiative?
+            return ValidationResult.new(true) if skip_validation?
 
-            return ValidationResult.new(false, :ineligible, error_details) if training_initiative_not_eligible?
+            return ValidationResult.new(false, :ineligible, error_details) if not_eligible?
 
             ValidationResult.new(true)
           end
 
         private
 
-          def training_initiative_not_eligible?
-            !training_initiative_eligible?
-          end
-
-          def training_initiative_eligible?
-            available_initiatives = Funding::AvailableTrainingInitiativesService.call(academic_cycle:)
-
-            available_initiatives.include?(training_initiative)
-          end
-
-          def no_training_initiative?
+          def skip_validation?
             training_initiative.blank? ||
               training_initiative.to_s == "no_initiative" ||
               training_initiative == ROUTE_INITIATIVES_ENUMS[:no_initiative] ||
               training_initiative.is_a?(Api::V20260::HesaMapper::Attributes::InvalidValue)
+          end
+
+          def not_eligible?
+            !available_initiatives.include?(validated_value)
+          end
+
+          def validated_value
+            training_initiative
+          end
+
+          def available_initiatives
+            @available_initiatives ||= Funding::AvailableTrainingInitiativesService.call(academic_cycle:)
           end
 
           def error_details

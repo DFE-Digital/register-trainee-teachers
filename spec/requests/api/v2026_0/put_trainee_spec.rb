@@ -2392,6 +2392,38 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           end
         end
       end
+
+      context "when additional_training_initiative is unavailable (025/transition_to_teach) in the given academic year" do
+        let(:params) do
+          { data: { additional_training_initiative: "025" } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include(
+            "additional_training_initiative 'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'",
+          )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "additional_training_initiative" => ["'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'"],
+            )
+          end
+        end
+      end
     end
   end
 
