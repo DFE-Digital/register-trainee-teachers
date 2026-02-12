@@ -5,7 +5,7 @@ class RenameTraineeIdToProviderTraineeIdHesa < ActiveRecord::Migration[7.1]
     add_column :hesa_students, :provider_trainee_id, :string
 
     safety_assured {
-      execute <<-SQL.squish
+      execute <<~SQL.squish
         UPDATE hesa_students
         SET provider_trainee_id = trainee_id
       SQL
@@ -18,7 +18,7 @@ class RenameTraineeIdToProviderTraineeIdHesa < ActiveRecord::Migration[7.1]
     add_column :hesa_students, :trainee_id, :string
 
     safety_assured {
-      execute <<-SQL.squish
+      execute <<~SQL.squish
         UPDATE hesa_students
         SET trainee_id = provider_trainee_id
       SQL

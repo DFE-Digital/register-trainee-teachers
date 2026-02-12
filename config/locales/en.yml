@@ -2191,6 +2191,8 @@ en:
               future: must not be more than one year in the future
             itt_end_date:
               before_or_same_as_start_date: must be after itt_start_date
+              too_old: must be within the last 10 years
+              future: must be within the next 5 years
               csv:
                 before_or_same_as_start_date: must be after ITT start date
             course_subject_one:
@@ -2263,6 +2265,11 @@ en:
               blank: must be entered if 202 selected for itt_aim
               csv:
                 blank: must be entered if 202 selected for itt_aim
+            additional_training_initiative:
+              ineligible: "'%{additional_training_initiative}' is not available in academic cycle '%{academic_cycle}'"
+            course_year:
+              not_a_number: is not a valid course year
+              not_an_integer: is not a valid course year
         api/v20260/degree_attributes:
           <<: *v20250_degree_attributes
         api/create_trainee:

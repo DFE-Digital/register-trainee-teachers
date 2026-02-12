@@ -166,5 +166,73 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes do
         end
       end
     end
+
+    describe "course_year" do
+      context "when not an integer" do
+        subject { described_class.new(course_year: "abc") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:course_year]).to contain_exactly("is not a valid course year")
+        }
+      end
+
+      context "when a valid integer" do
+        subject { described_class.new(course_year: "1") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:course_year]).to be_blank
+        }
+      end
+
+      context "when blank" do
+        subject { described_class.new(course_year: "") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:course_year]).to contain_exactly("can't be blank")
+        }
+      end
+    end
+
+    describe "additional_training_initiative" do
+      context "when not included in the list of HESA training initiative codes" do
+        subject { described_class.new(additional_training_initiative: "now_teach") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:additional_training_initiative]).to contain_exactly(
+            "has invalid reference data value of 'now_teach'. Valid values are #{Hesa::CodeSets::TrainingInitiatives::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
+        }
+      end
+
+      context "when included in the list of HESA training initiative codes" do
+        Hesa::CodeSets::TrainingInitiatives::MAPPING.each_key do |additional_training_initiative|
+          subject { described_class.new(additional_training_initiative:) }
+
+          it "is expected to allow #{additional_training_initiative}" do
+            subject.validate
+
+            expect(subject.errors[:additional_training_initiative]).to be_blank
+          end
+        end
+      end
+
+      context "when blank" do
+        subject { described_class.new(additional_training_initiative: "") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:additional_training_initiative]).to be_blank
+        }
+      end
+    end
   end
 end

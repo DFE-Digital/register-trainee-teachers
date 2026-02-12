@@ -1762,7 +1762,7 @@ paths:
                   record_source: api
                   provider_trainee_id:
                   defer_reason:
-                  ukprn: '22578565'
+                  ukprn: '95356428'
                   ethnicity: '997'
                   course_qualification: QTS
                   course_title:
@@ -1798,7 +1798,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: T7AWujDLtzo3NNbkoWFreBnj
+                    placement_id: A7pX5HMrFDQSPWF6fF1aVjDf
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -1814,9 +1814,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: Ewud1rsDmsZarnSZzNJJ2edi
+                    degree_id: AJZhwcNqfPqSTgYSRzYc28mj
                   state: submitted_for_trn
-                  trainee_id: RpQVhqq7KLGr63zEKH8ZVDtd
+                  trainee_id: GKBtV4sJZ6hQqZrG1yiqL4d9
                   application_id:
                   disability1: '58'
                   disability2: '57'
@@ -2222,9 +2222,26 @@ paths:
                         items:
                           type: string
                       degrees_attributes:
-                        type: array
+                        type: object
                         items:
                           type: string
+                        properties:
+                          graduation_year:
+                            type: array
+                            items:
+                              type: string
+                          subject:
+                            type: array
+                            items:
+                              type: string
+                          non_uk_degree:
+                            type: array
+                            items:
+                              type: string
+                          uk_degree:
+                            type: array
+                            items:
+                              type: string
                       first_names:
                         type: array
                         items:
@@ -2286,10 +2303,21 @@ paths:
                         items:
                           type: string
                       placements_attributes:
+                        type: object
+                        items:
+                          type: string
+                        properties:
+                          name:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - name
+                      uk_degree:
                         type: array
                         items:
                           type: string
-                      uk_degree:
+                      additional_training_initiative:
                         type: array
                         items:
                           type: string
@@ -2820,7 +2848,7 @@ paths:
         required: true
         schema:
           type: string
-        example: yEkBQXtmbtmMTfN6LpfWfaaU
+        example: B839twS9Wam3FJiWtSCzoVEc
       responses:
         '200':
           description: does not update the degrees
@@ -3009,7 +3037,6 @@ paths:
                           properties:
                             uk_degree:
                               type: string
-                              nullable: true
                             non_uk_degree:
                               nullable: true
                             created_at:
@@ -3021,6 +3048,7 @@ paths:
                               nullable: true
                             institution:
                               type: string
+                              nullable: true
                             graduation_year:
                               type: integer
                             grade:
@@ -3169,7 +3197,7 @@ paths:
                   record_source: api
                   provider_trainee_id:
                   defer_reason:
-                  ukprn: '45485167'
+                  ukprn: '10564189'
                   ethnicity: '997'
                   disability1: '55'
                   course_qualification: QTS
@@ -3206,7 +3234,7 @@ paths:
                     postcode:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: iLFXaEQNmz3wRfu31vG7KjRg
+                    placement_id: vdd4c4pcthDFKR8ruBFrENEM
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3222,9 +3250,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: Yz6jcMZ8WnAEa5RmgDE4fQQc
+                    degree_id: n4qQrRh1um4dveFN9o3ZwDGo
                   state: submitted_for_trn
-                  trainee_id: o7SqRvcwxapBhe5jQkTQ1YHb
+                  trainee_id: n4ZLd9foKfV5g92zmWsWnZkP
                   application_id:
                   disability2: '57'
         '401':
@@ -3355,6 +3383,14 @@ paths:
                         type: array
                         items:
                           type: string
+                      course_year:
+                        type: array
+                        items:
+                          type: string
+                      additional_training_initiative:
+                        type: array
+                        items:
+                          type: string
                 required:
                 - errors
               example:
@@ -3448,7 +3484,7 @@ paths:
                 course_age_range: '13909'
                 course_subject_1: '100346'
                 training_partner_urn: '900020'
-                employing_school_urn: '555071'
+                employing_school_urn: '602157'
                 ethnicity:
                 itt_start_date: '2023-01-01'
                 training_route:
@@ -3485,7 +3521,7 @@ paths:
         required: true
         schema:
           type: string
-        example: trscz3kf8fj5tvnrzp72xoum
+        example: ytqs9ya4erd7dw95p32hs7sn
       requestBody:
         content:
           application/json:
@@ -3746,27 +3782,27 @@ paths:
                 data:
                   defer_date: '2025-09-15'
                   defer_reason:
-                  trainee_start_date: '2025-08-26'
-                  first_names: Jefferey
-                  middle_names: Carroll
-                  last_name: Sanford
-                  email: Jefferey.Sanford@example.com
+                  trainee_start_date: '2025-08-30'
+                  first_names: Mark
+                  middle_names: Koss
+                  last_name: Schuppe
+                  email: Mark.Schuppe@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '6560417'
+                  trn: '6318087'
                   hesa_id:
                   record_source: manual
-                  date_of_birth: '2004-05-15'
+                  date_of_birth: '1984-01-13'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
                   training_route:
-                  sex: '11'
+                  sex: '12'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2025-08-20'
+                  itt_start_date: '2025-08-30'
                   outcome_date:
-                  itt_end_date: '2026-07-21'
+                  itt_end_date: '2026-07-01'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
                   recommended_for_award_at:
                   reinstate_date:
@@ -3776,13 +3812,13 @@ paths:
                   training_initiative:
                   study_mode:
                   course_education_phase: secondary
-                  provider_trainee_id: 25/26-1199
-                  ukprn: '41856934'
+                  provider_trainee_id: 25/26-1223
+                  ukprn: '50954503'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2025-08-20'
+                  course_itt_start_date: '2025-08-30'
                   course_age_range:
                   employing_school_urn:
                   training_partner_ukprn:
@@ -3790,7 +3826,7 @@ paths:
                   course_subject_1: '100403'
                   course_subject_2:
                   course_subject_3:
-                  nationality: FR
+                  nationality: OM
                   withdrawal_date:
                   withdrawal_reasons:
                   withdrawal_trigger:
@@ -3799,23 +3835,23 @@ paths:
                   withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
-                  - uk_degree: '216'
+                  - uk_degree: '085'
                     non_uk_degree:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    subject: '100761'
-                    institution: '1034'
-                    graduation_year: 1980
-                    grade: '05'
+                    subject: '100117'
+                    institution: '1163'
+                    graduation_year: 2007
+                    grade: '13'
                     country:
                     other_grade:
-                    institution_uuid: ba104e98-1f74-44be-a4a7-3f1b6f46edf1
-                    uk_degree_uuid: f3eaa983-d543-4d4b-a239-f46d7cc94825
-                    subject_uuid: 618370f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: 3d57e5f7-7904-4895-a982-ed953fff3f94
-                    degree_id: tzmk0esexd7uek6pk4nnbd3j
+                    institution_uuid: 7ccc1791-8c70-485b-997a-a792f3d74b3f
+                    uk_degree_uuid: 1f6a5652-c197-e711-80d8-005056ac45bb
+                    subject_uuid: a37f70f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
+                    degree_id: seqnkbrq3tbk787skh5niy5f
                   state: deferred
-                  trainee_id: lz5gvem4t721xbd797vyrgpy
+                  trainee_id: mi9brsctjbppazp2lt0ro3dn
                   application_id:
         '404':
           description: returns status code 404
@@ -3884,7 +3920,7 @@ paths:
         required: true
         schema:
           type: string
-        example: wrgxubaki89vfd97vink6q0s
+        example: duf9vwr52o9qlr0y74ul1vk4
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -3964,7 +4000,7 @@ paths:
         required: true
         schema:
           type: string
-        example: ylarlmf76zhj3u0r55enh86i
+        example: pc7h1yyqfmh7e7bauh5zm14h
       requestBody:
         content:
           application/json:
@@ -4085,7 +4121,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: kwZBLho24ziT2UP3hJvamvWn
+                  degree_id: z5p7HcJyiwMefxMeUYw9XZde
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4145,13 +4181,13 @@ paths:
                         updated_at:
                           type: string
                         subject:
-                          nullable: true
+                          type: string
                         institution:
                           type: string
                         graduation_year:
                           type: integer
                         grade:
-                          type: string
+                          nullable: true
                         country:
                           nullable: true
                         other_grade:
@@ -4190,21 +4226,21 @@ paths:
                 - error: Conflict
                   message: This is a duplicate degree
                 data:
-                - uk_degree: '305'
+                - uk_degree: '057'
                   non_uk_degree:
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  subject:
-                  institution: '0438'
-                  graduation_year: 1966
-                  grade: '13'
+                  subject: '101475'
+                  institution: '0274'
+                  graduation_year: 1982
+                  grade:
                   country:
                   other_grade:
-                  institution_uuid: af3aa14b-8929-4723-8713-dd47be444bcf
-                  uk_degree_uuid: 656a5652-c197-e711-80d8-005056ac45bb
-                  subject_uuid: 77bb4458-42c7-49c5-b4fa-8a921e691cb3
-                  grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
-                  degree_id: y5fi8vinizal0tl71gw7ole9
+                  institution_uuid: 8d3e182c-1425-ec11-b6e6-000d3adf095a
+                  uk_degree_uuid: e7695652-c197-e711-80d8-005056ac45bb
+                  subject_uuid: 6d8770f0-5dce-e911-a985-000d3ab79618
+                  grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
+                  degree_id: 4rhjuckt6jzromesu031uh81
         '422':
           description: does not create a new degree and returns a 422 status (unprocessable_entity)
             status
@@ -4261,13 +4297,13 @@ paths:
         required: true
         schema:
           type: string
-        example: 65yg5jofomfi3tgpryojb9pe
+        example: knwhhpr5mifzcvbq2dtmcro4
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: p8455sisnfld5ar2sbxdi62o
+        example: 6g8jcsmtmqhjwhv3td05bviu
       responses:
         '200':
           description: deletes the degree and returns a 200 status (ok)
@@ -4460,15 +4496,15 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Columbus
-                  last_name: Lynch
-                  date_of_birth: '2004-07-28'
+                  first_names: Miguel
+                  last_name: Smith
+                  date_of_birth: '2003-05-10'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  email: Columbus.Lynch@example.com
-                  middle_names: Homenick
+                  email: Miguel.Smith@example.com
+                  middle_names: Sawayn
                   training_route:
-                  sex: '12'
+                  sex: '99'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   ethnic_background:
@@ -4491,9 +4527,9 @@ paths:
                   course_education_phase:
                   hesa_id:
                   record_source: manual
-                  provider_trainee_id: 25/26-1168
+                  provider_trainee_id: 25/26-1192
                   defer_reason:
-                  ukprn: '72897977'
+                  ukprn: '78047478'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
@@ -4516,7 +4552,7 @@ paths:
                   placements: []
                   degrees: []
                   state: draft
-                  trainee_id: lene7mobktxt5gtptbidax1e
+                  trainee_id: z4u2zykxpg50r00klo6ql4hu
                   application_id:
         '404':
           description: does not delete the degree and returns a 404 status (not_found)
@@ -4565,7 +4601,7 @@ paths:
         required: true
         schema:
           type: string
-        example: hsmena14a61xpkwehp5xrn8l
+        example: a6hub0nux1gyi9ensgy8st5c
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -4627,21 +4663,21 @@ paths:
                 - data
               example:
                 data:
-                  uk_degree: '065'
+                  uk_degree: '072'
                   non_uk_degree:
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  subject: '100396'
-                  institution: '1013'
-                  graduation_year: 1999
-                  grade: '05'
+                  subject: '100117'
+                  institution: '0279'
+                  graduation_year: 1974
+                  grade: '13'
                   country:
                   other_grade:
-                  institution_uuid: 407f9288-f140-47d9-8a50-6723c8c986e3
-                  uk_degree_uuid: f7695652-c197-e711-80d8-005056ac45bb
-                  subject_uuid: 618170f0-5dce-e911-a985-000d3ab79618
-                  grade_uuid: 3d57e5f7-7904-4895-a982-ed953fff3f94
-                  degree_id: a65n4o2qwtbs9p7adxc46tis
+                  institution_uuid: 56510718-2e75-42c5-b052-6459a5af7015
+                  uk_degree_uuid: 056a5652-c197-e711-80d8-005056ac45bb
+                  subject_uuid: a37f70f0-5dce-e911-a985-000d3ab79618
+                  grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
+                  degree_id: og47byx4u7cjtmoclacsb4rv
         '404':
           description: returns status code 404 with a valid JSON response
           content:
@@ -4683,13 +4719,13 @@ paths:
         required: true
         schema:
           type: string
-        example: 5ehohwop5nxxaez1s6q44ezl
+        example: tg45wapiqdwjgymqrk1hih2v
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: 5gs27js1qq42m7d6c7yshacz
+        example: wb26a757e0ttx7j5ee6zb44i
       requestBody:
         content:
           application/json:
@@ -4792,11 +4828,11 @@ paths:
                   grade: '02'
                   country:
                   other_grade:
-                  institution_uuid: 199e23d3-6c70-432c-9f33-5d24218b9019
+                  institution_uuid: 44af345b-a26b-46a2-bdbd-6f90da5e3e5e
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 917f70f0-5dce-e911-a985-000d3ab79618
-                  grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                  degree_id: vhq29xgoenph6q68i9lppeqf
+                  grade_uuid: aaba4427-287c-4610-a838-1970dd9090c1
+                  degree_id: sar3hlxbk60jogstk91q7w9s
         '404':
           description: does not update the degree and returns a 404 status (not_found)
           content:
@@ -4863,7 +4899,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 8urbld1vokhi17xduezyrknw
+        example: 5y4xpgf8rx11tkrawz6swxo6
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -4919,7 +4955,7 @@ paths:
         required: true
         schema:
           type: string
-        example: dcz20klu093sqdxn233alpmu
+        example: 671ozrsr30g7g6kchhofidjs
       requestBody:
         content:
           application/json:
@@ -4939,9 +4975,9 @@ paths:
               - data
             example:
               data:
-                urn: '612835'
-                name: South Vermont College
-                postcode: Z1 9GG
+                urn: '205451'
+                name: West Emmerich College
+                postcode: EP1B 6SW
       responses:
         '201':
           description: creates a new placement and returns a 201 (created) status
@@ -4980,13 +5016,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '612835'
-                  name: South Vermont College
-                  address: URN 612835, Z1 9GG
-                  postcode: Z1 9GG
+                  urn: '205451'
+                  name: West Emmerich College
+                  address: URN 205451, EP1B 6SW
+                  postcode: EP1B 6SW
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: MiiyuDFvtaJvrsK4Q4t77Kxh
+                  placement_id: NUidhDnYhcWeuLbdjwhZJeDU
         '404':
           description: does not create a new placement and returns a 404 status (not_found)
             status
@@ -5056,13 +5092,13 @@ paths:
         required: true
         schema:
           type: string
-        example: 5w2uey8rifaiamxfnbusd4fj
+        example: ph35p81fatsxlmx0njfcsy9n
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: ekv7py3k6fz7qdtn7jmbzmzd
+        example: es3wceqq2sajtfggxqpukld0
       responses:
         '200':
           description: removes the specified placement
@@ -5306,15 +5342,15 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Darwin
-                  last_name: McKenzie
-                  date_of_birth: '1968-02-02'
+                  first_names: Twanda
+                  last_name: Purdy
+                  date_of_birth: '2000-06-25'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  email: Darwin.McKenzie@example.com
-                  middle_names: Jenkins
+                  email: Twanda.Purdy@example.com
+                  middle_names: Von
                   training_route:
-                  sex: '11'
+                  sex: '99'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   ethnic_background:
@@ -5335,29 +5371,29 @@ paths:
                   training_initiative:
                   study_mode: '01'
                   course_education_phase:
-                  hesa_id: '8632289661944'
+                  hesa_id: '3829153073623'
                   record_source: manual
-                  provider_trainee_id: 25/26-1178
+                  provider_trainee_id: 25/26-1202
                   defer_reason:
-                  ukprn: '65625383'
+                  ukprn: '44445641'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
                   course_itt_start_date:
-                  course_age_range: '13913'
+                  course_age_range: '13912'
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
-                  previous_last_name: Will
+                  previous_last_name: Boyer
                   itt_aim: '202'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
-                  funding_method: E
+                  funding_method: '9'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
-                  itt_qualification_aim: '001'
-                  fund_code: '2'
+                  itt_qualification_aim: '002'
+                  fund_code: '7'
                   course_subject_1:
                   course_subject_2:
                   course_subject_3:
@@ -5369,16 +5405,16 @@ paths:
                   withdrawal_another_reason:
                   withdrawal_safeguarding_concern_reasons:
                   placements:
-                  - urn: '338631'
-                    name: Flowerlake 295 Secondary College
-                    address: URN 338631, Leonmouth, YB7N 5BN
-                    postcode: YB7N 5BN
+                  - urn: '278188'
+                    name: Vertapple 311 High School
+                    address: URN 278188, Rodgerbury, W7A 0LF
+                    postcode: W7A 0LF
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    placement_id: rhsy0xrpau2nanbelw6y74vl
+                    placement_id: apg7j0ph9fbbo2oi2wmaf6up
                   degrees: []
                   state: draft
-                  trainee_id: ekv7py3k6fz7qdtn7jmbzmzd
+                  trainee_id: es3wceqq2sajtfggxqpukld0
                   application_id:
         '404':
           description: returns status code 404 with a valid JSON response
@@ -5427,7 +5463,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 1qurpmt41gxvrwk4vvmcdn5g
+        example: ns856pcrtqtmz6w2x4jokhbu
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -5465,13 +5501,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '169942'
-                  name: Ironbarrow 297 High School
-                  address: URN 169942, South Fidelia, YF5 1UL
-                  postcode: YF5 1UL
+                  urn: '143334'
+                  name: Marblewald 313 High School
+                  address: URN 143334, Reynoldsmouth, YD6 5JA
+                  postcode: YD6 5JA
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: yfx1eklenuxcyot68z6a5ywv
+                  placement_id: g96mzz09t5b1l5o2cuxbyy3c
         '404':
           description: returns status code 404 with a valid JSON response
           content:
@@ -5513,13 +5549,13 @@ paths:
         required: true
         schema:
           type: string
-        example: vftxyc035t5td6mk3ynimbvd
+        example: 45qy8veewml8qspwmodhy9hl
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: k0usnz5lnfik9id9rpuf10gm
+        example: 2a0ewnd6ubflgyh2olwes1n7
       requestBody:
         content:
           application/json:
@@ -5539,9 +5575,9 @@ paths:
               - data
             example:
               data:
-                urn: '386947'
-                name: North Washington Academy
-                postcode: TG9N 5AB
+                urn: '450045'
+                name: Southern Quigley University
+                postcode: K4 3GJ
       responses:
         '200':
           description: updates the placement and returns a 200 (ok) status
@@ -5580,13 +5616,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '835414'
-                  name: North Washington Academy
-                  address: URN 835414, TG9N 5AB
-                  postcode: TG9N 5AB
+                  urn: '352312'
+                  name: Southern Quigley University
+                  address: URN 352312, K4 3GJ
+                  postcode: K4 3GJ
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
-                  placement_id: vftxyc035t5td6mk3ynimbvd
+                  placement_id: 45qy8veewml8qspwmodhy9hl
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5656,7 +5692,7 @@ paths:
         required: true
         schema:
           type: string
-        example: paq1a6gmlo61fb0shd41oujj
+        example: hc5yrgyclxiy4f1jvzxf4mrq
       requestBody:
         content:
           application/json:
@@ -5917,43 +5953,43 @@ paths:
                 data:
                   outcome_date: '2025-09-15'
                   recommended_for_award_at: '2025-09-15T12:34:56Z'
-                  first_names: Melva
-                  middle_names: Hilpert
-                  last_name: Lowe
-                  email: Melva.Lowe@example.com
+                  first_names: Carlee
+                  middle_names: Bednar
+                  last_name: Rohan
+                  email: Carlee.Rohan@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '1074222'
+                  trn: '4775521'
                   hesa_id:
-                  date_of_birth: '1996-07-15'
+                  date_of_birth: '2002-10-15'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
                   training_route:
-                  sex: '11'
+                  sex: '96'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2025-08-21'
-                  itt_end_date: '2027-07-25'
+                  itt_start_date: '2025-08-02'
+                  itt_end_date: '2026-07-06'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
                   defer_date:
-                  trainee_start_date: '2025-08-21'
+                  trainee_start_date: '2025-08-14'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
                   awarded_at:
-                  training_initiative: '009'
+                  training_initiative: '026'
                   study_mode:
                   course_education_phase: secondary
                   record_source: manual
-                  provider_trainee_id: 25/26-1222
+                  provider_trainee_id: 25/26-1246
                   defer_reason:
-                  ukprn: '26631765'
+                  ukprn: '74371464'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2025-08-21'
+                  course_itt_start_date: '2025-08-02'
                   course_age_range:
                   employing_school_urn:
                   training_partner_ukprn:
@@ -5961,7 +5997,7 @@ paths:
                   course_subject_1: '100403'
                   course_subject_2:
                   course_subject_3:
-                  nationality: BN
+                  nationality: GY
                   withdrawal_date:
                   withdrawal_reasons:
                   withdrawal_trigger:
@@ -5970,23 +6006,23 @@ paths:
                   withdrawal_safeguarding_concern_reasons:
                   placements: []
                   degrees:
-                  - uk_degree: '083'
+                  - uk_degree: '009'
                     non_uk_degree:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    subject: '101338'
-                    institution: '0270'
-                    graduation_year: 1967
-                    grade: '13'
+                    subject: '100387'
+                    institution: '0439'
+                    graduation_year: 2004
+                    grade: '02'
                     country:
                     other_grade:
-                    institution_uuid: ed3e182c-1425-ec11-b6e6-000d3adf095a
-                    uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 778670f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
-                    degree_id: gdl60ttva334sl9cq1dhncib
+                    institution_uuid: 80678d02-0156-4f8e-913e-8829b26b1f9e
+                    uk_degree_uuid: da47d378-f4bb-45ec-bda0-14af40ad974e
+                    subject_uuid: 538170f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
+                    degree_id: 7aflcx99icmeiex2vop85mmh
                   state: recommended_for_award
-                  trainee_id: w16xb9zg8y82qpn4v13mss6b
+                  trainee_id: 6q6b3nknkmigbulele9p7jwn
                   application_id:
         '404':
           description: returns status code 404
@@ -6055,7 +6091,7 @@ paths:
         required: true
         schema:
           type: string
-        example: gs93fe971ve3zysqlsjuhnf6
+        example: urvmziutiv71mdachvebhmy2
       responses:
         '200':
           description: returns the trainee's withdrawal details in the response
@@ -6206,6 +6242,7 @@ paths:
                           properties:
                             uk_degree:
                               type: string
+                              nullable: true
                             non_uk_degree:
                               nullable: true
                             created_at:
@@ -6328,30 +6365,30 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Joella
-                  middle_names: Yundt
-                  last_name: Christiansen
-                  email: Joella.Christiansen@example.com
+                  first_names: Bonnie
+                  middle_names: Zulauf
+                  last_name: Greenfelder
+                  email: Bonnie.Greenfelder@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '7461965'
-                  hesa_id: '1153726388024'
+                  trn: '9669497'
+                  hesa_id: '1250812469813'
                   record_source: manual
-                  date_of_birth: '1992-11-26'
+                  date_of_birth: '1988-05-26'
                   created_at: '2025-09-15T12:34:56.000Z'
                   updated_at: '2025-09-15T12:34:56.000Z'
                   training_route:
-                  sex: '99'
+                  sex: '12'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2025-08-07'
+                  itt_start_date: '2025-08-26'
                   outcome_date:
-                  itt_end_date: '2027-07-22'
+                  itt_end_date: '2027-07-16'
                   submitted_for_trn_at: '2025-09-15T12:34:56.000Z'
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2025-08-17'
+                  trainee_start_date: '2025-08-31'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -6359,31 +6396,31 @@ paths:
                   training_initiative:
                   study_mode: '01'
                   course_education_phase: secondary
-                  provider_trainee_id: 25/26-1262
+                  provider_trainee_id: 25/26-1286
                   defer_reason:
-                  ukprn: '46594636'
+                  ukprn: '42919116'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2025-08-07'
-                  course_age_range: '13914'
+                  course_itt_start_date: '2025-08-26'
+                  course_age_range: '13909'
                   employing_school_urn:
                   training_partner_ukprn:
                   training_partner_urn:
-                  previous_last_name: Leffler
-                  itt_aim: '202'
+                  previous_last_name: Osinski
+                  itt_aim: '201'
                   course_year: 2025
                   pg_apprenticeship_start_date: '2025-09-15'
-                  funding_method: B
+                  funding_method: '4'
                   ni_number: QQ 12 34 56 C
                   additional_training_initiative: '026'
-                  itt_qualification_aim: '028'
-                  fund_code: '2'
+                  itt_qualification_aim: '007'
+                  fund_code: '7'
                   course_subject_1: '100403'
                   course_subject_2:
                   course_subject_3:
-                  nationality: CY
+                  nationality: BO
                   withdrawal_date: '2025-09-15'
                   withdrawal_reasons:
                   - safeguarding_concerns
@@ -6393,23 +6430,23 @@ paths:
                   withdrawal_safeguarding_concern_reasons: Some safeguarding reasons
                   placements: []
                   degrees:
-                  - uk_degree: '214'
+                  - uk_degree: '003'
                     non_uk_degree:
                     created_at: '2025-09-15T12:34:56.000Z'
                     updated_at: '2025-09-15T12:34:56.000Z'
-                    subject: '101453'
-                    institution: '0441'
-                    graduation_year: 1977
-                    grade: '02'
+                    subject: '100622'
+                    institution: '0236'
+                    graduation_year: 1982
+                    grade: '03'
                     country:
                     other_grade:
-                    institution_uuid: e68c8786-84db-43ed-ae5e-624750a2c8a9
-                    uk_degree_uuid: 576a5652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 458770f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: 5evs5czvy7th3h7svkvxxwt3
+                    institution_uuid: 593e182c-1425-ec11-b6e6-000d3adf095a
+                    uk_degree_uuid: 7ba49954-7595-437c-8df0-6a777c97307b
+                    subject_uuid: 8d8270f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
+                    degree_id: 33gtlwe2z7v0t7xte00vhgrm
                   state: withdrawn
-                  trainee_id: xiy9wi18camnos659asbkc5c
+                  trainee_id: eaqs5b45acwx0s0f79m9yni9
                   application_id:
         '401':
           description: did not change the trainee

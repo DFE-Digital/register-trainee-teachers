@@ -576,6 +576,36 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
     end
 
+    it "returns status code 422 with an `itt_end_date` too old and the trainee is not updated" do
+      original_itt_end_date = trainee.itt_end_date
+
+      put(
+        "/api/v2026.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { itt_end_date: 11.years.ago.to_date.iso8601 } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be within the last 10 years")
+      expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+    end
+
+    it "returns status code 422 with an `itt_end_date` too far in future and the trainee is not updated" do
+      original_itt_end_date = trainee.itt_end_date
+
+      put(
+        "/api/v2026.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { itt_end_date: 6.years.from_now.to_date.iso8601 } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be within the next 5 years")
+      expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+    end
+
     it "returns status code 422 with an invalid `trainee_start_date` and the trainee is not updated" do
       put(
         "/api/v2026.0/trainees/#{trainee.slug}",
@@ -655,6 +685,42 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
           "itt_end_date" => ["must be after itt_start_date"],
         )
         expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
+        expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+      end
+
+      it "returns status code 422 with an `itt_end_date` too old and the trainee is not updated" do
+        original_itt_end_date = trainee.itt_end_date
+
+        put(
+          "/api/v2026.0/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: { itt_end_date: 11.years.ago.to_date.iso8601 } },
+          as: :json,
+        )
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body).to have_key("errors")
+        expect(response.parsed_body[:errors]).to eq(
+          "itt_end_date" => ["must be within the last 10 years"],
+        )
+        expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+      end
+
+      it "returns status code 422 with an `itt_end_date` too far in future and the trainee is not updated" do
+        original_itt_end_date = trainee.itt_end_date
+
+        put(
+          "/api/v2026.0/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: { itt_end_date: 6.years.from_now.to_date.iso8601 } },
+          as: :json,
+        )
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body).to have_key("errors")
+        expect(response.parsed_body[:errors]).to eq(
+          "itt_end_date" => ["must be within the next 5 years"],
+        )
         expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
       end
 
@@ -2260,6 +2326,100 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
               "itt_qualification_aim" => [
                 "has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
               ],
+            )
+          end
+        end
+      end
+
+      context "when course_year is not an integer" do
+        let(:params) do
+          { data: { course_year: "abc" } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include("course_year is not a valid course year")
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "course_year" => ["is not a valid course year"],
+            )
+          end
+        end
+      end
+
+      context "when additional_training_initiative has invalid reference data values" do
+        let(:params) do
+          { data: { additional_training_initiative: "now_teach" } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include(
+            /additional_training_initiative has invalid reference data value of 'now_teach'/,
+          )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "additional_training_initiative" => [/has invalid reference data value of 'now_teach'/],
+            )
+          end
+        end
+      end
+
+      context "when additional_training_initiative is unavailable (025/transition_to_teach) in the given academic year" do
+        let(:params) do
+          { data: { additional_training_initiative: "025" } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to include(
+            "additional_training_initiative 'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'",
+          )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "additional_training_initiative" => ["'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'"],
             )
           end
         end
