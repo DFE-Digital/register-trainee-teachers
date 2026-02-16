@@ -5,7 +5,10 @@ require "rails_helper"
 module Trainees
   describe GetPlacementNameFromAudit do
     let(:trainee) { create(:trainee) }
-    let(:placement) { create(:placement, :with_school, trainee:) }
+    let(:school) { create(:school) }
+    let(:new_school) { create(:school) }
+
+    let(:placement) { create(:placement, school:, trainee:) }
 
     context "when the placement is associated with a school record" do
       it "returns the correct names for a create audit" do
@@ -28,6 +31,22 @@ module Trainees
 
         audit = Audited::Audit.where(auditable_type: "Placement", action: :update).last
         expect(described_class.call(audit:)).to eq([old_name, placement.name])
+      end
+
+      it "returns 'Unknown School' if the previous school doesn't exist any more" do
+        placement.update!(school: create(:school))
+        school.destroy!
+
+        audit = Audited::Audit.where(auditable_type: "Placement", action: :update).last
+        expect(described_class.call(audit:)).to eq(["Unknown school", placement.name])
+      end
+
+      it "returns 'Unknown School' if the current school doesn't exist any more" do
+        placement.update!(school: new_school)
+        new_school.destroy!
+
+        audit = Audited::Audit.where(auditable_type: "Placement", action: :update).last
+        expect(described_class.call(audit:)).to eq([school.name, "Unknown school"])
       end
     end
 
