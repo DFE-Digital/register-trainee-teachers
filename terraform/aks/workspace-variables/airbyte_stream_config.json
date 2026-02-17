@@ -855,6 +855,65 @@
         ]
       },
       {
+        "name": "feedbacks",
+        "syncMode": "incremental_append",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "satisfaction_level"
+            ]
+          },
+          {
+            "fieldPath": [
+              "improvement_suggestion"
+            ]
+          },
+          {
+            "fieldPath": [
+              "email"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
         "name": "funding_method_subjects",
         "syncMode": "incremental_append",
         "cursorField": [
