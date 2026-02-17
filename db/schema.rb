@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_15_110603) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_29_104853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -699,15 +699,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_15_110603) do
     t.index ["trainee_id"], name: "index_placements_on_trainee_id"
   end
 
-  create_table "potential_duplicate_trainees", force: :cascade do |t|
-    t.uuid "group_id", null: false
-    t.bigint "trainee_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_potential_duplicate_trainees_on_group_id"
-    t.index ["trainee_id"], name: "index_potential_duplicate_trainees_on_trainee_id"
-  end
-
   create_table "provider_users", force: :cascade do |t|
     t.bigint "provider_id", null: false
     t.bigint "user_id", null: false
@@ -1046,7 +1037,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_15_110603) do
   add_foreign_key "hesa_trainee_details", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
-  add_foreign_key "potential_duplicate_trainees", "trainees"
   add_foreign_key "provider_users", "providers"
   add_foreign_key "provider_users", "users"
   add_foreign_key "sign_offs", "academic_cycles"

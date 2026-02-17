@@ -91,7 +91,6 @@ features:
   change_accredited_provider: true
   funding_uploads: true
   register_api: true
-  duplicate_checking: true
   bulk_add_trainees: true
   token_management: true
 
