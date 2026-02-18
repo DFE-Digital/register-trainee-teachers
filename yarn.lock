@@ -1402,13 +1402,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ministryofjustice/frontend@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@ministryofjustice/frontend@npm:8.0.0"
+"@ministryofjustice/frontend@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@ministryofjustice/frontend@npm:8.0.1"
   peerDependencies:
     govuk-frontend: ^5.11.2
     moment: 2.30.1
-  checksum: 10c0/3b5bde977e14b39a919d4fbf1b4e2a97317823c07a33c8e99aa6b5f493acfb36e8f3de72ba769818be7f247ef513c6efd62e49ac64f2043b73b07c85ccabb452
+  checksum: 10c0/9754d558e3271aa3ef1ff1493d4d165eb6eeadc361f420f15c4b8591ab96c5e50b68ebb16adb66c378c721333aed45b1ade07018d2c71b808f581e92230a4137
   languageName: node
   linkType: hard
 
@@ -6406,7 +6406,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@hotwired/turbo-rails": "npm:^8.0.23"
-    "@ministryofjustice/frontend": "npm:^8.0.0"
+    "@ministryofjustice/frontend": "npm:^8.0.1"
     accessible-autocomplete: "npm:^3.0.1"
     esbuild: "npm:^0.27.3"
     esbuild-jest-transform: "npm:^2.0.1"
