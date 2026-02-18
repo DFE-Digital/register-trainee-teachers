@@ -117,6 +117,7 @@ shared:
     - id
     - satisfaction_level
     - improvement_suggestion
+    - name
     - email
     - created_at
     - updated_at
