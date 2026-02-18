@@ -27,18 +27,8 @@ class FeedbackForm
   def save
     return false unless valid?
 
-    Feedback.create!(
-      satisfaction_level: satisfaction_level,
-      improvement_suggestion: improvement_suggestion,
-      name: name.presence,
-      email: email.presence,
-    )
-    FeedbackSubmittedMailer.generate(
-      satisfaction_level: satisfaction_level_text,
-      improvement_suggestion:,
-      name:,
-      email:,
-    ).deliver_later
+    create_feedback!
+    send_confirmation_email
     clear_stash
     true
   end
@@ -55,6 +45,24 @@ class FeedbackForm
   end
 
 private
+
+  def create_feedback!
+    Feedback.create!(
+      satisfaction_level: satisfaction_level,
+      improvement_suggestion: improvement_suggestion,
+      name: name.presence,
+      email: email.presence,
+    )
+  end
+
+  def send_confirmation_email
+    FeedbackSubmittedMailer.generate(
+      satisfaction_level: satisfaction_level_text,
+      improvement_suggestion:,
+      name:,
+      email:,
+    ).deliver_later
+  end
 
   def clear_stash
     FormStore.set(store_id, form_store_key, nil)
