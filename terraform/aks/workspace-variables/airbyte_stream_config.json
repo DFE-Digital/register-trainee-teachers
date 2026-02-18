@@ -898,6 +898,11 @@
           },
           {
             "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
               "email"
             ]
           },
