@@ -109,6 +109,21 @@ describe FeedbackForm, type: :model do
       expect(feedback.email).to eq("user@example.com")
     end
 
+    it "sends a feedback email" do
+      message = instance_double(ActionMailer::MessageDelivery, deliver_later: true)
+      allow(FeedbackSubmittedMailer).to receive(:generate).and_return(message)
+
+      subject.save
+
+      expect(FeedbackSubmittedMailer).to have_received(:generate).with(
+        satisfaction_level: "Satisfied",
+        improvement_suggestion: "More documentation would be helpful",
+        name: "Jane Smith",
+        email: "user@example.com",
+      )
+      expect(message).to have_received(:deliver_later)
+    end
+
     it "clears the stash" do
       expect(FormStore).to receive(:set).with(store_id, :feedback, nil)
 
