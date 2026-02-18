@@ -6,7 +6,7 @@ class FeedbackForm
 
   FIELDS = %i[satisfaction_level improvement_suggestion name email].freeze
 
-  attr_accessor :satisfaction_level, :improvement_suggestion, :name, :email, :store_id
+  attr_accessor :satisfaction_level, :improvement_suggestion, :name, :email
 
   validates :satisfaction_level, presence: true, inclusion: { in: Feedback.satisfaction_levels.keys }
   validates :improvement_suggestion, presence: true
@@ -63,6 +63,8 @@ private
   def fields_from_store
     FormStore.get(store_id, form_store_key).presence || {}
   end
+
+  attr_reader :store_id
 
   def form_store_key
     self.class.name.underscore.chomp("_form").split("/").last.to_sym
