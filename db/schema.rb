@@ -470,7 +470,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_094052) do
 
   create_table "feedbacks", force: :cascade do |t|
     t.string "satisfaction_level", null: false
-    t.string "improvement_suggestion"
+    t.string "improvement_suggestion", null: false
+    t.string "name"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
