@@ -33,6 +33,12 @@ class FeedbackForm
       name: name.presence,
       email: email.presence,
     )
+    FeedbackSubmittedMailer.generate(
+      satisfaction_level: satisfaction_level_text,
+      improvement_suggestion:,
+      name:,
+      email:,
+    ).deliver_later
     clear_stash
     true
   end
