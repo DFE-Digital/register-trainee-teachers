@@ -14,7 +14,7 @@ describe FeedbackForm, type: :model do
     }
   end
 
-  subject { described_class.new(store_id, params: params) }
+  subject { described_class.new(store_id, params:) }
 
   before do
     allow(FormStore).to receive(:get).with(store_id, :feedback).and_return(nil)

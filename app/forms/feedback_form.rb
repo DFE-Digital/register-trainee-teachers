@@ -23,18 +23,20 @@ class FeedbackForm
     FormStore.set(store_id, form_store_key, fields)
   end
 
+  # rubocop:disable Naming/PredicateMethod
   def save
     return false unless valid?
 
     Feedback.create!(
-      satisfaction_level:,
-      improvement_suggestion:,
+      satisfaction_level: satisfaction_level,
+      improvement_suggestion: improvement_suggestion,
       name: name.presence,
       email: email.presence,
     )
     clear_stash
     true
   end
+  # rubocop:enable Naming/PredicateMethod
 
   def stashed?
     fields_from_store.present?
