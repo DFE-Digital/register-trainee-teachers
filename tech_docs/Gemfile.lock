@@ -208,7 +208,7 @@ GEM
       method_source (~> 1.0)
     public_suffix (6.0.2)
     racc (1.8.1)
-    rack (2.2.20)
+    rack (2.2.22)
     rack-livereload (0.3.17)
       rack
     rake (13.3.0)
