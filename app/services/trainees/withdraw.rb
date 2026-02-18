@@ -10,7 +10,6 @@ module Trainees
     end
 
     def call
-      # Check which integration is enabled and enqueue the appropriate job
       # Don't call TRS if the trainee's TRN has not been received yet
       if trs_enabled && trainee.trn.present?
         Trs::UpdateProfessionalStatusJob.perform_later(trainee)
