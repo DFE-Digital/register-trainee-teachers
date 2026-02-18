@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :feedback do
     satisfaction_level { "satisfied" }
     improvement_suggestion { "More documentation would be helpful" }
+    name { "Jane Smith" }
     email { "user@example.com" }
   end
 end
