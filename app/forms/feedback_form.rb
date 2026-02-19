@@ -58,9 +58,9 @@ private
   def send_confirmation_email
     FeedbackSubmittedMailer.generate(
       satisfaction_level: satisfaction_level_text,
-      improvement_suggestion:,
-      name:,
-      email:,
+      improvement_suggestion: improvement_suggestion,
+      name: name,
+      email: email,
     ).deliver_later
   end
 
