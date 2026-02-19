@@ -71,8 +71,10 @@ private
   def and_i_see_the_questions
     expect(page).to have_content("Overall, how do you feel about this service?")
     expect(page).to have_content("How could we improve this service?")
+    expect(page).to have_content("Do not include any personal or sensitive information")
     expect(page).to have_content("You can enter up to 200 words")
     expect(page).to have_content("If you want a reply (optional)")
+    expect(page).to have_content("If you would like us to contact you, please leave your details below.")
     expect(page).to have_content("Your name")
     expect(page).to have_content("Your email address")
   end
