@@ -5,8 +5,8 @@ class FeedbackSubmittedMailer < GovukNotifyRails::Mailer
     set_template(Settings.govuk_notify.feedback_submitted_email_template_id)
 
     set_personalisation(
-      satisfaction_level:,
-      improvement_suggestion:,
+      satisfaction_level: satisfaction_level,
+      improvement_suggestion: improvement_suggestion,
       name: name.presence || "Not entered",
       email: email.presence || "Not entered",
     )
