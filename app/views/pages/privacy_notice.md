@@ -14,7 +14,7 @@ title: Register trainee teachers (Register) privacy notice
 </p>
 
 <p class="govuk-body">
-  Jisc is an independent data controller. Our contractual arrangement with Jisc ends on 31 October 2025. They may continue to process your personal data after this date in accordance with their own legal obligations and data retention policies. <a class="govuk-link" taget="_blank" href="https://www.hesa.ac.uk/about/regulation/data-protection/notices">Find out more about how Jisc processes your personal data as an independent controller</a>.
+  Jisc is an independent data controller. Our contractual arrangement with Jisc ended on 31 October 2025. They may continue to process your personal data after this date in accordance with their own legal obligations and data retention policies. <a class="govuk-link" taget="_blank" href="https://www.hesa.ac.uk/about/regulation/data-protection/notices">Find out more about how Jisc processes your personal data as an independent controller</a>.
 </p>
 
 <h2 class="govuk-heading-m">
