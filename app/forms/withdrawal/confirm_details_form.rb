@@ -33,8 +33,9 @@ module Withdrawal
           trainee.trainee_withdrawals.create!
           save_forms
           trainee.withdraw!
-          Trainees::Withdraw.call(trainee:)
         end
+
+        Trainees::Withdraw.call(trainee:)
       else
         false
       end

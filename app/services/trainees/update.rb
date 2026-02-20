@@ -12,8 +12,6 @@ module Trainees
     end
 
     def call
-      update_trs
-
       save_trainee
 
       enqueue_jobs
