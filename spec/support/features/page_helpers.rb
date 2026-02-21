@@ -74,6 +74,18 @@ module Features
       @diversities_confirm_page ||= PageObjects::Trainees::Diversities::ConfirmDetails.new
     end
 
+    def feedback_page
+      @feedback_page ||= PageObjects::Feedback.new
+    end
+
+    def feedback_check_page
+      @feedback_check_page ||= PageObjects::FeedbackCheck.new
+    end
+
+    def feedback_confirmation_page
+      @feedback_confirmation_page ||= PageObjects::FeedbackConfirmation.new
+    end
+
     def new_provider_page
       @new_provider_page ||= PageObjects::Providers::New.new
     end

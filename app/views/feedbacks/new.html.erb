@@ -1,0 +1,52 @@
+<%= render PageTitle::View.new(text: "Give feedback", has_errors: @feedback_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: root_path,
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @feedback_form, url: feedback_path, method: :post) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">Give feedback on Register trainee teachers</h1>
+
+      <%= f.govuk_radio_buttons_fieldset(
+        :satisfaction_level,
+        legend: { text: "Overall, how do you feel about this service?", size: "m" },
+      ) do %>
+        <%= f.govuk_radio_button(:satisfaction_level, :very_satisfied, label: { text: "Very satisfied" }, link_errors: true) %>
+        <%= f.govuk_radio_button(:satisfaction_level, :satisfied, label: { text: "Satisfied" }) %>
+        <%= f.govuk_radio_button(:satisfaction_level, :neither_satisfied_nor_dissatisfied, label: { text: "Neither satisfied nor dissatisfied" }) %>
+        <%= f.govuk_radio_button(:satisfaction_level, :dissatisfied, label: { text: "Dissatisfied" }) %>
+        <%= f.govuk_radio_button(:satisfaction_level, :very_dissatisfied, label: { text: "Very dissatisfied" }) %>
+      <% end %>
+
+      <%= f.govuk_text_area :improvement_suggestion,
+        label: { text: "How could we improve this service?", size: "m" },
+        hint: { text: "Do not include any personal or sensitive information" },
+        max_words: 200 %>
+
+      <h2 class="govuk-heading-m">If you want a reply (optional)</h2>
+      <p class="govuk-body">If you would like us to contact you, please leave your details below.</p>
+
+      <%= f.govuk_text_field :name,
+        label: { text: "Your name", size: "m" },
+        width: "two-thirds" %>
+
+      <%= f.govuk_email_field :email,
+        label: { text: "Your email address", size: "m" },
+        hint: { text: "We'll only use this to reply to your message" },
+        width: "two-thirds" %>
+
+      <%= f.govuk_submit t(:continue) %>
+    <% end %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to("Cancel", root_path) %>
+    </p>
+  </div>
+</div>
