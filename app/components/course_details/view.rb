@@ -113,7 +113,9 @@ module CourseDetails
     end
 
     def subject_names
-      return data_model.primary_course_subjects if manual_entry_primary_phase?
+      if manual_entry_primary_phase? && data_model.primary_course_subjects&.to_sym != :other
+        return data_model.primary_course_subjects
+      end
 
       if data_model.course_subject_one.present?
         subjects_for_summary_view(

@@ -277,6 +277,24 @@ module CourseDetails
       end
     end
 
+    context "with a CourseDetailsForm for primary with other subjects" do
+      let(:trainee) do
+        create(:trainee, :with_primary_course_details,
+               course_subject_one: CourseSubjects::PRIMARY_TEACHING,
+               course_subject_two: CourseSubjects::DRAMA)
+      end
+      let(:data_model) { CourseDetailsForm.new(trainee) }
+
+      before do
+        render_inline(View.new(data_model: data_model, editable: true))
+      end
+
+      it "renders subject names instead of other" do
+        expect(rendered_content)
+          .to have_text("Primary with drama")
+      end
+    end
+
     context "trainee with Apply application changes course" do
       let(:trainee) { create(:trainee, :recommended_for_award, :with_apply_application, :with_publish_course_details) }
       let!(:new_course) { create(:course_with_subjects, accredited_body_code: trainee.provider.code, route: trainee.training_route) }
