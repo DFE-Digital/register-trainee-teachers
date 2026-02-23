@@ -59,6 +59,12 @@ Rails.application.configure do
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # config.active_job.queue_adapter = :resque
 
+  # Don't cache mailer template fragments
+  config.action_mailer.perform_caching = false
+
+  # Set the host for URL generation in mailer templates.
+  config.action_mailer.default_url_options = { host: ENV.fetch("APPLICATION_HOST", URI(Settings.base_url).host) }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
