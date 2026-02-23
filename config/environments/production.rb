@@ -63,7 +63,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Set the host for URL generation in mailer templates.
-  config.action_mailer.default_url_options = { host: ENV.fetch("APPLICATION_HOST") }
+  config.action_mailer.default_url_options = { host: ENV.fetch("APPLICATION_HOST", URI(Settings.base_url).host) }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
