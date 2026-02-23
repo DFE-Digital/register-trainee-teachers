@@ -48,17 +48,13 @@ private
 
   def extract_module_and_class_lines(file)
     content_lines = File.readlines(file).map(&:chomp)
-    module_lines = []
-    class_line = nil
-    capture_lines = true
+    expected_class_name = File.basename(file, ".rb").camelize
 
-    content_lines.each do |line|
-      if line =~ /^\s*class\s+/
-        class_line = line
-        capture_lines = false
-      end
-      module_lines << line if capture_lines
-    end
+    target_index = content_lines.rindex { |line| line =~ /^\s*class\s+#{expected_class_name}\b/ }
+    target_index ||= content_lines.index { |line| line =~ /^\s*#{expected_class_name}\s*=/ }
+
+    module_lines = content_lines[0...target_index]
+    class_line = content_lines[target_index]
 
     [module_lines, class_line]
   end
@@ -71,10 +67,14 @@ private
   end
 
   def extract_class_name_and_parent_class(class_line, file)
-    relative_path = file.gsub(%r{app/(models|serializers|services)/api/#{old_version}/}, "").gsub(".rb", "")
+    relative_path = file.gsub(%r{app/(models|serializers|services|validators)/api/#{old_version}/}, "").gsub(".rb", "")
     module_path = relative_path.split("/").map(&:camelize).join("::")
     parent_class = "Api::#{old_version.camelize}::#{module_path}"
-    class_name = class_line.split[1]
+    class_name = if class_line =~ /^\s*class\s+/
+                    class_line.split[1]
+                  else
+                    File.basename(file, ".rb").camelize
+                  end
 
     [class_name, parent_class]
   end
