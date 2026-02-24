@@ -27,7 +27,7 @@ resource "azurerm_storage_account" "tempdata" {
 resource "azurerm_storage_container" "tempdata" {
   count = var.deploy_temp_data_storage_account ? 1 : 0
   name                  = "tempdata"
-  storage_account_name  = resource.azurerm_storage_account.tempdata[0].name
+  storage_account_id  = resource.azurerm_storage_account.tempdata[0].id
   container_access_type = "private"
 }
 
