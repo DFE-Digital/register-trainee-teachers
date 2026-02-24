@@ -3,9 +3,6 @@ port: 5000
 # The url for this app, also used by `dfe_sign_in`
 base_url: https://localhost:5000
 
-# The url for the microsoft forms feedback link
-feedback_link_url: "https://forms.office.com/e/Q6LVwtEKje"
-
 # The email address for support queries
 support_email: becomingateacher@digital.education.gov.uk
 feedback_email: Registertraineeteachers@education.gov.uk
