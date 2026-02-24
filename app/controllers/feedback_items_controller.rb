@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FeedbackItemsController < ApplicationController
+  skip_before_action :authenticate
+
   def new
     @feedback_form = FeedbackForm.new(session.id)
   end

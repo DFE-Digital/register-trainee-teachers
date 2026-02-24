@@ -48,7 +48,47 @@ feature "User Feedback" do
     then_i_see_the_home_page
   end
 
+  scenario "A user provides feedback via the phase banner link" do
+    when_i_visit_home
+    and_i_click_on_the_phase_banner_feedback_link
+    and_i_see_the_feedback_form
+    and_i_select_the_option("Satisfied")
+    and_i_fill_the_fields
+    and_i_click_continue
+    then_i_see_the_check_your_answers_page
+    and_i_click_on_send_feedback
+    then_i_the_thank_you_page
+  end
+
+  scenario "A user provides feedback via the footer link" do
+    when_i_visit_home
+    and_i_click_on_the_footer_feedback_link
+    and_i_see_the_feedback_form
+    and_i_select_the_option("Dissatisfied")
+    and_i_fill_the_fields
+    and_i_click_continue
+    then_i_see_the_check_your_answers_page
+    and_i_click_on_send_feedback
+    then_i_the_thank_you_page
+  end
+
 private
+
+  def when_i_visit_home
+    visit root_path
+  end
+
+  def and_i_click_on_the_phase_banner_feedback_link
+    within(".govuk-phase-banner") do
+      click_on "feedback"
+    end
+  end
+
+  def and_i_click_on_the_footer_feedback_link
+    within(".govuk-footer") do
+      click_on "Give feedback to help us improve Register trainee teachers"
+    end
+  end
 
   def when_i_click_on_the_feedback_link
     within("#main-content") do

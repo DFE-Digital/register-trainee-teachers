@@ -2,6 +2,8 @@
 
 module FeedbackItems
   class ChecksController < ApplicationController
+    skip_before_action :authenticate
+
     def show
       @feedback_form = FeedbackForm.new(session.id)
 
