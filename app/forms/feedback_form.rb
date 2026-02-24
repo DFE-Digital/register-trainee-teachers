@@ -5,6 +5,7 @@ class FeedbackForm
   include ActiveModel::AttributeAssignment
 
   FIELDS = %i[satisfaction_level improvement_suggestion name email].freeze
+  FORM_STORE_KEY = :feedback
 
   attr_accessor :satisfaction_level, :improvement_suggestion, :name, :email
 
@@ -20,7 +21,7 @@ class FeedbackForm
   def stash
     return false unless valid?
 
-    FormStore.set(store_id, form_store_key, fields)
+    FormStore.set(store_id, FORM_STORE_KEY, fields)
   end
 
   # rubocop:disable Naming/PredicateMethod
@@ -65,7 +66,7 @@ private
   end
 
   def clear_stash
-    FormStore.set(store_id, form_store_key, nil)
+    FormStore.set(store_id, FORM_STORE_KEY, nil)
   end
 
   def compute_fields
@@ -77,12 +78,8 @@ private
   end
 
   def fields_from_store
-    FormStore.get(store_id, form_store_key).presence || {}
+    FormStore.get(store_id, FORM_STORE_KEY).presence || {}
   end
 
   attr_reader :store_id
-
-  def form_store_key
-    self.class.name.underscore.chomp("_form").split("/").last.to_sym
-  end
 end
