@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Feedbacks
+module FeedbackItems
   class ChecksController < ApplicationController
     def show
       @feedback_form = FeedbackForm.new(session.id)

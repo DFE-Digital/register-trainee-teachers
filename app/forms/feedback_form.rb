@@ -8,7 +8,7 @@ class FeedbackForm
 
   attr_accessor :satisfaction_level, :improvement_suggestion, :name, :email
 
-  validates :satisfaction_level, presence: true, inclusion: { in: Feedback.satisfaction_levels.keys }
+  validates :satisfaction_level, presence: true, inclusion: { in: FeedbackItem.satisfaction_levels.keys }
   validates :improvement_suggestion, presence: true
 
   def initialize(store_id, params: {})
@@ -47,7 +47,7 @@ class FeedbackForm
 private
 
   def create_feedback!
-    Feedback.create!(
+    FeedbackItem.create!(
       satisfaction_level: satisfaction_level,
       improvement_suggestion: improvement_suggestion,
       name: name.presence,

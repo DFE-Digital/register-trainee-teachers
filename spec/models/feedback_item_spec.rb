@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Feedback do
+RSpec.describe FeedbackItem do
   it do
     expect(subject).to define_enum_for(:satisfaction_level)
       .with_values({

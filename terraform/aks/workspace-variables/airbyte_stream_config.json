@@ -855,7 +855,7 @@
         ]
       },
       {
-        "name": "feedbacks",
+        "name": "feedback_items",
         "syncMode": "incremental_append",
         "cursorField": [
           "_ab_cdc_lsn"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Feedbacks
+module FeedbackItems
   class ConfirmationsController < ApplicationController
   end
 end

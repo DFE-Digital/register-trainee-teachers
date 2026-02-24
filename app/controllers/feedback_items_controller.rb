@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FeedbacksController < ApplicationController
+class FeedbackItemsController < ApplicationController
   def new
     @feedback_form = FeedbackForm.new(session.id)
   end

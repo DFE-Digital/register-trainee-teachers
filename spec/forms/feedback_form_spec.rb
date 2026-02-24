@@ -96,12 +96,12 @@ describe FeedbackForm, type: :model do
     end
 
     it "creates a Feedback record" do
-      expect { subject.save }.to change(Feedback, :count).by(1)
+      expect { subject.save }.to change(FeedbackItem, :count).by(1)
     end
 
     it "saves the correct attributes" do
       subject.save
-      feedback = Feedback.last
+      feedback = FeedbackItem.last
 
       expect(feedback.satisfaction_level).to eq("satisfied")
       expect(feedback.improvement_suggestion).to eq("More documentation would be helpful")
@@ -134,7 +134,7 @@ describe FeedbackForm, type: :model do
       before { subject.satisfaction_level = nil }
 
       it "returns false and does not create a record" do
-        expect { subject.save }.not_to change(Feedback, :count)
+        expect { subject.save }.not_to change(FeedbackItem, :count)
         expect(subject.save).to be false
       end
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_02_16_094052) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_24_114129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -325,6 +325,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_094052) do
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
   create_table "degrees", force: :cascade do |t|
     t.integer "locale_code", null: false
     t.string "uk_degree"
@@ -465,7 +468,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_02_16_094052) do
     t.index ["dttp_id"], name: "index_dttp_users_on_dttp_id", unique: true
   end
 
-  create_table "feedbacks", force: :cascade do |t|
+  create_table "feedback_items", force: :cascade do |t|
     t.string "satisfaction_level", null: false
     t.string "improvement_suggestion", null: false
     t.string "name"

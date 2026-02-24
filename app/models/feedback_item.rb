@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Feedback < ApplicationRecord
+class FeedbackItem < ApplicationRecord
   enum :satisfaction_level, {
     very_satisfied: "very_satisfied",
     satisfied: "satisfied",
