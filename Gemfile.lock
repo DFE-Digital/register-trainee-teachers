@@ -221,7 +221,7 @@ GEM
     dry-initializer (3.2.0)
     email_validator (2.2.4)
       activemodel
-    erb (6.0.1)
+    erb (6.0.2)
     erb_lint (0.9.0)
       activesupport
       better_html (>= 2.0.1)
@@ -399,7 +399,8 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2025.0107)
     mini_mime (1.1.5)
-    minitest (6.0.1)
+    minitest (6.0.2)
+      drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
     multi_json (1.19.1)
@@ -543,8 +544,8 @@ GEM
       activesupport (>= 4.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.6.2)
-      loofah (~> 2.21)
+    rails-html-sanitizer (1.7.0)
+      loofah (~> 2.25)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     rails_semantic_logger (4.19.0)
       rack
@@ -666,15 +667,15 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.17.0)
       concurrent-ruby (~> 1.0)
-    sentry-rails (6.3.1)
+    sentry-rails (6.4.0)
       railties (>= 5.2.0)
-      sentry-ruby (~> 6.3.1)
-    sentry-ruby (6.3.1)
+      sentry-ruby (~> 6.4.0)
+    sentry-ruby (6.4.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
-    sentry-sidekiq (6.3.1)
-      sentry-ruby (~> 6.3.1)
+    sentry-sidekiq (6.4.0)
+      sentry-ruby (~> 6.4.0)
       sidekiq (>= 5.0)
     shoulda-matchers (7.0.1)
       activesupport (>= 7.1)
@@ -791,7 +792,7 @@ GEM
       anyway_config (>= 1.3, < 3)
       railties
       yabeda (~> 0.8)
-    zeitwerk (2.7.4)
+    zeitwerk (2.7.5)
 
 PLATFORMS
   arm64-darwin
@@ -986,7 +987,7 @@ CHECKSUMS
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   dry-initializer (3.2.0) sha256=37d59798f912dc0a1efe14a4db4a9306989007b302dcd5f25d0a2a20c166c4e3
   email_validator (2.2.4) sha256=5ab238095bec7aef9389f230e9e0c64c5081cdf91f19d6c5cecee0a93af20604
-  erb (6.0.1) sha256=28ecdd99c5472aebd5674d6061e3c6b0a45c049578b071e5a52c2a7f13c197e5
+  erb (6.0.2) sha256=9fe6264d44f79422c87490a1558479bd0e7dad4dd0e317656e67ea3077b5242b
   erb_lint (0.9.0) sha256=dfb5e40ad839e8d1f0d56ca85ec9a7ac4c9cd966ec281138282f35b323ca7c31
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   et-orbi (1.3.0) sha256=56716ce1c40f56412d6acb0721ebede6bd23b66525dab008a95d77df00c7d260
@@ -1049,7 +1050,7 @@ CHECKSUMS
   mime-types (3.6.0) sha256=6f71db957840ceae44211531eff3e2f7e0dd4645fefb5f535dbaeb6307ab6464
   mime-types-data (3.2025.0107) sha256=232a497cc68cfca58982685d47fb26f10ef2eb009c4d1c53a7e159d572743dca
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
-  minitest (6.0.1) sha256=7854c74f48e2e975969062833adc4013f249a4b212f5e7b9d5c040bf838d54bb
+  minitest (6.0.2) sha256=db6e57956f6ecc6134683b4c87467d6dd792323c7f0eea7b93f66bd284adbc3d
   msgpack (1.8.0) sha256=e64ce0212000d016809f5048b48eb3a65ffb169db22238fb4b72472fecb2d732
   multi_json (1.19.1) sha256=7aefeff8f2c854bf739931a238e4aea64592845e0c0395c8a7d2eea7fdd631b7
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
@@ -1106,7 +1107,7 @@ CHECKSUMS
   rails-controller-testing (1.0.5) sha256=741448db59366073e86fc965ba403f881c636b79a2c39a48d0486f2607182e94
   rails-dom-testing (2.3.0) sha256=8acc7953a7b911ca44588bf08737bc16719f431a1cc3091a292bca7317925c1d
   rails-erd (1.7.2) sha256=0b17d0fba25d319d8da8af7a3e5e2149d02d6187cc7351e8be43423f07c48bcd
-  rails-html-sanitizer (1.6.2) sha256=35fce2ca8242da8775c83b6ba9c1bcaad6751d9eb73c1abaa8403475ab89a560
+  rails-html-sanitizer (1.7.0) sha256=28b145cceaf9cc214a9874feaa183c3acba036c9592b19886e0e45efc62b1e89
   rails_semantic_logger (4.19.0) sha256=e75e562c68a32abb6a8615940afd7d40c082cff786b8d7b50ff1f7462eff3c16
   railties (8.0.4) sha256=8203d853dcffab4abcdd05c193f101676a92068075464694790f6d8f72d5cb47
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
@@ -1149,9 +1150,9 @@ CHECKSUMS
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.41.0) sha256=cdc1173cd55cf186022cea83156cc2d0bec06d337e039b02ad25d94e41bedd22
   semantic_logger (4.17.0) sha256=c54b60d8596abe2e22bd4f20648d4f6c46e4287fba357779c7932335c8d130e9
-  sentry-rails (6.3.1) sha256=53cce0aac52520a92f411180014fe2b684770865cc85bfa2bf5978631742e9b7
-  sentry-ruby (6.3.1) sha256=b2de4e9bada1053a36f4224d75617a2b44d33157e9030b20b86a791358c2e154
-  sentry-sidekiq (6.3.1) sha256=0811300644a537977aa58b2e427f5fdc519df59e71ca3f33fb571b8cf39560be
+  sentry-rails (6.4.0) sha256=ad0ebbb2dc331d3488561f6245cdcf6709768cfd2c93ef59f73c6675c7a8f93c
+  sentry-ruby (6.4.0) sha256=562bee79aea8f92825ac9df3ea01cc7788f9170d382f8d38947895280dc3be06
+  sentry-sidekiq (6.4.0) sha256=a351bff587e97a8bb44245ad04cf57267fa2c1bebbd9611f43e20be5674ef500
   shoulda-matchers (7.0.1) sha256=b4bfd8744c10e0a36c8ac1a687f921ee7e25ed529e50488d61b79a8688749c77
   sidekiq (6.5.12) sha256=b4f93b2204c42220d0b526a7b8e0c49b5f9da82c1ce1a05d2baf1e8f744c197f
   sidekiq-cron (2.3.1) sha256=96ab3da372289a30dc744c1daa2ae2e85960b2444a6f6ed68df1ff7882c44aac
@@ -1204,7 +1205,7 @@ CHECKSUMS
   yabeda (0.14.0) sha256=bc517bf22d692ebd80a29fc9fd2246c257aaf92d10b2735a775e2419351a43bf
   yabeda-prometheus (0.9.1) sha256=b87d80cae8cffbeb527c25d288eafa8eed9c1fb56cf49616db5c8611768cd5fd
   yabeda-rails (0.11.0) sha256=afa2581bd44c8f419cb3f2bbf9f6fb40f817c30476f7caf5d1c55c48d69a5b29
-  zeitwerk (2.7.4) sha256=2bef90f356bdafe9a6c2bd32bcd804f83a4f9b8bc27f3600fff051eb3edcec8b
+  zeitwerk (2.7.5) sha256=d8da92128c09ea6ec62c949011b00ed4a20242b255293dd66bf41545398f73dd
 
 RUBY VERSION
    ruby 3.4.8p72
