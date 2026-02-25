@@ -1521,7 +1521,11 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
+<<<<<<< HEAD
             "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
+=======
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+>>>>>>> 6b28706f1 (Add v2026.1 API version)
           )
         end
 
@@ -1532,7 +1536,11 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
+<<<<<<< HEAD
                 "has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
+=======
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+>>>>>>> 6b28706f1 (Add v2026.1 API version)
               ],
             )
           end
@@ -2425,6 +2433,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         end
       end
     end
+<<<<<<< HEAD
 
     context "when updating a trainee to IQTS route" do
       let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }
