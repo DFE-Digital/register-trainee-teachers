@@ -1534,6 +1534,11 @@ en:
         course_subject_one: course_subject_1
         course_subject_two: course_subject_2
         course_subject_three: course_subject_3
+      api/v20261/trainee_attributes:
+        application_choice_id: application_id
+        course_subject_one: course_subject_1
+        course_subject_two: course_subject_2
+        course_subject_three: course_subject_3
       course_details_form:
         itt_start_date: &itt_start_date ITT start date
         itt_end_date: &itt_end_date Expected end date
@@ -2269,6 +2274,100 @@ en:
               not_a_number: is not a valid course year
               not_an_integer: is not a valid course year
         api/v20260/degree_attributes:
+          <<: *v20250_degree_attributes
+        api/v20261/trainee_attributes:
+          attributes:
+            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
+            inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
+            trainee_start_date:
+              future: must be in the past
+            date_of_birth:
+              future: must be in the past
+              under16: cannot be less than 16 years ago
+            itt_start_date:
+              future: must not be more than one year in the future
+            itt_end_date:
+              before_or_same_as_start_date: must be after itt_start_date
+              too_old: must be within the last 10 years
+              future: must be within the next 5 years
+              csv:
+                before_or_same_as_start_date: must be after ITT start date
+            course_subject_one:
+              invalid: is invalid. It should be `100511` for the course_age_range provided
+            course_subject_two:
+              duplicate: might contain duplicate values
+              csv:
+                duplicate: Course subject fields contain duplicate values
+            course_subject_three:
+              duplicate: might contain duplicate values
+              csv:
+                duplicate: Course subject fields contain duplicate values
+            course_subject_1:
+              invalid: is invalid. It should be `100511` for the course_age_range provided
+            course_subject_2:
+              duplicate: might contain duplicate values
+              csv:
+                duplicate: Course subject fields contain duplicate values
+            course_subject_3:
+              duplicate: might contain duplicate values
+              csv:
+                duplicate: Course subject fields contain duplicate values
+            degrees_attributes:
+              blank: degrees_attributes must be entered if specifying a postgraduate training_route
+              duplicate: degrees_attributes contains duplicate degrees
+              csv:
+                blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate training_route
+            training_initiative:
+              ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
+            hesa_id:
+              length: must be 13 or 17 characters
+            training_partner_id:
+              invalid: is invalid. The URN '%{value}' does not match any known training partners
+              csv:
+                invalid: Training Partner URN is invalid. The URN '%{value}' does not match any known training partners
+            employing_school_id:
+              invalid: is invalid. The URN '%{value}' does not match any known schools
+              csv:
+                invalid: Employing School URN is invalid. The URN '%{value}' does not match any known schools
+        api/v20261/withdrawal_attributes:
+          attributes:
+            reasons:
+              inclusion: Choose one or more reasons why the trainee withdrew from the course
+              invalid: entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger
+            withdrawal_date:
+              blank: Choose a withdrawal date
+              invalid: Choose a valid withdrawal date
+              not_before_itt_start_date: must be after itt_start_date
+            trigger:
+              blank: Please select an option for the trigger. Valid options are provider or trainee.
+            future_interest:
+              blank: Please select an option. Valid options are yes, no and unknown.
+            another_reason:
+              blank: Enter another reason
+            safeguarding_concern_reasons:
+              blank: Enter the concerns
+        api/v20261/hesa_trainee_detail_attributes:
+          attributes:
+            fund_code:
+              ineligible: is not valid for this trainee
+            funding_method:
+              csv:
+                not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_1 is '%{subject}'"
+                ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_1 is '%{subject}' in academic cycle '%{academic_cycle}'"
+              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund_code is '%{fund_code}' and course_subject_1 is '%{subject}'"
+              ineligible: "'%{funding_type}' is not allowed when training_route is '%{training_route}' and course_subject_1 is '%{subject}' in academic cycle '%{academic_cycle}'"
+            itt_aim:
+              ineligible: is not valid for this trainee
+            itt_qualification_aim:
+              blank: must be entered if 202 selected for itt_aim
+              csv:
+                blank: must be entered if 202 selected for itt_aim
+            additional_training_initiative:
+              ineligible: "'%{additional_training_initiative}' is not available in academic cycle '%{academic_cycle}'"
+            course_year:
+              not_a_number: is not a valid course year
+              not_an_integer: is not a valid course year
+        api/v20261/degree_attributes:
           <<: *v20250_degree_attributes
         api/create_trainee:
           duplicate: This trainee is already in Register
