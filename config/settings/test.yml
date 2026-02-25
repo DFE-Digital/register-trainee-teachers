@@ -29,4 +29,4 @@ govuk_notify:
   feedback_submitted_email_template_id: feedback-submitted-uuid
 
 api:
-  allowed_versions: [v2025.0-rc, v2025.0, v2026.0]
+  allowed_versions: [v2025.0-rc, v2025.0, v2026.0, v2026.1]
