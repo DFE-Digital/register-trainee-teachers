@@ -23,4 +23,4 @@ api:
 
 bulk_update:
   add_trainees:
-    version: v2026.0
+    version: v2026.1
