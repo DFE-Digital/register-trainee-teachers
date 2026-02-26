@@ -71,10 +71,10 @@ private
     module_path = relative_path.split("/").map(&:camelize).join("::")
     parent_class = "Api::#{old_version.camelize}::#{module_path}"
     class_name = if class_line =~ /^\s*class\s+/
-                    class_line.split[1]
-                  else
-                    File.basename(file, ".rb").camelize
-                  end
+                   class_line.split[1]
+                 else
+                   File.basename(file, ".rb").camelize
+                 end
 
     [class_name, parent_class]
   end
