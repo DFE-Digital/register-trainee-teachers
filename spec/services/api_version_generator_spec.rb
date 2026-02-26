@@ -13,15 +13,15 @@ RSpec.describe ApiVersionGenerator do
       let(:new_file) { "app/models/api/v2025_0/trainee_filter_params_attributes.rb" }
       let(:file_content) do
         <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20250
-            class TraineeFilterParamsAttributes
-              # ... code
+          module Api
+            module V20250
+              class TraineeFilterParamsAttributes
+                # ... code
+              end
             end
           end
-        end
         RUBY
       end
 
@@ -29,17 +29,17 @@ RSpec.describe ApiVersionGenerator do
       let(:new_extra_module_file) { "app/services/api/v2025_0/hesa_mapper/degree_attributes.rb" }
       let(:extra_module_file_content) do
         <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20250
-            module HesaMapper
-              class DegreeAttributes
-                # ... code
+          module Api
+            module V20250
+              module HesaMapper
+                class DegreeAttributes
+                  # ... code
+                end
               end
             end
           end
-        end
         RUBY
       end
 
@@ -59,14 +59,14 @@ RSpec.describe ApiVersionGenerator do
 
       it "writes the new file with updated module and class" do
         expected_content = <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20250
-            class TraineeFilterParamsAttributes < Api::V20250Rc::TraineeFilterParamsAttributes
+          module Api
+            module V20250
+              class TraineeFilterParamsAttributes < Api::V20250Rc::TraineeFilterParamsAttributes
+              end
             end
           end
-        end
         RUBY
 
         expect(File).to receive(:write).with(new_file, expected_content)
@@ -75,16 +75,16 @@ RSpec.describe ApiVersionGenerator do
 
       it "writes the new file with updated module and class for files with extra modules" do
         expected_extra_module_content = <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20250
-            module HesaMapper
-              class DegreeAttributes < Api::V20250Rc::HesaMapper::DegreeAttributes
+          module Api
+            module V20250
+              module HesaMapper
+                class DegreeAttributes < Api::V20250Rc::HesaMapper::DegreeAttributes
+                end
               end
             end
           end
-        end
         RUBY
 
         expect(File).to receive(:write).with(new_extra_module_file, expected_extra_module_content)
@@ -103,15 +103,15 @@ RSpec.describe ApiVersionGenerator do
       let(:new_file) { "app/models/api/v2026_1/trainee_filter_params_attributes.rb" }
       let(:file_content) do
         <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20260
-            class TraineeFilterParamsAttributes
-              # ... code
+          module Api
+            module V20260
+              class TraineeFilterParamsAttributes
+                # ... code
+              end
             end
           end
-        end
         RUBY
       end
 
@@ -119,17 +119,17 @@ RSpec.describe ApiVersionGenerator do
       let(:new_extra_module_file) { "app/services/api/v2026_1/hesa_mapper/degree_attributes.rb" }
       let(:extra_module_file_content) do
         <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20260
-            module HesaMapper
-              class DegreeAttributes
-                # ... code
+          module Api
+            module V20260
+              module HesaMapper
+                class DegreeAttributes
+                  # ... code
+                end
               end
             end
           end
-        end
         RUBY
       end
 
@@ -149,14 +149,14 @@ RSpec.describe ApiVersionGenerator do
 
       it "writes the new file with updated module and class" do
         expected_content = <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20261
-            class TraineeFilterParamsAttributes < Api::V20260::TraineeFilterParamsAttributes
+          module Api
+            module V20261
+              class TraineeFilterParamsAttributes < Api::V20260::TraineeFilterParamsAttributes
+              end
             end
           end
-        end
         RUBY
 
         expect(File).to receive(:write).with(new_file, expected_content)
@@ -165,16 +165,16 @@ RSpec.describe ApiVersionGenerator do
 
       it "writes the new file with updated module and class for files with extra modules" do
         expected_extra_module_content = <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20261
-            module HesaMapper
-              class DegreeAttributes < Api::V20260::HesaMapper::DegreeAttributes
+          module Api
+            module V20261
+              module HesaMapper
+                class DegreeAttributes < Api::V20260::HesaMapper::DegreeAttributes
+                end
               end
             end
           end
-        end
         RUBY
 
         expect(File).to receive(:write).with(new_extra_module_file, expected_extra_module_content)
@@ -193,17 +193,17 @@ RSpec.describe ApiVersionGenerator do
       let(:new_struct_file) { "app/validators/api/v2026_1/hesa_trainee_detail_attributes/rules/validation_result.rb" }
       let(:struct_file_content) do
         <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20260
-            class HesaTraineeDetailAttributes
-              module Rules
-                ValidationResult = Struct.new(:valid?, :error_type, :error_details)
+          module Api
+            module V20260
+              class HesaTraineeDetailAttributes
+                module Rules
+                  ValidationResult = Struct.new(:valid?, :error_type, :error_details)
+                end
               end
             end
           end
-        end
         RUBY
       end
 
@@ -217,18 +217,18 @@ RSpec.describe ApiVersionGenerator do
 
       it "writes the new file with correct nesting" do
         expected_content = <<~RUBY
-        # frozen_string_literal: true
+          # frozen_string_literal: true
 
-        module Api
-          module V20261
-            class HesaTraineeDetailAttributes
-              module Rules
-                class ValidationResult < Api::V20260::HesaTraineeDetailAttributes::Rules::ValidationResult
+          module Api
+            module V20261
+              class HesaTraineeDetailAttributes
+                module Rules
+                  class ValidationResult < Api::V20260::HesaTraineeDetailAttributes::Rules::ValidationResult
+                  end
                 end
               end
             end
           end
-        end
         RUBY
 
         expect(File).to have_received(:write).with(new_struct_file, expected_content)
