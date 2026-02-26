@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_29_104853) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_24_114129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
@@ -466,6 +466,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_29_104853) do
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["dttp_id"], name: "index_dttp_users_on_dttp_id", unique: true
+  end
+
+  create_table "feedback_items", force: :cascade do |t|
+    t.string "satisfaction_level", null: false
+    t.string "improvement_suggestion", null: false
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "funding_method_subjects", force: :cascade do |t|

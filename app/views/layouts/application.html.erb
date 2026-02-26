@@ -89,7 +89,7 @@
             </strong>
             <span class="govuk-phase-banner__text" role="status">
                 This is a new service - <% if FeatureService.enabled?("enable_feedback_link") %>
-                  your <%= govuk_link_to "feedback", Settings.feedback_link_url, class: "govuk-link--no-visited-state" %> will help us improve it
+                  your <%= govuk_link_to "feedback", feedback_path, class: "govuk-link--no-visited-state" %> will help us improve it
                 <% else %>
                   <%= support_email(name: "report a problem", subject: "Register trainee teachers support", classes: "govuk-link--no-visited-state") %>
                 <% end %>
@@ -160,7 +160,7 @@
                 <li class="govuk-footer__list-item">
                   <%= govuk_link_to(
                     "Give feedback to help us improve Register trainee teachers",
-                    "https://forms.office.com/e/Q6LVwtEKje",
+                    feedback_path,
                     class: "govuk-footer__link"
                   ) %>
                 </li>

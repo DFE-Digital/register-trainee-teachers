@@ -26,6 +26,7 @@ govuk_notify:
     pending_template_id: pending-uuid
     validated_template_id: validated-uuid
     failed_template_id: failed-uuid
+  feedback_submitted_email_template_id: feedback-submitted-uuid
 
 api:
   allowed_versions: [v2025.0-rc, v2025.0, v2026.0]

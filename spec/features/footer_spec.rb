@@ -142,7 +142,7 @@ private
   def and_i_see_the_give_feedback_link
     expect(page).to have_link(
       "Give feedback to help us improve Register trainee teachers",
-      href: "https://forms.office.com/e/Q6LVwtEKje",
+      href: feedback_path,
     )
   end
 

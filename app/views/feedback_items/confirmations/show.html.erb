@@ -1,0 +1,15 @@
+<%= render PageTitle::View.new(text: "Feedback sent") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= govuk_panel(title_text: "Thank you for submitting feedback", classes: "govuk-!-margin-bottom-6") %>
+
+    <p class="govuk-body">
+      If you gave us your name and email, we will respond within 5 working days.
+    </p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to("Return to home page", root_path) %>
+    </p>
+  </div>
+</div>

@@ -261,6 +261,13 @@ Rails.application.routes.draw do
   resources :trn_submissions, only: %i[create show], param: :trainee_id, path: "trainee-registrations"
   resource :cookie_preferences, only: %i[show update], path: "/cookies"
 
+  resource :feedback_item, path: "feedback", as: :feedback, only: %i[new create], path_names: { new: "" } do
+    scope module: :feedback_items do
+      resource :check, only: %i[show create]
+      resource :confirmation, only: :show
+    end
+  end
+
   resources :service_updates, only: %i[index show], path: "service-updates"
 
   resources :organisations, only: %i[index show], path: "organisations"
