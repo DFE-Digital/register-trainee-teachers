@@ -46,3 +46,4 @@ github_branch: main/tech_docs
 # Versions that show a preview warning banner (not yet available in production)
 preview_versions:
   - v2026.0
+  - v2026.1
