@@ -1,0 +1,56 @@
+{
+  "name": "register-api",
+  "displayName": "Register Trainee Teachers API",
+  "description": "Register Public API for ITT Providers, SRS Vendors and HEIs to register trainee teachers",
+  "overview": "Register API Public Interface\r\nFull documentation is available here:\r\n[Register API documentation - Register trainee teachers](https://www.register-trainee-teachers.service.gov.uk/api-docs)",
+  "schemaUrl": "https://raw.githubusercontent.com/DFE-Digital/register-trainee-teachers/refs/heads/main/public/openapi/v2025.0.yaml",
+  "schemaType": "openapi",
+  "siteUrl": "https://www.register-trainee-teachers.service.gov.uk/api-docs",
+  "backendType": "http",
+  "majorVersion": "v2025",
+  "visibility": "Internal",
+  "tags": "register;api;itt",
+  "classification": "Public facing",
+  "serviceLevel": "24/7",
+  "technology": "REST, Ruby on Rails",
+  "usage": "ITT Providers, SRS Vendors and HEIs",
+  "environments": [
+    {
+      "name": "dev",
+      "baseUrl": "https://sandbox.register-trainee-teachers.service.gov.uk",
+      "visibility": "Public",
+      "enabled": true,
+      "backendMode": "None"
+    },
+    {
+      "name": "staging",
+      "baseUrl": "https://staging.register-trainee-teachers.service.gov.uk",
+      "visibility": "Internal",
+      "enabled": true,
+      "backendMode": "None"
+    },
+    {
+      "name": "live",
+      "baseUrl": "https://www.register-trainee-teachers.service.gov.uk",
+      "visibility": "Public",
+      "enabled": true,
+      "backendMode": "None"
+    }
+  ],
+  "releases": [
+    {
+      "isCurrent": true,
+      "name": "v2025.0",
+      "tag": "Live",
+      "availableFrom": "2025-09-01",
+      "notes": "Current release of the Register API."
+    },
+    {
+      "isCurrent": false,
+      "name": "v2026.0",
+      "tag": "Planned",
+      "availableFrom": "2026-09-01",
+      "notes": "Planned release of the Register API."
+    }
+  ]
+}

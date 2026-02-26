@@ -216,6 +216,32 @@ jobs:
         basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
         basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
+  update-fauapi-catalogue:
+    name: Update FauAPI catalogue
+    if: ${{ success() && github.ref == 'refs/heads/main' }}
+    needs: [deploy-production]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Import and publish API to FauAPI
+      env:
+        FAUAPI_URL: https://apimanagement.education.gov.uk
+        FAUAPI_TOKEN: ${{ secrets.FAUAPI_AUTOMATION_TOKEN }}
+      run: |
+        API_ID=$(curl -sf -X POST "$FAUAPI_URL/api/tasks/apis/import" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d @public/fauapi/register-api.json | jq -r '.id')
+
+        echo "Imported API with id: $API_ID"
+
+        curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN"
+
+        echo "Published API $API_ID to FauAPI catalogue"
+
   deploy-after-production:
     name: Parallel deployment after production
     environment:
