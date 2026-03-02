@@ -1521,7 +1521,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14', '15'.",
           )
         end
 
@@ -1532,7 +1532,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14', '15'.",
               ],
             )
           end
@@ -2425,6 +2425,75 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         end
       end
     end
+
+    context "when updating a trainee to IQTS route" do
+      let(:iqts_country) { CodeSets::Countries::MAPPING.keys.sample }
+      let(:data) { { training_route: "15", iqts_country: iqts_country } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee to IQTS route with iqts_country" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("15")
+        expect(response.parsed_body[:data][:iqts_country]).to eq(iqts_country)
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("iqts")
+        expect(trainee.iqts_country).to eq(iqts_country)
+      end
+    end
+
+    context "when updating a trainee to IQTS route without iqts_country" do
+      let(:data) { { training_route: "15" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country can't be blank")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["can't be blank"],
+          )
+        end
+      end
+    end
+
+    context "when updating a trainee to IQTS route with invalid iqts_country" do
+      let(:data) { { training_route: "15", iqts_country: "InvalidCountry" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country is not a valid iQTS country")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["is not a valid iQTS country"],
+          )
+        end
+      end
+    end
   end
 
   context "Updating a newly created trainee" do
@@ -2902,6 +2971,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         end
       end
     end
+
   end
 end
 # rubocop:enable RSpec/NestedGroups

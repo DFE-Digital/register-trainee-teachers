@@ -77,6 +77,7 @@ RSpec.describe Api::V20261::TraineeSerializer do
         funding_method
         itt_qualification_aim
         state
+        iqts_country
       ]
     end
 
@@ -134,6 +135,22 @@ RSpec.describe Api::V20261::TraineeSerializer do
       it "serializes the ukprn correctly" do
         expect(json[:training_partner_ukprn]).not_to be_nil
         expect(json[:training_partner_ukprn]).to eq(trainee.training_partner.ukprn)
+      end
+    end
+
+    context "when trainee is on IQTS route" do
+      let(:trainee) { create(:trainee, :iqts, :with_training_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
+
+      it "serializes training_route as '15'" do
+        expect(json[:training_route]).to eq("15")
+      end
+
+      it "includes iqts_country in the output" do
+        expect(json[:iqts_country]).to eq(trainee.iqts_country)
+      end
+
+      it "includes iqts_country in the fields list" do
+        expect(json.keys).to include("iqts_country")
       end
     end
   end

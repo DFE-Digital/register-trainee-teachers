@@ -2107,4 +2107,67 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
       end
     end
   end
+
+  context "when creating a trainee with IQTS route" do
+    let(:training_route) { "15" }
+    let(:iqts_country) { CodeSets::Countries::MAPPING.keys.sample }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    context "when iqts_country is provided" do
+      let(:data) { super().merge(iqts_country: iqts_country) }
+
+      it "creates a trainee with IQTS route and iqts_country" do
+        expect(response).to have_http_status(:created)
+        expect(response.parsed_body[:data][:training_route]).to eq("15")
+        expect(response.parsed_body[:data][:iqts_country]).to eq(iqts_country)
+      end
+
+      it "stores the trainee with iqts training route" do
+        trainee = Trainee.last
+        expect(trainee.training_route).to eq("iqts")
+        expect(trainee.iqts_country).to eq(iqts_country)
+      end
+    end
+
+    context "when iqts_country is not provided" do
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country can't be blank")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["can't be blank"],
+          )
+        end
+      end
+    end
+
+    context "when iqts_country is not a valid country" do
+      let(:data) { super().merge(iqts_country: "InvalidCountry") }
+
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country is not a valid iQTS country")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["is not a valid iQTS country"],
+          )
+        end
+      end
+    end
+  end
 end
