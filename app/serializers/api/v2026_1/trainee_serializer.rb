@@ -5,7 +5,6 @@ module Api
     class TraineeSerializer
       EXCLUDED_ATTRIBUTES = %w[
         id
-        iqts_country
         additional_dttp_data
         course_uuid
         commencement_status

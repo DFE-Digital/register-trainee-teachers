@@ -270,12 +270,14 @@ RSpec.describe Api::V20250::TraineeAttributes do
             subject.trainee_start_date = academic_cycle.start_date.iso8601
           end
 
+          let(:obsolete_routes) { [TRAINING_ROUTE_ENUMS[:iqts]] }
+
           context "when AcademicCycle#start_date < 2023" do
             let(:cycle_year) { 2022 }
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -285,7 +287,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
                 .with_message(/has invalid reference data value/)
             end
 
@@ -304,7 +306,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -318,7 +320,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -328,7 +330,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) - obsolete_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end

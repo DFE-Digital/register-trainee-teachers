@@ -51,6 +51,7 @@ module Api
         applying_for_scholarship: {},
         bursary_tier: {},
         nationality: {},
+        iqts_country: {},
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end
@@ -162,6 +163,10 @@ module Api
 
       validate :validate_training_partner, unless: :training_partner_not_applicable
       validate :validate_employing_school, unless: :employing_school_not_applicable
+      validates :iqts_country, presence: true, if: :iqts_route?
+      validates :iqts_country, inclusion: {
+        in: DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.pluck(:name),
+      }, if: :iqts_route?, allow_blank: true
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
@@ -482,6 +487,10 @@ module Api
         if employing_school_id.is_a?(Api::HesaMapper::Attributes::InvalidValue)
           errors.add(:employing_school_id, :invalid, value: employing_school_id.to_s)
         end
+      end
+
+      def iqts_route?
+        training_route == TRAINING_ROUTE_ENUMS[:iqts]
       end
     end
   end

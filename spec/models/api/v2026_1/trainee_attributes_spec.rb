@@ -792,6 +792,58 @@ RSpec.describe Api::V20261::TraineeAttributes do
         end
       end
     end
+
+    describe "iqts_country" do
+      context "when training route is IQTS" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:iqts]
+        end
+
+        context "when blank" do
+          it "is invalid" do
+            subject.validate
+
+            expect(subject.errors[:iqts_country]).to contain_exactly("can't be blank")
+          end
+        end
+
+        context "when not a valid country" do
+          before do
+            subject.iqts_country = "InvalidCountry"
+          end
+
+          it "is invalid" do
+            subject.validate
+
+            expect(subject.errors[:iqts_country]).to contain_exactly("is not a valid iQTS country")
+          end
+        end
+
+        context "when a valid country" do
+          before do
+            subject.iqts_country = DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.pluck(:name).sample
+          end
+
+          it "is valid" do
+            subject.validate
+
+            expect(subject.errors[:iqts_country]).to be_empty
+          end
+        end
+      end
+
+      context "when training route is not IQTS" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_postgrad]
+        end
+
+        it "does not validate iqts_country" do
+          subject.validate
+
+          expect(subject.errors[:iqts_country]).to be_empty
+        end
+      end
+    end
   end
 
   describe "nested attribute validations" do
