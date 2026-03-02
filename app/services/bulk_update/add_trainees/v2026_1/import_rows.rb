@@ -47,6 +47,7 @@ module BulkUpdate
           "funding_method" => "funding_method",
           "training_initiative" => "training_initiative",
           "additional_training_initiative" => "additional_training_initiative",
+          "iqts_country" => "iqts_country",
         }.freeze
 
         PLACEMENT_HEADERS = {

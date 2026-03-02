@@ -461,6 +461,16 @@
   example: "`026`"
   validation: Optional
   page_title: Additional training initiative
+- field_name: iqts_country
+  technical: iqts_country
+  description: |-
+    The country where the trainee will be undertaking their International Qualified Teacher Status (iQTS) training.
+
+    Required when the training route is iQTS (code 15).
+  format: Country name as a plain string
+  example: "`Japan`"
+  validation: Conditional - mandatory when training_route is 15 (iQTS)
+  page_title: IQTS country
 - field_name: uk_degree
   technical: uk_degree
   hesa_alignment: DEGTYPE
