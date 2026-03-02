@@ -16,7 +16,7 @@
 
       <%= f.govuk_radio_buttons_fieldset(
         :satisfaction_level,
-        legend: { text: "Overall, how do you feel about this service?", size: "m" },
+        legend: { text: "Overall, how do you feel about this service?", size: "s" },
       ) do %>
         <%= f.govuk_radio_button(:satisfaction_level, :very_satisfied, label: { text: "Very satisfied" }, link_errors: true) %>
         <%= f.govuk_radio_button(:satisfaction_level, :satisfied, label: { text: "Satisfied" }) %>
@@ -26,7 +26,7 @@
       <% end %>
 
       <%= f.govuk_text_area :improvement_suggestion,
-        label: { text: "How could we improve this service?", size: "m" },
+        label: { text: "How could we improve this service?", size: "s" },
         hint: { text: "Do not include any personal or sensitive information" },
         max_words: 200 %>
 
@@ -34,11 +34,11 @@
       <p class="govuk-body">If you would like us to contact you, please leave your details below.</p>
 
       <%= f.govuk_text_field :name,
-        label: { text: "Your name", size: "m" },
+        label: { text: "Your name", size: "s" },
         width: "two-thirds" %>
 
       <%= f.govuk_email_field :email,
-        label: { text: "Your email address", size: "m" },
+        label: { text: "Your email address", size: "s" },
         hint: { text: "We'll only use this to reply to your message" },
         width: "two-thirds" %>
 
