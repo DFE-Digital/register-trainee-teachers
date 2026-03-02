@@ -94,6 +94,7 @@ module Api
 
       OBSOLETE_TRAINING_ROUTES = [
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+        TRAINING_ROUTE_ENUMS[:iqts],
       ].freeze
 
       private_constant :PROVIDER_LED_POSTGRAD_START_YEAR, :OBSOLETE_TRAINING_ROUTES
