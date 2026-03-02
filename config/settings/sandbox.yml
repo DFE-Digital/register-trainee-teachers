@@ -21,7 +21,7 @@ features:
   import_applications_from_apply: true
   publish_course_details: true
   google:
-    send_data_to_big_query: true
+    send_data_to_big_query: false
   integrate_with_trs: false
 
 environment:
