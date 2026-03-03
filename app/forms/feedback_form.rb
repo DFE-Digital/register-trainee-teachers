@@ -11,6 +11,7 @@ class FeedbackForm
 
   validates :satisfaction_level, presence: true, inclusion: { in: FeedbackItem.satisfaction_levels.keys }
   validates :improvement_suggestion, presence: true
+  validate { |record| EmailFormatValidator.new(record).validate if record.email.present? }
 
   def initialize(store_id, params: {})
     @store_id = store_id

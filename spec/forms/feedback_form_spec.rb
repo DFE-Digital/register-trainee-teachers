@@ -65,6 +65,15 @@ describe FeedbackForm, type: :model do
         expect(subject).to be_valid
       end
     end
+
+    context "when email has an invalid format" do
+      before { subject.email = "example.com" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors[:email]).to be_present
+      end
+    end
   end
 
   describe "#stash" do
