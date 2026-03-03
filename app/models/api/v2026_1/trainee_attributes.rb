@@ -164,8 +164,9 @@ module Api
       validate :validate_training_partner, unless: :training_partner_not_applicable
       validate :validate_employing_school, unless: :employing_school_not_applicable
       validates :iqts_country, presence: true, if: :iqts_route?
+
       validates :iqts_country, inclusion: {
-        in: DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.pluck(:name),
+        in: DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name),
       }, if: :iqts_route?, allow_blank: true
 
       def initialize(new_attributes = {})
