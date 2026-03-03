@@ -92,7 +92,7 @@ class AcademicCycle < ApplicationRecord
     first_day_of_year.next_week(:monday)
   end
 
-  def last_day_of_february
+  def last_day_of_performance_profile_period
     # Temporary change only for the 2024 academic cycle performance profile sign off. Should be removed after March 2026
     return Date.new(end_year + 1, 3, 9) if end_year == 2025
 
@@ -121,7 +121,7 @@ class AcademicCycle < ApplicationRecord
     census_date_range.cover?(date)
   end
 
-  alias_method :end_date_of_performance_profile, :last_day_of_february
+  alias_method :end_date_of_performance_profile, :last_day_of_performance_profile_period
 
   alias_method :itt_census_date, :second_wednesday_of_october
 

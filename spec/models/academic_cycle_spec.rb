@@ -185,9 +185,9 @@ describe AcademicCycle do
   describe "#in_performance_profile_range?" do
     it "returns whether a date is in the performance profile range" do
       expect(academic_cycle.in_performance_profile_range?(academic_cycle.second_monday_of_january)).to be true
-      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_february)).to be true
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_performance_profile_period)).to be true
       expect(academic_cycle.in_performance_profile_range?(academic_cycle.second_monday_of_january - 1.day)).to be false
-      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_february + 1.day)).to be false
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_performance_profile_period + 1.day)).to be false
     end
   end
 
@@ -200,8 +200,8 @@ describe AcademicCycle do
     it { expect(subject).to be_a(Date) }
   end
 
-  describe "#last_day_of_february" do
-    subject { academic_cycle.last_day_of_february }
+  describe "#last_day_of_performance_profile_period" do
+    subject { academic_cycle.last_day_of_performance_profile_period }
 
     it { expect(subject.month).to eq 2 }
     it { expect(subject.day).to be_between(28, 29) }
@@ -210,7 +210,7 @@ describe AcademicCycle do
     context "for 2024 academic cycle only" do
       let(:extended_performance_profile_academic_year) { build(:academic_cycle, cycle_year: 2024) }
 
-      subject { extended_performance_profile_academic_year.last_day_of_february }
+      subject { extended_performance_profile_academic_year.last_day_of_performance_profile_period }
 
       it { expect(subject.month).to eq 3 }
       it { expect(subject.day).to eq(9) }
