@@ -2971,7 +2971,6 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         end
       end
     end
-
   end
 end
 # rubocop:enable RSpec/NestedGroups

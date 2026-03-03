@@ -2117,7 +2117,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
     end
 
     context "when iqts_country is provided" do
-      let(:data) { super().merge(iqts_country: iqts_country) }
+      let(:data) { super().merge(iqts_country:) }
 
       it "creates a trainee with IQTS route and iqts_country" do
         expect(response).to have_http_status(:created)
