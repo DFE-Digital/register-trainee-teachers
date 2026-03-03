@@ -93,7 +93,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def last_day_of_february
-    # Temporary change only for the 2025/26 academic year. Should be removed after March 2026
+    # Temporary change only for the 2024 academic cycle performance profile sign off. Should be removed after March 2026
     return Date.new(end_year + 1, 3, 9) if end_year == 2025
 
     Date.new(end_year + 1, 2, -1)
