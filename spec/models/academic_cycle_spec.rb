@@ -206,6 +206,16 @@ describe AcademicCycle do
     it { expect(subject.month).to eq 2 }
     it { expect(subject.day).to be_between(28, 29) }
     it { expect(subject).to be_a(Date) }
+
+    context "for 2025/26 academic cycle only" do
+      let(:extended_performance_profile_academic_year) { build(:academic_cycle, cycle_year: 2025) }
+
+      subject { extended_performance_profile_academic_year.last_day_of_february }
+
+      it { expect(subject.month).to eq 2 }
+      it { expect(subject.day).to be_between(28, 29) }
+      it { expect(subject).to be_a(Date) }
+    end
   end
 
   describe "#in_census_range?" do
