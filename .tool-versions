@@ -1,7 +1,7 @@
 nodejs 24.13.0
 ruby 3.4.8
 bundler 2.5.22
-terraform 1.4.5
+terraform 1.14.5
 azure-cli 2.68.0
 kubectl 1.27.3
 jq 1.6
