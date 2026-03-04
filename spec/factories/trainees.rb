@@ -765,7 +765,7 @@ FactoryBot.define do
     trait :with_no_funding_hesa_trainee_detail do
       hesa_id { Faker::Number.number(digits: 13) }
       funding_eligibility { :not_eligible }
-      hesa_trainee_detail factory: :hesa_trainee_detail, funding_method: Hesa::CodeSets::BursaryLevels::NONE
+      hesa_trainee_detail factory: :hesa_trainee_detail, fund_code: Hesa::CodeSets::FundCodes::NOT_ELIGIBLE, funding_method: Hesa::CodeSets::BursaryLevels::NONE
     end
 
     trait :with_hesa_student do
