@@ -54,13 +54,13 @@ This is available for testing in the [sandbox environment](https://sandbox.regis
   | `Employing School URN` | `employing_school_urn` |
   | `Trainee Start Date` | `trainee_start_date` |
   | `PG Apprenticeship Start Date` | `pg_apprenticeship_start_date` |
-  | `Placement 1 URN` | `placement_1_urn` |
-  | `Placement 2 URN` | `placement_2_urn` |
-  | `Placement 3 URN` | `placement_3_urn` |
   | `Fund Code` | `fund_code` |
   | `Funding Method` | `funding_method` |
   | `Training Initiative` | `training_initiative` |
   | `Additional Training Initiative` | `additional_training_initiative` |
+  | `Placement 1 URN` | `placement_1_urn` |
+  | `Placement 2 URN` | `placement_2_urn` |
+  | `Placement 3 URN` | `placement_3_urn` |
   | `UK Degree type` | `uk_degree` |
   | `Non-UK Degree type` | `non_uk_degree` |
   | `Degree Subject` | `degree_subject` |
