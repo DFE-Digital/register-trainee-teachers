@@ -1082,6 +1082,13 @@ en:
       guidance_data_link: Check what data you need to provide
       give_feedback_link: Give feedback to help us improve Register trainee teachers
       data_sharing_agreement_link: Data sharing agreement
+  feedbacks:
+    satisfaction_levels:
+      very_satisfied: Very satisfied
+      satisfied: Satisfied
+      neither_satisfied_nor_dissatisfied: Neither satisfied nor dissatisfied
+      dissatisfied: Dissatisfied
+      very_dissatisfied: Very dissatisfied
   pages:
     cookie_policy:
       heading: Cookies on Register trainee teachers
@@ -1573,6 +1580,13 @@ en:
           attributes:
             school_id:
               blank: Select a placement school
+        feedback_form:
+          attributes:
+            satisfaction_level:
+              blank: Select how you feel about this service
+              inclusion: Select how you feel about this service
+            improvement_suggestion:
+              blank: Enter details about how we could improve this service
         cookie_preferences_form:
           attributes:
             consent:

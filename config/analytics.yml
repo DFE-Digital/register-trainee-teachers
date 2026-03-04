@@ -113,6 +113,14 @@ shared:
     - status_code
     - updated_at
     - urn
+  feedback_items:
+    - id
+    - satisfaction_level
+    - improvement_suggestion
+    - name
+    - email
+    - created_at
+    - updated_at
   funding_method_subjects:
     - allocation_subject_id
     - created_at
