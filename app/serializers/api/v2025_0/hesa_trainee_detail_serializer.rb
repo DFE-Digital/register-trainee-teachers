@@ -10,12 +10,24 @@ module Api
         trainee_id
       ].freeze
 
+      FUND_CODE_FROM_ELIGIBILITY = {
+        "eligible" => Hesa::CodeSets::FundCodes::ELIGIBLE,
+        "not_eligible" => Hesa::CodeSets::FundCodes::NOT_ELIGIBLE,
+      }.freeze
+
       def initialize(trainee_details)
         @trainee_details = trainee_details
       end
 
       def as_hash
-        @trainee_details&.attributes&.except(*EXCLUDED_ATTRIBUTES)
+        attrs = @trainee_details&.attributes&.except(*EXCLUDED_ATTRIBUTES) || {}
+        attrs.merge("fund_code" => fund_code_from_trainee)
+      end
+
+    private
+
+      def fund_code_from_trainee
+        FUND_CODE_FROM_ELIGIBILITY[@trainee_details&.trainee&.funding_eligibility]
       end
     end
   end

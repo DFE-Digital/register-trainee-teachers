@@ -110,12 +110,18 @@ RSpec.describe Api::V20250::TraineeSerializer do
     end
 
     describe "HESA trainee details" do
-      let(:hesa_trainee_detail) do
+      let(:serialized) do
         Api::V20250::HesaTraineeDetailSerializer.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
       end
 
-      it "serializes with Api::V20250::HesaTraineeDetailSerializer" do
-        expect(trainee.hesa_trainee_detail.attributes.except(*Api::V20250::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES)).to eq(hesa_trainee_detail)
+      it "serializes model attributes" do
+        model_attrs = trainee.hesa_trainee_detail.attributes.except(*Api::V20250::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES, "fund_code")
+        expect(serialized).to include(model_attrs)
+      end
+
+      it "includes fund_code derived from trainee funding_eligibility" do
+        trainee.update!(funding_eligibility: :eligible)
+        expect(serialized["fund_code"]).to eq(Hesa::CodeSets::FundCodes::ELIGIBLE)
       end
     end
 

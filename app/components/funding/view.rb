@@ -129,7 +129,12 @@ module Funding
     end
 
     def fund_code_value
-      trainee.hesa_trainee_detail&.fund_code || hesa_student&.fund_code
+      case trainee.funding_eligibility
+      when "eligible"
+        Hesa::CodeSets::FundCodes::ELIGIBLE
+      when "not_eligible"
+        Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
+      end
     end
 
     def applying_for_bursary_row

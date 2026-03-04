@@ -1,0 +1,5 @@
+class AddFundingEligibilityToTrainees < ActiveRecord::Migration[8.0]
+  def change
+    add_column :trainees, :funding_eligibility, :integer
+  end
+end

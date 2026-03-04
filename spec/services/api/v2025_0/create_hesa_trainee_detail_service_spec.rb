@@ -42,7 +42,7 @@ RSpec.describe Api::V20250::CreateHesaTraineeDetailService do
             subject.call(trainee:)
             trainee.reload
 
-            %i[course_age_range itt_aim itt_qualification_aim fund_code pg_apprenticeship_start_date ni_number].each do |attribute|
+            %i[course_age_range itt_aim itt_qualification_aim pg_apprenticeship_start_date ni_number].each do |attribute|
               expect(trainee.hesa_trainee_detail.send(attribute)).to eq(student.send(attribute))
             end
 
@@ -67,12 +67,10 @@ RSpec.describe Api::V20250::CreateHesaTraineeDetailService do
             %i[itt_aim itt_qualification_aim pg_apprenticeship_start_date].each do |attribute|
               expect(trainee.hesa_trainee_detail.send(attribute)).to eq(metadatum.send(attribute))
             end
-
-            expect(trainee.hesa_trainee_detail.fund_code).to eq(metadatum.fundability)
           end
         end
 
-        context "when there are existing hesa_metasatum and hesa_student records" do
+        context "when there are existing hesa_metadatum and hesa_student records" do
           let(:student) do
             create(:hesa_student,
                    course_age_range: "13915",
@@ -93,7 +91,7 @@ RSpec.describe Api::V20250::CreateHesaTraineeDetailService do
             subject.call(trainee:)
             trainee.reload
 
-            %i[itt_aim itt_qualification_aim fund_code].each do |attribute|
+            %i[itt_aim itt_qualification_aim].each do |attribute|
               expect(trainee.hesa_trainee_detail.send(attribute)).to eq(student.send(attribute))
             end
 
