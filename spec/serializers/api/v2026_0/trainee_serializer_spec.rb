@@ -115,7 +115,7 @@ RSpec.describe Api::V20260::TraineeSerializer do
       end
 
       it "serializes model attributes" do
-        model_attrs = trainee.hesa_trainee_detail.attributes.except(*Api::V20260::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES, "fund_code")
+        model_attrs = trainee.hesa_trainee_detail.attributes.except(*Api::V20260::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES)
         expect(serialized).to include(model_attrs)
       end
 
