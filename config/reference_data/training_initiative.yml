@@ -6,6 +6,9 @@ metadata:
     - date: "2025-11-26"
       change: "Initial version"
       author: "Register team"
+    - date: "2026-04-03"
+      change: "Added HESA code for primary_mathematics_specialist which was missing it"
+      author: "Tom Trentham"
 
 data:
   - id: 0
@@ -62,6 +65,7 @@ data:
     display_name: "Primary mathematics specialist"
     description: ""
     hesa_codes:
+      - "011"
   - id: 10
     name: "additional_itt_place_for_pe_with_a_priority_subject"
     display_name: "Additional ITT place for PE with a priority subject"
