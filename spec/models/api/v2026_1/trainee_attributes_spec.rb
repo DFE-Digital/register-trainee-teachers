@@ -821,7 +821,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
 
         context "when a valid country" do
           before do
-            subject.iqts_country = DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name).sample
+            subject.iqts_country = Hesa::CodeSets::Countries::MAPPING.values.sample
           end
 
           it "is valid" do

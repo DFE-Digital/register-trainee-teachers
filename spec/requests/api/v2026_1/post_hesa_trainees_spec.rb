@@ -2110,7 +2110,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
   context "when creating a trainee with IQTS route" do
     let(:training_route) { "15" }
-    let(:iqts_country) { CodeSets::Countries::MAPPING.keys.sample }
+    let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2128,7 +2128,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
       it "stores the trainee with iqts training route" do
         trainee = Trainee.last
         expect(trainee.training_route).to eq("iqts")
-        expect(trainee.iqts_country).to eq(iqts_country)
+        expect(trainee.iqts_country).to eq(Hesa::CodeSets::Countries::MAPPING[iqts_country])
       end
     end
 

@@ -145,8 +145,8 @@ RSpec.describe Api::V20261::TraineeSerializer do
         expect(json[:training_route]).to eq("15")
       end
 
-      it "includes iqts_country in the output" do
-        expect(json[:iqts_country]).to eq(trainee.iqts_country)
+      it "includes iqts_country as HESA code in the output" do
+        expect(json[:iqts_country]).to eq(Hesa::CodeSets::Countries::MAPPING.key(trainee.iqts_country))
       end
 
       it "includes iqts_country in the fields list" do

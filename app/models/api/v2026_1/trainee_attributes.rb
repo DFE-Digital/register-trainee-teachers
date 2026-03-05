@@ -166,7 +166,7 @@ module Api
       validates :iqts_country, presence: true, if: :iqts_route?
 
       validates :iqts_country, inclusion: {
-        in: DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name),
+        in: Hesa::CodeSets::Countries::MAPPING.values,
       }, if: :iqts_route?, allow_blank: true
 
       def initialize(new_attributes = {})
