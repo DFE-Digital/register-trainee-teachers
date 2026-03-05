@@ -2016,7 +2016,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       it "rejects the IQTS route" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly(
-          "training_route has invalid reference data value of 'iqts'. Valid values are '02', '03', '09', '10', '11', '12', '14', '15'.",
+          "training_route has invalid reference data value of 'iqts'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
         )
       end
     end

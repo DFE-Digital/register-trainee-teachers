@@ -295,7 +295,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+                "has invalid reference data value of '9'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
               )
             end
           end
