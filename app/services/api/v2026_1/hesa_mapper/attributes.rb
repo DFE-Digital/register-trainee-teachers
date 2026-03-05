@@ -18,6 +18,7 @@ module Api
           course_subject_1
           course_subject_2
           course_subject_3
+          iqts_country
         ].freeze
 
         ALLOWED_NIL_PARAMS = {
@@ -53,6 +54,7 @@ module Api
             nationality:,
             sex:,
             training_route:,
+            iqts_country:,
             nationalisations_attributes:,
             degrees_attributes:,
             placements_attributes:,
@@ -122,6 +124,14 @@ module Api
           mapped_value = ::Hesa::CodeSets::TrainingRoutes::MAPPING[params[:training_route]]
 
           return InvalidValue.new(params[:training_route]) if params[:training_route].present? && mapped_value.nil?
+
+          mapped_value
+        end
+
+        def iqts_country
+          mapped_value = ::Hesa::CodeSets::Countries::MAPPING[params[:iqts_country]]
+
+          return InvalidValue.new(params[:iqts_country]) if params[:iqts_country].present? && mapped_value.nil?
 
           mapped_value
         end

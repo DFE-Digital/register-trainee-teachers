@@ -65,6 +65,7 @@ module Api
             course_subject_2: course_subject_2,
             course_subject_3: course_subject_3,
             training_route: training_route,
+            iqts_country: iqts_country,
             nationality: nationality,
             training_initiative: training_initiative,
             withdrawal_date: @trainee.current_withdrawal&.date&.iso8601,
@@ -210,6 +211,10 @@ module Api
 
       def training_route
         ::Hesa::CodeSets::TrainingRoutes::MAPPING.key(@trainee.training_route)
+      end
+
+      def iqts_country
+        ::Hesa::CodeSets::Countries::MAPPING.key(@trainee.iqts_country)
       end
 
       def training_initiative
