@@ -2471,6 +2471,30 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       end
     end
 
+    context "when updating a non-IQTS trainee with iqts_country" do
+      let(:data) { { iqts_country: Hesa::CodeSets::Countries::MAPPING.keys.sample } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country must be blank")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["must be blank"],
+          )
+        end
+      end
+    end
+
     context "when updating a trainee to IQTS route with invalid iqts_country" do
       let(:data) { { training_route: "15", iqts_country: "InvalidCountry" } }
 

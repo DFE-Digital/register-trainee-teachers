@@ -169,6 +169,7 @@ module Api
       validate :validate_training_partner, unless: :training_partner_not_applicable
       validate :validate_employing_school, unless: :employing_school_not_applicable
       validates :iqts_country, presence: true, if: :iqts_route?
+      validates :iqts_country, absence: true, unless: :iqts_route?
 
       validates :iqts_country, inclusion: {
         in: Hesa::CodeSets::Countries::MAPPING.values,
