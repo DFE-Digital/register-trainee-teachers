@@ -134,7 +134,12 @@ module Api
         :training_route,
         inclusion: {
           in: :valid_training_routes,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys) },
+          message: ->(_, data) do
+            hesa_code_inclusion_message(
+              value: data[:value],
+              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.reject { |_, v| UNSUPPORTED_TRAINING_ROUTES.include?(v) }.keys
+            )
+          end,
         },
         allow_blank: true,
         if: :valid_trainee_start_date?,

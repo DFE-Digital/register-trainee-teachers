@@ -309,6 +309,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
       describe "inclusion" do
         context "when trainee_start_date is present" do
           let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
+          let(:unsupported_routes) { [TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]] }
 
           before do
             Timecop.travel academic_cycle.start_date
@@ -340,7 +341,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+                "has invalid reference data value of '9'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
               )
             end
           end
