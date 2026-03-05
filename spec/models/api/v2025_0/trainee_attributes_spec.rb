@@ -263,7 +263,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
       describe "inclusion" do
         context "when trainee_start_date is present" do
           let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
-          let(:obsolete_routes) { [TRAINING_ROUTE_ENUMS[:iqts]] }
+          let(:unsupported_routes) { [TRAINING_ROUTE_ENUMS[:iqts]] }
 
           before do
             Timecop.travel academic_cycle.start_date
@@ -276,7 +276,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - unsupported_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -286,7 +286,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - unsupported_routes)
                 .with_message(/has invalid reference data value/)
             end
 
@@ -305,7 +305,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - unsupported_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -319,7 +319,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - obsolete_routes)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values - unsupported_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end
@@ -329,7 +329,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) - obsolete_routes)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) - unsupported_routes)
                 .with_message(/has invalid reference data value of '.*'/)
             end
           end

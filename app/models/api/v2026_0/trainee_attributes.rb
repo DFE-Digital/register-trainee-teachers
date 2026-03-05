@@ -92,12 +92,12 @@ module Api
 
       PROVIDER_LED_POSTGRAD_START_YEAR = 2022
 
-      OBSOLETE_TRAINING_ROUTES = [
+      UNSUPPORTED_TRAINING_ROUTES = [
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
         TRAINING_ROUTE_ENUMS[:iqts],
       ].freeze
 
-      private_constant :PROVIDER_LED_POSTGRAD_START_YEAR, :OBSOLETE_TRAINING_ROUTES
+      private_constant :PROVIDER_LED_POSTGRAD_START_YEAR, :UNSUPPORTED_TRAINING_ROUTES
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
@@ -321,7 +321,7 @@ module Api
                    Hesa::CodeSets::TrainingRoutes::MAPPING.values
                  end
 
-        routes - OBSOLETE_TRAINING_ROUTES
+        routes - UNSUPPORTED_TRAINING_ROUTES
       end
 
       def start_year
