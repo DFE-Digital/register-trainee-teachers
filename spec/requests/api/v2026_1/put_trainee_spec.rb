@@ -2520,6 +2520,35 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         end
       end
     end
+
+    context "when updating an IQTS trainee to a non-IQTS route" do
+      let(:trainee_route_trait) { TRAINING_ROUTE_ENUMS[:iqts] }
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          trainee_route_trait,
+          :with_no_funding_hesa_trainee_detail,
+          :with_training_partner,
+          :with_employing_school,
+          :with_diversity_information,
+          iqts_country: Hesa::CodeSets::Countries::MAPPING.values.sample,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { training_route: "12" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "clears iqts_country and updates the route" do
+        expect(response).to have_http_status(:ok)
+        trainee.reload
+        expect(trainee.training_route).to eq("provider_led_postgrad")
+        expect(trainee.iqts_country).to be_nil
+      end
+    end
   end
 
   context "Updating a newly created trainee" do
