@@ -134,10 +134,10 @@ module Api
         :training_route,
         inclusion: {
           in: :valid_training_routes,
-          message: ->(_, data) do
+          message: lambda do |_, data|
             hesa_code_inclusion_message(
               value: data[:value],
-              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.reject { |_, v| UNSUPPORTED_TRAINING_ROUTES.include?(v) }.keys
+              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.reject { |_, v| UNSUPPORTED_TRAINING_ROUTES.include?(v) }.keys,
             )
           end,
         },
