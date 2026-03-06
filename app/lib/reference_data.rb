@@ -11,6 +11,7 @@ module ReferenceData
   ETHNICITIES = ReferenceData::Loader.instance.find(:ethnicity)
   FUND_CODES = ReferenceData::Loader.instance.find(:fund_code)
   FUNDING_METHODS = ReferenceData::Loader.instance.find(:funding_method)
+  IQTS_COUNTRIES = ReferenceData::Loader.instance.find(:iqts_country)
   INSTITUTIONS = ReferenceData::Loader.instance.find(:institution)
   ITT_AIMS = ReferenceData::Loader.instance.find(:itt_aim)
   ITT_QUALIFICATION_AIMS = ReferenceData::Loader.instance.find(:itt_qualification_aim)
