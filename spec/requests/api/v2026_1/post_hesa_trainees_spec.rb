@@ -2179,7 +2179,9 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
       it "returns a validation error" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country is not a valid iQTS country")
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "iqts_country has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'...",
+        )
       end
 
       context "with enhanced errors" do
@@ -2188,7 +2190,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
         it "returns a validation error" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "iqts_country" => ["is not a valid iQTS country"],
+            "iqts_country" => ["has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'..."],
           )
         end
       end

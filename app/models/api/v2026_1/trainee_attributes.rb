@@ -171,8 +171,9 @@ module Api
       validates :iqts_country, presence: true, if: :iqts_route?
       validates :iqts_country, absence: true, unless: :iqts_route?
 
-      validates :iqts_country, inclusion: {
+      validates :iqts_country, api_inclusion: {
         in: Hesa::CodeSets::Countries::MAPPING.values,
+        valid_values: Hesa::CodeSets::Countries::MAPPING.keys,
       }, if: :iqts_route?, allow_blank: true
 
       def initialize(new_attributes = {})

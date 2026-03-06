@@ -816,7 +816,9 @@ RSpec.describe Api::V20261::TraineeAttributes do
           it "is invalid" do
             subject.validate
 
-            expect(subject.errors[:iqts_country]).to contain_exactly("is not a valid iQTS country")
+            expect(subject.errors[:iqts_country]).to contain_exactly(
+              "has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'...",
+            )
           end
         end
 

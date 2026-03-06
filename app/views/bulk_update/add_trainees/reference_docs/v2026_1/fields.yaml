@@ -467,8 +467,8 @@
     The country where the trainee will be undertaking their International Qualified Teacher Status (iQTS) training.
 
     Required when the training route is iQTS (code 15).
-  format: Country name as a plain string
-  example: "`Japan`"
+  format: "[IQTS Country reference codes](/reference-data/v2026.1/country.html)"
+  example: "`JP`"
   validation: Conditional - mandatory when training_route is 15 (iQTS)
   page_title: IQTS country
 - field_name: uk_degree
