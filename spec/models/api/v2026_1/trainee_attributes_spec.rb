@@ -282,6 +282,18 @@ RSpec.describe Api::V20261::TraineeAttributes do
           end
         end
       end
+
+      context "when training_route is assessment_only" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:assessment_only]
+        end
+
+        it "does not require study_mode" do
+          subject.validate
+
+          expect(subject.errors[:study_mode]).to be_blank
+        end
+      end
     end
 
     it {
@@ -341,7 +353,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
+                "has invalid reference data value of '9'. Valid values are '03', '09', '10', '11', '12', '14', '15', '16'.",
               )
             end
           end

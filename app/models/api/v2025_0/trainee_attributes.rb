@@ -89,6 +89,7 @@ module Api
 
       UNSUPPORTED_TRAINING_ROUTES = [
         TRAINING_ROUTE_ENUMS[:iqts],
+        TRAINING_ROUTE_ENUMS[:assessment_only],
       ].freeze
 
       private_constant :PROVIDER_LED_POSTGRAD_START_YEAR, :UNSUPPORTED_TRAINING_ROUTES

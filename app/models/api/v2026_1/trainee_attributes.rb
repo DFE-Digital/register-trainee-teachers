@@ -87,7 +87,6 @@ module Api
         itt_end_date
         diversity_disclosure
         course_subject_one
-        study_mode
         hesa_id
       ].freeze
 
@@ -106,6 +105,7 @@ module Api
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
+      validates :study_mode, presence: true, if: :requires_study_mode?
       validates :email, presence: true, length: { maximum: 255 }
       validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
