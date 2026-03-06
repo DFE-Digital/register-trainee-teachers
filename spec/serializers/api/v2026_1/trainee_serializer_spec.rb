@@ -138,6 +138,14 @@ RSpec.describe Api::V20261::TraineeSerializer do
       end
     end
 
+    context "when trainee is on assessment_only route" do
+      let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_french_nationality, training_route: "assessment_only") }
+
+      it "serializes training_route as '16'" do
+        expect(json[:training_route]).to eq("16")
+      end
+    end
+
     context "when trainee is on IQTS route" do
       let(:trainee) { create(:trainee, :iqts, :with_training_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
 
