@@ -16,7 +16,7 @@ module Api
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
-      validate :course_subject_one_is_primary, if: :primary_education_phase?
+      validate :course_subject_one_is_primary, if: -> { primary_education_phase? && require_subject? }
       validate :course_subject_two_valid, if: :require_subject?
       validate :course_subject_three_valid, if: :require_subject?
       validate :itt_end_date_valid
@@ -86,7 +86,6 @@ module Api
         itt_start_date
         itt_end_date
         diversity_disclosure
-        course_subject_one
         hesa_id
       ].freeze
 
@@ -105,6 +104,7 @@ module Api
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
+      validates :course_subject_one, presence: true, if: :require_subject?
       validates :study_mode, presence: true, if: :requires_study_mode?
       validates :email, presence: true, length: { maximum: 255 }
       validate { |record| EmailFormatValidator.new(record).validate }

@@ -1521,7 +1521,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15', '16'.",
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15', '16', '17'.",
           )
         end
 
@@ -1532,7 +1532,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15', '16'.",
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15', '16', '17'.",
               ],
             )
           end
@@ -2453,6 +2453,36 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       it "stores the updated values" do
         trainee.reload
         expect(trainee.training_route).to eq("assessment_only")
+        expect(trainee.first_names).to eq("Jane")
+      end
+    end
+
+    context "when updating an early_years_assessment_only trainee" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :early_years_assessment_only,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("17")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("early_years_assessment_only")
         expect(trainee.first_names).to eq("Jane")
       end
     end
