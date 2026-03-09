@@ -2158,6 +2158,33 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
     end
   end
 
+  context "when creating a trainee with early_years_assessment_only route" do
+    let(:training_route) { "17" }
+    let(:data) do
+      super().except(:study_mode, :placements_attributes, :course_subject_1)
+    end
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with early_years_assessment_only route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("17")
+    end
+
+    it "stores the trainee with early_years_assessment_only training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("early_years_assessment_only")
+    end
+
+    it "does not require study_mode or course_subject_one" do
+      expect(response).to have_http_status(:created)
+      expect(Trainee.last.study_mode).to be_nil
+      expect(Trainee.last.course_subject_one).to be_nil
+    end
+  end
+
   context "when creating a trainee with IQTS route" do
     let(:training_route) { "15" }
     let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }
