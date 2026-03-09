@@ -26,7 +26,8 @@ RUN apk add --update --no-cache --virtual build-dependencies \
       libc6-compat \
       yaml-dev \
       icu-dev \
-      zlib-dev \
+      zlib=1.3.2-r0 \
+      zlib-dev=1.3.2-r0 \
       libxml2-dev \
       libxslt-dev \
   && bundle install --jobs=4 \
