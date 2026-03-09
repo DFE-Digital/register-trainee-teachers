@@ -213,7 +213,7 @@ group :test do
   gem "simplecov-json"
 
   # Page objects
-  gem "site_prism", "~> 5.1"
+  gem "site_prism", "~> 5.2"
 
   gem "webmock"
 
