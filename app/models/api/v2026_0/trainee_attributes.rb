@@ -96,6 +96,7 @@ module Api
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
         TRAINING_ROUTE_ENUMS[:iqts],
         TRAINING_ROUTE_ENUMS[:assessment_only],
+        TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
       ].freeze
 
       private_constant :PROVIDER_LED_POSTGRAD_START_YEAR, :UNSUPPORTED_TRAINING_ROUTES

@@ -263,7 +263,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
       describe "inclusion" do
         context "when trainee_start_date is present" do
           let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
-          let(:unsupported_routes) { [TRAINING_ROUTE_ENUMS[:iqts], TRAINING_ROUTE_ENUMS[:assessment_only]] }
+          let(:unsupported_routes) { [TRAINING_ROUTE_ENUMS[:iqts], TRAINING_ROUTE_ENUMS[:assessment_only], TRAINING_ROUTE_ENUMS[:early_years_assessment_only]] }
 
           before do
             Timecop.travel academic_cycle.start_date

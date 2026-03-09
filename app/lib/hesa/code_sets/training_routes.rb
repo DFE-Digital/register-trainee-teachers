@@ -14,6 +14,7 @@ module Hesa
         "14" => TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
         "15" => TRAINING_ROUTE_ENUMS[:iqts],
         "16" => TRAINING_ROUTE_ENUMS[:assessment_only],
+        "17" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
       }.freeze
     end
   end
