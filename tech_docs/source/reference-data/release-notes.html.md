@@ -5,6 +5,33 @@ weight: 2
 
 # Release notes
 
+## v2026.1 — 9 March 2026
+
+### New values
+
+The following new value has been added:
+
+#### Training route
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">Label</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">15</td>
+      <td class="govuk-table__cell">iQTS</td>
+    </tr>
+  </tbody>
+</table>
+
+#### iQTS country
+
+New reference data item `iqts_country` has been added. This is mandatory when the training route is iQTS. Accepts a valid HESA country code.
+
 ## v2026.0 — 30 January 2026
 
 All reference data items remain unchanged from v2025.0. All existing values remain valid and supported.
