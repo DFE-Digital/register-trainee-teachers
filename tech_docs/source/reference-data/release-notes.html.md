@@ -9,7 +9,7 @@ weight: 2
 
 ### New values
 
-The following new value has been added:
+The following new values have been added:
 
 #### Training route
 
@@ -24,6 +24,30 @@ The following new value has been added:
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">15</td>
       <td class="govuk-table__cell">iQTS</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">16</td>
+      <td class="govuk-table__cell">Assessment Only</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">17</td>
+      <td class="govuk-table__cell">Early Years Assessment Only</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">18</td>
+      <td class="govuk-table__cell">Early Years Undergrad</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">19</td>
+      <td class="govuk-table__cell">Early Years Postgrad</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">20</td>
+      <td class="govuk-table__cell">Early Years Salaried</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">21</td>
+      <td class="govuk-table__cell">HPITT Postgrad</td>
     </tr>
   </tbody>
 </table>
