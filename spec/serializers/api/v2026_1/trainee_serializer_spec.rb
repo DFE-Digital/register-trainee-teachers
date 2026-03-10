@@ -154,6 +154,30 @@ RSpec.describe Api::V20261::TraineeSerializer do
       end
     end
 
+    context "when trainee is on early_years_undergrad route" do
+      let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_french_nationality, training_route: "early_years_undergrad") }
+
+      it "serializes training_route as '18'" do
+        expect(json[:training_route]).to eq("18")
+      end
+    end
+
+    context "when trainee is on early_years_postgrad route" do
+      let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_french_nationality, training_route: "early_years_postgrad") }
+
+      it "serializes training_route as '19'" do
+        expect(json[:training_route]).to eq("19")
+      end
+    end
+
+    context "when trainee is on early_years_salaried route" do
+      let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_french_nationality, training_route: "early_years_salaried") }
+
+      it "serializes training_route as '20'" do
+        expect(json[:training_route]).to eq("20")
+      end
+    end
+
     context "when trainee is on IQTS route" do
       let(:trainee) { create(:trainee, :iqts, :with_training_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
 
