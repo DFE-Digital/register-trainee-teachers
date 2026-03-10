@@ -13,6 +13,7 @@ data:
     display_name: "Assessment only"
     description: "Assessment only"
     hesa_codes:
+      - "16"
   - id: 1
     name: "provider_led_postgrad"
     display_name: "Primary and Secondary Postgraduate Fee Funded"

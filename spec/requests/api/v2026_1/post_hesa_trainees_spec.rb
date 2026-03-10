@@ -2263,6 +2263,24 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
     end
   end
 
+  context "when creating a trainee with hpitt_postgrad route" do
+    let(:training_route) { "21" }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with hpitt_postgrad route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("21")
+    end
+
+    it "stores the trainee with hpitt_postgrad training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("hpitt_postgrad")
+    end
+  end
+
   context "when creating a trainee with IQTS route" do
     let(:training_route) { "15" }
     let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }
