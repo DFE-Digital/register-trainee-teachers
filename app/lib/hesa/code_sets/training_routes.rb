@@ -18,6 +18,7 @@ module Hesa
         "18" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],
         "19" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
         "20" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
+        "21" => TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
       }.freeze
     end
   end

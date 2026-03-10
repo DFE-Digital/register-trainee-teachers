@@ -2577,6 +2577,36 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       end
     end
 
+    context "when updating an hpitt_postgrad trainee" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :with_hpitt_provider,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("21")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("hpitt_postgrad")
+        expect(trainee.first_names).to eq("Jane")
+      end
+    end
+
     context "when updating a trainee to IQTS route" do
       let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }
       let(:data) { { training_route: "15", iqts_country: iqts_country } }
