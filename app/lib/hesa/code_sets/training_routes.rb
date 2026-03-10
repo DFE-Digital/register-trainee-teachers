@@ -15,6 +15,9 @@ module Hesa
         "15" => TRAINING_ROUTE_ENUMS[:iqts],
         "16" => TRAINING_ROUTE_ENUMS[:assessment_only],
         "17" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+        "18" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+        "19" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+        "20" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
       }.freeze
     end
   end
