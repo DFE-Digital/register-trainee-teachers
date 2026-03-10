@@ -23,7 +23,7 @@ module Hesa
           study_mode: ::ReferenceData::STUDY_MODES,
           training_route: ::ReferenceData::TRAINING_ROUTES,
           training_initiative: ::ReferenceData::TRAINING_INITIATIVES,
-          iqts_country: ::ReferenceData::IQTS_COUNTRIES,
+          iqts_country: ::ReferenceData::COUNTRIES,
         }.transform_values do |type|
           Hesa::ReferenceData::V20261.values_for(type)
         end.freeze
