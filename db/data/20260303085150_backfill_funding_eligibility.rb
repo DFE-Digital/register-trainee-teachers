@@ -5,7 +5,7 @@ class BackfillFundingEligibility < ActiveRecord::Migration[8.0]
     eligible_code = Hesa::CodeSets::FundCodes::ELIGIBLE
     not_eligible_code = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
 
-    Trainee.find_each do |trainee|
+    Trainee.imported_from_hesa.find_each do |trainee|
       fund_code = trainee.hesa_trainee_detail&.fund_code
 
       if fund_code.nil? && trainee.hesa_students.any?
@@ -19,7 +19,7 @@ class BackfillFundingEligibility < ActiveRecord::Migration[8.0]
                             when not_eligible_code then :not_eligible
                             end
 
-      trainee.update_column(:funding_eligibility, Trainee.funding_eligibilities[funding_eligibility]) if funding_eligibility
+      trainee.update!(funding_eligibility:) if funding_eligibility
     end
   end
 

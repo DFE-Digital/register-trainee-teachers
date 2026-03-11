@@ -6,6 +6,6 @@ FUNDING_ELIGIBILITY_ENUMS = {
 }.freeze
 
 FUNDING_ELIGIBILITIES = {
-  FUNDING_ELIGIBILITY_ENUMS[:eligible] => 0,
-  FUNDING_ELIGIBILITY_ENUMS[:not_eligible] => 1,
+  FUNDING_ELIGIBILITY_ENUMS[:eligible] => "eligible",
+  FUNDING_ELIGIBILITY_ENUMS[:not_eligible] => "not_eligible",
 }.freeze
