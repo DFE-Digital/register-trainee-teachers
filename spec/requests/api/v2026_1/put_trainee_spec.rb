@@ -1521,7 +1521,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
           )
         end
 
@@ -1532,7 +1532,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
               ],
             )
           end
@@ -2423,6 +2423,130 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             )
           end
         end
+      end
+    end
+
+    context "when updating a trainee to IQTS route" do
+      let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }
+      let(:data) { { training_route: "15", iqts_country: iqts_country } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee to IQTS route with iqts_country" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("15")
+        expect(response.parsed_body[:data][:iqts_country]).to eq(iqts_country)
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("iqts")
+        expect(trainee.iqts_country).to eq(Hesa::CodeSets::Countries::MAPPING[iqts_country])
+      end
+    end
+
+    context "when updating a trainee to IQTS route without iqts_country" do
+      let(:data) { { training_route: "15" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country can't be blank")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["can't be blank"],
+          )
+        end
+      end
+    end
+
+    context "when updating a non-IQTS trainee with iqts_country" do
+      let(:data) { { iqts_country: Hesa::CodeSets::Countries::MAPPING.keys.sample } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("iqts_country must be blank")
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["must be blank"],
+          )
+        end
+      end
+    end
+
+    context "when updating a trainee to IQTS route with invalid iqts_country" do
+      let(:data) { { training_route: "15", iqts_country: "InvalidCountry" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "returns a validation error" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "iqts_country has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'...",
+        )
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to eq(
+            "iqts_country" => ["has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'..."],
+          )
+        end
+      end
+    end
+
+    context "when updating an IQTS trainee to a non-IQTS route" do
+      let(:trainee_route_trait) { TRAINING_ROUTE_ENUMS[:iqts] }
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          trainee_route_trait,
+          :with_no_funding_hesa_trainee_detail,
+          :with_training_partner,
+          :with_employing_school,
+          :with_diversity_information,
+          iqts_country: Hesa::CodeSets::Countries::MAPPING.values.sample,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { training_route: "12" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "clears iqts_country and updates the route" do
+        expect(response).to have_http_status(:ok)
+        trainee.reload
+        expect(trainee.training_route).to eq("provider_led_postgrad")
+        expect(trainee.iqts_country).to be_nil
       end
     end
   end

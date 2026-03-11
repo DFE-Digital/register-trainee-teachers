@@ -5,6 +5,13 @@ weight: 2
 
 # Release notes
 
+## v2026.1 — 9 March 2026
+
+### Changes
+
+* Added support for the iQTS training route (HESA code `15`)
+* New `iqts_country` column. Mandatory when the training route is iQTS. Accepts a valid HESA country code.
+
 ## v2026.0 — 30 January 2026
 
 First release of the 2026 version of the CSV bulk add new trainee feature.

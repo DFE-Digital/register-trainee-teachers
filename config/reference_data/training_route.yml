@@ -80,6 +80,7 @@ data:
     display_name: "iQTS"
     description: "iQTS"
     hesa_codes:
+      - "15"
   - id: 14
     name: "teacher_degree_apprenticeship"
     display_name: "Teacher Degree Apprenticeship"
