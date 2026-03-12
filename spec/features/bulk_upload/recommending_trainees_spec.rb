@@ -180,7 +180,8 @@ private
   end
 
   def then_i_see_how_many_trainees_i_can_recommend
-    expect(recommendations_upload_page).to have_text("2 trainees")
+    expect(recommendations_upload_page).to have_text("You can update the status of 2 trainee records with QTS or EYTS. Trainee statuses will be updated within 3 days.")
+    expect(recommendations_upload_page).to have_text("This file contains all 2 trainees that can have their QTS or EYTS status updated.")
   end
 
   def then_i_see_the_option_to_download_the_empty_template
