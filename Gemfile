@@ -166,7 +166,7 @@ group :development, :test do
   gem "bullet"
 
   # Testing framework
-  gem "rspec-rails", "~> 8.0.3"
+  gem "rspec-rails", "~> 8.0.4"
 
   gem "rails-controller-testing"
 
@@ -213,7 +213,7 @@ group :test do
   gem "simplecov-json"
 
   # Page objects
-  gem "site_prism", "~> 5.1"
+  gem "site_prism", "~> 5.2"
 
   gem "webmock"
 

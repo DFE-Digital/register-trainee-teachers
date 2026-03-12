@@ -48,5 +48,6 @@ class FormStore
     change_accredited_provider
     placements
     itt_end_date
+    feedback
   ].freeze
 end
