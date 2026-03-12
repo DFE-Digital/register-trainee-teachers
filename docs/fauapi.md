@@ -16,7 +16,7 @@ ruby bin/generate_fauapi_manifest
 
 Both pre-prod and production required manual one-time setup in the fauapi management portal. Workspaces already exist — to get access, ask an existing dev on the team to add you.
 
-The linked API was created via import with `name: "register-trainee-teachers-api"`, `displayName: "Register Trainee Teachers API"`. The CI workflow keeps it updated on each deploy.
+The linked API was created via import with `name: "register-trainee-teachers-api"`, `displayName: "Register Trainee Teachers API"`. Note: `displayName` is globally unique across all fauapi workspaces. The CI workflow keeps it updated on each deploy.
 
 A `FAUAPI_AUTOMATION_TOKEN` [secret](https://github.com/DFE-Digital/register-trainee-teachers/settings/secrets/actions) is needed in GitHub Actions — this is a bearer token from the fauapi management portal.
 
