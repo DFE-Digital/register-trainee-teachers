@@ -225,19 +225,31 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v6
 
-    - name: Import and publish API to FauAPI
+    - name: Generate and publish API to FauAPI
       env:
         FAUAPI_URL: https://apimanagement.education.gov.uk
         FAUAPI_TOKEN: ${{ secrets.FAUAPI_AUTOMATION_TOKEN }}
+        FAUAPI_API_NAME: register-trainee-teachers-api
       run: |
-        API_ID=$(curl -sf -X POST "$FAUAPI_URL/api/tasks/apis/import" \
+        ruby bin/generate_fauapi_manifest
+
+        curl -sf -X POST "$FAUAPI_URL/api/tasks/apis/import" \
           -H "Authorization: Bearer $FAUAPI_TOKEN" \
           -H "Content-Type: application/json" \
-          -d @public/fauapi/register-api.json | jq -r '.id')
+          -d @public/fauapi/register-api.json
 
-        echo "Imported API with id: $API_ID"
+        API_ID=$(curl -sf "$FAUAPI_URL/api/tasks/apis" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" \
+          | jq -r --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name) | .id')
 
-        curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+        if [ -z "$API_ID" ]; then
+          echo "::error::Could not find API '$FAUAPI_API_NAME' after import"
+          exit 1
+        fi
+
+        echo "Found API id: $API_ID"
+
+        curl -s -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
           -H "Authorization: Bearer $FAUAPI_TOKEN"
 
         echo "Published API $API_ID to FauAPI catalogue"

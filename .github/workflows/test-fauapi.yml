@@ -1,0 +1,67 @@
+name: Test FauAPI integration (pre-prod)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-fauapi:
+    name: Generate, import and publish to FauAPI pre-prod
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Generate and publish API to FauAPI pre-prod
+      env:
+        FAUAPI_URL: https://pp-apimanagement.education.gov.uk
+        FAUAPI_TOKEN: ${{ secrets.FAUAPI_PP_AUTOMATION_TOKEN }}
+        FAUAPI_API_NAME: register-trainee-teachers-api
+      run: |
+        ruby bin/generate_fauapi_manifest
+
+        echo "=== Manifest ==="
+        cat public/fauapi/register-api.json
+
+        echo ""
+        echo "=== Import ==="
+        IMPORT_RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
+          -X POST "$FAUAPI_URL/api/tasks/apis/import" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d @public/fauapi/register-api.json)
+        echo "$IMPORT_RESPONSE"
+
+        echo ""
+        echo "=== List APIs ==="
+        API_ID=$(curl -sf "$FAUAPI_URL/api/tasks/apis" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" \
+          | jq -r --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name) | .id')
+
+        if [ -z "$API_ID" ]; then
+          echo "::error::Could not find API '$FAUAPI_API_NAME' after import"
+          exit 1
+        fi
+
+        echo "Found API id: $API_ID"
+
+        echo ""
+        echo "=== Publish ==="
+        PUBLISH_RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
+          -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN")
+        echo "$PUBLISH_RESPONSE"
+
+        echo ""
+        echo "=== Verify: GET API ==="
+        curl -sf "$FAUAPI_URL/api/tasks/apis/$API_ID" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" | jq .
+
+        echo ""
+        echo "=== Verify: GET Environments ==="
+        curl -sf "$FAUAPI_URL/api/tasks/apis/$API_ID/environments" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" | jq .
+
+        echo ""
+        echo "=== Verify: GET Releases ==="
+        curl -sf "$FAUAPI_URL/api/tasks/apis/$API_ID/releases" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" | jq .
