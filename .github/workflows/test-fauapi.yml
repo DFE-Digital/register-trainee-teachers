@@ -1,7 +1,9 @@
 name: Test FauAPI integration (pre-prod)
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - 9387-add-api-documentation-to-fauapi
 
 jobs:
   test-fauapi:
