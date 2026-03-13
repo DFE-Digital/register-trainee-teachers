@@ -17,9 +17,10 @@ class BackfillFundingEligibility < ActiveRecord::Migration[8.0]
       funding_eligibility = case fund_code
                             when eligible_code then :eligible
                             when not_eligible_code then :not_eligible
+                            else next
                             end
 
-      trainee.update!(funding_eligibility:) if funding_eligibility
+      trainee.update!(funding_eligibility:)
     end
   end
 

@@ -745,7 +745,7 @@ FactoryBot.define do
       with_hesa_student
       record_source { Sourceable::HESA_COLLECTION_SOURCE }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-      funding_eligibility { FUNDING_ELIGIBILITY_ENUMS.keys.sample }
+      funding_eligibility { FUNDING_ELIGIBILITIES.keys.sample }
 
       after(:create) do |trainee, evaluator|
         create(:hesa_metadatum, trainee: trainee, itt_aim: evaluator.itt_aim)

@@ -300,9 +300,9 @@ module Api
         def funding_eligibility_attribute
           case params[:fund_code]
           when ::Hesa::CodeSets::FundCodes::ELIGIBLE
-            { funding_eligibility: FUNDING_ELIGIBILITY_ENUMS[:eligible] }
+            { funding_eligibility: FUNDING_ELIGIBILITIES[:eligible] }
           when ::Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
-            { funding_eligibility: FUNDING_ELIGIBILITY_ENUMS[:not_eligible] }
+            { funding_eligibility: FUNDING_ELIGIBILITIES[:not_eligible] }
           else
             {}
           end
