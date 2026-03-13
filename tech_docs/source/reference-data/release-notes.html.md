@@ -27,27 +27,27 @@ The following new values have been added:
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">16</td>
-      <td class="govuk-table__cell">Assessment Only</td>
+      <td class="govuk-table__cell">Assessment only</td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">17</td>
-      <td class="govuk-table__cell">Early Years Assessment Only</td>
+      <td class="govuk-table__cell">Early years assessment only</td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">18</td>
-      <td class="govuk-table__cell">Early Years Undergrad</td>
+      <td class="govuk-table__cell">Early years undergrad</td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">19</td>
-      <td class="govuk-table__cell">Early Years Postgrad</td>
+      <td class="govuk-table__cell">Early years postgrad</td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">20</td>
-      <td class="govuk-table__cell">Early Years Salaried</td>
+      <td class="govuk-table__cell">Early years salaried</td>
     </tr>
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">21</td>
-      <td class="govuk-table__cell">HPITT Postgrad</td>
+      <td class="govuk-table__cell">HPITT postgrad</td>
     </tr>
   </tbody>
 </table>
