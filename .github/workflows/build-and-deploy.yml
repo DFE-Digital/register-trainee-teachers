@@ -135,7 +135,7 @@ jobs:
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Post comment to Pull Request ${{ github.event.number }}
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: aks
           message: |
