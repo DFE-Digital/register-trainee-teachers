@@ -18,6 +18,7 @@ weight: 2
 * Added support for the Early years salaried training route (HESA code `20`)
 * Added support for the HPITT postgrad training route (HESA code `21`)
 * `study_mode` is no longer required for Assessment only (HESA code `16`) and Early years assessment only (HESA code `17`) training routes
+* `course_subject_1` must be `100510` (Early Years Teaching) for early years training routes
 
 ## v2026.0 — 30 January 2026
 
