@@ -87,6 +87,7 @@ module Api
         itt_end_date
         diversity_disclosure
         hesa_id
+        course_subject_one
       ].freeze
 
       PROVIDER_LED_POSTGRAD_START_YEAR = 2022
@@ -104,7 +105,6 @@ module Api
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
-      validates :course_subject_one, presence: true, if: :require_subject?
       validates :study_mode, presence: true, if: :requires_study_mode?
       validates :email, presence: true, length: { maximum: 255 }
       validate { |record| EmailFormatValidator.new(record).validate }
