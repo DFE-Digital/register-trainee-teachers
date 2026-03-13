@@ -914,7 +914,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_04_100000) do
     t.bigint "training_partner_id"
     t.string "defer_reason"
     t.tsvector "searchable"
-    t.integer "funding_eligibility"
+    t.string "funding_eligibility"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"

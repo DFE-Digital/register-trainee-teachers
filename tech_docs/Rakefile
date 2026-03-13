@@ -258,7 +258,7 @@ module TechDocsHelpers
   def self.available_versions
     Dir.glob(File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/v*", __dir__))
        .map { |path| File.basename(path).tr("_", "").upcase } # v2025_0 -> V20250
-       .sort
+       .sort.reverse
   end
 
   def self.format_version(version)

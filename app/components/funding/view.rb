@@ -129,12 +129,9 @@ module Funding
     end
 
     def fund_code_value
-      case trainee.funding_eligibility
-      when "eligible"
-        Hesa::CodeSets::FundCodes::ELIGIBLE
-      when "not_eligible"
-        Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
-      end
+      return unless trainee.funding_eligibility
+
+      "Hesa::CodeSets::FundCodes::#{trainee.funding_eligibility.upcase}".constantize
     end
 
     def applying_for_bursary_row
