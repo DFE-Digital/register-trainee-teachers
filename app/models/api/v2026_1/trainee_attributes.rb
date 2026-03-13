@@ -16,7 +16,8 @@ module Api
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
-      validate :course_subject_one_is_primary, if: :primary_education_phase?
+      validate :course_subject_one_is_primary, if: -> { primary_education_phase? && require_subject? }
+      validate :course_subject_one_is_early_years, if: -> { early_years_route? && course_subject_one.present? }
       validate :course_subject_two_valid, if: :require_subject?
       validate :course_subject_three_valid, if: :require_subject?
       validate :itt_end_date_valid
@@ -86,9 +87,8 @@ module Api
         itt_start_date
         itt_end_date
         diversity_disclosure
-        course_subject_one
-        study_mode
         hesa_id
+        course_subject_one
       ].freeze
 
       PROVIDER_LED_POSTGRAD_START_YEAR = 2022
@@ -106,6 +106,7 @@ module Api
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
+      validates :study_mode, presence: true, if: :requires_study_mode?
       validates :email, presence: true, length: { maximum: 255 }
       validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
@@ -433,6 +434,16 @@ module Api
         return if course_subject_one.blank? || course_subject_one == CourseSubjects::PRIMARY_TEACHING
 
         errors.add(:course_subject_1, :invalid)
+      end
+
+      def course_subject_one_is_early_years
+        return if course_subject_one == CourseSubjects::EARLY_YEARS_TEACHING
+
+        errors.add(:course_subject_1, :early_years_invalid)
+      end
+
+      def early_years_route?
+        EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
       end
 
       def course_subject_two_valid

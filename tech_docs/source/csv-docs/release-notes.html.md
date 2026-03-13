@@ -11,6 +11,14 @@ weight: 2
 
 * Added support for the iQTS training route (HESA code `15`)
 * New `iqts_country` column. Mandatory when the training route is iQTS. Accepts a valid HESA country code.
+* Added support for the Assessment only training route (HESA code `16`)
+* Added support for the Early years assessment only training route (HESA code `17`)
+* Added support for the Early years undergrad training route (HESA code `18`)
+* Added support for the Early years postgrad training route (HESA code `19`)
+* Added support for the Early years salaried training route (HESA code `20`)
+* Added support for the HPITT postgrad training route (HESA code `21`)
+* `study_mode` is no longer required for Assessment only (HESA code `16`) and Early years assessment only (HESA code `17`) training routes
+* `course_subject_1` must be `100510` (Early Years Teaching) for early years training routes
 
 ## v2026.0 — 30 January 2026
 

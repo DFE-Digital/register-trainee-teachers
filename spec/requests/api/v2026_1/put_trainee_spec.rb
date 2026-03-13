@@ -1521,7 +1521,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Example values include '03', '09', '10', '11', '12', '14', '15', '16', '17', '18'...",
           )
         end
 
@@ -1532,7 +1532,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
+                "has invalid reference data value of 'provider_led_postgrad'. Example values include '03', '09', '10', '11', '12', '14', '15', '16', '17', '18'...",
               ],
             )
           end
@@ -2423,6 +2423,209 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             )
           end
         end
+      end
+    end
+
+    context "when updating an assessment_only trainee" do
+      let(:trainee_route_trait) { TRAINING_ROUTE_ENUMS[:assessment_only] }
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          trainee_route_trait,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("16")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("assessment_only")
+        expect(trainee.first_names).to eq("Jane")
+      end
+    end
+
+    context "when updating an early_years_assessment_only trainee" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :early_years_assessment_only,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("17")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("early_years_assessment_only")
+        expect(trainee.first_names).to eq("Jane")
+      end
+    end
+
+    context "when updating an early_years_undergrad trainee" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :early_years_undergrad,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("18")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("early_years_undergrad")
+        expect(trainee.first_names).to eq("Jane")
+      end
+    end
+
+    context "when updating an early_years_postgrad trainee" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :early_years_postgrad,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("19")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("early_years_postgrad")
+        expect(trainee.first_names).to eq("Jane")
+      end
+
+      context "when course_subject_1 is not early years teaching" do
+        let(:data) { { course_subject_1: "100346" } }
+
+        it "returns validation error for course_subject_1" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            "course_subject_1 is invalid. It should be `100510` for the training_route provided",
+          )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+          it "returns validation error for course_subject_1" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to eq(
+              "course_subject_1" => ["is invalid. It should be `100510` for the training_route provided"],
+            )
+          end
+        end
+      end
+    end
+
+    context "when updating an early_years_salaried trainee" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :early_years_salaried,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("20")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("early_years_salaried")
+        expect(trainee.first_names).to eq("Jane")
+      end
+    end
+
+    context "when updating an hpitt_postgrad trainee" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :with_hpitt_provider,
+          :with_no_funding_hesa_trainee_detail,
+          :with_diversity_information,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:training_route]).to eq("21")
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values" do
+        trainee.reload
+        expect(trainee.training_route).to eq("hpitt_postgrad")
+        expect(trainee.first_names).to eq("Jane")
       end
     end
 

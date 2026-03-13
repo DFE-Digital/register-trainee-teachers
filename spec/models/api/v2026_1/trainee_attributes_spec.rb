@@ -229,6 +229,31 @@ RSpec.describe Api::V20261::TraineeAttributes do
           }
         end
       end
+
+      context "with an early years training route" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:early_years_postgrad]
+        end
+
+        it "is valid when early years teaching" do
+          subject.course_subject_one = "early years teaching"
+
+          subject.validate
+
+          expect(subject.errors[:course_subject_1]).to be_empty
+        end
+
+        it "is invalid when not early years teaching" do
+          subject.course_subject_one = "primary teaching"
+
+          subject.validate
+
+          expect(subject.errors[:course_subject_1]).to contain_exactly(
+            "is invalid. It should be `100510` for the training_route provided",
+          )
+        end
+      end
+
     end
 
     %i[course_subject_two course_subject_three].each do |course_subject|
@@ -280,6 +305,30 @@ RSpec.describe Api::V20261::TraineeAttributes do
 
             expect(subject.errors[:study_mode]).to be_blank
           end
+        end
+      end
+
+      context "when training_route is assessment_only" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:assessment_only]
+        end
+
+        it "does not require study_mode" do
+          subject.validate
+
+          expect(subject.errors[:study_mode]).to be_blank
+        end
+      end
+
+      context "when training_route is early_years_assessment_only" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:early_years_assessment_only]
+        end
+
+        it "does not require study_mode" do
+          subject.validate
+
+          expect(subject.errors[:study_mode]).to be_blank
         end
       end
     end
@@ -341,7 +390,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
+                "has invalid reference data value of '9'. Example values include '03', '09', '10', '11', '12', '14', '15', '16', '17', '18'...",
               )
             end
           end
