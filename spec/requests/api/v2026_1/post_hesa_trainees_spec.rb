@@ -2161,7 +2161,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
   context "when creating a trainee with early_years_assessment_only route" do
     let(:training_route) { "17" }
     let(:data) do
-      super().except(:study_mode, :placements_attributes, :course_subject_1)
+      super().except(:study_mode, :placements_attributes)
     end
 
     before do
@@ -2178,18 +2178,14 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
       expect(trainee.training_route).to eq("early_years_assessment_only")
     end
 
-    it "does not require study_mode or course_subject_one" do
+    it "does not require study_mode" do
       expect(response).to have_http_status(:created)
       expect(Trainee.last.study_mode).to be_nil
-      expect(Trainee.last.course_subject_one).to be_nil
     end
   end
 
   context "when creating a trainee with early_years_undergrad route" do
     let(:training_route) { "18" }
-    let(:data) do
-      super().except(:course_subject_1)
-    end
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2204,18 +2200,10 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
       trainee = Trainee.last
       expect(trainee.training_route).to eq("early_years_undergrad")
     end
-
-    it "does not require course_subject_one" do
-      expect(response).to have_http_status(:created)
-      expect(Trainee.last.course_subject_one).to be_nil
-    end
   end
 
   context "when creating a trainee with early_years_postgrad route" do
     let(:training_route) { "19" }
-    let(:data) do
-      super().except(:course_subject_1)
-    end
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2230,18 +2218,10 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
       trainee = Trainee.last
       expect(trainee.training_route).to eq("early_years_postgrad")
     end
-
-    it "does not require course_subject_one" do
-      expect(response).to have_http_status(:created)
-      expect(Trainee.last.course_subject_one).to be_nil
-    end
   end
 
   context "when creating a trainee with early_years_salaried route" do
     let(:training_route) { "20" }
-    let(:data) do
-      super().except(:course_subject_1)
-    end
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2255,11 +2235,6 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
     it "stores the trainee with early_years_salaried training route" do
       trainee = Trainee.last
       expect(trainee.training_route).to eq("early_years_salaried")
-    end
-
-    it "does not require course_subject_one" do
-      expect(response).to have_http_status(:created)
-      expect(Trainee.last.course_subject_one).to be_nil
     end
   end
 
