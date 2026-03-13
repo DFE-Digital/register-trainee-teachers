@@ -23,8 +23,8 @@ data:
       - "12"
   - id: 2
     name: "early_years_undergrad"
-    display_name: "Early-years undergrad"
-    description: "Early-years undergrad"
+    display_name: "Early years undergrad"
+    description: "Early years undergrad"
     hesa_codes:
       - "18"
   - id: 3
