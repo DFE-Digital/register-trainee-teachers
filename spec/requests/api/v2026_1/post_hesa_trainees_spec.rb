@@ -2160,6 +2160,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
   context "when creating a trainee with early_years_assessment_only route" do
     let(:training_route) { "17" }
+    let(:course_subject_1) { "100510" }
     let(:data) do
       super().except(:study_mode, :placements_attributes)
     end
@@ -2186,6 +2187,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
   context "when creating a trainee with early_years_undergrad route" do
     let(:training_route) { "18" }
+    let(:course_subject_1) { "100510" }
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2204,6 +2206,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
   context "when creating a trainee with early_years_postgrad route" do
     let(:training_route) { "19" }
+    let(:course_subject_1) { "100510" }
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2222,6 +2225,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
   context "when creating a trainee with early_years_salaried route" do
     let(:training_route) { "20" }
+    let(:course_subject_1) { "100510" }
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }

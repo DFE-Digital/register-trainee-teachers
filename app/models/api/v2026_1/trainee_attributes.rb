@@ -17,6 +17,7 @@ module Api
       after_validation :set_progress
 
       validate :course_subject_one_is_primary, if: -> { primary_education_phase? && require_subject? }
+      validate :course_subject_one_is_early_years, if: -> { early_years_route? && course_subject_one.present? }
       validate :course_subject_two_valid, if: :require_subject?
       validate :course_subject_three_valid, if: :require_subject?
       validate :itt_end_date_valid
@@ -433,6 +434,16 @@ module Api
         return if course_subject_one.blank? || course_subject_one == CourseSubjects::PRIMARY_TEACHING
 
         errors.add(:course_subject_1, :invalid)
+      end
+
+      def course_subject_one_is_early_years
+        return if course_subject_one == CourseSubjects::EARLY_YEARS_TEACHING
+
+        errors.add(:course_subject_1, :early_years_invalid)
+      end
+
+      def early_years_route?
+        EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
       end
 
       def course_subject_two_valid

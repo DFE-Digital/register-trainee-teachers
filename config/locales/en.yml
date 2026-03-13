@@ -2318,6 +2318,7 @@ en:
                 duplicate: Course subject fields contain duplicate values
             course_subject_1:
               invalid: is invalid. It should be `100511` for the course_age_range provided
+              early_years_invalid: is invalid. It should be `100510` for the training_route provided
             course_subject_2:
               duplicate: might contain duplicate values
               csv:

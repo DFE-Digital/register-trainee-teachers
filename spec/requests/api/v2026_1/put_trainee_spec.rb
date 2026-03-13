@@ -2545,6 +2545,28 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         expect(trainee.training_route).to eq("early_years_postgrad")
         expect(trainee.first_names).to eq("Jane")
       end
+
+      context "when course_subject_1 is not early years teaching" do
+        let(:data) { { course_subject_1: "100346" } }
+
+        it "returns validation error for course_subject_1" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            "course_subject_1 is invalid. It should be `100510` for the training_route provided",
+          )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+          it "returns validation error for course_subject_1" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to eq(
+              "course_subject_1" => ["is invalid. It should be `100510` for the training_route provided"],
+            )
+          end
+        end
+      end
     end
 
     context "when updating an early_years_salaried trainee" do
