@@ -66,6 +66,7 @@ module Api
           .merge(training_initiative_attributes)
           .merge(training_partner_attributes)
           .merge(employing_school_attributes)
+          .merge(funding_eligibility_attribute)
           .compact
           .merge(params_with_allowed_nil_values)
 
@@ -306,6 +307,17 @@ module Api
 
         def veteran_teaching_undergraduate_bursary?
           params[:bursary_level] == VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL
+        end
+
+        def funding_eligibility_attribute
+          case params[:fund_code]
+          when ::Hesa::CodeSets::FundCodes::ELIGIBLE
+            { funding_eligibility: FUNDING_ELIGIBILITIES[:eligible] }
+          when ::Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
+            { funding_eligibility: FUNDING_ELIGIBILITIES[:not_eligible] }
+          else
+            {}
+          end
         end
 
         def application_choice_id

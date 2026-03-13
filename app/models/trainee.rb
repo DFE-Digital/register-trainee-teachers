@@ -233,6 +233,8 @@ class Trainee < ApplicationRecord
     Diversities::ETHNIC_GROUP_ENUMS[:not_provided] => 5,
   }
 
+  enum :funding_eligibility, FUNDING_ELIGIBILITIES
+
   enum :study_mode, TRAINEE_STUDY_MODE_ENUMS
 
   enum :course_education_phase, {

@@ -293,6 +293,7 @@ shared:
     - employing_school_not_applicable
     - end_academic_cycle_id
     - first_names
+    - funding_eligibility
     - sex
     - hesa_id
     - hesa_updated_at
