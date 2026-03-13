@@ -230,6 +230,30 @@ RSpec.describe Api::V20261::TraineeAttributes do
         end
       end
 
+      context "with an early years training route" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:early_years_postgrad]
+        end
+
+        it "is valid when early years teaching" do
+          subject.course_subject_one = "early years teaching"
+
+          subject.validate
+
+          expect(subject.errors[:course_subject_1]).to be_empty
+        end
+
+        it "is invalid when not early years teaching" do
+          subject.course_subject_one = "primary teaching"
+
+          subject.validate
+
+          expect(subject.errors[:course_subject_1]).to contain_exactly(
+            "is invalid. It should be `100510` for the training_route provided",
+          )
+        end
+      end
+
     end
 
     %i[course_subject_two course_subject_three].each do |course_subject|
