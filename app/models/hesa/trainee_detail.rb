@@ -33,6 +33,7 @@
 module Hesa
   class TraineeDetail < ApplicationRecord
     self.table_name = "hesa_trainee_details"
+    self.ignored_columns += %w[fund_code]
 
     belongs_to :trainee
   end

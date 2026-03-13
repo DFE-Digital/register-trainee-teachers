@@ -15,6 +15,5 @@ FactoryBot.define do
 
     additional_training_initiative { "026" }
     itt_qualification_aim { Hesa::CodeSets::IttQualificationAims::MAPPING.keys.sample }
-    fund_code { Hesa::CodeSets::FundCodes::MAPPING.keys.sample }
   end
 end
