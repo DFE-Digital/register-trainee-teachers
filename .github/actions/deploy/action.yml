@@ -121,7 +121,7 @@ runs:
         esac
 
     - name: Install kubectl
-      uses: DFE-Digital/github-actions/set-kubectl@master
+      uses: DFE-Digital/github-actions/set-kubectl@aksupgrade
 
     - name: K8 setup
       shell: bash
