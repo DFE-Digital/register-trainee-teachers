@@ -1,6 +1,6 @@
 ---
 title: v2025.0
-weight: 4
+weight: 6
 ---
 
 # v2025.0

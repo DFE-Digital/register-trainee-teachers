@@ -1,6 +1,6 @@
 ---
 title: v0.1 (Removed)
-weight: 6
+weight: 8
 ---
 
 # v0.1 - API Version Removed
