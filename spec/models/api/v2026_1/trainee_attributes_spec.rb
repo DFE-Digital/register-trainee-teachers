@@ -253,7 +253,6 @@ RSpec.describe Api::V20261::TraineeAttributes do
           )
         end
       end
-
     end
 
     %i[course_subject_two course_subject_three].each do |course_subject|
