@@ -5,7 +5,7 @@ weight: 2
 
 # Release notes
 
-## v2026.1 — 9 March 2026
+## v2026.1 — 20 March 2026
 
 ### Changes
 
