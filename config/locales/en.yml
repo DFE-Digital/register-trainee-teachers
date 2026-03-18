@@ -889,6 +889,10 @@ en:
           deferred: This trainee is deferred
       show:
         draft: Draft
+      outcome_dates:
+        forbidden:
+          heading: "You cannot update the trainee's %{award_type} status"
+          reason: "You cannot update the %{award_type} status for %{trainee_name} because the trainee record is missing:"
       delete:
         draft: Draft deleted
         record: Record deleted

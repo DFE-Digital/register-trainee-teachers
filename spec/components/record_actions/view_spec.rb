@@ -6,7 +6,7 @@ describe RecordActions::View do
   include SummaryHelper
 
   let(:trainee) { build(:trainee, trait, id: 1) }
-  let(:button_text) { "Change status of trainee" }
+  let(:button_text) { "Update QTS status" }
 
   subject { render_inline(described_class.new(trainee)).text }
 

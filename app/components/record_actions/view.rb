@@ -17,7 +17,7 @@ module RecordActions
     end
 
     def can_recommend_for_award?
-      trainee.trn_received? && !has_missing_fields && !course_starting_in_the_future?
+      trainee.trn_received? && !course_starting_in_the_future?
     end
 
     def action_links_sentence
