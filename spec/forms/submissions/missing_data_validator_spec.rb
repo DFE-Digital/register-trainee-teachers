@@ -29,9 +29,10 @@ module Submissions
       context "when only the placements section is missing data" do
         let(:trainee) { build(:trainee, :submitted_with_start_date, :early_years_salaried) }
 
-        it "is valid" do
-          expect(subject.valid?).to be true
-          expect(subject.errors).to be_empty
+        it "is invalid" do
+          expect(subject.valid?).to be false
+          expect(subject.errors.messages[:trainee])
+            .to include(I18n.t("activemodel.errors.models.submissions/missing_data_validator.attributes.trainee.incomplete"))
         end
       end
     end
@@ -86,8 +87,8 @@ module Submissions
       context "Trainee with missing placements" do
         let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_training_partner, :with_employing_school) }
 
-        it "doesn't cause validation errors" do
-          expect(subject.valid?).to be(true)
+        it "causes validation errors" do
+          expect(subject.valid?).to be(false)
         end
       end
 

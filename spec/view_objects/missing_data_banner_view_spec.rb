@@ -64,8 +64,12 @@ describe MissingDataBannerView do
           expect(subject.to_s).to include("Placements")
         end
 
-        it "displays the optional fields only title" do
-          I18n.t("views.missing_data_banner_view.header.default", award_type: trainee.award_type)
+        it "displays the default (mandatory fields) title" do
+          allow(trainee).to receive(:requires_placements?).and_return(true)
+          banner = described_class.new(missing_fields, trainee)
+          expect(banner.header).to eq(
+            "You need to give additional details before you can change status of the trainee for #{trainee.award_type}"
+          )
         end
       end
     end
