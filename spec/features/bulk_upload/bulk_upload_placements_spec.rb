@@ -11,6 +11,17 @@ feature "bulk update page" do
     and_i_visit_the_bulk_placements_page
   end
 
+  context "as a training partner user" do
+    before do
+      given_i_am_authenticated_as_a_training_partner_user
+    end
+
+    scenario "accessing the page is forbidden" do
+      visit new_bulk_update_placements_path
+      expect(page).to have_content("You do not have permission to perform this action")
+    end
+  end
+
   scenario "viewing and downloading the file" do
     then_i_see_how_many_trainees_i_can_bulk_update
     and_i_see_a_filename_of_the_file_i_need_to_download
