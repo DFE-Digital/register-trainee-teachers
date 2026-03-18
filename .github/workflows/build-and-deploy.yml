@@ -217,7 +217,7 @@ jobs:
         basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
   update-fauapi-catalogue:
-    name: Update FauAPI catalogue
+    name: Update FauAPI catalogue (pre-prod)
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     needs: [deploy-production]
     runs-on: ubuntu-latest
@@ -225,10 +225,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v6
 
-    - name: Generate and publish API to FauAPI
+    - name: Generate and publish API to FauAPI pre-prod
       env:
-        FAUAPI_URL: https://apimanagement.education.gov.uk
-        FAUAPI_TOKEN: ${{ secrets.FAUAPI_AUTOMATION_TOKEN }}
+        FAUAPI_URL: https://pp-apimanagement.education.gov.uk
+        FAUAPI_TOKEN: ${{ secrets.FAUAPI_PP_AUTOMATION_TOKEN }}
         FAUAPI_API_NAME: register-trainee-teachers-api
       run: |
         ruby bin/generate_fauapi_manifest
@@ -249,10 +249,10 @@ jobs:
 
         echo "Found API id: $API_ID"
 
-        curl -s -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+        curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
           -H "Authorization: Bearer $FAUAPI_TOKEN"
 
-        echo "Published API $API_ID to FauAPI catalogue"
+        echo "Published API $API_ID to FauAPI catalogue (pre-prod)"
 
   deploy-after-production:
     name: Parallel deployment after production
