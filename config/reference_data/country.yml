@@ -4,998 +4,1336 @@ metadata:
   display_name: "Country"
   description: "Country in which trainee studied for degree"
   change_log:
-    - date: "2025-11-19"
-      change: "Initial version"
-      author: "Register team"
-
+  - date: "2025-11-19"
+    change: "Initial version"
+    author: "Register team"
+  - date: "2026-03-17"
+    change: "Aligned with v2025.0 reference data (and Hesa::CodeSets::Countries::MAPPING)"
+    author: "Register team"
 data:
-  - id: "AF"
-    name: "afghanistan"
-    display_name: "Afghanistan"
-    hesa_codes:
-      - "AF"
-  - id: "AL"
-    name: "albania"
-    display_name: "Albania"
-    hesa_codes:
-      - "AL"
-  - id: "DZ"
-    name: "algeria"
-    display_name: "Algeria"
-    hesa_codes:
-      - "DZ"
-  - id: "AD"
-    name: "andorra"
-    display_name: "Andorra"
-    hesa_codes:
-      - "AD"
-  - id: "AO"
-    name: "angola"
-    display_name: "Angola"
-    hesa_codes:
-      - "AO"
-  - id: "AG"
-    name: "antigua_and_barbuda"
-    display_name: "Antigua and Barbuda"
-    hesa_codes:
-      - "AG"
-  - id: "AR"
-    name: "argentina"
-    display_name: "Argentina"
-    hesa_codes:
-      - "AR"
-  - id: "AM"
-    name: "armenia"
-    display_name: "Armenia"
-    hesa_codes:
-      - "AM"
-  - id: "AU"
-    name: "australia"
-    display_name: "Australia"
-    hesa_codes:
-      - "AU"
-  - id: "AT"
-    name: "austria"
-    display_name: "Austria"
-    hesa_codes:
-      - "AT"
-  - id: "AZ"
-    name: "azerbaijan"
-    display_name: "Azerbaijan"
-    hesa_codes:
-      - "AZ"
-  - id: "BH"
-    name: "bahrain"
-    display_name: "Bahrain"
-    hesa_codes:
-      - "BH"
-  - id: "BD"
-    name: "bangladesh"
-    display_name: "Bangladesh"
-    hesa_codes:
-      - "BD"
-  - id: "BB"
-    name: "barbados"
-    display_name: "Barbados"
-    hesa_codes:
-      - "BB"
-  - id: "BY"
-    name: "belarus"
-    display_name: "Belarus"
-    hesa_codes:
-      - "BY"
-  - id: "BE"
-    name: "belgium"
-    display_name: "Belgium"
-    hesa_codes:
-      - "BE"
-  - id: "BZ"
-    name: "belize"
-    display_name: "Belize"
-    hesa_codes:
-      - "BZ"
-  - id: "BJ"
-    name: "benin"
-    display_name: "Benin"
-    hesa_codes:
-      - "BJ"
-  - id: "BT"
-    name: "bhutan"
-    display_name: "Bhutan"
-    hesa_codes:
-      - "BT"
-  - id: "BO"
-    name: "bolivia"
-    display_name: "Bolivia"
-    hesa_codes:
-      - "BO"
-  - id: "BA"
-    name: "bosnia_and_herzegovina"
-    display_name: "Bosnia and Herzegovina"
-    hesa_codes:
-      - "BA"
-  - id: "BW"
-    name: "botswana"
-    display_name: "Botswana"
-    hesa_codes:
-      - "BW"
-  - id: "BR"
-    name: "brazil"
-    display_name: "Brazil"
-    hesa_codes:
-      - "BR"
-  - id: "BN"
-    name: "brunei"
-    display_name: "Brunei"
-    hesa_codes:
-      - "BN"
-  - id: "BG"
-    name: "bulgaria"
-    display_name: "Bulgaria"
-    hesa_codes:
-      - "BG"
-  - id: "BF"
-    name: "burkina_faso"
-    display_name: "Burkina Faso"
-    hesa_codes:
-      - "BF"
-  - id: "BI"
-    name: "burundi"
-    display_name: "Burundi"
-    hesa_codes:
-      - "BI"
-  - id: "KH"
-    name: "cambodia"
-    display_name: "Cambodia"
-    hesa_codes:
-      - "KH"
-  - id: "CM"
-    name: "cameroon"
-    display_name: "Cameroon"
-    hesa_codes:
-      - "CM"
-  - id: "CA"
-    name: "canada"
-    display_name: "Canada"
-    hesa_codes:
-      - "CA"
-  - id: "CV"
-    name: "cape_verde"
-    display_name: "Cape Verde"
-    hesa_codes:
-      - "CV"
-  - id: "CF"
-    name: "central_african_republic"
-    display_name: "Central African Republic"
-    hesa_codes:
-      - "CF"
-  - id: "TD"
-    name: "chad"
-    display_name: "Chad"
-    hesa_codes:
-      - "TD"
-  - id: "CL"
-    name: "chile"
-    display_name: "Chile"
-    hesa_codes:
-      - "CL"
-  - id: "CN"
-    name: "china"
-    display_name: "China"
-    hesa_codes:
-      - "CN"
-  - id: "CO"
-    name: "colombia"
-    display_name: "Colombia"
-    hesa_codes:
-      - "CO"
-  - id: "KM"
-    name: "comoros"
-    display_name: "Comoros"
-    hesa_codes:
-      - "KM"
-  - id: "CD"
-    name: "congo_democratic_republic"
-    display_name: "Congo (Democratic Republic)"
-    hesa_codes:
-      - "CD"
-  - id: "CD"
-    name: "congo"
-    display_name: "Congo"
-    hesa_codes:
-      - "CD"
-  - id: "CR"
-    name: "costa_rica"
-    display_name: "Costa Rica"
-    hesa_codes:
-      - "CR"
-  - id: "HR"
-    name: "croatia"
-    display_name: "Croatia"
-    hesa_codes:
-      - "HR"
-  - id: "CU"
-    name: "cuba"
-    display_name: "Cuba"
-    hesa_codes:
-      - "CU"
-  - id: "CY"
-    name: "cyprus"
-    display_name: "Cyprus"
-    hesa_codes:
-      - "CY"
-  - id: "CZ"
-    name: "czechia"
-    display_name: "Czechia"
-    hesa_codes:
-      - "CZ"
-  - id: "DK"
-    name: "denmark"
-    display_name: "Denmark"
-    hesa_codes:
-      - "DK"
-  - id: "DJ"
-    name: "djibouti"
-    display_name: "Djibouti"
-    hesa_codes:
-      - "DJ"
-  - id: "DM"
-    name: "dominica"
-    display_name: "Dominica"
-    hesa_codes:
-      - "DM"
-  - id: "DO"
-    name: "dominican_republic"
-    display_name: "Dominican Republic"
-    hesa_codes:
-      - "DO"
-  - id: "TL"
-    name: "east_timor"
-    display_name: "East Timor"
-    hesa_codes:
-      - "TL"
-  - id: "EC"
-    name: "ecuador"
-    display_name: "Ecuador"
-    hesa_codes:
-      - "EC"
-  - id: "EG"
-    name: "egypt"
-    display_name: "Egypt"
-    hesa_codes:
-      - "EG"
-  - id: "SV"
-    name: "el_salvador"
-    display_name: "El Salvador"
-    hesa_codes:
-      - "SV"
-  - id: "GQ"
-    name: "equatorial_guinea"
-    display_name: "Equatorial Guinea"
-    hesa_codes:
-      - "GQ"
-  - id: "ER"
-    name: "eritrea"
-    display_name: "Eritrea"
-    hesa_codes:
-      - "ER"
-  - id: "EE"
-    name: "estonia"
-    display_name: "Estonia"
-    hesa_codes:
-      - "EE"
-  - id: "SZ"
-    name: "eswatini"
-    display_name: "Eswatini"
-    hesa_codes:
-      - "SZ"
-  - id: "ET"
-    name: "ethiopia"
-    display_name: "Ethiopia"
-    hesa_codes:
-      - "ET"
-  - id: "FJ"
-    name: "fiji"
-    display_name: "Fiji"
-    hesa_codes:
-      - "FJ"
-  - id: "FI"
-    name: "finland"
-    display_name: "Finland"
-    hesa_codes:
-      - "FI"
-  - id: "FR"
-    name: "france"
-    display_name: "France"
-    hesa_codes:
-      - "FR"
-  - id: "GA"
-    name: "gabon"
-    display_name: "Gabon"
-    hesa_codes:
-      - "GA"
-  - id: "GE"
-    name: "georgia"
-    display_name: "Georgia"
-    hesa_codes:
-      - "GE"
-  - id: "DE"
-    name: "germany"
-    display_name: "Germany"
-    hesa_codes:
-      - "DE"
-  - id: "GH"
-    name: "ghana"
-    display_name: "Ghana"
-    hesa_codes:
-      - "GH"
-  - id: "GR"
-    name: "greece"
-    display_name: "Greece"
-    hesa_codes:
-      - "GR"
-  - id: "GD"
-    name: "grenada"
-    display_name: "Grenada"
-    hesa_codes:
-      - "GD"
-  - id: "GT"
-    name: "guatemala"
-    display_name: "Guatemala"
-    hesa_codes:
-      - "GT"
-  - id: "GN"
-    name: "guinea"
-    display_name: "Guinea"
-    hesa_codes:
-      - "GN"
-  - id: "GW"
-    name: "guinea-bissau"
-    display_name: "Guinea-Bissau"
-    hesa_codes:
-      - "GW"
-  - id: "GY"
-    name: "guyana"
-    display_name: "Guyana"
-    hesa_codes:
-      - "GY"
-  - id: "HT"
-    name: "haiti"
-    display_name: "Haiti"
-    hesa_codes:
-      - "HT"
-  - id: "HN"
-    name: "honduras"
-    display_name: "Honduras"
-    hesa_codes:
-      - "HN"
-  - id: "HK"
-    name: "hong_kong"
-    display_name: "Hong Kong"
-    hesa_codes:
-      - "HK"
-  - id: "HU"
-    name: "hungary"
-    display_name: "Hungary"
-    hesa_codes:
-      - "HU"
-  - id: "IS"
-    name: "iceland"
-    display_name: "Iceland"
-    hesa_codes:
-      - "IS"
-  - id: "IN"
-    name: "india"
-    display_name: "India"
-    hesa_codes:
-      - "IN"
-  - id: "ID"
-    name: "indonesia"
-    display_name: "Indonesia"
-    hesa_codes:
-      - "ID"
-  - id: "IR"
-    name: "iran"
-    display_name: "Iran"
-    hesa_codes:
-      - "IR"
-  - id: "IQ"
-    name: "iraq"
-    display_name: "Iraq"
-    hesa_codes:
-      - "IQ"
-  - id: "IE"
-    name: "ireland"
-    display_name: "Ireland"
-    hesa_codes:
-      - "IE"
-  - id: "IL"
-    name: "israel"
-    display_name: "Israel"
-    hesa_codes:
-      - "IL"
-  - id: "IT"
-    name: "italy"
-    display_name: "Italy"
-    hesa_codes:
-      - "IT"
-  - id: "CI"
-    name: "ivory_coast"
-    display_name: "Ivory Coast"
-    hesa_codes:
-      - "CI"
-  - id: "JM"
-    name: "jamaica"
-    display_name: "Jamaica"
-    hesa_codes:
-      - "JM"
-  - id: "JP"
-    name: "japan"
-    display_name: "Japan"
-    hesa_codes:
-      - "JP"
-  - id: "JO"
-    name: "jordan"
-    display_name: "Jordan"
-    hesa_codes:
-      - "JO"
-  - id: "KZ"
-    name: "kazakhstan"
-    display_name: "Kazakhstan"
-    hesa_codes:
-      - "KZ"
-  - id: "KE"
-    name: "kenya"
-    display_name: "Kenya"
-    hesa_codes:
-      - "KE"
-  - id: "KI"
-    name: "kiribati"
-    display_name: "Kiribati"
-    hesa_codes:
-      - "KI"
-  - id: "XK"
-    name: "kosovo"
-    display_name: "Kosovo"
-    hesa_codes:
-      - "XK"
-  - id: "KW"
-    name: "kuwait"
-    display_name: "Kuwait"
-    hesa_codes:
-      - "KW"
-  - id: "KG"
-    name: "kyrgyzstan"
-    display_name: "Kyrgyzstan"
-    hesa_codes:
-      - "KG"
-  - id: "LA"
-    name: "laos"
-    display_name: "Laos"
-    hesa_codes:
-      - "LA"
-  - id: "LV"
-    name: "latvia"
-    display_name: "Latvia"
-    hesa_codes:
-      - "LV"
-  - id: "LB"
-    name: "lebanon"
-    display_name: "Lebanon"
-    hesa_codes:
-      - "LB"
-  - id: "LS"
-    name: "lesotho"
-    display_name: "Lesotho"
-    hesa_codes:
-      - "LS"
-  - id: "LR"
-    name: "liberia"
-    display_name: "Liberia"
-    hesa_codes:
-      - "LR"
-  - id: "LY"
-    name: "libya"
-    display_name: "Libya"
-    hesa_codes:
-      - "LY"
-  - id: "LI"
-    name: "liechtenstein"
-    display_name: "Liechtenstein"
-    hesa_codes:
-      - "LI"
-  - id: "LT"
-    name: "lithuania"
-    display_name: "Lithuania"
-    hesa_codes:
-      - "LT"
-  - id: "LU"
-    name: "luxembourg"
-    display_name: "Luxembourg"
-    hesa_codes:
-      - "LU"
-  - id: "MG"
-    name: "madagascar"
-    display_name: "Madagascar"
-    hesa_codes:
-      - "MG"
-  - id: "MW"
-    name: "malawi"
-    display_name: "Malawi"
-    hesa_codes:
-      - "MW"
-  - id: "MY"
-    name: "malaysia"
-    display_name: "Malaysia"
-    hesa_codes:
-      - "MY"
-  - id: "MV"
-    name: "maldives"
-    display_name: "Maldives"
-    hesa_codes:
-      - "MV"
-  - id: "ML"
-    name: "mali"
-    display_name: "Mali"
-    hesa_codes:
-      - "ML"
-  - id: "MT"
-    name: "malta"
-    display_name: "Malta"
-    hesa_codes:
-      - "MT"
-  - id: "MH"
-    name: "marshall_islands"
-    display_name: "Marshall Islands"
-    hesa_codes:
-      - "MH"
-  - id: "MR"
-    name: "mauritania"
-    display_name: "Mauritania"
-    hesa_codes:
-      - "MR"
-  - id: "MU"
-    name: "mauritius"
-    display_name: "Mauritius"
-    hesa_codes:
-      - "MU"
-  - id: "MX"
-    name: "mexico"
-    display_name: "Mexico"
-    hesa_codes:
-      - "MX"
-  - id: "FM"
-    name: "micronesia"
-    display_name: "Micronesia"
-    hesa_codes:
-      - "FM"
-  - id: "MD"
-    name: "moldova"
-    display_name: "Moldova"
-    hesa_codes:
-      - "MD"
-  - id: "MC"
-    name: "monaco"
-    display_name: "Monaco"
-    hesa_codes:
-      - "MC"
-  - id: "MN"
-    name: "mongolia"
-    display_name: "Mongolia"
-    hesa_codes:
-      - "MN"
-  - id: "ME"
-    name: "montenegro"
-    display_name: "Montenegro"
-    hesa_codes:
-      - "ME"
-  - id: "MA"
-    name: "morocco"
-    display_name: "Morocco"
-    hesa_codes:
-      - "MA"
-  - id: "MZ"
-    name: "mozambique"
-    display_name: "Mozambique"
-    hesa_codes:
-      - "MZ"
-  - id: "MM"
-    name: "myanmar_burma"
-    display_name: "Myanmar (Burma)"
-    hesa_codes:
-      - "MM"
-  - id: "NA"
-    name: "namibia"
-    display_name: "Namibia"
-    hesa_codes:
-      - "NA"
-  - id: "NR"
-    name: "nauru"
-    display_name: "Nauru"
-    hesa_codes:
-      - "NR"
-  - id: "NP"
-    name: "nepal"
-    display_name: "Nepal"
-    hesa_codes:
-      - "NP"
-  - id: "NL"
-    name: "netherlands"
-    display_name: "Netherlands"
-    hesa_codes:
-      - "NL"
-  - id: "NZ"
-    name: "new_zealand"
-    display_name: "New Zealand"
-    hesa_codes:
-      - "NZ"
-  - id: "NI"
-    name: "nicaragua"
-    display_name: "Nicaragua"
-    hesa_codes:
-      - "NI"
-  - id: "NE"
-    name: "niger"
-    display_name: "Niger"
-    hesa_codes:
-      - "NE"
-  - id: "NG"
-    name: "nigeria"
-    display_name: "Nigeria"
-    hesa_codes:
-      - "NG"
-  - id: "KP"
-    name: "north_korea"
-    display_name: "North Korea"
-    hesa_codes:
-      - "KP"
-  - id: "MK"
-    name: "north_macedonia"
-    display_name: "North Macedonia"
-    hesa_codes:
-      - "MK"
-  - id: "NO"
-    name: "norway"
-    display_name: "Norway"
-    hesa_codes:
-      - "NO"
-  - id: "PS"
-    name: "occupied_palestinian_territories"
-    display_name: "Occupied Palestinian Territories"
-    hesa_codes:
-      - "PS"
-  - id: "OM"
-    name: "oman"
-    display_name: "Oman"
-    hesa_codes:
-      - "OM"
-  - id: "PK"
-    name: "pakistan"
-    display_name: "Pakistan"
-    hesa_codes:
-      - "PK"
-  - id: "PW"
-    name: "palau"
-    display_name: "Palau"
-    hesa_codes:
-      - "PW"
-  - id: "PA"
-    name: "panama"
-    display_name: "Panama"
-    hesa_codes:
-      - "PA"
-  - id: "PG"
-    name: "papua_new_guinea"
-    display_name: "Papua New Guinea"
-    hesa_codes:
-      - "PG"
-  - id: "PA"
-    name: "paraguay"
-    display_name: "Paraguay"
-    hesa_codes:
-      - "PA"
-  - id: "PE"
-    name: "peru"
-    display_name: "Peru"
-    hesa_codes:
-      - "PE"
-  - id: "PH"
-    name: "philippines"
-    display_name: "Philippines"
-    hesa_codes:
-      - "PH"
-  - id: "PL"
-    name: "poland"
-    display_name: "Poland"
-    hesa_codes:
-      - "PL"
-  - id: "PT"
-    name: "portugal"
-    display_name: "Portugal"
-    hesa_codes:
-      - "PT"
-  - id: "QA"
-    name: "qatar"
-    display_name: "Qatar"
-    hesa_codes:
-      - "QA"
-  - id: "RO"
-    name: "romania"
-    display_name: "Romania"
-    hesa_codes:
-      - "RO"
-  - id: "RU"
-    name: "russia"
-    display_name: "Russia"
-    hesa_codes:
-      - "RU"
-  - id: "RW"
-    name: "rwanda"
-    display_name: "Rwanda"
-    hesa_codes:
-      - "RW"
-  - id: "WS"
-    name: "samoa"
-    display_name: "Samoa"
-    hesa_codes:
-      - "WS"
-  - id: "SM"
-    name: "san_marino"
-    display_name: "San Marino"
-    hesa_codes:
-      - "SM"
-  - id: "ST"
-    name: "sao_tome_and_principe"
-    display_name: "Sao Tome and Principe"
-    hesa_codes:
-      - "ST"
-  - id: "SA"
-    name: "saudi_arabia"
-    display_name: "Saudi Arabia"
-    hesa_codes:
-      - "SA"
-  - id: "SN"
-    name: "senegal"
-    display_name: "Senegal"
-    hesa_codes:
-      - "SN"
-  - id: "RS"
-    name: "serbia"
-    display_name: "Serbia"
-    hesa_codes:
-      - "RS"
-  - id: "SC"
-    name: "seychelles"
-    display_name: "Seychelles"
-    hesa_codes:
-      - "SC"
-  - id: "SL"
-    name: "sierra_leone"
-    display_name: "Sierra Leone"
-    hesa_codes:
-      - "SL"
-  - id: "SG"
-    name: "singapore"
-    display_name: "Singapore"
-    hesa_codes:
-      - "SG"
-  - id: "SK"
-    name: "slovakia"
-    display_name: "Slovakia"
-    hesa_codes:
-      - "SK"
-  - id: "SI"
-    name: "slovenia"
-    display_name: "Slovenia"
-    hesa_codes:
-      - "SI"
-  - id: "SB"
-    name: "solomon_islands"
-    display_name: "Solomon Islands"
-    hesa_codes:
-      - "SB"
-  - id: "SO"
-    name: "somalia"
-    display_name: "Somalia"
-    hesa_codes:
-      - "SO"
-  - id: "ZA"
-    name: "south_africa"
-    display_name: "South Africa"
-    hesa_codes:
-      - "ZA"
-  - id: "KR"
-    name: "south_korea"
-    display_name: "South Korea"
-    hesa_codes:
-      - "KR"
-  - id: "SS"
-    name: "south_sudan"
-    display_name: "South Sudan"
-    hesa_codes:
-      - "SS"
-  - id: "ES"
-    name: "spain"
-    display_name: "Spain"
-    hesa_codes:
-      - "ES"
-  - id: "LK"
-    name: "sri_lanka"
-    display_name: "Sri Lanka"
-    hesa_codes:
-      - "LK"
-  - id: "KN"
-    name: "st_kitts_and_nevis"
-    display_name: "St Kitts and Nevis"
-    hesa_codes:
-      - "KN"
-  - id: "LC"
-    name: "st_lucia"
-    display_name: "St Lucia"
-    hesa_codes:
-      - "LC"
-  - id: "VC"
-    name: "st_vincent"
-    display_name: "St Vincent"
-    hesa_codes:
-      - "VC"
-  - id: "SD"
-    name: "sudan"
-    display_name: "Sudan"
-    hesa_codes:
-      - "SD"
-  - id: "SR"
-    name: "suriname"
-    display_name: "Suriname"
-    hesa_codes:
-      - "SR"
-  - id: "SE"
-    name: "sweden"
-    display_name: "Sweden"
-    hesa_codes:
-      - "SE"
-  - id: "CH"
-    name: "switzerland"
-    display_name: "Switzerland"
-    hesa_codes:
-      - "CH"
-  - id: "SY"
-    name: "syria"
-    display_name: "Syria"
-    hesa_codes:
-      - "SY"
-  - id: "TW"
-    name: "taiwan"
-    display_name: "Taiwan"
-    hesa_codes:
-      - "TW"
-  - id: "TJ"
-    name: "tajikistan"
-    display_name: "Tajikistan"
-    hesa_codes:
-      - "TJ"
-  - id: "TZ"
-    name: "tanzania"
-    display_name: "Tanzania"
-    hesa_codes:
-      - "TZ"
-  - id: "TH"
-    name: "thailand"
-    display_name: "Thailand"
-    hesa_codes:
-      - "TH"
-  - id: "BS"
-    name: "the_bahamas"
-    display_name: "The Bahamas"
-    hesa_codes:
-      - "BS"
-  - id: "GM"
-    name: "the_gambia"
-    display_name: "The Gambia"
-    hesa_codes:
-      - "GM"
-  - id: "TG"
-    name: "togo"
-    display_name: "Togo"
-    hesa_codes:
-      - "TG"
-  - id: "TO"
-    name: "tonga"
-    display_name: "Tonga"
-    hesa_codes:
-      - "TO"
-  - id: "TT"
-    name: "trinidad_and_tobago"
-    display_name: "Trinidad and Tobago"
-    hesa_codes:
-      - "TT"
-  - id: "TN"
-    name: "tunisia"
-    display_name: "Tunisia"
-    hesa_codes:
-      - "TN"
-  - id: "TR"
-    name: "turkey"
-    display_name: "Turkey"
-    hesa_codes:
-      - "TR"
-  - id: "TM"
-    name: "turkmenistan"
-    display_name: "Turkmenistan"
-    hesa_codes:
-      - "TM"
-  - id: "TV"
-    name: "tuvalu"
-    display_name: "Tuvalu"
-    hesa_codes:
-      - "TV"
-  - id: "UG"
-    name: "uganda"
-    display_name: "Uganda"
-    hesa_codes:
-      - "UG"
-  - id: "UA"
-    name: "ukraine"
-    display_name: "Ukraine"
-    hesa_codes:
-      - "UA"
-  - id: "AE"
-    name: "united_arab_emirates"
-    display_name: "United Arab Emirates"
-    hesa_codes:
-      - "AE"
-  - id: "GB"
-    name: "united_kingdom"
-    display_name: "United Kingdom"
-    hesa_codes:
-      - "GB"
-  - id: "US"
-    name: "united_states"
-    display_name: "United States"
-    hesa_codes:
-      - "US"
-  - id: "UY"
-    name: "uruguay"
-    display_name: "Uruguay"
-    hesa_codes:
-      - "UY"
-  - id: "UZ"
-    name: "uzbekistan"
-    display_name: "Uzbekistan"
-    hesa_codes:
-      - "UZ"
-  - id: "VU"
-    name: "vanuatu"
-    display_name: "Vanuatu"
-    hesa_codes:
-      - "VU"
-  - id: "VA"
-    name: "vatican_city"
-    display_name: "Vatican City"
-    hesa_codes:
-      - "VA"
-  - id: "VE"
-    name: "venezuela"
-    display_name: "Venezuela"
-    hesa_codes:
-      - "VE"
-  - id: "VN"
-    name: "vietnam"
-    display_name: "Vietnam"
-    hesa_codes:
-      - "VN"
-  - id: "YE"
-    name: "yemen"
-    display_name: "Yemen"
-    hesa_codes:
-      - "YE"
-  - id: "ZM"
-    name: "zambia"
-    display_name: "Zambia"
-    hesa_codes:
-      - "ZM"
-  - id: "ZW"
-    name: "zimbabwe"
-    display_name: "Zimbabwe"
-    hesa_codes:
-      - "ZW"
+- id: "AF"
+  name: "Afghanistan"
+  display_name: "Afghanistan"
+  hesa_codes:
+  - "AF"
+- id: "XQ"
+  name: ""
+  display_name: "Africa not otherwise specified"
+  hesa_codes:
+  - "XQ"
+- id: "AX"
+  name: ""
+  display_name: "Åland Islands {Ahvenamaa}"
+  hesa_codes:
+  - "AX"
+- id: "AL"
+  name: "Albania"
+  display_name: "Albania"
+  hesa_codes:
+  - "AL"
+- id: "DZ"
+  name: "Algeria"
+  display_name: "Algeria"
+  hesa_codes:
+  - "DZ"
+- id: "AS"
+  name: ""
+  display_name: "American Samoa"
+  hesa_codes:
+  - "AS"
+- id: "AD"
+  name: "Andorra"
+  display_name: "Andorra"
+  hesa_codes:
+  - "AD"
+- id: "AO"
+  name: "Angola"
+  display_name: "Angola"
+  hesa_codes:
+  - "AO"
+- id: "AI"
+  name: "Anguilla"
+  display_name: "Anguilla"
+  hesa_codes:
+  - "AI"
+- id: "XX"
+  name: ""
+  display_name: "Antarctica and Oceania not otherwise specified"
+  hesa_codes:
+  - "XX"
+- id: "AG"
+  name: "Antigua and Barbuda"
+  display_name: "Antigua and Barbuda"
+  hesa_codes:
+  - "AG"
+- id: "AR"
+  name: "Argentina"
+  display_name: "Argentina"
+  hesa_codes:
+  - "AR"
+- id: "AM"
+  name: "Armenia"
+  display_name: "Armenia"
+  hesa_codes:
+  - "AM"
+- id: "AW"
+  name: ""
+  display_name: "Aruba"
+  hesa_codes:
+  - "AW"
+- id: "XS"
+  name: ""
+  display_name: "Asia (Except Middle East) not otherwise
+    specified"
+  hesa_codes:
+  - "XS"
+- id: "AU"
+  name: "Australia"
+  display_name: "Australia"
+  hesa_codes:
+  - "AU"
+- id: "AT"
+  name: "Austria"
+  display_name: "Austria"
+  hesa_codes:
+  - "AT"
+- id: "AZ"
+  name: "Azerbaijan"
+  display_name: "Azerbaijan"
+  hesa_codes:
+  - "AZ"
+- id: "BS"
+  name: "The Bahamas"
+  display_name: "Bahamas, The"
+  hesa_codes:
+  - "BS"
+- id: "BH"
+  name: "Bahrain"
+  display_name: "Bahrain"
+  hesa_codes:
+  - "BH"
+- id: "BD"
+  name: "Bangladesh"
+  display_name: "Bangladesh"
+  hesa_codes:
+  - "BD"
+- id: "BB"
+  name: "Barbados"
+  display_name: "Barbados"
+  hesa_codes:
+  - "BB"
+- id: "BY"
+  name: "Belarus"
+  display_name: "Belarus"
+  hesa_codes:
+  - "BY"
+- id: "BE"
+  name: "Belgium"
+  display_name: "Belgium"
+  hesa_codes:
+  - "BE"
+- id: "BZ"
+  name: "Belize"
+  display_name: "Belize"
+  hesa_codes:
+  - "BZ"
+- id: "BJ"
+  name: "Benin"
+  display_name: "Benin"
+  hesa_codes:
+  - "BJ"
+- id: "BM"
+  name: "Bermuda"
+  display_name: "Bermuda"
+  hesa_codes:
+  - "BM"
+- id: "BT"
+  name: "Bhutan"
+  display_name: "Bhutan"
+  hesa_codes:
+  - "BT"
+- id: "BO"
+  name: "Bolivia"
+  display_name: "Bolivia [Bolivia, Plurinational State of]"
+  hesa_codes:
+  - "BO"
+- id: "BQ"
+  name: ""
+  display_name: "Bonaire, Sint Eustatius and Saba"
+  hesa_codes:
+  - "BQ"
+- id: "BA"
+  name: "Bosnia and Herzegovina"
+  display_name: "Bosnia and Herzegovina"
+  hesa_codes:
+  - "BA"
+- id: "BW"
+  name: "Botswana"
+  display_name: "Botswana"
+  hesa_codes:
+  - "BW"
+- id: "BR"
+  name: "Brazil"
+  display_name: "Brazil"
+  hesa_codes:
+  - "BR"
+- id: "VG"
+  name: "British Virgin Islands"
+  display_name: "British Virgin Islands [Virgin Islands,
+    British]"
+  hesa_codes:
+  - "VG"
+- id: "BN"
+  name: "Brunei"
+  display_name: "Brunei [Brunei Darussalam]"
+  hesa_codes:
+  - "BN"
+- id: "BG"
+  name: "Bulgaria"
+  display_name: "Bulgaria"
+  hesa_codes:
+  - "BG"
+- id: "BF"
+  name: "Burkina Faso"
+  display_name: "Burkina Faso"
+  hesa_codes:
+  - "BF"
+- id: "MM"
+  name: "Myanmar (Burma)"
+  display_name: "Burma [Myanmar]"
+  hesa_codes:
+  - "MM"
+- id: "BI"
+  name: "Burundi"
+  display_name: "Burundi"
+  hesa_codes:
+  - "BI"
+- id: "KH"
+  name: "Cambodia"
+  display_name: "Cambodia"
+  hesa_codes:
+  - "KH"
+- id: "CM"
+  name: "Cameroon"
+  display_name: "Cameroon"
+  hesa_codes:
+  - "CM"
+- id: "CA"
+  name: "Canada"
+  display_name: "Canada"
+  hesa_codes:
+  - "CA"
+- id: "IC"
+  name: ""
+  display_name: "Canary Islands"
+  hesa_codes:
+  - "IC"
+- id: "CV"
+  name: "Cape Verde"
+  display_name: "Cape Verde"
+  hesa_codes:
+  - "CV"
+- id: "XW"
+  name: ""
+  display_name: "Caribbean not otherwise specified"
+  hesa_codes:
+  - "XW"
+- id: "KY"
+  name: "Cayman Islands"
+  display_name: "Cayman Islands"
+  hesa_codes:
+  - "KY"
+- id: "CF"
+  name: "Central African Republic"
+  display_name: "Central African Republic"
+  hesa_codes:
+  - "CF"
+- id: "XU"
+  name: ""
+  display_name: "Central America not otherwise specified"
+  hesa_codes:
+  - "XU"
+- id: "TD"
+  name: "Chad"
+  display_name: "Chad"
+  hesa_codes:
+  - "TD"
+- id: "XL"
+  name: ""
+  display_name: "Channel Islands not otherwise specified"
+  hesa_codes:
+  - "XL"
+- id: "CL"
+  name: "Chile"
+  display_name: "Chile"
+  hesa_codes:
+  - "CL"
+- id: "CN"
+  name: "China"
+  display_name: "China"
+  hesa_codes:
+  - "CN"
+- id: "CX"
+  name: ""
+  display_name: "Christmas Island"
+  hesa_codes:
+  - "CX"
+- id: "CC"
+  name: ""
+  display_name: "Cocos (Keeling) Islands"
+  hesa_codes:
+  - "CC"
+- id: "CO"
+  name: "Colombia"
+  display_name: "Colombia"
+  hesa_codes:
+  - "CO"
+- id: "KM"
+  name: "Comoros"
+  display_name: "Comoros"
+  hesa_codes:
+  - "KM"
+- id: "CG"
+  name: "Congo"
+  display_name: "Congo"
+  hesa_codes:
+  - "CG"
+- id: "CD"
+  name: "Congo (Democratic Republic)"
+  display_name: "Congo (Democratic Republic) [Congo (The
+    Democratic Republic of the)]"
+  hesa_codes:
+  - "CD"
+- id: "CK"
+  name: ""
+  display_name: "Cook Islands"
+  hesa_codes:
+  - "CK"
+- id: "CR"
+  name: "Costa Rica"
+  display_name: "Costa Rica"
+  hesa_codes:
+  - "CR"
+- id: "HR"
+  name: "Croatia"
+  display_name: "Croatia"
+  hesa_codes:
+  - "HR"
+- id: "CU"
+  name: "Cuba"
+  display_name: "Cuba"
+  hesa_codes:
+  - "CU"
+- id: "CW"
+  name: ""
+  display_name: "Curaçao"
+  hesa_codes:
+  - "CW"
+- id: "XA"
+  name: ""
+  display_name: "Cyprus (European Union)"
+  hesa_codes:
+  - "XA"
+- id: "XB"
+  name: ""
+  display_name: "Cyprus (Non-European Union)"
+  hesa_codes:
+  - "XB"
+- id: "XC"
+  name: ""
+  display_name: "Cyprus not otherwise specified"
+  hesa_codes:
+  - "XC"
+- id: "CZ"
+  name: "Czechia"
+  display_name: "Czech Republic"
+  hesa_codes:
+  - "CZ"
+- id: "DK"
+  name: "Denmark"
+  display_name: "Denmark"
+  hesa_codes:
+  - "DK"
+- id: "DJ"
+  name: "Djibouti"
+  display_name: "Djibouti"
+  hesa_codes:
+  - "DJ"
+- id: "DM"
+  name: "Dominica"
+  display_name: "Dominica"
+  hesa_codes:
+  - "DM"
+- id: "DO"
+  name: "Dominican Republic"
+  display_name: "Dominican Republic"
+  hesa_codes:
+  - "DO"
+- id: "TL"
+  name: "East Timor"
+  display_name: "East Timor [Timor Leste]"
+  hesa_codes:
+  - "TL"
+- id: "EC"
+  name: "Ecuador"
+  display_name: "Ecuador"
+  hesa_codes:
+  - "EC"
+- id: "EG"
+  name: "Egypt"
+  display_name: "Egypt"
+  hesa_codes:
+  - "EG"
+- id: "SV"
+  name: "El Salvador"
+  display_name: "El Salvador"
+  hesa_codes:
+  - "SV"
+- id: "XF"
+  name: ""
+  display_name: "England"
+  hesa_codes:
+  - "XF"
+- id: "GQ"
+  name: "Equatorial Guinea"
+  display_name: "Equatorial Guinea"
+  hesa_codes:
+  - "GQ"
+- id: "ER"
+  name: "Eritrea"
+  display_name: "Eritrea"
+  hesa_codes:
+  - "ER"
+- id: "EE"
+  name: "Estonia"
+  display_name: "Estonia"
+  hesa_codes:
+  - "EE"
+- id: "ET"
+  name: "Ethiopia"
+  display_name: "Ethiopia"
+  hesa_codes:
+  - "ET"
+- id: "XP"
+  name: ""
+  display_name: "Europe not otherwise specified"
+  hesa_codes:
+  - "XP"
+- id: "EU"
+  name: ""
+  display_name: "European Union not otherwise specified"
+  hesa_codes:
+  - "EU"
+- id: "FK"
+  name: "Falkland Islands"
+  display_name: "Falkland Islands [Falkland Islands (Malvinas)]"
+  hesa_codes:
+  - "FK"
+- id: "FO"
+  name: ""
+  display_name: "Faroe Islands"
+  hesa_codes:
+  - "FO"
+- id: "FJ"
+  name: "Fiji"
+  display_name: "Fiji"
+  hesa_codes:
+  - "FJ"
+- id: "FI"
+  name: "Finland"
+  display_name: "Finland"
+  hesa_codes:
+  - "FI"
+- id: "FR"
+  name: "France"
+  display_name: "France"
+  hesa_codes:
+  - "FR"
+- id: "GF"
+  name: ""
+  display_name: "French Guiana"
+  hesa_codes:
+  - "GF"
+- id: "PF"
+  name: ""
+  display_name: "French Polynesia"
+  hesa_codes:
+  - "PF"
+- id: "GA"
+  name: "Gabon"
+  display_name: "Gabon"
+  hesa_codes:
+  - "GA"
+- id: "GM"
+  name: "The Gambia"
+  display_name: "Gambia, The"
+  hesa_codes:
+  - "GM"
+- id: "GE"
+  name: "Georgia"
+  display_name: "Georgia"
+  hesa_codes:
+  - "GE"
+- id: "DE"
+  name: "Germany"
+  display_name: "Germany"
+  hesa_codes:
+  - "DE"
+- id: "GH"
+  name: "Ghana"
+  display_name: "Ghana"
+  hesa_codes:
+  - "GH"
+- id: "GI"
+  name: "Gibraltar"
+  display_name: "Gibraltar"
+  hesa_codes:
+  - "GI"
+- id: "GR"
+  name: "Greece"
+  display_name: "Greece"
+  hesa_codes:
+  - "GR"
+- id: "GL"
+  name: ""
+  display_name: "Greenland"
+  hesa_codes:
+  - "GL"
+- id: "GD"
+  name: "Grenada"
+  display_name: "Grenada"
+  hesa_codes:
+  - "GD"
+- id: "GP"
+  name: ""
+  display_name: "Guadeloupe"
+  hesa_codes:
+  - "GP"
+- id: "GU"
+  name: ""
+  display_name: "Guam"
+  hesa_codes:
+  - "GU"
+- id: "GT"
+  name: "Guatemala"
+  display_name: "Guatemala"
+  hesa_codes:
+  - "GT"
+- id: "GG"
+  name: "Guernsey, Alderney, Sark"
+  display_name: "Guernsey"
+  hesa_codes:
+  - "GG"
+- id: "GN"
+  name: "Guinea"
+  display_name: "Guinea"
+  hesa_codes:
+  - "GN"
+- id: "GW"
+  name: "Guinea-Bissau"
+  display_name: "Guinea-Bissau"
+  hesa_codes:
+  - "GW"
+- id: "GY"
+  name: "Guyana"
+  display_name: "Guyana"
+  hesa_codes:
+  - "GY"
+- id: "HT"
+  name: "Haiti"
+  display_name: "Haiti"
+  hesa_codes:
+  - "HT"
+- id: "HN"
+  name: "Honduras"
+  display_name: "Honduras"
+  hesa_codes:
+  - "HN"
+- id: "HK"
+  name: "Hong Kong"
+  display_name: "Hong Kong (Special Administrative Region
+    of China) [Hong Kong]"
+  hesa_codes:
+  - "HK"
+- id: "HU"
+  name: "Hungary"
+  display_name: "Hungary"
+  hesa_codes:
+  - "HU"
+- id: "IS"
+  name: "Iceland"
+  display_name: "Iceland"
+  hesa_codes:
+  - "IS"
+- id: "IN"
+  name: "India"
+  display_name: "India"
+  hesa_codes:
+  - "IN"
+- id: "ID"
+  name: "Indonesia"
+  display_name: "Indonesia"
+  hesa_codes:
+  - "ID"
+- id: "IR"
+  name: "Iran"
+  display_name: "Iran [Iran, Islamic Republic of]"
+  hesa_codes:
+  - "IR"
+- id: "IQ"
+  name: "Iraq"
+  display_name: "Iraq"
+  hesa_codes:
+  - "IQ"
+- id: "IE"
+  name: "Ireland"
+  display_name: "Ireland"
+  hesa_codes:
+  - "IE"
+- id: "IM"
+  name: "Isle of Man"
+  display_name: "Isle of Man"
+  hesa_codes:
+  - "IM"
+- id: "IL"
+  name: "Israel"
+  display_name: "Israel"
+  hesa_codes:
+  - "IL"
+- id: "IT"
+  name: "Italy"
+  display_name: "Italy"
+  hesa_codes:
+  - "IT"
+- id: "CI"
+  name: "Ivory Coast"
+  display_name: "Ivory Coast [Côte D'ivoire]"
+  hesa_codes:
+  - "CI"
+- id: "JM"
+  name: "Jamaica"
+  display_name: "Jamaica"
+  hesa_codes:
+  - "JM"
+- id: "JP"
+  name: "Japan"
+  display_name: "Japan"
+  hesa_codes:
+  - "JP"
+- id: "JE"
+  name: "Jersey"
+  display_name: "Jersey"
+  hesa_codes:
+  - "JE"
+- id: "JO"
+  name: "Jordan"
+  display_name: "Jordan"
+  hesa_codes:
+  - "JO"
+- id: "KZ"
+  name: "Kazakhstan"
+  display_name: "Kazakhstan"
+  hesa_codes:
+  - "KZ"
+- id: "KE"
+  name: "Kenya"
+  display_name: "Kenya"
+  hesa_codes:
+  - "KE"
+- id: "KI"
+  name: "Kiribati"
+  display_name: "Kiribati"
+  hesa_codes:
+  - "KI"
+- id: "KP"
+  name: "North Korea"
+  display_name: "Korea (North) [Korea, Democratic People's
+    Republic of]"
+  hesa_codes:
+  - "KP"
+- id: "KR"
+  name: "South Korea"
+  display_name: "Korea (South) [Korea, Republic of]"
+  hesa_codes:
+  - "KR"
+- id: "QO"
+  name: ""
+  display_name: "Kosovo"
+  hesa_codes:
+  - "QO"
+- id: "KW"
+  name: "Kuwait"
+  display_name: "Kuwait"
+  hesa_codes:
+  - "KW"
+- id: "KG"
+  name: "Kyrgyzstan"
+  display_name: "Kyrgyzstan"
+  hesa_codes:
+  - "KG"
+- id: "LA"
+  name: "Laos"
+  display_name: "Laos [Lao People's Democratic Republic]"
+  hesa_codes:
+  - "LA"
+- id: "LV"
+  name: "Latvia"
+  display_name: "Latvia"
+  hesa_codes:
+  - "LV"
+- id: "LB"
+  name: "Lebanon"
+  display_name: "Lebanon"
+  hesa_codes:
+  - "LB"
+- id: "LS"
+  name: "Lesotho"
+  display_name: "Lesotho"
+  hesa_codes:
+  - "LS"
+- id: "LR"
+  name: "Liberia"
+  display_name: "Liberia"
+  hesa_codes:
+  - "LR"
+- id: "LY"
+  name: "Libya"
+  display_name: "Libya"
+  hesa_codes:
+  - "LY"
+- id: "LI"
+  name: "Liechtenstein"
+  display_name: "Liechtenstein"
+  hesa_codes:
+  - "LI"
+- id: "LT"
+  name: "Lithuania"
+  display_name: "Lithuania"
+  hesa_codes:
+  - "LT"
+- id: "LU"
+  name: "Luxembourg"
+  display_name: "Luxembourg"
+  hesa_codes:
+  - "LU"
+- id: "MO"
+  name: ""
+  display_name: "Macao (Special Administrative Region of
+    China) [Macao]"
+  hesa_codes:
+  - "MO"
+- id: "MK"
+  name: "North Macedonia"
+  display_name: "North Macedonia"
+  hesa_codes:
+  - "MK"
+- id: "MG"
+  name: "Madagascar"
+  display_name: "Madagascar"
+  hesa_codes:
+  - "MG"
+- id: "MW"
+  name: "Malawi"
+  display_name: "Malawi"
+  hesa_codes:
+  - "MW"
+- id: "MY"
+  name: "Malaysia"
+  display_name: "Malaysia"
+  hesa_codes:
+  - "MY"
+- id: "MV"
+  name: "Maldives"
+  display_name: "Maldives"
+  hesa_codes:
+  - "MV"
+- id: "ML"
+  name: "Mali"
+  display_name: "Mali"
+  hesa_codes:
+  - "ML"
+- id: "MT"
+  name: "Malta"
+  display_name: "Malta"
+  hesa_codes:
+  - "MT"
+- id: "MH"
+  name: "Marshall Islands"
+  display_name: "Marshall Islands"
+  hesa_codes:
+  - "MH"
+- id: "MQ"
+  name: ""
+  display_name: "Martinique"
+  hesa_codes:
+  - "MQ"
+- id: "MR"
+  name: "Mauritania"
+  display_name: "Mauritania"
+  hesa_codes:
+  - "MR"
+- id: "MU"
+  name: "Mauritius"
+  display_name: "Mauritius"
+  hesa_codes:
+  - "MU"
+- id: "YT"
+  name: ""
+  display_name: "Mayotte"
+  hesa_codes:
+  - "YT"
+- id: "MX"
+  name: "Mexico"
+  display_name: "Mexico"
+  hesa_codes:
+  - "MX"
+- id: "FM"
+  name: "Federated States of Micronesia"
+  display_name: "Micronesia [Micronesia, Federated States
+    of]"
+  hesa_codes:
+  - "FM"
+- id: "XR"
+  name: ""
+  display_name: "Middle East not otherwise specified"
+  hesa_codes:
+  - "XR"
+- id: "MD"
+  name: "Moldova"
+  display_name: "Moldova [Moldova, Republic of]"
+  hesa_codes:
+  - "MD"
+- id: "MC"
+  name: "Monaco"
+  display_name: "Monaco"
+  hesa_codes:
+  - "MC"
+- id: "MN"
+  name: "Mongolia"
+  display_name: "Mongolia"
+  hesa_codes:
+  - "MN"
+- id: "ME"
+  name: "Montenegro"
+  display_name: "Montenegro"
+  hesa_codes:
+  - "ME"
+- id: "MS"
+  name: "Montserrat"
+  display_name: "Montserrat"
+  hesa_codes:
+  - "MS"
+- id: "MA"
+  name: "Morocco"
+  display_name: "Morocco"
+  hesa_codes:
+  - "MA"
+- id: "MZ"
+  name: "Mozambique"
+  display_name: "Mozambique"
+  hesa_codes:
+  - "MZ"
+- id: "NA"
+  name: "Namibia"
+  display_name: "Namibia"
+  hesa_codes:
+  - "NA"
+- id: "NR"
+  name: "Nauru"
+  display_name: "Nauru"
+  hesa_codes:
+  - "NR"
+- id: "NP"
+  name: "Nepal"
+  display_name: "Nepal"
+  hesa_codes:
+  - "NP"
+- id: "NL"
+  name: "Netherlands"
+  display_name: "Netherlands"
+  hesa_codes:
+  - "NL"
+- id: "NC"
+  name: ""
+  display_name: "New Caledonia"
+  hesa_codes:
+  - "NC"
+- id: "NZ"
+  name: "New Zealand"
+  display_name: "New Zealand"
+  hesa_codes:
+  - "NZ"
+- id: "NI"
+  name: "Nicaragua"
+  display_name: "Nicaragua"
+  hesa_codes:
+  - "NI"
+- id: "NE"
+  name: "Niger"
+  display_name: "Niger"
+  hesa_codes:
+  - "NE"
+- id: "NG"
+  name: "Nigeria"
+  display_name: "Nigeria"
+  hesa_codes:
+  - "NG"
+- id: "NU"
+  name: ""
+  display_name: "Niue"
+  hesa_codes:
+  - "NU"
+- id: "NF"
+  name: ""
+  display_name: "Norfolk Island"
+  hesa_codes:
+  - "NF"
+- id: "XT"
+  name: ""
+  display_name: "North America not otherwise specified"
+  hesa_codes:
+  - "XT"
+- id: "XG"
+  name: ""
+  display_name: "Northern Ireland"
+  hesa_codes:
+  - "XG"
+- id: "MP"
+  name: ""
+  display_name: "Northern Mariana Islands"
+  hesa_codes:
+  - "MP"
+- id: "NO"
+  name: "Norway"
+  display_name: "Norway"
+  hesa_codes:
+  - "NO"
+- id: "ZZ"
+  name: ""
+  display_name: "Not known"
+  hesa_codes:
+  - "ZZ"
+- id: "PS"
+  name: "Palestine"
+  display_name: "Occupied Palestinian Territories [Palestine,
+    State of]"
+  hesa_codes:
+  - "PS"
+- id: "OM"
+  name: "Oman"
+  display_name: "Oman"
+  hesa_codes:
+  - "OM"
+- id: "PK"
+  name: "Pakistan"
+  display_name: "Pakistan"
+  hesa_codes:
+  - "PK"
+- id: "PW"
+  name: "Palau"
+  display_name: "Palau"
+  hesa_codes:
+  - "PW"
+- id: "PA"
+  name: "Panama"
+  display_name: "Panama"
+  hesa_codes:
+  - "PA"
+- id: "PG"
+  name: "Papua New Guinea"
+  display_name: "Papua New Guinea"
+  hesa_codes:
+  - "PG"
+- id: "PY"
+  name: "Paraguay"
+  display_name: "Paraguay"
+  hesa_codes:
+  - "PY"
+- id: "PE"
+  name: "Peru"
+  display_name: "Peru"
+  hesa_codes:
+  - "PE"
+- id: "PH"
+  name: "Philippines"
+  display_name: "Philippines"
+  hesa_codes:
+  - "PH"
+- id: "PN"
+  name: "Pitcairn, Henderson, Ducie and Oeno Islands"
+  display_name: "Pitcairn, Henderson, Ducie and Oeno Islands
+    [Pitcairn]"
+  hesa_codes:
+  - "PN"
+- id: "PL"
+  name: "Poland"
+  display_name: "Poland"
+  hesa_codes:
+  - "PL"
+- id: "PT"
+  name: "Portugal"
+  display_name: "Portugal"
+  hesa_codes:
+  - "PT"
+- id: "PR"
+  name: ""
+  display_name: "Puerto Rico"
+  hesa_codes:
+  - "PR"
+- id: "QA"
+  name: "Qatar"
+  display_name: "Qatar"
+  hesa_codes:
+  - "QA"
+- id: "RE"
+  name: ""
+  display_name: "Réunion"
+  hesa_codes:
+  - "RE"
+- id: "RO"
+  name: "Romania"
+  display_name: "Romania"
+  hesa_codes:
+  - "RO"
+- id: "RU"
+  name: "Russia"
+  display_name: "Russia [Russian Federation]"
+  hesa_codes:
+  - "RU"
+- id: "RW"
+  name: "Rwanda"
+  display_name: "Rwanda"
+  hesa_codes:
+  - "RW"
+- id: "WS"
+  name: "Samoa"
+  display_name: "Samoa"
+  hesa_codes:
+  - "WS"
+- id: "SM"
+  name: "San Marino"
+  display_name: "San Marino"
+  hesa_codes:
+  - "SM"
+- id: "ST"
+  name: "Sao Tome and Principe"
+  display_name: "Sao Tome and Principe"
+  hesa_codes:
+  - "ST"
+- id: "SA"
+  name: "Saudi Arabia"
+  display_name: "Saudi Arabia"
+  hesa_codes:
+  - "SA"
+- id: "XH"
+  name: ""
+  display_name: "Scotland"
+  hesa_codes:
+  - "XH"
+- id: "SN"
+  name: "Senegal"
+  display_name: "Senegal"
+  hesa_codes:
+  - "SN"
+- id: "RS"
+  name: "Serbia"
+  display_name: "Serbia"
+  hesa_codes:
+  - "RS"
+- id: "SC"
+  name: "Seychelles"
+  display_name: "Seychelles"
+  hesa_codes:
+  - "SC"
+- id: "SL"
+  name: "Sierra Leone"
+  display_name: "Sierra Leone"
+  hesa_codes:
+  - "SL"
+- id: "SG"
+  name: "Singapore"
+  display_name: "Singapore"
+  hesa_codes:
+  - "SG"
+- id: "SX"
+  name: ""
+  display_name: "Sint Maarten (Dutch part)"
+  hesa_codes:
+  - "SX"
+- id: "SK"
+  name: "Slovakia"
+  display_name: "Slovakia"
+  hesa_codes:
+  - "SK"
+- id: "SI"
+  name: "Slovenia"
+  display_name: "Slovenia"
+  hesa_codes:
+  - "SI"
+- id: "SB"
+  name: "Solomon Islands"
+  display_name: "Solomon Islands"
+  hesa_codes:
+  - "SB"
+- id: "SO"
+  name: "Somalia"
+  display_name: "Somalia"
+  hesa_codes:
+  - "SO"
+- id: "ZA"
+  name: "South Africa"
+  display_name: "South Africa"
+  hesa_codes:
+  - "ZA"
+- id: "XV"
+  name: ""
+  display_name: "South America not otherwise specified"
+  hesa_codes:
+  - "XV"
+- id: "GS"
+  name: "South Georgia and South Sandwich Islands"
+  display_name: "South Georgia and The South Sandwich Islands"
+  hesa_codes:
+  - "GS"
+- id: "SS"
+  name: "South Sudan"
+  display_name: "South Sudan"
+  hesa_codes:
+  - "SS"
+- id: "ES"
+  name: "Spain"
+  display_name: "Spain"
+  hesa_codes:
+  - "ES"
+- id: "LK"
+  name: "Sri Lanka"
+  display_name: "Sri Lanka"
+  hesa_codes:
+  - "LK"
+- id: "BL"
+  name: ""
+  display_name: "St Barthélemy"
+  hesa_codes:
+  - "BL"
+- id: "SH"
+  name: "St Helena, Ascension and Tristan da Cunha"
+  display_name: "St Helena, Ascension and Tristan da Cunha"
+  hesa_codes:
+  - "SH"
+- id: "KN"
+  name: "St Kitts and Nevis"
+  display_name: "St Kitts and Nevis"
+  hesa_codes:
+  - "KN"
+- id: "LC"
+  name: "St Lucia"
+  display_name: "St Lucia"
+  hesa_codes:
+  - "LC"
+- id: "MF"
+  name: ""
+  display_name: "St Martin (French Part) [St Martin]"
+  hesa_codes:
+  - "MF"
+- id: "PM"
+  name: ""
+  display_name: "St Pierre and Miquelon"
+  hesa_codes:
+  - "PM"
+- id: "VC"
+  name: "St Vincent"
+  display_name: "St Vincent and The Grenadines"
+  hesa_codes:
+  - "VC"
+- id: "SD"
+  name: "Sudan"
+  display_name: "Sudan"
+  hesa_codes:
+  - "SD"
+- id: "SR"
+  name: "Suriname"
+  display_name: "Suriname"
+  hesa_codes:
+  - "SR"
+- id: "SJ"
+  name: ""
+  display_name: "Svalbard and Jan Mayen"
+  hesa_codes:
+  - "SJ"
+- id: "SZ"
+  name: "Eswatini"
+  display_name: "Swaziland"
+  hesa_codes:
+  - "SZ"
+- id: "SE"
+  name: "Sweden"
+  display_name: "Sweden"
+  hesa_codes:
+  - "SE"
+- id: "CH"
+  name: "Switzerland"
+  display_name: "Switzerland"
+  hesa_codes:
+  - "CH"
+- id: "SY"
+  name: "Syria"
+  display_name: "Syria [Syrian Arab Republic]"
+  hesa_codes:
+  - "SY"
+- id: "TW"
+  name: ""
+  display_name: "Taiwan [Taiwan, Province of China]"
+  hesa_codes:
+  - "TW"
+- id: "TJ"
+  name: "Tajikistan"
+  display_name: "Tajikistan"
+  hesa_codes:
+  - "TJ"
+- id: "TZ"
+  name: "Tanzania"
+  display_name: "Tanzania [Tanzania, United Republic of]"
+  hesa_codes:
+  - "TZ"
+- id: "TH"
+  name: "Thailand"
+  display_name: "Thailand"
+  hesa_codes:
+  - "TH"
+- id: "TG"
+  name: "Togo"
+  display_name: "Togo"
+  hesa_codes:
+  - "TG"
+- id: "TK"
+  name: ""
+  display_name: "Tokelau"
+  hesa_codes:
+  - "TK"
+- id: "TO"
+  name: "Tonga"
+  display_name: "Tonga"
+  hesa_codes:
+  - "TO"
+- id: "TT"
+  name: "Trinidad and Tobago"
+  display_name: "Trinidad and Tobago"
+  hesa_codes:
+  - "TT"
+- id: "TN"
+  name: "Tunisia"
+  display_name: "Tunisia"
+  hesa_codes:
+  - "TN"
+- id: "TR"
+  name: "Turkey"
+  display_name: "Turkey"
+  hesa_codes:
+  - "TR"
+- id: "TM"
+  name: "Turkmenistan"
+  display_name: "Turkmenistan"
+  hesa_codes:
+  - "TM"
+- id: "TC"
+  name: "Turks and Caicos Islands"
+  display_name: "Turks and Caicos Islands"
+  hesa_codes:
+  - "TC"
+- id: "TV"
+  name: "Tuvalu"
+  display_name: "Tuvalu"
+  hesa_codes:
+  - "TV"
+- id: "UG"
+  name: "Uganda"
+  display_name: "Uganda"
+  hesa_codes:
+  - "UG"
+- id: "UA"
+  name: "Ukraine"
+  display_name: "Ukraine"
+  hesa_codes:
+  - "UA"
+- id: "AE"
+  name: "United Arab Emirates"
+  display_name: "United Arab Emirates"
+  hesa_codes:
+  - "AE"
+- id: "XK"
+  name: "Kosovo"
+  display_name: "United Kingdom, not otherwise specified"
+  hesa_codes:
+  - "XK"
+- id: "US"
+  name: "United States"
+  display_name: "United States"
+  hesa_codes:
+  - "US"
+- id: "VI"
+  name: ""
+  display_name: "United States Virgin Islands [Virgin Islands,
+    U. S.]"
+  hesa_codes:
+  - "VI"
+- id: "UY"
+  name: "Uruguay"
+  display_name: "Uruguay"
+  hesa_codes:
+  - "UY"
+- id: "UZ"
+  name: "Uzbekistan"
+  display_name: "Uzbekistan"
+  hesa_codes:
+  - "UZ"
+- id: "VU"
+  name: "Vanuatu"
+  display_name: "Vanuatu"
+  hesa_codes:
+  - "VU"
+- id: "VA"
+  name: "Vatican City"
+  display_name: "Vatican City [Holy See (Vatican City State)]"
+  hesa_codes:
+  - "VA"
+- id: "VE"
+  name: "Venezuela"
+  display_name: "Venezuela [Venezuela, Bolivarian Republic
+    of]"
+  hesa_codes:
+  - "VE"
+- id: "VN"
+  name: "Vietnam"
+  display_name: "Vietnam [Viet Nam]"
+  hesa_codes:
+  - "VN"
+- id: "XI"
+  name: ""
+  display_name: "Wales"
+  hesa_codes:
+  - "XI"
+- id: "WF"
+  name: ""
+  display_name: "Wallis and Futuna"
+  hesa_codes:
+  - "WF"
+- id: "EH"
+  name: ""
+  display_name: "Western Sahara"
+  hesa_codes:
+  - "EH"
+- id: "YE"
+  name: "Yemen"
+  display_name: "Yemen"
+  hesa_codes:
+  - "YE"
+- id: "ZM"
+  name: "Zambia"
+  display_name: "Zambia"
+  hesa_codes:
+  - "ZM"
+- id: "ZW"
+  name: "Zimbabwe"
+  display_name: "Zimbabwe"
+  hesa_codes:
+  - "ZW"
