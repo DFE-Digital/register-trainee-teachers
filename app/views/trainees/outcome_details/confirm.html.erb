@@ -1,27 +1,23 @@
-<%= render PageTitle::View.new(text: "Check #{@trainee.award_type} details") %>
+<%= render PageTitle::View.new(text: "Check your answers") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: t(:back_to_record), href: trainee_path(@trainee)) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: edit_trainee_outcome_details_outcome_date_path(@trainee)) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <span class="govuk-caption-l">
-      <%= trainee_name(@trainee) %>
+      Update <%= @trainee.award_type %> status - <%= trainee_name(@trainee) %>
     </span>
-    <h1 class="govuk-heading-l">Check <%= @trainee.award_type %> details</h1>
-  </div>
-</div>
+    <h1 class="govuk-heading-l">Check your answers</h1>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
     <%= render OutcomeDetails::View.new(@outcome_form) %>
 
     <%= register_form_with url: trainee_award_recommendations_path, method: :post, local: true do |f| %>
       <%= hidden_field_tag :trainee_id, @trainee.slug %>
-      <%= f.govuk_submit "Change status of trainee" %>
+      <%= f.govuk_submit "Update #{@trainee.award_type} status" %>
     <%- end -%>
+
+    <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee), class: "qa-cancel-link") %></p>
   </div>
 </div>
-
-<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee), class: "qa-cancel-link") %></p>
