@@ -156,7 +156,7 @@ feature "Recording a training outcome" do
   end
 
   def then_i_see_the_stop_page_with_missing(*details)
-    expect(page).to have_content("You cannot update the trainee's")
+    expect(page).to have_content("You cannot update the trainee’s")
 
     details.each do |detail|
       expect(page).to have_content(detail)
