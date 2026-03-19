@@ -68,7 +68,7 @@ describe MissingDataBannerView do
           allow(trainee).to receive(:requires_placements?).and_return(true)
           banner = described_class.new(missing_fields, trainee)
           expect(banner.header).to eq(
-            "You need to give additional details before you can change status of the trainee for #{trainee.award_type}"
+            "You need to give additional details before you can change status of the trainee for #{trainee.award_type}",
           )
         end
       end
