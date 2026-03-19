@@ -19,6 +19,12 @@
         <%= t("views.trainees.outcome_dates.forbidden.reason", award_type: @trainee.award_type, trainee_name: trainee_name(@trainee)) %>
       </p>
 
+      <% if required_missing_fields.include?(:placements) && @trainee.requires_placements? %>
+        <p class="govuk-body">
+          This trainee’s route requires a minimum of <%= @trainee.minimum_placements %> <%= "placement".pluralize(@trainee.minimum_placements) %>.
+        </p>
+      <% end %>
+
       <%= MissingDataBannerView.new(required_missing_fields, @trainee).content %>
 
       <p class="govuk-body">
