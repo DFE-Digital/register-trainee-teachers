@@ -13,6 +13,7 @@ en:
     trainee_diversity_updated: Trainee diversity updated
     trainee_reinstated: Trainee reinstated
     trainee_withdrawn: Trainee withdrawn
+    trainee_status_updated: "Trainee’s %{award_type} status updated"
     trainee_placement_added: Trainee placement added
     trainee_placement_removed: Placement removed
   update_record: Update record
