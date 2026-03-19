@@ -20,8 +20,8 @@ COPY .tool-versions Gemfile Gemfile.lock ./
 
 # Install gems and remove gem cache
 RUN apk add --update --no-cache --virtual build-dependencies \
-    build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev=1.3.1-r2 && \
-    apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib=1.3.1-r2 && \
+    build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev && \
+    apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib && \
     # Special configuration for charlock_holmes gem - requires explicit ICU library paths
     # due to its native C++ extension that often fails to build in Alpine Linux environments
     bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
