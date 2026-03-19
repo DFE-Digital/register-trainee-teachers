@@ -108,7 +108,7 @@ class Provider < ApplicationRecord
       .where.not(trn: nil)
       .where(training_route: PLACEMENTS_ROUTES.keys)
       .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
-      .where("placements_counts.placement_count < 2 OR placements_counts.placement_count IS NULL")
+      .where("placements_counts.placement_count < ? OR placements_counts.placement_count IS NULL", MINIMUM_PLACEMENTS.default)
       .joins(:end_academic_cycle)
       .where(academic_cycles: { id: AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE).select(:id) })
   end
