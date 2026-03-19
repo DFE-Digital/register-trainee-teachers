@@ -126,7 +126,6 @@ feature "Recording a training outcome" do
     record_page.record_outcome.click
   end
 
-
   def when_i_choose(option)
     outcome_date_edit_page.choose(option)
   end
