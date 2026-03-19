@@ -197,7 +197,6 @@ describe TrainingRouteManager do
         end
       end
     end
-
     context "for other routes" do
       let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) }
 
