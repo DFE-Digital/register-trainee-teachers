@@ -102,10 +102,6 @@ PLACEMENTS_ROUTES = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :early_years_assessment_only).exclude?(training_route)
 }.freeze
 
-MINIMUM_PLACEMENTS = Hash.new(2).merge(
-  TRAINING_ROUTE_ENUMS[:iqts] => 1,
-).freeze
-
 TRAINING_PARTNER_ROUTES = %i[
   school_direct_salaried
   school_direct_tuition_fee
@@ -123,6 +119,11 @@ EMPLOYING_SCHOOL_ROUTES = %i[
   early_years_salaried
   teacher_degree_apprenticeship
 ].freeze
+
+MINIMUM_PLACEMENTS = Hash.new(2).merge(
+  TRAINING_ROUTE_ENUMS[:iqts] => 1,
+  **EMPLOYING_SCHOOL_ROUTES.to_h { |route| [TRAINING_ROUTE_ENUMS[route], 1] },
+).freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only].include?(training_route)
