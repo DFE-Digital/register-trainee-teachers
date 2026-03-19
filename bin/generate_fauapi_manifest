@@ -10,7 +10,7 @@ settings = YAML.load_file(File.join(root, "config", "settings.yml"))
 
 current_version = settings.dig("api", "current_version")
 major_version = current_version.split(".").first
-schema_url = "https://raw.githubusercontent.com/DFE-Digital/register-trainee-teachers/refs/heads/main/public/openapi/#{current_version}.yaml"
+schema_url = "https://www.register-trainee-teachers.service.gov.uk/openapi/#{current_version}.yaml"
 
 current_year = Time.now.year
 
