@@ -81,7 +81,7 @@ jobs:
           docker compose exec -T web /bin/sh -c 'bundle exec rake parallel:setup'
           docker compose exec -T web /bin/sh -c "yarn add jest@30.0.0"
           docker compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
-          docker compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
+          docker compose exec -T web /bin/sh -c 'apk add chromium=144.0.7559.132-r4 chromium-chromedriver'
 
       - name: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} ${{ matrix.test-type }} tests"
         uses: Wandalen/wretry.action@v3.8.0
