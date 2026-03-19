@@ -98,7 +98,7 @@ RUN apk add --update --no-cache tzdata && \
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
-RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info yaml yarn zlib=1.3.1-r2
+RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info yaml yarn zlib
 
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
 COPY --from=rails-build /app/ .
