@@ -63,12 +63,12 @@ feature "Recording a training outcome" do
     then_the_outcome_date_is_updated
   end
 
-  context "choosing 'On another day'" do
+  context "choosing 'Another date'" do
     before do
       given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
       and_i_am_on_the_trainee_record_page
       and_i_click_on_record_training_outcome
-      when_i_choose("On another day")
+      when_i_choose("Another date")
     end
 
     scenario "and not filling out a complete date displays the correct error" do
