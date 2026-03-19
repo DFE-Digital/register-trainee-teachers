@@ -17,12 +17,13 @@ feature "Recommending for QTS" do
   end
 
   def then_the_trainee_is_recommended_for_qts
-    expect(page).to have_text("#{trainee_name(@trainee)} gained QTS")
+    expect(page).to have_text("Trainee's QTS status updated")
   end
 
   def and_a_trainee_exists_ready_for_qts
     given_a_trainee_exists(
       :with_placement_assignment,
+      :with_placements,
       :trn_received,
       :itt_start_date_in_the_past,
       :provider_led_postgrad,
@@ -34,7 +35,7 @@ feature "Recommending for QTS" do
   end
 
   def and_i_click_on_recommend_for_qts
-    click_on "Change status of trainee"
+    click_on "Update QTS status"
   end
 
   def and_i_record_the_outcome_date
