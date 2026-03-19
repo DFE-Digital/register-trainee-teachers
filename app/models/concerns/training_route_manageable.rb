@@ -4,6 +4,7 @@ module TrainingRouteManageable
   delegate :award_type,
            :requires_training_partner?,
            :requires_placements?,
+           :minimum_placements,
            :requires_employing_school?,
            :early_years_route?,
            :undergrad_route?,

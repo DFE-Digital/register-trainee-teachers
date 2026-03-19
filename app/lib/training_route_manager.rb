@@ -50,6 +50,10 @@ class TrainingRouteManager
     PLACEMENTS_ROUTES.keys.include?(training_route)
   end
 
+  def minimum_placements
+    MINIMUM_PLACEMENTS[training_route]
+  end
+
   def undergrad_route?
     UNDERGRAD_ROUTES.keys.include?(training_route)
   end
