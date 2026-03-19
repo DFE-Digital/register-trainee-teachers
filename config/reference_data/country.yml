@@ -2,7 +2,7 @@ metadata:
   source: "HESA"
   name: "country"
   display_name: "Country"
-  description: "Country in which trainee studied for degree"
+  description: "Countries used for Degree country and iQTS country."
   change_log:
   - date: "2025-11-19"
     change: "Initial version"
