@@ -11,7 +11,7 @@ inputs:
   pr-number:
     description: PR number if testing a review app
     required: false
-  slack-webhook:
+  teams-webhook:
     required: true
   smoke-test-username:
     required: true

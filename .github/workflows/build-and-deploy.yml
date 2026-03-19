@@ -38,7 +38,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           context: ""
 
   lint:
@@ -80,7 +81,7 @@ jobs:
           command: ${{ matrix.command }}
           docker-image: ${{ needs.build.outputs.docker-image }}
           image-tag: ${{ needs.build.outputs.image-tag }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
   test:
     name: Test
@@ -132,7 +133,7 @@ jobs:
           environment: review
           pr-number: ${{ github.event.pull_request.number }}
           sha: ${{ needs.build.outputs.image-tag }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
       - name: Post comment to Pull Request ${{ github.event.number }}
         uses: marocchino/sticky-pull-request-comment@v2
@@ -183,7 +184,7 @@ jobs:
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         environment: ${{ matrix.environment }}
         sha: ${{ github.sha }}
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
         smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
         smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
         basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
@@ -210,7 +211,7 @@ jobs:
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         environment: production
         sha: ${{ github.sha }}
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
         smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
         smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
         basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
@@ -241,7 +242,7 @@ jobs:
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         environment: ${{ matrix.environment }}
         sha: ${{ github.sha }}
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
         smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
         smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
         basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
@@ -272,7 +273,8 @@ jobs:
           azure-client-id:  ${{ secrets.AZURE_CLIENT_ID  }}
           azure-tenant-id:  ${{ secrets.AZURE_TENANT_ID   }}
           azure-subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           terraform-base: terraform/custom_domains/infrastructure
 
   deploy_domains_env:
@@ -306,5 +308,6 @@ jobs:
           azure-subscription-id:  ${{ secrets.AZURE_SUBSCRIPTION_ID   }}
           environment: ${{ matrix.domain_environment }}
           healthcheck: healthcheck
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           terraform-base: terraform/custom_domains/environment_domains

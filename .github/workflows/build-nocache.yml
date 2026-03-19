@@ -37,12 +37,12 @@ jobs:
           context: ""
 
       - name: Check for Failure
-        uses: ./.github/actions/send-slack-notification/
+        uses: ./.github/actions/send-teams-notification/
         if: failure()
         with:
-          slack-title: 'Build failure on weekly rebuild cache workflow'
-          slack-message: ':alert: Build failure :sadparrot:'
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-title: 'Build failure on weekly rebuild cache workflow'
+          teams-message: 'Build failure'
+          teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
   audit:
     name: Audit
@@ -73,10 +73,9 @@ jobs:
         run: docker compose exec -T web /bin/sh -c 'bundle-audit check --update'
 
       - name: Check for Failure
-        uses: ./.github/actions/send-slack-notification/
+        uses: ./.github/actions/send-teams-notification/
         if: ${{ failure() }}
         with:
-          slack-icon-emoji: ':lock:'
-          slack-title: Audit Failure
-          slack-message: ':alert: Audit failure on ${{ github.event.inputs.environment }} :sadparrot:'
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-title: Audit Failure
+          teams-message: 'Audit failure on ${{ github.event.inputs.environment }}'
+          teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}

@@ -81,7 +81,8 @@ jobs:
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         backup-file: ${{ env.BACKUP_FILE }}.sql
         db-server-name: ${{ inputs.db-server }}
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
 
   restore_and_sanitise:
     needs: [backup]
@@ -219,12 +220,12 @@ jobs:
         rm ${SANITISED_FILE_NAME}.sql.gz
 
     - name: Check for Failure
-      uses: ./.github/actions/send-slack-notification/
+      uses: ./.github/actions/send-teams-notification/
       if: ${{ failure() }}
       with:
-        slack-title: Backup Failure
-        slack-message: ':alert: Backup failure :sadparrot:'
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-title: Backup Failure
+        teams-message: 'Backup failure'
+        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
   restore_staging:
     needs: [restore_and_sanitise]
@@ -274,9 +275,9 @@ jobs:
         bin/konduit.sh -n bat-production -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
 
     - name: Check for Failure
-      uses: ./.github/actions/send-slack-notification/
+      uses: ./.github/actions/send-teams-notification/
       if: ${{ failure() }}
       with:
-        slack-title: Staging Restore Failure
-        slack-message: ':alert: Daily restore failure for staging :sadparrot:'
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-title: Staging Restore Failure
+        teams-message: 'Daily restore failure for staging'
+        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
