@@ -15,8 +15,8 @@ inputs:
   image-tag:
     description: Image tag to use
     required: true
-  slack-webhook:
-    description: Slack webhook to use
+  teams-webhook:
+    description: Teams webhook to use
     required: true
 
 runs:
@@ -35,9 +35,9 @@ runs:
         COMMAND: ${{ inputs.command }}
 
     - name: Check for Failure
-      uses: ./.github/actions/send-slack-notification/
+      uses: ./.github/actions/send-teams-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
       with:
-        slack-title: 'Lint failure'
-        slack-message: ':alert: Lint failure for ${{ inputs.linter-type }} on commit ${{inputs.image-tag}} :sadpanda:'
-        slack-webhook: ${{ inputs.slack-webhook }}
+        teams-title: 'Lint failure'
+        teams-message: 'Lint failure for ${{ inputs.linter-type }} on commit ${{inputs.image-tag}}'
+        teams-webhook: ${{ inputs.teams-webhook }}
