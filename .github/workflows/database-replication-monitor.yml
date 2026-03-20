@@ -33,6 +33,7 @@ jobs:
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         environment: ${{ matrix.environment }}
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+        service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
         app-name: ${{ env.SERVICE_NAME }}-${{ matrix.environment }}
         tf-vars-path: ${{ env.TF_VARS_PATH }}

@@ -1,0 +1,34 @@
+name: send-teams-notification
+description: Send a Teams notification
+
+inputs:
+  teams-title:
+    required: true
+  teams-message:
+    required: true
+  teams-webhook:
+    required: true
+  teams-status:
+    required: false
+    default: attention
+  teams-minimal:
+    required: false
+    default: 'false'
+  teams-ghrepo:
+    required: false
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Notify teams channel on job failure
+      uses: DFE-Digital/github-actions/send-to-teams-channel@master
+      with:
+        teams-webhook-url: ${{ inputs.teams-webhook }}
+        title: ${{ inputs.teams-title }}
+        service: Register trainee teachers
+        status: ${{ inputs.teams-status }}
+        minimal: ${{ inputs.teams-minimal }}
+        ghrepo: ${{ inputs.teams-ghrepo }}
+        message: |
+          ${{ inputs.teams-message }}

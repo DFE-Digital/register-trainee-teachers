@@ -111,12 +111,12 @@ RSpec.describe ReferenceData::Type do
     subject(:type) { ReferenceData::Loader.instance.find("training_route") }
 
     it "returns all HESA codes as strings" do
-      expect(type.hesa_codes).to contain_exactly("02", "03", "09", "10", "11", "12", "14")
+      expect(type.hesa_codes).to contain_exactly("02", "03", "09", "10", "11", "12", "14", "15", "16", "17", "18", "19", "20", "21")
     end
 
     context "filtered by year" do
       it "returns available hesa codes only" do
-        expect(type.hesa_codes(year: 2021)).to contain_exactly("02", "03", "09", "10", "11", "14")
+        expect(type.hesa_codes(year: 2021)).to contain_exactly("02", "03", "09", "10", "11", "14", "15", "16", "17", "18", "19", "20", "21")
       end
     end
   end
