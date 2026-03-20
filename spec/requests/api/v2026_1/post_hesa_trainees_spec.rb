@@ -2132,6 +2132,134 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
     end
   end
 
+  context "when creating a trainee with assessment_only route" do
+    let(:training_route) { "16" }
+    let(:data) do
+      super().except(:study_mode, :placements_attributes)
+    end
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with assessment_only route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("16")
+    end
+
+    it "stores the trainee with assessment_only training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("assessment_only")
+    end
+
+    it "does not require study_mode" do
+      expect(response).to have_http_status(:created)
+      expect(Trainee.last.study_mode).to be_nil
+    end
+  end
+
+  context "when creating a trainee with early_years_assessment_only route" do
+    let(:training_route) { "17" }
+    let(:course_subject_1) { "100510" }
+    let(:data) do
+      super().except(:study_mode, :placements_attributes)
+    end
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with early_years_assessment_only route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("17")
+    end
+
+    it "stores the trainee with early_years_assessment_only training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("early_years_assessment_only")
+    end
+
+    it "does not require study_mode" do
+      expect(response).to have_http_status(:created)
+      expect(Trainee.last.study_mode).to be_nil
+    end
+  end
+
+  context "when creating a trainee with early_years_undergrad route" do
+    let(:training_route) { "18" }
+    let(:course_subject_1) { "100510" }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with early_years_undergrad route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("18")
+    end
+
+    it "stores the trainee with early_years_undergrad training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("early_years_undergrad")
+    end
+  end
+
+  context "when creating a trainee with early_years_postgrad route" do
+    let(:training_route) { "19" }
+    let(:course_subject_1) { "100510" }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with early_years_postgrad route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("19")
+    end
+
+    it "stores the trainee with early_years_postgrad training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("early_years_postgrad")
+    end
+  end
+
+  context "when creating a trainee with early_years_salaried route" do
+    let(:training_route) { "20" }
+    let(:course_subject_1) { "100510" }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with early_years_salaried route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("20")
+    end
+
+    it "stores the trainee with early_years_salaried training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("early_years_salaried")
+    end
+  end
+
+  context "when creating a trainee with hpitt_postgrad route" do
+    let(:training_route) { "21" }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "creates a trainee with hpitt_postgrad route" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:training_route]).to eq("21")
+    end
+
+    it "stores the trainee with hpitt_postgrad training route" do
+      trainee = Trainee.last
+      expect(trainee.training_route).to eq("hpitt_postgrad")
+    end
+  end
+
   context "when creating a trainee with IQTS route" do
     let(:training_route) { "15" }
     let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }

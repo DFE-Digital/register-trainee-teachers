@@ -13,6 +13,7 @@ data:
     display_name: "Assessment only"
     description: "Assessment only"
     hesa_codes:
+      - "16"
   - id: 1
     name: "provider_led_postgrad"
     display_name: "Primary and Secondary Postgraduate Fee Funded"
@@ -22,9 +23,10 @@ data:
       - "12"
   - id: 2
     name: "early_years_undergrad"
-    display_name: "Early-years undergrad"
-    description: "Early-years undergrad"
+    display_name: "Early years undergrad"
+    description: "Early years undergrad"
     hesa_codes:
+      - "18"
   - id: 3
     name: "school_direct_tuition_fee"
     display_name: "School Direct tuition fee"
@@ -48,16 +50,19 @@ data:
     display_name: "Early years assessment only"
     description: "Early years assessment only"
     hesa_codes:
+      - "17"
   - id: 7
     name: "early_years_salaried"
     display_name: "Early years salaried"
     description: "Early years salaried"
     hesa_codes:
+      - "20"
   - id: 8
     name: "early_years_postgrad"
     display_name: "Early years postgrad"
     description: "Early years postgrad"
     hesa_codes:
+      - "19"
   - id: 9
     name: "provider_led_undergrad"
     display_name: "Primary and Secondary Undergraduate Fee Funded"
@@ -75,6 +80,7 @@ data:
     display_name: "HPITT postgrad"
     description: "HPITT postgrad"
     hesa_codes:
+      - "21"
   - id: 12
     name: "iqts"
     display_name: "iQTS"
