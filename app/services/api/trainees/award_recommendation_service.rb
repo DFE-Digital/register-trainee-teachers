@@ -46,7 +46,7 @@ module Api
       end
 
       def trainee_placements_missing?
-        placements.size < PlacementsForm::MINIMUM_PLACEMENTS
+        placements.size < trainee.minimum_placements
       end
 
     private
