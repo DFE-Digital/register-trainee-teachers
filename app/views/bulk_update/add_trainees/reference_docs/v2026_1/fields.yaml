@@ -81,7 +81,7 @@
   technical: sex
   hesa_alignment: SEXID
   description: This field records the gender of the student.
-  format: "[Sex reference codes](/reference-data/v2025.0/sex.html)"
+  format: "[Sex reference codes](/reference-data/v2026.1/sex.html)"
   example: |-
     `10`
   validation: Mandatory
@@ -101,14 +101,14 @@
   technical: nationality
   hesa_alignment: NATION
   description: This field defines the country of legal nationality.
-  format: "[Nationality reference codes](/reference-data/v2025.0/nationality.html)"
+  format: "[Nationality reference codes](/reference-data/v2026.1/nationality.html)"
   example: "`GB`"
   validation: Optional
 - field_name: ethnicity
   technical: ethnicity
   hesa_alignment: ETHNIC
   description: This field records a student’s ethnicity.
-  format: "[Ethnicity reference codes](/reference-data/v2025.0/ethnicity.html)"
+  format: "[Ethnicity reference codes](/reference-data/v2026.1/ethnicity.html)"
   example:
     "`103` for example is the code to use if the ethnicity is Asian - Indian or Indian British."
   validation: Optional
@@ -118,7 +118,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability1.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability1.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability2
@@ -127,7 +127,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability2.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability2.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability3
@@ -136,7 +136,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability3.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability3.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability4
@@ -145,7 +145,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability4.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability4.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability5
@@ -154,7 +154,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability5.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability5.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability6
@@ -163,7 +163,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability6.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability6.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability7
@@ -172,7 +172,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability7.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability7.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability8
@@ -181,7 +181,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability8.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability8.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: disability9
@@ -190,7 +190,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[Disability reference codes](/reference-data/v2025.0/disability9.html)"
+  format: "[Disability reference codes](/reference-data/v2026.1/disability9.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: itt_aim
@@ -200,7 +200,7 @@
     This field is a three characters field completed for students on courses
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
-  format: "[ITT Aim reference codes](/reference-data/v2025.0/itt-aim.html)"
+  format: "[ITT Aim reference codes](/reference-data/v2026.1/itt-aim.html)"
   example: |-
     - `201`
   validation: Mandatory
@@ -212,7 +212,7 @@
   description:
     This field describes the route by which the student has accessed Initial
     Teacher Training provision.
-  format: "[Training Route reference codes](/reference-data/v2025.0/training-route.html)"
+  format: "[Training Route reference codes](/reference-data/v2026.1/training-route.html)"
   example: "`03` for example is code to use if it is School Direct salaried"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/trainee.rb#L213-L215
@@ -223,7 +223,7 @@
   description: This field describes the qualification aim of the Initial Teacher
     Training course and is intended to record the qualification that will be attained
     as a result of successful completion of studies.
-  format: "[Qualification Aim reference codes](/reference-data/v2025.0/itt-qualification-aim.html)"
+  format: "[Qualification Aim reference codes](/reference-data/v2026.1/itt-qualification-aim.html)"
   example: |-
     `007`
   validation: "Conditional - mandatory if ITT Aim is `202`"
@@ -236,7 +236,7 @@
     First subject of the ITT course.
 
     Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, Course Subject One must be "Primary Teaching" (HESA code `100511`). A validation error will be returned if a different subject is provided. Where trainees study a primary specialism, a valid HECoS code should be used in course_subject_2 or course_subject_3.
-  format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-one.html)"
+  format: "[Course Subject reference codes](/reference-data/v2026.1/course-subject-one.html)"
   example: "`100511` for primary courses, `100048` for secondary (design as a subject)"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_0/trainee_attributes.rb
@@ -248,7 +248,7 @@
     Second subject of the ITT course.
 
     Notes\: For primary courses (course maximum age 11 or less), this field can be used to specify a primary specialism subject. A valid HECoS code should be used in this field.
-  format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-two.html)"
+  format: "[Course Subject reference codes](/reference-data/v2026.1/course-subject-two.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
   page_title: Course subject two
@@ -259,7 +259,7 @@
     Third subject of the ITT course.
 
     Notes\: For primary courses (course maximum age 11 or less), this field can be used to specify an additional primary specialism subject. A valid HECoS code should be used in this field.
-  format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-three.html)"
+  format: "[Course Subject reference codes](/reference-data/v2026.1/course-subject-three.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
   page_title: Course subject three
@@ -269,7 +269,7 @@
   description:
     This field indicates the method by which a student is being taught
     their course.
-  format: "[Study Mode reference codes](/reference-data/v2025.0/study-mode.html)"
+  format: "[Study Mode reference codes](/reference-data/v2026.1/study-mode.html)"
   example: "`01`"
   validation: "Conditional - mandatory when the training route is not Assessment only or Early years assessment only"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
@@ -301,7 +301,7 @@
   description: This field describes in more detail the student’s initial teacher
     training aim
   format: |-
-    [Course Age Range reference codes](/reference-data/v2025.0/course-age-range.html)
+    [Course Age Range reference codes](/reference-data/v2026.1/course-age-range.html)
 
     The following values are invalid for this field:
 
@@ -420,7 +420,7 @@
   technical: fund_code
   hesa_alignment: FUNDCODE
   description: "This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body. NOTE: Use `7` if the trainee chooses not to receive finance they are eligible for."
-  format: "[Fund Code reference codes](/reference-data/v2025.0/fund-code.html)"
+  format: "[Fund Code reference codes](/reference-data/v2026.1/fund-code.html)"
   example: "`2`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L66
@@ -434,7 +434,7 @@
     classification if applicable and the subject specialism in which they wish to
     train to teach.
 
-  format: "[Funding Method reference codes](/reference-data/v2025.0/funding-method.html)"
+  format: "[Funding Method reference codes](/reference-data/v2026.1/funding-method.html)"
   example: "`E`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L31
@@ -447,7 +447,7 @@
     is to be monitored independently. Valid entries will change from year to year
     to reflect current schemes.
   format: |-
-    [Training Initiative reference codes](/reference-data/v2025.0/training-initiative.html)
+    [Training Initiative reference codes](/reference-data/v2026.1/training-initiative.html)
   example: "`026`"
   validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
@@ -457,10 +457,20 @@
   hesa_alignment: INITIATIVES
   description: The secondary training initiative that the trainee is on.
   format: |-
-    [Training Initiative reference codes](/reference-data/v2025.0/training-initiative.html)
+    [Training Initiative reference codes](/reference-data/v2026.1/training-initiative.html)
   example: "`026`"
   validation: Optional
   page_title: Additional training initiative
+- field_name: iqts_country
+  technical: iqts_country
+  description: |-
+    The country where the trainee will be undertaking their International Qualified Teacher Status (iQTS) training.
+
+    Required when the training route is iQTS (code 15).
+  format: "[IQTS Country reference codes](/reference-data/v2026.1/country.html)"
+  example: "`JP`"
+  validation: Conditional - mandatory when training_route is 15 (iQTS)
+  page_title: IQTS country
 - field_name: uk_degree
   technical: uk_degree
   hesa_alignment: DEGTYPE
@@ -470,7 +480,7 @@
     The type of UK degree if the trainee holds any previous UK degrees.
 
     Only the highest previous degree qualification should be submitted.
-  format: "[UK Degree Type reference codes](/reference-data/v2025.0/uk-degree.html)"
+  format: "[UK Degree Type reference codes](/reference-data/v2026.1/uk-degree.html)"
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L37
@@ -479,7 +489,7 @@
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description: The type of non-UK degree.
-  format: "[Non-UK Degree Type reference codes](/reference-data/v2025.0/non-uk-degree.html) for degree type list of unique 3 digit numbers."
+  format: "[Non-UK Degree Type reference codes](/reference-data/v2026.1/non-uk-degree.html) for degree type list of unique 3 digit numbers."
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L42
@@ -488,7 +498,7 @@
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student’s previous degree. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1.
-  format: "[Degree Subject reference codes](/reference-data/v2025.0/subject.html)"
+  format: "[Degree Subject reference codes](/reference-data/v2026.1/subject.html)"
   example: "`100048` for example is the design degree subject as part of a previous degree"
   validation: Conditional - mandatory if specifying a degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L34
@@ -497,7 +507,7 @@
   technical: grade
   hesa_alignment: DEGCLSS
   description: The grade of the degree.
-  format: "[Degree Grade reference codes](/reference-data/v2025.0/grade.html)"
+  format: "[Degree Grade reference codes](/reference-data/v2026.1/grade.html)"
   example: "`01` for example is First class honours"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L38
@@ -523,7 +533,7 @@
   description:
     This records the provider where the student’s previous qualification
     was awarded, if a UK provider.
-  format: "[Awarding Institution reference codes if a UK provider](/reference-data/v2025.0/institution.html)"
+  format: "[Awarding Institution reference codes if a UK provider](/reference-data/v2026.1/institution.html)"
   example: "`1101` for example is Hull College"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L36
@@ -534,7 +544,7 @@
   description:
     This records the country where the student’s previous qualification
     was awarded
-  format: "[Degree Country reference codes](/reference-data/v2025.0/country.html)"
+  format: "[Degree Country reference codes](/reference-data/v2026.1/country.html)"
   example:
     "`AU` is an example of using the previous qualification country code for Australia"
   validation: Conditional - mandatory if specifying a non-UK degree

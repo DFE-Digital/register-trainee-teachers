@@ -309,6 +309,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
       describe "inclusion" do
         context "when trainee_start_date is present" do
           let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
+          let(:unsupported_routes) { [TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee]] }
 
           before do
             Timecop.travel academic_cycle.start_date
@@ -340,7 +341,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+                "has invalid reference data value of '9'. Valid values are '03', '09', '10', '11', '12', '14', '15'.",
               )
             end
           end
@@ -789,6 +790,60 @@ RSpec.describe Api::V20261::TraineeAttributes do
 
           expect(subject.errors[:trainee_start_date]).to contain_exactly("Cannot be more than 10 years in the past")
           expect(subject.errors.full_messages).to include("trainee_start_date Cannot be more than 10 years in the past")
+        end
+      end
+    end
+
+    describe "iqts_country" do
+      context "when training route is IQTS" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:iqts]
+        end
+
+        context "when blank" do
+          it "is invalid" do
+            subject.validate
+
+            expect(subject.errors[:iqts_country]).to contain_exactly("can't be blank")
+          end
+        end
+
+        context "when not a valid country" do
+          before do
+            subject.iqts_country = "InvalidCountry"
+          end
+
+          it "is invalid" do
+            subject.validate
+
+            expect(subject.errors[:iqts_country]).to contain_exactly(
+              "has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'...",
+            )
+          end
+        end
+
+        context "when a valid country" do
+          before do
+            subject.iqts_country = Hesa::CodeSets::Countries::MAPPING.values.sample
+          end
+
+          it "is valid" do
+            subject.validate
+
+            expect(subject.errors[:iqts_country]).to be_empty
+          end
+        end
+      end
+
+      context "when training route is not IQTS" do
+        before do
+          subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_postgrad]
+        end
+
+        it "does not validate iqts_country" do
+          subject.validate
+
+          expect(subject.errors[:iqts_country]).to be_empty
         end
       end
     end

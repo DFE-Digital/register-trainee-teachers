@@ -2339,6 +2339,8 @@ en:
               invalid: is invalid. The URN '%{value}' does not match any known training partners
               csv:
                 invalid: Training Partner URN is invalid. The URN '%{value}' does not match any known training partners
+            iqts_country:
+              inclusion: is not a valid iQTS country
             employing_school_id:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:
