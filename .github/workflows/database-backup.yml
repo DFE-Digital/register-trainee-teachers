@@ -113,7 +113,7 @@ jobs:
         BACKUP_FILE=${SERVICE_SHORT}_${CONFIG_SHORT}_${TODAY}.sql.gz
         echo "BACKUP_FILE=${BACKUP_FILE}" >> $GITHUB_ENV
 
-    - uses: azure/login@v2
+    - uses: azure/login@v3
       with:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -248,7 +248,7 @@ jobs:
         --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
         --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
 
-    - uses: azure/login@v2
+    - uses: azure/login@v3
       with:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
