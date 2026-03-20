@@ -87,7 +87,17 @@ module Api
 
       PROVIDER_LED_POSTGRAD_START_YEAR = 2022
 
-      private_constant :PROVIDER_LED_POSTGRAD_START_YEAR
+      UNSUPPORTED_TRAINING_ROUTES = [
+        TRAINING_ROUTE_ENUMS[:iqts],
+        TRAINING_ROUTE_ENUMS[:assessment_only],
+        TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+        TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+        TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+        TRAINING_ROUTE_ENUMS[:early_years_salaried],
+        TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+      ].freeze
+
+      private_constant :PROVIDER_LED_POSTGRAD_START_YEAR, :UNSUPPORTED_TRAINING_ROUTES
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
@@ -126,7 +136,12 @@ module Api
         :training_route,
         inclusion: {
           in: :valid_training_routes,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys) },
+          message: lambda do |_, data|
+            hesa_code_inclusion_message(
+              value: data[:value],
+              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.reject { |_, v| UNSUPPORTED_TRAINING_ROUTES.include?(v) }.keys,
+            )
+          end,
         },
         allow_blank: true,
         if: :valid_trainee_start_date?,
@@ -311,11 +326,13 @@ module Api
     private
 
       def valid_training_routes
-        if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-        else
-          Hesa::CodeSets::TrainingRoutes::MAPPING.values
-        end
+        routes = if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
+                   Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+                 else
+                   Hesa::CodeSets::TrainingRoutes::MAPPING.values
+                 end
+
+        routes - UNSUPPORTED_TRAINING_ROUTES
       end
 
       def start_year
