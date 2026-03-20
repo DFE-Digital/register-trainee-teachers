@@ -136,7 +136,6 @@ module Api
           mapped_value
         end
 
-
         def nationalisations_attributes
           return [] unless nationality_name || params[:nationality]
 

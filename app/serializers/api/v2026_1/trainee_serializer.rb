@@ -217,7 +217,6 @@ module Api
         ::Hesa::CodeSets::Countries::MAPPING.key(@trainee.iqts_country)
       end
 
-
       def training_initiative
         ::Hesa::CodeSets::TrainingInitiatives::MAPPING.key(@trainee.training_initiative)
       end
