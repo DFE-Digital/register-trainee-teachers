@@ -69,12 +69,12 @@ jobs:
         (kubectl -n bat-production exec -ti deployment/register-sandbox -- bundle exec rake vendor:create) >> vendor_create.txt
 
     - name: Check for Failure
-      uses: ./.github/actions/send-slack-notification/
+      uses: ./.github/actions/send-teams-notification/
       if: ${{ failure() }}
       with:
-        slack-title: 'Reset :sadpit: database Failure'
-        slack-message: ':alert: Reset sandbox database failure for sadpit :sadparrot:'
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-title: 'Reset sandbox database Failure'
+        teams-message: 'Reset sandbox database failure for sadpit'
+        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
     - name: Print out vendor_create.txt
       if: ${{ success() }}
@@ -83,10 +83,10 @@ jobs:
         cat vendor_create.txt
 
     - name: Check for Success
-      uses: ./.github/actions/send-slack-notification/
+      uses: ./.github/actions/send-teams-notification/
       if: ${{ success() }}
       with:
-        slack-color: '#37d67a'
-        slack-title: 'Reset :sadpit: database Success'
-        slack-message: ':alert-green: Reset sandbox database success for sadpit :char-dance:'
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        teams-title: 'Reset sandbox database Success'
+        teams-status: good
+        teams-message: 'Reset sandbox database success for sadpit'
+        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}

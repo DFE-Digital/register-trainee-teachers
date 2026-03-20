@@ -36,7 +36,7 @@ jobs:
         uses: DFE-Digital/github-actions/build-docker-image@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
           context: ""
 
   coverage_tests:
@@ -55,5 +55,5 @@ jobs:
           docker-image: ${{ needs.build.outputs.docker-image }}
           image-tag: ${{ needs.build.outputs.image-tag }}
           use-next-academic-year: false
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
           codecov-token: ${{ secrets.CODECOV_TOKEN }}

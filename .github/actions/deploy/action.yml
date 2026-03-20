@@ -20,7 +20,7 @@ inputs:
   sha:
     description: Commit sha to be deployed
     required: true
-  slack-webhook:
+  teams-webhook:
     required: true
   smoke-test-username:
     required: true
@@ -154,16 +154,16 @@ runs:
         environment: ${{ inputs.environment }}
         app-env: ${{ env.app_environment }}
         pr-number: ${{ inputs.pr-number }}
-        slack-webhook: ${{ inputs.slack-webhook }}
+        teams-webhook: ${{ inputs.teams-webhook }}
         smoke-test-username: ${{ inputs.smoke-test-username }}
         smoke-test-password: ${{ inputs.smoke-test-password }}
         basic-auth-username: ${{ inputs.basic-auth-username }}
         basic-auth-password: ${{ inputs.basic-auth-password }}
 
-    - name: Notify Slack channel on job failure
-      uses: ./.github/actions/send-slack-notification/
+    - name: Notify Teams channel on job failure
+      uses: ./.github/actions/send-teams-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
       with:
-        slack-title: 'Deployment failure on ${{ inputs.environment }}'
-        slack-message: ':alert: Deployment of commit ${{ inputs.sha }} to ${{ inputs.environment }} failed :sadparrot:'
-        slack-webhook: ${{ inputs.slack-webhook }}
+        teams-title: 'Deployment failure on ${{ inputs.environment }}'
+        teams-message: 'Deployment of commit ${{ inputs.sha }} to ${{ inputs.environment }} failed'
+        teams-webhook: ${{ inputs.teams-webhook }}

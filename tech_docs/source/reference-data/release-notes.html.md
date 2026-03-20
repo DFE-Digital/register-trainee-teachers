@@ -5,6 +5,57 @@ weight: 2
 
 # Release notes
 
+## v2026.1 — 20 March 2026
+
+### New values
+
+The following new values have been added:
+
+#### Training route
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">Label</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">15</td>
+      <td class="govuk-table__cell">iQTS</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">16</td>
+      <td class="govuk-table__cell">Assessment only</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">17</td>
+      <td class="govuk-table__cell">Early years assessment only</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">18</td>
+      <td class="govuk-table__cell">Early years undergrad</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">19</td>
+      <td class="govuk-table__cell">Early years postgrad</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">20</td>
+      <td class="govuk-table__cell">Early years salaried</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">21</td>
+      <td class="govuk-table__cell">HPITT postgrad</td>
+    </tr>
+  </tbody>
+</table>
+
+#### iQTS country
+
+New reference data item `iqts_country` has been added. This is mandatory when the training route is iQTS. Accepts a valid HESA country code.
+
 ## v2026.0 — 30 January 2026
 
 All reference data items remain unchanged from v2025.0. All existing values remain valid and supported.

@@ -1521,7 +1521,7 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14'.",
           )
         end
 
@@ -1532,10 +1532,40 @@ describe "`PUT /api/v2026.0/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '03', '09', '10', '11', '12', '14'.",
               ],
             )
           end
+        end
+      end
+
+      context "when IQTS route is used" do
+        let(:data) { { training_route: "15" } }
+
+        before do
+          put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+        end
+
+        it "rejects the IQTS route as obsolete" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            "training_route has invalid reference data value of 'iqts'. Valid values are '03', '09', '10', '11', '12', '14'.",
+          )
+        end
+      end
+
+      context "when school direct tuition fee route is used" do
+        let(:data) { { training_route: "02" } }
+
+        before do
+          put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+        end
+
+        it "rejects the school direct tuition fee route as obsolete" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            "training_route has invalid reference data value of 'school_direct_tuition_fee'. Valid values are '03', '09', '10', '11', '12', '14'.",
+          )
         end
       end
     end
