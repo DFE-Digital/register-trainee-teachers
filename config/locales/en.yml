@@ -2393,7 +2393,7 @@ en:
             degree_id:
               invalid: must be completed before qts_standards_met_date
             placements:
-              invalid: must be at least 2
+              invalid: "must be at least %{minimum}"
             state:
               invalid: must be selected as trn_received
             qts_standards_met_date:
