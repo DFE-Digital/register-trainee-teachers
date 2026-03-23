@@ -2397,7 +2397,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
         trainee.reload
         expect(response).to have_http_status(:ok)
         expect(trainee.first_names).to eq("Alice")
-        expect(trainee.hesa_trainee_detail.fund_code).to eq("2")
+        expect(trainee.funding_eligibility).to eq("not_eligible")
         expect(trainee.hesa_trainee_detail.course_year).to eq(2015)
         expect(trainee.hesa_trainee_detail.funding_method).to eq("6")
         expect(trainee.hesa_trainee_detail.itt_aim).to eq("202")
@@ -2447,7 +2447,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           trainee.reload
           expect(response).to have_http_status(:ok)
           expect(trainee.first_names).to eq("Alice")
-          expect(trainee.hesa_trainee_detail.fund_code).to eq("2")
+          expect(trainee.funding_eligibility).to eq("not_eligible")
           expect(trainee.hesa_trainee_detail.course_year).to eq(2015)
           expect(trainee.hesa_trainee_detail.funding_method).to eq("6")
           expect(trainee.hesa_trainee_detail.itt_aim).to eq("202")

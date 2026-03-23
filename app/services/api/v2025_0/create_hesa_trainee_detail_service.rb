@@ -29,7 +29,6 @@ module Api
         return {} if trainee.hesa_metadatum.nil?
 
         attributes = {}
-        attributes = { fund_code: trainee.hesa_metadatum.fundability } if existing_attributes[:fund_code].nil?
         attributes_for_extraction = %i[itt_aim itt_qualification_aim pg_apprenticeship_start_date]
         attributes_for_extraction = attributes_for_extraction.map! { |attribute| attribute if existing_attributes[attribute].nil? }.compact
 
@@ -39,7 +38,7 @@ module Api
       def extract_attributes_from_student_record
         return {} if trainee.hesa_students.empty?
 
-        attributes_for_extraction = %i[course_age_range itt_aim itt_qualification_aim fund_code pg_apprenticeship_start_date ni_number]
+        attributes_for_extraction = %i[course_age_range itt_aim itt_qualification_aim pg_apprenticeship_start_date ni_number]
 
         student_record = trainee.hesa_students.latest
         attributes = student_record.slice(attributes_for_extraction)

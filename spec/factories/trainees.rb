@@ -745,6 +745,7 @@ FactoryBot.define do
       with_hesa_student
       record_source { Sourceable::HESA_COLLECTION_SOURCE }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
+      funding_eligibility { FUNDING_ELIGIBILITIES.keys.sample }
 
       after(:create) do |trainee, evaluator|
         create(:hesa_metadatum, trainee: trainee, itt_aim: evaluator.itt_aim)
@@ -763,6 +764,7 @@ FactoryBot.define do
 
     trait :with_no_funding_hesa_trainee_detail do
       hesa_id { Faker::Number.number(digits: 13) }
+      funding_eligibility { :not_eligible }
       hesa_trainee_detail factory: :hesa_trainee_detail, fund_code: Hesa::CodeSets::FundCodes::NOT_ELIGIBLE, funding_method: Hesa::CodeSets::BursaryLevels::NONE
     end
 
