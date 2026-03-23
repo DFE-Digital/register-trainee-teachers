@@ -68,6 +68,7 @@ module Api
         course_min_age: {},
         course_max_age: {},
         record_source: { type: :string, options: { default: Trainee::API_SOURCE } },
+        funding_eligibility: {},
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end

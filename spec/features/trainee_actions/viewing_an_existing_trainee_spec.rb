@@ -106,8 +106,8 @@ feature "View trainees" do
         hesa_id: "5678",
         record_source: :hesa_collection,
         training_partner: @current_user.training_partners.first,
+        funding_eligibility: :eligible,
       )
-      trainee_with_fund_code.hesa_trainee_detail.update!(fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE)
 
       visit trainee_path(trainee_with_fund_code)
       then_i_should_see_the_fund_code_displayed

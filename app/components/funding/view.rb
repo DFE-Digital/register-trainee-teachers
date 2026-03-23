@@ -129,7 +129,9 @@ module Funding
     end
 
     def fund_code_value
-      trainee.hesa_trainee_detail&.fund_code || hesa_student&.fund_code
+      return unless trainee.funding_eligibility
+
+      "Hesa::CodeSets::FundCodes::#{trainee.funding_eligibility.upcase}".constantize
     end
 
     def applying_for_bursary_row
