@@ -35,7 +35,8 @@ jobs:
         uses: DFE-Digital/github-actions/build-docker-image@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          teams-webhook-url: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          service: ${{ vars.TEAMS_MSG_SERVICE_NAME }}
           context: ""
 
   test:

@@ -12,6 +12,13 @@ module Hesa
         "11" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
         "12" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
         "14" => TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
+        "15" => TRAINING_ROUTE_ENUMS[:iqts],
+        "16" => TRAINING_ROUTE_ENUMS[:assessment_only],
+        "17" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+        "18" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+        "19" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+        "20" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
+        "21" => TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
       }.freeze
     end
   end

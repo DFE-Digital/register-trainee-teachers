@@ -2542,6 +2542,27 @@
             ]
           }
         ]
+      },
+      {
+        "name": "airbyte_heartbeat",
+        "syncMode": "full_refresh_overwrite",
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "last_heartbeat"
+            ]
+          }
+        ]
       }
     ]
   }
