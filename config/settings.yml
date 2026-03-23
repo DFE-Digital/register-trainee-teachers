@@ -141,11 +141,12 @@ environment:
   name: beta
   display_name: Beta
 
-slack:
-  webhooks:
-    default: <set to register support on prod>
-    publish_register_tech_channel: <webhhook url>
-    publish_register_support_channel: <webhook url>
+notifications:
+  slack:
+    webhooks:
+      default: <set to register support on prod>
+      publish_register_tech_channel: <webhhook url>
+      publish_register_support_channel: <webhook url>
 
 track_validation_errors: true
 

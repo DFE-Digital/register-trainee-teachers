@@ -5,7 +5,7 @@ require "slack-notifier"
 class SlackNotifierService
   include ServicePattern
 
-  def initialize(channel_webhook: Settings.slack.webhooks.default, message:, username:, icon_emoji: ":inky-the-octopus:")
+  def initialize(channel_webhook: Settings.notifications.slack.webhooks.default, message:, username:, icon_emoji: ":inky-the-octopus:")
     @message = message
     @notifier = Slack::Notifier.new(channel_webhook)
     @icon_emoji = icon_emoji
