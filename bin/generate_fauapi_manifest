@@ -38,7 +38,7 @@ end
 manifest = {
   name: "register-trainee-teachers-api",
   displayName: "Register trainee teachers API",
-  description: "Register Public API for ITT Providers, SRS Vendors and HEIs to register trainee teachers",
+  description: "The Register API allows providers to import trainee records from their student record systems and to keep those records synchronised as they are modified.",
   overview: "Register API Public Interface\r\nFull documentation is available here:\r\n[Register API documentation - Register trainee teachers](https://www.register-trainee-teachers.service.gov.uk/api-docs)",
   schemaUrl: schema_url,
   schemaType: "openapi",
