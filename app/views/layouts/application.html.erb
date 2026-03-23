@@ -51,12 +51,13 @@
 
     <%= govuk_skip_link %>
 
-    <%= render Header::View.new %>
+    <header class="govuk-template__header">
+      <%= render Header::View.new %>
 
-    <%= render OrganisationSwitcher::View.new(current_user: @current_user) %>
+      <%= render OrganisationSwitcher::View.new(current_user: @current_user) %>
 
-    <% unless current_page?(:organisations) %>
-      <%= render NavigationBar::View.new(
+      <% unless current_page?(:organisations) %>
+        <%= render NavigationBar::View.new(
         items: [
           { name: "Home", url: root_path },
           ({ name: "Draft trainees", url: drafts_path, current: active_link_for("drafts", @trainee) } if can_view_drafts?),
@@ -98,6 +99,7 @@
         </div>
       </div>
     </div>
+    </header>
 
     <div class="govuk-width-container">
       <%= yield :breadcrumbs %>
