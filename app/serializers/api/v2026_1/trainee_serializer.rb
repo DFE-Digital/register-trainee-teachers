@@ -41,6 +41,7 @@ module Api
         applying_for_grant
         applying_for_scholarship
         bursary_tier
+        funding_eligibility
         course_subject_one
         course_subject_two
         course_subject_three
