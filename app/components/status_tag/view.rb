@@ -28,7 +28,7 @@ private
   def status_colour
     {
       draft: "grey",
-      submitted_for_trn: "turquoise",
+      submitted_for_trn: "teal",
       trn_received: "blue",
       recommended_for_award: "purple",
       awarded: "",

@@ -44,7 +44,7 @@ describe TaskList::View do
 
     it_behaves_like("status indicator", "completed", "blue")
     it_behaves_like("status indicator", "in_progress", "grey")
-    it_behaves_like("status indicator", "review", "pink")
+    it_behaves_like("status indicator", "review", "magenta")
     it_behaves_like("status indicator", "incomplete", "grey")
   end
 
