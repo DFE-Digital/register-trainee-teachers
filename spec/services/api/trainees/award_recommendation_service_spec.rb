@@ -155,7 +155,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("placements must be at least 2")
+          expect(errors.full_messages).to contain_exactly("placements must be at least 2 for the provider_led_postgrad training route")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -204,7 +204,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("placements must be at least 1")
+          expect(errors.full_messages).to contain_exactly("placements must be at least 1 for the school_direct_salaried training route")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -237,7 +237,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("placements must be at least 1")
+          expect(errors.full_messages).to contain_exactly("placements must be at least 1 for the iqts training route")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
