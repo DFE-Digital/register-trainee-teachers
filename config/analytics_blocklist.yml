@@ -312,7 +312,6 @@ shared:
     - hesa_updated_at
     - itt_aim
     - itt_qualification_aim
-    - fund_code
     - study_length
     - study_length_unit
     - service_leaver

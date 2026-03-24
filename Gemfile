@@ -194,6 +194,10 @@ group :development do
   gem "spring-commands-rspec", "~> 1.0"
   gem "spring-watcher-listen", "~> 2.1.0"
 
+  # Code analysis and language server support
+  gem "solargraph"
+  gem "solargraph-rails"
+
   # Profiling
   gem "annotate"
   gem "benchmark-memory"

@@ -938,7 +938,7 @@ RSpec.describe Api::V20250::TraineeAttributes do
         let(:hesa_trainee_detail_attributes) {
           hesa_trainee_detail.attributes.select { |k, _v|
             Api::V20250::HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
-          }
+          }.merge("fund_code" => nil)
         }
 
         let(:updated_hesa_trainee_detail_attributes) {
