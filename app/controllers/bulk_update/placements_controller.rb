@@ -2,6 +2,8 @@
 
 module BulkUpdate
   class PlacementsController < ApplicationController
+    before_action { authorize(%i[bulk_update placement]) }
+
     helper_method :bulk_placements_count, :prepopulated_template_filename, :blank_template_filename
 
     def new
