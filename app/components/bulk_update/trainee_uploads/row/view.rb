@@ -7,9 +7,7 @@ module BulkUpdate
         include Rails.application.routes.url_helpers
 
         COLOURS = {
-          "pending" => "govuk-tag--light-blue",
           "validated" => "govuk-tag--yellow",
-          "in_progress" => "govuk-tag--light-blue",
           "succeeded" => "govuk-tag--green",
           "failed" => "govuk-tag--red",
           "cancelled" => "govuk-tag--red",
