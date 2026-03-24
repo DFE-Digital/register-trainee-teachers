@@ -16,7 +16,7 @@
   background-color: $govuk-brand-colour;
 
   &:hover {
-    background-color: govuk-colour("blue", $variant: "shade-25");
+    background-color: govuk-colour("blue", $variant: "shade-10");
   }
 
   text-decoration: none;
@@ -59,7 +59,7 @@
 
 .app-status-card--grey {
   &, &:link, &:visited {
-    color: govuk-colour("black");
+    color: govuk-colour("black", $variant: "tint-25");
     background: govuk-colour("black", $variant: "tint-95");
   }
 
@@ -71,11 +71,11 @@
 .app-status-card--turquoise {
   &, &:link, &:visited {
     color: govuk-colour("teal", $variant: "shade-50");
-    background: govuk-colour("teal", $variant: "tint-50");
+    background: govuk-colour("teal", $variant: "tint-80");
   }
 
   &:hover {
-    background: govuk-colour("teal", $variant: "tint-25");
+    background: govuk-colour("teal", $variant: "tint-50");
   }
 }
 
