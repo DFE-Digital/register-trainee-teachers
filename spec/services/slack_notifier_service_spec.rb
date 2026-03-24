@@ -11,7 +11,7 @@ describe SlackNotifierService do
   let(:slack_notifier) { instance_double(Slack::Notifier) }
 
   describe "#call" do
-    context "when no webook passed" do
+    context "when no webhook passed" do
       before do
         allow(Settings.notifications.slack.webhooks).to receive(:default).and_return(default_webhook)
         allow(Slack::Notifier).to receive(:new).with(default_webhook).and_return(slack_notifier)
@@ -23,7 +23,7 @@ describe SlackNotifierService do
       end
     end
 
-    context "when no webook passed" do
+    context "when webhook is passed" do
       before do
         allow(Slack::Notifier).to receive(:new).with(channel_webhook).and_return(slack_notifier)
       end
