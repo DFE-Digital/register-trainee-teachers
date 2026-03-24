@@ -43,13 +43,13 @@ module TeacherTrainingApi
 
     before do
       allow(TeacherTrainingApi::PublishProviderChecker).to receive(:call).and_return(result)
-      allow(SlackNotifierService).to receive(:call).and_return(true)
+      allow(TeamsNotifierService).to receive(:call).and_return(true)
       allow(Rails.env).to receive(:production?).and_return(true)
     end
 
     it "generates the correct message and sends it to Slack" do
       described_class.perform_now
-      expect(SlackNotifierService).to have_received(:call)
+      expect(TeamsNotifierService).to have_received(:call)
     end
 
     context "when there are no missing providers" do
@@ -65,7 +65,7 @@ module TeacherTrainingApi
 
       it "sends a success message to Slack" do
         described_class.perform_now
-        expect(SlackNotifierService).to have_received(:call).with(
+        expect(TeamsNotifierService).to have_received(:call).with(
           hash_including(
             message: include(
               "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
@@ -75,7 +75,7 @@ module TeacherTrainingApi
               "Missing unaccredited providers: 0",
               "Total: 3",
             ),
-            icon_emoji: ":inky-the-octopus:",
+            icon_emoji: nil,
           ),
         )
       end
@@ -94,7 +94,7 @@ module TeacherTrainingApi
 
       it "sends a success message to Slack" do
         described_class.perform_now
-        expect(SlackNotifierService).to have_received(:call).with(
+        expect(TeamsNotifierService).to have_received(:call).with(
           hash_including(
             message: include(
               "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
@@ -106,7 +106,7 @@ module TeacherTrainingApi
               "  - School of BAT (Z01), UKPRN 87654321",
               "Total: 5",
             ),
-            icon_emoji: ":alert:",
+            icon_emoji: "&#128680;",
           ),
         )
       end

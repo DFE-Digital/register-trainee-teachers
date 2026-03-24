@@ -25,10 +25,9 @@ module TeacherTrainingApi
 
       message << "Total: #{checker.total_count}\n"
 
-      SlackNotifierService.call(
+      TeamsNotifierService.call(
         message: message,
-        icon_emoji: checker.missing.none? ? ":inky-the-octopus:" : ":alert:",
-        username: "Register Trainee Teachers: Job Failure",
+        icon_emoji: checker.missing.any? ? "&#128680;" : nil,
       )
     end
 
