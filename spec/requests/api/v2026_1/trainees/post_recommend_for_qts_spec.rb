@@ -76,6 +76,7 @@ RSpec.describe "POST /api/v2026.1/trainees/:trainee_id/recommend-for-qts" do
         expect(response.parsed_body[:errors]).to contain_exactly(
           "error" => "UnprocessableEntity",
           "message" => "placements must be at least 2 for the provider_led_postgrad training route",
+<<<<<<< HEAD
         )
       end
     end
@@ -174,104 +175,6 @@ RSpec.describe "POST /api/v2026.1/trainees/:trainee_id/recommend-for-qts" do
         expect(response.parsed_body[:errors]).to contain_exactly(
           "error" => "UnprocessableEntity",
           "message" => "placements must be at least 1 for the iqts training route",
-        )
-      end
-    end
-
-    context "when the trainee is on salaried route with 1 placement" do
-      let(:trainee) do
-        create(
-          :trainee,
-          :trn_received,
-          :school_direct_salaried,
-          placements: create_list(:placement, 1, :with_school),
-        )
-      end
-
-      it "recommends the trainee for a qts award" do
-        post "/api/v2026.1/trainees/#{trainee.slug}/recommend-for-qts",
-             headers: { authorization: "Bearer #{token}" },
-             params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
-
-        expect(response).to have_http_status(:accepted)
-        expect(response.parsed_body[:data][:recommended_for_award_at]).to be_present
-        expect(trainee.reload.recommended_for_award?).to be(true)
-      end
-    end
-
-    context "when the trainee is on salaried route with no placements" do
-      let(:trainee) do
-        create(
-          :trainee,
-          :without_placements,
-          :trn_received,
-          :school_direct_salaried,
-        )
-      end
-
-      it "does not change status of the trainee for a qts award" do
-        post "/api/v2026.1/trainees/#{trainee.slug}/recommend-for-qts",
-             headers: { authorization: "Bearer #{token}" },
-             params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
-
-        expect(response).to have_http_status(:unprocessable_entity)
-
-        trainee.reload
-        expect(trainee.recommended_for_award_at).to be_nil
-        expect(trainee.recommended_for_award?).to be(false)
-
-        expect(response.parsed_body[:errors]).to contain_exactly(
-          "error" => "UnprocessableEntity",
-          "message" => "placements must be at least 1",
-        )
-      end
-    end
-
-    context "when the trainee is on iQTS route with 1 placement" do
-      let(:trainee) do
-        create(
-          :trainee,
-          :trn_received,
-          :iqts,
-          placements: create_list(:placement, 1, :with_school),
-        )
-      end
-
-      it "recommends the trainee for a qts award" do
-        post "/api/v2026.1/trainees/#{trainee.slug}/recommend-for-qts",
-             headers: { authorization: "Bearer #{token}" },
-             params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
-
-        expect(response).to have_http_status(:accepted)
-        expect(response.parsed_body[:data][:recommended_for_award_at]).to be_present
-        expect(trainee.reload.recommended_for_award?).to be(true)
-      end
-    end
-
-    context "when the trainee is on iQTS route with no placements" do
-      let(:trainee) do
-        create(
-          :trainee,
-          :without_placements,
-          :trn_received,
-          :iqts,
-        )
-      end
-
-      it "does not change status of the trainee for a qts award" do
-        post "/api/v2026.1/trainees/#{trainee.slug}/recommend-for-qts",
-             headers: { authorization: "Bearer #{token}" },
-             params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
-
-        expect(response).to have_http_status(:unprocessable_entity)
-
-        trainee.reload
-        expect(trainee.recommended_for_award_at).to be_nil
-        expect(trainee.recommended_for_award?).to be(false)
-
-        expect(response.parsed_body[:errors]).to contain_exactly(
-          "error" => "UnprocessableEntity",
-          "message" => "placements must be at least 1",
         )
       end
     end
