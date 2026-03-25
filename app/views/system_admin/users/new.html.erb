@@ -5,12 +5,11 @@
       href: users_path,
     ) %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: [@user], local: true do |f| %>
+<%= register_form_with model: [@user], local: true do |f| %>
+  <%= f.govuk_error_summary %>
 
-      <%= f.govuk_error_summary %>
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-l">
         Add a user
       </h1>
@@ -21,6 +20,6 @@
       <%= f.govuk_text_field :dttp_id, label: { text: "DTTP ID", size: "s" }, hint: { text: "You only need this for provider users, not training partner users" }, width: 20, autocomplete: :off %>
 
       <%= f.govuk_submit %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
