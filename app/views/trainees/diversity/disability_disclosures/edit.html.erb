@@ -5,33 +5,33 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @disability_disclosure_form,
-                           url: trainee_diversity_disability_disclosure_path(@trainee),
-                           method: :put, local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(model: @disability_disclosure_form,
+                         url: trainee_diversity_disability_disclosure_path(@trainee),
+                         method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
 
-        <%= render TraineeName::View.new(@trainee) %>
-        <%= f.govuk_radio_buttons_fieldset(:disability_disclosure,
-                                           legend: { text: t("components.page_titles.trainees.diversity.disability_disclosure.edit"),
-                                                     tag: "h1",
-                                                     size: "l" }) do %>
-          <% format_disability_disclosure_options(Diversities::DISABILITY_DISCLOSURE_ENUMS.values).each_with_index do |disclosure_option, index| %>
-            <%= f.govuk_radio_button(
-              :disability_disclosure,
-              disclosure_option,
-              label: { text: I18n.t("views.forms.disability_disclosures.labels.#{disclosure_option}") },
-              link_errors: index.zero?,
-            ) %>
-          <% end %>
-
-          <%= f.govuk_radio_divider %>
-          <%= f.govuk_radio_button :disability_disclosure, Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
-                                   label: { text: "They did not say" } %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= render TraineeName::View.new(@trainee) %>
+      <%= f.govuk_radio_buttons_fieldset(:disability_disclosure,
+                                         legend: { text: t("components.page_titles.trainees.diversity.disability_disclosure.edit"),
+                                                   tag: "h1",
+                                                   size: "l" }) do %>
+        <% format_disability_disclosure_options(Diversities::DISABILITY_DISCLOSURE_ENUMS.values).each_with_index do |disclosure_option, index| %>
+          <%= f.govuk_radio_button(
+            :disability_disclosure,
+            disclosure_option,
+            label: { text: I18n.t("views.forms.disability_disclosures.labels.#{disclosure_option}") },
+            link_errors: index.zero?,
+          ) %>
         <% end %>
 
+        <%= f.govuk_radio_divider %>
+        <%= f.govuk_radio_button :disability_disclosure, Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
+                                 label: { text: "They did not say" } %>
+      <% end %>
+
       <%= f.govuk_submit %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>

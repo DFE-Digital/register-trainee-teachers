@@ -4,11 +4,11 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @training_partner_form, url: trainee_training_partners_details_path(@trainee) do |f| %>
+<%= register_form_with model: @training_partner_form, url: trainee_training_partners_details_path(@trainee) do |f| %>
+  <%= f.govuk_error_summary %>
 
-      <%= f.govuk_error_summary %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= f.govuk_collection_radio_buttons :training_partner_not_applicable,
         @training_partner_form.training_partner_not_applicable_options,
         :id,
@@ -18,9 +18,9 @@
       %>
 
       <%= f.govuk_submit t("continue") %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <% unless @trainee.draft? %>
   <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>

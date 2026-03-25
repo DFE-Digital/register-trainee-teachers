@@ -4,13 +4,11 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
+<%= register_form_with(model: @course_details_form, url: trainee_course_details_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
 
-    <%= register_form_with(model: @course_details_form, url: trainee_course_details_path(@trainee), method: :put, local: true) do |f| %>
-
-      <%= f.govuk_error_summary %>
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
@@ -65,9 +63,9 @@
                             hint: { text: t("activemodel.errors.models.course_details_form.attributes.itt_end_date.hint_html", year: Time.zone.now.next_year.year) }) %>
 
       <%= f.govuk_submit %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <%= render(CancelLink::View.new(@trainee)) %>
 

@@ -8,12 +8,12 @@
   ) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @disability_detail_form, url: trainee_diversity_disability_detail_path(@trainee),
-                           method: :put, local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(model: @disability_detail_form, url: trainee_diversity_disability_detail_path(@trainee),
+                         method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= render TraineeName::View.new(@trainee) %>
       <%= f.govuk_check_boxes_fieldset :disability_ids,
           legend: { text: t("components.page_titles.trainees.diversity.disabilities.edit"), tag: "h1", size: "l" },
@@ -38,6 +38,6 @@
       <% end %>
 
       <%= f.govuk_submit %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>

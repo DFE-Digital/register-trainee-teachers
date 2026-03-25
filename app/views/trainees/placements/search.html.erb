@@ -1,12 +1,12 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= form_with(
-        model: @select_placement_school_form,
-        url: @select_placement_school_form.form_path,
-        method: @select_placement_school_form.form_method,
-      ) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= form_with(
+    model: @select_placement_school_form,
+    url: @select_placement_school_form.form_path,
+    method: @select_placement_school_form.form_method,
+  ) do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-l">Find school</span>
         <%= @select_placement_school_form.title %>
@@ -32,11 +32,12 @@
         ) %>
         <%= f.govuk_submit t("continue") %>
       <% end %>
-    <% end %>
-     <% unless @select_placement_school_form.search_results.schools.empty? %>
-      <p class="govuk-body">
-        <%= govuk_link_to(t("cancel"), trainee_path(@select_placement_school_form.trainee)) %>
-      </p>
-    <% end %>
+
+      <% unless @select_placement_school_form.search_results.schools.empty? %>
+        <p class="govuk-body">
+          <%= govuk_link_to(t("cancel"), trainee_path(@select_placement_school_form.trainee)) %>
+        </p>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
