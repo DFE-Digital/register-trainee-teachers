@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "microsoft_teams_incoming_webhook_ruby"
-
 class TeamsNotifierService
   include ServicePattern
 
@@ -12,21 +10,14 @@ class TeamsNotifierService
   end
 
   def call
-    teams_message.send
+    TeamsWebhook::Client.post(channel_webhook, body: { text: formatted_text }.to_json)
   end
 
 private
 
   attr_reader :channel_webhook, :message, :icon_emoji
 
-  def teams_message
-    MicrosoftTeamsIncomingWebhookRuby::Message.new do |m|
-      m.url = channel_webhook
-      m.text = formatted_text
-    end
-  end
-
   def formatted_text
-    "#{icon_emoji} #{message}"
+    [icon_emoji, message].compact.join(" ").strip
   end
 end
