@@ -318,6 +318,7 @@ module Api
         end
 
         deep_attributes.delete("hesa_trainee_detail_attributes") if deep_attributes["hesa_trainee_detail_attributes"].blank?
+        deep_attributes["hesa_trainee_detail_attributes"]&.delete("fund_code")
 
         deep_attributes
       end
