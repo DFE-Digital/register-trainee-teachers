@@ -4,11 +4,11 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back), last_origin_page: true) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <%= register_form_with(model: @degree, url: trainee_degrees_new_type_path, local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(model: @degree, url: trainee_degrees_new_type_path, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
       <%= render TraineeName::View.new(@trainee) %>
       <% if @trainee.degrees.size > 1 %>
         <h1 class="govuk-heading-l">Add another degree</h1>
@@ -32,7 +32,6 @@
           legend: { text: "Is this a UK degree?" } %>
 
       <%= f.govuk_submit("Continue") %>
-
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
