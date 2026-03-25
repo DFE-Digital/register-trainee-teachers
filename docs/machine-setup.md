@@ -15,6 +15,7 @@ You’ll need to have the libraries below to be able to develop the application 
 - [JQ](https://stedolan.github.io/jq/)
 - [Docker](https://www.docker.com/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- [kubelogin](https://azure.github.io/kubelogin/)
 
 ### Install build dependencies with ASDF
 
