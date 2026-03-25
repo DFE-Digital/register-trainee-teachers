@@ -367,7 +367,6 @@ shared:
     - created_at
     - updated_at
     - itt_qualification_aim
-    - fund_code
     - hesa_disabilities
   providers:
     - searchable

@@ -283,6 +283,8 @@ module Api
         hesa_trainee_detail_attributes = trainee.hesa_trainee_detail&.attributes&.select { |k, _v|
           HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
         } || {}
+        hesa_trainee_detail_attributes["fund_code"] ||=
+          Api::V20250::HesaTraineeDetailSerializer::FUND_CODE_FROM_ELIGIBILITY[trainee.funding_eligibility]
 
         degrees_attributes = trainee.degrees.map do |degree|
           degree.attributes.select { |k, _v| DegreeAttributes::ATTRIBUTES.include?(k.to_sym) }
@@ -316,6 +318,7 @@ module Api
         end
 
         deep_attributes.delete("hesa_trainee_detail_attributes") if deep_attributes["hesa_trainee_detail_attributes"].blank?
+        deep_attributes["hesa_trainee_detail_attributes"]&.delete("fund_code")
 
         deep_attributes
       end
