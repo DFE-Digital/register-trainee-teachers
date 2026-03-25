@@ -20,8 +20,8 @@ kubelogin installed locally
 If you use asdf (or mise), `azure-cli` and `kubelogin` need to be set as **global** versions — not just in the project `.tool-versions`. This is because kubectl spawns kubelogin as a credential plugin from outside the project directory, so asdf can't find the project-level `.tool-versions`.
 
 ```bash
-asdf global kubelogin 0.1.1
-asdf global azure-cli 2.84.0
+asdf set --home kubelogin 0.1.1
+asdf set --home azure-cli 2.84.0
 ```
 
 Without this you'll get errors like `No version is set for command kubelogin` when running `make <env> console` or `get-cluster-credentials`.
