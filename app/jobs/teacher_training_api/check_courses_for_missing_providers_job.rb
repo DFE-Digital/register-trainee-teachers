@@ -13,8 +13,9 @@ module TeacherTrainingApi
       )
 
       TeamsNotifierService.call(
+        title: "Course Provider Checker Results for #{recruitment_cycle_year} [#{Rails.env}]",
         message: checker[:message],
-        icon_emoji: checker[:courses_with_missing_provider_count].to_i.positive? ? "&#128680;" : nil,
+        icon_emoji: checker[:courses_with_missing_provider_count].to_i.positive? ? "🚨" : "✅",
       )
     end
   end

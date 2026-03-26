@@ -14,8 +14,7 @@ module TeacherTrainingApi
         recruitment_cycle_year: Settings.current_recruitment_cycle_year,
       )
 
-      message = "[#{Rails.env}] Publish Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{checker.recruitment_cycle_year}:\n"
-      message << "Matching training partners: #{checker.training_partner_matches.count}\n"
+      message = "Matching training partners: #{checker.training_partner_matches.count}\n"
       message << "Matching providers: #{checker.provider_matches.count}\n"
       message << "Missing accredited providers: #{checker.missing_accredited.count}\n"
       output_missing_list(message, checker.missing_accredited)
@@ -26,8 +25,9 @@ module TeacherTrainingApi
       message << "Total: #{checker.total_count}\n"
 
       TeamsNotifierService.call(
+        title: "Publish Provider Checker Results for #{Settings.current_recruitment_cycle_year} [#{Rails.env}]",
         message: message,
-        icon_emoji: checker.missing.any? ? "&#128680;" : nil,
+        icon_emoji: checker.missing.any? ? "🚨" : "✅",
       )
     end
 

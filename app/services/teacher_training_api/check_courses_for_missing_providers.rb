@@ -30,9 +30,9 @@ module TeacherTrainingApi
     end
 
     def message
-      return "[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\nNo courses with missing providers for recruitment cycle year." unless courses_with_missing_providers.any?
+      return "No courses with missing providers for recruitment cycle year #{recruitment_cycle_year}." unless courses_with_missing_providers.any?
 
-      "[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\n#{courses_with_missing_providers.count} #{'course'.pluralize(courses_with_missing_providers.count)} with a missing provider for recruitment cycle year."
+      "#{courses_with_missing_providers.count} #{'course'.pluralize(courses_with_missing_providers.count)} with a missing provider for recruitment cycle year #{recruitment_cycle_year}."
     end
 
     def message_with_missing_provider_codes
