@@ -89,7 +89,7 @@ module ApplicationRecordCard
     describe "status" do
       [
         { state: :draft, colour: "grey", text: "Draft" },
-        { state: :submitted_for_trn, colour: "turquoise", text: "Pending TRN" },
+        { state: :submitted_for_trn, colour: "teal", text: "Pending TRN" },
         { state: :trn_received, colour: "blue", text: "TRN received" },
         { state: :recommended_for_award, colour: "purple", text: "QTS pending" },
         { state: :awarded, colour: "", text: "Holds QTS" },

@@ -43,7 +43,7 @@ private
         Progress::STATUSES[:completed] => "blue",
         Progress::STATUSES[:in_progress_valid] => "grey",
         Progress::STATUSES[:in_progress_invalid] => "grey",
-        Progress::STATUSES[:review] => "pink",
+        Progress::STATUSES[:review] => "magenta",
         Progress::STATUSES[:incomplete] => "grey",
       }.fetch(status, "grey")
     end
