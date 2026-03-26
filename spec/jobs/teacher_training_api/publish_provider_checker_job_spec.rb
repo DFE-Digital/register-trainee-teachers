@@ -47,7 +47,7 @@ module TeacherTrainingApi
       allow(Rails.env).to receive(:production?).and_return(true)
     end
 
-    it "generates the correct message and sends it to Slack" do
+    it "generates the correct message and sends it to Teams" do
       described_class.perform_now
       expect(TeamsNotifierService).to have_received(:call)
     end
@@ -63,7 +63,7 @@ module TeacherTrainingApi
         )
       end
 
-      it "sends a success message to Slack" do
+      it "sends a success message to Teams" do
         described_class.perform_now
         expect(TeamsNotifierService).to have_received(:call).with(
           {
@@ -90,7 +90,7 @@ module TeacherTrainingApi
         )
       end
 
-      it "sends a success message to Slack" do
+      it "sends a success message to Teams" do
         described_class.perform_now
         expect(TeamsNotifierService).to have_received(:call).with(
           {

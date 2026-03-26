@@ -142,11 +142,6 @@ environment:
   display_name: Beta
 
 notifications:
-  slack:
-    webhooks:
-      default: <set to register support on prod>
-      publish_register_tech_channel: <webhook url>
-      publish_register_support_channel: <webhook url>
   teams:
     webhooks:
       register_tech_channel: <webhook url>
