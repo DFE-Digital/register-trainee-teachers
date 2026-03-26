@@ -13,7 +13,7 @@ module TeamsWebhook
 
     describe ".post" do
       let(:url) { "https://example.com/webhook" }
-      let(:options) { { body: { text: "message" }.to_json } }
+      let(:options) { { body: { type: "AdaptiveCard", version: "1.0", body: "message" }.to_json } }
       let(:success_response) { double("response", success?: true, code: 200, body: "ok", headers: {}) }
       let(:failure_response) { double("response", success?: false, code: 500, body: "error", headers: {}) }
 

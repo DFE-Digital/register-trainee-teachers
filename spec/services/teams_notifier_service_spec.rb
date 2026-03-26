@@ -38,7 +38,7 @@ describe TeamsNotifierService do
           expect(payload.dig("body", 1, "items", 1, "text")).to eq(message)
         end
 
-        described_class.call(title: title, message: message)
+        described_class.call(title:, message:)
       end
     end
 

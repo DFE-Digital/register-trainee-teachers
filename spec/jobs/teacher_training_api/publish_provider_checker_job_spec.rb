@@ -97,10 +97,10 @@ module TeacherTrainingApi
             title: "Publish Provider Checker Results for #{Settings.current_recruitment_cycle_year} [test]",
             message: "Matching training partners: 2\n" \
                      "Matching providers: 1\n" \
-                     "Missing accredited providers: 1\n" \
-                     "  - University of BAT (A01), UKPRN 12345678\n\n" \
-                     "Missing unaccredited providers: 1\n" \
-                     "  - School of BAT (Z01), UKPRN 87654321\n\n" \
+                     "Missing accredited providers: 1\n  " \
+                     "- University of BAT (A01), UKPRN 12345678\n\n" \
+                     "Missing unaccredited providers: 1\n  " \
+                     "- School of BAT (Z01), UKPRN 87654321\n\n" \
                      "Total: 5\n",
             icon_emoji: "🚨",
           },
