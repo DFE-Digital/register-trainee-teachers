@@ -66,17 +66,15 @@ module TeacherTrainingApi
       it "sends a success message to Slack" do
         described_class.perform_now
         expect(TeamsNotifierService).to have_received(:call).with(
-          hash_including(
-            message: include(
-              "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
-              "Matching training partners: 2",
-              "Matching providers: 1",
-              "Missing accredited providers: 0",
-              "Missing unaccredited providers: 0",
-              "Total: 3",
-            ),
-            icon_emoji: nil,
-          ),
+          {
+            title: "Publish Provider Checker Results for #{Settings.current_recruitment_cycle_year} [test]",
+            message: "Matching training partners: 2\n" \
+                     "Matching providers: 1\n" \
+                     "Missing accredited providers: 0\n" \
+                     "Missing unaccredited providers: 0\n" \
+                     "Total: 3\n",
+            icon_emoji: "✅",
+          },
         )
       end
     end
@@ -95,19 +93,17 @@ module TeacherTrainingApi
       it "sends a success message to Slack" do
         described_class.perform_now
         expect(TeamsNotifierService).to have_received(:call).with(
-          hash_including(
-            message: include(
-              "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
-              "Matching training partners: 2",
-              "Matching providers: 1",
-              "Missing accredited providers: 1",
-              "  - University of BAT (A01), UKPRN 12345678",
-              "Missing unaccredited providers: 1",
-              "  - School of BAT (Z01), UKPRN 87654321",
-              "Total: 5",
-            ),
-            icon_emoji: "&#128680;",
-          ),
+          {
+            title: "Publish Provider Checker Results for #{Settings.current_recruitment_cycle_year} [test]",
+            message: "Matching training partners: 2\n" \
+                     "Matching providers: 1\n" \
+                     "Missing accredited providers: 1\n" \
+                     "  - University of BAT (A01), UKPRN 12345678\n\n" \
+                     "Missing unaccredited providers: 1\n" \
+                     "  - School of BAT (Z01), UKPRN 87654321\n\n" \
+                     "Total: 5\n",
+            icon_emoji: "🚨",
+          },
         )
       end
     end

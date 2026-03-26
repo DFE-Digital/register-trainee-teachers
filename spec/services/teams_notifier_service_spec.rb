@@ -5,8 +5,10 @@ require "rails_helper"
 describe TeamsNotifierService do
   let(:channel_webhook) { "https://example.com/teamswebhook" }
   let(:default_webhook) { "https://example.com/defaultteamswebhook" }
-  let(:message) { "hello world" }
-  let(:icon_emoji) { "&#x1F419;" }
+  let(:title) { "Notification Title" }
+  let(:message) { "Notification message" }
+  let(:icon_emoji) { "🚨" }
+  let(:default_icon_emoji) { "🐙" }
 
   describe "#call" do
     context "when no webhook is passed" do
@@ -16,21 +18,27 @@ describe TeamsNotifierService do
       end
 
       it "sends a message using the default webhook" do
-        expect(TeamsWebhook::Client).to receive(:post).with(
-          default_webhook,
-          body: { text: "#{icon_emoji} #{message}" }.to_json,
-        )
+        expect(TeamsWebhook::Client).to receive(:post) do |webhook, options|
+          payload = JSON.parse(options[:body])
 
-        described_class.call(message:)
+          expect(webhook).to eq(default_webhook)
+          expect(payload.dig("body", 1, "items", 0, "text")).to eq("#{icon_emoji} #{title}")
+          expect(payload.dig("body", 1, "items", 1, "text")).to eq(message)
+        end
+
+        described_class.call(title:, message:, icon_emoji:)
       end
 
-      it "does not include icon when icon_emoji is nil" do
-        expect(TeamsWebhook::Client).to receive(:post).with(
-          default_webhook,
-          body: { text: message }.to_json,
-        )
+      it "uses the default icon when icon_emoji is not provided" do
+        expect(TeamsWebhook::Client).to receive(:post) do |webhook, options|
+          payload = JSON.parse(options[:body])
 
-        described_class.call(message:, icon_emoji: nil)
+          expect(webhook).to eq(default_webhook)
+          expect(payload.dig("body", 1, "items", 0, "text")).to eq("#{default_icon_emoji} #{title}")
+          expect(payload.dig("body", 1, "items", 1, "text")).to eq(message)
+        end
+
+        described_class.call(title: title, message: message)
       end
     end
 
@@ -40,12 +48,15 @@ describe TeamsNotifierService do
       end
 
       it "sends a message using the passed webhook" do
-        expect(TeamsWebhook::Client).to receive(:post).with(
-          channel_webhook,
-          body: { text: "#{icon_emoji} #{message}" }.to_json,
-        )
+        expect(TeamsWebhook::Client).to receive(:post) do |webhook, options|
+          payload = JSON.parse(options[:body])
 
-        described_class.call(channel_webhook:, message:, icon_emoji:)
+          expect(webhook).to eq(channel_webhook)
+          expect(payload.dig("body", 1, "items", 0, "text")).to eq("#{icon_emoji} #{title}")
+          expect(payload.dig("body", 1, "items", 1, "text")).to eq(message)
+        end
+
+        described_class.call(channel_webhook:, title:, message:, icon_emoji:)
       end
     end
   end
