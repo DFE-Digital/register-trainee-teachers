@@ -5,7 +5,7 @@ module TeamsWebhook
     class Request
       include HTTParty
 
-      headers "Content-Type" => "application/json"
+      headers "Content-Type" => "application/json; charset=utf-8"
     end
 
     class HttpError < StandardError; end
