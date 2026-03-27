@@ -14,9 +14,8 @@ DELETE FROM "bulk_update_recommendations_uploads";
 DELETE FROM "bulk_update_row_errors";
 DELETE FROM "bulk_update_trainee_upload_rows";
 DELETE FROM "bulk_update_trainee_uploads";
-DELETE FROM "dqt_teachers";
-DELETE FROM "dqt_teacher_trainings";
 DELETE FROM "trs_trn_requests";
+DELETE FROM "feedback_items";
 DELETE FROM "funding_payment_schedules";
 DELETE FROM "funding_payment_schedule_rows";
 DELETE FROM "funding_payment_schedule_row_amounts";
@@ -24,9 +23,7 @@ DELETE FROM "funding_trainee_summaries";
 DELETE FROM "funding_trainee_summary_rows";
 DELETE FROM "funding_trainee_summary_row_amounts";
 DELETE FROM "funding_uploads";
-DELETE FROM "hesa_collection_requests";
 DELETE FROM "hesa_students";
-DELETE FROM "hesa_trn_requests";
 DELETE FROM "sessions";
 DELETE FROM "uploads";
 DELETE FROM "validation_errors";
@@ -74,12 +71,6 @@ SET
 WHERE
   email IS NULL
   OR email !~ '@(digital\.)?education\.gov\.uk$';
-
--- HESA TRN submissions
-UPDATE
-  "hesa_trn_submissions"
-SET
-  payload = NULL;
 
 -- Trainees
 UPDATE

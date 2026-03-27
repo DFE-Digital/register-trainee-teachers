@@ -1,4 +1,7 @@
 shared:
+  feedback_items:
+    - name
+    - email
   trainees:
     - first_names
     - last_name
