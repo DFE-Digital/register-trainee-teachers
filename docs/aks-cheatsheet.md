@@ -12,6 +12,20 @@ azure-cli installed locally
 kubectl installed locally
 - see https://github.com/DFE-Digital/teacher-services-cloud#kubectl
 
+kubelogin installed locally
+- see https://azure.github.io/kubelogin/
+
+### asdf users: global versions needed for cluster tools
+
+If you use asdf (or mise), `azure-cli` and `kubelogin` need to be set as **global** versions — not just in the project `.tool-versions`. This is because kubectl spawns kubelogin as a credential plugin from outside the project directory, so asdf can't find the project-level `.tool-versions`.
+
+```bash
+asdf set --home kubelogin 0.1.1
+asdf set --home azure-cli 2.84.0
+```
+
+Without this you'll get errors like `No version is set for command kubelogin` when running `make <env> console` or `get-cluster-credentials`.
+
 All examples below show qa usage and you should adapt accordingly.
 
 ### Cluster and app info
