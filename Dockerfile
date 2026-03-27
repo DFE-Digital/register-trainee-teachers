@@ -4,7 +4,7 @@
 # rails-app: runs the actual app
 
 # Build rails-build image
-FROM ruby:3.4.8-alpine3.22 AS rails-build
+FROM ruby:3.4.8-alpine3.23 AS rails-build
 
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
@@ -20,8 +20,8 @@ COPY .tool-versions Gemfile Gemfile.lock ./
 
 # Install gems and remove gem cache
 RUN apk add --update --no-cache --virtual build-dependencies \
-    build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev && \
-    apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib && \
+    build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev=1.3.2-r0 && \
+    apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib=1.3.2-r0 && \
     # Special configuration for charlock_holmes gem - requires explicit ICU library paths
     # due to its native C++ extension that often fails to build in Alpine Linux environments
     bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
@@ -52,7 +52,7 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 ###
 
 # Build Middleman docs image
-FROM ruby:3.4.8-alpine3.22 AS middleman-build
+FROM ruby:3.4.8-alpine3.23 AS middleman-build
 
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
@@ -86,7 +86,7 @@ RUN bundle exec rake tech_docs:build
 ###
 
 # Build final rails-app image
-FROM ruby:3.4.8-alpine3.22 AS rails-app
+FROM ruby:3.4.8-alpine3.23 AS rails-app
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
 
@@ -98,7 +98,7 @@ RUN apk add --update --no-cache tzdata && \
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
-RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info yaml yarn zlib
+RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info yaml yarn zlib=1.3.2-r0
 
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
 COPY --from=rails-build /app/ .
