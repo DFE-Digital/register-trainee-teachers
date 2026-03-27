@@ -76,7 +76,6 @@ RSpec.describe "POST /api/v2025.0/trainees/:trainee_id/recommend-for-qts" do
         expect(response.parsed_body[:errors]).to contain_exactly(
           "error" => "UnprocessableEntity",
           "message" => "placements must be at least 2 for the provider_led_postgrad training route",
-<<<<<<< HEAD
         )
       end
     end
