@@ -12,14 +12,14 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
+    <%= render ErrorSummary::View.new(renderable: @form.errors.any?) do %>
+      <% @form.errors.messages.map do |section, messages| %>
+        <%= tag.li(link_to(messages.first, "##{section}")) %>
+      <% end %>
+    <% end %>
+
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
-        <%= render ErrorSummary::View.new(renderable: @form.errors.any?) do %>
-          <% @form.errors.messages.map do |section, messages| %>
-            <%= tag.li(link_to(messages.first, "##{section}")) %>
-          <% end %>
-        <% end %>
-
         <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
           <span class="govuk-caption-l">
             Draft record <%= "for #{trainee_name(@trainee)}" if trainee_name(@trainee).present? %>
