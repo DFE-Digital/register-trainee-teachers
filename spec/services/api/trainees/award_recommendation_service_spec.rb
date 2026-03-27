@@ -143,8 +143,123 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         end
       end
 
+      context "when trainee requires placements and has fewer than 2" do
+        let(:trainee) { create(:trainee, :without_placements, :trn_received, training_route: :provider_led_postgrad) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("placements must be at least 2 for the provider_led_postgrad training route")
+          expect(trainee.recommended_for_award?).to be(false)
+        end
+      end
+
+      context "when trainee requires placements and has 2+" do
+        let(:trainee) { create(:trainee, :trn_received, :with_placements, training_route: :provider_led_postgrad) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
+      context "when trainee on salaried route has 1 placement" do
+        let(:trainee) { create(:trainee, :trn_received, :school_direct_salaried, placements: create_list(:placement, 1, :with_school)) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
+      context "when trainee on salaried route has no placements" do
+        let(:trainee) { create(:trainee, :without_placements, :trn_received, :school_direct_salaried) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("placements must be at least 1 for the school_direct_salaried training route")
+          expect(trainee.recommended_for_award?).to be(false)
+        end
+      end
+
+      context "when trainee on iQTS route has 1 placement" do
+        let(:trainee) { create(:trainee, :trn_received, :iqts, placements: create_list(:placement, 1, :with_school)) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
+      context "when trainee on iQTS route has no placements" do
+        let(:trainee) { create(:trainee, :without_placements, :trn_received, :iqts) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("placements must be at least 1 for the iqts training route")
+          expect(trainee.recommended_for_award?).to be(false)
+        end
+      end
+
+      context "when trainee on assessment_only route has no placements" do
+        let(:trainee) { create(:trainee, :without_placements, :trn_received, training_route: :assessment_only) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
       context "when trainee has no degrees but is on an undergraduate training route" do
-        let(:trainee) { create(:trainee, :trn_received, training_route: :early_years_undergrad) }
+        let(:trainee) { create(:trainee, :trn_received, :with_placements, training_route: :early_years_undergrad) }
         let(:params) do
           {
             qts_standards_met_date: Time.zone.today.iso8601,
@@ -161,7 +276,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       context "when trainee has no degrees and is on a postgraduate training route" do
-        let(:trainee) { create(:trainee, :trn_received, training_route: :provider_led_postgrad) }
+        let(:trainee) { create(:trainee, :trn_received, :with_placements, training_route: :provider_led_postgrad) }
         let(:params) do
           {
             qts_standards_met_date: Time.zone.today.iso8601,
@@ -175,22 +290,6 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("degree_id must be completed before qts_standards_met_date")
           expect(trainee.recommended_for_award?).to be(false)
-        end
-      end
-
-      context "when trainee has a degree and is on a postgraduate training route" do
-        let(:trainee) { create(:trainee, :trn_received, training_route: :provider_led_postgrad) }
-        let(:params) do
-          {
-            qts_standards_met_date: Time.zone.today.iso8601,
-          }
-        end
-
-        it "returns true" do
-          success, _errors = subject.call(params, trainee)
-
-          expect(success).to be(true)
-          expect(trainee.recommended_for_award?).to be(true)
         end
       end
     end

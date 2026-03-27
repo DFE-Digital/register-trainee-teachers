@@ -206,6 +206,10 @@ Recommendation details
         {
           "error": "UnprocessableEntity",
           "message": "Qts standards met date can't be blank"
+        },
+        {
+          "error": "UnprocessableEntity",
+          "message": "placements must be at least 2 for the provider_led_postgrad training route"
         }
       ]
     }</pre>

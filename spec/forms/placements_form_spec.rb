@@ -43,6 +43,38 @@ describe PlacementsForm, type: :model do
           expect(subject.errors[:placement_ids]).to include("Enter at least 2 placements")
         end
       end
+
+      context "iQTS route" do
+        let(:trainee) { build(:trainee, :submitted_for_trn, :iqts, placements:) }
+
+        context "with 1 placement" do
+          let(:placements) { build_list(:placement, 1, :with_school) }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "with no placements" do
+          let(:placements) { [] }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+
+      context "salaried route" do
+        let(:trainee) { build(:trainee, :submitted_for_trn, :school_direct_salaried, placements:) }
+
+        context "with 1 placement" do
+          let(:placements) { build_list(:placement, 1, :with_school) }
+
+          it { is_expected.to be_valid }
+        end
+
+        context "with no placements" do
+          let(:placements) { [] }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
     end
   end
 
