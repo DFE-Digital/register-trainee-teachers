@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@hotwired/turbo-rails": "^8.0.23",
-    "@ministryofjustice/frontend": "^8.0.1",
+    "@ministryofjustice/frontend": "^9.0.0",
     "accessible-autocomplete": "^3.0.1",
     "govuk-country-and-territory-autocomplete": "^2.0.0",
     "govuk-frontend": "^5.14.0",
