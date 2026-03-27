@@ -30,6 +30,17 @@ feature "bulk update page" do
     end
   end
 
+  context "salaried route trainee with one placement" do
+    before do
+      given_a_salaried_trainee_with_one_placement
+      and_i_visit_the_bulk_update_page
+    end
+
+    scenario "the bulk placement section is not visible" do
+      then_i_do_not_see_the_bulk_placement_section
+    end
+  end
+
   context "there are trainees to bulk recommend" do
     before do
       given_two_trainees_exist_to_recommend
@@ -59,7 +70,7 @@ private
   end
 
   def then_i_see_how_many_trainees_i_can_bulk_update
-    expect(page).to have_content("You have 1 trainee record who do not have at least two placements.")
+    expect(page).to have_content("You have 1 trainee record who do not have the required number of placements.")
   end
 
   def then_i_see_how_many_trainees_i_can_bulk_recommend
@@ -80,6 +91,16 @@ private
 
   def then_i_do_not_see_the_bulk_recommend_link
     expect(page).to have_content("You do not have any trainees eligible for a QTS or EYTS status change at the moment")
+  end
+
+  def given_a_salaried_trainee_with_one_placement
+    trainee = create(
+      :trainee,
+      :without_required_placements,
+      training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      provider: current_user.organisation,
+    )
+    create(:placement, trainee:)
   end
 
   def given_two_trainees_exist_to_recommend
