@@ -1,13 +1,9 @@
-<%= render SummaryCard::View.new(
-  title: "#{data_model.trainee.award_type} details",
-  rows: [
-    {
-      key: "Date standards met",
-      value: outcome_date,
-      action_href: edit_trainee_outcome_details_outcome_date_path(data_model.trainee),
-      action_text: t(:change),
-      action_visually_hidden_text: 'outcome date',
-    },
-  ],
-  editable: editable,
-) %>
+<%= govuk_summary_list do |summary_list|
+  summary_list.with_row do |row|
+    row.with_key(text: "When did the trainee’s #{data_model.trainee.award_type} status change?")
+    row.with_value(text: outcome_date_with_label)
+    if editable
+      row.with_action(href: edit_trainee_outcome_details_outcome_date_path(data_model.trainee), text: t(:change), visually_hidden_text: "outcome date")
+    end
+  end
+end %>

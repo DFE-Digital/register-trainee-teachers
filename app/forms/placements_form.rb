@@ -5,9 +5,7 @@ class PlacementsForm
 
   attr_accessor :trainee, :placement_ids
 
-  MINIMUM_PLACEMENTS = 2
-
-  validates :placement_ids, length: { minimum: MINIMUM_PLACEMENTS }, if: :non_draft_trainee?
+  validates :placement_ids, length: { minimum: ->(form) { form.trainee.minimum_placements } }, if: :non_draft_trainee?
   validate :placements_must_be_valid, if: :non_draft_trainee?
 
   def initialize(trainee, store = FormStore)

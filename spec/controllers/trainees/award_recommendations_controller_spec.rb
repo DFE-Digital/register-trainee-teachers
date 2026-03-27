@@ -14,9 +14,9 @@ describe Trainees::AwardRecommendationsController do
   end
 
   describe "#create" do
-    it "redirects user to the recommended page" do
+    it "redirects user to the trainee record page" do
       post :create, params: { trainee_id: trainee }
-      expect(response).to redirect_to(recommended_trainee_outcome_details_path(trainee))
+      expect(response).to redirect_to(trainee_path(trainee))
     end
 
     context "trainee state" do

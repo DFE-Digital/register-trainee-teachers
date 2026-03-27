@@ -9,11 +9,18 @@ feature "Recording a training outcome" do
     given_i_am_authenticated
   end
 
-  scenario "trainee cannnot be recommended for award" do
+  scenario "trainee cannot be recommended for award due to missing degrees" do
     given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :without_degrees)
     and_i_am_on_the_trainee_record_page
-    then_i_dont_see_the_recommend_for_qts_button
-    and_i_see_additional_details_have_to_be_provided("Degrees")
+    and_i_click_on_record_training_outcome
+    then_i_see_the_stop_page_with_missing("Degrees")
+  end
+
+  scenario "trainee cannot be recommended for award due to missing placements" do
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :provider_led_postgrad)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_record_training_outcome
+    then_i_see_the_stop_page_with_missing("Placements")
   end
 
   scenario "submit empty form" do
@@ -26,7 +33,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "view correct title for early years" do
-    given_a_trainee_exists(:trn_received, :early_years_salaried, :with_valid_past_itt_start_date)
+    given_a_trainee_exists(:trn_received, :early_years_salaried, :with_placements, :with_valid_past_itt_start_date)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     i_see_the_correct_title_for_early_years
@@ -56,12 +63,12 @@ feature "Recording a training outcome" do
     then_the_outcome_date_is_updated
   end
 
-  context "choosing 'On another day'" do
+  context "choosing 'Another date'" do
     before do
       given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
       and_i_am_on_the_trainee_record_page
       and_i_click_on_record_training_outcome
-      when_i_choose("On another day")
+      when_i_choose("Another date")
     end
 
     scenario "and not filling out a complete date displays the correct error" do
@@ -147,12 +154,15 @@ feature "Recording a training outcome" do
     expect(trainee.reload.outcome_date).not_to be_nil
   end
 
-  def then_i_dont_see_the_recommend_for_qts_button
-    expect(record_page).not_to have_content("Change status of trainee")
+  def then_i_see_the_stop_page_with_missing(*details)
+    expect(page).to have_content("You cannot update the trainee’s")
+
+    details.each do |detail|
+      expect(page).to have_content(detail)
+    end
   end
 
   def and_i_see_additional_details_have_to_be_provided(*details)
-    expect(record_page).to have_content("You need to give additional details before you can change status of the trainee for QTS")
     expect(record_page).to have_content("You need to enter:")
 
     details.each do |detail|

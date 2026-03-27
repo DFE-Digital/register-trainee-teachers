@@ -202,30 +202,6 @@ describe TraineePolicy do
     end
   end
 
-  permissions :recommended? do
-    context "when trainee is recommended" do
-      before do
-        allow(provider_trainee).to receive(:recommended_for_award?).and_return(true)
-      end
-
-      it { is_expected.to permit(provider_user, provider_trainee) }
-      it { is_expected.not_to permit(other_provider_user, provider_trainee) }
-      it { is_expected.not_to permit(training_partner_user, provider_trainee) }
-      it { is_expected.to permit(system_admin_user, provider_trainee) }
-    end
-
-    context "when trainee is deferred?" do
-      before do
-        allow(provider_trainee).to receive(:deferred?).and_return(true)
-      end
-
-      it { is_expected.not_to permit(provider_user, provider_trainee) }
-      it { is_expected.not_to permit(other_provider_user, provider_trainee) }
-      it { is_expected.not_to permit(training_partner_user, provider_trainee) }
-      it { is_expected.not_to permit(system_admin_user, provider_trainee) }
-    end
-  end
-
   permissions :recommend_for_award? do
     context "when trainee is trn_received?" do
       before do
