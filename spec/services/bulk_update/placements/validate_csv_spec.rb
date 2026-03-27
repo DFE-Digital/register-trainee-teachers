@@ -22,13 +22,13 @@ module BulkUpdate
       context "given a CSV with no header row" do
         let(:csv) { CSV.new("", **Config::CSV_ARGS).read }
 
-        it { expect(record.errors.first.message).to eql "CSV header must include: TRN, Trainee ITT start date, Placement 1 URN, Placement 2 URN" }
+        it { expect(record.errors.first.message).to eql "CSV header must include: TRN, Trainee ITT start date, Placement 1 URN" }
       end
 
       context "given a CSV with too many placement columns" do
         let(:file) { file_fixture("bulk_update/placements/complete-with-too-many-placements.csv") }
         let(:csv) { CSV.new(file.read, headers: true, header_converters: :downcase, strip: true).read }
-        let(:expected_error_message) { "CSV header must include: TRN, Trainee ITT start date, Placement 1 URN, Placement 2 URN" }
+        let(:expected_error_message) { "CSV header must include: TRN, Trainee ITT start date, Placement 1 URN" }
 
         it { expect(record.errors.first.message).to eql expected_error_message }
       end
