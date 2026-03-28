@@ -73,7 +73,7 @@ module Trs
     end
 
     def notify_failure
-      send_message_to_slack(trainee, self.class.name)
+      notify_on_timeout(trainee, self.class.name)
     end
 
     def timeout_duration

@@ -15,18 +15,18 @@ module TeacherTrainingApi
       create(:course, recruitment_cycle_year: recruitment_cycle_year, provider: discarded_provider)
       create(:course, recruitment_cycle_year: recruitment_cycle_year, accredited_body_code: "A003")
 
-      allow(SlackNotifierService).to receive(:call).and_return(true)
+      allow(TeamsNotifierService).to receive(:call).and_return(true)
       allow(Rails.env).to receive(:production?).and_return(true)
     end
 
     it "runs a job to check imported courses for missing providers" do
       Timecop.freeze do
         described_class.perform_now(recruitment_cycle_year:)
-        expect(SlackNotifierService).to have_received(:call).with(
+        expect(TeamsNotifierService).to have_received(:call).with(
           {
-            icon_emoji: ":alert:",
-            message: "[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\n2 courses with a missing provider for recruitment cycle year.\nMissing provider codes: A002, A003.",
-            username: "Register Trainee Teachers: Job Failure",
+            icon_emoji: "🚨",
+            title: "Course Provider Checker Results for #{recruitment_cycle_year} [#{Rails.env}]",
+            message: "2 courses with a missing provider for recruitment cycle year #{recruitment_cycle_year}.\nMissing provider codes: A002, A003.",
           },
         )
       end

@@ -43,13 +43,13 @@ module TeacherTrainingApi
 
     before do
       allow(TeacherTrainingApi::PublishProviderChecker).to receive(:call).and_return(result)
-      allow(SlackNotifierService).to receive(:call).and_return(true)
+      allow(TeamsNotifierService).to receive(:call).and_return(true)
       allow(Rails.env).to receive(:production?).and_return(true)
     end
 
-    it "generates the correct message and sends it to Slack" do
+    it "generates the correct message and sends it to Teams" do
       described_class.perform_now
-      expect(SlackNotifierService).to have_received(:call)
+      expect(TeamsNotifierService).to have_received(:call)
     end
 
     context "when there are no missing providers" do
@@ -63,20 +63,18 @@ module TeacherTrainingApi
         )
       end
 
-      it "sends a success message to Slack" do
+      it "sends a success message to Teams" do
         described_class.perform_now
-        expect(SlackNotifierService).to have_received(:call).with(
-          hash_including(
-            message: include(
-              "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
-              "Matching training partners: 2",
-              "Matching providers: 1",
-              "Missing accredited providers: 0",
-              "Missing unaccredited providers: 0",
-              "Total: 3",
-            ),
-            icon_emoji: ":inky-the-octopus:",
-          ),
+        expect(TeamsNotifierService).to have_received(:call).with(
+          {
+            title: "Publish Provider Checker Results for #{Settings.current_recruitment_cycle_year} [test]",
+            message: "Matching training partners: 2\n" \
+                     "Matching providers: 1\n" \
+                     "Missing accredited providers: 0\n" \
+                     "Missing unaccredited providers: 0\n" \
+                     "Total: 3\n",
+            icon_emoji: "✅",
+          },
         )
       end
     end
@@ -92,22 +90,20 @@ module TeacherTrainingApi
         )
       end
 
-      it "sends a success message to Slack" do
+      it "sends a success message to Teams" do
         described_class.perform_now
-        expect(SlackNotifierService).to have_received(:call).with(
-          hash_including(
-            message: include(
-              "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
-              "Matching training partners: 2",
-              "Matching providers: 1",
-              "Missing accredited providers: 1",
-              "  - University of BAT (A01), UKPRN 12345678",
-              "Missing unaccredited providers: 1",
-              "  - School of BAT (Z01), UKPRN 87654321",
-              "Total: 5",
-            ),
-            icon_emoji: ":alert:",
-          ),
+        expect(TeamsNotifierService).to have_received(:call).with(
+          {
+            title: "Publish Provider Checker Results for #{Settings.current_recruitment_cycle_year} [test]",
+            message: "Matching training partners: 2\n" \
+                     "Matching providers: 1\n" \
+                     "Missing accredited providers: 1\n  " \
+                     "- University of BAT (A01), UKPRN 12345678\n\n" \
+                     "Missing unaccredited providers: 1\n  " \
+                     "- School of BAT (Z01), UKPRN 87654321\n\n" \
+                     "Total: 5\n",
+            icon_emoji: "🚨",
+          },
         )
       end
     end

@@ -2,9 +2,6 @@ dttp:
   api_base_url: "https://test-api-base-uri.com"
   portal_host: traineeteacherportal-test.education.gov.uk
 
-slack:
-  default_channel: "test-channel"
-  webhook_url: "https://test-slack-webhook-url.com"
 features:
   sign_in_method: dfe-sign-in
   basic_auth: false

@@ -12,10 +12,10 @@ module TeacherTrainingApi
         recruitment_cycle_year:,
       )
 
-      SlackNotifierService.call(
+      TeamsNotifierService.call(
+        title: "Course Provider Checker Results for #{recruitment_cycle_year} [#{Rails.env}]",
         message: checker[:message],
-        icon_emoji: checker[:courses_with_missing_provider_count].zero? ? ":inky-the-octopus:" : ":alert:",
-        username: "Register Trainee Teachers: Job Failure",
+        icon_emoji: checker[:courses_with_missing_provider_count].to_i.positive? ? "🚨" : "✅",
       )
     end
   end

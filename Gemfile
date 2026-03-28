@@ -83,8 +83,6 @@ gem "rotp"
 # Full text search
 gem "pg_search", "~> 2.3"
 
-gem "slack-notifier"
-
 # Tracking changes to models
 gem "audited", "~> 5.8"
 
