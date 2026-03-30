@@ -5,6 +5,9 @@ module Api
     class AwardRecommendationValidator < ActiveModel::Validator
       def validate(record)
         record.errors.add(:degree_id) if record.trainee_requires_degree? && record.trainee_degree_missing?
+        if record.trainee_requires_placements? && record.trainee_placements_missing?
+          record.errors.add(:placements, :invalid, minimum: record.trainee.minimum_placements, training_route: record.trainee.training_route)
+        end
         record.errors.add(:state) unless record.trainee_can_recommend_for_award?
       end
     end

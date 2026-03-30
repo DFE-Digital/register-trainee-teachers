@@ -179,6 +179,34 @@ describe TrainingRouteManager do
     end
   end
 
+  describe "#minimum_placements" do
+    context "for iQTS route" do
+      let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[:iqts]) }
+
+      it "returns 1" do
+        expect(subject.minimum_placements).to eq(1)
+      end
+    end
+
+    EMPLOYING_SCHOOL_ROUTES.each do |route|
+      context "for salaried route #{route}" do
+        let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[route]) }
+
+        it "returns 1" do
+          expect(subject.minimum_placements).to eq(1)
+        end
+      end
+    end
+
+    context "for other routes" do
+      let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]) }
+
+      it "returns 2" do
+        expect(subject.minimum_placements).to eq(2)
+      end
+    end
+  end
+
   describe "#requires_placements?" do
     (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
       context "for route #{route}" do
