@@ -77,10 +77,6 @@ class TraineePolicy
     allow_actions? && trainee.deferred?
   end
 
-  def recommended?
-    read? && trainee.recommended_for_award?
-  end
-
   def recommend_for_award?
     allow_actions? && trainee.trn_received?
   end

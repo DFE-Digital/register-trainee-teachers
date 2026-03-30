@@ -8,7 +8,8 @@ module Trainees
 
         Trainees::UpdateIttDataInTra.call(trainee:)
 
-        redirect_to(recommended_trainee_outcome_details_path(trainee))
+        flash[:success] = I18n.t("flash.trainee_status_updated", award_type: trainee.award_type)
+        redirect_to(trainee_path(trainee))
       end
     end
 

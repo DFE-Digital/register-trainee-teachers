@@ -3,7 +3,7 @@
 module Trainees
   class OutcomeDatesController < BaseController
     def edit
-      @outcome_form = OutcomeDateForm.new(trainee)
+      @outcome_form = OutcomeDateForm.new(trainee) if required_missing_fields.empty?
     end
 
     def update

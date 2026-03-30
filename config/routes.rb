@@ -180,7 +180,6 @@ Rails.application.routes.draw do
 
       resource :outcome_details, only: [], path: "outcome-details" do
         get "confirm"
-        get "recommended"
         resource :outcome_date, only: %i[edit update], path: "/outcome-date"
       end
 

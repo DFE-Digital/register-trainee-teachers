@@ -13,6 +13,7 @@ en:
     trainee_diversity_updated: Trainee diversity updated
     trainee_reinstated: Trainee reinstated
     trainee_withdrawn: Trainee withdrawn
+    trainee_status_updated: "Trainee’s %{award_type} status updated"
     trainee_placement_added: Trainee placement added
     trainee_placement_removed: Placement removed
   update_record: Update record
@@ -438,14 +439,14 @@ en:
         iqts_country:
           edit: Which country or territory is the trainee studying in?
         outcome_date:
-          edit: When did they meet the QTS standards?
-          eyts_edit: When did they meet the EYTS standards?
+          edit: "When did the trainee’s QTS status change?"
+          eyts_edit: "When did the trainee’s EYTS status change?"
           confirm: Check outcome details
         outcome_details:
-          confirm_qts: Check QTS details
-          confirm_eyts: Check EYTS details
-          recommended_qts: Trainee status changed
-          recommended_eyts: Trainee status changed
+          confirm_qts: Check your answers
+          confirm_eyts: Check your answers
+          recommended_qts: "Trainee’s QTS status updated"
+          recommended_eyts: "Trainee’s EYTS status updated"
         personal_details:
           edit: Trainee personal details
         trainee_start_date:
@@ -880,8 +881,8 @@ en:
         withdraw: withdraw
         reinstate: reinstate
         this_trainee: this trainee
-        recommend_for_award: Change status of trainee
-        recommend_for_eyts: Change status of trainee
+        recommend_for_award: Update QTS status
+        recommend_for_eyts: Update EYTS status
         status_summary:
           missing_fields: This trainee record requires additional details
           itt_not_started: The trainee’s ITT starts on %{itt_start_date}
@@ -889,6 +890,10 @@ en:
           deferred: This trainee is deferred
       show:
         draft: Draft
+      outcome_dates:
+        forbidden:
+          heading: "You cannot update the trainee’s %{award_type} status"
+          reason: "You cannot update the %{award_type} status for %{trainee_name} because the trainee record is missing:"
       delete:
         draft: Draft deleted
         record: Record deleted
@@ -1840,9 +1845,9 @@ en:
         outcome_date_form:
           attributes:
             date_string:
-              blank: Choose an outcome date
+              blank: "Select when the trainee’s QTS status changed"
             date:
-              blank: Enter an outcome date
+              blank: "Enter the date the trainee’s QTS status changed"
               future: Outcome date must be in the past
               invalid: Enter a valid outcome date
               not_before_itt_start_date: *not_before_itt_start_date
