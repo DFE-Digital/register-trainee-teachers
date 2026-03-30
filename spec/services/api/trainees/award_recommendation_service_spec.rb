@@ -53,7 +53,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank. Enter a date the trainee met the QTS or EYTS requirements.")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -70,7 +70,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank. Enter a date the trainee met the QTS or EYTS requirements.")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
