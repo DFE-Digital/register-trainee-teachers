@@ -68,7 +68,6 @@ RSpec/RepeatedExampleGroupDescription:
     - 'spec/components/dynamic_back_link/view_spec.rb'
     - 'spec/helpers/diversities_helper_spec.rb'
     - 'spec/lib/page_tracker_spec.rb'
-    - 'spec/services/slack_notifier_service_spec.rb'
 
 # Offense count: 2
 # Configuration parameters: Include, CustomTransform, IgnoreMethods, IgnoreMetadata.

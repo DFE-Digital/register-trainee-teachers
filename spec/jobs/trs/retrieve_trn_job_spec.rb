@@ -17,7 +17,7 @@ module Trs
       enable_features(:integrate_with_trs)
       allow(RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
       allow(Settings.jobs).to receive_messages(poll_delay_hours: configured_delay, max_poll_duration_days: configured_poll_timeout_days)
-      allow(SlackNotifierService).to receive(:call)
+      allow(TeamsNotifierService).to receive(:call)
     end
 
     context "when trainee is discarded" do
@@ -169,7 +169,7 @@ module Trs
 
     context "timeout_after has passed" do
       it "doesn't queue another job" do
-        expect(SlackNotifierService).to receive(:call)
+        expect(TeamsNotifierService).to receive(:call)
         described_class.perform_now(trn_request, 1.minute.ago)
         expect(RetrieveTrnJob).not_to have_been_enqueued
       end

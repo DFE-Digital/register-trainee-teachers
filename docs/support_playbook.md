@@ -136,7 +136,7 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record", "status":400
 
 ### Trs::RetrieveTrnJob for Trainee id: xxx has timed out after 4 days
 
-We see this error on slack when our polling job times out before we receive a
+We see this error on Teams when our polling job times out before we receive a
 TRN from TRS. The default timeout is four days from the trainee’s
 `submitted_for_trn_at` date.
 
