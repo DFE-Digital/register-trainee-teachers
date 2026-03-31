@@ -7,8 +7,6 @@
 @import "govuk-frontend/dist/govuk/utilities";
 @import "govuk-frontend/dist/govuk/overrides";
 
-$govuk-suppressed-warnings: (govuk-typography-scale-14);
-
 @import "@ministryofjustice/frontend/moj/all";
 
 $moj-images-path: "@ministryofjustice/frontend/moj/assets/images/";
@@ -67,10 +65,6 @@ $mobile-big-end: 501px;
   left: 5px;
   position: relative;
   top: 6px;
-
-  @include govuk-media-query($from: tablet) {
-    top: 16px;
-  }
 }
 
 .trainee-record-header-name-trn {

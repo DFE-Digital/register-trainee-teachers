@@ -10,9 +10,9 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
   describe "#status" do
     let(:colours) do
       {
-        "pending" => "govuk-tag--light-blue",
+        "pending" => "govuk-tag--blue",
         "validated" => "govuk-tag--yellow",
-        "in_progress" => "govuk-tag--light-blue",
+        "in_progress" => "govuk-tag--blue",
         "succeeded" => "govuk-tag--green",
         "failed" => "govuk-tag--red",
         "cancelled" => "govuk-tag--red",
