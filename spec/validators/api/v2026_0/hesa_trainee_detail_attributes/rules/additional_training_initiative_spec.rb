@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/SpecFilePathFormat
 RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::AdditionalTrainingInitiative do
   subject { described_class }
 
@@ -71,4 +70,3 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::AdditionalTraini
     end
   end
 end
-# rubocop:enable RSpec/SpecFilePathFormat

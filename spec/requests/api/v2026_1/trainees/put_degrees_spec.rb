@@ -25,6 +25,9 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       )
     end
 
+    let(:new_subject) { "100105" }
+    let!(:original_subject) { degree.subject }
+
     context "when the trainee is in an awarded state" do
       let(:trainee) { create(:trainee, :awarded) }
 
@@ -50,8 +53,6 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         expect(degree.reload.grade).to eq("Third-class honours")
       end
     end
-    let!(:original_subject) { degree.subject }
-    let(:new_subject) { "100105" }
 
     context "with a valid trainee and degree" do
       context "when using partial HESA attributes" do

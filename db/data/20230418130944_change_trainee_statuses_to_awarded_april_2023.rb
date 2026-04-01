@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ChangeTraineeStatusesToAwardedApril2023 < ActiveRecord::Migration[7.0]
-  # rubocop:disable Metrics/CollectionLiteralLength
   def up
     {
       "YipgeM6RJtyHWMQCu2yEL2RS" => "2023-04-15", # NOSONAR
@@ -297,7 +296,6 @@ class ChangeTraineeStatusesToAwardedApril2023 < ActiveRecord::Migration[7.0]
       )
     end
   end
-  # rubocop:enable Metrics/CollectionLiteralLength
 
   def down
     raise ActiveRecord::IrreversibleMigration
