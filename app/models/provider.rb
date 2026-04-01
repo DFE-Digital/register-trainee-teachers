@@ -103,24 +103,15 @@ class Provider < ApplicationRecord
   end
 
   def trainees_without_required_placements
-    trainees.kept.awarded
-      .or(trainees.kept.in_training)
+    trainees.kept
+      .where(state: %i[submitted_for_trn trn_received recommended_for_award awarded])
       .where.not(trn: nil)
       .where(training_route: PLACEMENTS_ROUTES.keys)
-      .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
-      .where("placements_counts.placement_count < (#{minimum_placements_case_sql}) OR placements_counts.placement_count IS NULL")
-      .joins(:end_academic_cycle)
-      .where(academic_cycles: { id: AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE).select(:id) })
-def trainees_without_required_placements
-  trainees.kept
-    .where(state: %i[submitted_for_trn trn_received recommended_for_award awarded])
-    .where.not(trn: nil)
-    .where(training_route: PLACEMENTS_ROUTES.keys)
-    .left_joins(:placements, :end_academic_cycle)
-    .merge(AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE))
-    .group("trainees.id")
-    .having("COUNT(placements.id) < (#{minimum_placements_case_sql})")
-end
+      .left_joins(:placements, :end_academic_cycle)
+      .merge(AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE))
+      .group("trainees.id")
+      .having("COUNT(placements.id) < (#{minimum_placements_case_sql})")
+  end
 
   def hei?
     accreditation_id&.starts_with?("1") || accreditation_id == NIOT_ACCREDITATION_ID
