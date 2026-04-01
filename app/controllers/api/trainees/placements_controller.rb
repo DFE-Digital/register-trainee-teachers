@@ -5,6 +5,9 @@ module Api
     class PlacementsController < Api::BaseController
       include Api::Serializable
       include Api::Attributable
+      include Api::TraineeStateRestriction
+
+      before_action :restrict_awarded_trainee_modification!, only: %i[create update destroy]
 
       def index
         render(

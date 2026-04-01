@@ -5,6 +5,9 @@ module Api
     class DegreesController < Api::BaseController
       include Api::Attributable
       include Api::Serializable
+      include Api::TraineeStateRestriction
+
+      before_action :restrict_awarded_trainee_modification!, only: %i[create update destroy]
 
       def index
         trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
