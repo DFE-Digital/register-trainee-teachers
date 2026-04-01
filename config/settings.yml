@@ -137,6 +137,10 @@ session_store:
 teacher_training_api:
   base_url: "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1"
 
+rotp:
+  base_url: "https://register-training-providers.education.gov.uk"
+  api_token: <get from secrets>
+
 environment:
   name: beta
   display_name: Beta
