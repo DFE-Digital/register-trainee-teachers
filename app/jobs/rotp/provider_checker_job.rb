@@ -5,10 +5,6 @@ module Rotp
     queue_as :default
     retry_on Rotp::Client::HttpError
 
-    MAX_MISSING_TO_DISPLAY = 10
-
-    # Runs the provider comparison and posts a summary to Teams.
-    # Production-only to avoid noise from dev/review environments.
     def perform
       return false unless Rails.env.production?
 
@@ -23,7 +19,6 @@ module Rotp
 
   private
 
-    # Formats an Adaptive Card-compatible markdown summary for the Teams message.
     def build_message(checker)
       message = +"**Accredited Providers**\n"
       message << "Matched: #{checker.accredited_matched.count}\n"
@@ -44,12 +39,10 @@ module Rotp
       message
     end
 
-    # Appends up to MAX_MISSING_TO_DISPLAY provider names to keep the message readable.
     def append_missing_list(message, missing_list)
-      missing_list.first(MAX_MISSING_TO_DISPLAY).each do |provider|
+      missing_list.each do |provider|
         message << "  - #{provider['operating_name']} (#{provider['code']})\n"
       end
-      message << "  - ... and #{missing_list.count - MAX_MISSING_TO_DISPLAY} more\n" if missing_list.count > MAX_MISSING_TO_DISPLAY
     end
   end
 end

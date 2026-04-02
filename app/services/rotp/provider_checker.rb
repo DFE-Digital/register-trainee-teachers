@@ -4,8 +4,12 @@ module Rotp
   class ProviderChecker
     MATCHABLE_PROVIDER_TYPES = %w[hei scitt].freeze
 
-    attr_reader :accredited_matched, :accredited_missing_from_register, :accredited_missing_from_rotp,
-                :training_partner_matched, :training_partner_missing_from_register, :training_partner_missing_from_rotp,
+    attr_reader :accredited_matched,
+                :accredited_missing_from_register,
+                :accredited_missing_from_rotp,
+                :training_partner_matched,
+                :training_partner_missing_from_register,
+                :training_partner_missing_from_rotp,
                 :skipped_schools
 
     def initialize
