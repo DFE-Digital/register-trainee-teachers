@@ -4,12 +4,12 @@ require "rails_helper"
 
 module Rotp
   RSpec.describe ProviderChecker, type: :service do
-    describe "#call" do
+    describe "provider comparison" do
       before do
         allow(Rotp::Client).to receive(:get).and_return(double(parsed_response: { "data" => rotp_data }))
       end
 
-      subject { described_class.call }
+      subject { described_class.new }
 
       let(:accredited_provider) { create(:provider) }
       let(:training_partner) { create(:training_partner, :hei) }

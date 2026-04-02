@@ -2,8 +2,6 @@
 
 module Rotp
   class ProviderChecker
-    include ServicePattern
-
     MATCHABLE_PROVIDER_TYPES = %w[hei scitt].freeze
 
     attr_reader :accredited_matched, :accredited_missing_from_register, :accredited_missing_from_rotp,
@@ -18,15 +16,10 @@ module Rotp
       @training_partner_missing_from_register = []
       @training_partner_missing_from_rotp = []
       @skipped_schools = []
-    end
 
-    def call
       rotp_providers = fetch_rotp_providers
-
       compare_accredited_providers(rotp_providers)
       compare_training_partners(rotp_providers)
-
-      self
     end
 
     def any_discrepancies?

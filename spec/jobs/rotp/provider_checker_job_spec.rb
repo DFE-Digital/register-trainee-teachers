@@ -6,10 +6,22 @@ module Rotp
   describe ProviderCheckerJob do
     include ActiveJob::TestHelper
 
-    let(:result) { Rotp::ProviderChecker.send(:new) }
+    let(:result) do
+      instance_double(
+        Rotp::ProviderChecker,
+        accredited_matched: [],
+        accredited_missing_from_register: [],
+        accredited_missing_from_rotp: [],
+        training_partner_matched: [],
+        training_partner_missing_from_register: [],
+        training_partner_missing_from_rotp: [],
+        skipped_schools: [],
+        any_discrepancies?: false,
+      )
+    end
 
     before do
-      allow(Rotp::ProviderChecker).to receive(:call).and_return(result)
+      allow(Rotp::ProviderChecker).to receive(:new).and_return(result)
       allow(TeamsNotifierService).to receive(:call).and_return(true)
       allow(Rails.env).to receive(:production?).and_return(true)
     end
