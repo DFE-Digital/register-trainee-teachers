@@ -92,7 +92,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
     end
 
     context "when the trainee is in an awarded state" do
-      %i[recommended_for_award awarded].each do |awarded_state|
+      %i[recommended_for_award withdrawn awarded].each do |awarded_state|
         context "when the trainee is #{awarded_state}" do
           let(:trainee) do
             create(

@@ -19,7 +19,7 @@ weight: 2
 * Added support for the HPITT postgrad training route (HESA code `21`)
 * `study_mode` is no longer required for Assessment only (HESA code `16`) and Early years assessment only (HESA code `17`) training routes
 * `course_subject_1` must be `100510` (Early Years Teaching) for early years training routes
-* Trainees with a state of `recommended_for_award` or `awarded` can no longer be modified via the API, to be more in line with the Register UI. The following endpoints will return a `422` error with a `StateTransitionError`:
+* Trainees with a state of `recommended_for_award`, `withdrawn` or `awarded` can no longer be modified via the API, to be more in line with the Register UI. The following endpoints will return a `422` error with a `StateTransitionError`:
 
     * POST `/trainees/{trainee_id}/placements`
     * POST `/trainees/{trainee_id}/degrees`

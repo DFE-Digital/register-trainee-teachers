@@ -5,7 +5,7 @@ module Api
     extend ActiveSupport::Concern
 
     UNRESTRICTED_VERSIONS = %w[v2025.0 v2026.0].freeze
-    RESTRICTED_STATES = %w[recommended_for_award awarded].freeze
+    RESTRICTED_STATES = %w[recommended_for_award withdrawn awarded].freeze
 
   private
 
