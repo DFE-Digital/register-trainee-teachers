@@ -15,6 +15,33 @@ describe "`DELETE /trainees/:trainee_slug/degrees/:slug` endpoint" do
       )
     end
 
+    context "when the trainee is in an awarded state" do
+      let(:trainee) { create(:trainee, :awarded) }
+
+      it "returns status code 422 with a StateTransitionError" do
+        delete(
+          "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+        )
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          {
+            "error" => "StateTransitionError",
+            "message" => "It’s not possible to perform this action while the trainee is in its current state",
+          },
+        )
+      end
+
+      it "does not delete the degree" do
+        expect {
+          delete(
+            "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+          )
+        }.not_to change { trainee.degrees.count }
+      end
+    end
+
     context "with a valid trainee and degree" do
       it "deletes the degree and returns a 200 status (ok)" do
         delete(
