@@ -7,12 +7,11 @@
   <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: bulk_update_path) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
+<%= register_form_with(model: @recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
+  <%= f.govuk_error_summary %>
 
-    <%= register_form_with(model: @recommendations_upload_form, url: bulk_update_recommendations_uploads_path) do |f| %>
-      <%= f.govuk_error_summary %>
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-xl"><%= organisation_name %></span>
         Bulk change trainee statuses with QTS or EYTS
@@ -71,7 +70,6 @@
 
       <p class="govuk-body">
         The date must be written in the format <span class="app-nowrap">‘DD/MM/YYYY’</span>.
-
       </p>
 
       <h3 class="govuk-heading-m">
@@ -86,7 +84,6 @@
       <%= f.govuk_file_field(:file, label: {  text: "Upload a file" }, hint: { text: "File type must be ‘csv’"}, accept: ".csv") %>
 
       <%= f.govuk_submit("Upload file") %>
-
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
