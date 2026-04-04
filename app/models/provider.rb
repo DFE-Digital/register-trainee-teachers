@@ -103,14 +103,14 @@ class Provider < ApplicationRecord
   end
 
   def trainees_without_required_placements
-    trainees.kept.awarded
-      .or(trainees.kept.in_training)
+    trainees.kept
+      .where(state: %i[submitted_for_trn trn_received recommended_for_award awarded])
       .where.not(trn: nil)
       .where(training_route: PLACEMENTS_ROUTES.keys)
-      .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
-      .where("placements_counts.placement_count < ? OR placements_counts.placement_count IS NULL", MINIMUM_PLACEMENTS.default)
-      .joins(:end_academic_cycle)
-      .where(academic_cycles: { id: AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE).select(:id) })
+      .left_joins(:placements, :end_academic_cycle)
+      .merge(AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE))
+      .group("trainees.id")
+      .having("COUNT(placements.id) < (#{minimum_placements_case_sql})")
   end
 
   def hei?
@@ -142,6 +142,14 @@ class Provider < ApplicationRecord
   end
 
 private
+
+  def minimum_placements_case_sql
+    whens = MINIMUM_PLACEMENTS.map do |route, min|
+      "WHEN trainees.training_route = #{TRAINING_ROUTES[route]} THEN #{min}"
+    end
+
+    "CASE #{whens.join(' ')} ELSE #{MINIMUM_PLACEMENTS.default} END"
+  end
 
   def update_courses
     Course.where(accredited_body_code: code_was).update_all(accredited_body_code: code)
