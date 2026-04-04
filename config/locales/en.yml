@@ -230,7 +230,7 @@ en:
         record_added_in_error: This training record was added in error
         mandatory_reasons: Trainee removed for mandatory reasons
         lack_of_progress_during_placements: Lack of progress during placements
-        not_meeting_qts_standards: Not meeting QTS standards
+        not_meeting_qts_standards: Not meeting QTS or EYTS requirements
         trainee_workload_issues: Trainee workload issues
         change_in_personal_or_health_circumstances: Change in their personal or health situation
         never_intended_to_obtain_qts: They never intended to obtain QTS
@@ -1680,8 +1680,8 @@ en:
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_id_header: The selected file must contain a column for TRN, trainee provider ID or HESA ID
-              no_date_header: The selected file must contain a column for date QTS or EYTS standards met
-              no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
+              no_date_header: The selected file must contain a column for date QTS or EYTS requirements met
+              no_dates_given: The selected file must contain date QTS or EYTS requirements met for at least one trainee
               no_trainees: The selected file must contain at least one trainee
         bulk_update/bulk_add_trainees_upload_form:
           attributes:
@@ -1719,11 +1719,11 @@ en:
             validate_csv_row:
               trn_format: TRN must be 7 numbers
               hesa_id_format: HESA ID must be 13 or 17 numbers
-              award_date_not_valid: Date QTS or EYTS standards met must be a valid date
-              award_date_future: Date QTS or EYTS standards met must be today or in the past
-              award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk changed status - you can change the trainee status separately in their trainee record
-              date_standards_met: Date QTS or EYTS standards met must be after trainee’s ITT start date
-              date_parse: Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023
+              award_date_not_valid: Date QTS or EYTS requirements met must be a valid date
+              award_date_future: Date QTS or EYTS requirements met must be today or in the past
+              award_date_past: Date QTS or EYTS requirements met must be within the past 12 months to bulk changed status - you can change the trainee status separately in their trainee record
+              date_standards_met: Date QTS or EYTS requirements met must be after trainee’s ITT start date
+              date_parse: Date QTS or EYTS requirements met must be written as dd/mm/yyyy, for example 27/02/2023
               trn: TRN must match trainee record
               hesa_id: HESA ID must match trainee record
               provider_trainee_id: Provider trainee ID must match trainee record
@@ -2402,6 +2402,7 @@ en:
             state:
               invalid: must be selected as trn_received
             qts_standards_met_date:
+              blank: can't be blank. Enter a date the trainee met the QTS or EYTS requirements.
               itt_start_date: &qts_itt_start_date must be after itt_start_date
         api/trainees/deferral_service:
           attributes:
