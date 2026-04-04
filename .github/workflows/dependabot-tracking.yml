@@ -18,7 +18,7 @@ jobs:
     steps:
       # rtCamp/action-slack-notify v4.6.0
       # SHA: b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238
-      - uses: codecov/codecov-action@v4.6.0
+      - uses: codecov/codecov-action@v6.0.0
 
       # marocchino/sticky-pull-request-comment@ v2.9.4
       # SHA: 773744901bac0e8cbb5a0dc842800d45e9b2b405
