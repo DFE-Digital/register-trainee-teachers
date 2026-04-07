@@ -57,6 +57,8 @@ module Rotp
       end
 
       register_providers.find_each do |provider|
+        next if provider.code.blank?
+
         unless rotp_codes.include?(provider.code)
           @accredited_missing_from_rotp << { "operating_name" => provider.name, "code" => provider.code }
         end

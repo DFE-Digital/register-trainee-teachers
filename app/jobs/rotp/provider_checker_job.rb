@@ -22,6 +22,7 @@ module Rotp
     def build_message(checker)
       message = +"**Accredited Providers**\n"
       message << "Matched: #{checker.accredited_matched.count}\n"
+      message << "Not matched: #{checker.accredited_missing_from_register.count + checker.accredited_missing_from_rotp.count}\n"
       message << "In RoTP but not Register: #{checker.accredited_missing_from_register.count}\n"
       append_missing_list(message, checker.accredited_missing_from_register)
       message << "In Register but not RoTP: #{checker.accredited_missing_from_rotp.count}\n"
@@ -29,6 +30,7 @@ module Rotp
 
       message << "\n**Training Partners (HEI/SCITT)**\n"
       message << "Matched: #{checker.training_partner_matched.count}\n"
+      message << "Not matched: #{checker.training_partner_missing_from_register.count + checker.training_partner_missing_from_rotp.count}\n"
       message << "In RoTP but not Register: #{checker.training_partner_missing_from_register.count}\n"
       append_missing_list(message, checker.training_partner_missing_from_register)
       message << "In Register but not RoTP: #{checker.training_partner_missing_from_rotp.count}\n"
