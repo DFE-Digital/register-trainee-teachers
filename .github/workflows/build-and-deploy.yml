@@ -136,7 +136,7 @@ jobs:
           teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
       - name: Post comment to Pull Request ${{ github.event.number }}
-        uses: marocchino/sticky-pull-request-comment@70d2764d1a7d5d9560b100cbea0077fc8f633987 # Pinned at v3.0.2
+        uses: marocchino/sticky-pull-request-comment@d4d6b0936434b21bc8345ad45a440c5f7d2c40ff # Pinned at v3.0.3
         with:
           header: aks
           message: |
