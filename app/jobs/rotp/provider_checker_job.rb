@@ -20,31 +20,36 @@ module Rotp
   private
 
     def build_message(checker)
-      message = +"**Accredited Providers**\n"
-      message << "Matched: #{checker.accredited_matched.count}\n"
-      message << "Not matched: #{checker.accredited_missing_from_register.count + checker.accredited_missing_from_rotp.count}\n"
-      message << "In RoTP but not Register: #{checker.accredited_missing_from_register.count}\n"
-      append_missing_list(message, checker.accredited_missing_from_register)
-      message << "In Register but not RoTP: #{checker.accredited_missing_from_rotp.count}\n"
-      append_missing_list(message, checker.accredited_missing_from_rotp)
+      message = +""
+      message << build_section("Accredited Providers",
+                               matched: checker.accredited_matched,
+                               missing_from_register: checker.accredited_missing_from_register,
+                               missing_from_rotp: checker.accredited_missing_from_rotp)
 
-      message << "\n**Training Partners (HEI/SCITT)**\n"
-      message << "Matched: #{checker.training_partner_matched.count}\n"
-      message << "Not matched: #{checker.training_partner_missing_from_register.count + checker.training_partner_missing_from_rotp.count}\n"
-      message << "In RoTP but not Register: #{checker.training_partner_missing_from_register.count}\n"
-      append_missing_list(message, checker.training_partner_missing_from_register)
-      message << "In Register but not RoTP: #{checker.training_partner_missing_from_rotp.count}\n"
-      append_missing_list(message, checker.training_partner_missing_from_rotp)
+      message << build_section("Training Partners (HEI/SCITT)",
+                               matched: checker.training_partner_matched,
+                               missing_from_register: checker.training_partner_missing_from_register,
+                               missing_from_rotp: checker.training_partner_missing_from_rotp)
 
-      message << "\n**Not checked:** #{checker.skipped_schools.count} school training partners (no matching identifier available in RoTP API)\n"
+      message << "**Not checked:** #{checker.skipped_schools.count} school training partners (no matching identifier available in RoTP API)\n"
+    end
 
-      message
+    def build_section(title, matched:, missing_from_register:, missing_from_rotp:)
+      section = "**#{title}**\n"
+      section << "Matched: #{matched.count}\n"
+      section << "Not matched: #{missing_from_register.count + missing_from_rotp.count}\n"
+      section << "In RoTP but not Register: #{missing_from_register.count}\n"
+      append_missing_list(section, missing_from_register)
+      section << "In Register but not RoTP: #{missing_from_rotp.count}\n"
+      append_missing_list(section, missing_from_rotp)
+      section << "\n"
     end
 
     def append_missing_list(message, missing_list)
       missing_list.each do |provider|
         message << "  - #{provider['operating_name']} (#{provider['code']})\n"
       end
+      message << "\n" if missing_list.any?
     end
   end
 end
