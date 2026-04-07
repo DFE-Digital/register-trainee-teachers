@@ -4,14 +4,14 @@
   <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: @page_tracker.last_origin_page_path.presence || trainee_path(@trainee) ) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(
-      model: @change_accredited_provider_form,
-      url: trainee_accredited_providers_provider_path(trainee_id: @change_accredited_provider_form.id),
-    ) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(
+  model: @change_accredited_provider_form,
+  url: trainee_accredited_providers_provider_path(trainee_id: @change_accredited_provider_form.id),
+) do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <label class="govuk-label" for="sort"><%= @change_accredited_provider_form.full_name %></label>
       <h1 class="govuk-heading-l">Change accredited provider</h1>
 
@@ -47,6 +47,6 @@
       <p class="govuk-body">
         <%= govuk_link_to(t('views.forms.common.cancel_and_return_to_record'), trainee_path(@trainee))%>
       </p>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
