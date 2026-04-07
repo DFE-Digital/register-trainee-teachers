@@ -6,12 +6,13 @@
                                                    href: edit_trainee_start_status_path(@trainee, context: :delete)) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @trainee_forbidden_deletes_form,
-                           url: trainee_forbidden_deletes_path(@trainee),
-                           local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(model: @trainee_forbidden_deletes_form,
+                         url: trainee_forbidden_deletes_path(@trainee),
+                         local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= f.hidden_field :alternative_option %>
 
       <%= render TraineeName::View.new(@trainee) %>
@@ -37,8 +38,8 @@
                                  label: { text: t(".return_to_record") }) %>
       <% end %>
       <%= f.govuk_submit t(:continue) %>
-    <% end %>
 
-    <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+      <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+    </div>
   </div>
-</div>
+<% end %>

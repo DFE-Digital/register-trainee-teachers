@@ -11,8 +11,10 @@
     %>
   <% end %>
 
-  <%= render TraineeName::View.new(@trainee) %>
-  <h1 class="govuk-heading-l">Non-UK degree details</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= render TraineeName::View.new(@trainee) %>
+      <h1 class="govuk-heading-l">Non-UK degree details</h1>
 
   <%= render FormComponents::CountryAutocomplete::View.new(
     f,
@@ -61,5 +63,7 @@
                             render InvalidDataText::View.new(form_section: :graduation_year, degree_form: @degree_form)
                           end %>
 
-  <%= f.govuk_submit %>
+      <%= f.govuk_submit %>
+    </div>
+  </div>
 <% end %>
