@@ -23,9 +23,9 @@ weight: 2
 
     * POST `/trainees/{trainee_id}/placements`
     * POST `/trainees/{trainee_id}/degrees`
-    * PUT|PATCH `/trainees/{trainee_id}`
-    * PUT|PATCH `/trainees/{trainee_id}/placements/{placement_id}`
-    * PUT|PATCH `/trainees/{trainee_id}/degrees/{degree_id}`
+    * PUT\|PATCH `/trainees/{trainee_id}`
+    * PUT\|PATCH `/trainees/{trainee_id}/placements/{placement_id}`
+    * PUT\|PATCH `/trainees/{trainee_id}/degrees/{degree_id}`
     * DELETE `/trainees/{trainee_id}/placements/{placement_id}`
     * DELETE `/trainees/{trainee_id}/degrees/{degree_id}`
 
