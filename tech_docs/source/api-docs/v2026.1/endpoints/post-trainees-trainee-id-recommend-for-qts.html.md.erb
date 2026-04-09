@@ -1,11 +1,18 @@
 ---
-title: POST /trainees/{trainee_id}/recommend-for-qts
-weight: 11
+title: POST /trainees/{trainee_id}/recommend-for-qts (deprecated)
+weight: 12
 ---
 
-# `POST /trainees/{trainee_id}/recommend-for-qts`
+# `POST /trainees/{trainee_id}/recommend-for-qts` (deprecated)
 
 <%= preview_warning_if_needed %>
+
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    This endpoint is deprecated. Use <code>POST /trainees/{trainee_id}/update-qts-or-eyts-status</code> instead.
+  </strong>
+</div>
 
 Change status of a trainee for a QTS Award.
 
