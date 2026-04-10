@@ -5,7 +5,7 @@ require "rails_helper"
 module Rotp
   RSpec.describe Client do
     describe ".get" do
-      let(:path) { "/api/v0/providers" }
+      let(:path) { "/example" }
       let(:response) { double(code: 200, body: '{"data":[]}', headers: {}) }
 
       before do

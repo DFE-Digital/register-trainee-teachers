@@ -6,7 +6,7 @@ module Rotp
   RSpec.describe ProviderChecker, type: :service do
     describe "provider comparison" do
       before do
-        allow(Rotp::Client).to receive(:get).and_return(double(parsed_response: { "data" => rotp_data }))
+        allow(Rotp::Providers).to receive(:list).and_return(rotp_data)
       end
 
       subject { described_class.new }

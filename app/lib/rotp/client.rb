@@ -2,8 +2,6 @@
 
 module Rotp
   class Client
-    # Inner class holds HTTParty config so headers/base_uri are evaluated once at boot,
-    # mirroring the pattern in TeacherTrainingApi::Client.
     class Request
       include HTTParty
 
@@ -16,7 +14,6 @@ module Rotp
 
     GET_SUCCESS = 200
 
-    # Delegates to HTTParty and raises on non-200 so callers don't need to check status.
     def self.get(...)
       response = Request.get(...)
 

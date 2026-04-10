@@ -36,8 +36,7 @@ module Rotp
   private
 
     def fetch_rotp_providers
-      response = Rotp::Client.get("/api/v0/providers")
-      response.parsed_response["data"]
+      Rotp::Providers.list
     end
 
     def compare_accredited_providers(rotp_providers)
