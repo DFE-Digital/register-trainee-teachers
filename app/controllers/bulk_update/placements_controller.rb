@@ -53,7 +53,7 @@ module BulkUpdate
     end
 
     def bulk_placements_count
-      @bulk_placements_count ||= bulk_placements.count
+      @bulk_placements_count ||= bulk_placements.count.count
     end
 
     def bulk_placements

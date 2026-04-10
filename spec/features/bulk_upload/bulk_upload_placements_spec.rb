@@ -62,10 +62,20 @@ feature "bulk update page" do
     then_i_see_an_error_message
   end
 
+  context "salaried route trainee" do
+    scenario "uploading a file with one placement creates the placement" do
+      given_there_is_a_salaried_trainee_with_matching_trn
+      and_there_are_schools_for_the_placements
+      when_i_upload_the_file_with_one_placement
+      then_i_see_a_success_message
+      and_the_salaried_trainee_has_one_placement_via_ui
+    end
+  end
+
 private
 
   def then_i_see_how_many_trainees_i_can_bulk_update
-    expect(page).to have_content("You have 2 trainee records who do not have at least two placements")
+    expect(page).to have_content("You have 2 trainee records who do not have the required number of placements")
   end
 
   def and_i_see_a_filename_of_the_file_i_need_to_download
@@ -178,6 +188,29 @@ private
   def when_i_upload_the_file_with_five_placements
     attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/complete-with-five-placements.csv"))
     click_on "Upload records"
+  end
+
+  def given_there_is_a_salaried_trainee_with_matching_trn
+    @salaried_trainee = create(
+      :trainee,
+      :without_required_placements,
+      training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      trn: "1234567",
+      provider: current_user.organisation,
+    )
+  end
+
+  def when_i_upload_the_file_with_one_placement
+    attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/complete-with-one-placement.csv"))
+    click_on "Upload records"
+  end
+
+  def and_the_salaried_trainee_has_one_placement_via_ui
+    perform_enqueued_jobs
+
+    visit trainee_path(@salaried_trainee)
+
+    expect(page).to have_content("Test School 1")
   end
 
   def and_the_trainee_has_five_placements_via_ui
