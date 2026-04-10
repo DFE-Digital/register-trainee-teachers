@@ -37,7 +37,7 @@ module Rotp
     def build_section(title, matched:, missing_from_register:, missing_from_rotp:)
       section = "**#{title}**\n"
       section << "Matched: #{matched.count}\n"
-      section << "Not matched: #{missing_from_register.count + missing_from_rotp.count}\n"
+      section << "Not matched: #{missing_from_register.count + missing_from_rotp.count}\n\n"
       section << "In RoTP but not Register: #{missing_from_register.count}\n"
       append_missing_list(section, missing_from_register)
       section << "In Register but not RoTP: #{missing_from_rotp.count}\n"
