@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Rotp
-  describe ProviderCheckerJob do
+  describe CheckProvidersJob do
     include ActiveJob::TestHelper
 
     let(:result) do

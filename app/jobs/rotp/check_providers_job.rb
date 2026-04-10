@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Rotp
-  class ProviderCheckerJob < ApplicationJob
+  class CheckProvidersJob < ApplicationJob
     queue_as :default
     retry_on Rotp::Client::HttpError
 
