@@ -64,20 +64,17 @@ module Rotp
     end
 
     def compare_training_partners(rotp_providers)
-      rotp_unaccredited = rotp_providers.select do |p|
-        p["accreditation_status"] == "unaccredited" && p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES)
-      end
+      all_rotp_unaccredited = rotp_providers.select { |p| p["accreditation_status"] == "unaccredited" }
 
-      @skipped_schools = rotp_providers.select do |p|
-        p["accreditation_status"] == "unaccredited" && !p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES)
-      end
+      rotp_matchable = all_rotp_unaccredited.select { |p| p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES) }
+      @skipped_schools = all_rotp_unaccredited.reject { |p| p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES) }
 
-      rotp_codes = rotp_unaccredited.map { |p| p["code"] }.compact.to_set
+      all_rotp_unaccredited_codes = all_rotp_unaccredited.map { |p| p["code"] }.compact.to_set
 
       register_tps = TrainingPartner.kept.where.not(provider_id: nil).includes(:provider)
       register_codes = register_tps.filter_map { |tp| tp.provider&.code }.to_set
 
-      rotp_unaccredited.each do |rotp_provider|
+      rotp_matchable.each do |rotp_provider|
         code = rotp_provider["code"]
         if register_codes.include?(code)
           @training_partner_matched << rotp_provider
@@ -90,7 +87,7 @@ module Rotp
         code = tp.provider&.code
         next if code.blank?
 
-        unless rotp_codes.include?(code)
+        unless all_rotp_unaccredited_codes.include?(code)
           @training_partner_missing_from_rotp << { "operating_name" => tp.name, "code" => code }
         end
       end

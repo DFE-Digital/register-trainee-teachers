@@ -110,6 +110,19 @@ module Rotp
           expect(missing_codes).to include(extra_tp.provider.code)
         end
       end
+
+      context "when a Register training partner's code matches a school-type RoTP provider" do
+        let(:school_tp) { create(:training_partner, :hei) }
+        let(:rotp_school_match) do
+          { "code" => school_tp.provider.code, "operating_name" => "Some School", "accreditation_status" => "unaccredited", "provider_type" => "school" }
+        end
+        let(:rotp_data) { [rotp_accredited_matched, rotp_tp_matched, rotp_school_match] }
+
+        it "does not flag it as missing from RoTP" do
+          missing_codes = subject.training_partner_missing_from_rotp.map { |p| p["code"] }
+          expect(missing_codes).not_to include(school_tp.provider.code)
+        end
+      end
     end
   end
 end
