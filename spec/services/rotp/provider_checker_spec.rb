@@ -85,6 +85,20 @@ module Rotp
         end
       end
 
+      context "when Register includes the DfE / GP provider" do
+        let(:dfe_gp) { create(:provider, name: "DfE", code: "GP") }
+        let(:rotp_gp) { { "code" => "GP", "operating_name" => "DfE", "accreditation_status" => "accredited", "provider_type" => "hei" } }
+        let(:rotp_data) { [rotp_accredited_matched, rotp_gp] }
+
+        before { dfe_gp }
+
+        it "excludes it from both matched and missing lists" do
+          expect(subject.accredited_matched.map { |p| p["code"] }).not_to include("GP")
+          expect(subject.accredited_missing_from_rotp.map { |p| p["code"] }).not_to include("GP")
+          expect(subject.accredited_missing_from_register.map { |p| p["code"] }).to include("GP")
+        end
+      end
+
       context "when a Register training partner has no match in RoTP" do
         let(:extra_tp) { create(:training_partner, :scitt) }
         let(:rotp_data) { [rotp_tp_matched] }

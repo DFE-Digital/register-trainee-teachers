@@ -3,6 +3,7 @@
 module Rotp
   class ProviderChecker
     MATCHABLE_PROVIDER_TYPES = %w[hei scitt].freeze
+    EXCLUDED_PROVIDER = { name: "DfE", code: "GP" }.freeze
 
     attr_reader :accredited_matched,
                 :accredited_missing_from_register,
@@ -43,8 +44,8 @@ module Rotp
       rotp_accredited = rotp_providers.select { |p| p["accreditation_status"] == "accredited" }
       rotp_codes = rotp_accredited.map { |p| p["code"] }.compact.to_set
 
-      register_providers = Provider.kept.where(accredited: true)
-      register_codes = register_providers.pluck(:code).compact.to_set
+      register_scope = Provider.kept.where(accredited: true).where.not(EXCLUDED_PROVIDER).where.not(code: [nil, ""])
+      register_codes = register_scope.pluck(:code).to_set
 
       rotp_accredited.each do |rotp_provider|
         code = rotp_provider["code"]
@@ -55,9 +56,7 @@ module Rotp
         end
       end
 
-      register_providers.find_each do |provider|
-        next if provider.code.blank?
-
+      register_scope.find_each do |provider|
         unless rotp_codes.include?(provider.code)
           @accredited_missing_from_rotp << { "operating_name" => provider.name, "code" => provider.code }
         end
