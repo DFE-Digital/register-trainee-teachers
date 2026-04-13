@@ -179,7 +179,7 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "timecop", "~> 0.9.10"
+  gem "timecop", "~> 0.9.11"
 end
 
 group :development do
