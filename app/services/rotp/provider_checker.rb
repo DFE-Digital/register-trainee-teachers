@@ -11,7 +11,9 @@ module Rotp
                 :training_partner_matched,
                 :training_partner_missing_from_register,
                 :training_partner_missing_from_rotp,
-                :skipped_schools
+                :school_matched,
+                :school_missing_from_register,
+                :school_missing_from_rotp
 
     def initialize
       @accredited_matched = []
@@ -20,18 +22,23 @@ module Rotp
       @training_partner_matched = []
       @training_partner_missing_from_register = []
       @training_partner_missing_from_rotp = []
-      @skipped_schools = []
+      @school_matched = []
+      @school_missing_from_register = []
+      @school_missing_from_rotp = []
 
       rotp_providers = fetch_rotp_providers
       compare_accredited_providers(rotp_providers)
       compare_training_partners(rotp_providers)
+      compare_school_partners(rotp_providers)
     end
 
     def any_discrepancies?
       accredited_missing_from_register.any? ||
         accredited_missing_from_rotp.any? ||
         training_partner_missing_from_register.any? ||
-        training_partner_missing_from_rotp.any?
+        training_partner_missing_from_rotp.any? ||
+        school_missing_from_register.any? ||
+        school_missing_from_rotp.any?
     end
 
   private
@@ -67,7 +74,6 @@ module Rotp
       all_rotp_unaccredited = rotp_providers.select { |p| p["accreditation_status"] == "unaccredited" }
 
       rotp_matchable = all_rotp_unaccredited.select { |p| p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES) }
-      @skipped_schools = all_rotp_unaccredited.reject { |p| p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES) }
 
       all_rotp_unaccredited_codes = all_rotp_unaccredited.map { |p| p["code"] }.compact.to_set
 
@@ -89,6 +95,29 @@ module Rotp
 
         unless all_rotp_unaccredited_codes.include?(code)
           @training_partner_missing_from_rotp << { "operating_name" => tp.name, "code" => code }
+        end
+      end
+    end
+
+    def compare_school_partners(rotp_providers)
+      rotp_schools = rotp_providers.select { |p| p["accreditation_status"] == "unaccredited" && !p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES) }
+      rotp_urns = rotp_schools.map { |p| p["urn"] }.compact.to_set
+
+      register_schools = TrainingPartner.kept.where(record_type: "school").where.not(urn: [nil, ""])
+      register_urns = register_schools.pluck(:urn).to_set
+
+      rotp_schools.each do |rotp_provider|
+        urn = rotp_provider["urn"]
+        if urn.present? && register_urns.include?(urn)
+          @school_matched << rotp_provider
+        else
+          @school_missing_from_register << rotp_provider
+        end
+      end
+
+      register_schools.find_each do |tp|
+        unless rotp_urns.include?(tp.urn)
+          @school_missing_from_rotp << { "operating_name" => tp.name, "urn" => tp.urn }
         end
       end
     end

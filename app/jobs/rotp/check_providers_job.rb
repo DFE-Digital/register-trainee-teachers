@@ -31,7 +31,10 @@ module Rotp
                                missing_from_register: checker.training_partner_missing_from_register,
                                missing_from_rotp: checker.training_partner_missing_from_rotp)
 
-      message << "**Not checked:** #{checker.skipped_schools.count} school training partners (no matching identifier available in RoTP API)\n"
+      message << build_section("Training Partners (School)",
+                               matched: checker.school_matched,
+                               missing_from_register: checker.school_missing_from_register,
+                               missing_from_rotp: checker.school_missing_from_rotp)
     end
 
     def build_section(title, matched:, missing_from_register:, missing_from_rotp:)
@@ -47,7 +50,8 @@ module Rotp
 
     def append_missing_list(message, missing_list)
       missing_list.each do |provider|
-        message << "  - #{provider['operating_name']} (#{provider['code']})\n"
+        identifier = provider["code"] || provider["urn"]
+        message << "  - #{provider['operating_name']} (#{identifier})\n"
       end
       message << "\n" if missing_list.any?
     end

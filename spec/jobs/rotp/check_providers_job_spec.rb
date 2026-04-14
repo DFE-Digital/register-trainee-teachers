@@ -15,7 +15,9 @@ module Rotp
         training_partner_matched: [],
         training_partner_missing_from_register: [],
         training_partner_missing_from_rotp: [],
-        skipped_schools: [],
+        school_matched: [],
+        school_missing_from_register: [],
+        school_missing_from_rotp: [],
         any_discrepancies?: false,
       )
     end
@@ -40,7 +42,9 @@ module Rotp
           training_partner_matched: [3],
           training_partner_missing_from_register: [],
           training_partner_missing_from_rotp: [],
-          skipped_schools: [],
+          school_matched: [4, 5],
+          school_missing_from_register: [],
+          school_missing_from_rotp: [],
           any_discrepancies?: false,
         )
       end
@@ -54,6 +58,7 @@ module Rotp
             "In RoTP but not Register: 0",
             "In Register but not RoTP: 0",
             "Matched: 1",
+            "Matched: 2",
           ),
           icon_emoji: "✅",
         )
@@ -69,6 +74,10 @@ module Rotp
         { "operating_name" => "Unknown SCITT", "code" => "Y88" }
       end
 
+      let(:missing_school) do
+        { "operating_name" => "Unknown School", "urn" => "123456" }
+      end
+
       before do
         allow(result).to receive_messages(
           accredited_matched: [1],
@@ -77,7 +86,9 @@ module Rotp
           training_partner_matched: [],
           training_partner_missing_from_register: [missing_tp],
           training_partner_missing_from_rotp: [],
-          skipped_schools: [1, 2],
+          school_matched: [],
+          school_missing_from_register: [],
+          school_missing_from_rotp: [missing_school],
           any_discrepancies?: true,
         )
       end
@@ -90,7 +101,7 @@ module Rotp
             "In RoTP but not Register: 1",
             "Unknown University (Z99)",
             "Unknown SCITT (Y88)",
-            "Not checked:** 2 school training partners",
+            "Unknown School (123456)",
           ),
           icon_emoji: "🚨",
         )

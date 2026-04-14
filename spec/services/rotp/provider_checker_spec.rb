@@ -13,6 +13,7 @@ module Rotp
 
       let(:accredited_provider) { create(:provider) }
       let(:training_partner) { create(:training_partner, :hei) }
+      let(:school_partner) { create(:training_partner, :school) }
 
       let(:rotp_accredited_matched) do
         { "code" => accredited_provider.code, "operating_name" => "Matched HEI", "accreditation_status" => "accredited", "provider_type" => "hei" }
@@ -30,11 +31,15 @@ module Rotp
         { "code" => "YYY", "operating_name" => "Unknown TP", "accreditation_status" => "unaccredited", "provider_type" => "hei" }
       end
 
-      let(:rotp_school) do
-        { "code" => "XXX", "operating_name" => "Some School", "accreditation_status" => "unaccredited", "provider_type" => "school" }
+      let(:rotp_school_matched) do
+        { "urn" => school_partner.urn, "operating_name" => "Matched School", "accreditation_status" => "unaccredited", "provider_type" => "school" }
       end
 
-      let(:rotp_data) { [rotp_accredited_matched, rotp_accredited_missing, rotp_tp_matched, rotp_tp_missing, rotp_school] }
+      let(:rotp_school_missing) do
+        { "urn" => "999999", "operating_name" => "Unknown School", "accreditation_status" => "unaccredited", "provider_type" => "school" }
+      end
+
+      let(:rotp_data) { [rotp_accredited_matched, rotp_accredited_missing, rotp_tp_matched, rotp_tp_missing, rotp_school_matched, rotp_school_missing] }
 
       it "matches accredited providers by code" do
         expect(subject.accredited_matched).to contain_exactly(rotp_accredited_matched)
@@ -57,8 +62,12 @@ module Rotp
         expect(subject.training_partner_missing_from_register).to contain_exactly(rotp_tp_missing)
       end
 
-      it "skips school-type providers" do
-        expect(subject.skipped_schools).to contain_exactly(rotp_school)
+      it "matches school partners by urn" do
+        expect(subject.school_matched).to contain_exactly(rotp_school_matched)
+      end
+
+      it "identifies school partners in RoTP but not Register" do
+        expect(subject.school_missing_from_register).to contain_exactly(rotp_school_missing)
       end
 
       it "reports any_discrepancies? when there are missing providers" do
@@ -66,7 +75,7 @@ module Rotp
       end
 
       context "when everything matches" do
-        let(:rotp_data) { [rotp_accredited_matched, rotp_tp_matched] }
+        let(:rotp_data) { [rotp_accredited_matched, rotp_tp_matched, rotp_school_matched] }
 
         it "reports no discrepancies" do
           expect(subject.any_discrepancies?).to be false
@@ -111,16 +120,15 @@ module Rotp
         end
       end
 
-      context "when a Register training partner's code matches a school-type RoTP provider" do
-        let(:school_tp) { create(:training_partner, :hei) }
-        let(:rotp_school_match) do
-          { "code" => school_tp.provider.code, "operating_name" => "Some School", "accreditation_status" => "unaccredited", "provider_type" => "school" }
-        end
-        let(:rotp_data) { [rotp_accredited_matched, rotp_tp_matched, rotp_school_match] }
+      context "when a Register school partner has no match in RoTP" do
+        let(:extra_school) { create(:training_partner, :school) }
+        let(:rotp_data) { [rotp_school_matched] }
 
-        it "does not flag it as missing from RoTP" do
-          missing_codes = subject.training_partner_missing_from_rotp.map { |p| p["code"] }
-          expect(missing_codes).not_to include(school_tp.provider.code)
+        before { extra_school }
+
+        it "includes the unmatched school partner in school_missing_from_rotp" do
+          missing_urns = subject.school_missing_from_rotp.map { |p| p["urn"] }
+          expect(missing_urns).to include(extra_school.urn)
         end
       end
     end
