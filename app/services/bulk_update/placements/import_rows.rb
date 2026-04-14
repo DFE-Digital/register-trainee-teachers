@@ -35,7 +35,7 @@ module BulkUpdate
       end
 
       def find_trainees(trn)
-        provider.trainees.where(trn:)
+        provider.trainees.kept.where(trn:)
       end
 
       def valid_trainee?(trainees, trn, rows)
