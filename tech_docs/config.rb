@@ -10,6 +10,10 @@ require "services/bulk_update/add_trainees/config"
 
 GovukTechDocs.configure(self, livereload: { host: "0.0.0.0" })
 
+if ENV["MAX_TOC_HEADING_LEVEL"]
+  config[:tech_docs][:max_toc_heading_level] = ENV["MAX_TOC_HEADING_LEVEL"].to_i
+end
+
 TECH_DOCS_CONFIG = YAML.load_file(File.expand_path("config/tech-docs.yml", __dir__))
 
 helpers do

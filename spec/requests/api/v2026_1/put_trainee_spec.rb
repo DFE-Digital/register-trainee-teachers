@@ -91,6 +91,43 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       create(:nationality, :french)
     end
 
+    context "when the trainee is in an awarded state" do
+      %i[recommended_for_award withdrawn awarded].each do |awarded_state|
+        context "when the trainee is #{awarded_state}" do
+          let(:trainee) do
+            create(
+              :trainee,
+              awarded_state,
+              trainee_route_trait,
+              first_names: "Bob",
+            )
+          end
+
+          before do
+            put(
+              endpoint,
+              headers: { Authorization: "Bearer #{token}", **json_headers },
+              params: params.to_json,
+            )
+          end
+
+          it "returns status code 422 with a StateTransitionError" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              {
+                "error" => "StateTransitionError",
+                "message" => "It’s not possible to perform this action while the trainee is in its current state",
+              },
+            )
+          end
+
+          it "does not update the trainee" do
+            expect(trainee.reload.first_names).to eq("Bob")
+          end
+        end
+      end
+    end
+
     context "when the trainee does not exist" do
       let(:slug) { "missing-trainee-slug" }
       let(:data) { { first_names: "Alice" } }

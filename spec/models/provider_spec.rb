@@ -224,6 +224,69 @@ describe Provider do
         expect(provider.trainees_without_required_placements).to be_empty
       end
     end
+
+    context "when the trainee is on a salaried route" do
+      let(:trainee) do
+        create(
+          :trainee, :school_direct_salaried, :awarded, provider:, itt_start_date:, itt_end_date:
+        )
+      end
+
+      context "with no placements" do
+        it "includes the trainee" do
+          expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
+        end
+      end
+
+      context "with one placement" do
+        before { create(:placement, trainee:) }
+
+        it "doesn't include the trainee" do
+          expect(provider.trainees_without_required_placements).to be_empty
+        end
+      end
+    end
+
+    context "when the trainee is on the iQTS route" do
+      let(:trainee) do
+        create(
+          :trainee, :iqts, :awarded, provider:, itt_start_date:, itt_end_date:
+        )
+      end
+
+      context "with no placements" do
+        it "includes the trainee" do
+          expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
+        end
+      end
+
+      context "with one placement" do
+        before { create(:placement, trainee:) }
+
+        it "doesn't include the trainee" do
+          expect(provider.trainees_without_required_placements).to be_empty
+        end
+      end
+    end
+
+    context "when a route has a minimum higher than the default" do
+      let(:trainee) do
+        create(
+          :trainee, :provider_led_postgrad, :awarded, provider:, itt_start_date:, itt_end_date:
+        )
+      end
+
+      before do
+        stub_const("MINIMUM_PLACEMENTS", Hash.new(2).merge(
+          TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 3,
+        ).freeze)
+        create_list(:placement, 2, trainee:)
+      end
+
+      it "includes the trainee" do
+        expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
+      end
+    end
   end
 
   describe "hei?" do

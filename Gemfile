@@ -46,7 +46,7 @@ gem "stackprof"
 # Logging
 gem "amazing_print", "~> 2.0"
 
-gem "rails_semantic_logger", "~> 4.19.0"
+gem "rails_semantic_logger", "~> 4.20.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -179,7 +179,7 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "timecop", "~> 0.9.10"
+  gem "timecop", "~> 0.9.11"
 end
 
 group :development do

@@ -8,13 +8,13 @@ describe FindNewStarterTrainees do
   let(:valid_trainee) { create(:trainee, state: 1, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
   let(:valid_trainee_with_no_trainee_start_date) { create(:trainee, state: 1, trainee_start_date: nil, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
   let(:valid_draft_trainee) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
-  let(:valid_trainee_from_previous_academic_cycle) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle_id: 10, training_route: :provider_led_postgrad) }
+  let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
+  let(:valid_trainee_from_previous_academic_cycle) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle: previous_academic_cycle, training_route: :provider_led_postgrad) }
 
   subject { described_class.new(census_date).call }
 
   before do
     create(:academic_cycle)
-    create(:academic_cycle, previous_cycle: true, id: 10)
     allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
   end
 

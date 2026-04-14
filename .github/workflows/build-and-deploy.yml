@@ -56,9 +56,7 @@ jobs:
             command: docker compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
           - linter-type: scss
             command: |
-              docker compose exec -T web /bin/sh -c "yarn add stylelint@15.11.0"
-              docker compose exec -T web /bin/sh -c "yarn add stylelint-scss@5.3.1"
-              docker compose exec -T web /bin/sh -c "yarn add stylelint-config-gds@1.1.0"
+              docker compose exec -T web /bin/sh -c "yarn install --immutable"
               docker compose exec -T web /bin/sh -c "yarn run scss:lint"
           - linter-type: dfe_analytics
             command: |
@@ -66,7 +64,7 @@ jobs:
               docker compose exec -T web /bin/sh -c 'bundle exec rake dfe:analytics:check'
           - linter-type: javascript_lint_and_test
             command: |
-              docker compose exec -T web /bin/sh -c "yarn add jest@30.0.0"
+              docker compose exec -T web /bin/sh -c "yarn install --immutable"
               docker compose exec -T web /bin/sh -c "yarn run standard $(git ls-files '**.js' | tr '\n' ' ')"
               docker compose exec -T web /bin/sh -c 'yarn run test'
 
@@ -136,7 +134,7 @@ jobs:
           teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
       - name: Post comment to Pull Request ${{ github.event.number }}
-        uses: marocchino/sticky-pull-request-comment@d4d6b0936434b21bc8345ad45a440c5f7d2c40ff # Pinned at v3.0.3
+        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # Pinned at v3.0.4
         with:
           header: aks
           message: |
