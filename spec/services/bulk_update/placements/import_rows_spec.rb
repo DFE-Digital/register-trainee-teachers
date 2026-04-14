@@ -227,6 +227,45 @@ module BulkUpdate
           end
         end
 
+        context "when a discarded trainee exists with the same TRN as an active trainee" do
+          let(:trainee) { create(:trainee, :trn_received, provider:) }
+          let(:trns) { [trainee.trn] }
+          let(:rows) { bulk_update_placement.rows }
+
+          before do
+            create(:trainee, :discarded, trn: trainee.trn, provider: provider)
+            create_rows_for_bulk_placement(trns)
+          end
+
+          it "ignores the discarded trainee and imports successfully" do
+            described_class.call(bulk_update_placement)
+
+            expect(trainee.placements.count).to eq(1)
+            rows.each { |row| expect(row.state).to eql "imported" }
+          end
+        end
+
+        context "when only a discarded trainee exists for a TRN" do
+          let(:trn) { "1234567" }
+          let(:trns) { [trn] }
+          let(:rows) { bulk_update_placement.rows }
+
+          before do
+            create(:trainee, :discarded, trn:, provider:)
+            create_rows_for_bulk_placement(trns)
+
+            allow(ImportRow).to receive(:call)
+          end
+
+          it "marks rows as failed with no trainee found error" do
+            described_class.call(bulk_update_placement)
+
+            expect(ImportRow).to have_received(:call).exactly(0).times
+
+            check_rows_for_errors("No trainee was found for TRN:", "failed")
+          end
+        end
+
         context "when there are multiple trainees for a TRN" do
           let(:trns) { %w[1234567 1234567] }
           let(:rows) { bulk_update_placement.rows }

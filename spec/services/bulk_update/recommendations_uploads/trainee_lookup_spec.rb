@@ -37,6 +37,17 @@ module BulkUpdate
       it "returns the trainees with matching Trainee ID" do
         expect(subject[trainee.provider_trainee_id]).to eq([trainee])
       end
+
+      context "when a discarded trainee exists with the same TRN" do
+        let!(:discarded_trainee) do
+          create(:trainee, :discarded, trn: trainee.trn, provider: trainee.provider)
+        end
+
+        it "excludes the discarded trainee from results" do
+          expect(subject[trainee.trn]).to eq([trainee])
+          expect(subject[trainee.trn]).not_to include(discarded_trainee)
+        end
+      end
     end
   end
 end

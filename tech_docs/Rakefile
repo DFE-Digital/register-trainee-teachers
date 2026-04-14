@@ -91,7 +91,7 @@ namespace :tech_docs do
     task :generate do
       version_runner_code = "print Hesa::ReferenceData.constants"
 
-      TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.reverse_each.with_index do |version, index|
+      TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.sort.reverse_each.with_index do |version, index|
         if version < TechDocsHelpers::FIRST_VERSION_WITH_NEW_REFERENCE_DATA
           ReferenceDataGenerator2025.generate(version, index)
         else
@@ -287,7 +287,8 @@ module TechDocsHelpers
     FileUtils.rm_rf("source/csv-docs")
     FileUtils.rm_rf("source/reference-data")
 
-    system("bundle exec middleman build --build-dir ../public/#{source}")
+    env = source == "reference-data" ? { "MAX_TOC_HEADING_LEVEL" => "1" } : {}
+    system(env, "bundle exec middleman build --build-dir ../public/#{source}")
 
     FileUtils.rm_rf("source")
     FileUtils.mv("temp_source", "source")
