@@ -4,6 +4,7 @@ module Rotp
   class CheckProvidersJob < ApplicationJob
     queue_as :default
     retry_on Rotp::Client::HttpError
+    MAX_LISTED = 10
 
     def perform
       return false unless Rails.env.production?
@@ -49,10 +50,13 @@ module Rotp
     end
 
     def append_missing_list(message, missing_list)
-      missing_list.each do |provider|
+      missing_list.first(MAX_LISTED).each do |provider|
         identifier = provider["code"] || provider["urn"]
         message << "  - #{provider['operating_name']} (#{identifier})\n"
       end
+
+      remaining = missing_list.count - MAX_LISTED
+      message << "  - ...and #{remaining} more\n" if remaining.positive?
       message << "\n" if missing_list.any?
     end
   end

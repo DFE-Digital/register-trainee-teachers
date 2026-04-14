@@ -100,7 +100,7 @@ module Rotp
     end
 
     def compare_school_partners(rotp_providers)
-      rotp_schools = rotp_providers.select { |p| p["accreditation_status"] == "unaccredited" && !p["provider_type"].in?(MATCHABLE_PROVIDER_TYPES) }
+      rotp_schools = rotp_providers.select { |p| p["accreditation_status"] == "unaccredited" && p["provider_type"] == "school" }
       rotp_urns = rotp_schools.map { |p| p["urn"] }.compact.to_set
 
       register_schools = TrainingPartner.kept.where(record_type: "school").where.not(urn: [nil, ""])
