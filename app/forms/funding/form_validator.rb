@@ -3,24 +3,33 @@
 module Funding
   class FormValidator
     include ActiveModel::Model
+    include FundCodeExceptionable
 
-    attr_accessor :trainee, :fields, :bursary_form, :training_initiatives_form
+    attr_accessor :trainee, :fields, :bursary_form, :training_initiatives_form, :funding_eligibility_form
 
-    delegate :id, :persisted?, to: :trainee
+    delegate :id, :persisted?, :course_allocation_subject_id, to: :trainee
+    delegate :start_academic_cycle, to: :trainee, prefix: false
+    alias_method :academic_cycle, :start_academic_cycle
     delegate :applying_for_bursary, :applying_for_scholarship,
              :applying_for_grant, :bursary_tier,
              to: :bursary_form
     delegate :training_initiative, to: :training_initiatives_form
+    delegate :funding_eligibility, to: :funding_eligibility_form
 
+    validate :validate_funding_eligibility
     validate :validate_training_initiative
     validate :validate_funding, if: -> { funding_manager.can_apply_for_funding_type? }
+    validate :validate_funding_method_eligibility
 
     def initialize(trainee)
       @trainee = trainee
       @bursary_form = bursary_form_class.new(trainee)
       @training_initiatives_form = TrainingInitiativesForm.new(trainee)
+      @funding_eligibility_form = EligibilityForm.new(trainee)
 
-      @fields = bursary_form_fields.merge(training_initiatives_form_fields)
+      @fields = funding_eligibility_form_fields
+        .merge(bursary_form_fields)
+        .merge(training_initiatives_form_fields)
     end
 
     def save!
@@ -40,6 +49,7 @@ module Funding
 
     def funding_forms
       [
+        funding_eligibility_form,
         training_initiatives_form,
         (bursary_form if funding_manager.can_apply_for_bursary? || funding_manager.can_apply_for_grant?),
       ].compact
@@ -52,8 +62,30 @@ module Funding
       errors.add(:applying_for_grant, :inclusion)
     end
 
+    def validate_funding_eligibility
+      errors.add(:funding_eligibility, :blank) unless funding_eligibility_form.valid?
+    end
+
+    def validate_funding_method_eligibility
+      if fund_code_not_eligible? && funding_method? && !fund_code_exception?
+        errors.add(:funding_eligibility, :not_eligible_fund_code)
+      end
+    end
+
+    def fund_code_not_eligible?
+      trainee.not_eligible?
+    end
+
+    def funding_method?
+      trainee.applying_for_bursary? || trainee.applying_for_scholarship? || trainee.applying_for_grant?
+    end
+
     def validate_training_initiative
       errors.add(:training_initiative, :blank) unless training_initiatives_form.valid?
+    end
+
+    def funding_eligibility_form_fields
+      funding_eligibility_form.fields || {}
     end
 
     def bursary_form_fields
