@@ -1822,6 +1822,10 @@ en:
             date:
               blank: &withdrawal_date_blank Enter the date the trainee withdrew
               invalid: *withdrawal_date_blank
+        funding/eligibility_form:
+          attributes:
+            funding_eligibility:
+              blank: Select the funding eligibility for this trainee
         funding/training_initiatives_form:
           attributes:
             training_initiative:
@@ -2059,6 +2063,8 @@ en:
               blank: Enter a partner unique reference number (URN), name or postcode
         funding/form_validator:
           attributes:
+            funding_eligibility:
+              not_eligible_fund_code: A funding method is not allowed when the trainee is not eligible for funding
             training_initiative:
               blank: Select if the trainee is on a training initiative
             applying_for_grant:
