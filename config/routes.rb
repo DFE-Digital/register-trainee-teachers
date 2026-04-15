@@ -161,6 +161,7 @@ Rails.application.routes.draw do
 
       namespace :funding do
         concerns :confirmable
+        resource :funding_eligibility, only: %i[edit update], path: "/funding-eligibility"
         resource :training_initiative, only: %i[edit update], path: "/training-initiative"
         resource :bursary, only: %i[edit update], path: "/bursary"
       end
