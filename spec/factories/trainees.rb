@@ -165,6 +165,7 @@ FactoryBot.define do
     trait :completed do
       in_progress
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
+      funding_eligibility { FUNDING_ELIGIBILITIES.keys.sample }
       applying_for_bursary { false }
       applying_for_scholarship { false }
       applying_for_grant { false }
@@ -622,6 +623,7 @@ FactoryBot.define do
     trait :with_funding do
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
       applying_for_bursary { Faker::Boolean.boolean }
+      funding_eligibility { FUNDING_ELIGIBILITIES.keys.sample }
     end
 
     trait :with_provider_led_bursary do
