@@ -1,0 +1,41 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.funding.funding_eligibilities.edit",
+                               has_errors: @funding_eligibility_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<%= register_form_with(model: @funding_eligibility_form,
+                         url: trainee_funding_funding_eligibility_path(@trainee),
+                         method: :put,
+                         local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= render TraineeName::View.new(@trainee) %>
+      <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.funding_eligibilities.edit") %></h1>
+
+      <p class="govuk-body"><%= t("views.forms.funding.funding_eligibilities.description") %></p>
+
+      <%= f.govuk_radio_buttons_fieldset(:funding_eligibility,
+                                         legend: {
+                                           text: t("views.forms.funding.funding_eligibilities.title"),
+                                           size: "m",
+                                         }) do %>
+        <%= f.govuk_radio_button(
+          :funding_eligibility,
+          FUNDING_ELIGIBILITIES[:eligible],
+          label: { text: "Yes" },
+          link_errors: true,
+        ) %>
+        <%= f.govuk_radio_button(
+          :funding_eligibility,
+          FUNDING_ELIGIBILITIES[:not_eligible],
+          label: { text: "No" },
+        ) %>
+      <% end %>
+      <%= f.govuk_submit %>
+    </div>
+  </div>
+<% end %>

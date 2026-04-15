@@ -358,6 +358,10 @@ module Features
       @recommended_for_qts_page ||= PageObjects::Trainees::RecommendedForQts.new
     end
 
+    def funding_eligibility_page
+      @funding_eligibility_page ||= PageObjects::Trainees::Funding::FundingEligibility.new
+    end
+
     def training_initiative_page
       @training_initiative_page ||= PageObjects::Trainees::Funding::TrainingInitiative.new
     end

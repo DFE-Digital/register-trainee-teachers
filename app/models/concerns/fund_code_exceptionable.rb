@@ -14,13 +14,11 @@ module FundCodeExceptionable
 
   FUND_CODE_EXCEPTIONS_START_YEARS = [2025, 2026].freeze
 
-  private
+private
 
   def fund_code_exception?
     academic_cycle.start_year.in?(FUND_CODE_EXCEPTIONS_START_YEARS) &&
-      AllocationSubject.where(
-        name: FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS,
-        id: course_allocation_subject_id,
-      ).exists?
+      AllocationSubject.exists?(name: FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS,
+                                id: course_allocation_subject_id)
   end
 end

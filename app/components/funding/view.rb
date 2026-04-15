@@ -5,6 +5,11 @@ module Funding
     include SanitizeHelper
     include FundingHelper
 
+    FUNDING_ELIGIBILITY_LABELS = {
+      "eligible" => "Yes",
+      "not_eligible" => "No",
+    }.freeze
+
     def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
@@ -22,6 +27,7 @@ module Funding
 
     def funding_detail_rows
       [
+        funding_eligibility_row,
         training_initiative_row,
         funding_method_row,
         fund_code_row,
@@ -39,6 +45,14 @@ module Funding
              :can_apply_for_grant?, :grant_amount,
              :can_apply_for_funding_type?,
              to: :funding_manager
+
+    def funding_eligibility_row
+      mappable_field(
+        FUNDING_ELIGIBILITY_LABELS[trainee.funding_eligibility],
+        t(".funding_eligibility"),
+        edit_trainee_funding_funding_eligibility_path(trainee),
+      )
+    end
 
     def training_initiative_row
       mappable_field(

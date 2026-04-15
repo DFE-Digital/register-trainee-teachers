@@ -129,6 +129,7 @@ module Submissions
                                                             :itt_start_date,
                                                             :itt_end_date,
                                                             :provider_trainee_id,
+                                                            :funding_eligibility,
                                                             :training_initiative,
                                                             :placements,
                                                             :degree_ids,
