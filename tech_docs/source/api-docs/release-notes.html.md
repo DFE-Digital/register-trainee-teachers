@@ -9,6 +9,7 @@ weight: 2
 
 ### Changes
 
+* Renamed `POST /trainees/{trainee_id}/recommend-for-qts` to `POST /trainees/{trainee_id}/update-qts-or-eyts-status`. The old URL is still supported but deprecated.
 * Added support for the iQTS training route (HESA code `15`)
 * New `iqts_country` field. Mandatory when the training route is iQTS. Accepts a valid HESA country code.
 * Added support for the Assessment only training route (HESA code `16`)
