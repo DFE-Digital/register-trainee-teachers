@@ -23,6 +23,19 @@ helpers do
 
     partial("partials/preview_warning", locals: { version: })
   end
+
+  def active_page(page_path)
+    [
+      page_path == "/" && current_page.path == "index.html",
+      "/#{current_page.path}" == page_path,
+      !current_page.data.parent.nil? && current_page.data.parent.to_s == page_path,
+      page_path.end_with?("/") && config[:build_dir].to_s.end_with?(page_path.chomp("/")) && !header_link_page?,
+    ].any?
+  end
+
+  def header_link_page?
+    config[:tech_docs][:header_links]&.any? { |_, path| "/#{current_page.path}" == path }
+  end
 end
 
 set :relative_links, true
