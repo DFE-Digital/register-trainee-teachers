@@ -17,6 +17,8 @@ module FundCodeExceptionable
 private
 
   def fund_code_exception?
+    return false unless academic_cycle
+
     academic_cycle.start_year.in?(FUND_CODE_EXCEPTIONS_START_YEARS) &&
       AllocationSubject.exists?(name: FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS,
                                 id: course_allocation_subject_id)
