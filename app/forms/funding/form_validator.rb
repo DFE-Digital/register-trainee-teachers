@@ -19,7 +19,7 @@ module Funding
     validate :validate_funding_eligibility
     validate :validate_training_initiative
     validate :validate_funding, if: -> { funding_manager.can_apply_for_funding_type? }
-    validate :validate_funding_method_eligibility
+    validate :validate_funding_method_eligibility, unless: -> { trainee.api_record? || trainee.csv_record? }
 
     def initialize(trainee)
       @trainee = trainee
