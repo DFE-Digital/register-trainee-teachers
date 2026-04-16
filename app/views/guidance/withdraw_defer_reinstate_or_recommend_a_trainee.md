@@ -1,5 +1,5 @@
 ---
-page_title: Withdraw, defer, reinstate or change status of a trainee for teaching standards
+page_title: Withdraw, defer, reinstate or change status of a trainee for teaching requirements
 title: Withdraw, defer, reinstate or change status of a trainee for QTS or EYTS
 ---
 
@@ -40,4 +40,4 @@ You do not need to record in Register when a trainee got a PGCE or completed an 
 
 You can sign into Register to change a trainee’s QTS or EYTS status from within their trainee record. You can also change the status of multiple trainees at the same time. Find out [how to change trainee status for QTS or EYTS in bulk](/guidance/bulk-recommend-trainees).
 
-The DfE will send an email within 3-5 working days to the trainees telling them that their certificates are available to download from the Access your Teacher Qualifications service. 
+The DfE will send an email within 3-5 working days to the trainees telling them that their certificates are available to download from the Access your Teacher Qualifications service.
