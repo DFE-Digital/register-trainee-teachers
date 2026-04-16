@@ -1001,7 +1001,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
       end
 
       context "changing a single hesa trainee detail attribute" do
-        let(:trainee) { create(:trainee, :with_hesa_student, :completed, sex: :prefer_not_to_say, hesa_trainee_detail: hesa_trainee_detail) }
+        let(:trainee) { create(:trainee, :with_hesa_student, :completed, sex: :prefer_not_to_say, funding_eligibility: :eligible, hesa_trainee_detail: hesa_trainee_detail) }
 
         let(:hesa_trainee_detail) {
           build(:hesa_trainee_detail, course_age_range: "13909")
@@ -1010,7 +1010,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
         let(:hesa_trainee_detail_attributes) {
           hesa_trainee_detail.attributes.select { |k, _v|
             Api::V20260::HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
-          }.merge("fund_code" => nil)
+          }.merge("fund_code" => "7")
         }
 
         let(:updated_hesa_trainee_detail_attributes) {
