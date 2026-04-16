@@ -250,7 +250,7 @@ module Api
         def training_partner_from_urn
           training_partner_id =
             if params[:training_partner_urn].present? && !NOT_APPLICABLE_SCHOOL_URNS.include?(params[:training_partner_urn])
-              TrainingPartner.find_by(urn: params[:training_partner_urn])&.id || InvalidValue.new(params[:training_partner_urn])
+              TrainingPartner.find_by(urn: params[:training_partner_urn])&.id || InvalidValue.new(params[:training_partner_urn], :training_partner_urn)
             end
 
           {
@@ -262,7 +262,7 @@ module Api
         def training_partner_from_ukprn
           training_partner_id =
             if params[:training_partner_ukprn].present?
-              TrainingPartner.find_by(ukprn: params[:training_partner_ukprn])&.id || InvalidValue.new(params[:training_partner_ukprn])
+              TrainingPartner.find_by(ukprn: params[:training_partner_ukprn])&.id || InvalidValue.new(params[:training_partner_ukprn], :training_partner_ukprn)
             end
 
           {

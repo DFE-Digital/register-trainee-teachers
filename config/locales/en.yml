@@ -2250,6 +2250,10 @@ en:
               invalid: is invalid. The URN '%{value}' does not match any known training partners
               csv:
                 invalid: Training Partner URN is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_urn:
+              invalid: is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_ukprn:
+              invalid: is invalid. The UKPRN '%{value}' does not match any known training partners
             employing_school_id:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:
@@ -2345,6 +2349,10 @@ en:
               invalid: is invalid. The URN '%{value}' does not match any known training partners
               csv:
                 invalid: Training Partner URN is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_urn:
+              invalid: is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_ukprn:
+              invalid: is invalid. The UKPRN '%{value}' does not match any known training partners
             iqts_country:
               inclusion: is not a valid iQTS country
             employing_school_id:
