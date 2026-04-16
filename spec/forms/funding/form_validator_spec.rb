@@ -107,6 +107,42 @@ module Funding
         end
       end
 
+      context "when trainee is an API record and not eligible with a funding method" do
+        let(:academic_cycle) { create(:academic_cycle) }
+        let(:trainee) do
+          build(:trainee,
+                :created_from_api,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                start_academic_cycle: academic_cycle)
+        end
+
+        it "does not return a funding_eligibility error" do
+          subject.valid?
+
+          expect(subject.errors[:funding_eligibility]).to be_empty
+        end
+      end
+
+      context "when trainee is a CSV record and not eligible with a funding method" do
+        let(:academic_cycle) { create(:academic_cycle) }
+        let(:trainee) do
+          build(:trainee,
+                :created_from_csv,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                start_academic_cycle: academic_cycle)
+        end
+
+        it "does not return a funding_eligibility error" do
+          subject.valid?
+
+          expect(subject.errors[:funding_eligibility]).to be_empty
+        end
+      end
+
       context "when trainee is not eligible and has no funding method" do
         let(:trainee) do
           build(:trainee,
