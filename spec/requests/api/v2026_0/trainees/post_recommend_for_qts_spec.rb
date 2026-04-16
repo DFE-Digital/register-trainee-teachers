@@ -214,7 +214,7 @@ RSpec.describe "POST /api/v2026.0/trainees/:trainee_id/recommend-for-qts" do
 
       expect(response.parsed_body[:errors]).to contain_exactly(
         "error" => "UnprocessableEntity",
-        "message" => "qts_standards_met_date can't be blank",
+        "message" => "qts_standards_met_date can't be blank. Enter a date the trainee met the QTS or EYTS requirements.",
       )
     end
   end
