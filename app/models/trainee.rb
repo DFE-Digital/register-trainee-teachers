@@ -35,6 +35,7 @@
 #  ethnic_background               :text
 #  ethnic_group                    :integer
 #  first_names                     :text
+#  funding_eligibility             :string
 #  hesa_editable                   :boolean          default(FALSE)
 #  hesa_updated_at                 :datetime
 #  iqts_country                    :string
