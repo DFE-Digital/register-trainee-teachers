@@ -345,20 +345,10 @@ class ReferenceDataHelper
                 end_year: value.fetch("end_year", nil),
               )
             end
-          else
-            reference_data_type.type_values << ReferenceDataValue.new(
-              hesa_code: "-",
-              id: value.fetch("id"),
-              name: value.fetch("name"),
-              display_name: value.fetch("display_name"),
-              description: value.fetch("description", nil),
-              start_year: value.fetch("start_year", nil),
-              end_year: value.fetch("end_year", nil),
-            )
           end
         end
 
-        reference_data_type.type_values.sort_by! { |v| [v.hesa_code == "-" ? 1 : 0, v.hesa_code] }
+        reference_data_type.type_values.sort_by!(&:hesa_code)
 
         yield(reference_data_type)
       end
