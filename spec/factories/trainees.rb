@@ -164,6 +164,7 @@ FactoryBot.define do
 
     trait :completed do
       in_progress
+      funding_eligibility { FUNDING_ELIGIBILITIES.values.sample }
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
       applying_for_bursary { false }
       applying_for_scholarship { false }
@@ -620,6 +621,7 @@ FactoryBot.define do
     end
 
     trait :with_funding do
+      funding_eligibility { FUNDING_ELIGIBILITIES.values.sample }
       training_initiative { ROUTE_INITIATIVES_ENUMS.keys.sample }
       applying_for_bursary { Faker::Boolean.boolean }
     end
@@ -766,6 +768,10 @@ FactoryBot.define do
     trait :with_no_funding_hesa_trainee_detail do
       hesa_id { Faker::Number.number(digits: 13) }
       funding_eligibility { :not_eligible }
+      applying_for_bursary { nil }
+      applying_for_scholarship { nil }
+      applying_for_grant { nil }
+      bursary_tier { nil }
       hesa_trainee_detail factory: :hesa_trainee_detail, funding_method: Hesa::CodeSets::BursaryLevels::NONE
     end
 

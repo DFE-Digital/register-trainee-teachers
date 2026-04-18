@@ -9,10 +9,12 @@ module Funding
     describe "validations" do
       context "when no bursary would be available" do
         let(:trainee) { build(:trainee) }
+        let(:funding_eligibility_form) { instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: nil, valid?: true) }
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil) }
         let(:bursary_form) { instance_double(Funding::BursaryForm, fields: nil, valid?: true) }
 
         before do
+          allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
           allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
           allow(Funding::BursaryForm).to receive(:new).and_return(bursary_form)
         end
@@ -42,24 +44,146 @@ module Funding
         end
       end
 
-      context "when tiered bursary is available" do
-        let(:trainee) { create(:trainee, :early_years_postgrad) }
+      context "when trainee is not eligible and has a funding method" do
+        let(:academic_cycle) { create(:academic_cycle) }
+        let(:trainee) do
+          build(:trainee,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                start_academic_cycle: academic_cycle)
+        end
+
+        let(:funding_eligibility_form) { instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: "not_eligible", valid?: true) }
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil, valid?: true) }
 
         before do
+          allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
+          allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
+        end
+
+        it "returns an error for the funding_eligibility key" do
+          subject.valid?
+
+          expect(subject.errors[:funding_eligibility]).to include(
+            I18n.t(
+              "activemodel.errors.models.funding/form_validator.attributes.funding_eligibility.not_eligible_fund_code",
+            ),
+          )
+        end
+      end
+
+      context "when trainee is not eligible and has a funding method but has an exception subject and year" do
+        let(:academic_cycle) { create(:academic_cycle, start_date: Date.new(2025, 9, 1), end_date: Date.new(2026, 8, 31)) }
+        let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::PHYSICS) }
+        let(:trainee) do
+          build(:trainee,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                start_academic_cycle: academic_cycle,
+                course_allocation_subject: allocation_subject)
+        end
+
+        it { is_expected.to be_valid }
+      end
+
+      context "when trainee is not eligible and has a funding method but no academic cycle" do
+        let(:trainee) do
+          build(:trainee,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative])
+        end
+
+        it "returns an error for the funding_eligibility key" do
+          subject.valid?
+
+          expect(subject.errors[:funding_eligibility]).to include(
+            I18n.t(
+              "activemodel.errors.models.funding/form_validator.attributes.funding_eligibility.not_eligible_fund_code",
+            ),
+          )
+        end
+      end
+
+      context "when trainee is an API record and not eligible with a funding method" do
+        let(:academic_cycle) { create(:academic_cycle) }
+        let(:trainee) do
+          build(:trainee,
+                :created_from_api,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                start_academic_cycle: academic_cycle)
+        end
+
+        it "does not return a funding_eligibility error" do
+          subject.valid?
+
+          expect(subject.errors[:funding_eligibility]).to be_empty
+        end
+      end
+
+      context "when trainee is a CSV record and not eligible with a funding method" do
+        let(:academic_cycle) { create(:academic_cycle) }
+        let(:trainee) do
+          build(:trainee,
+                :created_from_csv,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                start_academic_cycle: academic_cycle)
+        end
+
+        it "does not return a funding_eligibility error" do
+          subject.valid?
+
+          expect(subject.errors[:funding_eligibility]).to be_empty
+        end
+      end
+
+      context "when trainee is not eligible and has no funding method" do
+        let(:trainee) do
+          build(:trainee,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: false,
+                applying_for_scholarship: false,
+                applying_for_grant: false,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative])
+        end
+
+        let(:funding_eligibility_form) { instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: "not_eligible", valid?: true) }
+        let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil, valid?: true) }
+
+        before do
+          allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
+          allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
+        end
+
+        it { is_expected.to be_valid }
+      end
+
+      context "when tiered bursary is available" do
+        let(:trainee) { create(:trainee, :early_years_postgrad, funding_eligibility: :eligible) }
+        let(:funding_eligibility_form) { instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: "eligible", valid?: true) }
+        let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil, valid?: true) }
+
+        before do
+          allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
           allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
         end
 
         it { is_expected.not_to be_valid }
 
         context "and a tier has been selected" do
-          let(:trainee) { create(:trainee, :early_years_postgrad, :with_tiered_bursary) }
+          let(:trainee) { create(:trainee, :early_years_postgrad, :with_tiered_bursary, funding_eligibility: :eligible) }
 
           it { is_expected.to be_valid }
         end
 
         context "and no bursary has been selected" do
-          let(:trainee) { create(:trainee, :early_years_postgrad, applying_for_bursary: false) }
+          let(:trainee) { create(:trainee, :early_years_postgrad, applying_for_bursary: false, funding_eligibility: :eligible) }
 
           it { is_expected.to be_valid }
         end
@@ -78,6 +202,7 @@ module Funding
                  course_allocation_subject: allocation_subject)
         end
 
+        let(:funding_eligibility_form) { instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: nil, valid?: true) }
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil) }
         let(:bursary_form) do
           instance_double(Funding::BursaryForm, fields: nil, applying_for_bursary: nil, applying_for_grant: nil)
@@ -85,6 +210,7 @@ module Funding
 
         before do
           create(:funding_method_subject, allocation_subject:, funding_method:)
+          allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
           allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
           allow(Funding::BursaryForm).to receive(:new).and_return(bursary_form)
         end
@@ -214,16 +340,26 @@ module Funding
       subject { described_class.new(trainee).missing_fields }
 
       context "when valid" do
-        let(:trainee) { build(:trainee, :with_funding, applying_for_bursary: false) }
+        let(:trainee) { build(:trainee, :with_funding, applying_for_bursary: false, funding_eligibility: :eligible) }
 
         it { is_expected.to eq([[]]) }
       end
 
+      context "with invalid EligibilityForm form" do
+        let(:trainee) { build(:trainee, :with_funding, applying_for_bursary: false, funding_eligibility: nil) }
+
+        it { is_expected.to eq([[:funding_eligibility]]) }
+      end
+
       context "with invalid TrainingInitiativesForm form" do
+        let(:trainee) { build(:trainee, funding_eligibility: :eligible) }
+
         it { is_expected.to eq([[:training_initiative]]) }
       end
 
       context "with invalid TrainingInitiativesForm and Bursary form" do
+        let(:trainee) { build(:trainee, funding_eligibility: :eligible) }
+
         before do
           allow(FundingManager).to receive(:new).with(trainee).and_return(double(can_apply_for_bursary?: true, applicable_available_funding: :bursary))
         end

@@ -49,6 +49,7 @@ en:
   funding:
     view:
       title: Funding
+      funding_eligibility: &funding_eligibility Funding eligibility
       training_initiative: &training_initiative Training initiative
       funding_method: &funding_method Funding method
       bursary_applied_for: Bursary applied for
@@ -502,6 +503,8 @@ en:
           index: Select the employing school
           edit: Employing school
         funding:
+          funding_eligibilities:
+            edit: *funding_eligibility
           training_initiatives:
             edit: Training initiatives
           bursaries:
@@ -765,6 +768,7 @@ en:
         itt_start_date: *course_path
         itt_end_date: *course_path
         main_age_range: *course_path
+        funding_eligibility: edit_trainee_funding_funding_eligibility_path
         training_initiative: edit_trainee_funding_training_initiative_path
         applying_for_bursary: &funding_method_path edit_trainee_funding_bursary_path
         applying_for_grant: *funding_method_path
@@ -820,6 +824,7 @@ en:
         main_age_range: *course_age_range
         itt_start_date: *itt_start_date
         itt_end_date: *itt_end_date
+        funding_eligibility: *funding_eligibility
         training_initiative: *training_initiative
         applying_for_bursary: *funding_method
         applying_for_grant: *funding_method
@@ -1022,6 +1027,9 @@ en:
           provider_led_undergrad: primary and secondary undergrad
           teacher_degree_apprenticeship: teaching apprenticeship
       funding:
+        funding_eligibilities:
+          title: Is this trainee eligible for funding?
+          description: A funding eligibility code records a trainee's status using Department of Education (DfE) student finance criteria. Funding eligibility must be submitted for every trainee.
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
           title_two: Is the trainee on either of these training initiatives?
@@ -1822,6 +1830,10 @@ en:
             date:
               blank: &withdrawal_date_blank Enter the date the trainee withdrew
               invalid: *withdrawal_date_blank
+        funding/eligibility_form:
+          attributes:
+            funding_eligibility:
+              blank: Select the funding eligibility for this trainee
         funding/training_initiatives_form:
           attributes:
             training_initiative:
@@ -2059,6 +2071,8 @@ en:
               blank: Enter a partner unique reference number (URN), name or postcode
         funding/form_validator:
           attributes:
+            funding_eligibility:
+              not_eligible_fund_code: A funding method is not allowed when the trainee is not eligible for funding
             training_initiative:
               blank: Select if the trainee is on a training initiative
             applying_for_grant:
