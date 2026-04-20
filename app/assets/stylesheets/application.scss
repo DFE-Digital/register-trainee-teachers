@@ -117,8 +117,12 @@ $mobile-big-end: 501px;
 }
 
 // Display for js only
-:not(.js-enabled) .app-js-only {
+.app-js-only {
   display: none;
+
+  .js-enabled & {
+    display: revert;
+  }
 }
 
 // Display for no-js only
