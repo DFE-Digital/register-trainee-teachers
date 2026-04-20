@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.4.9"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 8.0"
+gem "rails", "~> 8.1"
 gem "sprockets-rails"
 gem "turbo-rails"
 
@@ -27,9 +27,6 @@ gem "bootsnap", ">= 1.1.0", require: false
 
 # Manage multiple processes i.e. web server, redis, css/js builds
 gem "foreman"
-
-# Canonical meta tag
-gem "canonical-rails"
 
 # For determining file encoding
 gem "charlock_holmes", "0.7.9"
