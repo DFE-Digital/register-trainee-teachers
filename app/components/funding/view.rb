@@ -30,7 +30,6 @@ module Funding
         funding_eligibility_row,
         training_initiative_row,
         funding_method_row,
-        fund_code_row,
         applying_for_bursary_row,
         selected_bursary_level_row,
       ].compact
@@ -133,19 +132,6 @@ module Funding
         t(".funding_method"),
         edit_trainee_funding_bursary_path(trainee),
       )
-    end
-
-    def fund_code_row
-      fund_code_text = Hesa::CodeSets::FundCodes::MAPPING[fund_code_value] ||
-        Hesa::CodeSets::FundCodes::NO_FUND_CODE_PROVIDED
-
-      mappable_field(fund_code_text, t(".fund_code"), nil)
-    end
-
-    def fund_code_value
-      return unless trainee.funding_eligibility
-
-      "Hesa::CodeSets::FundCodes::#{trainee.funding_eligibility.upcase}".constantize
     end
 
     def applying_for_bursary_row

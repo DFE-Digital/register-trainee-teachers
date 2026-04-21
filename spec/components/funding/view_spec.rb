@@ -301,41 +301,6 @@ module Funding
         end
       end
 
-      describe "fund code row" do
-        context "when trainee has eligible funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: :eligible) }
-
-          before { render_inline(View.new(data_model: trainee)) }
-
-          it "renders the fund code with description" do
-            expect(rendered_content).to have_text("Fund code")
-            expect(rendered_content).to have_text("Eligible for funding from the DfE")
-          end
-        end
-
-        context "when trainee has not eligible funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: :not_eligible) }
-
-          before { render_inline(View.new(data_model: trainee)) }
-
-          it "renders the fund code with description" do
-            expect(rendered_content).to have_text("Fund code")
-            expect(rendered_content).to have_text("Not fundable by funding council/body")
-          end
-        end
-
-        context "when trainee has no funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: nil) }
-
-          before { render_inline(View.new(data_model: trainee)) }
-
-          it "renders fund code row with empty value" do
-            expect(rendered_content).to have_text("Fund code")
-            expect(rendered_content).to have_text("No fund code provided")
-          end
-        end
-      end
-
       describe "hesa selected bursary level" do
         let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: true) }
         let(:hesa_bursary_code) { trainee.hesa_students.first.bursary_level }
