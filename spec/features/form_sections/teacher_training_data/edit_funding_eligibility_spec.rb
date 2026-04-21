@@ -159,10 +159,10 @@ private
       training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
     )
     allocation_subject = trainee.course_allocation_subject || create(:allocation_subject)
-    subject_specialism = create(:subject_specialism, allocation_subject: allocation_subject)
+    subject_specialism = create(:subject_specialism, allocation_subject:)
     trainee.update!(course_allocation_subject: allocation_subject, course_subject_one: subject_specialism.name)
     funding_method = create(:funding_method, :bursary, training_route: :provider_led_postgrad, academic_cycle: trainee.start_academic_cycle)
-    create(:funding_method_subject, allocation_subject: allocation_subject, funding_method: funding_method)
+    create(:funding_method_subject, allocation_subject:, funding_method:)
   end
 
   def then_i_see_the_section_contains_questions_message
@@ -199,9 +199,9 @@ private
       training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
     )
     allocation_subject = trainee.course_allocation_subject || create(:allocation_subject)
-    subject_specialism = create(:subject_specialism, allocation_subject: allocation_subject)
+    subject_specialism = create(:subject_specialism, allocation_subject:)
     trainee.update!(course_allocation_subject: allocation_subject, course_subject_one: subject_specialism.name)
     funding_method = create(:funding_method, :bursary, training_route: :provider_led_postgrad, academic_cycle: trainee.start_academic_cycle)
-    create(:funding_method_subject, allocation_subject: allocation_subject, funding_method: funding_method)
+    create(:funding_method_subject, allocation_subject:, funding_method:)
   end
 end

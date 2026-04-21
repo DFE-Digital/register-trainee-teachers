@@ -333,20 +333,19 @@ class ReferenceDataHelper
 
         reference_data_type.data.each do |value|
           hesa_codes = value.fetch("hesa_codes", [])
-          if hesa_codes.present?
-            hesa_codes.each do |code|
-              next if code.blank?
 
-              reference_data_type.type_values << ReferenceDataValue.new(
-                hesa_code: code,
-                id: value.fetch("id"),
-                name: value.fetch("name"),
-                display_name: hesa_value_labels.dig("en", reference_data_type.metadata.fetch("name"), code) || value.fetch("display_name"),
-                description: value.fetch("description", nil),
-                start_year: value.fetch("start_year", nil),
-                end_year: value.fetch("end_year", nil),
-              )
-            end
+          next if hesa_codes.blank?
+
+          hesa_codes.each do |code|
+            reference_data_type.type_values << ReferenceDataValue.new(
+              hesa_code: code,
+              id: value.fetch("id"),
+              name: value.fetch("name"),
+              display_name: hesa_value_labels.dig("en", reference_data_type.metadata.fetch("name"), code) || value.fetch("display_name"),
+              description: value.fetch("description", nil),
+              start_year: value.fetch("start_year", nil),
+              end_year: value.fetch("end_year", nil),
+            )
           end
         end
 
