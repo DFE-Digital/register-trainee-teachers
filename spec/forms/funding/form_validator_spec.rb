@@ -361,10 +361,29 @@ module Funding
         let(:trainee) { build(:trainee, funding_eligibility: :eligible) }
 
         before do
-          allow(FundingManager).to receive(:new).with(trainee).and_return(double(can_apply_for_bursary?: true, applicable_available_funding: :bursary))
+          allow(FundingManager)
+            .to receive(:new)
+            .with(trainee)
+            .and_return(
+              double(
+              can_apply_for_bursary?: true, can_apply_for_funding_type?: true, applicable_available_funding: :bursary
+            ))
         end
 
-        it { is_expected.to eq([%i[training_initiative funding_type]]) }
+        it { is_expected.to eq([%i[training_initiative funding_type applying_for_bursary applying_for_grant]]) }
+      end
+
+      context "when trainee is not eligible and has a funding method for a non-exception course" do
+        let(:academic_cycle) { create(:academic_cycle) }
+        let(:trainee) do
+          build(:trainee,
+                funding_eligibility: :not_eligible,
+                applying_for_bursary: true,
+                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+                start_academic_cycle: academic_cycle)
+        end
+
+        it { is_expected.to eq([[:funding_eligibility]]) }
       end
     end
   end

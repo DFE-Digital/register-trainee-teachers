@@ -37,11 +37,12 @@ module Funding
     end
 
     def missing_fields
+      valid?
       [
-        funding_forms.flat_map do |form|
+        (funding_forms.flat_map do |form|
           form.valid?
           form.errors.attribute_names
-        end,
+        end + errors.attribute_names).uniq,
       ]
     end
 
