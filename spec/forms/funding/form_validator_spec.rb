@@ -366,8 +366,9 @@ module Funding
             .with(trainee)
             .and_return(
               double(
-              can_apply_for_bursary?: true, can_apply_for_funding_type?: true, applicable_available_funding: :bursary
-            ))
+                can_apply_for_bursary?: true, can_apply_for_funding_type?: true, applicable_available_funding: :bursary,
+              ),
+            )
         end
 
         it { is_expected.to eq([%i[training_initiative funding_type applying_for_bursary applying_for_grant]]) }
