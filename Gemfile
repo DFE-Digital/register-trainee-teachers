@@ -194,7 +194,7 @@ group :development do
   gem "solargraph-rails"
 
   # Profiling
-  gem "annotate"
+  gem "annotaterb"
   gem "benchmark-memory"
   gem "flamegraph"
   gem "memory_profiler"
