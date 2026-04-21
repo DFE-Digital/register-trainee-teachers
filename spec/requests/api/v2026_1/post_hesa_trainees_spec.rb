@@ -489,7 +489,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
           response.parsed_body[:data]
           expect(response.parsed_body["errors"]).to include(
-            "training_partner_id is invalid. The URN '99999999' does not match any known training partners",
+            "training_partner_ukprn is invalid. The UKPRN '99999999' does not match any known training partners",
           )
         end
       end
@@ -532,7 +532,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
 
             response.parsed_body[:data]
             expect(response.parsed_body["errors"]).to include(
-              "training_partner_id is invalid. The URN '123456' does not match any known training partners",
+              "training_partner_urn is invalid. The URN '123456' does not match any known training partners",
             )
           end
         end
@@ -568,7 +568,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
             it "returns unprocessible entity HTTP code and a validation error message" do
               expect(response).to have_http_status(:unprocessable_entity)
               expect(response.parsed_body["errors"]).to include(
-                "training_partner_id is invalid. The URN '#{training_partner.urn}' does not match any known training partners",
+                "training_partner_urn is invalid. The URN '#{training_partner.urn}' does not match any known training partners",
               )
             end
           end

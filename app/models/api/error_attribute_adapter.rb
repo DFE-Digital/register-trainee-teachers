@@ -48,6 +48,13 @@ module Api
       end
     end
 
+    # Rails' Error.generate_message calls read_attribute_for_validation before
+    # merging explicit value: options, raising NoMethodError for error attributes
+    # that don't correspond to model attributes (e.g. training_partner_urn).
+    def read_attribute_for_validation(attr)
+      respond_to?(attr) ? super : nil
+    end
+
     def errors
       model = self
 
