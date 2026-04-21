@@ -47,7 +47,7 @@ module Funding
 
     def funding_eligibility_row
       mappable_field(
-        FUNDING_ELIGIBILITY_LABELS[trainee.funding_eligibility],
+        funding_eligibility,
         t(".funding_eligibility"),
         edit_trainee_funding_funding_eligibility_path(trainee),
       )
@@ -147,6 +147,10 @@ module Funding
       hesa_bursary_text = "#{hesa_student.bursary_level} - #{hesa_bursary_level}"
 
       mappable_field(hesa_bursary_text, t(".selected_bursary_level"), nil)
+    end
+
+    def funding_eligibility
+      FUNDING_ELIGIBILITY_LABELS[data_model.funding_eligibility]
     end
 
     def training_initiative
