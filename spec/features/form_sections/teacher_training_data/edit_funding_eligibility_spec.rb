@@ -38,6 +38,23 @@ feature "edit funding eligibility" do
     and_eligible_is_selected
   end
 
+  scenario "non-draft trainee changing eligibility shows new value on confirm page" do
+    given_a_trainee_exists(
+      :submitted_for_trn,
+      :provider_led_postgrad,
+      :with_valid_itt_start_date,
+      funding_eligibility: :eligible,
+    )
+
+    when_i_visit_the_funding_eligibility_page
+    and_i_select_not_eligible
+    and_i_submit_the_form
+    then_i_am_on_the_training_initiative_page
+
+    when_i_visit_the_funding_confirm_page
+    then_i_see_the_new_funding_eligibility_on_the_confirm_page
+  end
+
 private
 
   def when_i_visit_the_review_draft_page
