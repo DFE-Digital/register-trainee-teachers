@@ -15,6 +15,15 @@ feature "List schools" do
       when_i_visit_the_school_index_page
       then_i_see_the_school
     end
+
+    scenario "shows school search when JS is enabled", js: true do
+      when_i_visit_the_school_index_page
+      then_i_see_the_school_search
+    end
+  end
+
+  def then_i_see_the_school_search
+    expect(page).to have_field("Search for a school", visible: :visible)
   end
 
   def when_i_visit_the_school_index_page
