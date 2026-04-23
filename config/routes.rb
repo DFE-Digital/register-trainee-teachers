@@ -96,11 +96,11 @@ Rails.application.routes.draw do
       resource :confirmation, only: %i[show]
     end
 
-    resources :recommendations_uploads, only: %i[new create edit update], path: "change-status", path_names: { new: "choose-who-to-change-status", edit: "choose-who-youll-change-status" } do
+    resources :recommendations_uploads, only: %i[new create edit update], path: "change-status", path_names: { new: "choose-whose-status-to-change", edit: "change-whose-status-will-change" } do
       get "confirmation"
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
       resource :recommendations, only: :create
-      resource :recommendations_checks, only: :show, path: "check-who-youll-change-status"
+      resource :recommendations_checks, only: :show, path: "check-whose-status-will-change"
       resource :recommendations_errors, only: %i[show create], path: "review-errors"
       member { get :cancel, path: "cancel" }
     end
