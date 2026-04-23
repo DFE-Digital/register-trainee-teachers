@@ -285,7 +285,7 @@ Rails.application.routes.draw do
     get "/check-data", to: "guidance#check_data"
     get "/census-sign-off", to: "guidance#census_sign_off"
     get "/performance-profiles", to: "guidance#performance_profiles"
-    get "/bulk-change-status-trainees", to: "guidance#bulk_recommend_trainees", as: :bulk_recommend_trainees
+    get "/bulk-change-trainee-status", to: "guidance#bulk_recommend_trainees", as: :bulk_recommend_trainees
     get "/withdraw-defer-reinstate-or-recommend-a-trainee", to: "guidance#withdraw_defer_reinstate_or_recommend_a_trainee"
     get "/manage-placements", to: "guidance#manage_placements"
     get "/bulk-upload-placement-data", to: "guidance#bulk_upload_placement_data"
