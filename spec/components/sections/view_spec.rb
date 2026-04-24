@@ -192,7 +192,7 @@ module Sections
           in_progress_valid: "trainee_schools_confirm_path",
         },
         funding: {
-          incomplete: "edit_trainee_funding_training_initiative_path",
+          incomplete: "edit_trainee_funding_funding_eligibility_path",
           in_progress_valid: "trainee_funding_confirm_path",
         },
         trainee_data: {

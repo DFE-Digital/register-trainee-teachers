@@ -32,6 +32,7 @@ class FormStore
     employing_school
     training_partner
     schools
+    funding_eligibility
     training_initiative
     bursary
     grant_and_tiered_bursary
