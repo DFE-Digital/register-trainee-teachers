@@ -24,8 +24,8 @@ module Hesa
           training_route: ::ReferenceData::TRAINING_ROUTES,
           training_initiative: ::ReferenceData::TRAINING_INITIATIVES,
           iqts_country: ::ReferenceData::COUNTRIES,
-        }.transform_values do |type|
-          Hesa::ReferenceData::V20261.values_for(type)
+        }.each_with_object({}) do |(name, type), hash|
+          hash[name] = Hesa::ReferenceData::V20261.values_for(name, type)
         end.freeze
       end
     end
