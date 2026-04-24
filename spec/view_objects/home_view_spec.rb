@@ -53,7 +53,7 @@ describe HomeView do
           {
             status: :can_bulk_recommend_for_award,
             trainee_count: 0,
-            link: "/bulk-update/change-status/choose-who-to-change-status",
+            link: "/bulk-update/change-status/choose-whose-status-to-change",
           },
           {
             status: :can_complete,
