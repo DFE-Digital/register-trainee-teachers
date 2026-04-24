@@ -219,39 +219,9 @@ jobs:
     name: Update FauAPI catalogue (pre-prod)
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     needs: [deploy-production]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v6
-
-    - name: Generate and publish API to FauAPI pre-prod
-      env:
-        FAUAPI_URL: https://pp-apimanagement.education.gov.uk
-        FAUAPI_TOKEN: ${{ secrets.FAUAPI_PP_AUTOMATION_TOKEN }}
-        FAUAPI_API_NAME: register-trainee-teachers-api
-      run: |
-        ruby bin/generate_fauapi_manifest
-
-        curl -sf -X POST "$FAUAPI_URL/api/tasks/apis/import" \
-          -H "Authorization: Bearer $FAUAPI_TOKEN" \
-          -H "Content-Type: application/json" \
-          -d @public/fauapi/register-api.json
-
-        API_ID=$(curl -sf "$FAUAPI_URL/api/tasks/apis" \
-          -H "Authorization: Bearer $FAUAPI_TOKEN" \
-          | jq -r --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name) | .id')
-
-        if [ -z "$API_ID" ]; then
-          echo "::error::Could not find API '$FAUAPI_API_NAME' after import"
-          exit 1
-        fi
-
-        echo "Found API id: $API_ID"
-
-        curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
-          -H "Authorization: Bearer $FAUAPI_TOKEN"
-
-        echo "Published API $API_ID to FauAPI catalogue (pre-prod)"
+    uses: ./.github/workflows/update-fauapi-catalogue.yml
+    secrets:
+      fauapi_token: ${{ secrets.FAUAPI_PP_AUTOMATION_TOKEN }}
 
   deploy-after-production:
     name: Parallel deployment after production
