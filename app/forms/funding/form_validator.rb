@@ -42,11 +42,21 @@ module Funding
         (funding_forms.flat_map do |form|
           form.valid?
           form.errors.attribute_names
-        end + errors.attribute_names).uniq,
+        end + mapped_attribute_names).uniq,
       ]
     end
 
   private
+
+    def mapped_attribute_names
+      errors.map do |error|
+        if error.attribute == :funding_eligibility && error.type == :not_eligible_fund_code
+          :funding_method_not_allowed
+        else
+          error.attribute
+        end
+      end
+    end
 
     def funding_forms
       [

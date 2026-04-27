@@ -176,7 +176,7 @@ private
   end
 
   def and_i_see_funding_eligibility_in_the_missing_fields
-    expect(page).to have_link("Funding eligibility is missing")
+    expect(page).to have_link("A funding method is not allowed when the trainee is not eligible for funding")
   end
 
   def when_i_visit_the_trainee_show_page

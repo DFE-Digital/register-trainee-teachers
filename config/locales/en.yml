@@ -776,6 +776,7 @@ en:
         custom_applying_for_grant: *funding_method_path
         applying_for_scholarship: *funding_method_path
         funding_type: *funding_method_path
+        funding_method_not_allowed: edit_trainee_funding_funding_eligibility_path
         institution: &degree_path degree_path
         subject: *degree_path
         uk_degree: *degree_path
@@ -802,6 +803,8 @@ en:
         other: This section contains questions which you need to complete.
       single_missing_field_text_html: "%{missing_field} is missing"
       multiple_missing_field_text_html: '%{missing_field} is missing<span class="govuk-visually-hidden"> for %{section_label}</span>'
+      custom_field_text:
+        funding_method_not_allowed: &not_eligible_fund_code_message A funding method is not allowed when the trainee is not eligible for funding
       missing_fields_mapping:
         first_names: *full_name
         last_name: *full_name
@@ -832,6 +835,7 @@ en:
         custom_bursary_tier: *funding_method
         custom_applying_for_grant: *funding_method
         funding_type: *funding_method
+        funding_method_not_allowed: *funding_eligibility
         institution: *institution
         subject: *subject
         uk_degree: *degree_type
@@ -2074,7 +2078,7 @@ en:
         funding/form_validator:
           attributes:
             funding_eligibility:
-              not_eligible_fund_code: A funding method is not allowed when the trainee is not eligible for funding
+              not_eligible_fund_code: *not_eligible_fund_code_message
             training_initiative:
               blank: Select if the trainee is on a training initiative
             applying_for_grant:

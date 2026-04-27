@@ -384,7 +384,7 @@ module Funding
                 start_academic_cycle: academic_cycle)
         end
 
-        it { is_expected.to eq([[:funding_eligibility]]) }
+        it { is_expected.to eq([[:funding_method_not_allowed]]) }
       end
     end
   end
