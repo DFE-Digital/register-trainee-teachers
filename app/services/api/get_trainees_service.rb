@@ -14,7 +14,16 @@ module Api
 
       [
         ::Trainees::Filter.call(trainees:, filters:)
-          .includes(%i[published_course employing_school training_partner placements degrees hesa_trainee_detail]),
+          .includes(
+            :published_course,
+            :employing_school,
+            :training_partner,
+            :degrees,
+            :hesa_trainee_detail,
+            :nationalities,
+            { placements: :school },
+            { trainee_withdrawals: :withdrawal_reasons },
+          ),
         nil,
       ]
     end
@@ -27,7 +36,11 @@ module Api
       @trainees ||= provider.trainees
         .not_draft
         .joins(:start_academic_cycle)
-        .includes(%i[nationalities withdrawal_reasons])
+        .includes(
+          :nationalities,
+          { placements: :school },
+          { trainee_withdrawals: :withdrawal_reasons },
+        )
         .where(academic_cycles: { id: academic_cycle.id })
         .where(trainees: { updated_at: since.. })
         .order("trainees.updated_at #{sort_order}")
