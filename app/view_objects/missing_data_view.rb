@@ -55,22 +55,14 @@ private
   end
 
   def single_record_link_text(field)
-    custom_field_text(field) || default_missing_field_text(field)
+    I18n.t("views.missing_data_view.single_missing_field_text_html",
+           missing_field: get_display_name(field)).html_safe
   end
 
   def multiple_record_link_text(field, index)
     I18n.t("views.missing_data_view.multiple_missing_field_text_html",
            missing_field: get_display_name(field),
            section_label: "#{I18n.t("views.missing_data_view.#{form_instance.model_name.i18n_key}")} #{index}").html_safe
-  end
-
-  def custom_field_text(field)
-    I18n.t("views.missing_data_view.custom_field_text.#{field}", default: nil)&.html_safe
-  end
-
-  def default_missing_field_text(field)
-    I18n.t("views.missing_data_view.single_missing_field_text_html",
-           missing_field: get_display_name(field)).html_safe
   end
 
   def get_display_name(field)

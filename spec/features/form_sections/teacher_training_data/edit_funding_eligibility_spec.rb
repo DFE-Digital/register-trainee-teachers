@@ -55,20 +55,6 @@ feature "edit funding eligibility" do
     then_i_see_the_new_funding_eligibility_on_the_confirm_page
   end
 
-  scenario "non-draft trainee show page banner lists funding eligibility when not_eligible has a funding method" do
-    given_a_submitted_trainee_with_bursary_and_not_eligible_funding
-    when_i_visit_the_trainee_show_page
-    then_the_missing_data_banner_lists_funding_eligibility
-  end
-
-  scenario "draft trainee with not_eligible and a funding method for non-exception course shows error when confirming" do
-    given_a_draft_trainee_with_bursary_and_not_eligible_funding
-    when_i_visit_the_funding_confirm_page
-    and_i_mark_as_completed_and_continue
-    then_i_see_the_section_contains_questions_message
-    and_i_see_funding_eligibility_in_the_missing_fields
-  end
-
 private
 
   def when_i_visit_the_review_draft_page
@@ -147,61 +133,5 @@ private
       expect(page).to have_text("No")
       expect(page).not_to have_text("Yes")
     end
-  end
-
-  def given_a_draft_trainee_with_bursary_and_not_eligible_funding
-    given_a_trainee_exists(
-      :provider_led_postgrad,
-      :with_start_date,
-      :with_study_mode_and_course_dates,
-      funding_eligibility: :not_eligible,
-      applying_for_bursary: true,
-      training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
-    )
-    allocation_subject = trainee.course_allocation_subject || create(:allocation_subject)
-    subject_specialism = create(:subject_specialism, allocation_subject:)
-    trainee.update!(course_allocation_subject: allocation_subject, course_subject_one: subject_specialism.name)
-    funding_method = create(:funding_method, :bursary, training_route: :provider_led_postgrad, academic_cycle: trainee.start_academic_cycle)
-    create(:funding_method_subject, allocation_subject:, funding_method:)
-  end
-
-  def then_i_see_the_section_contains_questions_message
-    expect(page).to have_text("There is a problem")
-    expect(page).to have_text("This section contains 1 question that you need to complete")
-  end
-
-  def and_i_mark_as_completed_and_continue
-    confirm_funding_page.confirm.click
-    confirm_funding_page.continue.click
-  end
-
-  def and_i_see_funding_eligibility_in_the_missing_fields
-    expect(page).to have_link("A funding method is not allowed when the trainee is not eligible for funding")
-  end
-
-  def when_i_visit_the_trainee_show_page
-    visit(trainee_path(trainee))
-  end
-
-  def then_the_missing_data_banner_lists_funding_eligibility
-    expect(page).to have_text("You need to enter")
-    expect(page).to have_link("Funding eligibility")
-  end
-
-  def given_a_submitted_trainee_with_bursary_and_not_eligible_funding
-    given_a_trainee_exists(
-      :submitted_for_trn,
-      :provider_led_postgrad,
-      :with_start_date,
-      :with_study_mode_and_course_dates,
-      funding_eligibility: :not_eligible,
-      applying_for_bursary: true,
-      training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
-    )
-    allocation_subject = trainee.course_allocation_subject || create(:allocation_subject)
-    subject_specialism = create(:subject_specialism, allocation_subject:)
-    trainee.update!(course_allocation_subject: allocation_subject, course_subject_one: subject_specialism.name)
-    funding_method = create(:funding_method, :bursary, training_route: :provider_led_postgrad, academic_cycle: trainee.start_academic_cycle)
-    create(:funding_method_subject, allocation_subject:, funding_method:)
   end
 end

@@ -3,7 +3,6 @@
 module Funding
   class FormValidator
     include ActiveModel::Model
-    include FundCodeExceptionable
 
     attr_accessor :trainee, :fields, :bursary_form, :training_initiatives_form, :funding_eligibility_form
 
@@ -19,7 +18,6 @@ module Funding
     validate :validate_funding_eligibility
     validate :validate_training_initiative
     validate :validate_funding, if: -> { funding_manager.can_apply_for_funding_type? }
-    validate :validate_funding_method_eligibility, unless: -> { trainee.api_record? || trainee.csv_record? }
 
     def initialize(trainee)
       @trainee = trainee
@@ -42,21 +40,11 @@ module Funding
         (funding_forms.flat_map do |form|
           form.valid?
           form.errors.attribute_names
-        end + mapped_attribute_names).uniq,
+        end + errors.attribute_names).uniq,
       ]
     end
 
   private
-
-    def mapped_attribute_names
-      errors.map do |error|
-        if error.attribute == :funding_eligibility && error.type == :not_eligible_fund_code
-          :funding_method_not_allowed
-        else
-          error.attribute
-        end
-      end
-    end
 
     def funding_forms
       [
@@ -75,20 +63,6 @@ module Funding
 
     def validate_funding_eligibility
       errors.add(:funding_eligibility, :blank) unless funding_eligibility_form.valid?
-    end
-
-    def validate_funding_method_eligibility
-      if fund_code_not_eligible? && funding_method? && !fund_code_exception?
-        errors.add(:funding_eligibility, :not_eligible_fund_code)
-      end
-    end
-
-    def fund_code_not_eligible?
-      trainee.not_eligible?
-    end
-
-    def funding_method?
-      trainee.applying_for_bursary? || trainee.applying_for_scholarship? || trainee.applying_for_grant?
     end
 
     def validate_training_initiative

@@ -7,7 +7,6 @@ module Api
         class FundingMethod < Api::Rules::Base
           include DateValidatable
           include Api::Rules::AcademicCyclable
-          include FundCodeExceptionable
 
           FUNDING_TYPES = {
             Hesa::CodeSets::BursaryLevels::SCHOLARSHIP => FUNDING_TYPES["scholarship"],
@@ -20,6 +19,17 @@ module Api
             Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
             Hesa::CodeSets::BursaryLevels::GRANT => FUNDING_TYPES["grant"],
           }.freeze
+
+          FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS = [
+            AllocationSubjects::ANCIENT_LANGUAGES,
+            AllocationSubjects::MODERN_LANGUAGES,
+            AllocationSubjects::FRENCH_LANGUAGE,
+            AllocationSubjects::GERMAN_LANGUAGE,
+            AllocationSubjects::SPANISH_LANGUAGE,
+            AllocationSubjects::PHYSICS,
+          ].freeze
+
+          FUND_CODE_EXCEPTIONS_START_YEARS = [2025, 2026].freeze
 
           attr_reader :hesa_trainee_detail_attributes
 
@@ -81,6 +91,14 @@ module Api
 
           def funding_type
             @funding_type ||= FUNDING_TYPES[funding_method]
+          end
+
+          def fund_code_exception?
+            return false unless academic_cycle
+
+            academic_cycle.start_year.in?(FUND_CODE_EXCEPTIONS_START_YEARS) &&
+              AllocationSubject.exists?(name: FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS,
+                                        id: course_allocation_subject_id)
           end
 
           def error_details

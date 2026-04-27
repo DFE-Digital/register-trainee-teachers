@@ -62,85 +62,7 @@ module Funding
           allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
         end
 
-        it "returns an error for the funding_eligibility key" do
-          subject.valid?
-
-          expect(subject.errors[:funding_eligibility]).to include(
-            I18n.t(
-              "activemodel.errors.models.funding/form_validator.attributes.funding_eligibility.not_eligible_fund_code",
-            ),
-          )
-        end
-      end
-
-      context "when trainee is not eligible and has a funding method but has an exception subject and year" do
-        let(:academic_cycle) { create(:academic_cycle, start_date: Date.new(2025, 9, 1), end_date: Date.new(2026, 8, 31)) }
-        let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::PHYSICS) }
-        let(:trainee) do
-          build(:trainee,
-                funding_eligibility: :not_eligible,
-                applying_for_bursary: true,
-                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
-                start_academic_cycle: academic_cycle,
-                course_allocation_subject: allocation_subject)
-        end
-
         it { is_expected.to be_valid }
-      end
-
-      context "when trainee is not eligible and has a funding method but no academic cycle" do
-        let(:trainee) do
-          build(:trainee,
-                funding_eligibility: :not_eligible,
-                applying_for_bursary: true,
-                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative])
-        end
-
-        it "returns an error for the funding_eligibility key" do
-          subject.valid?
-
-          expect(subject.errors[:funding_eligibility]).to include(
-            I18n.t(
-              "activemodel.errors.models.funding/form_validator.attributes.funding_eligibility.not_eligible_fund_code",
-            ),
-          )
-        end
-      end
-
-      context "when trainee is an API record and not eligible with a funding method" do
-        let(:academic_cycle) { create(:academic_cycle) }
-        let(:trainee) do
-          build(:trainee,
-                :created_from_api,
-                funding_eligibility: :not_eligible,
-                applying_for_bursary: true,
-                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
-                start_academic_cycle: academic_cycle)
-        end
-
-        it "does not return a funding_eligibility error" do
-          subject.valid?
-
-          expect(subject.errors[:funding_eligibility]).to be_empty
-        end
-      end
-
-      context "when trainee is a CSV record and not eligible with a funding method" do
-        let(:academic_cycle) { create(:academic_cycle) }
-        let(:trainee) do
-          build(:trainee,
-                :created_from_csv,
-                funding_eligibility: :not_eligible,
-                applying_for_bursary: true,
-                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
-                start_academic_cycle: academic_cycle)
-        end
-
-        it "does not return a funding_eligibility error" do
-          subject.valid?
-
-          expect(subject.errors[:funding_eligibility]).to be_empty
-        end
       end
 
       context "when trainee is not eligible and has no funding method" do
@@ -372,19 +294,6 @@ module Funding
         end
 
         it { is_expected.to eq([%i[training_initiative funding_type applying_for_bursary applying_for_grant]]) }
-      end
-
-      context "when trainee is not eligible and has a funding method for a non-exception course" do
-        let(:academic_cycle) { create(:academic_cycle) }
-        let(:trainee) do
-          build(:trainee,
-                funding_eligibility: :not_eligible,
-                applying_for_bursary: true,
-                training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
-                start_academic_cycle: academic_cycle)
-        end
-
-        it { is_expected.to eq([[:funding_method_not_allowed]]) }
       end
     end
   end
