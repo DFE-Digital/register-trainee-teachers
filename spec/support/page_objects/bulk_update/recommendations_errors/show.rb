@@ -3,7 +3,7 @@
 module PageObjects
   module RecommendationsErrors
     class Show < PageObjects::Base
-      set_url "/bulk-update/recommend/{id}/review-errors"
+      set_url "/bulk-update/change-status/{id}/review-errors"
 
       element :upload_button, ".govuk-button", text: "Upload file and check whose status will change"
     end
