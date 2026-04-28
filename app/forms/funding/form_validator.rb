@@ -6,9 +6,7 @@ module Funding
 
     attr_accessor :trainee, :fields, :bursary_form, :training_initiatives_form, :funding_eligibility_form
 
-    delegate :id, :persisted?, :course_allocation_subject_id, to: :trainee
-    delegate :start_academic_cycle, to: :trainee, prefix: false
-    alias_method :academic_cycle, :start_academic_cycle
+    delegate :id, :persisted?, to: :trainee
     delegate :applying_for_bursary, :applying_for_scholarship,
              :applying_for_grant, :bursary_tier,
              to: :bursary_form
