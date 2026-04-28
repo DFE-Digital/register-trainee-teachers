@@ -50,30 +50,14 @@ module Funding
         end
         let(:eligibility) { FUNDING_ELIGIBILITIES[:not_eligible] }
 
-        it "clears funding method fields" do
-          subject.save!
-
-          trainee.reload
-          expect(trainee.applying_for_bursary).to be_nil
-          expect(trainee.applying_for_scholarship).to be_nil
-          expect(trainee.applying_for_grant).to be_nil
-          expect(trainee.bursary_tier).to be_nil
-        end
-      end
-
-      context "when funding eligibility does not change" do
-        let(:trainee) do
-          create(:trainee,
-                 funding_eligibility: "eligible",
-                 applying_for_bursary: true)
-        end
-        let(:eligibility) { FUNDING_ELIGIBILITIES[:eligible] }
-
-        it "does not clear funding method fields" do
+        it "preserves the existing funding method fields" do
           subject.save!
 
           trainee.reload
           expect(trainee.applying_for_bursary).to be true
+          expect(trainee.applying_for_scholarship).to be false
+          expect(trainee.applying_for_grant).to be true
+          expect(trainee.bursary_tier).to eq("tier_one")
         end
       end
     end
