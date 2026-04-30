@@ -145,7 +145,7 @@ GEM
       csv
       railties (>= 7.2)
       safely_block (>= 1)
-    bootsnap (1.24.0)
+    bootsnap (1.24.1)
       msgpack (~> 1.2)
     builder (3.3.0)
     bullet (8.1.1)
@@ -997,7 +997,7 @@ CHECKSUMS
   bigdecimal (3.3.1) sha256=eaa01e228be54c4f9f53bf3cc34fe3d5e845c31963e7fcc5bedb05a4e7d52218
   bindata (2.5.0) sha256=29dccb8ba1cc9de148f24bb88930840c62db56715f0f80eccadd624d9f3d2623
   blazer (3.4.0) sha256=ff8d4e32013857f3614772ccd74018955ae126005460065dbc9036cc5ed9cc7d
-  bootsnap (1.24.0) sha256=34e6dea61ff4895101aa9c10894ce30186bec73fe2279e0eb52040d8d4cec297
+  bootsnap (1.24.1) sha256=d7faea1dc24aa5b22dacc049c9236b64ebf60b14dd49c615e15d8402375d39ef
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   bullet (8.1.1) sha256=3ddecdf3787c64a3f1e5b316256840bc034d60c1070b1b16d3fe5b5932d42b87
   bundle-audit (0.2.0) sha256=cb499708f7fbc56d2d2e8bab09a1184f8f5b548bdbd628b757e5a1856874ca12
