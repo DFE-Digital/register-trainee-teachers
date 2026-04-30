@@ -23,25 +23,22 @@ module Hesa
           study_mode: ::ReferenceData::STUDY_MODES,
           training_route: ::ReferenceData::TRAINING_ROUTES,
           training_initiative: ::ReferenceData::TRAINING_INITIATIVES,
-        }.transform_values do |type|
-          Hesa::ReferenceData::V20260.values_for(type)
+        }.each_with_object({}) do |(name, type), hash|
+          hash[name] = Hesa::ReferenceData::V20260.values_for(name, type)
         end.freeze
       end
 
       # rubocop:disable Style/HashEachMethods
-      def self.values_for(type)
-        transformed_values = []
+      def self.values_for(type_name, type)
+        rows = []
         type.values.each do |value|
-          hesa_codes = value.hesa_codes || []
-          if hesa_codes.present?
-            hesa_codes.each do |code|
-              transformed_values << [code, value.display_name]
-            end
-          else
-            transformed_values << ["-", value.display_name]
+          Array(value.hesa_codes).each do |code|
+            next if code.blank?
+
+            rows << [code, I18n.t("#{type_name}.#{code}", default: value.display_name)]
           end
-        end.flatten
-        transformed_values
+        end
+        rows.sort_by(&:first)
       end
       # rubocop:enable Style/HashEachMethods
     end

@@ -335,6 +335,8 @@ class ReferenceDataHelper
           hesa_codes = value.fetch("hesa_codes", [])
           if hesa_codes.present?
             hesa_codes.each do |code|
+              next if code.blank?
+
               reference_data_type.type_values << ReferenceDataValue.new(
                 hesa_code: code,
                 id: value.fetch("id"),
