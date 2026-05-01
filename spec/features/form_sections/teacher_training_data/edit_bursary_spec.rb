@@ -38,6 +38,20 @@ feature "edit bursary" do
     end
   end
 
+  scenario "redirects to confirmation when not eligible and subject is not in the fund code exception list" do
+    given_a_not_eligible_trainee_exists
+    and_a_bursary_exists_for_their_subject
+    when_i_visit_the_bursary_page
+    then_i_am_redirected_to_the_funding_confirmation_page
+  end
+
+  scenario "renders the bursary form when not eligible but subject is in the fund code exception list" do
+    given_a_not_eligible_trainee_exists
+    and_a_bursary_exists_for_an_exception_subject
+    when_i_visit_the_bursary_page
+    then_i_see_the_bursary_page
+  end
+
 private
 
   def given_an_early_years_postgrad_trainee_exists
@@ -81,7 +95,27 @@ private
     create(:subject_specialism, allocation_subject: allocation_subject, name: course_subject)
   end
 
+  def and_a_bursary_exists_for_an_exception_subject
+    funding_method = create(:funding_method, training_route: :provider_led_postgrad, amount: 100_000)
+    allocation_subject = create(:allocation_subject, name: AllocationSubjects::PHYSICS, funding_methods: [funding_method])
+    create(:subject_specialism, allocation_subject: allocation_subject, name: course_subject)
+    trainee.update!(course_allocation_subject: allocation_subject)
+  end
+
+  def given_a_not_eligible_trainee_exists
+    given_a_trainee_exists(
+      :provider_led_postgrad,
+      :with_valid_itt_start_date,
+      course_subject_one: course_subject,
+      funding_eligibility: :not_eligible,
+    )
+  end
+
   def then_i_am_redirected_to_the_funding_confirmation_page
     expect(confirm_funding_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_i_see_the_bursary_page
+    expect(bursary_page).to be_displayed(id: trainee.slug)
   end
 end
