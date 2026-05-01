@@ -1,0 +1,81 @@
+name: Update FauAPI catalogue
+
+on:
+  workflow_call:
+    inputs:
+      fauapi_url:
+        required: false
+        type: string
+        default: https://pp-apimanagement.education.gov.uk
+      fauapi_api_name:
+        required: false
+        type: string
+        default: register-trainee-teachers-api
+    secrets:
+      fauapi_token:
+        required: true
+  workflow_dispatch:
+    inputs:
+      fauapi_url:
+        description: FauAPI management API base URL
+        required: false
+        type: string
+        default: https://pp-apimanagement.education.gov.uk
+      fauapi_api_name:
+        description: FauAPI API name to import and publish
+        required: false
+        type: string
+        default: register-trainee-teachers-api
+
+jobs:
+  update-fauapi-catalogue:
+    name: Update FauAPI catalogue (pre-prod)
+    runs-on: ubuntu-latest
+    env:
+      FAUAPI_URL: ${{ inputs.fauapi_url || github.event.inputs.fauapi_url }}
+      FAUAPI_API_NAME: ${{ inputs.fauapi_api_name || github.event.inputs.fauapi_api_name }}
+      FAUAPI_TOKEN: ${{ secrets.fauapi_token || secrets.FAUAPI_PP_AUTOMATION_TOKEN }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+
+    - name: Generate and publish API to FauAPI
+      run: |
+        ruby bin/generate_fauapi_manifest
+
+        echo "fauapi import payload:"
+        jq . public/fauapi/register-api.json
+
+        IMPORT_RESPONSE=$(curl -sf -X POST "$FAUAPI_URL/api/tasks/apis/import" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN" \
+          -H "Content-Type: application/json" \
+          -d @public/fauapi/register-api.json)
+
+        echo "fauapi import response:"
+        echo "$IMPORT_RESPONSE" | jq .
+
+        APIS_RESPONSE=$(curl -sf "$FAUAPI_URL/api/tasks/apis" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN")
+
+        API_ID=$(echo "$APIS_RESPONSE" \
+          | jq -r --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name) | .id')
+
+        if [ -z "$API_ID" ]; then
+          echo "::error::Could not find API '$FAUAPI_API_NAME' after import"
+          exit 1
+        fi
+
+        echo "fauapi persisted api object:"
+        echo "$APIS_RESPONSE" \
+          | jq -c --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name)' \
+          | jq .
+
+        echo "Found API id: $API_ID"
+
+        PUBLISH_RESPONSE=$(curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+          -H "Authorization: Bearer $FAUAPI_TOKEN")
+
+        echo "fauapi publish response:"
+        echo "$PUBLISH_RESPONSE" | jq .
+
+        echo "Published API $API_ID to FauAPI catalogue (pre-prod)"

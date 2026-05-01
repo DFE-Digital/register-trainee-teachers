@@ -68,8 +68,8 @@ Rails.application.routes.draw do
   resources :reports, only: :index do
     collection do
       get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off"
-      get :bulk_recommend_export
-      get :bulk_recommend_empty_export
+      get :bulk_recommend_export, path: "bulk-change-status-export"
+      get :bulk_recommend_empty_export, path: "bulk-change-status-empty-export"
       get :bulk_placement_export
       scope module: :reports, as: :reports do
         resources :performance_profiles, path: "performance-profiles", only: %i[index new create] do
@@ -96,11 +96,11 @@ Rails.application.routes.draw do
       resource :confirmation, only: %i[show]
     end
 
-    resources :recommendations_uploads, only: %i[new create edit update], path: "recommend", path_names: { new: "choose-who-to-recommend", edit: "change-who-youll-recommend" } do
+    resources :recommendations_uploads, only: %i[new create edit update], path: "change-status", path_names: { new: "choose-whose-status-to-change", edit: "change-whose-status-will-change" } do
       get "confirmation"
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
       resource :recommendations, only: :create
-      resource :recommendations_checks, only: :show, path: "check-who-youll-recommend"
+      resource :recommendations_checks, only: :show, path: "check-whose-status-will-change"
       resource :recommendations_errors, only: %i[show create], path: "review-errors"
       member { get :cancel, path: "cancel" }
     end
@@ -285,7 +285,7 @@ Rails.application.routes.draw do
     get "/check-data", to: "guidance#check_data"
     get "/census-sign-off", to: "guidance#census_sign_off"
     get "/performance-profiles", to: "guidance#performance_profiles"
-    get "/bulk-recommend-trainees", to: "guidance#bulk_recommend_trainees"
+    get "/bulk-change-trainee-status", to: "guidance#bulk_recommend_trainees", as: :bulk_recommend_trainees
     get "/withdraw-defer-reinstate-or-recommend-a-trainee", to: "guidance#withdraw_defer_reinstate_or_recommend_a_trainee"
     get "/manage-placements", to: "guidance#manage_placements"
     get "/bulk-upload-placement-data", to: "guidance#bulk_upload_placement_data"
