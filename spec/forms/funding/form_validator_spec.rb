@@ -222,6 +222,22 @@ module Funding
           end
         end
 
+        context "when stashed eligibility is not_eligible (non-draft trainee mid-flow)" do
+          let(:funding_method) { create(:funding_method, :bursary, training_route: :provider_led_postgrad) }
+          let(:funding_eligibility_form) do
+            instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: "not_eligible", valid?: true)
+          end
+
+          before do
+            allow(training_initiative_form).to receive(:valid?).and_return(true)
+            allow(bursary_form).to receive(:valid?).and_return(false)
+          end
+
+          it "skips bursary validation because the stashed eligibility wins over the persisted trainee" do
+            expect(subject).to be_valid
+          end
+        end
+
         context "when grant and tiered bursary are available" do
           let(:grant_and_tiered_bursary_form) do
             instance_double(Funding::GrantAndTieredBursaryForm, fields: nil, applying_for_bursary: nil, applying_for_grant: nil)
@@ -285,7 +301,7 @@ module Funding
         before do
           allow(FundingManager)
             .to receive(:new)
-            .with(trainee)
+            .with(trainee, funding_eligibility: "eligible")
             .and_return(
               double(
                 can_apply_for_bursary?: true, can_apply_for_funding_type?: true, applicable_available_funding: :bursary,

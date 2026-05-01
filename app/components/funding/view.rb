@@ -184,7 +184,7 @@ module Funding
     end
 
     def funding_manager
-      @funding_manager ||= FundingManager.new(trainee)
+      @funding_manager ||= FundingManager.new(trainee, funding_eligibility: data_model.funding_eligibility)
     end
 
     def hesa_student

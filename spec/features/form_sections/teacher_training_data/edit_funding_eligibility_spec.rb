@@ -55,6 +55,19 @@ feature "edit funding eligibility" do
     then_i_see_the_new_funding_eligibility_on_the_confirm_page
   end
 
+  scenario "redirects to the funding confirmation page when not eligible" do
+    given_a_trainee_eligible_for_a_bursary_exists
+
+    when_i_visit_the_funding_eligibility_page
+    and_i_select_not_eligible
+    and_i_submit_the_form
+    then_i_am_on_the_training_initiative_page
+
+    when_i_update_the_training_initiative
+    and_i_submit_the_form
+    then_i_am_redirected_to_the_funding_confirmation_page
+  end
+
 private
 
   def when_i_visit_the_review_draft_page
@@ -133,5 +146,25 @@ private
       expect(page).to have_text("No")
       expect(page).not_to have_text("Yes")
     end
+  end
+
+  def given_a_trainee_eligible_for_a_bursary_exists
+    given_a_trainee_exists(
+      :submitted_for_trn,
+      :provider_led_postgrad,
+      :with_provider_led_bursary,
+      :with_valid_itt_start_date,
+      funding_eligibility: :eligible,
+    )
+  end
+
+  def when_i_update_the_training_initiative
+    edit_funding_page.training_initiative_radios.choose(
+      "funding-training-initiatives-form-training-initiative-now-teach-field",
+    )
+  end
+
+  def then_i_am_redirected_to_the_funding_confirmation_page
+    expect(confirm_funding_page).to be_displayed(id: trainee.slug)
   end
 end

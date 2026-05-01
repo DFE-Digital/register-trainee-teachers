@@ -92,6 +92,7 @@ module Funding
               training_route: route,
               start_academic_cycle: start_academic_cycle,
               applying_for_bursary: true,
+              funding_eligibility: :eligible,
               course_subject_one: subject_specialism.name)
       end
 
@@ -353,6 +354,34 @@ module Funding
       let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true, start_academic_cycle: start_academic_cycle) }
 
       it "doesn't render the funding row" do
+        expect(rendered_content).not_to have_text("Funding method")
+      end
+    end
+
+    describe "when data_model exposes a stashed funding_eligibility different from the trainee's persisted value" do
+      let(:allocation_subject) { create(:allocation_subject) }
+      let(:subject_specialism) { create(:subject_specialism, allocation_subject:) }
+      let(:funding_method) { create(:funding_method, :bursary, training_route: :provider_led_postgrad, academic_cycle: current_academic_cycle) }
+      let(:trainee) do
+        create(:trainee,
+               :with_start_date,
+               training_route: :provider_led_postgrad,
+               course_subject_one: subject_specialism.name,
+               course_allocation_subject: allocation_subject,
+               funding_eligibility: :eligible,
+               start_academic_cycle: current_academic_cycle)
+      end
+      let(:funding_eligibility_form) do
+        instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: "not_eligible", valid?: true)
+      end
+
+      before do
+        create(:funding_method_subject, funding_method:, allocation_subject:)
+        allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
+        render_inline(View.new(data_model: data_model, editable: true))
+      end
+
+      it "does not render the funding method row" do
         expect(rendered_content).not_to have_text("Funding method")
       end
     end
