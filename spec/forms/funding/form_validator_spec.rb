@@ -272,6 +272,95 @@ module Funding
       end
     end
 
+    describe "#save!" do
+      let(:funding_eligibility_form) do
+        instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: funding_eligibility, valid?: true, save!: true)
+      end
+      let(:training_initiative_form) do
+        instance_double(Funding::TrainingInitiativesForm, fields: nil, valid?: true, save!: true)
+      end
+      let(:bursary_form) { instance_double(Funding::BursaryForm, fields: nil, valid?: true) }
+
+      before do
+        allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
+        allow(Funding::TrainingInitiativesForm).to receive(:new).and_return(training_initiative_form)
+        allow(Funding::BursaryForm).to receive(:new).and_return(bursary_form)
+      end
+
+      context "when trainee is not eligible and not in the fund-code exception list" do
+        let(:funding_eligibility) { "not_eligible" }
+        let(:trainee) do
+          create(:trainee,
+                 funding_eligibility: funding_eligibility,
+                 applying_for_bursary: true,
+                 applying_for_grant: false,
+                 applying_for_scholarship: false,
+                 bursary_tier: BURSARY_TIER_ENUMS[:tier_one])
+        end
+
+        it "clears the funding method fields" do
+          described_class.new(trainee).save!
+
+          expect(trainee.reload).to have_attributes(
+            applying_for_bursary: nil,
+            applying_for_scholarship: nil,
+            applying_for_grant: nil,
+            bursary_tier: nil,
+          )
+        end
+      end
+
+      context "when trainee is not eligible but in the fund-code exception list" do
+        let(:funding_eligibility) { "not_eligible" }
+        let(:academic_cycle) { create(:academic_cycle, :current) }
+        let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::PHYSICS) }
+        let(:trainee) do
+          create(:trainee,
+                 funding_eligibility: funding_eligibility,
+                 course_allocation_subject: allocation_subject,
+                 start_academic_cycle: academic_cycle,
+                 applying_for_bursary: true,
+                 applying_for_grant: false,
+                 applying_for_scholarship: false,
+                 bursary_tier: BURSARY_TIER_ENUMS[:tier_one])
+        end
+
+        it "preserves the funding method fields" do
+          described_class.new(trainee).save!
+
+          expect(trainee.reload).to have_attributes(
+            applying_for_bursary: true,
+            applying_for_scholarship: false,
+            applying_for_grant: false,
+            bursary_tier: BURSARY_TIER_ENUMS[:tier_one],
+          )
+        end
+      end
+
+      context "when trainee is eligible" do
+        let(:funding_eligibility) { "eligible" }
+        let(:trainee) do
+          create(:trainee,
+                 funding_eligibility: funding_eligibility,
+                 applying_for_bursary: true,
+                 applying_for_grant: false,
+                 applying_for_scholarship: false,
+                 bursary_tier: BURSARY_TIER_ENUMS[:tier_one])
+        end
+
+        it "preserves the funding method fields" do
+          described_class.new(trainee).save!
+
+          expect(trainee.reload).to have_attributes(
+            applying_for_bursary: true,
+            applying_for_scholarship: false,
+            applying_for_grant: false,
+            bursary_tier: BURSARY_TIER_ENUMS[:tier_one],
+          )
+        end
+      end
+    end
+
     describe "#missing_fields" do
       let(:trainee) { build(:trainee) }
 
