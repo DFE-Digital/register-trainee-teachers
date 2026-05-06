@@ -161,6 +161,14 @@ console: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID} -- /bin/sh -c "cd /app && /usr/local/bin/bundle exec rails c"
 
+rotp-provider-check-csv: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
+	$(if $(OUTPUT), , $(eval OUTPUT=tmp/rotp_provider_check.csv))
+	mkdir -p $$(dirname "$(OUTPUT)")
+	kubectl -n ${NAMESPACE} exec deployment/register-${APP_ID} -- /bin/sh -c "cd /app && /usr/local/bin/bundle exec rails runner 'require \"csv\"; checker = Rotp::ProviderChecker.new; headers = %w[comparison_group status operating_name code urn accreditation_status provider_type]; output = CSV.generate(force_quotes: true) do |csv|; csv << headers; append = lambda { |comparison_group, status, rows| rows.each { |row| csv << [comparison_group, status, row[\"operating_name\"] || row[\"name\"], row[\"code\"], row[\"urn\"], row[\"accreditation_status\"], row[\"provider_type\"]] } }; append.call(\"accredited\", \"matched\", checker.accredited_matched); append.call(\"accredited\", \"missing_from_register\", checker.accredited_missing_from_register); append.call(\"accredited\", \"missing_from_rotp\", checker.accredited_missing_from_rotp); append.call(\"training_partner\", \"matched\", checker.training_partner_matched); append.call(\"training_partner\", \"missing_from_register\", checker.training_partner_missing_from_register); append.call(\"training_partner\", \"missing_from_rotp\", checker.training_partner_missing_from_rotp); append.call(\"school\", \"matched\", checker.school_matched); append.call(\"school\", \"missing_from_register\", checker.school_missing_from_register); append.call(\"school\", \"missing_from_rotp\", checker.school_missing_from_rotp); end; puts output'" > "$(OUTPUT)"
+	$(if $(COPY), cat "$(OUTPUT)" | pbcopy)
+	echo "wrote $(OUTPUT)"
+
 logs: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} logs -l app=register-${APP_ID} --tail=-1 --timestamps=true
