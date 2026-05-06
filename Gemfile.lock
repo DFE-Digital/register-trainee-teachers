@@ -192,7 +192,7 @@ GEM
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.5)
-    csv-safe (3.3.1)
+    csv-safe (3.3.2)
       csv (~> 3.0)
     cuprite (0.17)
       capybara (~> 3.0)
@@ -1020,7 +1020,7 @@ CHECKSUMS
   cronex (0.15.0) sha256=21c794e085fad2951c4f2e279f440340a35ba2297e0b738f22f263f69fbe2186
   cssbundling-rails (1.4.3) sha256=53aecd5a7d24ac9c8fcd92975acd0e830fead4ee4583d3d3d49bb64651946e41
   csv (3.3.5) sha256=6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f
-  csv-safe (3.3.1) sha256=c2ab44cc38358af58197a5cd281b402191c0bde01ff9972da2104c739291a73f
+  csv-safe (3.3.2) sha256=51110ed65ee6c9629a4e7107282b5a1e3de586a0eef0ea728f6eccc80300b4c7
   cuprite (0.17) sha256=b140d5dc70d08b97ad54bcf45cd95d0bd430e291e9dffe76fff851fddd57c12b
   data_migrate (11.3.1) sha256=18b9b2189d15e482d5335f3fc2248b8b447204bd8257ded872dd077737168ffb
   database_cleaner-active_record (2.2.2) sha256=88296b9f3088c31f7c0d4fcec10f68e4b71c96698043916de59b04debec10388
