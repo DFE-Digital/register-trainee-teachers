@@ -192,8 +192,8 @@ describe TrainingRouteManager do
       context "for salaried route #{route}" do
         let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[route]) }
 
-        it "returns 1" do
-          expect(subject.minimum_placements).to eq(1)
+        it "returns 2" do
+          expect(subject.minimum_placements).to eq(2)
         end
       end
     end
