@@ -16,7 +16,7 @@
       <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.funding_eligibilities.edit") %></h1>
 
-      <p class="govuk-body"><%= t("views.forms.funding.funding_eligibilities.description") %></p>
+      <p class="govuk-body"><%= t("views.forms.funding.funding_eligibilities.description_html") %></p>
 
       <%= f.govuk_radio_buttons_fieldset(:funding_eligibility,
                                          legend: {

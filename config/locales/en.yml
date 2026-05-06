@@ -1029,7 +1029,7 @@ en:
       funding:
         funding_eligibilities:
           title: Is this trainee eligible for funding?
-          description: A funding eligibility code records a trainee's status using Department of Education (DfE) student finance criteria. We need to record whether this trainee is eligible for funding, based on student finance criteria. You must provide funding eligibility information for every trainee.
+          description_html: A funding eligibility code records a trainee's status using Department of Education (DfE) student finance criteria. We need to record whether this trainee is eligible for funding, based on student finance criteria.<br><br>You must provide funding eligibility information for every trainee.
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
           title_two: Is the trainee on either of these training initiatives?
