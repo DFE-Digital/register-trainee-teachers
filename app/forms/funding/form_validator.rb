@@ -30,7 +30,6 @@ module Funding
 
     def save!
       funding_forms.each(&:save!)
-      clear_funding_method_fields! unless funding_manager.eligible_for_funding?
     end
 
     def missing_fields
@@ -44,15 +43,6 @@ module Funding
     end
 
   private
-
-    def clear_funding_method_fields!
-      trainee.update!(
-        applying_for_bursary: nil,
-        applying_for_scholarship: nil,
-        applying_for_grant: nil,
-        bursary_tier: nil,
-      )
-    end
 
     def funding_forms
       [
