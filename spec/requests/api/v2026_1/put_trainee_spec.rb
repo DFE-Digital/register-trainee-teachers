@@ -2745,7 +2745,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       it "returns a validation error" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly(
-          "iqts_country has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'...",
+          "iqts_country has invalid reference data value of 'InvalidCountry'. Example values include 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AR', 'AS'...",
         )
       end
 
@@ -2755,7 +2755,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it "returns a validation error" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "iqts_country" => ["has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'..."],
+            "iqts_country" => ["has invalid reference data value of 'InvalidCountry'. Example values include 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AR', 'AS'..."],
           )
         end
       end

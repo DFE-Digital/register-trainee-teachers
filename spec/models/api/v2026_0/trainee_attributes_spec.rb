@@ -165,7 +165,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:course_subject_one]).to contain_exactly(
-            "has invalid reference data value of 'random subject'. Example values include #{format_reference_data_list(Hesa::CodeSets::CourseSubjects::MAPPING.keys)}...",
+            "has invalid reference data value of 'random subject'. Example values include #{format_reference_data_list(ReferenceData::COURSE_SUBJECTS.hesa_codes)}...",
           )
         }
       end
@@ -286,8 +286,8 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:ethnicity)
-        .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq)
-        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(Hesa::CodeSets::Ethnicities::MAPPING.keys)}\.\.\./)
+        .in_array(ReferenceData::ETHNICITIES.values.map(&:name))
+        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(ReferenceData::ETHNICITIES.hesa_codes)}\.\.\./)
         .allow_blank
     }
 

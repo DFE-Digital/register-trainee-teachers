@@ -39,6 +39,12 @@ data:
     description: ""
     hesa_codes:
       - "007"
+  - id: "008"
+    name: "ba_hons"
+    display_name: "BA (Hons)"
+    description: ""
+    hesa_codes:
+      - "008"
   - id: "020"
     name: "postgraduate_certificate_in_education"
     display_name: "Postgraduate Certificate in Education"

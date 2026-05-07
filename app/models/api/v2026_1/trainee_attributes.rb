@@ -118,13 +118,13 @@ module Api
       validate :validate_hesa_id_length, if: -> { hesa_id.present? }
 
       validates :ethnicity, api_inclusion: {
-        in: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq,
-        valid_values: Hesa::CodeSets::Ethnicities::MAPPING.keys,
+        in: ::ReferenceData::ETHNICITIES.values.map(&:name),
+        valid_values: ::ReferenceData::ETHNICITIES.hesa_codes,
       }, allow_blank: true
 
       validates :sex, api_inclusion: {
-        in: Hesa::CodeSets::Sexes::MAPPING.values,
-        valid_values: Hesa::CodeSets::Sexes::MAPPING.keys,
+        in: ::ReferenceData::SEXES.values.map { |v| Trainee.sexes[v.name] },
+        valid_values: ::ReferenceData::SEXES.hesa_codes,
       }, allow_blank: true
 
       validates :first_names, length: { maximum: 60 }
@@ -139,7 +139,7 @@ module Api
           message: lambda do |_, data|
             hesa_code_inclusion_message(
               value: data[:value],
-              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.reject { |_, v| UNSUPPORTED_TRAINING_ROUTES.include?(v) }.keys,
+              valid_values: ::ReferenceData::TRAINING_ROUTES.values.reject { |v| UNSUPPORTED_TRAINING_ROUTES.include?(v.name) }.flat_map(&:hesa_codes).sort,
             )
           end,
         },
@@ -147,13 +147,13 @@ module Api
         if: :valid_trainee_start_date?,
       )
       validates :course_subject_one, :course_subject_two, :course_subject_three, api_inclusion: {
-        in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values,
-        valid_values: Hesa::CodeSets::CourseSubjects::MAPPING.keys,
+        in: ::ReferenceData::COURSE_SUBJECTS.values.map(&:name),
+        valid_values: ::ReferenceData::COURSE_SUBJECTS.hesa_codes,
       }, allow_blank: true
 
       validates :study_mode, api_inclusion: {
         in: TRAINEE_STUDY_MODE_ENUMS.keys,
-        valid_values: Hesa::CodeSets::StudyModes::MAPPING.keys,
+        valid_values: ::ReferenceData::STUDY_MODES.hesa_codes,
       }, allow_blank: true
 
       validates :nationality, api_inclusion: {
@@ -163,7 +163,7 @@ module Api
 
       validates :training_initiative, api_inclusion: {
         in: ROUTE_INITIATIVES.keys,
-        valid_values: Hesa::CodeSets::TrainingInitiatives::MAPPING.keys,
+        valid_values: ::ReferenceData::TRAINING_INITIATIVES.hesa_codes,
       }, allow_blank: true
 
       validates :trainee_disabilities_attributes, uniqueness: true
@@ -174,8 +174,8 @@ module Api
       validates :iqts_country, absence: true, unless: :iqts_route?
 
       validates :iqts_country, api_inclusion: {
-        in: Hesa::CodeSets::Countries::MAPPING.values,
-        valid_values: Hesa::CodeSets::Countries::MAPPING.keys,
+        in: ::ReferenceData::COUNTRIES.values.map(&:display_name),
+        valid_values: ::ReferenceData::COUNTRIES.hesa_codes,
       }, if: :iqts_route?, allow_blank: true
 
       def initialize(new_attributes = {})
@@ -262,7 +262,7 @@ module Api
         )
 
         updated_disabilities = updated_hesa_disabilities.map do |_key, value|
-          Disability.find_by(name: ::Hesa::CodeSets::Disabilities::MAPPING[value])
+          Disability.find_by(name: ::ReferenceData::DISABILITIES.find_by_hesa_code(value)&.display_name)
         end
 
         params_for_update.merge(hesa_disabilities: updated_hesa_disabilities, disabilities: updated_disabilities)
@@ -333,9 +333,9 @@ module Api
 
       def valid_training_routes
         routes = if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-                   Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+                   ::ReferenceData::TRAINING_ROUTES.values.map(&:name).excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
                  else
-                   Hesa::CodeSets::TrainingRoutes::MAPPING.values
+                   ::ReferenceData::TRAINING_ROUTES.values.map(&:name)
                  end
 
         routes - UNSUPPORTED_TRAINING_ROUTES

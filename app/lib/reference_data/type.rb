@@ -17,6 +17,7 @@ module ReferenceData
           end
         end
       end
+      @sorted_hesa_codes = @values.flat_map(&:hesa_codes).sort.freeze
     end
 
     def self.from_yaml(metadata:, data:)
@@ -44,7 +45,9 @@ module ReferenceData
     end
 
     def hesa_codes(year: nil)
-      valid_values_for(year:).flat_map(&:hesa_codes)
+      return @sorted_hesa_codes if year.nil?
+
+      valid_values_for(year:).flat_map(&:hesa_codes).sort
     end
 
     def find_by_hesa_code(hesa_code)

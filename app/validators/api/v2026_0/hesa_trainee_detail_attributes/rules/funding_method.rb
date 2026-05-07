@@ -88,7 +88,7 @@ module Api
           end
 
           def funding_method?
-            !no_funding_method? && Hesa::CodeSets::BursaryLevels::MAPPING.key?(funding_method.to_s)
+            !no_funding_method? && ::ReferenceData::FUNDING_METHODS.hesa_codes.include?(funding_method.to_s)
           end
 
           def no_funding_method?
