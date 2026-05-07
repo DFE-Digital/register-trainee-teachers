@@ -241,6 +241,14 @@ describe Provider do
       context "with one placement" do
         before { create(:placement, trainee:) }
 
+        it "includes the trainee" do
+          expect(provider.trainees_without_required_placements).to contain_exactly(trainee)
+        end
+      end
+
+      context "with two placements" do
+        before { create_list(:placement, 2, trainee:) }
+
         it "doesn't include the trainee" do
           expect(provider.trainees_without_required_placements).to be_empty
         end
