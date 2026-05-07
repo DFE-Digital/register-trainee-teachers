@@ -70,6 +70,12 @@ describe PlacementsForm, type: :model do
         context "with 1 placement" do
           let(:placements) { build_list(:placement, 1, :with_school) }
 
+          it { is_expected.not_to be_valid }
+        end
+
+        context "with 2 placements" do
+          let(:placements) { build_list(:placement, 2, :with_school) }
+
           it { is_expected.to be_valid }
         end
 
