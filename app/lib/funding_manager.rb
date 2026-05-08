@@ -62,7 +62,7 @@ class FundingManager
 
   def eligible_for_funding?
     # Treat nil and "eligible" the same. Only an explicit "not_eligible" answer
-    # triggers the fund code exception check. Preserves prior behavior for
+    # triggers the fund code exception check. Preserves prior behaviour for
     # legacy and in-flight trainees who haven't answered the question yet.
     #
     return true if funding_eligibility != FUNDING_ELIGIBILITIES[:not_eligible]
