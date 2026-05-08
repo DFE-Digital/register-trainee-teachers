@@ -57,6 +57,7 @@ module Api
       succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
 
       if succeeded
+        trainee.reload
         render(json: { data: serializer_klass.new(trainee).as_hash })
       else
         render(

@@ -57,6 +57,10 @@ describe PlacementsForm, type: :model do
           let(:placements) { [] }
 
           it { is_expected.not_to be_valid }
+
+          it "returns an error if its empty" do
+            expect(subject.errors[:placement_ids]).to include("Enter at least 1 placement")
+          end
         end
       end
 
