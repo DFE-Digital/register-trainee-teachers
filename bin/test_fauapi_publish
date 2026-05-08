@@ -39,10 +39,13 @@ echo "$APIS_RESPONSE" \
   | jq -c --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name)' \
   | jq .
 
-PUBLISH_RESPONSE=$(curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+PUBLISH_BODY_FILE=$(mktemp)
+PUBLISH_HTTP_CODE=$(curl -s -o "$PUBLISH_BODY_FILE" -w "%{http_code}" -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
   -H "Authorization: Bearer $FAUAPI_TOKEN")
+PUBLISH_BODY=$(cat "$PUBLISH_BODY_FILE")
+rm -f "$PUBLISH_BODY_FILE"
 
-echo "fauapi publish response:"
-echo "$PUBLISH_RESPONSE" | jq .
+echo "fauapi publish response (HTTP $PUBLISH_HTTP_CODE):"
+echo "$PUBLISH_BODY" | jq . 2>/dev/null || echo "$PUBLISH_BODY"
 
 echo "Published API $API_ID to FauAPI catalogue (pre-prod)"
