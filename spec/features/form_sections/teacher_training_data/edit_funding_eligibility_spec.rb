@@ -107,7 +107,7 @@ private
   end
 
   def and_i_see_the_description
-    expect(page).to have_text("A funding eligibility code records a trainee's status using Department of Education (DfE) student finance criteria.")
+    expect(page).to have_text("We need to record whether this trainee is eligible for funding, based on student finance criteria.You must provide funding eligibility information for every trainee.")
   end
 
   def and_i_see_the_question
