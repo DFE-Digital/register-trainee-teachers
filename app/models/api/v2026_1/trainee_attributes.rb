@@ -118,12 +118,12 @@ module Api
       validate :validate_hesa_id_length, if: -> { hesa_id.present? }
 
       validates :ethnicity, api_inclusion: {
-        in: ::ReferenceData::ETHNICITIES.values.map(&:name),
+        in: ::ReferenceData::ETHNICITIES.names_with_hesa_codes,
         valid_values: ::ReferenceData::ETHNICITIES.hesa_codes,
       }, allow_blank: true
 
       validates :sex, api_inclusion: {
-        in: ::ReferenceData::SEXES.values.map { |v| Trainee.sexes[v.name] },
+        in: ::ReferenceData::SEXES.names_with_hesa_codes.map { |name| Trainee.sexes[name] },
         valid_values: ::ReferenceData::SEXES.hesa_codes,
       }, allow_blank: true
 
@@ -147,7 +147,7 @@ module Api
         if: :valid_trainee_start_date?,
       )
       validates :course_subject_one, :course_subject_two, :course_subject_three, api_inclusion: {
-        in: ::ReferenceData::COURSE_SUBJECTS.values.map(&:name),
+        in: ::ReferenceData::COURSE_SUBJECTS.names_with_hesa_codes,
         valid_values: ::ReferenceData::COURSE_SUBJECTS.hesa_codes,
       }, allow_blank: true
 
@@ -157,8 +157,8 @@ module Api
       }, allow_blank: true
 
       validates :nationality, api_inclusion: {
-        in: RecruitsApi::CodeSets::Nationalities::MAPPING.values,
-        valid_values: RecruitsApi::CodeSets::Nationalities::MAPPING.keys,
+        in: ::ReferenceData::NATIONALITIES.names_with_hesa_codes,
+        valid_values: ::ReferenceData::NATIONALITIES.hesa_codes,
       }, allow_blank: true
 
       validates :training_initiative, api_inclusion: {
@@ -333,9 +333,9 @@ module Api
 
       def valid_training_routes
         routes = if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-                   ::ReferenceData::TRAINING_ROUTES.values.map(&:name).excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+                   ::ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
                  else
-                   ::ReferenceData::TRAINING_ROUTES.values.map(&:name)
+                   ::ReferenceData::TRAINING_ROUTES.names_with_hesa_codes
                  end
 
         routes - UNSUPPORTED_TRAINING_ROUTES

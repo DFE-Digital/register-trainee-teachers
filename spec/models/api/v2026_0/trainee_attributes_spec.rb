@@ -16,8 +16,8 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:nationality)
-        .in_array(RecruitsApi::CodeSets::Nationalities::MAPPING.values)
-        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(RecruitsApi::CodeSets::Nationalities::MAPPING.keys)}\.\.\./)
+        .in_array(ReferenceData::NATIONALITIES.names_with_hesa_codes)
+        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(ReferenceData::NATIONALITIES.hesa_codes)}\.\.\./)
         .allow_blank
     }
 
@@ -286,7 +286,7 @@ RSpec.describe Api::V20260::TraineeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:ethnicity)
-        .in_array(ReferenceData::ETHNICITIES.values.map(&:name))
+        .in_array(ReferenceData::ETHNICITIES.names_with_hesa_codes)
         .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(ReferenceData::ETHNICITIES.hesa_codes)}\.\.\./)
         .allow_blank
     }
