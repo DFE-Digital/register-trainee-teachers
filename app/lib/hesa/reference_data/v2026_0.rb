@@ -35,8 +35,6 @@ module Hesa
         rows = []
         type.values.each do |value|
           Array(value.hesa_codes).each do |code|
-            next if code.blank?
-
             rows << {
               hesa_code: code,
               display_name: I18n.t("#{type_name}.#{code}", default: value.display_name),

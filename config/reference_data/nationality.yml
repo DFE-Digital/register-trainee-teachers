@@ -964,11 +964,6 @@ data:
   display_name: St lucian
   hesa_codes:
     - "LC"
-- id:
-  name: stateless
-  display_name: Stateless
-  hesa_codes:
-    - ""
 - id: SD
   name: sudanese
   display_name: Sudanese
