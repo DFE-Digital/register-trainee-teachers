@@ -44,7 +44,8 @@ RSpec.describe Hesa::ReferenceData::V20250 do
                               else
                                 mapping.transform_values { |label| label[0].upcase + label[1..] }.sort
                               end
-        translated_mapping  = transformed_mapping.map { |code, label| [code, I18n.t("#{attribute}.#{code}", default: label)] }
+        locale_namespace    = Hesa::ReferenceData::V20250::LOCALE_NAMESPACES.fetch(attribute, attribute)
+        translated_mapping  = transformed_mapping.map { |code, label| [code, I18n.t("#{locale_namespace}.#{code}", default: label)] }
 
         [attribute, translated_mapping.to_h]
       end
