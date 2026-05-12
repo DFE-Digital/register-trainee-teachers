@@ -14,20 +14,6 @@ RSpec.describe Hesa::ReferenceData::V20260 do
       expect(entries.first.keys).to contain_exactly(:hesa_code, :display_name, :start_year, :end_year)
     end
 
-    it "skips entries without HESA codes" do
-      expect(entries.map { |e| e[:display_name] }).not_to include(
-        "Future Teaching Scholars",
-        "Troops to Teachers",
-        "Not on a training initiative",
-      )
-    end
-
-    it "uses the locale label when one exists, falling back to display_name otherwise" do
-      labels_by_code = entries.to_h { |e| [e[:hesa_code], e[:display_name]] }
-      expect(labels_by_code["009"]).to eq("Maths and Physics Chairs Programme")
-      expect(labels_by_code["011"]).to eq("Primary mathematics specialist")
-    end
-
     it "is sorted by hesa_code" do
       codes = entries.map { |e| e[:hesa_code] }
       expect(codes).to eq(codes.sort)

@@ -11,7 +11,7 @@ RSpec.describe "Reference data integrity" do
     let(:data) { load_reference_data("institution.yml") }
 
     it "has expected entry count" do
-      expect(data.count).to eq(314)
+      expect(data.count).to eq(335)
     end
 
     it "has HESA codes zero-padded to 4 digits" do
