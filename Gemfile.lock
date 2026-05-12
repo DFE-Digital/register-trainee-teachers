@@ -771,7 +771,7 @@ GEM
       sprockets (>= 3.0.0)
     stackprof (0.2.28)
     stateful_enum (0.9.0)
-    store_model (4.5.0)
+    store_model (4.6.0)
       activerecord (>= 7.0)
     stringio (3.2.0)
     strong_migrations (2.7.0)
@@ -950,7 +950,7 @@ DEPENDENCIES
   sprockets-rails
   stackprof
   stateful_enum
-  store_model (~> 4.5)
+  store_model (~> 4.6)
   strong_migrations
   timecop (~> 0.9.11)
   turbo-rails
@@ -1237,7 +1237,7 @@ CHECKSUMS
   sprockets-rails (3.5.2) sha256=a9e88e6ce9f8c912d349aa5401509165ec42326baf9e942a85de4b76dbc4119e
   stackprof (0.2.28) sha256=4ec2ace02f386012b40ca20ef80c030ad711831f59511da12e83b34efb0f9a04
   stateful_enum (0.9.0) sha256=4aaaf890ddf9a108a596775e862a7972015730d762a82a8209b9778a3aed35e5
-  store_model (4.5.0) sha256=2aa0790daaf254144d9232f2b301009e954a3ca3719e87732a7ef8195c6bec38
+  store_model (4.6.0) sha256=13646cf65b7620919ebbe19e363d3e8943b752add1f51c24136902deffeeb149
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   strong_migrations (2.7.0) sha256=ab9a942e3907c4f9b83526ab0ec476df9a5252b29c2fc5b8167755ee1be29e10
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
