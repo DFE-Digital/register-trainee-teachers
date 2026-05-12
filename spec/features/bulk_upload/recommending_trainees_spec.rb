@@ -272,11 +272,11 @@ private
   end
 
   def then_i_see_an_error_message_about_file_encoding
-    expect(page).to have_content("There is a problem")
-    expect(page).to have_content("The uploaded file is in an unsupported file encoding")
+    expect(page).to have_text("There is a problem")
+    expect(page).to have_text("The uploaded file is in an unsupported file encoding")
   end
 
   def then_i_see_the_confirmation
-    expect(recommendations_upload_confirmation_page).to have_content("2 trainees gained QTS")
+    expect(recommendations_upload_confirmation_page).to have_text("2 trainees gained QTS")
   end
 end

@@ -202,7 +202,7 @@ private
   end
 
   def and_i_can_see_the_trainee_show_page
-    expect(page).to have_content("Training overview")
+    expect(page).to have_text("Training overview")
   end
 
   def then_i_should_see_the_fund_code_displayed

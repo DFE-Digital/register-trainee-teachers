@@ -271,7 +271,7 @@ private
       message = I18n.t(
         "activemodel.errors.validators.autocomplete.#{f}",
       )
-      expect(degree_details_page).to have_content(message)
+      expect(degree_details_page).to have_text(message)
     end
   end
 

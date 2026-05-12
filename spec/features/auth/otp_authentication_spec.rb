@@ -86,15 +86,15 @@ private
   end
 
   def and_i_should_see_the_link_to_sign_out
-    expect(page).to have_content("Sign out")
+    expect(page).to have_text("Sign out")
   end
 
   def and_i_should_see_the_link_to_the_support_interface
-    expect(page).to have_content("Support")
+    expect(page).to have_text("Support")
   end
 
   def and_i_should_not_see_the_link_to_the_support_interface
-    expect(page).not_to have_content("Support")
+    expect(page).not_to have_text("Support")
   end
 
   def and_i_can_access_the_support_interface
@@ -103,6 +103,6 @@ private
 
   def then_i_am_redirected_to_the_otp_form
     expect(page).to have_current_path(otp_verifications_path)
-    expect(page).to have_content("The code is incorrect or has expired")
+    expect(page).to have_text("The code is incorrect or has expired")
   end
 end

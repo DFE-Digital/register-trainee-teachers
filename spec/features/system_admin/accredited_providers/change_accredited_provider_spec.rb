@@ -79,7 +79,7 @@ feature "Change a trainee's accredited provider" do
   end
 
   def then_i_see_the_change_accredited_providers_page
-    expect(page).to have_content("Change accredited provider")
+    expect(page).to have_text("Change accredited provider")
   end
 
   def when_i_select_a_provider
@@ -92,7 +92,7 @@ feature "Change a trainee's accredited provider" do
   alias_method :when_i_click_continue, :and_click_continue
 
   def then_i_see_the_reasons_page
-    expect(page).to have_content("Why you’re changing the accredited provider")
+    expect(page).to have_text("Why you’re changing the accredited provider")
   end
 
   def when_i_fill_in_reasons
@@ -107,7 +107,7 @@ feature "Change a trainee's accredited provider" do
   end
 
   def then_i_see_the_confirmation_page
-    expect(page).to have_content("Check change of accredited provider details")
+    expect(page).to have_text("Check change of accredited provider details")
   end
 
   def when_i_click_update
@@ -116,12 +116,12 @@ feature "Change a trainee's accredited provider" do
 
   def then_i_see_a_flash_message
     within ".govuk-notification-banner--success" do
-      expect(page).to have_content("Accredited provider changed")
+      expect(page).to have_text("Accredited provider changed")
     end
   end
 
   def and_i_see_the_new_provider_name_and_code
-    expect(page).to have_content(new_provider.name_and_code)
+    expect(page).to have_text(new_provider.name_and_code)
   end
 
   def given_i_am_reviewing_my_changes_on_the_confirmation_page

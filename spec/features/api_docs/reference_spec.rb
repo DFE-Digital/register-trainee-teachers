@@ -17,7 +17,7 @@ feature "References documentation page for Register API" do
   end
 
   def then_i_should_see_the_api_reference_for_the_current_version
-    expect(page).to have_content("Register API documentation")
+    expect(page).to have_text("Register API documentation")
   end
 
   def and_i_should_see_links_to_other_versions

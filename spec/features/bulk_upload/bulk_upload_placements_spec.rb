@@ -18,7 +18,7 @@ feature "bulk update page" do
 
     scenario "accessing the page is forbidden" do
       visit new_bulk_update_placements_path
-      expect(page).to have_content("You do not have permission to perform this action")
+      expect(page).to have_text("You do not have permission to perform this action")
     end
   end
 
@@ -75,27 +75,27 @@ feature "bulk update page" do
 private
 
   def then_i_see_how_many_trainees_i_can_bulk_update
-    expect(page).to have_content("You have 2 trainee records who do not have the required number of placements")
+    expect(page).to have_text("You have 2 trainee records who do not have the required number of placements")
   end
 
   def and_i_see_a_filename_of_the_file_i_need_to_download
-    expect(page).to have_content("bulk-add-placements-prepopulated.csv")
+    expect(page).to have_text("bulk-add-placements-prepopulated.csv")
   end
 
   def and_i_see_the_placement_schools_section
-    expect(page).to have_content(
+    expect(page).to have_text(
       "You can add a maximum of 5 placements per trainee. Enter the placement's URN in the placement columns.",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "You can add or change trainees placement details by adding them to the end of the CSV file. Adding or changing any information in the CSV will over-write placements that are associated to a school in the Register service. If you leave a space blank in the CSV it will over-write any existing information you have entered",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "You can find the URNs using Get information about schools (opens in a new tab).",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "You cannot add information in bulk if the school or setting does not have a URN. Add those placements to the trainee record manually.",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "If you do not have the information for a placement, leave the cell empty.",
     )
   end
@@ -119,7 +119,7 @@ private
 
   def and_i_see_the_blank_template_link
     expect(page).to have_link("Bulk add placements blank")
-    expect(page).to have_content("bulk-add-placements-blank.csv")
+    expect(page).to have_text("bulk-add-placements-blank.csv")
   end
 
   def when_i_click_on_the_blank_template_link
@@ -147,11 +147,11 @@ private
   end
 
   def then_i_see_a_success_message
-    expect(page).to have_content("Placement data submitted")
+    expect(page).to have_text("Placement data submitted")
   end
 
   def then_i_see_an_error_message
-    expect(page).to have_content("There was an issue uploading your CSV file")
+    expect(page).to have_text("There was an issue uploading your CSV file")
   end
 
   def given_there_is_a_trainee_with_matching_trn
@@ -173,8 +173,8 @@ private
 
     visit trainee_path(@trainee_with_placements)
 
-    expect(page).to have_content("Test School 1")
-    expect(page).to have_content("Test School 2")
+    expect(page).to have_text("Test School 1")
+    expect(page).to have_text("Test School 2")
   end
 
   def and_there_are_five_schools_for_the_placements
@@ -210,7 +210,7 @@ private
 
     visit trainee_path(@salaried_trainee)
 
-    expect(page).to have_content("Test School 1")
+    expect(page).to have_text("Test School 1")
   end
 
   def and_the_trainee_has_five_placements_via_ui
@@ -218,10 +218,10 @@ private
 
     visit trainee_path(@trainee_with_placements)
 
-    expect(page).to have_content("Test School 1")
-    expect(page).to have_content("Test School 2")
-    expect(page).to have_content("Test School 3")
-    expect(page).to have_content("Test School 4")
-    expect(page).to have_content("Test School 5")
+    expect(page).to have_text("Test School 1")
+    expect(page).to have_text("Test School 2")
+    expect(page).to have_text("Test School 3")
+    expect(page).to have_text("Test School 4")
+    expect(page).to have_text("Test School 5")
   end
 end

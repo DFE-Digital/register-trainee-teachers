@@ -61,6 +61,6 @@ feature "edit diversity disclosure" do
 
   def then_i_see_error_messages
     content = I18n.t("activemodel.errors.models.diversities/disclosure_form.attributes.diversity_disclosure.blank")
-    expect(ethnic_group_page).to have_content(content)
+    expect(ethnic_group_page).to have_text(content)
   end
 end

@@ -124,7 +124,7 @@ private
   def then_i_see_error_messages_for_partially_submitted_fields(*fields)
     fields.each do |f|
       message = I18n.t("activemodel.errors.validators.autocomplete.#{f}")
-      expect(degree_details_page).to have_content(message)
+      expect(degree_details_page).to have_text(message)
     end
   end
 

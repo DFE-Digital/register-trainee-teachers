@@ -77,15 +77,15 @@ feature "Undo trainee withdrawal" do
   end
 
   def then_i_expect_the_page_to_show_url_error
-    expect(page).to have_content("Must be a URL")
+    expect(page).to have_text("Must be a URL")
   end
 
   def then_i_expect_the_page_to_show_comment_error
-    expect(page).to have_content("Enter a comment")
+    expect(page).to have_text("Enter a comment")
   end
 
   def then_i_expect_the_timeline_to_show_the_comment_and_ticket
-    expect(page).to have_content("this is the comment")
+    expect(page).to have_text("this is the comment")
   end
 
   def then_i_expect_the_trainee_to_have_been_updated
@@ -98,7 +98,7 @@ feature "Undo trainee withdrawal" do
   def then_i_expect_the_session_to_have_been_cleared
     record_page.undo_withdrawal.click
     show_undo_withdrawal_page.continue.click
-    expect(page).not_to have_content("this is the comment")
+    expect(page).not_to have_text("this is the comment")
   end
 
   def and_trs_is_notified_about_the_change

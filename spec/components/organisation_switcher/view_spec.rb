@@ -44,7 +44,7 @@ module OrganisationSwitcher
       end
 
       it "renders the organisation name" do
-        expect(component).to have_content(organisation.name)
+        expect(component).to have_text(organisation.name)
       end
 
       it "does not render the _Change organisation_ link" do
@@ -66,7 +66,7 @@ module OrganisationSwitcher
       end
 
       it "renders the organisation name" do
-        expect(component).to have_content(organisation.name)
+        expect(component).to have_text(organisation.name)
       end
 
       it "renders the _Change organisation_ link" do

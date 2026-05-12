@@ -244,11 +244,11 @@ private
   alias_method :and_i_navigate_to_the_new_placement_form, :when_i_navigate_to_the_new_placement_form
 
   def then_i_see_the_new_placement_form
-    expect(page).to have_content("First placement")
+    expect(page).to have_text("First placement")
   end
 
   def then_i_see_the_second_new_placement_form
-    expect(page).to have_content("Second placement")
+    expect(page).to have_text("Second placement")
   end
 
   def when_i_select_an_existing_school
@@ -270,26 +270,26 @@ private
 
   def then_i_see_the_confirmation_page
     expect(page).to have_current_path(trainee_placements_confirm_path(trainee_id: @trainee.slug))
-    expect(page).to have_content("Confirm placement details")
+    expect(page).to have_text("Confirm placement details")
   end
 
   def and_i_see_the_new_placement_ready_for_confirmation
-    expect(page).to have_content("First placement")
+    expect(page).to have_text("First placement")
 
     within("#school-or-setting-1") do
-      expect(page).to have_content(@school.name)
-      expect(page).to have_content(@school.postcode)
-      expect(page).to have_content("URN #{@school.urn}")
+      expect(page).to have_text(@school.name)
+      expect(page).to have_text(@school.postcode)
+      expect(page).to have_text("URN #{@school.urn}")
     end
   end
 
   def and_i_see_the_second_placement_ready_for_confirmation
-    expect(page).to have_content("Second placement")
+    expect(page).to have_text("Second placement")
 
     within("#school-or-setting-2") do
-      expect(page).to have_content(@school.name)
-      expect(page).to have_content(@school.postcode)
-      expect(page).to have_content("URN #{@school.urn}")
+      expect(page).to have_text(@school.name)
+      expect(page).to have_text(@school.postcode)
+      expect(page).to have_text("URN #{@school.urn}")
     end
   end
 
@@ -300,24 +300,24 @@ private
   end
 
   def and_i_see_the_first_placement_ready_for_confirmation
-    expect(page).to have_content("First placement")
+    expect(page).to have_text("First placement")
 
     within("#school-or-setting-1") do
-      expect(page).to have_content("St. Alice's Primary School")
-      expect(page).to have_content("OX1 1AA")
-      expect(page).to have_content("URN 654321")
+      expect(page).to have_text("St. Alice's Primary School")
+      expect(page).to have_text("OX1 1AA")
+      expect(page).to have_text("URN 654321")
     end
   end
 
   def and_i_see_the_second_new_placement_ready_for_confirmation
-    expect(page).to have_content("Second placement")
-    expect(page).to have_content("St. Alice's Primary School")
-    expect(page).to have_content("OX1 1AA")
-    expect(page).to have_content("URN 654321")
+    expect(page).to have_text("Second placement")
+    expect(page).to have_text("St. Alice's Primary School")
+    expect(page).to have_text("OX1 1AA")
+    expect(page).to have_text("URN 654321")
   end
 
   def and_i_see_the_other_existing_placement_ready_for_confirmation
-    expect(page).to have_content("Edinburgh School")
+    expect(page).to have_text("Edinburgh School")
   end
 
   def when_i_click_update
@@ -326,7 +326,7 @@ private
   alias_method :and_i_click_update, :when_i_click_update
 
   def then_i_see_a_flash_message
-    expect(page).to have_content("Trainee placement details updated")
+    expect(page).to have_text("Trainee placement details updated")
   end
 
   def and_no_placements_are_created
@@ -354,7 +354,7 @@ private
   end
 
   def then_i_see_the_no_search_results_page
-    expect(page).to have_content("No results found for ‘Birmingham’")
+    expect(page).to have_text("No results found for ‘Birmingham’")
   end
 
   def when_i_click_back_to_the_new_placement_page
@@ -365,7 +365,7 @@ private
     expect(page).to have_current_path(
       trainee_placement_school_search_index_path(trainee_id: @trainee.slug),
     )
-    expect(page).to have_content("Select a placement school")
+    expect(page).to have_text("Select a placement school")
   end
 
   def when_i_enter_a_search_for_a_school
@@ -379,11 +379,11 @@ private
     expect(page).to have_current_path(
       new_trainee_placement_school_search_path(trainee_id: @trainee.slug, school_search: "Lond"),
     )
-    expect(page).to have_content("1 result found")
-    expect(page).to have_content("Change your search if the school you’re looking for is not listed")
-    expect(page).to have_content("London School for Children")
-    expect(page).not_to have_content("Cardiff College for Teenagers")
-    expect(page).not_to have_content("Edinburgh Academy for Infants")
+    expect(page).to have_text("1 result found")
+    expect(page).to have_text("Change your search if the school you’re looking for is not listed")
+    expect(page).to have_text("London School for Children")
+    expect(page).not_to have_text("Cardiff College for Teenagers")
+    expect(page).not_to have_text("Edinburgh Academy for Infants")
   end
 
   def when_i_select_an_existing_school_from_the_search_results

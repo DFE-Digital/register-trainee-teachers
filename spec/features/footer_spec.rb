@@ -147,12 +147,12 @@ private
   end
 
   def and_i_see_the_email_link
-    expect(page).to have_content("Email: becomingateacher@digital.education.gov.uk")
+    expect(page).to have_text("Email: becomingateacher@digital.education.gov.uk")
     expect(page).to have_link(
       "becomingateacher@digital.education.gov.uk",
       href: "mailto:becomingateacher@digital.education.gov.uk",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "We aim to respond within 5 working days, or 1 working day for more urgent queries.",
     )
   end

@@ -49,12 +49,12 @@ private
   end
 
   def verify_successful_login
-    expect(page).to have_content("Sign out")
+    expect(page).to have_text("Sign out")
   end
 
   def sign_out
     find_link("Sign out").click
-    expect(page).to have_content("Sign in")
+    expect(page).to have_text("Sign in")
   end
 
   def url_with_basic_auth

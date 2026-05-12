@@ -14,7 +14,7 @@ def when_i_visit_the_csv_docs_page
 end
 
 def then_i_see_the_csv_docs
-  expect(page).to have_content(
+  expect(page).to have_text(
     "How to add trainee information to the bulk add new trainee CSV template",
   )
 end

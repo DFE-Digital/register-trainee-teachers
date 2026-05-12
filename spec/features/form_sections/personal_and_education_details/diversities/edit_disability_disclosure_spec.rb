@@ -82,11 +82,11 @@ private
   end
 
   def and_i_should_not_see_any_disabilities_listed
-    expect(disabilities_page).not_to have_content("Disabilities shared:")
+    expect(disabilities_page).not_to have_text("Disabilities shared:")
   end
 
   def then_i_see_error_messages
-    expect(disabilities_page).to have_content(
+    expect(disabilities_page).to have_text(
       I18n.t("activemodel.errors.models.diversities/disability_disclosure_form.attributes.disability_disclosure.blank"),
     )
   end
