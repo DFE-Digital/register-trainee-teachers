@@ -105,7 +105,7 @@ private
             {
               type: "TextBlock",
               id: "42654e7e-cece-b419-867a-3e3ef4076870",
-              text: "[Go to Register support console](https://www.register-trainee-teachers.service.gov.uk/sytem-admin/users)",
+              text: "[Go to Register support console](https://www.register-trainee-teachers.service.gov.uk/system-admin/users)",
               wrap: true,
               color: "Accent",
               horizontalAlignment: "Right",
