@@ -166,6 +166,6 @@ When updating a degree, a duplication validation is performed to ensure that dup
   <li><code>grade</code></li>
 </ul>
 
-If a degree with these exact fields already exists, it is considered a duplicate.
+If a degree with these exact fields already exists, a `409 - Conflict` error message will be returned indicating it is a duplicate.
 
 This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
