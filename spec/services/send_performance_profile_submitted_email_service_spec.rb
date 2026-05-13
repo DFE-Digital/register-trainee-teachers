@@ -12,7 +12,7 @@ describe SendPerformanceProfileSubmittedEmailService do
     expect {
       described_class.call(provider:, submitted_at:)
     }.to have_enqueued_job.with(
-      "PerformanceProfileSubmittedEmailMailer", "generate", "deliver_now", args: [user:, submitted_at:]
+      "PerformanceProfileSubmittedEmailMailer", "generate", "deliver_now", args: [{ user:, submitted_at: }]
     )
   end
 
@@ -20,7 +20,7 @@ describe SendPerformanceProfileSubmittedEmailService do
     expect {
       described_class.call(provider:, submitted_at:)
     }.not_to have_enqueued_job.with(
-      "PerformanceProfileSubmittedEmailMailer", "generate", "deliver_now", args: [user: inactive_user, submitted_at: submitted_at]
+      "PerformanceProfileSubmittedEmailMailer", "generate", "deliver_now", args: [{ user: inactive_user, submitted_at: submitted_at }]
     )
   end
 end

@@ -11,7 +11,7 @@ describe SendCsvSubmittedForProcessingEmailService do
       expect {
         described_class.call(upload:)
       }.to have_enqueued_job.with(
-        "CsvSubmittedForProcessingEmailMailer", "generate", "deliver_now", args: [upload:]
+        "CsvSubmittedForProcessingEmailMailer", "generate", "deliver_now", args: [{ upload: }]
       ).at(wait_time.from_now)
     end
   end
