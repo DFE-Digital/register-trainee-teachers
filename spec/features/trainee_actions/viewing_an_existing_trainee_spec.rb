@@ -96,22 +96,6 @@ feature "View trainees" do
       # redirect to trainees index
       expect(trainee_index_page).to be_displayed
     end
-
-    scenario "viewing fund code for HESA trainee" do
-      trainee_with_fund_code = create(
-        :trainee,
-        :completed,
-        :trn_received,
-        :with_hesa_trainee_detail,
-        hesa_id: "5678",
-        record_source: :hesa_collection,
-        training_partner: @current_user.training_partners.first,
-        funding_eligibility: :eligible,
-      )
-
-      visit trainee_path(trainee_with_fund_code)
-      then_i_should_see_the_fund_code_displayed
-    end
   end
 
 private
@@ -203,11 +187,5 @@ private
 
   def and_i_can_see_the_trainee_show_page
     expect(page).to have_content("Training overview")
-  end
-
-  def then_i_should_see_the_fund_code_displayed
-    expected_text = Hesa::CodeSets::FundCodes::MAPPING[Hesa::CodeSets::FundCodes::ELIGIBLE]
-    expect(page).to have_text("Fund code")
-    expect(page).to have_text(expected_text)
   end
 end

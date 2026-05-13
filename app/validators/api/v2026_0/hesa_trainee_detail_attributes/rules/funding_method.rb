@@ -20,15 +20,6 @@ module Api
             Hesa::CodeSets::BursaryLevels::GRANT => FUNDING_TYPES["grant"],
           }.freeze
 
-          FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS = [
-            AllocationSubjects::ANCIENT_LANGUAGES,
-            AllocationSubjects::MODERN_LANGUAGES,
-            AllocationSubjects::FRENCH_LANGUAGE,
-            AllocationSubjects::GERMAN_LANGUAGE,
-            AllocationSubjects::SPANISH_LANGUAGE,
-            AllocationSubjects::PHYSICS,
-          ].freeze
-
           FUND_CODE_EXCEPTIONS_START_YEARS = [2025, 2026].freeze
 
           attr_reader :hesa_trainee_detail_attributes
@@ -57,16 +48,6 @@ module Api
           end
 
         private
-
-          def fund_code_exception_allocation_subject_ids
-            @fund_code_exception_allocation_subject_ids ||=
-              AllocationSubject.where(name: FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS).pluck(:id)
-          end
-
-          def fund_code_exception?
-            academic_cycle.start_year.in?(FUND_CODE_EXCEPTIONS_START_YEARS) &&
-              fund_code_exception_allocation_subject_ids.include?(course_allocation_subject_id)
-          end
 
           def funding_method_exists?
             return false if academic_cycle.nil?
@@ -101,6 +82,14 @@ module Api
 
           def funding_type
             @funding_type ||= FUNDING_TYPES[funding_method]
+          end
+
+          def fund_code_exception?
+            return false unless academic_cycle
+
+            academic_cycle.start_year.in?(FUND_CODE_EXCEPTIONS_START_YEARS) &&
+              AllocationSubject.exists?(name: ::FundCodeException::ALLOCATION_SUBJECTS,
+                                        id: course_allocation_subject_id)
           end
 
           def error_details
