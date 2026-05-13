@@ -92,6 +92,7 @@ module Funding
               training_route: route,
               start_academic_cycle: start_academic_cycle,
               applying_for_bursary: true,
+              funding_eligibility: :eligible,
               course_subject_one: subject_specialism.name)
       end
 
@@ -301,41 +302,6 @@ module Funding
         end
       end
 
-      describe "fund code row" do
-        context "when trainee has eligible funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: :eligible) }
-
-          before { render_inline(View.new(data_model: trainee)) }
-
-          it "renders the fund code with description" do
-            expect(rendered_content).to have_text("Fund code")
-            expect(rendered_content).to have_text("Eligible for funding from the DfE")
-          end
-        end
-
-        context "when trainee has not eligible funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: :not_eligible) }
-
-          before { render_inline(View.new(data_model: trainee)) }
-
-          it "renders the fund code with description" do
-            expect(rendered_content).to have_text("Fund code")
-            expect(rendered_content).to have_text("Not fundable by funding council/body")
-          end
-        end
-
-        context "when trainee has no funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: nil) }
-
-          before { render_inline(View.new(data_model: trainee)) }
-
-          it "renders fund code row with empty value" do
-            expect(rendered_content).to have_text("Fund code")
-            expect(rendered_content).to have_text("No fund code provided")
-          end
-        end
-      end
-
       describe "hesa selected bursary level" do
         let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: true) }
         let(:hesa_bursary_code) { trainee.hesa_students.first.bursary_level }
@@ -346,10 +312,76 @@ module Funding
       end
     end
 
+    describe "funding eligibility row" do
+      context "when trainee has eligible funding eligibility" do
+        let(:trainee) { create(:trainee, :with_start_date, funding_eligibility: :eligible, start_academic_cycle: start_academic_cycle) }
+
+        before { render_inline(View.new(data_model: trainee, editable: true)) }
+
+        it "renders the funding eligibility as Yes" do
+          expect(rendered_content).to have_text("Funding eligibility")
+          expect(rendered_content).to have_text("Yes")
+        end
+
+        it "has correct change link" do
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/funding-eligibility/edit")
+        end
+      end
+
+      context "when trainee has not eligible funding eligibility" do
+        let(:trainee) { create(:trainee, :with_start_date, funding_eligibility: :not_eligible, start_academic_cycle: start_academic_cycle) }
+
+        before { render_inline(View.new(data_model: trainee, editable: true)) }
+
+        it "renders the funding eligibility as No" do
+          expect(rendered_content).to have_text("Funding eligibility")
+          expect(rendered_content).to have_text("No")
+        end
+      end
+
+      context "when trainee has no funding eligibility" do
+        let(:trainee) { create(:trainee, :with_start_date, funding_eligibility: nil, start_academic_cycle: start_academic_cycle) }
+
+        before { render_inline(View.new(data_model: trainee, editable: true)) }
+
+        it "renders funding eligibility row with missing data" do
+          expect(rendered_content).to have_text("Funding eligibility")
+        end
+      end
+    end
+
     describe "when we don't know the funding rules for the trainee's cycle" do
       let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true, start_academic_cycle: start_academic_cycle) }
 
       it "doesn't render the funding row" do
+        expect(rendered_content).not_to have_text("Funding method")
+      end
+    end
+
+    describe "when data_model exposes a stashed funding_eligibility different from the trainee's persisted value" do
+      let(:allocation_subject) { create(:allocation_subject) }
+      let(:subject_specialism) { create(:subject_specialism, allocation_subject:) }
+      let(:funding_method) { create(:funding_method, :bursary, training_route: :provider_led_postgrad, academic_cycle: current_academic_cycle) }
+      let(:trainee) do
+        create(:trainee,
+               :with_start_date,
+               training_route: :provider_led_postgrad,
+               course_subject_one: subject_specialism.name,
+               course_allocation_subject: allocation_subject,
+               funding_eligibility: :eligible,
+               start_academic_cycle: current_academic_cycle)
+      end
+      let(:funding_eligibility_form) do
+        instance_double(Funding::EligibilityForm, fields: nil, funding_eligibility: "not_eligible", valid?: true)
+      end
+
+      before do
+        create(:funding_method_subject, funding_method:, allocation_subject:)
+        allow(Funding::EligibilityForm).to receive(:new).and_return(funding_eligibility_form)
+        render_inline(View.new(data_model: data_model, editable: true))
+      end
+
+      it "does not render the funding method row" do
         expect(rendered_content).not_to have_text("Funding method")
       end
     end

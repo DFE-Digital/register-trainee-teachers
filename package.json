@@ -27,14 +27,14 @@
   "devDependencies": {
     "esbuild": "^0.28.0",
     "esbuild-jest-transform": "^2.0.1",
-    "jest": "^30.4.0",
-    "jest-environment-jsdom": "^30.4.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "postcss": "^8.5.14",
     "standard": "^17.1.2",
     "stylelint": "^17.11.0",
     "stylelint-config-gds": "^2.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
-    "stylelint-scss": "^7.0.0"
+    "stylelint-scss": "^7.1.1"
   },
   "standard": {
     "env": [

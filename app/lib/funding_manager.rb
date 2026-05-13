@@ -7,8 +7,9 @@ class FundingManager
     tier_three: 2_000,
   }.with_indifferent_access.freeze
 
-  def initialize(trainee)
+  def initialize(trainee, funding_eligibility: nil)
     @trainee = trainee
+    @funding_eligibility = funding_eligibility || trainee.funding_eligibility
     @allocation_subject = trainee.course_allocation_subject
     @academic_cycle = trainee.start_academic_cycle
   end
@@ -40,21 +41,33 @@ class FundingManager
   end
 
   def can_apply_for_funding_type?
-    can_apply_for_bursary? || can_apply_for_scholarship? || can_apply_for_grant?
+    eligible_for_funding? && (can_apply_for_bursary? || can_apply_for_scholarship? || can_apply_for_grant?)
   end
 
   def can_apply_for_bursary?
-    can_apply_for_tiered_bursary? || available_bursary_amount.present?
+    eligible_for_funding? && (can_apply_for_tiered_bursary? || available_bursary_amount.present?)
   end
 
-  def can_apply_for_tiered_bursary? = trainee.early_years_postgrad?
+  def can_apply_for_tiered_bursary?
+    eligible_for_funding? && trainee.early_years_postgrad?
+  end
 
   def can_apply_for_scholarship?
-    scholarship_amount.present?
+    eligible_for_funding? && scholarship_amount.present?
   end
 
   def can_apply_for_grant?
-    grant_amount.present?
+    eligible_for_funding? && grant_amount.present?
+  end
+
+  def eligible_for_funding?
+    # Treat nil and "eligible" the same. Only an explicit "not_eligible" answer
+    # triggers the fund code exception check. Preserves prior behaviour for
+    # legacy and in-flight trainees who haven't answered the question yet.
+    #
+    return true if funding_eligibility != FUNDING_ELIGIBILITIES[:not_eligible]
+
+    FundCodeException.applies_to?(allocation_subject:, academic_cycle:)
   end
 
   def funding_available?
@@ -80,7 +93,7 @@ class FundingManager
 
 private
 
-  attr_reader :trainee, :academic_cycle, :allocation_subject
+  attr_reader :trainee, :funding_eligibility, :academic_cycle, :allocation_subject
 
   delegate :training_route, :course_subject_one, :bursary_tier, to: :trainee
 
