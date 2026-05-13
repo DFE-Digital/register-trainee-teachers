@@ -23,7 +23,7 @@ module BulkUpdate
           return
         end
 
-        return if headers.all? { |value| value.is_a?(String) } &&
+        return if headers.all?(String) &&
           headers.sort == BulkUpdate::AddTrainees::VERSION::ImportRows::ALL_HEADERS.keys.sort
 
         record.errors.add(:file, :invalid_headers, explanations: error_explanations)
