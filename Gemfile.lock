@@ -774,7 +774,7 @@ GEM
     store_model (4.6.0)
       activerecord (>= 7.0)
     stringio (3.2.0)
-    strong_migrations (2.7.0)
+    strong_migrations (2.8.0)
       activerecord (>= 7.2)
     swd (2.0.3)
       activesupport (>= 3)
@@ -1240,7 +1240,7 @@ CHECKSUMS
   stateful_enum (0.9.0) sha256=4aaaf890ddf9a108a596775e862a7972015730d762a82a8209b9778a3aed35e5
   store_model (4.6.0) sha256=13646cf65b7620919ebbe19e363d3e8943b752add1f51c24136902deffeeb149
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
-  strong_migrations (2.7.0) sha256=ab9a942e3907c4f9b83526ab0ec476df9a5252b29c2fc5b8167755ee1be29e10
+  strong_migrations (2.8.0) sha256=cb9c0f8160e60f3e9c0e76098d57a6f61825b9618e8eb41cebbd1c1079874439
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   tilt (2.7.0) sha256=0d5b9ba69f6a36490c64b0eee9f6e9aad517e20dcc848800a06eb116f08c6ab3
