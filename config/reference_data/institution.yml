@@ -53,12 +53,10 @@ data:
     name: "other_uk"
     display_name: "Other UK"
     hesa_codes:
-      - ""
   - id: "3a71f34a-2887-e711-80d8-005056ac45bb"
     name: "plymouth_marjon_university"
     display_name: "Plymouth Marjon University"
     hesa_codes:
-      - ""
   - id: "6c407223-7042-e811-80ff-3863bb3640b8"
     name: "royal_holloway_and_bedford_new_college"
     display_name: "Royal Holloway and Bedford New College"
@@ -688,7 +686,6 @@ data:
     name: "manchester_health_academy"
     display_name: "Manchester Health Academy"
     hesa_codes:
-      - ""
   - id: "913e182c-1425-ec11-b6e6-000d3adf095a"
     name: "matrix_college_of_counselling_and_psychotherapy_ltd"
     display_name: "Matrix College of Counselling and Psychotherapy Ltd"
@@ -758,12 +755,10 @@ data:
     name: "newcastle_college"
     display_name: "Newcastle College"
     hesa_codes:
-      - ""
   - id: "9c7fcac0-4a37-e811-80ef-005056ac45bb"
     name: "non_eu_countries"
     display_name: "Non EU countries"
     hesa_codes:
-      - ""
   - id: "aa3e182c-1425-ec11-b6e6-000d3adf095a"
     name: "norland_college"
     display_name: "Norland College"
@@ -783,7 +778,6 @@ data:
     name: "norwich_city_college_of_further_and_higher_education"
     display_name: "Norwich City College of Further and Higher Education"
     hesa_codes:
-      - ""
   - id: "a01c7817-7042-e811-80ff-3863bb3640b8"
     name: "norwich_university_of_the_arts"
     display_name: "Norwich University of the Arts"
@@ -793,12 +787,10 @@ data:
     name: "not_applicable"
     display_name: "Not applicable"
     hesa_codes:
-      - ""
   - id: "23f3791d-7042-e811-80ff-3863bb3640b8"
     name: "not_available_in_ebrdms"
     display_name: "Not available in EBRDMS"
     hesa_codes:
-      - ""
   - id: "af3e182c-1425-ec11-b6e6-000d3adf095a"
     name: "oak_hill_college"
     display_name: "Oak Hill College"
@@ -808,22 +800,18 @@ data:
     name: "other_eu_countries"
     display_name: "Other EU countries"
     hesa_codes:
-      - ""
   - id: "a47fcac0-4a37-e811-80ef-005056ac45bb"
     name: "other_uk_northern_ireland"
     display_name: "Other UK (Northern Ireland)"
     hesa_codes:
-      - ""
   - id: "a07fcac0-4a37-e811-80ef-005056ac45bb"
     name: "other_uk_scotland"
     display_name: "Other UK (Scotland)"
     hesa_codes:
-      - ""
   - id: "a27fcac0-4a37-e811-80ef-005056ac45bb"
     name: "other_uk_wales"
     display_name: "Other UK (Wales)"
     hesa_codes:
-      - ""
   - id: "f070f34a-2887-e711-80d8-005056ac45bb"
     name: "oxford_brookes_university"
     display_name: "Oxford Brookes University"
@@ -853,7 +841,6 @@ data:
     name: "prestolee_scitt"
     display_name: "Prestolee SCITT"
     hesa_codes:
-      - ""
   - id: "40f3791d-7042-e811-80ff-3863bb3640b8"
     name: "queen_margaret_university_edinburgh"
     display_name: "Queen Margaret University, Edinburgh"
@@ -1053,7 +1040,6 @@ data:
     name: "teach_first"
     display_name: "Teach First"
     hesa_codes:
-      - ""
   - id: "2a96fc9d-a141-e811-80ff-3863bb351d40"
     name: "teesside_university"
     display_name: "Teesside University"
@@ -1403,7 +1389,6 @@ data:
     name: "the_university_of_wales_central_functions"
     display_name: "The University of Wales (central functions)"
     hesa_codes:
-      - ""
   - id: "73228041-7042-e811-80ff-3863bb3640b8"
     name: "the_university_of_wales_newport"
     display_name: "The University of Wales, Newport"
@@ -1468,7 +1453,6 @@ data:
     name: "university_church_free_school"
     display_name: "University Church Free School"
     hesa_codes:
-      - ""
   - id: "fa70f34a-2887-e711-80d8-005056ac45bb"
     name: "university_college_birmingham"
     display_name: "University College Birmingham"
@@ -1478,7 +1462,6 @@ data:
     name: "university_college_cardiff"
     display_name: "University College Cardiff"
     hesa_codes:
-      - ""
   - id: "a27af34a-2887-e711-80d8-005056ac45bb"
     name: "university_college_london"
     display_name: "University College London"
@@ -1533,7 +1516,6 @@ data:
     name: "university_of_glamorgan"
     display_name: "University of Glamorgan"
     hesa_codes:
-      - ""
   - id: "1871f34a-2887-e711-80d8-005056ac45bb"
     name: "university_of_gloucestershire"
     display_name: "University of Gloucestershire"
@@ -1558,7 +1540,6 @@ data:
     name: "university_of_london"
     display_name: "University of London"
     hesa_codes:
-      - ""
   - id: "2c71f34a-2887-e711-80d8-005056ac45bb"
     name: "university_of_nottingham"
     display_name: "University of Nottingham"
@@ -1608,7 +1589,6 @@ data:
     name: "university_of_wales_cardiff"
     display_name: "University of Wales, Cardiff"
     hesa_codes:
-      - ""
   - id: "7eda4db6-a141-e811-80ff-3863bb351d40"
     name: "university_of_westminster"
     display_name: "University of Westminster"
@@ -1663,7 +1643,6 @@ data:
     name: "west_suffolk_college"
     display_name: "West Suffolk College"
     hesa_codes:
-      - ""
   - id: "cb23a753-7042-e811-80ff-3863bb3640b8"
     name: "wimbledon_school_of_art"
     display_name: "Wimbledon School of Art"
