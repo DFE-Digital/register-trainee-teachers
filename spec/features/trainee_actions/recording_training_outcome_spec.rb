@@ -135,13 +135,13 @@ feature "Recording a training outcome" do
   end
 
   def then_i_see_the_error_message_for(type)
-    expect(record_page).to have_content(
+    expect(record_page).to have_text(
       I18n.t("activemodel.errors.models.outcome_date_form.attributes.date.#{type}"),
     )
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(record_page).to have_content(
+    expect(record_page).to have_text(
       I18n.t("activemodel.errors.models.outcome_date_form.attributes.date_string.blank"),
     )
   end
@@ -155,18 +155,18 @@ feature "Recording a training outcome" do
   end
 
   def then_i_see_the_stop_page_with_missing(*details)
-    expect(page).to have_content("You cannot update the trainee’s")
+    expect(page).to have_text("You cannot update the trainee’s")
 
     details.each do |detail|
-      expect(page).to have_content(detail)
+      expect(page).to have_text(detail)
     end
   end
 
   def and_i_see_additional_details_have_to_be_provided(*details)
-    expect(record_page).to have_content("You need to enter:")
+    expect(record_page).to have_text("You need to enter:")
 
     details.each do |detail|
-      expect(record_page).to have_content(detail)
+      expect(record_page).to have_text(detail)
     end
   end
 
@@ -183,13 +183,13 @@ feature "Recording a training outcome" do
   end
 
   def and_i_see_the_correct_title_for_non_early_years
-    expect(record_page).to have_content(
+    expect(record_page).to have_text(
       I18n.t("components.page_titles.trainees.outcome_date.edit"),
     )
   end
 
   def i_see_the_correct_title_for_early_years
-    expect(record_page).to have_content(
+    expect(record_page).to have_text(
       I18n.t("components.page_titles.trainees.outcome_date.eyts_edit"),
     )
   end

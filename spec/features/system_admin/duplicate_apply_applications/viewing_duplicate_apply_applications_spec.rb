@@ -67,9 +67,9 @@ feature "Viewing duplicate Apply applications" do
   def then_i_should_see_the_duplicate_apply_applications
     expect(page).to have_current_path(duplicate_apply_applications_path)
     candidate_attributes = @duplicate_apply_application.application.dig("attributes", "candidate")
-    expect(page).to have_content(candidate_attributes["first_name"])
-    expect(page).to have_content(candidate_attributes["last_name"])
-    expect(page).to have_content(@duplicate_apply_application.created_at.to_fs(:govuk_short))
+    expect(page).to have_text(candidate_attributes["first_name"])
+    expect(page).to have_text(candidate_attributes["last_name"])
+    expect(page).to have_text(@duplicate_apply_application.created_at.to_fs(:govuk_short))
   end
 
   def when_i_click_on_a_duplicate_apply_application
@@ -77,14 +77,14 @@ feature "Viewing duplicate Apply applications" do
   end
 
   def then_i_should_see_the_candidate_name
-    expect(page).to have_content(@duplicate_apply_application.candidate_full_name)
+    expect(page).to have_text(@duplicate_apply_application.candidate_full_name)
   end
 
   def and_i_should_see_the_application_details
-    expect(page).to have_content(@application["attributes"]["support_reference"])
-    expect(page).to have_content(@application["attributes"]["candidate"]["domicile"])
-    expect(page).to have_content(@application["attributes"]["contact_details"]["phone_number"])
-    expect(page).to have_content(@application["attributes"]["course"]["course_code"])
+    expect(page).to have_text(@application["attributes"]["support_reference"])
+    expect(page).to have_text(@application["attributes"]["candidate"]["domicile"])
+    expect(page).to have_text(@application["attributes"]["contact_details"]["phone_number"])
+    expect(page).to have_text(@application["attributes"]["course"]["course_code"])
   end
 
   def when_i_click_on_the_trainee_link
@@ -98,7 +98,7 @@ feature "Viewing duplicate Apply applications" do
   end
 
   def and_i_should_not_see_the_trainee_link
-    expect(page).to have_content("None found")
+    expect(page).to have_text("None found")
   end
 
   def then_i_should_see_the_trainee_page

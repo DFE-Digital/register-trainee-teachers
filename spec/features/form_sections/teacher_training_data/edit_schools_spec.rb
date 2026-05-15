@@ -102,13 +102,13 @@ private
 
   def when_i_see_the_training_partner
     within(record_page.record_detail) do
-      expect(record_page).to have_content(trainee.training_partner.name)
+      expect(record_page).to have_text(trainee.training_partner.name)
     end
   end
 
   def when_i_see_the_employing_school
     within(record_page.record_detail) do
-      expect(record_page).to have_content(trainee.employing_school.name)
+      expect(record_page).to have_text(trainee.employing_school.name)
     end
   end
 
@@ -212,20 +212,20 @@ private
 
   def and_i_see_the_edit_training_partner_details_page
     expect(edit_trainee_training_partner_details_page).to be_displayed
-    expect(edit_trainee_training_partner_details_page).to have_content(
+    expect(edit_trainee_training_partner_details_page).to have_text(
       "Is there a training partner?",
     )
-    expect(edit_trainee_training_partner_details_page).to have_content(
+    expect(edit_trainee_training_partner_details_page).to have_text(
       "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end
 
   def and_i_see_the_edit_employing_school_details_page
     expect(edit_trainee_employing_school_details_page).to be_displayed
-    expect(edit_trainee_employing_school_details_page).to have_content(
+    expect(edit_trainee_employing_school_details_page).to have_text(
       "Is there an employing school?",
     )
-    expect(edit_trainee_employing_school_details_page).to have_content(
+    expect(edit_trainee_employing_school_details_page).to have_text(
       "You do not need to provide an employing school if the trainee is funded or employed privately.",
     )
   end
@@ -235,10 +235,10 @@ private
   end
 
   def and_i_see_the_updated_training_partner
-    expect(confirm_schools_page).to have_content(my_training_partner_name)
+    expect(confirm_schools_page).to have_text(my_training_partner_name)
   end
 
   def and_i_see_the_updated_employing_school
-    expect(confirm_schools_page).to have_content(my_employing_school_name)
+    expect(confirm_schools_page).to have_text(my_employing_school_name)
   end
 end

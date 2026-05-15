@@ -326,7 +326,7 @@ private
   end
 
   def then_i_should_not_see_sort_links
-    expect(trainee_index_page).not_to have_content("Sort by")
+    expect(trainee_index_page).not_to have_text("Sort by")
   end
 
   def then_i_see_my_provider_name

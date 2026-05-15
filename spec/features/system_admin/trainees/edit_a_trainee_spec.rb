@@ -33,7 +33,7 @@ feature "Edit a trainee" do
 private
 
   def then_i_see_the_timeline_details
-    expect(timeline_page).to have_content("Degree added")
+    expect(timeline_page).to have_text("Degree added")
   end
 
   def when_i_click_on_timeline_tab
@@ -41,16 +41,16 @@ private
   end
 
   def then_i_see_the_updated_degree_details
-    expect(record_page.degree_detail).to have_content(degree_template.uk_degree)
-    expect(record_page.degree_detail).to have_content(degree_template.subject)
-    expect(record_page.degree_detail).to have_content(degree_template.institution)
-    expect(record_page.degree_detail).to have_content(degree_template.grade.capitalize)
-    expect(record_page.degree_detail).to have_content(degree_template.graduation_year)
+    expect(record_page.degree_detail).to have_text(degree_template.uk_degree)
+    expect(record_page.degree_detail).to have_text(degree_template.subject)
+    expect(record_page.degree_detail).to have_text(degree_template.institution)
+    expect(record_page.degree_detail).to have_text(degree_template.grade.capitalize)
+    expect(record_page.degree_detail).to have_text(degree_template.graduation_year)
   end
 
   def and_i_see_the_trainee_record_page
     expect(record_page).to be_displayed
-    expect(record_page).to have_content("Trainee degree details updated")
+    expect(record_page).to have_text("Trainee degree details updated")
   end
 
   def and_i_click_on_update_record
@@ -101,6 +101,6 @@ private
   end
 
   def and_i_see_the_new_degree_form
-    expect(record_page).to have_content("Is this a UK degree?")
+    expect(record_page).to have_text("Is this a UK degree?")
   end
 end

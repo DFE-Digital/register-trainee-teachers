@@ -76,7 +76,7 @@ feature "Add user to training partners" do
 
   def then_i_see_the_add_to_training_partner_page
     expect(page).to have_current_path(new_user_training_partner_path(user))
-    expect(page).to have_content("Add a training partner for #{user.name}")
+    expect(page).to have_text("Add a training partner for #{user.name}")
   end
 
   def when_i_search_for_a_discarded_training_partner
@@ -84,7 +84,7 @@ feature "Add user to training partners" do
   end
 
   def then_i_dont_see_matching_results
-    expect(page).to have_content("No results")
+    expect(page).to have_text("No results")
   end
 
   def when_i_select_a_training_partner
@@ -97,7 +97,7 @@ feature "Add user to training partners" do
   end
 
   def then_i_see_the_user_added_to_the_training_partner
-    expect(page).to have_content("Training partner added")
+    expect(page).to have_text("Training partner added")
     expect(page).to have_link("Garibaldi School", href: training_partner_path(school_training_partner))
   end
 
@@ -107,11 +107,11 @@ feature "Add user to training partners" do
 
   def then_i_see_the_training_partner_detail_page
     expect(page).to have_current_path(training_partner_path(school_training_partner))
-    expect(page).to have_content("Garibaldi School")
+    expect(page).to have_text("Garibaldi School")
   end
 
   def and_i_see_the_user_has_been_added_to_the_training_partner
-    expect(page).to have_content(user.name)
+    expect(page).to have_text(user.name)
   end
 
   def and_i_click_the_remove_link
@@ -122,7 +122,7 @@ feature "Add user to training partners" do
 
   def then_i_see_the_remove_training_partner_page
     expect(page).to have_current_path(edit_user_training_partner_accessions_path(user, school_training_partner))
-    expect(page).to have_content("Yes I’m sure – remove #{user.name}’s access to Garibaldi School")
+    expect(page).to have_text("Yes I’m sure – remove #{user.name}’s access to Garibaldi School")
   end
 
   def when_i_confirm_the_removal
@@ -130,11 +130,11 @@ feature "Add user to training partners" do
   end
 
   def then_i_see_a_flash_message_to_confirm_the_removal
-    expect(page).to have_content("User access removed successfully")
+    expect(page).to have_text("User access removed successfully")
   end
 
   def and_i_no_longer_see_the_training_partner_on_the_user_page
-    expect(page).not_to have_content("Garibaldi School")
+    expect(page).not_to have_text("Garibaldi School")
   end
 
   def when_i_enter_a_training_partner_search_and_submit(name:)
@@ -148,8 +148,8 @@ feature "Add user to training partners" do
   end
 
   def then_i_see_matching_results
-    expect(page).to have_content("Bourbon University")
-    expect(page).to have_content("Digestive University")
+    expect(page).to have_text("Bourbon University")
+    expect(page).to have_text("Digestive University")
   end
 
   def when_i_select_a_training_partner_from_search_results
@@ -158,7 +158,7 @@ feature "Add user to training partners" do
   end
 
   def then_i_see_the_user_added_to_the_hei_training_partner
-    expect(page).to have_content("Training partner added")
+    expect(page).to have_text("Training partner added")
     expect(page).to have_link("Digestive University", href: training_partner_path(hei_training_partner2))
   end
 

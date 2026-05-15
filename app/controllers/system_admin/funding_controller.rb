@@ -29,8 +29,8 @@ module SystemAdmin
       years = organisation.funding_payment_schedules.joins(rows: :amounts)&.pluck(Arel.sql("DISTINCT funding_payment_schedule_row_amounts.year"))
       return {} if years.blank?
 
-      years.each_with_object({}) do |year, hash|
-        hash["#{year} to #{year + 1}"] = funding_path(year, "payment_schedule")
+      years.to_h do |year|
+        ["#{year} to #{year + 1}", funding_path(year, "payment_schedule")]
       end
     end
 

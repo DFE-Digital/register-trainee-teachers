@@ -21,7 +21,7 @@ describe RouteIndicator::View do
     let(:trainee) { create(:trainee, :submitted_for_trn) }
 
     it "wont render if the trainee is not a draft trainee" do
-      expect(component).not_to have_content("recruited to")
+      expect(component).not_to have_text("recruited to")
     end
   end
 
@@ -29,7 +29,7 @@ describe RouteIndicator::View do
     let(:trainee) { create(:trainee, :with_apply_application, :with_publish_course_details) }
 
     it "renders" do
-      expect(component).to have_content(trainee.course_subject_one.upcase_first)
+      expect(component).to have_text(trainee.course_subject_one.upcase_first)
     end
 
     it "renders the correct training route link" do
@@ -44,9 +44,9 @@ describe RouteIndicator::View do
       end
 
       it "renders the apply application's course code" do
-        expect(component).to have_content("Citizenship (V6X1)")
-        expect(component).to have_content("Assessment only route.")
-        expect(component).to have_content("recruited to")
+        expect(component).to have_text("Citizenship (V6X1)")
+        expect(component).to have_text("Assessment only route.")
+        expect(component).to have_text("recruited to")
       end
     end
 
@@ -54,8 +54,8 @@ describe RouteIndicator::View do
       let(:trainee) { create(:trainee, :with_apply_application) }
 
       it "does not render course details" do
-        expect(component).not_to have_content("recruited to")
-        expect(component).not_to have_content("Citizenship (V6X1)")
+        expect(component).not_to have_text("recruited to")
+        expect(component).not_to have_text("Citizenship (V6X1)")
       end
     end
   end

@@ -85,7 +85,7 @@ private
   end
 
   def then_i_see_a_not_found_message
-    expect(page).to have_content("Page not found")
+    expect(page).to have_text("Page not found")
   end
 
   def and_i_can_generate_an_authentication_token
@@ -113,7 +113,7 @@ private
   end
 
   def then_i_should_see_the_new_token_form
-    expect(page).to have_content("Create a token")
+    expect(page).to have_text("Create a token")
   end
 
   def when_i_enter_an_expiry_date_in_the_past
@@ -129,11 +129,11 @@ private
   end
 
   def then_i_should_see_validation_error_messages(past:)
-    expect(page).to have_content("Create a token")
-    expect(page).to have_content("There is a problem")
-    expect(page).to have_content("Enter the token name")
+    expect(page).to have_text("Create a token")
+    expect(page).to have_text("There is a problem")
+    expect(page).to have_text("Enter the token name")
 
-    expect(page).to have_content(
+    expect(page).to have_text(
       past ? "Expiration date must be in the future" : "Expiration date must not be more than 6 months in the future",
     )
   end
@@ -150,9 +150,9 @@ private
   end
 
   def then_i_should_see_the_new_token_confirmation_page
-    expect(page).to have_content("Token generated")
-    expect(page).to have_content("Your API token is")
-    expect(page).to have_content("test_#{@token_string}")
+    expect(page).to have_text("Token generated")
+    expect(page).to have_text("Your API token is")
+    expect(page).to have_text("test_#{@token_string}")
   end
 
   def when_i_refresh_the_page
@@ -160,7 +160,7 @@ private
   end
 
   def then_i_can_no_longer_see_the_token
-    expect(page).not_to have_content("test_#{@token_string}")
+    expect(page).not_to have_text("test_#{@token_string}")
   end
 
   def when_i_click_the_continue_to_manage_tokens_button
@@ -168,17 +168,17 @@ private
   end
 
   def then_i_should_see_the_existing_tokens_in_the_list
-    expect(page).to have_content("Old token 1")
-    expect(page).to have_content("Old token 2")
+    expect(page).to have_text("Old token 1")
+    expect(page).to have_text("Old token 2")
   end
 
   def then_i_should_see_the_new_token_in_the_list
-    expect(page).to have_content("My new token")
-    expect(page).to have_content(expires_at.to_fs(:govuk))
+    expect(page).to have_text("My new token")
+    expect(page).to have_text(expires_at.to_fs(:govuk))
   end
 
   def then_i_see_an_unauthorised_message
-    expect(page).to have_content("You do not have permission to perform this action")
+    expect(page).to have_text("You do not have permission to perform this action")
   end
 
   def and_i_cannot_see_the_generate_new_token_button
@@ -196,7 +196,7 @@ private
   end
 
   def then_i_should_see_the_revoke_token_page
-    expect(page).to have_content("Are you sure you want to revoke this token?")
+    expect(page).to have_text("Are you sure you want to revoke this token?")
   end
 
   def and_i_click_the_revoke_token_confirmation_button

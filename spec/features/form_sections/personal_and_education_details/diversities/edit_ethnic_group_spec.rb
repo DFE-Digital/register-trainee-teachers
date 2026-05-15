@@ -94,7 +94,7 @@ feature "edit ethnic group" do
   end
 
   def then_i_see_error_messages
-    expect(ethnic_background_page).to have_content(
+    expect(ethnic_background_page).to have_text(
       I18n.t("activemodel.errors.models.diversities/ethnic_group_form.attributes.ethnic_group.blank"),
     )
   end

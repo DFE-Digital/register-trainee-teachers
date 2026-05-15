@@ -144,28 +144,28 @@ private
   def then_i_see_error_messages
     translation_key_prefix = "activemodel.errors.models.course_details_form.attributes"
 
-    expect(course_details_page).to have_content(
+    expect(course_details_page).to have_text(
       I18n.t("#{translation_key_prefix}.course_subject_one.blank"),
     )
-    expect(course_details_page).to have_content(
+    expect(course_details_page).to have_text(
       I18n.t("#{translation_key_prefix}.main_age_range.blank"),
     )
-    expect(course_details_page).to have_content(
+    expect(course_details_page).to have_text(
       I18n.t("#{translation_key_prefix}.itt_start_date.blank"),
     )
   end
 
   def then_i_see_error_messages_for_partially_submitted_fields
-    expect(course_details_page).to have_content(
+    expect(course_details_page).to have_text(
       I18n.t("activemodel.errors.validators.autocomplete.course_subject_one"),
     )
   end
 
   def then_i_see_error_messages_for_blank_submitted_fields
-    expect(course_details_page).to have_content(
+    expect(course_details_page).to have_text(
       I18n.t("activemodel.errors.models.course_details_form.attributes.course_subject_one.blank"),
     )
-    expect(course_details_page).not_to have_content(
+    expect(course_details_page).not_to have_text(
       I18n.t("activemodel.errors.validators.autocomplete.course_subject_one"),
     )
   end

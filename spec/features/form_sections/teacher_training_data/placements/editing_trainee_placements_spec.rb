@@ -152,17 +152,17 @@ private
 
   def then_i_see_the_confirmation_page
     expect(page).to have_current_path(trainee_placements_confirm_path(trainee_id: trainee.slug))
-    expect(page).to have_content("Confirm placement details")
+    expect(page).to have_text("Confirm placement details")
   end
   alias_method :and_i_see_the_confirmation_page, :then_i_see_the_confirmation_page
 
   def and_i_see_the_updated_placement(school: school_one)
-    expect(page).to have_content("First placement")
-    expect(page).not_to have_content("Second placement")
-    expect(page).to have_content(school.name)
-    expect(page).not_to have_content("Edinburgh Academy")
-    expect(page).to have_content(school.postcode)
-    expect(page).to have_content("URN #{school.urn}")
+    expect(page).to have_text("First placement")
+    expect(page).not_to have_text("Second placement")
+    expect(page).to have_text(school.name)
+    expect(page).not_to have_text("Edinburgh Academy")
+    expect(page).to have_text(school.postcode)
+    expect(page).to have_text("URN #{school.urn}")
   end
 
   def and_i_see_only_one_placement
@@ -196,11 +196,11 @@ private
         school_search: "Lond",
       ),
     )
-    expect(page).to have_content("1 result found")
-    expect(page).to have_content("Change your search if the school you’re looking for is not listed")
-    expect(page).to have_content("London School")
-    expect(page).not_to have_content("Edinburgh Academy")
-    expect(page).not_to have_content("Cardiff College")
+    expect(page).to have_text("1 result found")
+    expect(page).to have_text("Change your search if the school you’re looking for is not listed")
+    expect(page).to have_text("London School")
+    expect(page).not_to have_text("Edinburgh Academy")
+    expect(page).not_to have_text("Cardiff College")
   end
 
   def when_i_select_an_existing_school_from_the_search_results

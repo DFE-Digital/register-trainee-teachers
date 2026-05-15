@@ -109,10 +109,10 @@ feature "add training partner and employing school" do
 
   def and_i_see_the_edit_training_partner_details_page
     expect(edit_trainee_training_partner_details_page).to be_displayed
-    expect(edit_trainee_training_partner_details_page).to have_content(
+    expect(edit_trainee_training_partner_details_page).to have_text(
       "Is there a training partner?",
     )
-    expect(edit_trainee_training_partner_details_page).to have_content(
+    expect(edit_trainee_training_partner_details_page).to have_text(
       "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end
@@ -131,24 +131,24 @@ feature "add training partner and employing school" do
 
   def then_i_see_the_training_partner_edit_page
     expect(edit_training_partner_page).to be_displayed
-    expect(edit_training_partner_page).to have_content(
+    expect(edit_training_partner_page).to have_text(
       "The training partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.",
     )
-    expect(edit_training_partner_page).to have_content(
+    expect(edit_training_partner_page).to have_text(
       "The training partner you select will be able to view trainee’s record.",
     )
-    expect(edit_training_partner_page).to have_content(
+    expect(edit_training_partner_page).to have_text(
       "Search for a training partner by name, postcode, school URN or training provider UKPRN",
     )
-    expect(edit_training_partner_page).to have_content(
+    expect(edit_training_partner_page).to have_text(
       "If the training partner is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
     )
     expect(edit_employing_school_page).to have_link(text: "Get information about schools", href: "https://get-information-schools.service.gov.uk/")
-    expect(edit_training_partner_page).to have_content(
+    expect(edit_training_partner_page).to have_text(
       "If you still cannot find the training partner, contact becomingateacher@digital.education.gov.uk",
     )
     expect(edit_employing_school_page).to have_link("becomingateacher@digital.education.gov.uk")
-    expect(edit_training_partner_page).to have_content(
+    expect(edit_training_partner_page).to have_text(
       "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end
@@ -179,18 +179,18 @@ feature "add training partner and employing school" do
 
   def then_i_see_the_employing_school_edit_page
     expect(edit_employing_school_page).to be_displayed
-    expect(edit_employing_school_page).to have_content(
+    expect(edit_employing_school_page).to have_text(
       "Search for a school by its unique reference number (URN), name or postcode",
     )
-    expect(edit_employing_school_page).to have_content(
+    expect(edit_employing_school_page).to have_text(
       "If the employing school is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
     )
     expect(edit_employing_school_page).to have_link(text: "Get information about schools", href: "https://get-information-schools.service.gov.uk/")
-    expect(edit_employing_school_page).to have_content(
+    expect(edit_employing_school_page).to have_text(
       "If you still cannot find the school, contact becomingateacher@digital.education.gov.uk",
     )
     expect(edit_employing_school_page).to have_link("becomingateacher@digital.education.gov.uk")
-    expect(edit_employing_school_page).to have_content(
+    expect(edit_employing_school_page).to have_text(
       "You do not need to provide an employing school if the trainee is funded or employed privately.",
     )
   end
@@ -205,10 +205,10 @@ feature "add training partner and employing school" do
 
   def then_i_see_the_edit_employing_school_details_page
     expect(edit_trainee_employing_school_details_page).to be_displayed
-    expect(edit_trainee_employing_school_details_page).to have_content(
+    expect(edit_trainee_employing_school_details_page).to have_text(
       "Is there an employing school?",
     )
-    expect(edit_trainee_employing_school_details_page).to have_content(
+    expect(edit_trainee_employing_school_details_page).to have_text(
       "You do not need to provide an employing school if the trainee is funded or employed privately.",
     )
   end

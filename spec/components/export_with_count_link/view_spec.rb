@@ -46,7 +46,7 @@ module ExportWithCountLink
       end
 
       it "renders the no record text" do
-        expect(page).to have_content("No trainees found")
+        expect(page).to have_text("No trainees found")
       end
     end
   end
