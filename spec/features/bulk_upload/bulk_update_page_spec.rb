@@ -36,8 +36,8 @@ feature "bulk update page" do
       and_i_visit_the_bulk_update_page
     end
 
-    scenario "the bulk placement section is not visible" do
-      then_i_do_not_see_the_bulk_placement_section
+    scenario "the bulk placement section is visible" do
+      then_i_see_how_many_trainees_i_can_bulk_update
     end
   end
 
