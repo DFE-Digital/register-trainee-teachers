@@ -18,7 +18,7 @@ module Api
           end
 
           def mapped_additional_training_initiative
-            @mapped_additional_training_initiative ||= Hesa::CodeSets::TrainingInitiatives::MAPPING[additional_training_initiative]
+            @mapped_additional_training_initiative ||= ::ReferenceData::TRAINING_INITIATIVES.find_by_hesa_code(additional_training_initiative)&.name
           end
 
           def error_details

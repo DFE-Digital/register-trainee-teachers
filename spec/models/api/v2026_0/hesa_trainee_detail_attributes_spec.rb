@@ -61,7 +61,7 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes do
       end
 
       context "when included in the list of HESA itt qualification aim codes" do
-        Hesa::CodeSets::IttQualificationAims::MAPPING.each_key do |itt_qualification_aim|
+        ReferenceData::ITT_QUALIFICATION_AIMS.hesa_codes.each do |itt_qualification_aim|
           subject { described_class.new(itt_qualification_aim:) }
 
           it {
@@ -79,7 +79,7 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes do
           subject.validate
 
           expect(subject.errors[:itt_qualification_aim]).to contain_exactly(
-            "has invalid reference data value of '300'. Example values include #{format_reference_data_list(Hesa::CodeSets::IttQualificationAims::MAPPING.keys)}...",
+            "has invalid reference data value of '300'. Example values include #{format_reference_data_list(ReferenceData::ITT_QUALIFICATION_AIMS.hesa_codes)}...",
           )
         }
       end
