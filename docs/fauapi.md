@@ -39,5 +39,5 @@ The fauapi platform API has some bugs we've reported:
 
 - `schemaUrl` and `schemaType` in the import payload are silently ignored — the OpenAPI spec doesn't get attached
 - `baseUrl` on environment objects is silently dropped
-- Publish endpoint returns `{ "status": 400 }` in the body with HTTP 200 — acknowledged as their bug
+- Publish endpoint previously returned `{ "status": 400 }` in the body with HTTP 200, but as of May 2026 it returns an actual 4xx HTTP status — the CI workflow now uses `-s -w "%{http_code}"` instead of `-sf` so it captures the response body without failing the job
 - Import response doesn't include the API `id` — we work around this by listing APIs after import

@@ -72,10 +72,13 @@ jobs:
 
         echo "Found API id: $API_ID"
 
-        PUBLISH_RESPONSE=$(curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+        PUBLISH_RESPONSE=$(curl -s -w "\n%{http_code}" -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
           -H "Authorization: Bearer $FAUAPI_TOKEN")
 
-        echo "fauapi publish response:"
-        echo "$PUBLISH_RESPONSE" | jq .
+        PUBLISH_HTTP_CODE=$(echo "$PUBLISH_RESPONSE" | tail -1)
+        PUBLISH_BODY=$(echo "$PUBLISH_RESPONSE" | head -n -1)
+
+        echo "fauapi publish response (HTTP $PUBLISH_HTTP_CODE):"
+        echo "$PUBLISH_BODY" | jq . 2>/dev/null || echo "$PUBLISH_BODY"
 
         echo "Published API $API_ID to FauAPI catalogue (pre-prod)"
