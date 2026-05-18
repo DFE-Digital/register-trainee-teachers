@@ -49,6 +49,7 @@ feature "edit funding eligibility" do
 
       when_i_visit_the_funding_confirm_page
       then_the_funding_method_row_is_not_displayed
+      and_the_hesa_trainee_detail_funding_method_is_none
     end
   end
 
@@ -83,6 +84,7 @@ feature "edit funding eligibility" do
       then_i_am_redirected_to_the_funding_confirmation_page
 
       when_i_save_the_funding_section
+      and_the_hesa_trainee_detail_funding_method_is_none
       when_i_visit_the_funding_confirm_page
       then_the_funding_method_row_shows_not_applicable
     end
@@ -173,6 +175,7 @@ private
       :provider_led_postgrad,
       :with_provider_led_bursary,
       :with_valid_itt_start_date,
+      :with_hesa_trainee_detail,
       funding_eligibility: :eligible,
       applying_for_bursary: false,
       applying_for_scholarship: true,
@@ -185,6 +188,7 @@ private
       :provider_led_postgrad,
       :with_provider_led_bursary,
       :with_valid_itt_start_date,
+      :with_hesa_trainee_detail,
       funding_eligibility: :eligible,
       applying_for_bursary: false,
       applying_for_scholarship: true,
@@ -215,5 +219,10 @@ private
 
   def when_i_save_the_funding_section
     confirm_funding_page.continue.click
+  end
+
+  def and_the_hesa_trainee_detail_funding_method_is_none
+    expect(trainee.reload.hesa_trainee_detail.funding_method)
+      .to eq(Hesa::CodeSets::BursaryLevels::NONE)
   end
 end

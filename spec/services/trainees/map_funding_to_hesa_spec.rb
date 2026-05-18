@@ -30,6 +30,19 @@ module Trainees
         it { is_expected.to eq(::Hesa::CodeSets::BursaryLevels::GRANT) }
       end
 
+      context "when the trainee is applying for both a grant and a tiered bursary" do
+        let(:trainee) do
+          build(:trainee,
+                applying_for_grant: true,
+                applying_for_bursary: true,
+                bursary_tier: :tier_one)
+        end
+
+        it "prefers the tier over the grant" do
+          expect(result).to eq(::Hesa::CodeSets::BursaryLevels::TIER_ONE)
+        end
+      end
+
       context "when the trainee is applying for a tiered bursary" do
         let(:trainee) { build(:trainee, applying_for_bursary: true, bursary_tier: tier) }
 
