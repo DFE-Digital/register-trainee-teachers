@@ -6,6 +6,7 @@ describe HesaFundingMethodSync do
   let(:host_class) do
     Class.new do
       include HesaFundingMethodSync
+
       attr_accessor :trainee
 
       def save!
