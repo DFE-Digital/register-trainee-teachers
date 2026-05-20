@@ -44,7 +44,7 @@ module SystemAdmin
     end
 
     def user
-      @user ||= authorize(User.kept.find(params[:id]))
+      @user ||= authorize(User.kept.find(params.expect(:id)))
     end
 
     def filtered_users(users)

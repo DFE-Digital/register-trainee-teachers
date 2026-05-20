@@ -33,7 +33,7 @@ module Api
     end
 
     def show
-      trainee = current_provider.trainees.find_by!(slug: params[:slug])
+      trainee = current_provider.trainees.find_by!(slug: params.expect(:slug))
 
       render(json: serializer_klass.new(trainee).as_hash)
     end
@@ -73,7 +73,7 @@ module Api
   private
 
     def trainee
-      @trainee ||= current_provider&.trainees&.find_by!(slug: params[:slug])
+      @trainee ||= current_provider&.trainees&.find_by!(slug: params.expect(:slug))
     end
 
     def hesa_mapped_params

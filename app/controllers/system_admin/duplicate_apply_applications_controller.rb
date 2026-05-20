@@ -11,7 +11,7 @@ module SystemAdmin
     end
 
     def show
-      @apply_application = ApplyApplication.find(params[:id])
+      @apply_application = ApplyApplication.find(params.expect(:id))
       @candidate_name = @apply_application.candidate_full_name
 
       @duplicate_trainees = Trainees::FindDuplicatesOfApplyApplication.call(application_record: @apply_application)

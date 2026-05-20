@@ -31,7 +31,7 @@ module SystemAdmin
       end
 
       def organisation
-        @organisation ||= Provider.find(params[:provider_id]) if params[:provider_id].present?
+        @organisation ||= Provider.find(params.expect(:provider_id)) if params[:provider_id].present?
       end
 
       def data_export

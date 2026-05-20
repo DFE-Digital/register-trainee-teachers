@@ -49,7 +49,7 @@ module SystemAdmin
     end
 
     def dead_job_service
-      @dead_job_service ||= params[:id]&.constantize&.new
+      @dead_job_service ||= params.expect(:id)&.constantize&.new
     end
 
     def sorted_rows
