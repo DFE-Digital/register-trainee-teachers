@@ -7,20 +7,31 @@ module Rotp
     MAX_LISTED = 10
 
     def perform
-      return false unless Rails.env.production?
+      # return false unless Rails.env.production?
 
       checker = Rotp::ProviderChecker.new
+      download_url = generate_csv_download_url(checker)
 
       TeamsNotifierService.call(
         title: "RoTP Provider Checker Results [#{Rails.env}]",
-        message: build_message(checker),
+        message: build_message(checker, download_url:),
         icon_emoji: checker.any_discrepancies? ? "🚨" : "✅",
       )
     end
 
   private
 
-    def build_message(checker)
+    def generate_csv_download_url(checker)
+      csv = Rotp::ProviderCheckerCsvExport.call(checker)
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new(csv),
+        filename: "rotp_provider_check_#{Time.zone.today}.csv",
+        content_type: "text/csv",
+      )
+      blob.url(expires_in: 7.days)
+    end
+
+    def build_message(checker, download_url:)
       message = +""
       message << build_section("Accredited Providers",
                                matched: checker.accredited_matched,
@@ -36,6 +47,8 @@ module Rotp
                                matched: checker.school_matched,
                                missing_from_register: checker.school_missing_from_register,
                                missing_from_rotp: checker.school_missing_from_rotp)
+
+      message << "[Download full provider check CSV](#{download_url})"
     end
 
     def build_section(title, matched:, missing_from_register:, missing_from_rotp:)
