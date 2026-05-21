@@ -17,6 +17,15 @@ RSpec.describe ReferenceData::Type do
     end
   end
 
+  describe "#metadata" do
+    it "exposes the raw metadata hash with string keys" do
+      expect(type.metadata).to include(
+        "name" => "study_mode",
+        "display_name" => "Study mode",
+      )
+    end
+  end
+
   describe "#values" do
     it "has the correct values" do
       expect(type.values).to include(

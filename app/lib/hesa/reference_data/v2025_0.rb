@@ -8,6 +8,22 @@ module Hesa
         subject
       ].freeze
 
+      LOCALE_NAMESPACES = {
+        course_subject_one: "course_subject",
+        course_subject_two: "course_subject",
+        course_subject_three: "course_subject",
+        disability1: "disability",
+        disability2: "disability",
+        disability3: "disability",
+        disability4: "disability",
+        disability5: "disability",
+        disability6: "disability",
+        disability7: "disability",
+        disability8: "disability",
+        disability9: "disability",
+        grade: "degree_grade",
+      }.freeze
+
       def self.all
         {
           funding_method: CodeSets::BursaryLevels::VALUES,
@@ -46,7 +62,8 @@ module Hesa
                                   mapping.transform_values { |label| label[0].upcase + label[1..] }.sort
                                 end
 
-          translated_mapping  = transformed_mapping.map { |code, label| [code, I18n.t("#{attribute}.#{code}", default: label)] }
+          locale_namespace    = LOCALE_NAMESPACES.fetch(attribute, attribute)
+          translated_mapping  = transformed_mapping.map { |code, label| [code, I18n.t("#{locale_namespace}.#{code}", default: label)] }
 
           [attribute, translated_mapping.to_h]
         end.freeze
