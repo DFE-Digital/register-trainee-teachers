@@ -9,7 +9,7 @@ module Api
           include Api::Rules::AcademicCyclable
 
           FUND_CODE       = "7"
-          AGE_RANGE_CODES = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.keys.freeze
+          AGE_RANGE_CODES = ::ReferenceData::COURSE_AGE_RANGES.hesa_codes.freeze
 
           attr_reader :hesa_trainee_detail_attributes
 
