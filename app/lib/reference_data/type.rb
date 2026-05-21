@@ -2,11 +2,12 @@
 
 module ReferenceData
   class Type
-    attr_reader :name, :display_name, :values
+    attr_reader :name, :display_name, :metadata, :values
 
-    def initialize(name: nil, display_name: nil, values: nil)
+    def initialize(name: nil, display_name: nil, metadata: {}, values: nil)
       @name = name
       @display_name = display_name
+      @metadata = metadata
       @values = values
       @values_by_id = @values.index_by(&:id).transform_keys(&:to_s).with_indifferent_access
       @values_by_name = @values.index_by(&:name).transform_keys(&:to_s).with_indifferent_access
@@ -17,12 +18,14 @@ module ReferenceData
           end
         end
       end
+      @sorted_hesa_codes = @values.flat_map(&:hesa_codes).sort.freeze
     end
 
     def self.from_yaml(metadata:, data:)
       new(
         name: metadata[:name],
         display_name: metadata[:display_name],
+        metadata: metadata.to_h.deep_stringify_keys,
         values: data.map { |value_attrs| ReferenceData::Value.from_yaml(value_attrs.with_indifferent_access) },
       )
     end
@@ -44,7 +47,9 @@ module ReferenceData
     end
 
     def hesa_codes(year: nil)
-      valid_values_for(year:).flat_map(&:hesa_codes)
+      return @sorted_hesa_codes if year.nil?
+
+      valid_values_for(year:).flat_map(&:hesa_codes).sort
     end
 
     def find_by_hesa_code(hesa_code)
