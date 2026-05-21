@@ -12,7 +12,7 @@ feature "edit training initiative" do
       given_a_provider_led_postgrad_trainee_exists
       and_a_bursary_exists_for_their_subject
       when_i_visit_the_training_initiative_page
-      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_update_the_training_initiative("now_teach")
       and_i_submit_the_form
       then_i_am_redirected_to_the_bursary_page
     end
@@ -20,7 +20,7 @@ feature "edit training initiative" do
     scenario "without bursary redirects to funding confirmation page" do
       given_a_trainee_exists(:assessment_only)
       when_i_visit_the_training_initiative_page
-      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_update_the_training_initiative("now_teach")
       and_i_submit_the_form
       then_i_am_redirected_to_the_funding_confirmation_page
     end
@@ -28,7 +28,7 @@ feature "edit training initiative" do
     scenario "on the early_years_postgrad route redirects to bursary page" do
       given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
       when_i_visit_the_training_initiative_page
-      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_update_the_training_initiative("now_teach")
       and_i_submit_the_form
       then_i_am_redirected_to_the_bursary_page
     end
@@ -39,9 +39,9 @@ feature "edit training initiative" do
   scenario "can select an initiative and save it to the trainee record" do
     given_a_trainee_exists(:provider_led_postgrad)
     when_i_visit_the_training_initiative_page
-    and_i_update_the_training_initiative("international_relocation_payment")
+    and_i_update_the_training_initiative("now_teach")
     and_i_submit_the_form
-    then_the_trainee_has_the_correct_initiative("international_relocation_payment")
+    then_the_trainee_has_the_correct_initiative("now_teach")
   end
 
   scenario "submitting with invalid parameters shows error messages" do
@@ -87,7 +87,7 @@ private
     training_initiative_page.load(id: trainee.slug)
   end
 
-  def and_i_update_the_training_initiative(initiative = "international_relocation_payment")
+  def and_i_update_the_training_initiative(initiative = "now_teach")
     radio_button = training_initiative_page.find("input[value='#{initiative}']", visible: :all)
     radio_button.presence&.click
   end
