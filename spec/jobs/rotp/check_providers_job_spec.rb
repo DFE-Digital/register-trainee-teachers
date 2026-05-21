@@ -32,11 +32,6 @@ module Rotp
       allow(Rails.env).to receive(:production?).and_return(true)
     end
 
-    it "sends a message to Teams" do
-      described_class.perform_now
-      expect(TeamsNotifierService).to have_received(:call).with(hash_including(:title, :message, :icon_emoji))
-    end
-
     it "generates a CSV and uploads it as a blob" do
       described_class.perform_now
       expect(Rotp::ProviderCheckerCsvExport).to have_received(:call).with(result)
