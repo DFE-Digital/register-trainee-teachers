@@ -48,7 +48,7 @@ module SchoolDetails
     end
 
     context "when urn not provided from hesa import" do
-      let(:trainee) { create(:trainee, :imported_from_hesa) }
+      let(:trainee) { create(:trainee, :imported_from_hesa, :with_training_route) }
 
       before do
         render_inline(View.new(trainee: trainee, editable: true))
