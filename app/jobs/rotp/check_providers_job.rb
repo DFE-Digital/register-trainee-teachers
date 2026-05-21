@@ -7,7 +7,8 @@ module Rotp
     MAX_LISTED = 10
 
     def perform
-      return false unless Rails.env.production?
+      return false unless Rails.env.production? || Rails.env.productiondata?
+ 
 
       checker = Rotp::ProviderChecker.new
       download_url = generate_csv_download_url(checker)
