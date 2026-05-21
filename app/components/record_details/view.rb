@@ -38,13 +38,9 @@ module RecordDetails
 
     def record_detail_rows
       rows = [provider_row]
-      if trainee.requires_training_partner?
-        rows += [
-          training_partner_row,
-          employing_school_row,
-        ]
-      end
       rows += [
+        training_partner_row(not_applicable: training_partner_not_applicable?),
+        employing_school_row(not_applicable: employing_school_not_applicable?),
         record_source_row,
         trainee_id_row,
         region,
