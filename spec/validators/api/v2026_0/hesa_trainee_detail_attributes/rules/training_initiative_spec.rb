@@ -63,7 +63,7 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::TrainingInitiati
     end
 
     context "when the `training_initiative` is a valid HESA code and available in the given year" do
-      let(:training_initiative) { "international_relocation_payment" }
+      let(:training_initiative) { "now_teach" }
 
       it "returns true" do
         expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
@@ -75,7 +75,7 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::TrainingInitiati
     end
 
     context "when the `training_initiative` is a valid HESA code but not available in the given year" do
-      let(:training_initiative) { "future_teaching_scholars" }
+      let(:training_initiative) { "international_relocation_payment" }
 
       it "returns false" do
         expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
@@ -83,7 +83,7 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::TrainingInitiati
 
       it "returns error details including the given value and allowed values" do
         expect(subject.call(hesa_trainee_detail_attributes).error_details).to eq(
-          { academic_cycle: "2026 to 2027", training_initiative: "future_teaching_scholars" },
+          { academic_cycle: "2026 to 2027", training_initiative: "international_relocation_payment" },
         )
       end
     end

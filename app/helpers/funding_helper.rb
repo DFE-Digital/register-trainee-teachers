@@ -1,15 +1,8 @@
 # frozen_string_literal: true
 
 module FundingHelper
-  HIDDEN_TRAINING_INITIATIVES_BY_START_YEAR = {
-    2026 => %w[international_relocation_payment],
-  }.freeze
-
   def training_initiative_options(trainee)
-    cycle = trainee.start_academic_cycle
-    initiatives = Funding::AvailableTrainingInitiativesService.call(academic_cycle: cycle)
-    hidden = hidden_training_initiatives(cycle) - [trainee.training_initiative].compact
-    (initiatives - hidden).sort
+    Funding::AvailableTrainingInitiativesService.call(academic_cycle: trainee.start_academic_cycle).sort
   end
 
   def funding_options(trainee)
@@ -35,9 +28,5 @@ private
 
   def can_start_funding_section?(trainee)
     trainee.progress.course_details && trainee.start_academic_cycle.present?
-  end
-
-  def hidden_training_initiatives(academic_cycle)
-    HIDDEN_TRAINING_INITIATIVES_BY_START_YEAR.fetch(academic_cycle&.start_year, [])
   end
 end

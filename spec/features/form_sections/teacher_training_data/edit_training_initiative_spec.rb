@@ -57,12 +57,6 @@ feature "edit training initiative" do
       when_i_visit_the_training_initiative_page
       then_the_international_relocation_payment_option_is_not_shown
     end
-
-    scenario "international relocation payment is still offered if the trainee already has it set" do
-      given_a_2026_to_2027_trainee_exists(training_initiative: "international_relocation_payment")
-      when_i_visit_the_training_initiative_page
-      then_the_international_relocation_payment_option_is_shown
-    end
   end
 
   context "when a trainee is in 2025/26 academic cycle" do

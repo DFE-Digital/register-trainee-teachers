@@ -70,32 +70,13 @@ describe FundingHelper do
     context "when looking for 2026 initiatives" do
       let(:year) { 2026 }
 
-      it "returns 2026-2027 initiatives excluding international_relocation_payment" do
+      it "returns 2026-2027 initiatives" do
         expected_initiatives = %w[
           now_teach
           veterans_teaching_undergraduate_bursary
           primary_mathematics_specialist
         ]
         expect(training_initiative_options(trainee)).to match_array(expected_initiatives)
-      end
-
-      context "when the trainee already has international_relocation_payment set" do
-        let(:trainee) do
-          create(:trainee,
-                 itt_start_date: Date.new(year, 9, 1),
-                 start_academic_cycle: academic_cycle,
-                 training_initiative: ROUTE_INITIATIVES_ENUMS[:international_relocation_payment])
-        end
-
-        it "keeps international_relocation_payment in the list so it can stay selected" do
-          expected_initiatives = %w[
-            international_relocation_payment
-            now_teach
-            veterans_teaching_undergraduate_bursary
-            primary_mathematics_specialist
-          ]
-          expect(training_initiative_options(trainee)).to match_array(expected_initiatives)
-        end
       end
     end
 
