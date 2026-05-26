@@ -34,3 +34,9 @@ When the versions are updated in main run `asdf install` again to update your
 installation.
 
 (We do not mandate asdf, you can use other tools if you prefer.)
+
+### Bundler
+
+This project uses Bundler 4. The required version is pinned in `Gemfile.lock` (`BUNDLED WITH`)
+
+Run `bundle install` from the project root (or `./bin/setup`). If your local bundler doesn't match the lockfile, it will install the correct version automatically.

@@ -28,7 +28,6 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
     bundle config build.charlock_holmes --with-cxxflags="-std=c++17" && \
     bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
-    gem install bundler -v 4.0.12 && \
     bundle install --jobs=4 && \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependencies
@@ -72,7 +71,7 @@ WORKDIR $DOCS_HOME
 
 COPY tech_docs/Gemfile tech_docs/Gemfile.lock $DOCS_HOME
 
-RUN gem install bundler -v 4.0.12 && bundle install --jobs=4
+RUN bundle install --jobs=4
 
 WORKDIR $APP_HOME
 

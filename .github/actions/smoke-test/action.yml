@@ -29,7 +29,6 @@ runs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.4.9
-        bundler: 4.0.12
 
     # base_url is set in config_settings for non-review apps and will need to be overridden for aks non-review
     - name: Set Environment variables
