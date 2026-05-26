@@ -9,7 +9,7 @@ module BulkUpdate
       VALID_URN = /^\d{6}$/ # 123456
 
       # constants
-      DEFAULT_NUM_PLACEMENTS = 1 # number of mandatory "Placement <n> URN" columns in the CSV
+      DEFAULT_NUM_PLACEMENTS = 2 # number of mandatory "Placement <n> URN" columns in the CSV
       MAX_PLACEMENTS = 5 # number of "Placement <n> URN" columns we allow in the CSV
       ENCODING = "UTF-8"
       FIRST_CSV_ROW_NUMBER = 2

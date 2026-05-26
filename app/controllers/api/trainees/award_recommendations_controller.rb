@@ -18,7 +18,7 @@ module Api
     private
 
       def trainee
-        @trainee ||= current_provider&.trainees&.find_by!(slug: params[:trainee_slug])
+        @trainee ||= current_provider&.trainees&.includes(placements: :school)&.find_by!(slug: params[:trainee_slug])
       end
 
       def award_recommendation_params
