@@ -30,6 +30,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
       zlib-dev=1.3.2-r0 \
       libxml2-dev \
       libxslt-dev \
+  && gem install bundler -v 4.0.12 \
   && bundle install --jobs=4 \
   && rm -rf /usr/local/bundle/cache \
   && apk del build-dependencies
