@@ -27,6 +27,8 @@
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
+#  fk_rails_...  (provider_id => providers.id)
+#  fk_rails_...  (school_id => schools.id)
 #  fk_rails_...  (school_id => schools.id)
 #
 class TrainingPartner < ApplicationRecord
