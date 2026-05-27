@@ -9,26 +9,26 @@ weight: 2
 
 ### Changes
 
-* Renamed `POST /trainees/{trainee_id}/recommend-for-qts` to `POST /trainees/{trainee_id}/update-qts-or-eyts-status`. The old URL is still supported but deprecated.
-* Added support for the iQTS training route (HESA code `15`)
+* Renamed `POST /trainees/{trainee_id}/recommend-for-qts` to `POST /trainees/{trainee_id}/update-qts-or-eyts-status`. [The old URL](/api-docs/v2026.1/endpoints/post-trainees-trainee-id-recommend-for-qts.html) is still supported but deprecated. Move to [the new URL](/api-docs/v2026.1/endpoints/post-trainees-trainee-id-update-qts-or-eyts-status.html) before the 2027 academic year.
+* Added support for the iQTS training route ([HESA code `15`](/reference-data/v2026.1/training-route.html))
 * New `iqts_country` field. Mandatory when the training route is iQTS. Accepts a valid HESA country code.
-* Added support for the Assessment only training route (HESA code `16`)
-* Added support for the Early years assessment only training route (HESA code `17`)
-* Added support for the Early years undergrad training route (HESA code `18`)
-* Added support for the Early years postgrad training route (HESA code `19`)
-* Added support for the Early years salaried training route (HESA code `20`)
-* Added support for the HPITT postgrad training route (HESA code `21`)
-* `study_mode` is no longer required for Assessment only (HESA code `16`) and Early years assessment only (HESA code `17`) training routes
-* `course_subject_1` must be `100510` (Early Years Teaching) for early years training routes
+* Added support for the Assessment only training route ([HESA code `16`](/reference-data/v2026.1/training-route.html))
+* Added support for the Early years assessment only training route ([HESA code `17`](/reference-data/v2026.1/training-route.html))
+* Added support for the Early years undergrad training route ([HESA code `18`](/reference-data/v2026.1/training-route.html))
+* Added support for the Early years postgrad training route ([HESA code `19`](/reference-data/v2026.1/training-route.html))
+* Added support for the Early years salaried training route ([HESA code `20`](/reference-data/v2026.1/training-route.html))
+* Added support for the HPITT postgrad training route ([HESA code `21`](/reference-data/v2026.1/training-route.html))
+* `study_mode` is no longer required for Assessment only ([HESA code `16`](/reference-data/v2026.1/training-route.html)) and Early years assessment only ([HESA code `17`](/reference-data/v2026.1/training-route.html)) training routes
+* `course_subject_1` must be [`100510` (Early Years Teaching)](/reference-data/v2026.1/course-subject.html#reference-data:~:text=100510) for early years training routes
 * Trainees with a state of `recommended_for_award`, `withdrawn` or `awarded` can no longer be modified via the API, to be more in line with the Register UI. The following endpoints will return a `422` error with a `StateTransitionError`:
 
-    * POST `/trainees/{trainee_id}/placements`
-    * POST `/trainees/{trainee_id}/degrees`
-    * PUT\|PATCH `/trainees/{trainee_id}`
-    * PUT\|PATCH `/trainees/{trainee_id}/placements/{placement_id}`
-    * PUT\|PATCH `/trainees/{trainee_id}/degrees/{degree_id}`
-    * DELETE `/trainees/{trainee_id}/placements/{placement_id}`
-    * DELETE `/trainees/{trainee_id}/degrees/{degree_id}`
+    * [POST `/trainees/{trainee_id}/placements`](/api-docs/v2026.1/endpoints/post-trainees-trainee-id-placements.html)
+    * [POST `/trainees/{trainee_id}/degrees`](/api-docs/v2026.1/endpoints/post-trainees-trainee-id-degrees.html)
+    * [PUT\|PATCH `/trainees/{trainee_id}`](/api-docs/v2026.1/endpoints/put-patch-trainees-trainee-id.html)
+    * [PUT\|PATCH `/trainees/{trainee_id}/placements/{placement_id}`](/api-docs/v2026.1/endpoints/put-patch-trainees-trainee-id-placements-placement-id.html)
+    * [PUT\|PATCH `/trainees/{trainee_id}/degrees/{degree_id}`](/api-docs/v2026.1/endpoints/put-patch-trainees-trainee-id-degrees-degree-id.html)
+    * [DELETE `/trainees/{trainee_id}/placements/{placement_id}`](/api-docs/v2026.1/endpoints/delete-trainees-trainee-id-placements-placement-id.html)
+    * [DELETE `/trainees/{trainee_id}/degrees/{degree_id}`](/api-docs/v2026.1/endpoints/delete-trainees-trainee-id-degrees-degree-id.html)
 
 ## v2026.0 — 30 January 2026
 
@@ -52,7 +52,7 @@ This is available for testing in the [sandbox environment](https://sandbox.regis
   | `withdraw_reasons` | `withdrawal_reasons` |
 
 * Handling of course subject for primary courses:
-  * An error will be returned if the age range is primary (max age 11 or less) but the `course_subject_1` is not `100511` (Primary Teaching)
+  * An error will be returned if the age range is primary (max age 11 or less) but the `course_subject_1` is not [`100511` (Primary Teaching)](/reference-data/v2026.0/course-subject.html#reference-data:~:text=100511).
 * Funding rules have been updated to include the 2026 to 2027 academic year funding.
 
 ## v2025.0 — 1 September 2025

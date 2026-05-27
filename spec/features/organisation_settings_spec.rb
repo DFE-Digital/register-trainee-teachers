@@ -129,137 +129,137 @@ private
   end
 
   def and_i_see_api_tokens_details
-    expect(organisation_settings_page).to have_content("Register API Tokens")
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text("Register API Tokens")
+    expect(organisation_settings_page).to have_text(
       "You need an application programming interface (API) token if you want to use the Register API to send your trainee data from your students record system directly to the Register service",
     )
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "The API token is unique to your organisation.",
     )
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "Your token will need to be copied and added to the student record system which is connecting to the Register API. Contact your student record system provider about this.",
     )
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "You can view and use the Register API technical documentation (opens in new tab).",
     )
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "How to manage your API token",
     )
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "The Register API is used to make trainee data transfer quicker, easier and more secure.",
     )
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "Your token will need to be copied and added to the student record system which is connecting to the Register API. Contact your student record system provider about this.",
     )
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "You must make sure the token is securely sent to those responsible for managing your Register API integration.",
     )
   end
 
   def and_i_dont_see_api_tokens_details
-    expect(organisation_settings_page).not_to have_content("Register API Tokens")
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text("Register API Tokens")
+    expect(organisation_settings_page).not_to have_text(
       "You need an API token if you want to use the Register API to send your trainee data from your students record system directly to the Register service.",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your student record system directly into the Register service.",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "Your token is needed by the developers who are managing your Register API integration.",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "You can view and use the Register API technical documentation (opens in new tab).",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "How to manage your API token",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "The Register API is used to make trainee data transfer quicker and easier.",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "You must make sure the token is securely sent to the developers managing your Register API integration.",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "In the 'Manage your API token' screen, you can:",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "view a list of tokens, their description, expiry date, date last used",
     )
-    expect(organisation_settings_page).not_to have_content(
+    expect(organisation_settings_page).not_to have_text(
       "generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token",
     )
   end
 
   def then_i_see_the_token_management_page
-    expect(token_management_page).to have_content("Manage your API tokens")
+    expect(token_management_page).to have_text("Manage your API tokens")
 
-    expect(token_management_page).to have_content("You can:")
+    expect(token_management_page).to have_text("You can:")
 
-    expect(token_management_page).to have_content(
+    expect(token_management_page).to have_text(
       "view a list of tokens, their name, expiry date and date last used",
     )
 
-    expect(token_management_page).to have_content(
+    expect(token_management_page).to have_text(
       "generate a new token, give it a name, set an expiry date (optional) and revoke a token",
     )
 
-    expect(token_management_page).to have_content(
+    expect(token_management_page).to have_text(
       "These API tokens are unique to your organisation.",
     )
 
-    expect(token_management_page).to have_content(
+    expect(token_management_page).to have_text(
       "Your token will need to be set up in the student record system which is connecting to the Register API. Contact your student record system provider about this.",
     )
 
-    expect(token_management_page).to have_content(
+    expect(token_management_page).to have_text(
       "You must make sure the token is securely sent to those responsible for managing your Register API integration.",
     )
 
-    expect(token_management_page).to have_content("Previously created tokens")
+    expect(token_management_page).to have_text("Previously created tokens")
 
     token_names = all(".govuk-summary-card__title").map(&:text)
 
     expect(token_names).to eq(["Token 1", "Token 2", "Token 3", "Token 4"])
 
     within("#token-#{token_one.id}") do
-      expect(token_management_page).to have_content("Token 1")
-      expect(token_management_page).to have_content("Status\tActive")
-      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).not_to have_content("Revoked by")
-      expect(token_management_page).to have_content("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
-      expect(token_management_page).not_to have_content("Expired")
+      expect(token_management_page).to have_text("Token 1")
+      expect(token_management_page).to have_text("Status\tActive")
+      expect(token_management_page).to have_text("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Last used\t#{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_text("Revoked by")
+      expect(token_management_page).to have_text("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_text("Expired")
       expect(token_management_page).to have_link("Revoke")
     end
 
     within("#token-#{token_two.id}") do
-      expect(token_management_page).to have_content("Token 2")
-      expect(token_management_page).to have_content("Status\tActive")
-      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Last used\t#{1.day.ago.to_fs(:govuk)}")
-      expect(token_management_page).not_to have_content("Revoked by")
-      expect(token_management_page).to have_content("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Token 2")
+      expect(token_management_page).to have_text("Status\tActive")
+      expect(token_management_page).to have_text("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Last used\t#{1.day.ago.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_text("Revoked by")
+      expect(token_management_page).to have_text("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
       expect(token_management_page).to have_link("Revoke")
     end
 
     within("#token-#{token_three.id}") do
-      expect(token_management_page).to have_content("Token 3")
-      expect(token_management_page).to have_content("Status\tExpired")
-      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).not_to have_content("Revoked by")
-      expect(token_management_page).to have_content("Expired\t#{1.day.ago.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Token 3")
+      expect(token_management_page).to have_text("Status\tExpired")
+      expect(token_management_page).to have_text("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Last used\t#{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_text("Revoked by")
+      expect(token_management_page).to have_text("Expired\t#{1.day.ago.to_fs(:govuk)}")
       expect(token_management_page).not_to have_link("Revoke")
     end
 
     within("#token-#{token_four.id}") do
-      expect(token_management_page).to have_content("Token 4")
-      expect(token_management_page).to have_content("Status\tRevoked")
-      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Revoked by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
-      expect(token_management_page).not_to have_content("Expired")
+      expect(token_management_page).to have_text("Token 4")
+      expect(token_management_page).to have_text("Status\tRevoked")
+      expect(token_management_page).to have_text("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Last used\t#{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Revoked by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_text("Expires on\t#{1.month.from_now.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_text("Expired")
       expect(token_management_page).not_to have_link("Revoke")
     end
 
@@ -281,7 +281,7 @@ private
 
   def then_i_see_the_documentation(window)
     within_window(window) do
-      expect(page).to have_content("Register API documentation")
+      expect(page).to have_text("Register API documentation")
     end
   end
 
@@ -290,25 +290,25 @@ private
   end
 
   def then_i_see_the_organisation_details
-    expect(organisation_settings_page).to have_content(organisation.name)
-    expect(organisation_settings_page).to have_content("About your organisation")
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(organisation.name)
+    expect(organisation_settings_page).to have_text("About your organisation")
+    expect(organisation_settings_page).to have_text(
       "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Training partner'}",
     )
-    expect(organisation_settings_page).to have_content("Accreditation ID#{accreditation_id}")
+    expect(organisation_settings_page).to have_text("Accreditation ID#{accreditation_id}")
   end
 
   def and_i_see_the_organisation_team_members
-    expect(organisation_settings_page).to have_content("Team members")
-    expect(organisation_settings_page).to have_content("#{current_user.name} (you) – #{current_user.email}")
-    expect(organisation_settings_page).to have_content("#{user_one.name} – #{user_one.email}")
-    expect(organisation_settings_page).to have_content("#{user_two.name} – #{user_two.email}")
-    expect(organisation_settings_page).not_to have_content("#{user_three.name} – #{user_three.email}")
-    expect(organisation_settings_page).not_to have_content("#{discarded_user.name} – #{discarded_user.email}")
+    expect(organisation_settings_page).to have_text("Team members")
+    expect(organisation_settings_page).to have_text("#{current_user.name} (you) – #{current_user.email}")
+    expect(organisation_settings_page).to have_text("#{user_one.name} – #{user_one.email}")
+    expect(organisation_settings_page).to have_text("#{user_two.name} – #{user_two.email}")
+    expect(organisation_settings_page).not_to have_text("#{user_three.name} – #{user_three.email}")
+    expect(organisation_settings_page).not_to have_text("#{discarded_user.name} – #{discarded_user.email}")
   end
 
   def and_i_see_the_contact_support_email
-    expect(organisation_settings_page).to have_content(
+    expect(organisation_settings_page).to have_text(
       "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk.",
     )
   end
@@ -318,11 +318,11 @@ private
   end
 
   def then_i_see_the_root_page
-    expect(page).to have_content("Your trainee teachers")
+    expect(page).to have_text("Your trainee teachers")
   end
 
   def then_i_see_the_unauthorized_message
-    expect(page).to have_content("You do not have permission to perform this action")
+    expect(page).to have_text("You do not have permission to perform this action")
   end
 
   def when_i_attempt_to_visit_the_token_management_page

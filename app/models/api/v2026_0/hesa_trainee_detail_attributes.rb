@@ -48,23 +48,23 @@ module Api
       validates(:itt_qualification_aim, presence: true, if: -> { itt_aim == ITT_AIM_REQUIRED_CODE || itt_aim.blank? })
 
       validates :itt_aim, api_inclusion: {
-        in: Hesa::CodeSets::IttAims::MAPPING.keys,
+        in: ::ReferenceData::ITT_AIMS.hesa_codes,
       }, allow_blank: true
 
       validates :itt_qualification_aim, api_inclusion: {
-        in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys,
+        in: ::ReferenceData::ITT_QUALIFICATION_AIMS.hesa_codes,
       }, allow_blank: true
 
       validates :course_age_range, api_inclusion: {
-        in: Hesa::CodeSets::AgeRanges::MAPPING.keys,
+        in: ::ReferenceData::COURSE_AGE_RANGES.hesa_codes,
       }, allow_blank: true
 
       validates :funding_method, api_inclusion: {
-        in: Hesa::CodeSets::BursaryLevels::MAPPING.keys,
+        in: ::ReferenceData::FUNDING_METHODS.hesa_codes,
       }, allow_blank: true
 
       validates :fund_code, api_inclusion: {
-        in: Hesa::CodeSets::FundCodes::MAPPING.keys,
+        in: ::ReferenceData::FUND_CODES.hesa_codes,
       }, allow_blank: true
 
       validates :course_year,
@@ -72,7 +72,7 @@ module Api
                 allow_blank: true
 
       validates :additional_training_initiative, api_inclusion: {
-        in: Hesa::CodeSets::TrainingInitiatives::MAPPING.keys,
+        in: ::ReferenceData::TRAINING_INITIATIVES.hesa_codes,
       }, allow_blank: true
 
       def initialize(attributes = {}, record_source: nil, **kwargs)

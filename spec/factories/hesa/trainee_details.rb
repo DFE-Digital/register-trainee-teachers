@@ -14,6 +14,6 @@ FactoryBot.define do
     ni_number { "QQ 12 34 56 C" }
 
     additional_training_initiative { "026" }
-    itt_qualification_aim { Hesa::CodeSets::IttQualificationAims::MAPPING.keys.sample }
+    itt_qualification_aim { Hesa::CodeSets::IttQualificationAims::MAPPING.except("008").keys.sample }
   end
 end

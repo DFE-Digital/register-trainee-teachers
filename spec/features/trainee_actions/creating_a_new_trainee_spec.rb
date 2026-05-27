@@ -85,7 +85,7 @@ private
   end
 
   def then_i_should_see_a_validation_error
-    expect(new_trainee_page).to have_content(I18n.t("activerecord.errors.models.trainee.attributes.training_route"))
+    expect(new_trainee_page).to have_text(I18n.t("activerecord.errors.models.trainee.attributes.training_route"))
   end
 
   def and_trainee_course_subject_one_set_to_early_years_teaching

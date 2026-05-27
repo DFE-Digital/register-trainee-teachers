@@ -32,11 +32,11 @@ private
   end
 
   def and_the_provider_access_table_is_shown
-    expect(admin_user_show_page).to have_content(user.providers.first.name)
+    expect(admin_user_show_page).to have_text(user.providers.first.name)
   end
 
   def and_the_training_partner_access_table_is_shown
-    expect(admin_user_show_page).to have_content(user.training_partners.first.name)
+    expect(admin_user_show_page).to have_text(user.training_partners.first.name)
   end
 
   def and_i_choose_a_user_to_remove_access_under_providers
@@ -56,12 +56,12 @@ private
   end
 
   def then_the_provider_is_no_longer_listed_on_the_user_page
-    expect(admin_user_show_page).not_to have_content(user.providers.first.name)
+    expect(admin_user_show_page).not_to have_text(user.providers.first.name)
     expect(admin_user_show_page.flash_message).to be_visible
   end
 
   def then_the_training_partner_is_no_longer_listed_on_the_user_page
-    expect(admin_user_show_page).not_to have_content(user.training_partners.first.name)
+    expect(admin_user_show_page).not_to have_text(user.training_partners.first.name)
     expect(admin_user_show_page.flash_message).to be_visible
   end
 end

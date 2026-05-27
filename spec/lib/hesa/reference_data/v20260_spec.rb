@@ -5,6 +5,66 @@ require "rails_helper"
 RSpec.describe Hesa::ReferenceData::V20260 do
   include FileHelper
 
+  describe "::entries_for" do
+    let(:entries) do
+      described_class.entries_for(:training_initiative, ReferenceData::TRAINING_INITIATIVES)
+    end
+
+    it "returns rich entries with hesa_code, display_name, start_year, end_year" do
+      expect(entries.first.keys).to contain_exactly(:hesa_code, :display_name, :start_year, :end_year)
+    end
+
+    it "is sorted by hesa_code" do
+      codes = entries.map { |e| e[:hesa_code] }
+      expect(codes).to eq(codes.sort)
+    end
+  end
+
+  describe "TYPES" do
+    it "maps every reference data type to its registry" do
+      expect(described_class::TYPES).to eq(
+        country: ReferenceData::COUNTRIES,
+        course_age_range: ReferenceData::COURSE_AGE_RANGES,
+        course_subject: ReferenceData::COURSE_SUBJECTS,
+        degree_subject: ReferenceData::DEGREE_SUBJECTS,
+        degree_grade: ReferenceData::DEGREE_GRADES,
+        degree_type: ReferenceData::DEGREE_TYPES,
+        disability: ReferenceData::DISABILITIES,
+        ethnicity: ReferenceData::ETHNICITIES,
+        fund_code: ReferenceData::FUND_CODES,
+        funding_method: ReferenceData::FUNDING_METHODS,
+        institution: ReferenceData::INSTITUTIONS,
+        itt_aim: ReferenceData::ITT_AIMS,
+        nationality: ReferenceData::NATIONALITIES,
+        itt_qualification_aim: ReferenceData::ITT_QUALIFICATION_AIMS,
+        sex: ReferenceData::SEXES,
+        study_mode: ReferenceData::STUDY_MODES,
+        training_route: ReferenceData::TRAINING_ROUTES,
+        training_initiative: ReferenceData::TRAINING_INITIATIVES,
+      )
+    end
+  end
+
+  describe "::docs_payload" do
+    let(:payload) { described_class.docs_payload }
+
+    it "returns one entry per type in TYPES" do
+      expect(payload.keys).to match_array(described_class::TYPES.keys)
+    end
+
+    it "exposes type metadata under :metadata" do
+      expect(payload[:disability][:metadata]).to include(
+        "name" => "disability",
+        "display_name" => "Disability",
+      )
+    end
+
+    it "exposes rich entries under :entries" do
+      first_entry = payload[:disability][:entries].first
+      expect(first_entry.keys).to contain_exactly(:hesa_code, :display_name, :start_year, :end_year)
+    end
+  end
+
   describe "as_csv" do
     it "converts data to csv" do
       expect(

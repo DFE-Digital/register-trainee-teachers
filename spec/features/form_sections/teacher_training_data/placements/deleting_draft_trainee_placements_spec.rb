@@ -50,7 +50,7 @@ private
   end
 
   def then_i_see_the_delete_placement_form
-    expect(page).to have_content("Are you sure you want to remove this placement?")
+    expect(page).to have_text("Are you sure you want to remove this placement?")
   end
 
   def when_i_click_cancel
@@ -75,14 +75,14 @@ private
 
   def then_i_see_the_confirmation_page
     expect(page).to have_current_path(trainee_placements_confirm_path(trainee_id: @trainee.slug))
-    expect(page).to have_content("Confirm placement details")
+    expect(page).to have_text("Confirm placement details")
   end
 
   def and_the_deleted_placement_is_no_longer_visible
-    expect(page).not_to have_content(@placement.name)
+    expect(page).not_to have_text(@placement.name)
   end
 
   def and_i_see_a_flash_message
-    expect(page).to have_content("Placement removed")
+    expect(page).to have_text("Placement removed")
   end
 end

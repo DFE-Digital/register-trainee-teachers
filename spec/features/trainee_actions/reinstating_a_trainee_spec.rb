@@ -121,19 +121,19 @@ feature "Reinstating a trainee" do
   end
 
   def then_i_see_the_error_message_for_invalid_date
-    expect(record_page).to have_content(
+    expect(record_page).to have_text(
       I18n.t("activemodel.errors.models.reinstatement_form.attributes.date.invalid"),
     )
   end
 
   def then_i_see_the_error_message_for_blank_date
-    expect(record_page).to have_content(
+    expect(record_page).to have_text(
       I18n.t("activemodel.errors.models.reinstatement_form.attributes.date.blank"),
     )
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(record_page).to have_content(
+    expect(record_page).to have_text(
       I18n.t("activemodel.errors.models.reinstatement_form.attributes.date_string.blank"),
     )
   end

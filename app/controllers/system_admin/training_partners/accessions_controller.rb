@@ -15,8 +15,8 @@ module SystemAdmin
     private
 
       def load_models
-        @user = authorize(User.find(params[:user_id]))
-        @training_partner = policy_scope(TrainingPartner, policy_scope_class: TrainingPartnerPolicy::Scope).find(params[:training_partner_id])
+        @user = authorize(User.find(params.expect(:user_id)))
+        @training_partner = policy_scope(TrainingPartner, policy_scope_class: TrainingPartnerPolicy::Scope).find(params.expect(:training_partner_id))
       end
     end
   end

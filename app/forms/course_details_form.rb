@@ -137,10 +137,7 @@ class CourseDetailsForm < TraineeForm
   end
 
   def nullify_and_stash!
-    opts = FIELDS.inject({}) { |sum, f|
-      sum[f] = nil
-      sum
-    }
+    opts = FIELDS.index_with { nil }
     assign_attributes_and_stash(opts)
   end
 

@@ -28,8 +28,8 @@ private
     years = organisation&.funding_payment_schedules&.joins(rows: :amounts)&.pluck(Arel.sql("DISTINCT funding_payment_schedule_row_amounts.year"))
     return {} if years.blank?
 
-    years.each_with_object({}) do |year, hash|
-      hash["#{year} to #{year + 1}"] = funding_payment_schedule_path(year)
+    years.to_h do |year|
+      ["#{year} to #{year + 1}", funding_payment_schedule_path(year)]
     end
   end
 

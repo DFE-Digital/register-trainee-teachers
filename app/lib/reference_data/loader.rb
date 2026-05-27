@@ -19,8 +19,8 @@ module ReferenceData
       type = find(type_name)
       raise(UnknownReferenceDataTypeError) unless type
 
-      type.values.each_with_object({}) do |value, enum_hash|
-        enum_hash[value.name] = value.id
+      type.values.to_h do |value|
+        [value.name, value.id]
       end
     end
 

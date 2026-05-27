@@ -27,7 +27,7 @@ module SystemAdmin
     private
 
       def trainee
-        @trainee ||= Trainee.find(params[:trainee_id])
+        @trainee ||= Trainee.find(params.expect(:trainee_id))
       end
 
       def update_params

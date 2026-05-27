@@ -36,8 +36,8 @@ feature "bulk update page" do
       and_i_visit_the_bulk_update_page
     end
 
-    scenario "the bulk placement section is not visible" do
-      then_i_do_not_see_the_bulk_placement_section
+    scenario "the bulk placement section is visible" do
+      then_i_see_how_many_trainees_i_can_bulk_update
     end
   end
 
@@ -70,11 +70,11 @@ private
   end
 
   def then_i_see_how_many_trainees_i_can_bulk_update
-    expect(page).to have_content("You have 1 trainee record who do not have the required number of placements.")
+    expect(page).to have_text("You have 1 trainee record who do not have the required number of placements.")
   end
 
   def then_i_see_how_many_trainees_i_can_bulk_recommend
-    expect(page).to have_content("You can update the status of 2 trainees")
+    expect(page).to have_text("You can update the status of 2 trainees")
   end
 
   def and_i_see_the_placement_data_link
@@ -86,11 +86,11 @@ private
   end
 
   def then_i_do_not_see_the_bulk_placement_section
-    expect(page).not_to have_content("Add missing placement data")
+    expect(page).not_to have_text("Add missing placement data")
   end
 
   def then_i_do_not_see_the_bulk_recommend_link
-    expect(page).to have_content("You do not have any trainees eligible for a QTS or EYTS status change at the moment")
+    expect(page).to have_text("You do not have any trainees eligible for a QTS or EYTS status change at the moment")
   end
 
   def given_a_salaried_trainee_with_one_placement

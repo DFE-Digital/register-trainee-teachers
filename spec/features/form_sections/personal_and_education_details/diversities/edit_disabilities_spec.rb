@@ -54,7 +54,7 @@ feature "edit disability details" do
   end
 
   def then_i_see_error_messages
-    expect(diversities_confirm_page).to have_content(
+    expect(diversities_confirm_page).to have_text(
       I18n.t(
         "activemodel.errors.models.diversities/disability_detail_form.attributes.disability_ids.empty_disabilities",
       ),

@@ -17,16 +17,16 @@ module ReferenceData
 
     def data
       @data ||= data_klass.find(
-        params[:reference_datum_attribute],
+        params.expect(:reference_datum_attribute),
       )
     end
 
     def filename
-      "#{params[:reference_datum_attribute].gsub('_', '-')}-#{params[:reference_data_version]}.csv"
+      "#{params.expect(:reference_datum_attribute).gsub('_', '-')}-#{params[:reference_data_version]}.csv"
     end
 
     def version
-      params[:reference_data_version].titleize.gsub(/\.|\s/, "")
+      params.expect(:reference_data_version).titleize.gsub(/\.|\s/, "")
     end
 
     def data_klass

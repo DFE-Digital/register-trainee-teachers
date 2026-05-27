@@ -54,7 +54,7 @@ private
 
   def then_i_see_the_confirmation_page
     expect(page).to have_current_path(trainee_placements_confirm_path(trainee_id: @trainee.slug))
-    expect(page).to have_content("Confirm placement details")
+    expect(page).to have_text("Confirm placement details")
   end
 
   def when_i_visit_the_placement_details_page

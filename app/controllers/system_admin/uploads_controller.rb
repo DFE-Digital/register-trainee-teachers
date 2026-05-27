@@ -42,7 +42,7 @@ module SystemAdmin
   private
 
     def set_upload
-      @upload = Upload.find(params[:id])
+      @upload = Upload.find(params.expect(:id))
       @upload_view = UploadView.new(@upload)
     end
 

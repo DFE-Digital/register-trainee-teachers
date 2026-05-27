@@ -105,18 +105,18 @@ private
   end
 
   def and_i_see_the_feedback_form
-    expect(page).to have_content("Give feedback on Register trainee teachers")
+    expect(page).to have_text("Give feedback on Register trainee teachers")
   end
 
   def and_i_see_the_questions
-    expect(page).to have_content("Overall, how do you feel about this service?")
-    expect(page).to have_content("How could we improve this service?")
-    expect(page).to have_content("Do not include any personal or sensitive information")
-    expect(page).to have_content("You can enter up to 200 words")
-    expect(page).to have_content("If you want a reply (optional)")
-    expect(page).to have_content("If you would like us to contact you, please leave your details below.")
-    expect(page).to have_content("Your name")
-    expect(page).to have_content("Your email address")
+    expect(page).to have_text("Overall, how do you feel about this service?")
+    expect(page).to have_text("How could we improve this service?")
+    expect(page).to have_text("Do not include any personal or sensitive information")
+    expect(page).to have_text("You can enter up to 200 words")
+    expect(page).to have_text("If you want a reply (optional)")
+    expect(page).to have_text("If you would like us to contact you, please leave your details below.")
+    expect(page).to have_text("Your name")
+    expect(page).to have_text("Your email address")
   end
 
   def and_i_click_continue
@@ -140,7 +140,7 @@ private
   end
 
   def then_i_see_the_check_your_answers_page
-    expect(page).to have_content("Check your answers before sending your feedback")
+    expect(page).to have_text("Check your answers before sending your feedback")
   end
 
   alias_method :and_i_see_the_check_your_answers_page, :then_i_see_the_check_your_answers_page
@@ -158,11 +158,11 @@ private
   end
 
   def and_i_see_the_updated_satisfaction_level
-    expect(page).to have_content("Very dissatisfied")
+    expect(page).to have_text("Very dissatisfied")
   end
 
   def and_i_see_the_updated_improvement_suggestion
-    expect(page).to have_content("Better error messages please")
+    expect(page).to have_text("Better error messages please")
   end
 
   def and_i_click_on_send_feedback
@@ -170,7 +170,7 @@ private
   end
 
   def then_i_the_thank_you_page
-    expect(page).to have_content("Thank you for submitting feedback")
-    expect(page).to have_content("If you gave us your name and email, we will respond within 5 working days.")
+    expect(page).to have_text("Thank you for submitting feedback")
+    expect(page).to have_text("If you gave us your name and email, we will respond within 5 working days.")
   end
 end

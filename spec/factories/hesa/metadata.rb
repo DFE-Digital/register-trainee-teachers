@@ -11,7 +11,7 @@ FactoryBot.define do
     end
     study_length_unit { %i[weeks months years].sample }
     itt_aim { Hesa::CodeSets::IttAims::MAPPING.values.sample }
-    itt_qualification_aim { Hesa::CodeSets::IttQualificationAims::MAPPING.values.sample }
+    itt_qualification_aim { Hesa::CodeSets::IttQualificationAims::MAPPING.except("008").values.sample }
     fundability { Hesa::CodeSets::FundCodes::MAPPING.values.sample }
     year_of_course { (0..5).to_a.sample }
   end
