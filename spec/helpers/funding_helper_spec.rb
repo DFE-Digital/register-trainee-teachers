@@ -67,6 +67,19 @@ describe FundingHelper do
       end
     end
 
+    context "when looking for 2026 initiatives" do
+      let(:year) { 2026 }
+
+      it "returns 2026-2027 initiatives" do
+        expected_initiatives = %w[
+          now_teach
+          veterans_teaching_undergraduate_bursary
+          primary_mathematics_specialist
+        ]
+        expect(training_initiative_options(trainee)).to match_array(expected_initiatives)
+      end
+    end
+
     context "when constant doesn't exist for the year" do
       let(:year) { 1999 }
 

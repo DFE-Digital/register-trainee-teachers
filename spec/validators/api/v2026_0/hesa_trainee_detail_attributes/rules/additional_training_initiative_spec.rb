@@ -44,7 +44,7 @@ RSpec.describe Api::V20260::HesaTraineeDetailAttributes::Rules::AdditionalTraini
     end
 
     context "when `additional_training_initiative` is a valid HESA code and available in the given year" do
-      let(:additional_training_initiative) { "036" }
+      let(:additional_training_initiative) { "026" }
 
       it "returns true" do
         expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
