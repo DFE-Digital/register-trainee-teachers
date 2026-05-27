@@ -24,7 +24,7 @@ module BulkUpdate
 
       def bulk_update_trainee_upload
         @bulk_update_trainee_upload ||= policy_scope(BulkUpdate::TraineeUpload)
-          .find(params[:id])
+          .find(params.expect(:id))
       end
     end
   end

@@ -10,7 +10,7 @@ module SystemAdmin
     end
 
     def show
-      @training_partner = authorize(TrainingPartner.find(params[:id]))
+      @training_partner = authorize(TrainingPartner.find(params.expect(:id)))
     end
   end
 end

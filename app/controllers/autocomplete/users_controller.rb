@@ -24,7 +24,7 @@ module Autocomplete
     end
 
     def invalid_query?
-      params[:query].present? && params[:query].length < UserSearch::MIN_QUERY_LENGTH
+      params[:query].present? && params.expect(:query).length < UserSearch::MIN_QUERY_LENGTH
     end
 
     def error_response

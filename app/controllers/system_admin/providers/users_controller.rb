@@ -27,11 +27,11 @@ module SystemAdmin
     private
 
       def provider
-        @provider ||= Provider.find(params[:provider_id])
+        @provider ||= Provider.find(params.expect(:provider_id))
       end
 
       def user
-        @user ||= authorize(User.find(params[:id]))
+        @user ||= authorize(User.find(params.expect(:id)))
       end
     end
   end

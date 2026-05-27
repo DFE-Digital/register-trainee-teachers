@@ -14,7 +14,7 @@ class AuthenticationTokensController < ApplicationController
   end
 
   def show
-    authorize(AuthenticationToken.find(params[:id]))
+    authorize(AuthenticationToken.find(params.expect(:id)))
   end
 
   def new

@@ -35,7 +35,7 @@ class GuidanceController < ApplicationController
   end
 
   def hesa_register_data_mapping
-    tab_param = params[:tab].underscore
+    tab_param = params.expect(:tab).underscore
     @tab = valid_tabs.include?(tab_param) ? tab_param : "trainee_progress"
     render(layout: "application")
   end

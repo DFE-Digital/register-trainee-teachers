@@ -57,7 +57,7 @@ module SystemAdmin
     end
 
     def set_provider
-      @provider = authorize(Provider.find(params[:id]))
+      @provider = authorize(Provider.find(params.expect(:id)))
     end
   end
 end
