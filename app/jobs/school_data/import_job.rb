@@ -22,7 +22,7 @@ module SchoolData
       download_record
     rescue StandardError
       download_record&.update(status: :failed, completed_at: Time.current)
-      raise
+      raise if executions > 14 # Raise if the job is still failing on the next day
     end
   end
 end
