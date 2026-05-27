@@ -48,4 +48,9 @@ rm -f "$PUBLISH_BODY_FILE"
 echo "fauapi publish response (HTTP $PUBLISH_HTTP_CODE):"
 echo "$PUBLISH_BODY" | jq . 2>/dev/null || echo "$PUBLISH_BODY"
 
+if [[ "$PUBLISH_HTTP_CODE" != 2* ]]; then
+  echo "FauAPI publish failed with HTTP $PUBLISH_HTTP_CODE"
+  exit 1
+fi
+
 echo "Published API $API_ID to FauAPI catalogue (pre-prod)"
