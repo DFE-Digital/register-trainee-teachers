@@ -9,6 +9,8 @@ module TrainingPartnerHelper
   end
 
   def training_partner_row(not_applicable: false)
+    return unless trainee.requires_training_partner?
+
     mappable_field(
       not_applicable ? t(:not_applicable) : training_partner_detail(training_partner),
       t("components.training_partner_and_employing_school_details.training_partner_key"),
