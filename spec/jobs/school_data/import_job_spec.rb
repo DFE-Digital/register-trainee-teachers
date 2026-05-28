@@ -73,15 +73,38 @@ RSpec.describe SchoolData::ImportJob do
         end
 
         it "updates download record status to failed" do
-          expect { job.perform }.to raise_error(error)
+          begin
+            job.perform
+          rescue StandardError
+            nil
+          end
 
           download_record.reload
           expect(download_record.status).to eq("failed")
           expect(download_record.completed_at).to be_present
         end
 
-        it "re-raises the error" do
+        it "re-raises the error immediately for non-HTTPClientException errors" do
           expect { job.perform }.to raise_error(error)
+        end
+
+        context "when the error is a Net::HTTPClientException" do
+          let(:response) { Net::HTTPBadRequest.new("1.1", 404, "Not Found") }
+          let(:error) { Net::HTTPClientException.new("Not Found", response) }
+
+          it "does not re-raise the error before the retry limit" do
+            expect { job.perform }.not_to raise_error
+          end
+
+          it "re-raises the error once the retry limit is exceeded" do
+            job.executions = 15
+            expect { job.perform }.to raise_error(error)
+          end
+
+          it "does not re-raise the error at exactly the retry limit" do
+            job.executions = 14
+            expect { job.perform }.not_to raise_error
+          end
         end
 
         context "when download record is nil" do
