@@ -42,9 +42,8 @@ runs:
     - name: Bundle smoke test gems
       shell: bash
       run: |
-        gem install bundler
         echo 'gem "rspec"' >> Gemfile
-        bundle
+        bundle install
 
     - name: Smoke Tests ${{ inputs.environment }}
       shell: bash
