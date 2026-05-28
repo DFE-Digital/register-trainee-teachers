@@ -139,6 +139,11 @@ data:
   display_name: British
   hesa_codes:
     - "GB"
+    - "FK"
+    - "GG"
+    - "IM"
+    - "IO"
+    - "JE"
 - id: VG
   name: british virgin islander
   display_name: British virgin islander
