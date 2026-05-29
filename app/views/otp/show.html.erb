@@ -8,16 +8,19 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-
     <div class="govuk-!-margin-bottom-0">
       <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
         <% notification_banner.with_heading(text: 'DfE Sign-in is currently unavailable') %>
       <% end %>
     </div>
+  </div>
+</div>
 
-    <%= register_form_with model: otp_form, url: otp_path do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with model: otp_form, url: otp_path do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <h1 class="govuk-heading-l">
         Sign in
       </h1>
@@ -29,6 +32,6 @@
       <%= f.govuk_text_field :email, type: :email, width: 'two-thirds', label: { text: "Email address", size: "s" } %>
 
       <%= f.govuk_submit "Request code to sign in" %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>

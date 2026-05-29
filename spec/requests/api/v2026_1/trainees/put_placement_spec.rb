@@ -11,6 +11,34 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
     let(:slug) { placement.slug }
     let(:placement_attribute_keys) { Api::V20261::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
+    context "when the trainee is in an awarded state" do
+      let(:trainee) { create(:trainee, :awarded) }
+      let(:placement) { create(:placement, :with_school, trainee:) }
+      let(:new_school) { create(:school) }
+
+      before do
+        put(
+          "/api/v2026.1/trainees/#{trainee_slug}/placements/#{slug}",
+          params: { data: { urn: new_school.urn } }.to_json,
+          headers: { Authorization: token, **json_headers },
+        )
+      end
+
+      it "returns status code 422 with a StateTransitionError" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          {
+            "error" => "StateTransitionError",
+            "message" => "It’s not possible to perform this action while the trainee is in its current state",
+          },
+        )
+      end
+
+      it "does not update the placement" do
+        expect(placement.reload.school).not_to eq(new_school)
+      end
+    end
+
     context "with a valid trainee and placement" do
       describe "update placement with a school" do
         let!(:placement) { create(:placement, :with_school, trainee:, school:) }

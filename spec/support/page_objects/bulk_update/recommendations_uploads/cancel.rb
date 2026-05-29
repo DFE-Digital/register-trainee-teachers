@@ -3,7 +3,7 @@
 module PageObjects
   module RecommendationsUploads
     class Cancel < PageObjects::Base
-      set_url "/bulk-update/recommend/{id}/cancel"
+      set_url "/bulk-update/change-status/{id}/cancel"
 
       element :confirm_button, ".govuk-button", text: "Cancel the bulk status change"
     end

@@ -201,7 +201,7 @@ private
   end
 
   def then_i_see_the_unauthorized_message
-    expect(page).to have_content("You do not have permission to perform this action")
+    expect(page).to have_text("You do not have permission to perform this action")
   end
 
   def then_i_see_the_system_administrator_account_banner

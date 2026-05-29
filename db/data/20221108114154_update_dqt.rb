@@ -40,7 +40,6 @@ private
   end
 
   def trns_to_ignore
-    # rubocop:disable Metrics/CollectionLiteralLength
     @trns_to_ignore ||= [
       4150222,
       4148667,
@@ -500,6 +499,5 @@ private
       1338901,
       1230039,
     ]
-    # rubocop:enable Metrics/CollectionLiteralLength
   end
 end

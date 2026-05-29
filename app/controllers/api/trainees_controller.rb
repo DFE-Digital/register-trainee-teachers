@@ -3,7 +3,9 @@
 module Api
   class TraineesController < Api::BaseController
     include Api::Serializable
+    include Api::TraineeStateRestriction
 
+    before_action :restrict_awarded_trainee_modification!, only: %i[update]
     after_action :enhance_errors, if: -> { request.headers["HTTP_ENHANCED_ERRORS"] == "true" }, only: %i[create update]
 
     def index
@@ -31,7 +33,7 @@ module Api
     end
 
     def show
-      trainee = current_provider.trainees.find_by!(slug: params[:slug])
+      trainee = current_provider.trainees.find_by!(slug: params.expect(:slug))
 
       render(json: serializer_klass.new(trainee).as_hash)
     end
@@ -45,7 +47,6 @@ module Api
     end
 
     def update
-      trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
       if trainee.hesa_trainee_detail.nil?
         create_hesa_trainee_detail_service_class.call(trainee:)
         trainee.reload
@@ -56,6 +57,7 @@ module Api
       succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
 
       if succeeded
+        trainee.reload
         render(json: { data: serializer_klass.new(trainee).as_hash })
       else
         render(
@@ -69,6 +71,10 @@ module Api
     end
 
   private
+
+    def trainee
+      @trainee ||= current_provider&.trainees&.find_by!(slug: params.expect(:slug))
+    end
 
     def hesa_mapped_params
       hesa_mapper_class.call(

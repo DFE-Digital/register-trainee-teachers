@@ -4,11 +4,11 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @iqts_country_form, url: trainee_iqts_country_path(@trainee), method: :put, local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(model: @iqts_country_form, url: trainee_iqts_country_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= render TraineeName::View.new(@trainee) %>
       <%= render FormComponents::CountryAutocomplete::View.new(
         f,
@@ -23,8 +23,8 @@
       ) %>
 
       <%= f.govuk_submit %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <%= render(CancelLink::View.new(@trainee)) %>

@@ -48,15 +48,15 @@ feature "View the timeline", js: true do
 
     expect(timeline_page.tab_title.text).to eq("Timeline")
     within("div.app-timeline") do
-      expect(page).to have_content("Record created")
+      expect(page).to have_text("Record created")
     end
   end
 
   def then_i_should_not_see_the_create_trainee_button
-    expect(trainee_index_page).not_to have_content("Create a trainee record")
+    expect(trainee_index_page).not_to have_text("Create a trainee record")
   end
 
   def then_i_should_see_the_create_trainee_button
-    expect(trainee_index_page).to have_content("Create a trainee record")
+    expect(trainee_index_page).to have_text("Create a trainee record")
   end
 end

@@ -3,6 +3,8 @@
 module Trainees
   module Funding
     class BursariesController < BaseController
+      before_action :funding_method_applicable
+
       def edit
         funding_manager
         @bursary_form = form.new(trainee)
@@ -20,6 +22,16 @@ module Trainees
       end
 
     private
+
+      def funding_method_applicable
+        return if funding_manager.eligible_for_funding?
+
+        redirect_to(trainee_funding_confirm_path(trainee))
+      end
+
+      def eligibility_form
+        @eligibility_form ||= ::Funding::EligibilityForm.new(trainee)
+      end
 
       def form_params
         if params.key?(:funding_grant_and_tiered_bursary_form)
@@ -45,7 +57,7 @@ module Trainees
       end
 
       def funding_manager
-        @funding_manager ||= FundingManager.new(trainee)
+        @funding_manager ||= FundingManager.new(trainee, funding_eligibility: eligibility_form.funding_eligibility)
       end
     end
   end

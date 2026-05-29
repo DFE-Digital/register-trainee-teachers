@@ -20,6 +20,32 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       }
     end
 
+    context "when the trainee is in an awarded state" do
+      let(:trainee) { create(:trainee, :awarded) }
+
+      before do
+        post(
+          "/api/v2026.1/trainees/#{trainee.slug}/degrees",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: degrees_attributes }.to_json,
+        )
+      end
+
+      it "returns status code 422 with a StateTransitionError" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          {
+            "error" => "StateTransitionError",
+            "message" => "It’s not possible to perform this action while the trainee is in its current state",
+          },
+        )
+      end
+
+      it "does not create a degree" do
+        expect(trainee.degrees.count).to eq(1)
+      end
+    end
+
     context "with a valid trainee and uk degree" do
       it "creates a new degree and returns a 201 (created) status" do
         post(

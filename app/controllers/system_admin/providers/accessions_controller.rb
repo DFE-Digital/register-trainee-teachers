@@ -15,8 +15,8 @@ module SystemAdmin
     private
 
       def load_models
-        @user = authorize(User.find(params[:user_id]))
-        @provider = Provider.find(params[:provider_id])
+        @user = authorize(User.find(params.expect(:user_id)))
+        @provider = Provider.find(params.expect(:provider_id))
       end
     end
   end

@@ -5,6 +5,11 @@ module Funding
     include SanitizeHelper
     include FundingHelper
 
+    FUNDING_ELIGIBILITY_LABELS = {
+      "eligible" => "Yes",
+      "not_eligible" => "No",
+    }.freeze
+
     def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
@@ -22,9 +27,9 @@ module Funding
 
     def funding_detail_rows
       [
+        funding_eligibility_row,
         training_initiative_row,
         funding_method_row,
-        fund_code_row,
         applying_for_bursary_row,
         selected_bursary_level_row,
       ].compact
@@ -39,6 +44,14 @@ module Funding
              :can_apply_for_grant?, :grant_amount,
              :can_apply_for_funding_type?,
              to: :funding_manager
+
+    def funding_eligibility_row
+      mappable_field(
+        funding_eligibility,
+        t(".funding_eligibility"),
+        edit_trainee_funding_funding_eligibility_path(trainee),
+      )
+    end
 
     def training_initiative_row
       mappable_field(
@@ -121,19 +134,6 @@ module Funding
       )
     end
 
-    def fund_code_row
-      fund_code_text = Hesa::CodeSets::FundCodes::MAPPING[fund_code_value] ||
-        Hesa::CodeSets::FundCodes::NO_FUND_CODE_PROVIDED
-
-      mappable_field(fund_code_text, t(".fund_code"), nil)
-    end
-
-    def fund_code_value
-      return unless trainee.funding_eligibility
-
-      "Hesa::CodeSets::FundCodes::#{trainee.funding_eligibility.upcase}".constantize
-    end
-
     def applying_for_bursary_row
       return unless trainee.hesa_record?
 
@@ -147,6 +147,10 @@ module Funding
       hesa_bursary_text = "#{hesa_student.bursary_level} - #{hesa_bursary_level}"
 
       mappable_field(hesa_bursary_text, t(".selected_bursary_level"), nil)
+    end
+
+    def funding_eligibility
+      FUNDING_ELIGIBILITY_LABELS[data_model.funding_eligibility]
     end
 
     def training_initiative
@@ -180,7 +184,7 @@ module Funding
     end
 
     def funding_manager
-      @funding_manager ||= FundingManager.new(trainee)
+      @funding_manager ||= FundingManager.new(trainee, funding_eligibility: data_model.funding_eligibility)
     end
 
     def hesa_student

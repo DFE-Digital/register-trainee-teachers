@@ -19,7 +19,7 @@ feature "Home page for Register API documentation" do
   end
 
   def then_i_should_see_the_api_docs_home_page
-    expect(page).to have_content("Register API documentation")
+    expect(page).to have_text("Register API documentation")
   end
 
   def when_i_navigate_to_the_release_notes
@@ -27,7 +27,7 @@ feature "Home page for Register API documentation" do
   end
 
   def then_i_should_see_the_release_notes_for_the_current_and_earlier_versions
-    expect(page).to have_content("Release notes")
+    expect(page).to have_text("Release notes")
   end
 
   def when_i_click_on_the_logo

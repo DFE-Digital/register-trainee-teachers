@@ -7,7 +7,7 @@ module Wizards
     def initialize(trainee:, page_tracker: nil)
       @trainee = trainee
       @page_tracker = page_tracker
-      @funding_manager ||= FundingManager.new(trainee)
+      @funding_manager ||= FundingManager.new(trainee, funding_eligibility:)
     end
 
     def next_step
@@ -17,6 +17,10 @@ module Wizards
   private
 
     attr_reader :trainee, :page_tracker, :funding_manager
+
+    def funding_eligibility
+      ::Funding::EligibilityForm.new(trainee).funding_eligibility
+    end
 
     def origin_page_or_next_step
       return trainee_funding_confirm_path(trainee) if user_came_from_confirm_or_trainee_page?

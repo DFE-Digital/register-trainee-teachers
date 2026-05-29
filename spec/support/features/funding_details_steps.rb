@@ -4,6 +4,8 @@ module Features
   module FundingDetailsSteps
     def and_the_funding_details_is_complete
       review_draft_page.funding_section.link.click
+      funding_eligibility_page.eligible.click
+      funding_eligibility_page.submit_button.click
       edit_funding_page.training_initiative_radios.choose("funding-training-initiatives-form-training-initiative-now-teach-field")
       edit_funding_page.continue_button.click
       confirm_funding_page.confirm.check
@@ -12,6 +14,8 @@ module Features
 
     def and_the_funding_details_with_bursary_is_complete
       review_draft_page.funding_section.link.click
+      funding_eligibility_page.eligible.click
+      funding_eligibility_page.submit_button.click
       edit_funding_page.training_initiative_radios.choose("funding-training-initiatives-form-training-initiative-now-teach-field")
       edit_funding_page.continue_button.click
       page.choose("funding-grant-and-tiered-bursary-form-custom-applying-for-grant-yes-field")

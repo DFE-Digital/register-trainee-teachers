@@ -24,8 +24,35 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         graduation_year: 1978,
       )
     end
-    let!(:original_subject) { degree.subject }
+
     let(:new_subject) { "100105" }
+    let!(:original_subject) { degree.subject }
+
+    context "when the trainee is in an awarded state" do
+      let(:trainee) { create(:trainee, :awarded) }
+
+      before do
+        put(
+          "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: { grade: "01" } }.to_json,
+        )
+      end
+
+      it "returns status code 422 with a StateTransitionError" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          {
+            "error" => "StateTransitionError",
+            "message" => "It’s not possible to perform this action while the trainee is in its current state",
+          },
+        )
+      end
+
+      it "does not update the degree" do
+        expect(degree.reload.grade).to eq("Third-class honours")
+      end
+    end
 
     context "with a valid trainee and degree" do
       context "when using partial HESA attributes" do

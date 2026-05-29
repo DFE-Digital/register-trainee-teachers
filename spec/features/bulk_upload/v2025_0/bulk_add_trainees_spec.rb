@@ -636,7 +636,7 @@ feature "bulk add trainees" do
 private
 
   def then_i_see_the_root_page
-    expect(page).to have_content("Your trainee teachers")
+    expect(page).to have_text("Your trainee teachers")
   end
 
   def and_i_click_on_cancel_link
@@ -656,7 +656,7 @@ private
   end
 
   def then_i_dont_see_the_upload
-    expect(page).not_to have_content(
+    expect(page).not_to have_text(
       @previous_academic_cycle_upload.submitted_at.to_fs(:govuk_date_and_time),
     )
   end
@@ -670,7 +670,7 @@ private
   end
 
   def then_i_see_the_bulk_update_add_trainees_uploads_index_page
-    expect(page).to have_content("Status of new trainee files")
+    expect(page).to have_text("Status of new trainee files")
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
@@ -678,10 +678,10 @@ private
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
-    expect(page).to have_content("Your new trainees have been registered")
-    expect(page).to have_content(/Submitted by\s*#{current_user.name}/)
-    expect(page).to have_content(/Number of registered trainees\s*5/)
-    expect(page).to have_content("See the status of all your uploaded files")
+    expect(page).to have_text("Your new trainees have been registered")
+    expect(page).to have_text(/Submitted by\s*#{current_user.name}/)
+    expect(page).to have_text(/Number of registered trainees\s*5/)
+    expect(page).to have_text("See the status of all your uploaded files")
   end
 
   def and_i_click_on_back_link
@@ -699,11 +699,11 @@ private
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
-    expect(page).to have_content("#{upload.filename} In progress", normalize_ws: true)
+    expect(page).to have_text("#{upload.filename} In progress", normalize_ws: true)
   end
 
   def then_i_see_the_upload_status_row_as_validated(upload)
-    expect(page).to have_content("#{upload.filename} Ready to submit", normalize_ws: true)
+    expect(page).to have_text("#{upload.filename} Ready to submit", normalize_ws: true)
   end
 
   def when_multiple_uploads_exist
@@ -738,31 +738,31 @@ private
   end
 
   def then_i_see_the_uploads
-    expect(page).to have_content(current_user.organisation.name)
+    expect(page).to have_text(current_user.organisation.name)
 
-    expect(page).to have_content("Status of new trainee files")
-    expect(page).to have_content("View the status of recently uploaded files containing new trainees.")
-    expect(page).to have_content("Failed uploads will be removed after 30 days.")
+    expect(page).to have_text("Status of new trainee files")
+    expect(page).to have_text("View the status of recently uploaded files containing new trainees.")
+    expect(page).to have_text("Failed uploads will be removed after 30 days.")
 
-    expect(page).not_to have_content(
+    expect(page).not_to have_text(
       "five_trainees.csv Uploaded",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "five_trainees.csv In progress",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "five_trainees.csv Ready to submit",
     )
-    expect(page).not_to have_content(
+    expect(page).not_to have_text(
       "five_trainees.csv Cancelled",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "#{BulkUpdate::TraineeUpload.in_progress.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv In progress",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "#{BulkUpdate::TraineeUpload.succeeded.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Trainees registered",
     )
-    expect(page).to have_content(
+    expect(page).to have_text(
       "#{BulkUpdate::TraineeUpload.failed.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Failed",
     )
   end
@@ -786,7 +786,7 @@ private
   end
 
   def then_i_see_the_unauthorized_message
-    expect(page).to have_content("You do not have permission to perform this action")
+    expect(page).to have_text("You do not have permission to perform this action")
   end
 
   def and_i_dont_see_the_back_to_bulk_updates_link
@@ -814,20 +814,20 @@ private
   end
 
   def then_i_see_that_the_upload_is_processing
-    expect(page).to have_content("Your CSV is being checked")
-    expect(page).to have_content("This may take several minutes")
-    expect(page).to have_content("You will receive an email telling you if errors have been found, or if you can complete the register process.")
-    expect(page).to have_content("You can also check the status of new trainee files.")
-    expect(page).not_to have_content("File uploaded")
+    expect(page).to have_text("Your CSV is being checked")
+    expect(page).to have_text("This may take several minutes")
+    expect(page).to have_text("You will receive an email telling you if errors have been found, or if you can complete the register process.")
+    expect(page).to have_text("You can also check the status of new trainee files.")
+    expect(page).not_to have_text("File uploaded")
     expect(page).to have_link("Back to bulk updates page")
   end
 
   def and_i_dont_see_that_the_upload_is_processing
-    expect(page).not_to have_content("File uploaded")
-    expect(page).not_to have_content("Your CSV is being checked")
-    expect(page).not_to have_content("This may take several minutes")
-    expect(page).not_to have_content("You will receive an email telling you if errors have been found, or if you can complete the register process.")
-    expect(page).not_to have_content("You can also check the status of new trainee files.")
+    expect(page).not_to have_text("File uploaded")
+    expect(page).not_to have_text("Your CSV is being checked")
+    expect(page).not_to have_text("This may take several minutes")
+    expect(page).not_to have_text("You will receive an email telling you if errors have been found, or if you can complete the register process.")
+    expect(page).not_to have_text("You can also check the status of new trainee files.")
     expect(page).not_to have_link("Back to bulk updates page")
   end
 
@@ -874,8 +874,8 @@ private
 
   def then_i_see_instructions_on_how_to_bulk_add_trainees
     expect(page).to have_current_path(new_bulk_update_add_trainees_upload_path)
-    expect(page).to have_content("Bulk add new trainees")
-    expect(page).not_to have_content("There is a problem")
+    expect(page).to have_text("Bulk add new trainees")
+    expect(page).not_to have_text("There is a problem")
   end
 
   def and_i_see_the_empty_csv_link
@@ -901,7 +901,7 @@ private
   def then_i_see_the_bulk_add_trainees_guidance_page
     within_window(@guidance_window) do
       expect(page).to have_current_path("/csv-docs/")
-      expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
+      expect(page).to have_text("How to add trainee information to the bulk add new trainee CSV template")
 
       when_i_click_the_documentation_empty_csv_link
       then_i_receive_the_empty_csv_file
@@ -1004,22 +1004,22 @@ private
                 "Select a CSV file"
               end
 
-    expect(page).to have_content("There is a problem")
-    expect(page).to have_content(content)
+    expect(page).to have_text("There is a problem")
+    expect(page).to have_text(content)
   end
 
   def and_i_see_file_validation_passed
-    expect(page).to have_content("Your file has been approved")
+    expect(page).to have_text("Your file has been approved")
   end
 
   def then_i_see_the_validated_upload_page
-    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
-    expect(page).to have_content("It included:")
+    expect(page).to have_text("You uploaded a CSV file with details of 5 trainees.")
+    expect(page).to have_text("It included:")
   end
 
   def and_i_dont_see_the_review_errors_message
-    expect(page).not_to have_content("Review errors for")
-    expect(page).not_to have_content("You cannot add new trainees if there’s an error in their row in the CSV file")
+    expect(page).not_to have_text("Review errors for")
+    expect(page).not_to have_text("You cannot add new trainees if there’s an error in their row in the CSV file")
   end
 
   def and_i_dont_see_the_submit_button
@@ -1087,109 +1087,109 @@ private
   end
 
   def then_i_can_see_the_new_trainees
-    expect(page).to have_content("Spencer Murphy")
-    expect(page).to have_content(/Adrianne Ko(e|é)lpin/)
-    expect(page).to have_content("Sacha Bechtelar")
-    expect(page).to have_content("Rico Corkery")
-    expect(page).to have_content("Chantelle Raynor")
+    expect(page).to have_text("Spencer Murphy")
+    expect(page).to have_text(/Adrianne Ko(e|é)lpin/)
+    expect(page).to have_text("Sacha Bechtelar")
+    expect(page).to have_text("Rico Corkery")
+    expect(page).to have_text("Chantelle Raynor")
   end
 
   def then_i_can_see_the_new_trainees_with_placements
-    expect(page).to have_content("Preston Rath")
-    expect(page).to have_content("Breanne Langosh")
-    expect(page).to have_content("Kirby Gerlach")
-    expect(page).to have_content("Emilio Rippin")
-    expect(page).to have_content("Lavonda Bins")
+    expect(page).to have_text("Preston Rath")
+    expect(page).to have_text("Breanne Langosh")
+    expect(page).to have_text("Kirby Gerlach")
+    expect(page).to have_text("Emilio Rippin")
+    expect(page).to have_text("Lavonda Bins")
 
     click_on "Preston Rath"
 
-    expect(page).to have_content("Placement 1")
-    expect(page).to have_content("URN 609384")
-    expect(page).to have_content("Placement 2")
-    expect(page).to have_content("URN 325900")
-    expect(page).to have_content("Placement 3")
-    expect(page).to have_content("URN 894261")
+    expect(page).to have_text("Placement 1")
+    expect(page).to have_text("URN 609384")
+    expect(page).to have_text("Placement 2")
+    expect(page).to have_text("URN 325900")
+    expect(page).to have_text("Placement 3")
+    expect(page).to have_text("URN 894261")
 
-    expect(page).not_to have_content("First placement is missing")
-    expect(page).not_to have_content("Second placement is missing")
+    expect(page).not_to have_text("First placement is missing")
+    expect(page).not_to have_text("Second placement is missing")
 
     click_on "All records"
 
     click_on "Lavonda Bins"
 
-    expect(page).to have_content("Placement 1")
-    expect(page).to have_content("URN 773124")
+    expect(page).to have_text("Placement 1")
+    expect(page).to have_text("URN 773124")
 
-    expect(page).not_to have_content("First placement is missing")
-    expect(page).to have_content("Second placement is missing")
+    expect(page).not_to have_text("First placement is missing")
+    expect(page).to have_text("Second placement is missing")
   end
 
   def then_i_can_see_the_new_trainees_with_a_degree
-    expect(page).to have_content("Charissa Gibson")
-    expect(page).to have_content("Kraig Howe")
-    expect(page).to have_content("Katharyn Roberts")
-    expect(page).to have_content("Maurice Bashirian")
-    expect(page).to have_content("Bethanie Schumm")
+    expect(page).to have_text("Charissa Gibson")
+    expect(page).to have_text("Kraig Howe")
+    expect(page).to have_text("Katharyn Roberts")
+    expect(page).to have_text("Maurice Bashirian")
+    expect(page).to have_text("Bethanie Schumm")
 
     click_on "Charissa Gibson"
 
-    expect(page).to have_content("Bachelor of Humanities")
-    expect(page).to have_content("general or integrated engineering")
-    expect(page).to have_content("Point Blank Music School")
-    expect(page).to have_content("Third-class honours")
-    expect(page).to have_content("2010")
+    expect(page).to have_text("Bachelor of Humanities")
+    expect(page).to have_text("general or integrated engineering")
+    expect(page).to have_text("Point Blank Music School")
+    expect(page).to have_text("Third-class honours")
+    expect(page).to have_text("2010")
 
     click_on "All records"
 
     click_on "Bethanie Schumm"
 
-    expect(page).to have_content("Non-UK Master of Social Studies: offshore engineering")
-    expect(page).to have_content("Mexico")
-    expect(page).to have_content("Offshore engineering")
-    expect(page).to have_content("Master of Social Studies")
-    expect(page).to have_content("2001")
+    expect(page).to have_text("Non-UK Master of Social Studies: offshore engineering")
+    expect(page).to have_text("Mexico")
+    expect(page).to have_text("Offshore engineering")
+    expect(page).to have_text("Master of Social Studies")
+    expect(page).to have_text("2001")
   end
 
   def then_i_can_see_the_new_trainees_with_a_disability
-    expect(page).to have_content("Preston Rath")
-    expect(page).to have_content("Breanne Langosh")
-    expect(page).to have_content("Kirby Gerlach")
-    expect(page).to have_content("Emilio Rippin")
-    expect(page).to have_content("Lavonda Bins")
+    expect(page).to have_text("Preston Rath")
+    expect(page).to have_text("Breanne Langosh")
+    expect(page).to have_text("Kirby Gerlach")
+    expect(page).to have_text("Emilio Rippin")
+    expect(page).to have_text("Lavonda Bins")
 
     click_on "Preston Rath"
 
-    expect(page).to have_content("deaf")
-    expect(page).to have_content("blind")
-    expect(page).to have_content("development condition")
-    expect(page).to have_content("learning difficulty")
-    expect(page).to have_content("long-standing illness")
-    expect(page).to have_content("mental health condition")
-    expect(page).to have_content("physical disability or mobility issue")
-    expect(page).to have_content("social or communication impairment")
-    expect(page).to have_content("other")
+    expect(page).to have_text("deaf")
+    expect(page).to have_text("blind")
+    expect(page).to have_text("development condition")
+    expect(page).to have_text("learning difficulty")
+    expect(page).to have_text("long-standing illness")
+    expect(page).to have_text("mental health condition")
+    expect(page).to have_text("physical disability or mobility issue")
+    expect(page).to have_text("social or communication impairment")
+    expect(page).to have_text("other")
   end
 
   def then_i_can_see_the_new_trainees_with_lead_partners
-    expect(page).to have_content("Spencer Murphy")
-    expect(page).to have_content("Adrianne Koelpin")
-    expect(page).to have_content("Sacha Bechtelar")
+    expect(page).to have_text("Spencer Murphy")
+    expect(page).to have_text("Adrianne Koelpin")
+    expect(page).to have_text("Sacha Bechtelar")
 
     click_on "Spencer Murphy"
-    expect(page).to have_content("University of Sussex")
-    expect(page).to have_content("URN 133795")
+    expect(page).to have_text("University of Sussex")
+    expect(page).to have_text("URN 133795")
 
     click_on "All records"
 
     click_on "Adrianne Koelpin"
-    expect(page).to have_content("University of Cumbria")
-    expect(page).to have_content("URN 135398")
+    expect(page).to have_text("University of Cumbria")
+    expect(page).to have_text("URN 135398")
 
     click_on "All records"
 
     click_on "Sacha Bechtelar"
-    expect(page).to have_content("Leeds SCITT")
-    expect(page).to have_content("URN 133838")
+    expect(page).to have_text("Leeds SCITT")
+    expect(page).to have_text("URN 133838")
   end
 
   def when_the_upload_has_failed_with_validation_errors
@@ -1218,11 +1218,11 @@ private
 
   def then_the_upload_is_cancelled
     expect(page).to have_current_path(bulk_update_path)
-    expect(page).to have_content("Bulk updates to records have been cancelled")
+    expect(page).to have_text("Bulk updates to records have been cancelled")
   end
 
   def then_i_dont_see_the_cancelled_upload(upload: BulkUpdate::TraineeUpload.cancelled.last)
-    expect(page).not_to have_content(upload.filename)
+    expect(page).not_to have_text(upload.filename)
   end
 
   def and_i_visit_the_summary_page(upload:)
@@ -1234,8 +1234,8 @@ private
   end
 
   def then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
-    expect(page).to have_content("Review errors for #{pluralize(upload.total_rows_with_errors, 'trainee')} in the CSV you uploaded")
-    expect(page).to have_content("You cannot add new trainees if there is an error in their row in the CSV file")
+    expect(page).to have_text("Review errors for #{pluralize(upload.total_rows_with_errors, 'trainee')} in the CSV you uploaded")
+    expect(page).to have_text("You cannot add new trainees if there is an error in their row in the CSV file")
   end
 
   def when_i_click_on_the_download_link
@@ -1308,9 +1308,9 @@ private
   end
 
   def then_i_see_the_new_bulk_update_import_page
-    expect(page).to have_content("You uploaded a CSV file with details of:")
-    expect(page).to have_content("5 trainees who can be added")
-    expect(page).to have_content("File uploaded")
+    expect(page).to have_text("You uploaded a CSV file with details of:")
+    expect(page).to have_text("5 trainees who can be added")
+    expect(page).to have_text("File uploaded")
   end
 
   def when_i_click_on_cancel_process_link

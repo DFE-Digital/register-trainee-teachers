@@ -12,6 +12,8 @@ Run setup:
 ./bin/setup
 ```
 
+After pulling changes to `Gemfile.lock`, re-run `./bin/setup` or `bundle install` so bundler picks up the pinned version — see [Machine setup](/docs/machine-setup.md#bundler).
+
 Add a file to config/settings called development.local.yml containing the following:
 
 ```yml

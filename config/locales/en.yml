@@ -49,6 +49,7 @@ en:
   funding:
     view:
       title: Funding
+      funding_eligibility: &funding_eligibility Funding eligibility
       training_initiative: &training_initiative Training initiative
       funding_method: &funding_method Funding method
       bursary_applied_for: Bursary applied for
@@ -230,7 +231,7 @@ en:
         record_added_in_error: This training record was added in error
         mandatory_reasons: Trainee removed for mandatory reasons
         lack_of_progress_during_placements: Lack of progress during placements
-        not_meeting_qts_standards: Not meeting QTS standards
+        not_meeting_qts_standards: Not meeting QTS or EYTS requirements
         trainee_workload_issues: Trainee workload issues
         change_in_personal_or_health_circumstances: Change in their personal or health situation
         never_intended_to_obtain_qts: They never intended to obtain QTS
@@ -502,6 +503,8 @@ en:
           index: Select the employing school
           edit: Employing school
         funding:
+          funding_eligibilities:
+            edit: *funding_eligibility
           training_initiatives:
             edit: Training initiatives
           bursaries:
@@ -765,6 +768,7 @@ en:
         itt_start_date: *course_path
         itt_end_date: *course_path
         main_age_range: *course_path
+        funding_eligibility: edit_trainee_funding_funding_eligibility_path
         training_initiative: edit_trainee_funding_training_initiative_path
         applying_for_bursary: &funding_method_path edit_trainee_funding_bursary_path
         applying_for_grant: *funding_method_path
@@ -820,6 +824,7 @@ en:
         main_age_range: *course_age_range
         itt_start_date: *itt_start_date
         itt_end_date: *itt_end_date
+        funding_eligibility: *funding_eligibility
         training_initiative: *training_initiative
         applying_for_bursary: *funding_method
         applying_for_grant: *funding_method
@@ -1022,6 +1027,9 @@ en:
           provider_led_undergrad: primary and secondary undergrad
           teacher_degree_apprenticeship: teaching apprenticeship
       funding:
+        funding_eligibilities:
+          title: Is this trainee eligible for funding?
+          description_html: We need to record whether this trainee is eligible for funding, based on student finance criteria.<br><br>You must provide funding eligibility information for every trainee.
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
           title_two: Is the trainee on either of these training initiatives?
@@ -1584,7 +1592,9 @@ en:
         placements_form:
           attributes:
             placement_ids:
-              too_short: Enter at least 2 placements
+              too_short:
+                one: Enter at least 1 placement
+                other: Enter at least %{count} placements
               invalid: Some placements are invalid
         select_placement_school_form:
           attributes:
@@ -1680,8 +1690,8 @@ en:
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_id_header: The selected file must contain a column for TRN, trainee provider ID or HESA ID
-              no_date_header: The selected file must contain a column for date QTS or EYTS standards met
-              no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
+              no_date_header: The selected file must contain a column for date QTS or EYTS requirements met
+              no_dates_given: The selected file must contain date QTS or EYTS requirements met for at least one trainee
               no_trainees: The selected file must contain at least one trainee
         bulk_update/bulk_add_trainees_upload_form:
           attributes:
@@ -1719,11 +1729,11 @@ en:
             validate_csv_row:
               trn_format: TRN must be 7 numbers
               hesa_id_format: HESA ID must be 13 or 17 numbers
-              award_date_not_valid: Date QTS or EYTS standards met must be a valid date
-              award_date_future: Date QTS or EYTS standards met must be today or in the past
-              award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk changed status - you can change the trainee status separately in their trainee record
-              date_standards_met: Date QTS or EYTS standards met must be after trainee’s ITT start date
-              date_parse: Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023
+              award_date_not_valid: Date QTS or EYTS requirements met must be a valid date
+              award_date_future: Date QTS or EYTS requirements met must be today or in the past
+              award_date_past: Date QTS or EYTS requirements met must be within the past 12 months to bulk changed status - you can change the trainee status separately in their trainee record
+              date_standards_met: Date QTS or EYTS requirements met must be after trainee’s ITT start date
+              date_parse: Date QTS or EYTS requirements met must be written as dd/mm/yyyy, for example 27/02/2023
               trn: TRN must match trainee record
               hesa_id: HESA ID must match trainee record
               provider_trainee_id: Provider trainee ID must match trainee record
@@ -1822,6 +1832,10 @@ en:
             date:
               blank: &withdrawal_date_blank Enter the date the trainee withdrew
               invalid: *withdrawal_date_blank
+        funding/eligibility_form:
+          attributes:
+            funding_eligibility:
+              blank: Select the funding eligibility for this trainee
         funding/training_initiatives_form:
           attributes:
             training_initiative:
@@ -2250,6 +2264,10 @@ en:
               invalid: is invalid. The URN '%{value}' does not match any known training partners
               csv:
                 invalid: Training Partner URN is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_urn:
+              invalid: is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_ukprn:
+              invalid: is invalid. The UKPRN '%{value}' does not match any known training partners
             employing_school_id:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:
@@ -2345,6 +2363,10 @@ en:
               invalid: is invalid. The URN '%{value}' does not match any known training partners
               csv:
                 invalid: Training Partner URN is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_urn:
+              invalid: is invalid. The URN '%{value}' does not match any known training partners
+            training_partner_ukprn:
+              invalid: is invalid. The UKPRN '%{value}' does not match any known training partners
             iqts_country:
               inclusion: is not a valid iQTS country
             employing_school_id:
@@ -2402,6 +2424,7 @@ en:
             state:
               invalid: must be selected as trn_received
             qts_standards_met_date:
+              blank: can't be blank. Enter a date the trainee met the QTS or EYTS requirements.
               itt_start_date: &qts_itt_start_date must be after itt_start_date
         api/trainees/deferral_service:
           attributes:

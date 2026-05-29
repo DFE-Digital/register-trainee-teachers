@@ -3,10 +3,10 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.4.8"
+ruby "3.4.9"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 8.0"
+gem "rails", "~> 8.1"
 gem "sprockets-rails"
 gem "turbo-rails"
 
@@ -14,7 +14,7 @@ gem "turbo-rails"
 gem "pg", "~> 1.6"
 
 # Use Puma as the app server
-gem "puma", "~> 7.2"
+gem "puma", "~> 8.0"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -27,9 +27,6 @@ gem "bootsnap", ">= 1.1.0", require: false
 
 # Manage multiple processes i.e. web server, redis, css/js builds
 gem "foreman"
-
-# Canonical meta tag
-gem "canonical-rails"
 
 # For determining file encoding
 gem "charlock_holmes", "0.7.9"
@@ -46,7 +43,7 @@ gem "stackprof"
 # Logging
 gem "amazing_print", "~> 2.0"
 
-gem "rails_semantic_logger", "~> 4.19.0"
+gem "rails_semantic_logger", "~> 4.20.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -57,7 +54,7 @@ gem "govuk_design_system_formbuilder"
 
 # Background job processor
 gem "sidekiq", "~> 6.5"
-gem "sidekiq-cron", "~> 2.3"
+gem "sidekiq-cron", "~> 2.4"
 
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
@@ -67,7 +64,7 @@ gem "config", "~> 5.6"
 gem "httparty", "~> 0.24"
 
 # Wrap jsonb columns with activemodel-like classes
-gem "store_model", "~> 4.5"
+gem "store_model", "~> 4.6"
 
 gem "pundit"
 
@@ -179,7 +176,7 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "timecop", "~> 0.9.10"
+  gem "timecop", "~> 0.9.11"
 end
 
 group :development do
@@ -197,7 +194,7 @@ group :development do
   gem "solargraph-rails"
 
   # Profiling
-  gem "annotate"
+  gem "annotaterb"
   gem "benchmark-memory"
   gem "flamegraph"
   gem "memory_profiler"

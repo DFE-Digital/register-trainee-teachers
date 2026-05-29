@@ -96,7 +96,7 @@ module Funding
     attr_reader :trainee_summary
 
     def payment_type_total(data_for_payment_type)
-      data_for_payment_type.map { |data| (data.amount_in_pence * data.number_of_trainees) }.sum
+      data_for_payment_type.map { |data| data.amount_in_pence * data.number_of_trainees }.sum
     end
 
     def sort_by_route_then_subject(data)

@@ -69,12 +69,12 @@ module Api
             training_route: training_route,
             nationality: nationality,
             training_initiative: training_initiative,
-            withdrawal_date: @trainee.current_withdrawal&.date&.iso8601,
+            withdrawal_date: current_withdrawal&.date&.iso8601,
             withdrawal_reasons: withdrawal_reasons,
-            withdrawal_trigger: @trainee.current_withdrawal&.trigger,
-            withdrawal_future_interest: @trainee.current_withdrawal&.future_interest,
-            withdrawal_another_reason: @trainee.current_withdrawal&.another_reason,
-            withdrawal_safeguarding_concern_reasons: @trainee.current_withdrawal&.safeguarding_concern_reasons,
+            withdrawal_trigger: current_withdrawal&.trigger,
+            withdrawal_future_interest: current_withdrawal&.future_interest,
+            withdrawal_another_reason: current_withdrawal&.another_reason,
+            withdrawal_safeguarding_concern_reasons: current_withdrawal&.safeguarding_concern_reasons,
             placements: placements,
             degrees: degrees,
             state: @trainee.state,
@@ -91,7 +91,7 @@ module Api
       end
 
       def placements
-        @placements ||= @trainee.placements.includes(:school).map do |placement|
+        @placements ||= @trainee.placements.map do |placement|
           PlacementSerializer.new(placement).as_hash
         end
       end
@@ -203,7 +203,7 @@ module Api
       end
 
       def nationality
-        return if @trainee.nationalities.reload.blank?
+        return if @trainee.nationalities.blank?
 
         RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[
           @trainee.nationalities.first.name,
@@ -223,7 +223,11 @@ module Api
       end
 
       def withdrawal_reasons
-        @trainee.current_withdrawal_reasons&.map(&:name)
+        current_withdrawal&.withdrawal_reasons&.map(&:name)
+      end
+
+      def current_withdrawal
+        @current_withdrawal ||= @trainee.current_withdrawal
       end
 
       delegate :ethnic_group, :disability_disclosure, :course_education_phase, :trainee_start_date, to: :@trainee

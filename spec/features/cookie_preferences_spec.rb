@@ -12,7 +12,22 @@ feature "navigate to cookies preferences" do
     and_i_should_not_see_the_cookie_banner
   end
 
+  scenario "shows accept and reject buttons when JS is enabled", js: true do
+    given_i_am_on_the_start_page
+    then_i_should_see_the_cookie_banner
+    and_i_should_see_the_cookie_accept_button
+    and_i_should_see_the_cookie_reject_button
+  end
+
 private
+
+  def and_i_should_see_the_cookie_accept_button
+    expect(page).to have_button(t("cookies.accept"), visible: :visible)
+  end
+
+  def and_i_should_see_the_cookie_reject_button
+    expect(page).to have_button(t("cookies.reject"), visible: :visible)
+  end
 
   def given_i_am_on_the_start_page
     start_page.load

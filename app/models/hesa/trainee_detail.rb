@@ -9,7 +9,6 @@
 #  course_age_range               :string
 #  course_study_mode              :string
 #  course_year                    :integer
-#  fund_code                      :string
 #  funding_method                 :string
 #  hesa_disabilities              :jsonb
 #  itt_aim                        :string

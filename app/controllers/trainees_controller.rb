@@ -6,12 +6,13 @@ class TraineesController < BaseTraineeController
   include MissingFieldsCheckable
 
   before_action :redirect_to_not_found, if: -> { trainee.discarded? }, only: :show
-  before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
+  before_action :ensure_trainee_is_not_draft!, only: :show
   before_action :clear_page_tracker, only: :show
 
   def show
     authorize(trainee)
     clear_form_stash(trainee)
+    load_missing_data_view
     page_tracker.save_as_origin!
     @timeline_events = Trainees::CreateTimeline.call(trainee:, current_user:)
   end

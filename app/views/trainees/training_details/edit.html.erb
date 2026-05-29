@@ -4,15 +4,15 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @training_details_form, url: trainee_training_details_path(@trainee), method: :put, local: true) do |f| %>
-      <% if f.object.duplicate_error? %>
-        <%= render "duplicate_error", form: f %>
-      <% else %>
-        <%= f.govuk_error_summary %>
-      <% end %>
+<%= register_form_with(model: @training_details_form, url: trainee_training_details_path(@trainee), method: :put, local: true) do |f| %>
+  <% if f.object.duplicate_error? %>
+    <%= render "duplicate_error", form: f %>
+  <% else %>
+    <%= f.govuk_error_summary %>
+  <% end %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= render TraineeName::View.new(@trainee) %>
 
       <%= f.govuk_text_field :provider_trainee_id, label: {
@@ -20,8 +20,8 @@
       }, hint: { text: t("views.forms.training_details.provider_trainee_id.hint").html_safe }, width: 20, autocomplete: :off %>
 
       <%= f.govuk_submit t(:continue) %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>

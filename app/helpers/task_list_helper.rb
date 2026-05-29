@@ -131,7 +131,7 @@ module TaskListHelper
     when :funding_active
       {
         task_name: "Funding",
-        path: edit_trainee_funding_training_initiative_path(trainee),
+        path: edit_trainee_funding_funding_eligibility_path(trainee),
         confirm_path: trainee_funding_confirm_path(trainee),
         status: ProgressService.call(
           validator: Funding::FormValidator.new(trainee),

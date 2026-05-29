@@ -73,7 +73,7 @@ private
   end
 
   def then_i_see_error_messages
-    expect(apply_trainee_data_page).to have_content(I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: 2))
+    expect(apply_trainee_data_page).to have_text(I18n.t("views.apply_invalid_data_view.invalid_answers_summary", count: 2))
   end
 
   def and_i_click_to_change_the_trainee_full_name

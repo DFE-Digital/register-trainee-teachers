@@ -124,8 +124,8 @@ module Sections
           review: "trainee_schools_confirm_path",
         },
         funding: {
-          incomplete: "edit_trainee_funding_training_initiative_path",
-          in_progress_invalid: "edit_trainee_funding_training_initiative_path",
+          incomplete: "edit_trainee_funding_funding_eligibility_path",
+          in_progress_invalid: "edit_trainee_funding_funding_eligibility_path",
           in_progress_valid: "trainee_funding_confirm_path",
           review: "trainee_funding_confirm_path",
         },

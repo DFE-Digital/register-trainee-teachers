@@ -10,6 +10,10 @@ require "services/bulk_update/add_trainees/config"
 
 GovukTechDocs.configure(self, livereload: { host: "0.0.0.0" })
 
+if ENV["MAX_TOC_HEADING_LEVEL"]
+  config[:tech_docs][:max_toc_heading_level] = ENV["MAX_TOC_HEADING_LEVEL"].to_i
+end
+
 TECH_DOCS_CONFIG = YAML.load_file(File.expand_path("config/tech-docs.yml", __dir__))
 
 helpers do
@@ -18,6 +22,19 @@ helpers do
     return unless version && TECH_DOCS_CONFIG.fetch("preview_versions", []).include?(version)
 
     partial("partials/preview_warning", locals: { version: })
+  end
+
+  def active_page(page_path)
+    [
+      page_path == "/" && current_page.path == "index.html",
+      "/#{current_page.path}" == page_path,
+      !current_page.data.parent.nil? && current_page.data.parent.to_s == page_path,
+      page_path.end_with?("/") && config[:build_dir].to_s.end_with?(page_path.chomp("/")) && !header_link_page?,
+    ].any?
+  end
+
+  def header_link_page?
+    config[:tech_docs][:header_links]&.any? { |_, path| "/#{current_page.path}" == path }
   end
 end
 

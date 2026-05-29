@@ -127,6 +127,26 @@ describe Api::FindDuplicateTrainees do
     ).to eq([Api::V20250::TraineeSerializer.new(trainee).as_hash])
   end
 
+  it "does not return discarded trainees as duplicates" do
+    trainee.discard
+
+    attributes = trainee_attributes.new(
+      first_names: "Bob",
+      last_name: "Roberts",
+      date_of_birth: trainee.date_of_birth,
+      training_route: trainee.training_route,
+      itt_start_date: trainee.itt_start_date,
+    )
+
+    expect(
+      described_class.call(
+        current_provider: trainee.provider,
+        trainee_attributes: attributes,
+        serializer_klass: serializer_klass,
+      ),
+    ).to be_empty
+  end
+
   it "doesn't return trainees that are have a different first name and email" do
     attributes = trainee_attributes.new(
       first_names: "Bobbie",

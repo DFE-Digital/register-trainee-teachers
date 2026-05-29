@@ -77,8 +77,8 @@ private
 
   def then_i_am_on_the_correct_funding_upload_page
     expect(page).to have_current_path(funding_type_url_for(funding_type))
-    expect(page).to have_content(t("components.page_titles.funding_uploads.new.#{funding_type}"))
-    expect(page).to have_content(t("system_admin.funding_uploads.new.#{funding_type}"))
+    expect(page).to have_text(t("components.page_titles.funding_uploads.new.#{funding_type}"))
+    expect(page).to have_text(t("system_admin.funding_uploads.new.#{funding_type}"))
   end
 
   def when_i_submit_a_valid_funding_upload
@@ -103,13 +103,13 @@ private
 
   def then_i_see_the_funding_upload_details_for(funding_type)
     within("##{funding_type}") do
-      expect(page).to have_content("January")
-      expect(page).to have_content(SystemAdmin::FundingUpload.last.created_at.strftime("%d %B %Y"))
+      expect(page).to have_text("January")
+      expect(page).to have_text(SystemAdmin::FundingUpload.last.created_at.strftime("%d %B %Y"))
     end
   end
 
   def then_i_see_the_errors
-    expect(page).to have_content("Select month")
-    expect(page).to have_content("Select a CSV file")
+    expect(page).to have_text("Select month")
+    expect(page).to have_text("Select a CSV file")
   end
 end

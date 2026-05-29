@@ -20,6 +20,25 @@ describe FundingManager do
     create(:academic_cycle, :current)
   end
 
+  shared_context "trainee not eligible with funded subject" do
+    let(:training_route) { :provider_led_postgrad }
+    let(:specialism) { create(:subject_specialism) }
+    let(:allocation_subject) { specialism.allocation_subject }
+    let(:funding_method) { create(:funding_method, training_route: training_route, amount: 24_000) }
+    let(:trainee) do
+      create(:trainee,
+             :with_study_mode_and_course_dates,
+             :with_course_allocation_subject,
+             course_subject_one: specialism.name,
+             training_route: training_route,
+             funding_eligibility: "not_eligible")
+    end
+
+    before do
+      create(:funding_method_subject, funding_method:, allocation_subject:)
+    end
+  end
+
   describe "#bursary_amount" do
     subject { funding_manager.bursary_amount }
 
@@ -237,6 +256,12 @@ describe FundingManager do
         end
       end
     end
+
+    context "when the trainee's funding eligibility is not_eligible" do
+      include_context "trainee not eligible with funded subject"
+
+      it { is_expected.to be false }
+    end
   end
 
   describe "#can_apply_for_tiered_bursary?" do
@@ -257,6 +282,135 @@ describe FundingManager do
         it "returns false" do
           expect(subject).to be_falsey
         end
+      end
+    end
+
+    context "when the trainee's funding eligibility is not_eligible" do
+      let(:trainee) do
+        create(:trainee,
+               :with_study_mode_and_course_dates,
+               training_route: :early_years_postgrad,
+               funding_eligibility: "not_eligible")
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#can_apply_for_funding_type?" do
+    subject { funding_manager.can_apply_for_funding_type? }
+
+    context "when the trainee's funding eligibility is not_eligible" do
+      include_context "trainee not eligible with funded subject"
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#can_apply_for_scholarship?" do
+    subject { funding_manager.can_apply_for_scholarship? }
+
+    context "when the trainee's funding eligibility is not_eligible" do
+      let(:training_route) { :provider_led_postgrad }
+      let(:specialism) { create(:subject_specialism) }
+      let(:allocation_subject) { specialism.allocation_subject }
+      let(:funding_method) { create(:funding_method, :scholarship, training_route: training_route, amount: 28_000) }
+      let(:trainee) do
+        create(:trainee,
+               :with_study_mode_and_course_dates,
+               :with_course_allocation_subject,
+               course_subject_one: specialism.name,
+               training_route: training_route,
+               funding_eligibility: "not_eligible")
+      end
+
+      before do
+        create(:funding_method_subject, funding_method:, allocation_subject:)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#can_apply_for_grant?" do
+    subject { funding_manager.can_apply_for_grant? }
+
+    context "when the trainee's funding eligibility is not_eligible" do
+      let(:training_route) { :provider_led_postgrad }
+      let(:specialism) { create(:subject_specialism) }
+      let(:allocation_subject) { specialism.allocation_subject }
+      let(:funding_method) { create(:funding_method, :grant, training_route: training_route, amount: 9_000) }
+      let(:trainee) do
+        create(:trainee,
+               :with_study_mode_and_course_dates,
+               :with_course_allocation_subject,
+               course_subject_one: specialism.name,
+               training_route: training_route,
+               funding_eligibility: "not_eligible")
+      end
+
+      before do
+        create(:funding_method_subject, funding_method:, allocation_subject:)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#eligible_for_funding?" do
+    subject { funding_manager.eligible_for_funding? }
+
+    context "when the trainee's funding eligibility is eligible" do
+      let(:trainee) { create(:trainee, funding_eligibility: "eligible") }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the trainee's funding eligibility is nil" do
+      let(:trainee) { create(:trainee, funding_eligibility: nil) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the trainee's funding eligibility is not_eligible" do
+      let(:specialism) { create(:subject_specialism, allocation_subject:) }
+      let!(:academic_cycle) { AcademicCycle.for_year(cycle_year) || create(:academic_cycle, cycle_year:) }
+      let(:trainee) do
+        create(:trainee,
+               :with_study_mode_and_course_dates,
+               :with_course_allocation_subject,
+               course_subject_one: specialism.name,
+               itt_start_date: Date.new(cycle_year, 9, 1),
+               itt_end_date: Date.new(cycle_year + 1, 6, 30),
+               funding_eligibility: "not_eligible")
+      end
+
+      context "and the subject is not in the fund code exception list" do
+        let(:cycle_year) { 2026 }
+        let(:allocation_subject) { create(:allocation_subject) }
+
+        it { is_expected.to be false }
+      end
+
+      context "and the subject is in the fund code exception list and the academic cycle starts in 2025" do
+        let(:cycle_year) { 2025 }
+        let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::PHYSICS) }
+
+        it { is_expected.to be true }
+      end
+
+      context "and the subject is in the fund code exception list and the academic cycle starts in 2026" do
+        let(:cycle_year) { 2026 }
+        let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::PHYSICS) }
+
+        it { is_expected.to be true }
+      end
+
+      context "and the subject is in the fund code exception list but the academic cycle starts outside 2025/2026" do
+        let(:cycle_year) { 2024 }
+        let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::PHYSICS) }
+
+        it { is_expected.to be false }
       end
     end
   end

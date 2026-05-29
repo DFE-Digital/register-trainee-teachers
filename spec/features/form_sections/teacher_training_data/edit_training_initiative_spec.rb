@@ -12,7 +12,7 @@ feature "edit training initiative" do
       given_a_provider_led_postgrad_trainee_exists
       and_a_bursary_exists_for_their_subject
       when_i_visit_the_training_initiative_page
-      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_update_the_training_initiative("now_teach")
       and_i_submit_the_form
       then_i_am_redirected_to_the_bursary_page
     end
@@ -20,7 +20,7 @@ feature "edit training initiative" do
     scenario "without bursary redirects to funding confirmation page" do
       given_a_trainee_exists(:assessment_only)
       when_i_visit_the_training_initiative_page
-      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_update_the_training_initiative("now_teach")
       and_i_submit_the_form
       then_i_am_redirected_to_the_funding_confirmation_page
     end
@@ -28,7 +28,7 @@ feature "edit training initiative" do
     scenario "on the early_years_postgrad route redirects to bursary page" do
       given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
       when_i_visit_the_training_initiative_page
-      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_update_the_training_initiative("now_teach")
       and_i_submit_the_form
       then_i_am_redirected_to_the_bursary_page
     end
@@ -39,9 +39,9 @@ feature "edit training initiative" do
   scenario "can select an initiative and save it to the trainee record" do
     given_a_trainee_exists(:provider_led_postgrad)
     when_i_visit_the_training_initiative_page
-    and_i_update_the_training_initiative("international_relocation_payment")
+    and_i_update_the_training_initiative("now_teach")
     and_i_submit_the_form
-    then_the_trainee_has_the_correct_initiative("international_relocation_payment")
+    then_the_trainee_has_the_correct_initiative("now_teach")
   end
 
   scenario "submitting with invalid parameters shows error messages" do
@@ -49,6 +49,22 @@ feature "edit training initiative" do
     when_i_visit_the_training_initiative_page
     and_i_submit_the_form
     then_i_see_error_messages
+  end
+
+  context "when a trainee is in 2026/27 academic cycle" do
+    scenario "international relocation payment is not offered as an option" do
+      given_a_2026_to_2027_trainee_exists
+      when_i_visit_the_training_initiative_page
+      then_the_international_relocation_payment_option_is_not_shown
+    end
+  end
+
+  context "when a trainee is in 2025/26 academic cycle" do
+    scenario "international relocation payment is still offered as an option" do
+      given_a_2025_to_2026_trainee_exists
+      when_i_visit_the_training_initiative_page
+      then_the_international_relocation_payment_option_is_shown
+    end
   end
 
 private
@@ -65,7 +81,7 @@ private
     training_initiative_page.load(id: trainee.slug)
   end
 
-  def and_i_update_the_training_initiative(initiative = "international_relocation_payment")
+  def and_i_update_the_training_initiative(initiative = "now_teach")
     radio_button = training_initiative_page.find("input[value='#{initiative}']", visible: :all)
     radio_button.presence&.click
   end
@@ -98,5 +114,27 @@ private
   def then_the_trainee_has_the_correct_initiative(initiative)
     trainee.reload
     expect(trainee.training_initiative).to eq(initiative)
+  end
+
+  def given_a_2026_to_2027_trainee_exists(**attrs)
+    given_a_trainee_exists(:provider_led_postgrad,
+                           itt_start_date: Date.new(2026, 9, 1),
+                           start_academic_cycle: AcademicCycle.for_year(2026),
+                           **attrs)
+  end
+
+  def given_a_2025_to_2026_trainee_exists(**attrs)
+    given_a_trainee_exists(:provider_led_postgrad,
+                           itt_start_date: Date.new(2025, 9, 1),
+                           start_academic_cycle: AcademicCycle.for_year(2025),
+                           **attrs)
+  end
+
+  def then_the_international_relocation_payment_option_is_not_shown
+    expect(training_initiative_page).not_to have_field("International Relocation Payment", type: "radio")
+  end
+
+  def then_the_international_relocation_payment_option_is_shown
+    expect(training_initiative_page).to have_field("International Relocation Payment", type: "radio")
   end
 end

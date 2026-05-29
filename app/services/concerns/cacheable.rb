@@ -35,7 +35,7 @@ module Cacheable
       end
 
       def redis
-        RedisClient.current
+        RedisSetup::RedisClient.current
       end
     end
   end

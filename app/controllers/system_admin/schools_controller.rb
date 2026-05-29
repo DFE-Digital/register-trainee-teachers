@@ -28,7 +28,7 @@ module SystemAdmin
   private
 
     def school
-      policy_scope(School).find(params[:id])
+      policy_scope(School).find(params.expect(:id))
     end
 
     def school_params

@@ -49,7 +49,7 @@ private
   def then_i_see_error_messages
     translation_key_prefix = "activemodel.errors.models.course_education_phase_form.attributes"
 
-    expect(course_details_page).to have_content(
+    expect(course_details_page).to have_text(
       I18n.t("#{translation_key_prefix}.course_education_phase.blank"),
     )
   end

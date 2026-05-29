@@ -4,10 +4,11 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @study_mode_form, url: trainee_course_details_study_mode_path(@trainee), method: :put, local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(model: @study_mode_form, url: trainee_course_details_study_mode_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= render TraineeName::View.new(@trainee) %>
 
       <%= f.govuk_radio_buttons_fieldset(:study_mode, legend: { text: t("components.page_titles.trainees.study_mode.edit"), size: "l", tag: "h1" }) do %>
@@ -16,6 +17,6 @@
       <% end %>
 
       <%= f.govuk_submit %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>

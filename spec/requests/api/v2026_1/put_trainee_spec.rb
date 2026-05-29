@@ -91,6 +91,43 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       create(:nationality, :french)
     end
 
+    context "when the trainee is in an awarded state" do
+      %i[recommended_for_award withdrawn awarded].each do |awarded_state|
+        context "when the trainee is #{awarded_state}" do
+          let(:trainee) do
+            create(
+              :trainee,
+              awarded_state,
+              trainee_route_trait,
+              first_names: "Bob",
+            )
+          end
+
+          before do
+            put(
+              endpoint,
+              headers: { Authorization: "Bearer #{token}", **json_headers },
+              params: params.to_json,
+            )
+          end
+
+          it "returns status code 422 with a StateTransitionError" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              {
+                "error" => "StateTransitionError",
+                "message" => "It’s not possible to perform this action while the trainee is in its current state",
+              },
+            )
+          end
+
+          it "does not update the trainee" do
+            expect(trainee.reload.first_names).to eq("Bob")
+          end
+        end
+      end
+    end
+
     context "when the trainee does not exist" do
       let(:slug) { "missing-trainee-slug" }
       let(:data) { { first_names: "Alice" } }
@@ -1029,7 +1066,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
               it "returns an error" do
                 expect(response).to have_http_status(:unprocessable_entity)
                 expect(response.parsed_body["errors"]).to include(
-                  "training_partner_id is invalid. The URN '#{new_training_partner.urn}' does not match any known training partners",
+                  "training_partner_urn is invalid. The URN '#{new_training_partner.urn}' does not match any known training partners",
                 )
               end
             end
@@ -2313,7 +2350,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
+            "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '020', '021', '028', '031', '032'...",
           )
         end
 
@@ -2324,7 +2361,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"]).to include(
               "itt_qualification_aim" => [
-                "has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
+                "has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '020', '021', '028', '031', '032'...",
               ],
             )
           end
@@ -2708,7 +2745,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       it "returns a validation error" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly(
-          "iqts_country has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'...",
+          "iqts_country has invalid reference data value of 'InvalidCountry'. Example values include 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AR', 'AS'...",
         )
       end
 
@@ -2718,7 +2755,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it "returns a validation error" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "iqts_country" => ["has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'..."],
+            "iqts_country" => ["has invalid reference data value of 'InvalidCountry'. Example values include 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AR', 'AS'..."],
           )
         end
       end

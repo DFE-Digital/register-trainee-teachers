@@ -372,7 +372,7 @@ feature "publish course details", feature_publish_course_details: true do
     def then_i_see_an_error_message
       translation_key_prefix = "activemodel.errors.models.publish_course_details_form.attributes"
 
-      expect(publish_course_details_page).to have_content(
+      expect(publish_course_details_page).to have_text(
         I18n.t("#{translation_key_prefix}.course_uuid.blank"),
       )
     end
@@ -415,7 +415,7 @@ feature "publish course details", feature_publish_course_details: true do
     end
 
     def then_i_see_the_error_message_for_start_date(type)
-      expect(itt_dates_edit_page).to have_content(
+      expect(itt_dates_edit_page).to have_text(
         I18n.t("activemodel.errors.models.itt_dates_form.attributes.start_date.#{type}"),
       )
     end

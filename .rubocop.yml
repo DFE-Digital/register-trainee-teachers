@@ -113,5 +113,5 @@ RSpec/SpecFilePathFormat:
     - "spec/data_migrations/**/*"
     - "spec/**/v20*/**/*"
 
-Capybara/NegationMatcher:
+Capybara/RSpec/NegationMatcher:
   EnforcedStyle: not_to

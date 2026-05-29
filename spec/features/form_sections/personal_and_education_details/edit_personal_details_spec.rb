@@ -90,7 +90,7 @@ private
 
   def then_i_see_error_messages_related_to_missing_fields
     text = I18n.t("views.missing_data_view.single_missing_field_text_html", missing_field: "Nationality")
-    expect(confirm_details_page).to have_content(text)
+    expect(confirm_details_page).to have_text(text)
     expect(confirm_details_page).to have_css(".govuk-error-summary")
   end
 
@@ -149,7 +149,7 @@ private
   end
 
   def then_i_see_error_messages
-    expect(personal_details_page).to have_content(
+    expect(personal_details_page).to have_text(
       I18n.t(
         "activemodel.errors.models.personal_details_form.attributes.nationality_names.empty_nationalities",
       ),
@@ -188,7 +188,7 @@ private
   end
 
   def then_i_see_error_messages_for_partially_completed_nationalities
-    expect(personal_details_page).to have_content(
+    expect(personal_details_page).to have_text(
       I18n.t(
         "activemodel.errors.validators.autocomplete.other_nationality1",
       ),

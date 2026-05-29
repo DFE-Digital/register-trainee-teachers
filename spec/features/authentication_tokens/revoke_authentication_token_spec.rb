@@ -60,11 +60,11 @@ private
   end
 
   def then_i_should_see_the_revoke_token_page
-    expect(page).to have_content("Are you sure you want to revoke this token?")
+    expect(page).to have_text("Are you sure you want to revoke this token?")
   end
 
   def then_the_token_should_have_a_revoked_status
-    expect(page).to have_content("Revoked")
+    expect(page).to have_text("Revoked")
   end
 
   def and_i_should_no_longer_see_the_revoke_action
@@ -72,12 +72,12 @@ private
   end
 
   def and_i_should_see_when_the_token_was_revoked
-    expect(page).to have_content("Revoked by")
-    expect(page).to have_content("on #{Time.zone.today.to_fs(:govuk)}")
+    expect(page).to have_text("Revoked by")
+    expect(page).to have_text("on #{Time.zone.today.to_fs(:govuk)}")
   end
 
   def then_i_see_an_unauthorised_message
-    expect(page).to have_content("You do not have permission to perform this action")
+    expect(page).to have_text("You do not have permission to perform this action")
   end
 
   def and_i_cannot_see_the_revoke_action
@@ -91,6 +91,6 @@ private
   end
 
   def then_i_see_an_unauthorised_message
-    expect(page).to have_content("You do not have permission to perform this action")
+    expect(page).to have_text("You do not have permission to perform this action")
   end
 end

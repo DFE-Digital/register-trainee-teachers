@@ -356,17 +356,17 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(withdrawal_date_page).to have_content("Select when the trainee withdrew")
+    expect(withdrawal_date_page).to have_text("Select when the trainee withdrew")
   end
 
   def then_i_see_the_error_message_for_invalid_date
-    expect(withdrawal_page).to have_content(
+    expect(withdrawal_page).to have_text(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.date.invalid"),
     )
   end
 
   def then_i_see_the_error_message_for_blank_date
-    expect(withdrawal_page).to have_content(
+    expect(withdrawal_page).to have_text(
       I18n.t("activemodel.errors.models.withdrawal_form.attributes.date.blank"),
     )
   end
@@ -376,15 +376,15 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen
-    expect(withdrawal_trigger_page).to have_content("Select who chose to withdraw the trainee")
+    expect(withdrawal_trigger_page).to have_text("Select who chose to withdraw the trainee")
   end
 
   def then_i_see_the_error_message_for_future_interest_not_chosen
-    expect(withdrawal_future_interest_page).to have_content("Select if the trainee would be interested in becoming a teacher in the future")
+    expect(withdrawal_future_interest_page).to have_text("Select if the trainee would be interested in becoming a teacher in the future")
   end
 
   def then_i_see_the_error_message_for_unknown_exclusivity
-    expect(withdrawal_reason_page).to have_content('Only select "Unknown" if no other withdrawal reasons apply')
+    expect(withdrawal_reason_page).to have_text('Only select "Unknown" if no other withdrawal reasons apply')
   end
 
   def and_i_see_the_summary_card(withdrawal_date:, reason:)

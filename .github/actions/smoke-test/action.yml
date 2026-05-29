@@ -28,7 +28,7 @@ runs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.4.8
+        ruby-version: 3.4.9
 
     # base_url is set in config_settings for non-review apps and will need to be overridden for aks non-review
     - name: Set Environment variables
@@ -42,9 +42,8 @@ runs:
     - name: Bundle smoke test gems
       shell: bash
       run: |
-        gem install bundler
         echo 'gem "rspec"' >> Gemfile
-        bundle
+        bundle install
 
     - name: Smoke Tests ${{ inputs.environment }}
       shell: bash

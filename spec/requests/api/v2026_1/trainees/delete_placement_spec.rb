@@ -8,6 +8,29 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
     let!(:token) { auth_token.token }
     let!(:provider) { auth_token.provider }
 
+    context "when the trainee is in an awarded state" do
+      let(:trainee) { create(:trainee, :awarded, :with_placements, provider:) }
+      let(:trainee_slug) { trainee.slug }
+      let(:slug) { trainee.placements.last.slug }
+
+      it "returns status code 422 with a StateTransitionError" do
+        delete "/api/v2026.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token, **json_headers }
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          {
+            "error" => "StateTransitionError",
+            "message" => "It’s not possible to perform this action while the trainee is in its current state",
+          },
+        )
+      end
+
+      it "does not delete the placement" do
+        expect {
+          delete "/api/v2026.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token, **json_headers }
+        }.not_to change { trainee.placements.count }
+      end
+    end
+
     context "non existant trainee" do
       let(:trainee_slug) { "non-existant" }
       let(:slug) { "non-existant" }

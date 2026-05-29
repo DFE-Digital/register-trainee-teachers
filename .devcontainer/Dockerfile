@@ -1,4 +1,4 @@
-FROM ruby:3.4.8-alpine3.22
+FROM ruby:3.4.9-alpine3.23
 
 ENV APP_HOME=/app
 RUN mkdir -p $APP_HOME
@@ -35,7 +35,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
   && apk del build-dependencies
 
 # Install corepack and enable yarn
-RUN yarn global add corepack
+RUN yarn global add corepack@0.34.0
 RUN corepack enable && corepack prepare yarn@4.9.1 --activate
 
 # Install node packages defined in package.json

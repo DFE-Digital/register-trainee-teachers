@@ -70,7 +70,7 @@ private
   end
 
   def and_i_should_see_the_link_to_sign_out
-    expect(page).to have_content("Sign out")
+    expect(page).to have_text("Sign out")
   end
 
   def and_my_details_are_refreshed

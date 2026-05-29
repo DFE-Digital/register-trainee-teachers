@@ -52,7 +52,7 @@ feature "submit for TRN" do
           when_i_am_viewing_the_review_draft_page
           and_i_want_to_review_record_before_submitting_for_trn
           then_i_review_the_trainee_data
-          expect(page).to have_content(trainee_name(trainee))
+          expect(page).to have_text(trainee_name(trainee))
         end
       end
 

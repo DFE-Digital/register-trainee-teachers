@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FAUAPI_URL="https://pp-apimanagement.education.gov.uk"
+FAUAPI_API_NAME="register-trainee-teachers-api"
+FAUAPI_TOKEN="${1:-}"
+
+if [ -z "$FAUAPI_TOKEN" ]; then
+  echo "usage: bin/test_fauapi_publish <fauapi_token>"
+  exit 1
+fi
+
+ruby bin/generate_fauapi_manifest
+
+echo "fauapi import payload:"
+jq . public/fauapi/register-api.json
+
+IMPORT_RESPONSE=$(curl -sf -X POST "$FAUAPI_URL/api/tasks/apis/import" \
+  -H "Authorization: Bearer $FAUAPI_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d @public/fauapi/register-api.json)
+
+echo "fauapi import response:"
+echo "$IMPORT_RESPONSE" | jq .
+
+APIS_RESPONSE=$(curl -sf "$FAUAPI_URL/api/tasks/apis" \
+  -H "Authorization: Bearer $FAUAPI_TOKEN")
+
+API_ID=$(echo "$APIS_RESPONSE" \
+  | jq -r --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name) | .id')
+
+if [ -z "$API_ID" ]; then
+  echo "Could not find API '$FAUAPI_API_NAME' after import"
+  exit 1
+fi
+
+echo "fauapi persisted api object:"
+echo "$APIS_RESPONSE" \
+  | jq -c --arg name "$FAUAPI_API_NAME" '.[] | select(.name == $name)' \
+  | jq .
+
+PUBLISH_RESPONSE=$(curl -sf -X PUT "$FAUAPI_URL/api/tasks/apis/$API_ID/publish" \
+  -H "Authorization: Bearer $FAUAPI_TOKEN")
+
+echo "fauapi publish response:"
+echo "$PUBLISH_RESPONSE" | jq .
+
+echo "Published API $API_ID to FauAPI catalogue (pre-prod)"

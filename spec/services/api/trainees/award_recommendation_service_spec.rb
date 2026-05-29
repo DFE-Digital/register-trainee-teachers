@@ -53,7 +53,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank. Enter a date the trainee met the QTS or EYTS requirements.")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -70,7 +70,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank. Enter a date the trainee met the QTS or EYTS requirements.")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -184,6 +184,23 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           }
         end
 
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("placements must be at least 2 for the school_direct_salaried training route")
+          expect(trainee.recommended_for_award?).to be(false)
+        end
+      end
+
+      context "when trainee on salaried route has 2 placements" do
+        let(:trainee) { create(:trainee, :trn_received, :school_direct_salaried, placements: create_list(:placement, 2, :with_school)) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
         it "returns true" do
           success, _errors = subject.call(params, trainee)
 
@@ -204,7 +221,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("placements must be at least 1 for the school_direct_salaried training route")
+          expect(errors.full_messages).to contain_exactly("placements must be at least 2 for the school_direct_salaried training route")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end

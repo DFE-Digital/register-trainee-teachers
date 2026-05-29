@@ -252,13 +252,13 @@ feature "Deferring a trainee" do
   end
 
   def and_i_see_a_message_for_trainee_deferred_before_itt_started
-    expect(deferral_confirmation_page).to have_content(
+    expect(deferral_confirmation_page).to have_text(
       strip_tags(I18n.t("deferral_details.view.deferred_before_itt_started")),
     )
   end
 
   def and_i_see_a_message_for_itt_started_but_trainee_deferred_before_starting
-    expect(deferral_confirmation_page).to have_content(
+    expect(deferral_confirmation_page).to have_text(
       strip_tags(I18n.t("deferral_details.view.itt_started_but_trainee_did_not_start")),
     )
   end
@@ -272,19 +272,19 @@ feature "Deferring a trainee" do
   end
 
   def then_i_see_the_error_message_for_invalid_date
-    expect(deferral_page).to have_content(
+    expect(deferral_page).to have_text(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date.invalid"),
     )
   end
 
   def then_i_see_the_error_message_for_blank_date
-    expect(deferral_page).to have_content(
+    expect(deferral_page).to have_text(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date.blank"),
     )
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(deferral_page).to have_content(
+    expect(deferral_page).to have_text(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date_string.blank"),
     )
   end
@@ -302,7 +302,7 @@ feature "Deferring a trainee" do
   end
 
   def and_i_see_a_validation_error_for_defer_reason_length
-    expect(page).to have_content("Deferral reason is too long (maximum is #{DeferralForm::MAX_DEFER_REASON_LENGTH} characters)")
+    expect(page).to have_text("Deferral reason is too long (maximum is #{DeferralForm::MAX_DEFER_REASON_LENGTH} characters)")
   end
 
   def then_i_am_redirected_to_deferral_confirmation_page

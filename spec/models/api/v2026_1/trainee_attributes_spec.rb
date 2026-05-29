@@ -16,8 +16,8 @@ RSpec.describe Api::V20261::TraineeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:nationality)
-        .in_array(RecruitsApi::CodeSets::Nationalities::MAPPING.values)
-        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(RecruitsApi::CodeSets::Nationalities::MAPPING.keys)}\.\.\./)
+        .in_array(ReferenceData::NATIONALITIES.names_with_hesa_codes)
+        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(ReferenceData::NATIONALITIES.hesa_codes)}\.\.\./)
         .allow_blank
     }
 
@@ -165,7 +165,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:course_subject_one]).to contain_exactly(
-            "has invalid reference data value of 'random subject'. Example values include #{format_reference_data_list(Hesa::CodeSets::CourseSubjects::MAPPING.keys)}...",
+            "has invalid reference data value of 'random subject'. Example values include #{format_reference_data_list(ReferenceData::COURSE_SUBJECTS.hesa_codes)}...",
           )
         }
       end
@@ -334,8 +334,8 @@ RSpec.describe Api::V20261::TraineeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:ethnicity)
-        .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq)
-        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(Hesa::CodeSets::Ethnicities::MAPPING.keys)}\.\.\./)
+        .in_array(ReferenceData::ETHNICITIES.names_with_hesa_codes)
+        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(ReferenceData::ETHNICITIES.hesa_codes)}\.\.\./)
         .allow_blank
     }
 
@@ -865,7 +865,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
             subject.validate
 
             expect(subject.errors[:iqts_country]).to contain_exactly(
-              "has invalid reference data value of 'InvalidCountry'. Example values include 'AF', 'XQ', 'AX', 'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'XX'...",
+              "has invalid reference data value of 'InvalidCountry'. Example values include 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AR', 'AS'...",
             )
           end
         end
@@ -1103,7 +1103,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
       end
 
       context "changing a single hesa trainee detail attribute" do
-        let(:trainee) { create(:trainee, :with_hesa_student, :completed, sex: :prefer_not_to_say, hesa_trainee_detail: hesa_trainee_detail) }
+        let(:trainee) { create(:trainee, :with_hesa_student, :completed, sex: :prefer_not_to_say, funding_eligibility: :eligible, hesa_trainee_detail: hesa_trainee_detail) }
 
         let(:hesa_trainee_detail) {
           build(:hesa_trainee_detail, course_age_range: "13909")
@@ -1112,7 +1112,7 @@ RSpec.describe Api::V20261::TraineeAttributes do
         let(:hesa_trainee_detail_attributes) {
           hesa_trainee_detail.attributes.select { |k, _v|
             Api::V20261::HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
-          }.merge("fund_code" => nil)
+          }.merge("fund_code" => "7")
         }
 
         let(:updated_hesa_trainee_detail_attributes) {

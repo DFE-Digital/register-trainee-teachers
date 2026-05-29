@@ -5,9 +5,12 @@ module Api
     class DegreesController < Api::BaseController
       include Api::Attributable
       include Api::Serializable
+      include Api::TraineeStateRestriction
+
+      before_action :restrict_awarded_trainee_modification!, only: %i[create update destroy]
 
       def index
-        trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
+        trainee = current_provider.trainees.find_by!(slug: params.expect(:trainee_slug))
 
         render(
           json: { data: trainee.degrees.map { |degree| serializer_klass.new(degree).as_hash } },
@@ -80,11 +83,11 @@ module Api
       end
 
       def trainee
-        @trainee ||= current_provider.trainees.find_by!(slug: params[:trainee_slug])
+        @trainee ||= current_provider.trainees.find_by!(slug: params.expect(:trainee_slug))
       end
 
       def degree
-        @degree ||= trainee.degrees.find_by!(slug: params[:degree_slug])
+        @degree ||= trainee.degrees.find_by!(slug: params.expect(:degree_slug))
       end
 
       def trainee_serializer_klass
