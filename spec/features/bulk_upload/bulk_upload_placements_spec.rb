@@ -72,7 +72,27 @@ feature "bulk update page" do
     end
   end
 
+  context "early years route trainees" do
+    scenario "are not counted as needing placements" do
+      given_there_are_early_years_trainees_without_placements
+      and_i_visit_the_bulk_placements_page
+      then_i_see_how_many_trainees_i_can_bulk_update
+    end
+  end
+
 private
+
+  def given_there_are_early_years_trainees_without_placements
+    %i[early_years_salaried early_years_postgrad early_years_undergrad].each do |route|
+      create(
+        :trainee,
+        :without_required_placements,
+        :without_placements,
+        training_route: TRAINING_ROUTE_ENUMS[route],
+        provider: current_user.organisation,
+      )
+    end
+  end
 
   def then_i_see_how_many_trainees_i_can_bulk_update
     expect(page).to have_text("You have 2 trainee records who do not have the required number of placements")

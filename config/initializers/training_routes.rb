@@ -122,7 +122,10 @@ EMPLOYING_SCHOOL_ROUTES = %i[
 
 MINIMUM_PLACEMENTS = Hash.new(2).merge(
   TRAINING_ROUTE_ENUMS[:iqts] => 1,
-  TRAINING_ROUTE_ENUMS[:early_years_salaried] => 1,
+  TRAINING_ROUTE_ENUMS[:early_years_salaried] => 0,
+  TRAINING_ROUTE_ENUMS[:early_years_postgrad] => 0,
+  TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 0,
+  TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 0,
 ).freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|

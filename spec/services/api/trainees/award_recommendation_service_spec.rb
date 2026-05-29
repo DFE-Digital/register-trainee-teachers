@@ -275,6 +275,24 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         end
       end
 
+      %i[early_years_salaried early_years_postgrad early_years_undergrad].each do |route|
+        context "when trainee on #{route} route has no placements" do
+          let(:trainee) { create(:trainee, :without_placements, :trn_received, training_route: route) }
+          let(:params) do
+            {
+              qts_standards_met_date: Time.zone.today.iso8601,
+            }
+          end
+
+          it "returns true" do
+            success, _errors = subject.call(params, trainee)
+
+            expect(success).to be(true)
+            expect(trainee.recommended_for_award?).to be(true)
+          end
+        end
+      end
+
       context "when trainee has no degrees but is on an undergraduate training route" do
         let(:trainee) { create(:trainee, :trn_received, :with_placements, training_route: :early_years_undergrad) }
         let(:params) do
