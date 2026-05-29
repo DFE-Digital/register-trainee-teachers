@@ -82,7 +82,7 @@ jobs:
         echo "$PUBLISH_BODY" | jq . 2>/dev/null || echo "$PUBLISH_BODY"
 
         if [[ "$PUBLISH_HTTP_CODE" != 2* ]]; then
-          echo "::error::FauAPI publish failed with HTTP $PUBLISH_HTTP_CODE"
+          echo "::error::FauAPI publish failed"
           exit 1
         fi
 
