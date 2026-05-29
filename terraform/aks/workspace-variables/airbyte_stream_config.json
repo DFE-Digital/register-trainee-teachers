@@ -3,7 +3,7 @@
     "streams": [
       {
         "name": "academic_cycles",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -57,7 +57,7 @@
       },
       {
         "name": "activities",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -121,7 +121,7 @@
       },
       {
         "name": "allocation_subjects",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -170,7 +170,7 @@
       },
       {
         "name": "apply_applications",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -234,7 +234,7 @@
       },
       {
         "name": "bulk_update_row_errors",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -298,7 +298,7 @@
       },
       {
         "name": "bulk_update_trainee_uploads",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -372,7 +372,7 @@
       },
       {
         "name": "course_subjects",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -426,7 +426,7 @@
       },
       {
         "name": "courses",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -565,7 +565,7 @@
       },
       {
         "name": "degrees",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -689,7 +689,7 @@
       },
       {
         "name": "disabilities",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -733,7 +733,7 @@
       },
       {
         "name": "dttp_providers",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -792,7 +792,7 @@
       },
       {
         "name": "dttp_schools",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -856,7 +856,7 @@
       },
       {
         "name": "feedback_items",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -920,7 +920,7 @@
       },
       {
         "name": "funding_method_subjects",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -974,7 +974,7 @@
       },
       {
         "name": "funding_methods",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1038,7 +1038,7 @@
       },
       {
         "name": "hesa_metadata",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1137,7 +1137,7 @@
       },
       {
         "name": "training_partner_users",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1191,7 +1191,7 @@
       },
       {
         "name": "training_partners",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1270,7 +1270,7 @@
       },
       {
         "name": "nationalities",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1319,7 +1319,7 @@
       },
       {
         "name": "nationalisations",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1373,7 +1373,7 @@
       },
       {
         "name": "placements",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1452,7 +1452,7 @@
       },
       {
         "name": "provider_users",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1506,7 +1506,7 @@
       },
       {
         "name": "providers",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1590,7 +1590,7 @@
       },
       {
         "name": "schools",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1664,7 +1664,7 @@
       },
       {
         "name": "sign_offs",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1728,7 +1728,7 @@
       },
       {
         "name": "subject_specialisms",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1787,7 +1787,7 @@
       },
       {
         "name": "subjects",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1841,7 +1841,7 @@
       },
       {
         "name": "trainee_withdrawal_reasons",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1900,7 +1900,7 @@
       },
       {
         "name": "trainee_withdrawals",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1979,7 +1979,7 @@
       },
       {
         "name": "trainees",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -2343,7 +2343,7 @@
       },
       {
         "name": "trs_trn_requests",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -2407,7 +2407,7 @@
       },
       {
         "name": "users",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -2496,7 +2496,7 @@
       },
       {
         "name": "withdrawal_reasons",
-        "syncMode": "incremental_append",
+        "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
