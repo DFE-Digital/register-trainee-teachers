@@ -20,9 +20,9 @@ module SchoolData
       )
 
       download_record
-    rescue StandardError
+    rescue StandardError => e
       download_record&.update(status: :failed, completed_at: Time.current)
-      raise
+      raise if executions > 14 || !e.is_a?(Net::HTTPClientException) # Raise immediately unless it's a retryable client error. Raise those after 14 attempts.
     end
   end
 end

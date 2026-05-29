@@ -244,11 +244,16 @@ module TechDocsHelpers
   FIRST_VERSION_WITH_NEW_REFERENCE_DATA = "V20260"
 
   def self.runner(runner_code)
+    rails_lockfile = File.join(RAILS_DIR, "Gemfile.lock")
     command = <<~CMD
-      cd #{RAILS_DIR} && BUNDLE_GEMFILE=#{RAILS_GEMFILE} bundle exec rails runner '#{runner_code}.to_json'
+      cd #{RAILS_DIR} && BUNDLE_GEMFILE=#{RAILS_GEMFILE} BUNDLE_LOCKFILE=#{rails_lockfile} bundle exec rails runner '#{runner_code}.to_json'
     CMD
 
-    stdout, stderr, status = Open3.capture3(command)
+    # tech_docs runs under its own Gemfile; without this, Bundler 4 inherits that
+    # context into the Rails subprocess and fails to resolve git-sourced gems.
+    stdout, stderr, status = Bundler.with_unbundled_env do
+      Open3.capture3(command)
+    end
 
     if status.success?
       JSON.parse(stdout)
