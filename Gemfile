@@ -32,7 +32,7 @@ gem "foreman"
 gem "charlock_holmes", "0.7.9"
 
 # Soft delete records
-gem "discard", "~> 1.4"
+gem "discard", "~> 2.0"
 
 # Sentry
 gem "sentry-rails"
