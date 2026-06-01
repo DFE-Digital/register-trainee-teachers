@@ -29,13 +29,17 @@ RSpec.describe "Reference data integrity" do
       gem_codes: -> { Hesa::CodeSets::BursaryLevels::VALUES.keys } },
     { file: "institution.yml", v26: :institution, v25: :institution,
       gem_codes: -> { DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:hesa_itt_code) },
-      entry_count: 604, code_format: /^\d{4}$/ },
+      entry_count: 602, code_format: /^\d{4}$/ },
     { file: "itt_aim.yml", v26: :itt_aim, v25: :itt_aim,
       gem_codes: -> { Hesa::CodeSets::IttAims::MAPPING.keys } },
     { file: "itt_qualification_aim.yml", v26: :itt_qualification_aim, v25: :itt_qualification_aim,
       gem_codes: -> { Hesa::CodeSets::IttQualificationAims::MAPPING.keys } },
     { file: "nationality.yml", v26: :nationality, v25: :nationality,
-      gem_codes: -> { RecruitsApi::CodeSets::Nationalities::MAPPING.keys } },
+      gem_codes: -> { RecruitsApi::CodeSets::Nationalities::MAPPING.keys },
+      accepted_names: {
+        v25: -> { RecruitsApi::CodeSets::Nationalities::MAPPING.values },
+        v26: -> { ReferenceData::NATIONALITIES.names_with_hesa_codes },
+      } },
     { file: "sex.yml", v26: :sex, v25: :sex,
       gem_codes: -> { Hesa::CodeSets::Sexes::MAPPING.keys } },
     { file: "study_mode.yml", v26: :study_mode, v25: :study_mode,
@@ -98,6 +102,12 @@ RSpec.describe "Reference data integrity" do
         end
       end
 
+      it "has no duplicate HESA codes" do
+        codes = data.flat_map { |e| Array(e["hesa_codes"]) }.compact_blank
+        duplicates = codes.tally.select { |_, count| count > 1 }.keys
+        expect(duplicates).to be_empty
+      end
+
       it "HESA codes match v2025" do
         expect(yaml_codes(type[:file])).to eq(normalize(type[:gem_codes].call))
       end
@@ -105,6 +115,14 @@ RSpec.describe "Reference data integrity" do
       it "labels match v2025 published" do
         divergences = divergences_from_v25(v25_published, v2026_labels_by_code(type[:v26]), except: except_codes)
         expect(divergences).to be_empty, "v2026 labels diverge from v2025:\n#{divergences.join("\n")}"
+      end
+
+      if type[:accepted_names]
+        it "API accepted names match v2025" do
+          v25 = type[:accepted_names][:v25].call.uniq.sort
+          v26 = type[:accepted_names][:v26].call.sort
+          expect(v26).to eq(v25), "only in v2026: #{(v26 - v25).inspect}\nonly in v2025: #{(v25 - v26).inspect}"
+        end
       end
     end
   end

@@ -1381,6 +1381,7 @@ data:
     name: "the_university_of_wales_central_functions"
     display_name: "The University of Wales (central functions)"
     hesa_codes:
+      - "0186"
   - id: "73228041-7042-e811-80ff-3863bb3640b8"
     name: "the_university_of_wales_newport"
     display_name: "The University of Wales, Newport"
@@ -1631,6 +1632,7 @@ data:
     name: "west_suffolk_college"
     display_name: "West Suffolk College"
     hesa_codes:
+      - "1190"
   - id: "cb23a753-7042-e811-80ff-3863bb3640b8"
     name: "wimbledon_school_of_art"
     display_name: "Wimbledon School of Art"
@@ -1781,11 +1783,6 @@ data:
     display_name: "University of Wales College of Medicine"
     hesa_codes:
       - "0181"
-  - id: "c25c467f-9217-430e-a496-4299c9c73b56"
-    name: "the_university_of_wales_central_functions"
-    display_name: "The University of Wales (central functions)"
-    hesa_codes:
-      - "0186"
   - id: "1f593ae1-291a-4bff-872d-65a9bd5e210d"
     name: "westhill_college"
     display_name: "Westhill College"
@@ -2946,11 +2943,6 @@ data:
     display_name: "Morley College Limited"
     hesa_codes:
       - "1189"
-  - id: "3c30e11c-7b46-4d59-b979-319fbe8ff919"
-    name: "west_suffolk_college"
-    display_name: "West Suffolk College"
-    hesa_codes:
-      - "1190"
   - id: "184f9945-d4a6-4bdd-8827-12534d550893"
     name: "north_shropshire_college"
     display_name: "North Shropshire College"
