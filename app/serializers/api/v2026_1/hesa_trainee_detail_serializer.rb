@@ -2,7 +2,7 @@
 
 module Api
   module V20261
-    class HesaTraineeDetailSerializer < Api::V20260::HesaTraineeDetailSerializer
+    class HesaTraineeDetailSerializer < Api::V20250::HesaTraineeDetailSerializer
     end
   end
 end
