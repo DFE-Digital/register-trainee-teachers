@@ -113,6 +113,21 @@ module Funding
         it "sets applying_for_scholarship to nil" do
           expect { subject.save! }.to change(trainee.reload, :applying_for_scholarship).to(false)
         end
+
+        context "and the trainee has a hesa_trainee_detail" do
+          let(:custom_bursary_tier) { "tier_two" }
+
+          before do
+            trainee.create_hesa_trainee_detail!(funding_method: Hesa::CodeSets::BursaryLevels::TIER_ONE)
+          end
+
+          it "syncs hesa_trainee_detail.funding_method via the mapper" do
+            subject.save!
+
+            expect(trainee.reload.hesa_trainee_detail.funding_method)
+              .to eq(Hesa::CodeSets::BursaryLevels::TIER_TWO)
+          end
+        end
       end
     end
   end

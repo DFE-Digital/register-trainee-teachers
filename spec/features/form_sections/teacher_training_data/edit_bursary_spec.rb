@@ -8,13 +8,14 @@ feature "edit bursary" do
   let(:course_subject) { CourseSubjects::EARLY_YEARS_TEACHING }
 
   scenario "edit with valid parameters" do
-    given_a_trainee_exists(:provider_led_postgrad, :with_valid_itt_start_date, course_subject_one: course_subject)
+    given_a_trainee_exists(:provider_led_postgrad, :with_valid_itt_start_date, :with_hesa_trainee_detail, course_subject_one: course_subject, funding_eligibility: :eligible)
     and_a_bursary_exists_for_their_subject
     when_i_visit_the_bursary_page
     and_i_choose_applying_for_bursary
 
     and_i_submit_the_form
     then_i_am_redirected_to_the_funding_confirmation_page
+    and_the_hesa_trainee_detail_funding_method_is_postgraduate_bursary
   end
 
   scenario "submitting with invalid parameters" do
@@ -35,6 +36,7 @@ feature "edit bursary" do
 
       and_i_submit_the_form
       then_i_am_redirected_to_the_funding_confirmation_page
+      and_the_hesa_trainee_detail_funding_method_is_tier_one
     end
   end
 
@@ -55,7 +57,7 @@ feature "edit bursary" do
 private
 
   def given_an_early_years_postgrad_trainee_exists
-    trainee = given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
+    trainee = given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date, :with_hesa_trainee_detail, funding_eligibility: :eligible)
     trainee.set_early_years_course_details
     trainee.save
   end
@@ -117,5 +119,15 @@ private
 
   def then_i_see_the_bursary_page
     expect(bursary_page).to be_displayed(id: trainee.slug)
+  end
+
+  def and_the_hesa_trainee_detail_funding_method_is_postgraduate_bursary
+    expect(trainee.reload.hesa_trainee_detail.funding_method)
+      .to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+  end
+
+  def and_the_hesa_trainee_detail_funding_method_is_tier_one
+    expect(trainee.reload.hesa_trainee_detail.funding_method)
+      .to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
   end
 end

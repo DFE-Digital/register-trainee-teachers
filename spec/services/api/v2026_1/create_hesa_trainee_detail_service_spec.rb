@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V20250::CreateHesaTraineeDetailService do
+RSpec.describe Api::V20261::CreateHesaTraineeDetailService do
   subject { described_class }
 
   describe "#call" do
