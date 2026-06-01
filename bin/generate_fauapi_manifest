@@ -10,7 +10,6 @@ settings = YAML.load_file(File.join(root, "config", "settings.yml"))
 
 current_version = settings.dig("api", "current_version")
 major_version = current_version.split(".").first
-schema_url = "https://www.register-trainee-teachers.service.gov.uk/openapi/#{current_version}.yaml"
 
 current_year = Time.now.year
 
@@ -40,8 +39,6 @@ manifest = {
   displayName: "Register trainee teachers API",
   description: "The Register API allows providers to import trainee records from their student record systems and to keep those records synchronised as they are modified.",
   overview: "Register API Public Interface\r\nFull documentation is available here:\r\n[Register API documentation - Register trainee teachers](https://www.register-trainee-teachers.service.gov.uk/api-docs)",
-  schemaUrl: schema_url,
-  schemaType: "openapi",
   siteUrl: "https://www.register-trainee-teachers.service.gov.uk/api-docs",
   backendType: "http",
   majorVersion: major_version,
@@ -52,9 +49,9 @@ manifest = {
   technology: "REST, Ruby on Rails",
   usage: "HEI ITT providers and SRS vendors",
   environments: [
-    { name: "dev", baseUrl: "https://sandbox.register-trainee-teachers.service.gov.uk", visibility: "Public", enabled: true, backendMode: "None" },
-    { name: "staging", baseUrl: "https://staging.register-trainee-teachers.service.gov.uk", visibility: "Internal", enabled: true, backendMode: "None" },
-    { name: "live", baseUrl: "https://www.register-trainee-teachers.service.gov.uk", visibility: "Public", enabled: true, backendMode: "None" },
+    { name: "dev", backendUrl: "https://sandbox.register-trainee-teachers.service.gov.uk", visibility: "Public", enabled: true, backendMode: "None" },
+    { name: "staging", backendUrl: "https://staging.register-trainee-teachers.service.gov.uk", visibility: "Internal", enabled: true, backendMode: "None" },
+    { name: "live", backendUrl: "https://www.register-trainee-teachers.service.gov.uk", visibility: "Public", enabled: true, backendMode: "None" },
   ],
   releases: releases,
 }
@@ -64,6 +61,5 @@ FileUtils.mkdir_p(File.dirname(output_path))
 File.write(output_path, JSON.pretty_generate(manifest) + "\n")
 
 warn "Generated #{output_path}"
-warn "  schemaUrl: #{schema_url}"
 warn "  majorVersion: #{major_version}"
 warn "  releases: #{releases.map { |r| "#{r[:name]} (#{r[:tag]})" }.join(', ')}"

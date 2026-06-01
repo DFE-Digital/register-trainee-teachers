@@ -4,7 +4,7 @@
 
 ## Current status: pre-prod only
 
-We're currently only publishing to FauAPI **pre-prod**. The FauAPI platform has several bugs (see below) that make the production catalogue unreliable — `schemaUrl`, `baseUrl`, and publish responses are all broken on their side. We've reported these and they're aware. Once they're resolved, we'll switch the workflow to target production.
+We're currently only publishing to FauAPI **pre-prod**. The FauAPI platform has a known bug where `schemaUrl` is silently ignored, so the OpenAPI spec doesn't get attached automatically. Once platform bugs are resolved, we'll switch the workflow to target production.
 
 ## How it works
 
@@ -37,7 +37,5 @@ Production workspace setup hasn't been done yet. When the platform bugs are fixe
 
 The fauapi platform API has some bugs we've reported:
 
-- `schemaUrl` and `schemaType` in the import payload are silently ignored — the OpenAPI spec doesn't get attached
-- `baseUrl` on environment objects is silently dropped
-- Publish endpoint returns `{ "status": 400 }` in the body with HTTP 200 — acknowledged as their bug
+- The OpenAPI spec can't be attached via the import API — `schema.documentContentValue` (the documented upload mechanism) returns HTTP 500 for a real-world spec, likely a request size limit on their end; the schema shown in the catalogue is from a previous manual upload
 - Import response doesn't include the API `id` — we work around this by listing APIs after import
