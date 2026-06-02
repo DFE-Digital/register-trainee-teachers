@@ -3,7 +3,7 @@ name: Fix Airbyte Replication
 on:
   push:
     branches:
-      - feature/airbyte-replication
+      - feature/airbyte-replication-fix-workflows
   workflow_dispatch:
     inputs:
       environment:
