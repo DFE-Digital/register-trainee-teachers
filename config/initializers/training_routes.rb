@@ -120,13 +120,6 @@ EMPLOYING_SCHOOL_ROUTES = %i[
   teacher_degree_apprenticeship
 ].freeze
 
-MINIMUM_PLACEMENTS = Hash.new(2).merge(
-  TRAINING_ROUTE_ENUMS[:iqts] => 1,
-MINIMUM_PLACEMENTS = Hash.new(2).merge(TRAINING_ROUTE_ENUMS[:iqts] => 1)
-                                .merge(EARLY_YEARS_TRAINING_ROUTES.keys.index_with(0))
-                                .freeze
-).freeze
-
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only].include?(training_route)
 }.freeze
@@ -155,6 +148,10 @@ TRAINING_ROUTE_AWARD_TYPE = {
 EARLY_YEARS_ROUTE_NAME_PREFIX = "early_years"
 
 EARLY_YEARS_TRAINING_ROUTES = TRAINING_ROUTES.select { |t| t.starts_with?(EARLY_YEARS_ROUTE_NAME_PREFIX) }
+
+MINIMUM_PLACEMENTS = Hash.new(2)
+  .merge(TRAINING_ROUTE_ENUMS[:iqts] => 1)
+  .merge(EARLY_YEARS_TRAINING_ROUTES.keys.index_with(0)).freeze
 
 # Training route groupings
 POSTGRAD_FUNDED = "Postgrad (fee funded)"
