@@ -1,6 +1,9 @@
 name: Fix Airbyte Replication
 
 on:
+  push:
+    branches:
+      - feature/airbyte-replication
   workflow_dispatch:
     inputs:
       environment:
@@ -31,12 +34,13 @@ env:
 
 jobs:
   fix-replication:
-    name: Fix Airbyte replication on ${{ inputs.environment }}
+    name: Fix Airbyte replication
     runs-on: ubuntu-latest
     environment:
-      name: ${{ inputs.environment }}
+      name: qa
     env:
-      DEPLOY_ENV: ${{ inputs.environment }}
+      DEPLOY_ENV: ${{ github.event_name == 'push' && 'qa' || inputs.environment }}
+      DRY_RUN: ${{ github.event_name == 'push' && 'true' || inputs.dry-run }}
 
     steps:
     - name: Checkout
@@ -50,7 +54,7 @@ jobs:
         echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
 
     - name: Get cluster credentials
-      run: make ci ${{ inputs.environment }} get-cluster-credentials
+      run: make ci ${{ env.DEPLOY_ENV }} get-cluster-credentials
 
     - name: Fix Airbyte replication slot
       uses: DFE-Digital/github-actions/fix-airbyte-replication@feature/airbyte-replication
@@ -61,4 +65,4 @@ jobs:
         app-name: ${{ env.SERVICE_NAME }}-${{ env.DEPLOY_ENV }}
         namespace: ${{ env.NAMESPACE }}
         cluster: ${{ env.CLUSTER }}
-        dry-run: ${{ inputs.dry-run }}
+        dry-run: ${{ env.DRY_RUN }}
