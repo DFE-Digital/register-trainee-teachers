@@ -124,6 +124,30 @@ RSpec.describe Api::V20261::TraineeSerializer do
         trainee.update!(funding_eligibility: :eligible)
         expect(serialized["fund_code"]).to eq(Hesa::CodeSets::FundCodes::ELIGIBLE)
       end
+
+      it "includes funding_method derived from trainee funding fields" do
+        trainee.update!(applying_for_bursary: true, training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative])
+        expect(serialized["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+      end
+    end
+
+    describe "when the trainee has no HESA trainee detail record" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :created_manually,
+          :with_diversity_information,
+          :in_progress,
+          :with_french_nationality,
+          applying_for_bursary: true,
+          training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative],
+        )
+      end
+
+      it "derives funding_method from the trainee funding fields" do
+        expect(trainee.hesa_trainee_detail).to be_nil
+        expect(json[:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+      end
     end
 
     describe "nationality" do

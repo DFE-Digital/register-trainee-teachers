@@ -27,6 +27,29 @@ describe "`GET /api/v2026.0/trainees/:id` endpoint" do
     end
   end
 
+  context "when the trainee was created in the UI without a HESA trainee detail record" do
+    let!(:trainee) do
+      create(
+        :trainee,
+        :created_manually,
+        provider: auth_token.provider,
+        applying_for_bursary: true,
+      )
+    end
+
+    before do
+      get(
+        "/api/v2026.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns funding_method derived from the trainee funding fields" do
+      expect(trainee.hesa_trainee_detail).to be_nil
+      expect(response.parsed_body[:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+    end
+  end
+
   context "when the trainee does not exist" do
     before do
       get(

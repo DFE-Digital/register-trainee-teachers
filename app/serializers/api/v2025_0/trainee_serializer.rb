@@ -194,9 +194,13 @@ module Api
       end
 
       def hesa_trainee_attributes
-        return {} unless @trainee.hesa_trainee_detail
+        return { "funding_method" => funding_method } unless @trainee.hesa_trainee_detail
 
         HesaTraineeDetailSerializer.new(@trainee.hesa_trainee_detail).as_hash
+      end
+
+      def funding_method
+        ::Trainees::MapFundingToHesaBursaryLevel.call(trainee: @trainee)
       end
 
       def nationality

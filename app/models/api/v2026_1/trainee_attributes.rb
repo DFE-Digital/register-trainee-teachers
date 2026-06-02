@@ -285,6 +285,8 @@ module Api
         } || {}
         hesa_trainee_detail_attributes["fund_code"] ||=
           Api::V20250::HesaTraineeDetailSerializer::FUND_CODE_FROM_ELIGIBILITY[trainee.funding_eligibility]
+        hesa_trainee_detail_attributes["funding_method"] ||=
+          ::Trainees::MapFundingToHesaBursaryLevel.call(trainee:)
 
         degrees_attributes = trainee.degrees.map do |degree|
           degree.attributes.select { |k, _v| DegreeAttributes::ATTRIBUTES.include?(k.to_sym) }
