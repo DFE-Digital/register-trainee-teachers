@@ -188,9 +188,9 @@ describe TrainingRouteManager do
       end
     end
 
-    %i[early_years_salaried early_years_postgrad early_years_undergrad early_years_assessment_only].each do |route|
+    EARLY_YEARS_TRAINING_ROUTES.each_key do |route|
       context "for #{route} route" do
-        let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[route]) }
+        let(:trainee) { Struct.new(:training_route).new(route) }
 
         it "returns 0" do
           expect(subject.minimum_placements).to eq(0)

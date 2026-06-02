@@ -83,12 +83,12 @@ feature "bulk update page" do
 private
 
   def given_there_are_early_years_trainees_without_placements
-    %i[early_years_salaried early_years_postgrad early_years_undergrad].each do |route|
+    EARLY_YEARS_TRAINING_ROUTES.each_key do |route|
       create(
         :trainee,
         :without_required_placements,
         :without_placements,
-        training_route: TRAINING_ROUTE_ENUMS[route],
+        training_route: route,
         provider: current_user.organisation,
       )
     end

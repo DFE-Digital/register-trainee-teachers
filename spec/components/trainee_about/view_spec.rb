@@ -41,7 +41,7 @@ describe TraineeAbout::View do
     end
 
     context "with early year trainees that have status trn_received" do
-      let(:early_years_trainees) { TRAINING_ROUTE_ENUMS.values_at(:early_years_assessment_only, :early_years_postgrad, :early_years_salaried, :early_years_undergrad) }
+      let(:early_years_trainees) { EARLY_YEARS_TRAINING_ROUTES.keys }
       let(:current_user) { create(:user, :system_admin) }
       let(:trainee) { create(:trainee, :trn_received, early_years_trainees.sample) }
 
