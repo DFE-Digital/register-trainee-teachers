@@ -8,10 +8,10 @@ RSpec.describe Api::ErrorAttributeAdapter do
       # Call first with the 2025 version to load the CSV field mappings
       expect(Api::V20250::DegreeAttributes.attribute_mappings[:graduation_year]).to eq("Degree graduation year")
 
-      degree_attributes = Api::V20260::DegreeAttributes.new({}, record_source: Trainee::CSV_SOURCE)
+      degree_attributes = Api::V20261::DegreeAttributes.new({}, record_source: Trainee::CSV_SOURCE)
       degree_attributes.validate
 
-      expect(Api::V20260::DegreeAttributes.attribute_mappings[:graduation_year]).to eq("degree_graduation_year")
+      expect(Api::V20261::DegreeAttributes.attribute_mappings[:graduation_year]).to eq("degree_graduation_year")
       expect(degree_attributes.errors.full_messages).to include(/degree_graduation_year/)
     end
   end
