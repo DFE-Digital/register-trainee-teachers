@@ -48,13 +48,9 @@ jobs:
 
     - name: Set environment variables
       run: |
-        source global_config/${DEPLOY_ENV}.sh
         tf_vars_file=${TF_VARS_PATH}/${DEPLOY_ENV}.tfvars.json
         echo "CLUSTER=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
         echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
-
-    - name: Get cluster credentials
-      run: make ci ${{ env.DEPLOY_ENV }} get-cluster-credentials
 
     - name: Fix Airbyte replication slot
       uses: DFE-Digital/github-actions/fix-airbyte-replication@feature/airbyte-replication
