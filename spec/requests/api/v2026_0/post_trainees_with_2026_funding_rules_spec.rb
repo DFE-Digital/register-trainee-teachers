@@ -196,6 +196,12 @@ describe "`POST /api/v2026.0/trainees` endpoint", time_sensitive: true do
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
       expect(response.parsed_body[:data][:funding_method]).to eq(Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY)
     end
+
+    it "sets the trainee's training_initiative to veterans_teaching_undergraduate_bursary" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(Trainee.last.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary])
+    end
   end
 
   context "when the request is valid and includes a scholarship" do

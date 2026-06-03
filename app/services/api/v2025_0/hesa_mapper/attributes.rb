@@ -294,7 +294,7 @@ module Api
         end
 
         def veteran_teaching_undergraduate_bursary?
-          params[:bursary_level] == VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL
+          params[:funding_method] == VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL
         end
 
         def funding_eligibility_attribute
