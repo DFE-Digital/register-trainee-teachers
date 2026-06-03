@@ -29,10 +29,10 @@ module Trainees
       it { is_expected.to be_nil }
     end
 
-    # The following codes can't be recovered from the funding fields alone -
-    # the inbound mapper collapses undergrad/postgrad/veteran bursaries to a
-    # plain applying_for_bursary, so we disambiguate via training_route and
-    # training_initiative. These are asserted explicitly rather than round-tripped.
+    # We can't work out these codes using *only* the funding fields.
+    # The inbound mapping squashes undergrad, postgrad, and veteran bursaries into a
+    # basic "applying_for_bursary" flag. We need to use the training_route and
+    # training_initiative to tell them apart, hence direct testing, instead of round-trips.
     context "when applying for a bursary on the veteran teaching initiative" do
       let(:applying_for_bursary) { true }
       let(:training_initiative) { ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] }

@@ -116,7 +116,7 @@ RSpec.describe Api::V20261::TraineeSerializer do
       end
 
       it "serializes model attributes" do
-        model_attrs = trainee.hesa_trainee_detail.attributes.except(*Api::V20261::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES, "fund_code")
+        model_attrs = trainee.hesa_trainee_detail.attributes.except(*Api::V20261::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES, "fund_code", "funding_method")
         expect(serialized).to include(model_attrs)
       end
 
@@ -125,7 +125,8 @@ RSpec.describe Api::V20261::TraineeSerializer do
         expect(serialized["fund_code"]).to eq(Hesa::CodeSets::FundCodes::ELIGIBLE)
       end
 
-      it "includes funding_method derived from trainee funding fields" do
+      it "falls back to deriving funding_method from trainee funding fields when the stored value is nil" do
+        trainee.hesa_trainee_detail.update!(funding_method: nil)
         trainee.update!(applying_for_bursary: true, training_initiative: ROUTE_INITIATIVES_ENUMS[:no_initiative])
         expect(serialized["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
       end

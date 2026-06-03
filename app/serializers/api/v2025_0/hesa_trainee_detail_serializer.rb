@@ -8,7 +8,6 @@ module Api
         course_study_mode
         hesa_disabilities
         trainee_id
-        funding_method
       ].freeze
 
       FUND_CODE_FROM_ELIGIBILITY = {
@@ -24,7 +23,7 @@ module Api
         attrs = @trainee_details&.attributes&.except(*EXCLUDED_ATTRIBUTES) || {}
         attrs.merge(
           "fund_code" => fund_code_from_trainee,
-          "funding_method" => funding_method_from_trainee,
+          "funding_method" => attrs["funding_method"].presence || funding_method_from_trainee,
         )
       end
 
