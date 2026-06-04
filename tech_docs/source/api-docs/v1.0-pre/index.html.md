@@ -1,6 +1,6 @@
 ---
 title: v1.0-pre (Removed)
-weight: 7
+weight: 8
 ---
 
 # v1.0-pre - API Version Removed
