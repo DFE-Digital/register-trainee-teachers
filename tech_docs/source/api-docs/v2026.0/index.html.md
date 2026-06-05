@@ -13,8 +13,8 @@ API version v2026.0 was superseded by [v2026.1](/api-docs/v2026.1/) on 20 March 
 
 ## What should I do?
 
-Please migrate to the current supported preview version:
+Please migrate to the current supported test version:
 
-* **[v2026.1](/api-docs/v2026.1/)** - The current supported preview API version
+* **[v2026.1](/api-docs/v2026.1/)** - The current supported 2026 API version available for testing in the sandbox environment
 
 If you need assistance migrating from v2026.0, please refer to the [API versioning strategy](/api-docs/v2026.1/api-versioning-strategy.html) documentation.
