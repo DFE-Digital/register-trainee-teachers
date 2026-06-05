@@ -9,7 +9,7 @@ This API version has been **permanently removed** and is no longer supported.
 
 ## What happened?
 
-API version v2026.0 was a preview version. It was discontinued on **3rd June 2026** and superseded by [v2026.1](/api-docs/v2026.1/). All its documentation has been removed.
+API version v2026.0 was superseded by [v2026.1](/api-docs/v2026.1/) on 20 March 2026, and discontinued on **5 June 2026**. All its documentation has been removed.
 
 ## What should I do?
 
