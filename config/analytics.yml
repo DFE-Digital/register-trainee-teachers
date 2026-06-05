@@ -259,6 +259,8 @@ shared:
     - created_at
     - updated_at
   trainees:
+    - additional_dttp_data
+    - additional_ethnic_background
     - apply_application_id
     - applying_for_bursary
     - applying_for_grant
@@ -292,6 +294,7 @@ shared:
     - employing_school_id
     - employing_school_not_applicable
     - end_academic_cycle_id
+    - ethnic_background
     - first_names
     - funding_eligibility
     - sex
@@ -302,6 +305,7 @@ shared:
     - itt_end_date
     - itt_start_date
     - last_name
+    - middle_names
     - training_partner_id
     - placement_detail
     - training_partner_not_applicable
@@ -309,10 +313,12 @@ shared:
     - placement_assignment_dttp_id
     - progress
     - provider_id
+    - provider_trainee_id
     - recommended_for_award_at
     - record_source
     - region
     - reinstate_date
+    - searchable
     - slug
     - start_academic_cycle_id
     - state

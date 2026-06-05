@@ -8,6 +8,12 @@ shared:
     - email
     - date_of_birth
     - trn
+    - searchable
+    - middle_names
+    - ethnic_background
+    - additional_ethnic_background
+    - additional_dttp_data
+    - provider_trainee_id
   trainee_withdrawals:
     - safeguarding_concern_reasons
   users:
