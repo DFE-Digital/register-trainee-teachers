@@ -40,7 +40,7 @@ jobs:
       name: qa
     env:
       DEPLOY_ENV: ${{ github.event_name == 'push' && 'qa' || inputs.environment }}
-      DRY_RUN: ${{ github.event_name == 'push' && 'true' || inputs.dry-run }}
+      DRY_RUN: ${{ github.event_name == 'push' && 'false' || inputs.dry-run }}
 
     steps:
     - name: Checkout
