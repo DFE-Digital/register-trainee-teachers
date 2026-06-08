@@ -27,7 +27,7 @@ module Submissions
       end
 
       context "when only the placements section is missing data" do
-        let(:trainee) { build(:trainee, :submitted_with_start_date, :early_years_salaried) }
+        let(:trainee) { build(:trainee, :submitted_with_start_date, :provider_led_postgrad) }
 
         it "is invalid" do
           expect(subject.valid?).to be false

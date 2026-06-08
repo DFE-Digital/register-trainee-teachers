@@ -188,11 +188,13 @@ describe TrainingRouteManager do
       end
     end
 
-    context "for early_years_salaried route" do
-      let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[:early_years_salaried]) }
+    EARLY_YEARS_TRAINING_ROUTES.each_key do |route|
+      context "for #{route} route" do
+        let(:trainee) { Struct.new(:training_route).new(route) }
 
-      it "returns 1" do
-        expect(subject.minimum_placements).to eq(1)
+        it "returns 0" do
+          expect(subject.minimum_placements).to eq(0)
+        end
       end
     end
 
