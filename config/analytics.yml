@@ -295,6 +295,7 @@ shared:
     - employing_school_not_applicable
     - end_academic_cycle_id
     - ethnic_background
+    - ethnic_group
     - first_names
     - funding_eligibility
     - sex

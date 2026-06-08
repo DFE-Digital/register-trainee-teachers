@@ -10,6 +10,7 @@ shared:
     - date_of_birth
     - email
     - ethnic_background
+    - ethnic_group
     - first_names
     - last_name
     - middle_names

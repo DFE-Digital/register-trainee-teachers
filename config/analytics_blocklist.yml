@@ -396,8 +396,6 @@ shared:
     - created_at
     - updated_at
     - additional_disability
-  trainees:
-    - ethnic_group
   uploads:
     - id
     - created_at
