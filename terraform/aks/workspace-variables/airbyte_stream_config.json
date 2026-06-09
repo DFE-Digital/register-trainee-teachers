@@ -2006,6 +2006,16 @@
           },
           {
             "fieldPath": [
+              "additional_dttp_data"
+            ]
+          },
+          {
+            "fieldPath": [
+              "additional_ethnic_background"
+            ]
+          },
+          {
+            "fieldPath": [
               "apply_application_id"
             ]
           },
@@ -2171,6 +2181,16 @@
           },
           {
             "fieldPath": [
+              "ethnic_background"
+            ]
+          },
+          {
+            "fieldPath": [
+              "ethnic_group"
+            ]
+          },
+          {
+            "fieldPath": [
               "first_names"
             ]
           },
@@ -2221,6 +2241,11 @@
           },
           {
             "fieldPath": [
+              "middle_names"
+            ]
+          },
+          {
+            "fieldPath": [
               "training_partner_id"
             ]
           },
@@ -2256,6 +2281,11 @@
           },
           {
             "fieldPath": [
+              "provider_trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
               "recommended_for_award_at"
             ]
           },
@@ -2272,6 +2302,11 @@
           {
             "fieldPath": [
               "reinstate_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "searchable"
             ]
           },
           {
