@@ -6,7 +6,6 @@
 #
 #  id            :bigint           not null, primary key
 #  expires_at    :date             not null
-#  hashed_token  :string
 #  last_used_at  :datetime
 #  name          :string           not null
 #  revoked_at    :datetime
@@ -22,7 +21,6 @@
 #
 #  index_authentication_tokens_on_created_by_id            (created_by_id)
 #  index_authentication_tokens_on_expires_at               (expires_at)
-#  index_authentication_tokens_on_hashed_token             (hashed_token) UNIQUE
 #  index_authentication_tokens_on_provider_id              (provider_id)
 #  index_authentication_tokens_on_revoked_by_id            (revoked_by_id)
 #  index_authentication_tokens_on_status                   (status)
@@ -90,24 +88,12 @@ class AuthenticationToken < ApplicationRecord
     create!(name:, provider:, created_by:, expires_at:, token_hash:, token:)
   end
 
-  def self.legacy_hash_token(unhashed_token)
-    Digest::SHA256.hexdigest(unhashed_token)
-  end
-
   def self.hash_token(unhashed_token)
     OpenSSL::HMAC.hexdigest("SHA256", SECRET_KEY, unhashed_token)
   end
 
   def self.authenticate(unhashed_token)
-    hmac_token = find_by(token_hash: hash_token(unhashed_token))
-
-    return hmac_token if hmac_token.present?
-
-    # Temp logic to convert existing tokens
-    #
-    token = find_by(hashed_token: legacy_hash_token(unhashed_token))
-    token.presence&.update!(token_hash: hash_token(unhashed_token))
-    token
+    find_by(token_hash: hash_token(unhashed_token))
   end
 
   def update_last_used_at!
