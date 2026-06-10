@@ -172,15 +172,133 @@ module BulkUpdate
           end
 
           describe "#valid?" do
+            it { expect(service.valid?).to be false }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql(["Enter at least 2 placements"]) }
+          end
+
+          describe "#trainee" do
+            it { expect(service.trainee).to eql trainee }
+          end
+        end
+
+        context "and a row with the required Placements" do
+          let(:trainee) { create(:trainee, :bulk_recommend, :provider_led_postgrad, :with_placements) }
+
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          describe "#valid?" do
             it { expect(service.valid?).to be true }
           end
 
           describe "#messages" do
             it { expect(service.messages).to be_empty }
           end
+        end
 
-          describe "#trainee" do
-            it { expect(service.trainee).to eql trainee }
+        context "with a salaried route" do
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          context "and a row with only one Placement" do
+            let(:trainee) { create(:trainee, :bulk_recommend, :school_direct_salaried, :with_manual_placements, number_of_placements: 1) }
+
+            describe "#valid?" do
+              it { expect(service.valid?).to be false }
+            end
+
+            describe "#messages" do
+              it { expect(service.messages).to eql(["Enter at least 2 placements"]) }
+            end
+          end
+
+          context "and a row with two Placements" do
+            let(:trainee) { create(:trainee, :bulk_recommend, :school_direct_salaried, :with_manual_placements, number_of_placements: 2) }
+
+            describe "#valid?" do
+              it { expect(service.valid?).to be true }
+            end
+
+            describe "#messages" do
+              it { expect(service.messages).to be_empty }
+            end
+          end
+        end
+
+        context "with the iQTS route" do
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          context "and a row without Placements" do
+            let(:trainee) { create(:trainee, :bulk_recommend, :iqts, :without_placements) }
+
+            describe "#valid?" do
+              it { expect(service.valid?).to be false }
+            end
+
+            describe "#messages" do
+              it { expect(service.messages).to eql(["Enter at least 1 placement"]) }
+            end
+          end
+
+          context "and a row with one Placement" do
+            let(:trainee) { create(:trainee, :bulk_recommend, :iqts, :with_manual_placements, number_of_placements: 1) }
+
+            describe "#valid?" do
+              it { expect(service.valid?).to be true }
+            end
+
+            describe "#messages" do
+              it { expect(service.messages).to be_empty }
+            end
+          end
+        end
+
+        context "with an early years route" do
+          let(:trainee) { create(:trainee, :bulk_recommend, :early_years_postgrad, :without_placements) }
+
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be true }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to be_empty }
+          end
+        end
+
+        context "with the assessment only route" do
+          let(:trainee) { create(:trainee, :bulk_recommend, :without_placements) }
+
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be true }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to be_empty }
           end
         end
       end
