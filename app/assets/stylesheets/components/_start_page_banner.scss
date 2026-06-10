@@ -1,7 +1,7 @@
 @import "../inverted";
 
 .app-phase-banner__env--development .govuk-tag {
-  background: govuk-colour("dark-grey");
+  background: govuk-colour("black", $variant: "tint-25");
   color: govuk-colour("white");
 }
 
@@ -22,7 +22,7 @@
 
 .app-header__env--development,
 .app-header__env--development .govuk-header__container {
-  border-color: govuk-colour("dark-grey");
+  border-color: govuk-colour("black", $variant: "tint-25");
 }
 
 .app-header__env--qa,
@@ -51,7 +51,7 @@
   }
 
   .govuk-phase-banner {
-    border-bottom-color: govuk-colour("light-blue");
+    border-bottom-color: govuk-colour("blue", $variant: "tint-25");
   }
 
   .govuk-phase-banner__text,

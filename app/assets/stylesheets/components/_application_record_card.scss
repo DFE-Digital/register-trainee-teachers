@@ -1,5 +1,5 @@
 .application-record-card {
-  border-bottom: 1px solid govuk-colour("mid-grey");
+  border-bottom: 1px solid govuk-colour("black", $variant: "tint-80");
   margin-bottom: govuk-spacing(3);
   padding-bottom: govuk-spacing(3);
 }
@@ -27,12 +27,12 @@
     .govuk-tag {
       margin-left: govuk-spacing(3);
 
-      &:first-child { 
+      &:first-child {
         margin-bottom: govuk-spacing(1);
       }
 
       @include govuk-media-query($from: tablet) {
-        &:first-child { 
+        &:first-child {
           margin-bottom: govuk-spacing(0);
         }
       }
@@ -41,7 +41,7 @@
 }
 
 .application-record-card:first-of-type {
-  border-top: 1px solid govuk-colour("mid-grey");
+  border-top: 1px solid govuk-colour("black", $variant: "tint-80");
   padding-top: govuk-spacing(3);
 }
 
@@ -87,12 +87,12 @@
       padding-right: govuk-spacing(3);
       margin-bottom: 0;
     }
-    
+
     div:nth-child(2) {
       width: 40%;
     }
   }
-  
+
   @include govuk-media-query($from: $govuk-page-width) {
     display: flex;
     justify-content: space-between;
@@ -102,7 +102,7 @@
       padding-right: govuk-spacing(3);
       margin-bottom: 0;
     }
-    
+
     div:nth-child(2) {
       width: 40%;
     }
@@ -112,13 +112,13 @@
 // Updated at column
 .application-record-card__col:nth-last-child(1) {
   margin-top: govuk-spacing(2);
-  
+
   @include govuk-media-query($from: 401px) {
     width: 40%;
     margin-top: 0;
     text-align: right;
   }
-  
+
   @include govuk-media-query($from: 501px) {
     width: 35%;
   }
