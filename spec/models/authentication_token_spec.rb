@@ -51,15 +51,6 @@ RSpec.describe AuthenticationToken do
     end
   end
 
-  describe "::legacy_hash_token" do
-    let(:unhashed_token) { "test_#{SecureRandom.hex(10)}" }
-    let(:hashed_token) { Digest::SHA256.hexdigest(unhashed_token) }
-
-    it "hashes the token with SHA256" do
-      expect(described_class.legacy_hash_token(unhashed_token)).to eq(hashed_token)
-    end
-  end
-
   describe "::hash_token" do
     let(:unhashed_token) { "test_#{SecureRandom.hex(32)}" }
     let(:hashed_token) { OpenSSL::HMAC.hexdigest("SHA256", described_class::SECRET_KEY, unhashed_token) }
@@ -87,10 +78,6 @@ RSpec.describe AuthenticationToken do
       expect(authentication_token).to be_active
     end
 
-    it "does not set the hashed_token" do
-      expect(authentication_token.hashed_token).to be_nil
-    end
-
     it "sets the token_hash" do
       token_hash = OpenSSL::HMAC.hexdigest(
         "SHA256", Rails.application.key_generator.generate_key("api-token:v1", 32), authentication_token.token
@@ -107,13 +94,13 @@ RSpec.describe AuthenticationToken do
       expect(token.split.last.split("_").first).to eq("test")
     end
 
-    context "when the hashed token already exists" do
+    context "when the token_hash already exists" do
       let(:hex) { SecureRandom.hex(32) }
       let(:new_hex) { SecureRandom.hex(32) }
 
-      let(:hashed_token) { described_class.hash_token("test_#{hex}") }
+      let(:token_hash) { described_class.hash_token("test_#{hex}") }
 
-      let!(:existing_token) { create(:authentication_token, hashed_token:) }
+      let!(:existing_token) { create(:authentication_token, token_hash:) }
 
       before do
         allow(SecureRandom).to receive(:hex).with(32).and_return(hex, new_hex)
@@ -140,26 +127,6 @@ RSpec.describe AuthenticationToken do
         expect(
           described_class.authenticate(authentication_token.token),
         ).to eq(authentication_token)
-      end
-    end
-
-    context "when an non HMAC token exists" do
-      let(:token) { "test_#{SecureRandom.hex(10)}" }
-      let(:hashed_token) { described_class.legacy_hash_token(token) }
-
-      let(:secret_key) { Rails.application.key_generator.generate_key("api-token:v1", 32) }
-      let(:token_hash) { OpenSSL::HMAC.hexdigest("SHA256", secret_key, token) }
-
-      let!(:authentication_token) do
-        create(:authentication_token, hashed_token:)
-      end
-
-      it "returns the token converted to an HMAC token" do
-        expect(described_class.authenticate(token)).to eq(authentication_token)
-        expect(authentication_token.reload.hashed_token).to eq(hashed_token)
-
-        expect(authentication_token.token_hash).to eq(token_hash)
-        expect(described_class.authenticate(token)).to eq(authentication_token.reload)
       end
     end
 
