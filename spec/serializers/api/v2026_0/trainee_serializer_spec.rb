@@ -125,6 +125,34 @@ RSpec.describe Api::V20260::TraineeSerializer do
       end
     end
 
+    describe "funding_method" do
+      context "when the hesa_trainee_detail has a funding_method" do
+        it "serializes the stored funding_method" do
+          expect(json["funding_method"]).to eq(trainee.hesa_trainee_detail.funding_method)
+        end
+      end
+
+      context "when the hesa_trainee_detail has no funding_method" do
+        let(:trainee) do
+          create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary).tap do |trainee|
+            trainee.hesa_trainee_detail.update!(funding_method: nil)
+          end
+        end
+
+        it "serializes the funding_method mapped from the trainee funding attributes" do
+          expect(json["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+        end
+      end
+
+      context "when the trainee has no hesa_trainee_detail" do
+        let(:trainee) { create(:trainee, :with_tiered_bursary) }
+
+        it "serializes the funding_method mapped from the trainee funding attributes" do
+          expect(json["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+        end
+      end
+    end
+
     describe "nationality" do
       it "serializes nationality to HESA code" do
         expect(json[:nationality]).to eq("FR")

@@ -11,6 +11,33 @@ describe "`GET /trainees` endpoint" do
 
   it_behaves_like "a register API endpoint", "/api/v2025.0/trainees"
 
+  context "when trainees are missing a funding_method" do
+    let!(:trainee_without_stored_funding_method) do
+      create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary, :trn_received, provider: auth_token.provider, start_academic_cycle: start_academic_cycle).tap do |trainee|
+        trainee.hesa_trainee_detail.update!(funding_method: nil)
+      end
+    end
+
+    let!(:trainee_without_hesa_trainee_detail) do
+      create(:trainee, :with_tiered_bursary, :trn_received, provider: auth_token.provider, start_academic_cycle: start_academic_cycle)
+    end
+
+    before do
+      get(
+        "/api/v2025.0/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the funding_method mapped from the trainee funding attributes" do
+      [trainee_without_stored_funding_method, trainee_without_hesa_trainee_detail].each do |trainee|
+        serialized_trainee = response.parsed_body["data"].find { |data| data["trainee_id"] == trainee.slug }
+
+        expect(serialized_trainee["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+      end
+    end
+  end
+
   context "filtering out draft trainees" do
     let!(:draft_trainee) { create(:trainee, :draft, :with_hesa_trainee_detail) }
 
