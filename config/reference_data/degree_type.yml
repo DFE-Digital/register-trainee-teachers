@@ -256,17 +256,17 @@ data:
       - "001"
   - id: "c5695652-c197-e711-80d8-005056ac45bb"
     name: "bsc_education"
-    display_name: "BSc/Education"
+    display_name: "Bachelor of Science in Education"
     hesa_codes:
       - "003"
   - id: "c9695652-c197-e711-80d8-005056ac45bb"
     name: "btech_education"
-    display_name: "BTech/Education"
+    display_name: "Bachelor of Technology in Education"
     hesa_codes:
       - "005"
   - id: "cd695652-c197-e711-80d8-005056ac45bb"
     name: "ba_education"
-    display_name: "BA/Education"
+    display_name: "Bachelor of Arts in Education"
     hesa_codes:
       - "007"
   - id: "d1695652-c197-e711-80d8-005056ac45bb"
@@ -279,6 +279,31 @@ data:
     display_name: "BA with intercalated PGCE"
     hesa_codes:
       - "012"
+  - id: "39353d3e-4702-4820-a86e-fbd8158485bf"
+    name: "bed_hons"
+    display_name: "Bachelor of Education (Hons)"
+    hesa_codes:
+      - "002"
+  - id: "e658efba-cb6f-4a49-b1bf-c0073e8fa29d"
+    name: "ba_hons_combined_studies_education_of_the_deaf"
+    display_name: "Bachelor of Arts (Hons) Combined Studies/Education of the Deaf"
+    hesa_codes:
+      - "010"
+  - id: "10910408-85ec-4f2a-b0b3-f1d8934a8b7b"
+    name: "bsc_hons_with_intercalated_pgce"
+    display_name: "Bachelor of Science (Hons) with intercalated PGCE"
+    hesa_codes:
+      - "013"
+  - id: "0caa1ea5-868a-47a4-9b26-4b7470528b67"
+    name: "ba_hons_with_intercalated_pgce"
+    display_name: "Bachelor of Arts (Hons) with intercalated PGCE"
+    hesa_codes:
+      - "014"
+  - id: "348ff3a9-a4b8-4a40-a74d-dcaef9e8ac73"
+    name: "bsc_with_intercalated_pgce"
+    display_name: "BSc with intercalated PGCE"
+    hesa_codes:
+      - "099"
   - id: "3b6a5652-c197-e711-80d8-005056ac45bb"
     name: "ma"
     display_name: "Master of Arts"
@@ -359,6 +384,21 @@ data:
     display_name: "Master of Physics"
     hesa_codes:
       - "215"
+  - id: "f3eaa983-d543-4d4b-a239-f46d7cc94825"
+    name: "mmath"
+    display_name: "Master of Mathematics"
+    hesa_codes:
+      - "216"
+  - id: "cfae21bd-2b03-4048-bfdd-5f768c5b85e9"
+    name: "mres"
+    display_name: "Master of Research"
+    hesa_codes:
+      - "217"
+  - id: "b6d2c5aa-cf99-4831-9bfe-6279349d8ea9"
+    name: "msci"
+    display_name: "Master in Science"
+    hesa_codes:
+      - "218"
   - id: "5b6a5652-c197-e711-80d8-005056ac45bb"
     name: "dd"
     display_name: "Doctor of Divinity"
@@ -394,6 +434,11 @@ data:
     display_name: "PhD"
     hesa_codes:
       - "306"
+  - id: "03d6b7af-499c-49e3-96cc-e63f9beda6e5"
+    name: "edd"
+    display_name: "Doctor of Education"
+    hesa_codes:
+      - "307"
   - id: "696a5652-c197-e711-80d8-005056ac45bb"
     name: "first_degree"
     display_name: "First Degree"

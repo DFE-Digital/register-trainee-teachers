@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_04_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_09_164710) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -129,7 +129,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_04_100000) do
     t.datetime "created_at", null: false
     t.bigint "created_by_id"
     t.date "expires_at", null: false
-    t.string "hashed_token"
     t.datetime "last_used_at"
     t.string "name", null: false
     t.bigint "provider_id", null: false
@@ -140,7 +139,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_04_100000) do
     t.datetime "updated_at", null: false
     t.index ["created_by_id"], name: "index_authentication_tokens_on_created_by_id"
     t.index ["expires_at"], name: "index_authentication_tokens_on_expires_at"
-    t.index ["hashed_token"], name: "index_authentication_tokens_on_hashed_token", unique: true
     t.index ["provider_id"], name: "index_authentication_tokens_on_provider_id"
     t.index ["revoked_by_id"], name: "index_authentication_tokens_on_revoked_by_id"
     t.index ["status", "last_used_at"], name: "index_authentication_tokens_on_status_and_last_used_at"
