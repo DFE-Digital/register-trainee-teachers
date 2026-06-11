@@ -1,15 +1,22 @@
 shared:
   feedback_items:
+    - email
     - name
-    - email
-  trainees:
-    - first_names
-    - last_name
-    - email
-    - date_of_birth
-    - trn
   trainee_withdrawals:
     - safeguarding_concern_reasons
+  trainees:
+    - additional_dttp_data
+    - additional_ethnic_background
+    - date_of_birth
+    - email
+    - ethnic_background
+    - ethnic_group
+    - first_names
+    - last_name
+    - middle_names
+    - provider_trainee_id
+    - searchable
+    - trn
   users:
     - dfe_sign_in_uid
     - email

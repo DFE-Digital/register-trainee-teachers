@@ -396,14 +396,6 @@ shared:
     - created_at
     - updated_at
     - additional_disability
-  trainees:
-    - searchable
-    - middle_names
-    - ethnic_group
-    - ethnic_background
-    - additional_ethnic_background
-    - additional_dttp_data
-    - provider_trainee_id
   uploads:
     - id
     - created_at

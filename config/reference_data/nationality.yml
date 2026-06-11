@@ -139,6 +139,11 @@ data:
   display_name: British
   hesa_codes:
     - "GB"
+    - "FK"
+    - "GG"
+    - "IM"
+    - "IO"
+    - "JE"
 - id: VG
   name: british virgin islander
   display_name: British virgin islander
@@ -289,16 +294,6 @@ data:
   display_name: Cuban
   hesa_codes:
     - "CU"
-- id: GB
-  name: cymraes
-  display_name: Cymraes
-  hesa_codes:
-    - "GB"
-- id: GB
-  name: cymro
-  display_name: Cymro
-  hesa_codes:
-    - "GB"
 - id: CY
   name: cypriot
   display_name: Cypriot
@@ -834,11 +829,6 @@ data:
   display_name: Portuguese
   hesa_codes:
     - "PT"
-- id: GB
-  name: prydeinig
-  display_name: Prydeinig
-  hesa_codes:
-    - "GB"
 - id: PR
   name: puerto rican
   display_name: Puerto rican
@@ -954,11 +944,6 @@ data:
   display_name: Sri lankan
   hesa_codes:
     - "LK"
-- id: SH
-  name: st helenian
-  display_name: St helenian
-  hesa_codes:
-    - "SH"
 - id: LC
   name: st lucian
   display_name: St lucian
