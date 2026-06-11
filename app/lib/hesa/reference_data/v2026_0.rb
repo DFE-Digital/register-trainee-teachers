@@ -24,6 +24,11 @@ module Hesa
         training_initiative: ::ReferenceData::TRAINING_INITIATIVES,
       }.freeze
 
+      LOCALE_NAMESPACES = {
+        degree_type: "uk_degree",
+        degree_subject: "subject",
+      }.freeze
+
       def self.all
         self::TYPES.each_with_object({}) do |(name, type), hash|
           hash[name] = values_for(name, type)
@@ -32,12 +37,13 @@ module Hesa
 
       # rubocop:disable Style/HashEachMethods
       def self.entries_for(type_name, type)
+        namespace = self::LOCALE_NAMESPACES.fetch(type_name, type_name)
         rows = []
         type.values.each do |value|
           Array(value.hesa_codes).each do |code|
             rows << {
               hesa_code: code,
-              display_name: I18n.t("#{type_name}.#{code}", default: value.display_name),
+              display_name: I18n.t("#{namespace}.#{code}", default: value.display_name),
               start_year: value.start_year,
               end_year: value.end_year,
             }
