@@ -58,6 +58,7 @@ module Api
             course_attributes,
             lead_partner_and_employing_school_attributes,
             hesa_trainee_attributes,
+            funding_method: funding_method,
             sex: sex,
             study_mode: course_study_mode,
             course_subject_one: course_subject_one,
@@ -197,6 +198,11 @@ module Api
         return {} unless @trainee.hesa_trainee_detail
 
         HesaTraineeDetailSerializer.new(@trainee.hesa_trainee_detail).as_hash
+      end
+
+      def funding_method
+        @trainee.hesa_trainee_detail&.funding_method.presence ||
+          ::Trainees::MapFundingToHesa.call(trainee: @trainee)
       end
 
       def nationality
