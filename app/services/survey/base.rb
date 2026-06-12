@@ -25,10 +25,7 @@ module Survey
     def call
       return false unless should_send_survey?
 
-      unless response.success?
-        raise(StandardError, response.body)
-      end
-
+      create_distribution
       true
     end
 
@@ -38,19 +35,15 @@ module Survey
 
     delegate :first_names, :last_name, :email, :training_route, to: :trainee
 
-    def response
-      @response ||= create_distribution
-    end
-
     def contact_id
-      @contact_id ||= begin
-        response_body = create_contact_in_mailing_list_response.body
-        JSON.parse(response_body)["result"]["contactLookupId"]
-      end
+      @contact_id ||= QualtricsApi::Client.fetch_result(
+        create_contact_in_mailing_list_response,
+        "contactLookupId",
+      )
     end
 
     def create_contact_in_mailing_list_response
-      @create_contact_in_mailing_list_response ||= QualtricsApi::Client::Request.post(
+      @create_contact_in_mailing_list_response ||= QualtricsApi::Client.post(
         "/directories/#{directory_id}/mailinglists/#{mailing_list_id}/contacts",
         body: create_contact_in_mailing_list_body,
       )
@@ -66,7 +59,7 @@ module Survey
     end
 
     def create_distribution
-      QualtricsApi::Client::Request.post(
+      QualtricsApi::Client.post(
         "/distributions",
         body: create_distribution_body,
       )
