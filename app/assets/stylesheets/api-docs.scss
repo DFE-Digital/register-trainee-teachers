@@ -1,7 +1,7 @@
 code {
   padding: 2px 4px;
   font-family: monospace;
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
   color: govuk-colour("red");
 }
 
@@ -9,10 +9,8 @@ code {
   padding: 3px 5px;
   font-family: Monaco, Consolas, "Lucida Console", monospace;
   font-size: 15px;
-  color: $govuk-text-colour;
-  word-break: break-word;
-  word-wrap: break-word;
+  color: govuk-functional-colour(text);
   overflow-wrap: break-word;
   white-space: break-spaces;
-  background: govuk-colour("light-grey");
+  background: govuk-colour("black", $variant: "tint-95");
 }

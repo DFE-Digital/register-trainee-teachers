@@ -1,6 +1,6 @@
 @for $i from 1 through 20 {
   .app-table__column-#{$i * 5} {
-    width: $i * 5 + unquote('%');
+    width: $i * 5 + string.unquote('%');
   }
 }
 
@@ -10,3 +10,4 @@
     border-bottom-width: 0;
   }
 }
+

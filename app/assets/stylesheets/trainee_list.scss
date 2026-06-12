@@ -1,6 +1,6 @@
 .app-records-actions {
   margin: 0 0 govuk-spacing(3);
-  border-bottom: 1px solid govuk-colour("mid-grey");
+  border-bottom: 1px solid govuk-colour("black", $variant: "tint-80");
 
   @include govuk-clearfix;
 

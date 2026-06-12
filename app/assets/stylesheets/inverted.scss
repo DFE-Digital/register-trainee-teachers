@@ -53,8 +53,9 @@ $app-button-inverted-hover-background-colour: govuk-colour("blue", $variant: "ti
 
 .app-link--inverted:focus,
 .app-link--inverted:hover:focus {
-  color: $govuk-text-colour;
+  color: govuk-functional-colour(text);
 }
+
 
 .app-link--inverted:hover {
   color: $app-button-inverted-hover-background-colour;

@@ -26,7 +26,7 @@
   &:focus, &:link:focus, &:visited:focus {
     @include govuk-focused-text;
 
-    color:  $govuk-text-colour;
+    color: govuk-functional-colour(text);
     background:  $govuk-focus-colour;
     outline: none;
   }
@@ -41,7 +41,6 @@
 .app-status-card__status {
   text-decoration: underline;
   overflow-wrap: break-word;
-  word-wrap: break-word;
   hyphens: none;
 }
 

@@ -3,9 +3,9 @@
 
   .app-summary-card__header {
     align-items: center;
-    background-color: govuk-colour("light-grey");
+    background-color: govuk-colour("black", $variant: "tint-95");
     padding: govuk-spacing(3);
-    color: $govuk-text-colour;
+    color: govuk-functional-colour(text);
 
     @include govuk-media-query($from: desktop) {
       display: flex;

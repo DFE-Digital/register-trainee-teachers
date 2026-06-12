@@ -1,5 +1,5 @@
 .user-card {
-  border-bottom: 1px solid govuk-colour("mid-grey");
+  border-bottom: 1px solid govuk-colour("black", $variant: "tint-80");
 
   &:last-child {
     border-bottom: none;
