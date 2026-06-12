@@ -112,13 +112,13 @@ RSpec.describe Hesa::ReferenceData::V20260 do
         )
       end
 
-      it "renders duplicate hesa codes as separate rows sharing the locale label" do
+      it "renders one row per hesa code with the locale label" do
         rows_for_0115 = rows.select { |r| r["Code"] == "0115" }
         rows_for_0204 = rows.select { |r| r["Code"] == "0204" }
-        expect(rows_for_0115.size).to eq(2)
-        expect(rows_for_0204.size).to eq(2)
-        expect(rows_for_0115.map { |r| r["Label"] }).to all(eq("City, University of London"))
-        expect(rows_for_0204.map { |r| r["Label"] }).to all(eq("The University of Manchester"))
+        expect(rows_for_0115.size).to eq(1)
+        expect(rows_for_0204.size).to eq(1)
+        expect(rows_for_0115.first["Label"]).to eq("City, University of London")
+        expect(rows_for_0204.first["Label"]).to eq("The University of Manchester")
       end
 
       it "uses locale label rather than YAML display_name" do
