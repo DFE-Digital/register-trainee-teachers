@@ -40,6 +40,11 @@
       </p>
 
       <p class="govuk-body">
+        Trainee records that do not have the required number of placements are not included. You can bulk add placement data to
+        registered trainee records using the <%= govuk_link_to("Bulk add missing placement data to trainee records", new_bulk_update_placements_path) %>.
+      </p>
+
+      <p class="govuk-body">
         <%= govuk_link_to("Download a prepopulated file", bulk_recommend_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
       </p>
 
