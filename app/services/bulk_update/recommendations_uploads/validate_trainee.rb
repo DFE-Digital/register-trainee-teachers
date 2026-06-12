@@ -12,8 +12,6 @@ module BulkUpdate
         provider_trainee_id: "provider trainee ID",
       }.freeze
 
-      OPTIONAL_FORMS = [::PlacementsForm].freeze
-
       def initialize(row:, provider:, trainee_lookup:)
         @row = row
         @provider = provider
@@ -46,8 +44,6 @@ module BulkUpdate
             missing_data_validator.validate
 
             missing_data_validator.forms.each do |form|
-              next if form.class.in?(OPTIONAL_FORMS)
-
               form.errors.each do |error|
                 @messages << error.message
               end
