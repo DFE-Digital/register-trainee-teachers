@@ -81,16 +81,30 @@ RSpec.shared_examples "a survey service" do |date_field, email_subject|
   end
 
   context "when the API call fails" do
-    before do
-      allow(QualtricsApi::Client::Request).to receive(:post)
-        .and_raise(
-          QualtricsApi::Client::HttpError,
-          "status: 500, body: Internal Server Error",
-        )
+    let(:failure_response) do
+      instance_double(
+        HTTParty::Response,
+        code: 403,
+        body: {
+          meta: {
+            httpStatus: "403 - Forbidden",
+            error: { errorMessage: "Access denied to TA entity", errorCode: "TAG_0.4" },
+          },
+        }.to_json,
+        success?: false,
+        headers: {},
+      )
     end
 
-    it "raises an HttpError" do
-      expect { subject }.to raise_error(QualtricsApi::Client::HttpError)
+    before do
+      allow(QualtricsApi::Client::Request).to receive(:post).and_return(failure_response)
+    end
+
+    it "raises an HttpError with the Qualtrics error details" do
+      expect { subject }.to raise_error(
+        QualtricsApi::Client::HttpError,
+        /TAG_0\.4: Access denied to TA entity/,
+      )
     end
   end
 end
