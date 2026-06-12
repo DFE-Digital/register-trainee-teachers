@@ -41,8 +41,6 @@ module Api
   private
 
     def trn_validator(trainee)
-      return nil if version == "v2026.0"
-
       Submissions::ApiTrnValidator.new(trainee:)
     end
 
