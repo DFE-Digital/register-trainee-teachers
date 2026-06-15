@@ -89,5 +89,5 @@
 .app-timeline__metadata-container {
   @include govuk-font($size: 19);
 
-  color: $govuk-text-colour;
+  color: govuk-functional-colour(text);
 }

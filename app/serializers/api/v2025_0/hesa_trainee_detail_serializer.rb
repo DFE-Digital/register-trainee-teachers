@@ -6,6 +6,7 @@ module Api
       EXCLUDED_ATTRIBUTES = %w[
         id
         course_study_mode
+        funding_method
         hesa_disabilities
         trainee_id
       ].freeze

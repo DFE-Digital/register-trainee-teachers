@@ -29,11 +29,10 @@
     position: relative;
     top: .1875em;
     height: 1.18em;
-    border-right: .0938em solid $govuk-text-colour;
+    border-right: .0938em solid govuk-functional-colour(text);
     margin-left: 2px;
     margin-right: 2px;
   }
-
 }
 
 .app-sort-links__item {

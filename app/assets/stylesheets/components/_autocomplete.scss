@@ -67,7 +67,7 @@
 }
 
 .autocomplete__hint {
-  color: govuk-colour("mid-grey");
+  color: govuk-colour("black", $variant: "tint-80");
   position: absolute;
 }
 
@@ -96,7 +96,7 @@
   background-color: govuk-colour("white");
   border: $govuk-border-width-form-element solid $govuk-input-border-colour;
   border-top: 0;
-  color: $govuk-text-colour;
+  color: govuk-functional-colour(text);
   margin: 0;
   max-height: 342px;
   overflow-x: hidden;
@@ -126,7 +126,7 @@
 }
 
 .autocomplete__option {
-  border-bottom: solid govuk-colour("mid-grey");
+  border-bottom: solid govuk-colour("black", $variant: "tint-80");
   border-width: 1px 0;
   cursor: pointer;
   display: block;
@@ -146,7 +146,7 @@
 }
 
 .autocomplete__option--odd {
-  background-color: govuk-colour("light-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
 }
 
 .autocomplete__option--hint {
@@ -167,8 +167,8 @@
 }
 
 .autocomplete__option--no-results {
-  background-color: govuk-colour("light-grey");
-  color: govuk-colour("dark-grey");
+  background-color: govuk-colour("black", $variant: "tint-95");
+  color: govuk-colour("black", $variant: "tint-25");
   cursor: not-allowed;
 }
 

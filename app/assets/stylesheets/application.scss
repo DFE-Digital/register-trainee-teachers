@@ -1,3 +1,5 @@
+@use 'sass:string';
+
 @import "./govuk_style_setup";
 
 @import "govuk-frontend/dist/govuk/base";
@@ -26,6 +28,7 @@ $mobile-big-end: 501px;
 @import "api-docs";
 @import "csv-docs";
 
+
 .govuk-cookie-banner__hide {
   display: none;
 }
@@ -40,7 +43,7 @@ $mobile-big-end: 501px;
   .govuk-panel__body {
     @include govuk-font(24);
 
-    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 

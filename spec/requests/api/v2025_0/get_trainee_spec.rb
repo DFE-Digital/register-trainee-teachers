@@ -27,6 +27,54 @@ describe "`GET /api/v2025.0/trainees/:id` endpoint" do
     end
   end
 
+  context "when the trainee has a hesa_trainee_detail" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary, slug: "12345", provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2025.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    context "with a funding_method" do
+      it "returns the stored funding_method" do
+        expect(response.parsed_body["funding_method"]).to eq(trainee.hesa_trainee_detail.funding_method)
+      end
+    end
+
+    context "without a funding_method" do
+      let!(:trainee) do
+        create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary, slug: "12345", provider: auth_token.provider).tap do |trainee|
+          trainee.hesa_trainee_detail.update!(funding_method: nil)
+        end
+      end
+
+      it "returns the funding_method mapped from the trainee funding attributes" do
+        expect(response.parsed_body["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+      end
+    end
+  end
+
+  context "when the trainee has no hesa_trainee_detail" do
+    let!(:trainee) do
+      create(:trainee, :with_tiered_bursary, slug: "12345", provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2025.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the funding_method mapped from the trainee funding attributes" do
+      expect(response.parsed_body["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+    end
+  end
+
   context "when the trainee does not exist" do
     before do
       get(
