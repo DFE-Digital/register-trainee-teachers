@@ -2269,6 +2269,10 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
         expect(trainee.course_max_age).to eq(5)
         expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
       end
+
+      it "stores the early years course_education_phase" do
+        expect(Trainee.last.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:early_years])
+      end
     end
 
     context "with a non early years training_route" do

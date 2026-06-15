@@ -202,9 +202,14 @@ module Api
         end
 
         def course_education_phase
+          return COURSE_EDUCATION_PHASE_ENUMS[:early_years] if early_years_route?
           return COURSE_EDUCATION_PHASE_ENUMS[:primary] if primary_education_phase?
 
           COURSE_EDUCATION_PHASE_ENUMS[:secondary]
+        end
+
+        def early_years_route?
+          EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
         end
 
         def study_mode
