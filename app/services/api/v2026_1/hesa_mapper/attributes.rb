@@ -216,7 +216,7 @@ module Api
         end
 
         def course_age_range
-          DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[params[:course_age_range]]
+          ::ReferenceData::COURSE_AGE_RANGES.find_by_hesa_code(params[:course_age_range])&.id
         end
 
         def course_study_mode

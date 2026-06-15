@@ -15,6 +15,9 @@ module Api
 
           additional_result = Rules::AdditionalTrainingInitiative.call(record)
           record.errors.add(:additional_training_initiative, additional_result.error_type, **additional_result.error_details) unless additional_result.valid?
+
+          validation_result = Rules::CourseAgeRange.call(record)
+          record.errors.add(:course_age_range, validation_result.error_type, **validation_result.error_details) unless validation_result.valid?
         end
       end
     end

@@ -5,6 +5,13 @@ FactoryBot.define do
     transient do
       randomise_subjects { false }
       potential_itt_start_date { itt_start_date || compute_valid_past_itt_start_date }
+      hesa_course_age_range do
+        if EARLY_YEARS_TRAINING_ROUTES.include?(training_route)
+          ReferenceData::COURSE_AGE_RANGES.find(:zero_to_five).hesa_code
+        else
+          DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.keys.sample
+        end
+      end
     end
 
     sequence :provider_trainee_id do |n|
@@ -762,7 +769,9 @@ FactoryBot.define do
     trait :with_hesa_trainee_detail do
       hesa_id { Faker::Number.number(digits: 13) }
       funding_eligibility { FUNDING_ELIGIBILITIES.keys.sample }
-      hesa_trainee_detail
+      hesa_trainee_detail do
+        association(:hesa_trainee_detail, course_age_range: hesa_course_age_range)
+      end
     end
 
     trait :with_no_funding_hesa_trainee_detail do
@@ -772,7 +781,13 @@ FactoryBot.define do
       applying_for_scholarship { nil }
       applying_for_grant { nil }
       bursary_tier { nil }
-      hesa_trainee_detail factory: :hesa_trainee_detail, funding_method: Hesa::CodeSets::BursaryLevels::NONE
+      hesa_trainee_detail do
+        association(
+          :hesa_trainee_detail,
+          funding_method: Hesa::CodeSets::BursaryLevels::NONE,
+          course_age_range: hesa_course_age_range,
+        )
+      end
     end
 
     trait :with_hesa_student do
