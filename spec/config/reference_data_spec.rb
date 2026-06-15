@@ -64,7 +64,7 @@ RSpec.describe "Reference data integrity" do
   end
 
   def v2026_labels_by_code(v26_type)
-    Hesa::ReferenceData::V20260.all[v26_type].each_with_object({}) do |(code, label), hash|
+    Hesa::ReferenceData::V20261.all[v26_type].each_with_object({}) do |(code, label), hash|
       (hash[code.to_s] ||= []) << label
     end
   end
