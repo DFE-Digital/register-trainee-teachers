@@ -109,6 +109,15 @@ RSpec.describe Api::V20260::TraineeSerializer do
       end
     end
 
+    describe "created_at and updated_at" do
+      it "uses the trainee timestamps, not hesa_trainee_detail" do
+        expect(json["created_at"]).to eq(trainee.created_at)
+        expect(json["updated_at"]).to eq(trainee.updated_at)
+        expect(json["created_at"]).not_to eq(trainee.hesa_trainee_detail.created_at)
+        expect(json["updated_at"]).not_to eq(trainee.hesa_trainee_detail.updated_at)
+      end
+    end
+
     describe "HESA trainee details" do
       let(:serialized) do
         Api::V20260::HesaTraineeDetailSerializer.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
