@@ -2,6 +2,13 @@
 
 GRANTS_2026_TO_2027 = [
   OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+    amount: 9_535,
+    allocation_subjects: [
+      AllocationSubjects::EARLY_YEARS_ITT,
+    ],
+  ),
+  OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
     amount: 16_535,
     allocation_subjects: [
