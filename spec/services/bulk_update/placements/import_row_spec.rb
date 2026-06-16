@@ -48,7 +48,7 @@ module BulkUpdate
           it "records errors and updates the row state to failed" do
             expect { service }.not_to change { ::Placement.count }
             expect(placement_row.failed?).to be true
-            expect(placement_row.row_error_messages).to match(/Error message/)
+            expect(placement_row.row_error_messages).to include("Error message")
           end
         end
 
