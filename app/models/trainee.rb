@@ -335,6 +335,17 @@ class Trainee < ApplicationRecord
   scope :with_trn, -> { where.not(trn: nil) }
   scope :without_trn, -> { where(trn: nil) }
 
+  scope :without_required_placements_for_award, lambda {
+    where(training_route: PLACEMENTS_ROUTES.keys)
+      .left_joins(:placements)
+      .group("trainees.id")
+      .having("COUNT(placements.id) < (#{minimum_placements_case_sql})")
+  }
+
+  scope :with_required_placements_for_award, lambda {
+    where.not(id: without_required_placements_for_award)
+  }
+
   scope :potential_duplicates_of, lambda { |trainee|
     trainee.provider.trainees.kept
       .and(Trainee.not_withdrawn.or(Trainee.not_awarded))
@@ -422,6 +433,14 @@ class Trainee < ApplicationRecord
       LEFT JOIN subject_specialisms AS specialism ON specialism.name = trainees.course_subject_one OR specialism.name = trainees.course_subject_two OR specialism.name = trainees.course_subject_three
       LEFT JOIN allocation_subjects ON specialism.allocation_subject_id = allocation_subjects.id
     SQL
+  end
+
+  def self.minimum_placements_case_sql
+    whens = MINIMUM_PLACEMENTS.map do |route, min|
+      "WHEN trainees.training_route = #{TRAINING_ROUTES[route]} THEN #{min}"
+    end
+
+    "CASE #{whens.join(' ')} ELSE #{MINIMUM_PLACEMENTS.default} END"
   end
 
   def available_courses(training_route = self.training_route)
