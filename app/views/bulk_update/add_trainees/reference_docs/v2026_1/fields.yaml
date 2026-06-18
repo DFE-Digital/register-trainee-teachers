@@ -239,7 +239,7 @@
   format: "[Course Subject reference codes](/reference-data/v2026.1/course-subject-one.html)"
   example: "`100511` for primary courses, `100048` for secondary (design as a subject)"
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_0/trainee_attributes.rb
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_1/trainee_attributes.rb
   page_title: Course subject one
 - field_name: course_subject_2
   technical: course_subject_2
@@ -293,7 +293,7 @@
   format: YYYY-MM-DD
   example: "`2025-03-11`"
   validation: Mandatory. Must be within the last 10 years and within the next 5 years.
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_0/trainee_attributes.rb#L437
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2026_1/trainee_attributes.rb#L437
   page_title: ITT end date
 - field_name: course_age_range
   technical: course_age_range

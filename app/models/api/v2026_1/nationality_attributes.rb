@@ -2,7 +2,7 @@
 
 module Api
   module V20261
-    class NationalityAttributes < Api::V20260::NationalityAttributes
+    class NationalityAttributes < Api::V20250::NationalityAttributes
     end
   end
 end

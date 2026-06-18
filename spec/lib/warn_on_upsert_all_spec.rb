@@ -12,7 +12,7 @@ RSpec.describe WarnOnUpsertAll do
 
   context "when not in seeding mode" do
     it "logs a warning message" do
-      expect(logger).to receive(:warn).with(match(/WARNING/))
+      expect(logger).to receive(:warn).with(include("WARNING"))
       Nationality.upsert_all([{ name: "British" }], unique_by: :name)
     end
   end

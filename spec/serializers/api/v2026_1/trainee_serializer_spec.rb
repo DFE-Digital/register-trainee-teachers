@@ -110,6 +110,15 @@ RSpec.describe Api::V20261::TraineeSerializer do
       end
     end
 
+    describe "created_at and updated_at" do
+      it "uses the trainee timestamps, not hesa_trainee_detail" do
+        expect(json["created_at"]).to eq(trainee.created_at)
+        expect(json["updated_at"]).to eq(trainee.updated_at)
+        expect(json["created_at"]).not_to eq(trainee.hesa_trainee_detail.created_at)
+        expect(json["updated_at"]).not_to eq(trainee.hesa_trainee_detail.updated_at)
+      end
+    end
+
     describe "HESA trainee details" do
       let(:serialized) do
         Api::V20261::HesaTraineeDetailSerializer.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
@@ -123,6 +132,34 @@ RSpec.describe Api::V20261::TraineeSerializer do
       it "includes fund_code derived from trainee funding_eligibility" do
         trainee.update!(funding_eligibility: :eligible)
         expect(serialized["fund_code"]).to eq(Hesa::CodeSets::FundCodes::ELIGIBLE)
+      end
+    end
+
+    describe "funding_method" do
+      context "when the hesa_trainee_detail has a funding_method" do
+        it "serializes the stored funding_method" do
+          expect(json["funding_method"]).to eq(trainee.hesa_trainee_detail.funding_method)
+        end
+      end
+
+      context "when the hesa_trainee_detail has no funding_method" do
+        let(:trainee) do
+          create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary).tap do |trainee|
+            trainee.hesa_trainee_detail.update!(funding_method: nil)
+          end
+        end
+
+        it "serializes the funding_method mapped from the trainee funding attributes" do
+          expect(json["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+        end
+      end
+
+      context "when the trainee has no hesa_trainee_detail" do
+        let(:trainee) { create(:trainee, :with_tiered_bursary) }
+
+        it "serializes the funding_method mapped from the trainee funding attributes" do
+          expect(json["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+        end
       end
     end
 

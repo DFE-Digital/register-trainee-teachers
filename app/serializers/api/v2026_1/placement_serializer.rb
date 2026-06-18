@@ -2,7 +2,7 @@
 
 module Api
   module V20261
-    class PlacementSerializer < Api::V20260::PlacementSerializer
+    class PlacementSerializer < Api::V20250::PlacementSerializer
     end
   end
 end

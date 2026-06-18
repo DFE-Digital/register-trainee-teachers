@@ -2,6 +2,8 @@
 
 module Funding
   class GrantAndTieredBursaryForm < TraineeForm
+    include HesaFundingMethodSync
+
     FIELDS = %i[
       applying_for_bursary
       bursary_tier
@@ -33,6 +35,15 @@ module Funding
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)
       super
+    end
+
+    def save!
+      return false unless valid?
+
+      assign_attributes_to_trainee
+      sync_hesa_funding_method
+      Trainees::Update.call(trainee:, update_trs:)
+      clear_stash
     end
 
   private

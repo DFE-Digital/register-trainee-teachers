@@ -17,7 +17,7 @@
 @media (min-width: 40.0625em) {
   .govuk-details {
     font-size: 1.1875rem;
-    line-height: 1.3157894737;
+    line-height: 1.3158;
   }
 }
 @media print {
@@ -48,6 +48,7 @@
 .govuk-details__summary-text > :first-child {
   margin-top: 0;
 }
+
 .govuk-details__summary-text > :only-child,
 .govuk-details__summary-text > :last-child {
   margin-bottom: 0;
@@ -72,9 +73,11 @@
   .govuk-details {
     border-left: 10px solid #b1b4b6;
   }
+
   .govuk-details__summary {
     margin-top: 15px;
   }
+
   .govuk-details__summary-text {
     font-weight: 700;
     margin-bottom: 15px;
@@ -95,9 +98,11 @@
     color: #1d70b8;
     cursor: pointer;
   }
+
   .govuk-details__summary:hover {
     color: #003078;
   }
+
   .govuk-details__summary:focus {
     outline: 3px solid transparent;
     color: #0b0c0c;
@@ -111,11 +116,13 @@
       box-decoration-break: clone;
     }
   }
+
   .govuk-details__summary-text {
     text-decoration: underline;
     text-decoration-thickness: max(1px, .0625rem);
     text-underline-offset: 0.1578em;
   }
+
   .govuk-details__summary:hover .govuk-details__summary-text {
     text-decoration-thickness: max(3px, .1875rem, .12em);
     -webkit-text-decoration-skip-ink: none;
@@ -123,12 +130,15 @@
     -webkit-text-decoration-skip: none;
     text-decoration-skip: none;
   }
+
   .govuk-details__summary:focus .govuk-details__summary-text {
     text-decoration: none;
   }
+
   .govuk-details__summary::-webkit-details-marker {
     display: none;
   }
+
   .govuk-details__summary::before {
     content: "";
     position: absolute;
@@ -146,6 +156,7 @@
     border-width: 7px 0 7px 12.124px;
     border-left-color: inherit;
   }
+
   .govuk-details[open] > .govuk-details__summary::before {
     display: block;
     width: 0;
@@ -154,9 +165,10 @@
     border-color: transparent;
     -webkit-clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
     clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
-    border-width: 12.124px 7px 0 7px;
+    border-width: 12.124px 7px 0;
     border-top-color: inherit;
   }
+
   .govuk-details__text {
     border-left: 5px solid #b1b4b6;
   }

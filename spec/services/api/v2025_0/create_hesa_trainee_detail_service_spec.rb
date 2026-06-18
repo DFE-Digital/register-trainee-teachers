@@ -108,6 +108,64 @@ RSpec.describe Api::V20250::CreateHesaTraineeDetailService do
           expect { subject.call(trainee:) } .not_to change { Hesa::TraineeDetail.count }
         end
       end
+
+      context "when there is no hesa_student record" do
+        context "with bursary fields set on the trainee" do
+          let(:trainee) do
+            create(:trainee,
+                   applying_for_bursary: true,
+                   applying_for_scholarship: false,
+                   applying_for_grant: false,
+                   bursary_tier: BURSARY_TIER_ENUMS[:tier_one])
+          end
+
+          it "sets funding_method from Trainees::MapFundingToHesa" do
+            subject.call(trainee:)
+
+            expect(trainee.reload.hesa_trainee_detail.funding_method)
+              .to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+          end
+        end
+
+        context "without any funding application from the trainee" do
+          let(:trainee) do
+            create(:trainee,
+                   applying_for_bursary: false,
+                   applying_for_scholarship: false,
+                   applying_for_grant: false)
+          end
+
+          it "sets funding_method to NONE via Trainees::MapFundingToHesa" do
+            subject.call(trainee:)
+
+            expect(trainee.reload.hesa_trainee_detail.funding_method)
+              .to eq(Hesa::CodeSets::BursaryLevels::NONE)
+          end
+        end
+      end
+
+      context "when a hesa_student bursary_level is present" do
+        let(:trainee) do
+          create(:trainee,
+                 applying_for_bursary: true,
+                 applying_for_scholarship: false,
+                 applying_for_grant: false,
+                 bursary_tier: BURSARY_TIER_ENUMS[:tier_one])
+        end
+
+        before do
+          create(:hesa_student,
+                 bursary_level: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
+                 trainee: trainee)
+        end
+
+        it "prefers the student record's bursary_level over the fallback" do
+          subject.call(trainee:)
+
+          expect(trainee.reload.hesa_trainee_detail.funding_method)
+            .to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+        end
+      end
     end
   end
 end

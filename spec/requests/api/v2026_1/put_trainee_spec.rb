@@ -2350,7 +2350,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '020', '021', '028', '031', '032'...",
+            "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
           )
         end
 
@@ -2361,7 +2361,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"]).to include(
               "itt_qualification_aim" => [
-                "has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '020', '021', '028', '031', '032'...",
+                "has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
               ],
             )
           end
@@ -2787,6 +2787,43 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         trainee.reload
         expect(trainee.training_route).to eq("provider_led_postgrad")
         expect(trainee.iqts_country).to be_nil
+      end
+    end
+
+    context "when the trainee has no hesa_trainee_detail, the hesa_student has no bursary_level and funding_method is not in the update payload" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          trainee_route_trait,
+          hesa_id: "0310261553101",
+          funding_eligibility: :not_eligible,
+          applying_for_bursary: false,
+          applying_for_scholarship: false,
+          applying_for_grant: false,
+          bursary_tier: nil,
+          first_names: "Bob",
+        )
+      end
+      let(:data) do
+        {
+          first_names: "Alice",
+          course_year: "2015",
+          itt_aim: "202",
+          itt_qualification_aim: "001",
+        }
+      end
+
+      before do
+        create(:hesa_student, hesa_id: trainee.hesa_id, course_age_range: "13918", fund_code: "7", bursary_level: nil)
+        create(:hesa_metadatum, trainee:)
+      end
+
+      it "falls back to Trainees::MapFundingToHesa for funding_method" do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.hesa_trainee_detail.funding_method).to eq(Hesa::CodeSets::BursaryLevels::NONE)
       end
     end
   end

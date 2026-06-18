@@ -39,12 +39,12 @@ google_tag_manager:
 qualtrics:
   directory_id: POOL_03wzmFoShC0dJRP
   base_url: https://fra1.qualtrics.com/API/v3/
-  library_id: UR_0qTPqmqVt86pGL4
+  library_id: UR_00Y1yoROVfab3Ei
   withdraw:
     survey_id: change_me
-    mailing_list_id: CG_2bZrlBdyq2DWcLV
-    message_id: MS_UaqTY612tQhJaZl
+    mailing_list_id: CG_3fCpfKT6HlLIKKa
+    message_id: MS_iGynzGf4Lcyb9AR
   award:
     survey_id: change_me
-    mailing_list_id: CG_2bZrlBdyq2DWcLV
-    message_id: MS_UaqTY612tQhJaZl
+    mailing_list_id: CG_3fCpfKT6HlLIKKa
+    message_id: MS_iGynzGf4Lcyb9AR

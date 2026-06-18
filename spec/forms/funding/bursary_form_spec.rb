@@ -41,6 +41,33 @@ module Funding
       it "takes any data from the form store and saves it to the database" do
         expect { subject.save! }.to change(trainee.reload, :applying_for_bursary).to(false)
       end
+
+      context "when the trainee has a hesa_trainee_detail" do
+        let(:trainee) do
+          create(:trainee,
+                 training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+                 applying_for_bursary: false,
+                 applying_for_scholarship: false,
+                 applying_for_grant: false)
+        end
+
+        before do
+          trainee.create_hesa_trainee_detail!(funding_method: Hesa::CodeSets::BursaryLevels::NONE)
+          allow(form_store).to receive(:get).and_return({
+            "applying_for_bursary" => true,
+            "applying_for_scholarship" => false,
+            "applying_for_grant" => false,
+            "bursary_tier" => nil,
+          })
+        end
+
+        it "syncs hesa_trainee_detail.funding_method via the mapper" do
+          subject.save!
+
+          expect(trainee.reload.hesa_trainee_detail.funding_method)
+            .to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+        end
+      end
     end
 
     describe "#funding_type" do

@@ -87,6 +87,19 @@ module Funding
             bursary_tier: nil,
           )
         end
+
+        context "and the trainee has a hesa_trainee_detail with funding_method set" do
+          before do
+            trainee.create_hesa_trainee_detail!(funding_method: Hesa::CodeSets::BursaryLevels::TIER_ONE)
+          end
+
+          it "syncs hesa_trainee_detail.funding_method to NONE" do
+            subject.save!
+
+            expect(trainee.reload.hesa_trainee_detail.funding_method)
+              .to eq(Hesa::CodeSets::BursaryLevels::NONE)
+          end
+        end
       end
 
       context "when funding eligibility changes to not eligible but the trainee is in the fund-code exception list" do

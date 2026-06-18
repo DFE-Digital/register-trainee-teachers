@@ -277,6 +277,20 @@ describe Provider do
       end
     end
 
+    context "when the trainee is on an early years route" do
+      %i[early_years_salaried early_years_postgrad early_years_undergrad].each do |route|
+        context "for #{route} with no placements" do
+          let!(:trainee) do
+            create(:trainee, route, :without_placements, :awarded, provider:, itt_start_date:, itt_end_date:)
+          end
+
+          it "doesn't include the trainee" do
+            expect(provider.trainees_without_required_placements).not_to include(trainee)
+          end
+        end
+      end
+    end
+
     context "when a route has a minimum higher than the default" do
       let(:trainee) do
         create(

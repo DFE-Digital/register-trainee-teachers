@@ -2,6 +2,8 @@
 
 module Funding
   class BursaryForm < TraineeForm
+    include HesaFundingMethodSync
+
     FIELDS = %i[
       funding_type
       applying_for_bursary
@@ -30,6 +32,15 @@ module Funding
     def initialize(trainee, params: {}, user: nil, store: FormStore)
       params = add_fields_from_params(params)
       super
+    end
+
+    def save!
+      return false unless valid?
+
+      assign_attributes_to_trainee
+      sync_hesa_funding_method
+      Trainees::Update.call(trainee:, update_trs:)
+      clear_stash
     end
 
   private

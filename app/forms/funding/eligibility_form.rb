@@ -2,6 +2,8 @@
 
 module Funding
   class EligibilityForm < TraineeForm
+    include HesaFundingMethodSync
+
     FIELDS = %i[
       funding_eligibility
     ].freeze
@@ -30,6 +32,7 @@ module Funding
       trainee.applying_for_scholarship = nil
       trainee.applying_for_grant = nil
       trainee.bursary_tier = nil
+      sync_hesa_funding_method
     end
 
     def compute_fields

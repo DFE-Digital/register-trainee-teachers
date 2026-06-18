@@ -17,9 +17,9 @@ describe "GET all versioned api endpoints" do
     end
   end
 
-  context "Version v2026.0" do
+  context "Version v2026.1" do
     paths.each do |path|
-      it_behaves_like "register versioned api GET request", "v2026.0", path, true
+      it_behaves_like "register versioned api GET request", "v2026.1", path, true
     end
   end
 end
