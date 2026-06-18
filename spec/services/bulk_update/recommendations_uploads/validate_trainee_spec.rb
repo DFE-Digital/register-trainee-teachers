@@ -184,6 +184,26 @@ module BulkUpdate
           end
         end
 
+        context "and a row without Placements but submission_ready is true" do
+          let(:trainee) do
+            create(:trainee, :bulk_recommend, :provider_led_postgrad, :without_placements, submission_ready: true)
+          end
+
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be false }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql(["Enter at least 2 placements"]) }
+          end
+        end
+
         context "and a row with the required Placements" do
           let(:trainee) { create(:trainee, :bulk_recommend, :provider_led_postgrad, :with_placements) }
 
