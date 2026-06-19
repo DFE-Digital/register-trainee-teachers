@@ -59,6 +59,15 @@ module Hesa
           }
         end.freeze
       end
+
+      def self.available_fields
+        TYPES.keys + [:withdrawal_reasons]
+      end
+
+      def self.api_payload(field: nil)
+        payload = docs_payload.merge(withdrawal_reasons: withdrawal_reasons_payload)
+        field.present? ? payload.fetch(field.to_sym) : payload
+      end
     end
   end
 end
