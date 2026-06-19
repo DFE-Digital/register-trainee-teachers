@@ -132,7 +132,7 @@ read-cluster-config:
 terraform-plan: deploy-plan
 
 deploy-plan: terraform-init
-	terraform -chdir=terraform/$(PLATFORM) plan -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS}
+	terraform -chdir=terraform/$(PLATFORM) plan ${DETAILED_EXITCODE} -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS}
 
 terraform-apply: deploy
 
@@ -188,7 +188,7 @@ domains-infra-init: domains set-azure-account
 		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
 
 domains-infra-plan: domains-infra-init # make domains-infra-plan
-	terraform -chdir=terraform/custom_domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
+	terraform -chdir=terraform/custom_domains/infrastructure plan ${DETAILED_EXITCODE} -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
 
 domains-infra-apply: domains-infra-init # make domains-infra-apply
 	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
@@ -200,7 +200,7 @@ domains-init: domains set-azure-account
 	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}_backend.tfvars
 
 domains-plan: domains-init  # make qa domains-plan
-	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
+	terraform -chdir=terraform/custom_domains/environment_domains plan ${DETAILED_EXITCODE} -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
 
 domains-apply: domains-init # make qa domains-apply
 	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}

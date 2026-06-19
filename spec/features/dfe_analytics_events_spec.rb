@@ -29,6 +29,6 @@ private
   end
 
   def then_dfe_analytics_events_are_sent
-    expect(%i[web_request create_entity]).to have_been_enqueued_as_analytics_events
+    expect(%i[web_request create_entity]).to have_been_enqueued_as_analytics_events # rubocop:disable RSpec/ExpectActual
   end
 end

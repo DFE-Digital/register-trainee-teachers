@@ -2,7 +2,7 @@
 
 module Api
   module V20261
-    class PlacementAttributes < Api::V20260::PlacementAttributes
+    class PlacementAttributes < Api::V20250::PlacementAttributes
     end
   end
 end

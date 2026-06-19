@@ -25,7 +25,7 @@ module BulkUpdate
 
           it "is not valid and has the correct error message" do
             expect(service).not_to be_valid
-            expect(service.error_messages).to include match(/URN must be 6 numbers/)
+            expect(service.error_messages).to include include("URN must be 6 numbers")
           end
         end
 
@@ -34,7 +34,7 @@ module BulkUpdate
 
           it "is not valid and has the correct error message" do
             expect(service).not_to be_valid
-            expect(service.error_messages).to include match(/No School was found for URN 123456/)
+            expect(service.error_messages).to include include("No School was found for URN 123456")
           end
         end
       end

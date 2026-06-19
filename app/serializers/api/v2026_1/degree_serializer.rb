@@ -2,7 +2,7 @@
 
 module Api
   module V20261
-    class DegreeSerializer < Api::V20260::DegreeSerializer
+    class DegreeSerializer < Api::V20250::DegreeSerializer
     end
   end
 end

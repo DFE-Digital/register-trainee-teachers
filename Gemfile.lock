@@ -177,6 +177,8 @@ GEM
       railties (> 4.0)
     coderay (1.1.3)
     colorize (1.1.0)
+    commander (5.0.0)
+      highline (~> 3.0.0)
     concurrent-ruby (1.3.6)
     config (5.6.1)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -241,13 +243,13 @@ GEM
       railties (>= 5.0.0)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.14.2)
+    faraday (2.14.3)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
-    faraday-net_http (3.4.2)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     ferrum (0.17.1)
       addressable (~> 2.5)
@@ -472,6 +474,11 @@ GEM
     parallel (2.1.0)
     parallel_tests (5.7.0)
       parallel
+    parlour (9.1.2)
+      commander (~> 5.0)
+      parser
+      rainbow (~> 3.0)
+      sorbet-runtime (>= 0.5)
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
@@ -636,7 +643,7 @@ GEM
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
     rspec-support (3.13.7)
-    rubocop (1.86.2)
+    rubocop (1.87.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -656,15 +663,16 @@ GEM
     rubocop-factory_bot (2.28.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
-    rubocop-rails (2.35.3)
+    rubocop-rails (2.35.4)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    rubocop-rspec (3.9.0)
+    rubocop-rspec (3.10.2)
       lint_roller (~> 1.1)
-      rubocop (~> 1.81)
+      regexp_parser (>= 2.0)
+      rubocop (~> 1.86, >= 1.86.2)
     rubocop-rspec_rails (2.32.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
@@ -675,10 +683,10 @@ GEM
     ruby-progressbar (1.13.0)
     rubyntlm (0.6.5)
       base64
-    rubyzip (3.3.1)
+    rubyzip (3.4.0)
     safely_block (1.0.0)
     securerandom (0.4.1)
-    selenium-webdriver (4.44.0)
+    selenium-webdriver (4.45.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -696,8 +704,8 @@ GEM
     sentry-sidekiq (6.6.2)
       sentry-ruby (~> 6.6.2)
       sidekiq (>= 5.0)
-    shoulda-matchers (7.0.1)
-      activesupport (>= 7.1)
+    shoulda-matchers (8.0.1)
+      activesupport (>= 7.2)
     sidekiq (6.5.12)
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
@@ -731,7 +739,7 @@ GEM
     skylight (7.1.1)
       activesupport (>= 7.2.0)
     smart_properties (1.17.0)
-    solargraph (0.59.2)
+    solargraph (0.60.0)
       ast (~> 2.4.3)
       backport (~> 1.2)
       benchmark (~> 0.4)
@@ -749,6 +757,7 @@ GEM
       rbs (>= 3.10.0)
       reverse_markdown (~> 3.0)
       rubocop (~> 1.76)
+      sord (~> 7.0)
       thor (~> 1.0)
       tilt (~> 2.0)
       yard (~> 0.9, >= 0.9.24)
@@ -757,6 +766,14 @@ GEM
     solargraph-rails (1.3)
       activesupport
       solargraph (>= 0.48.0)
+    sorbet-runtime (0.6.13297)
+    sord (7.1.0)
+      commander (~> 5.0)
+      parlour (~> 9.1)
+      parser
+      rbs (>= 3.0, < 5)
+      sorbet-runtime
+      yard
     spring (4.6.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -839,7 +856,7 @@ GEM
       anyway_config (>= 1.3, < 3)
       railties
       yabeda (~> 0.8)
-    yard (0.9.43)
+    yard (0.9.44)
     yard-activesupport-concern (0.0.1)
       yard (>= 0.8)
     yard-solargraph (0.1.0)
@@ -936,7 +953,7 @@ DEPENDENCIES
   sentry-rails
   sentry-ruby
   sentry-sidekiq
-  shoulda-matchers (~> 7.0)
+  shoulda-matchers (~> 8.0)
   sidekiq (~> 6.5)
   sidekiq-cron (~> 2.4)
   simplecov (~> 0.22.0)
@@ -1014,6 +1031,7 @@ CHECKSUMS
   cloudfront-rails (0.4.0) sha256=39b92eceef815ca269610d73d15d2de2698989805ddd5ebbd1d0179350821702
   coderay (1.1.3) sha256=dc530018a4684512f8f38143cd2a096c9f02a1fc2459edcfe534787a7fc77d4b
   colorize (1.1.0) sha256=30b5237f0603f6662ab8d1fc2bd4a96142b806c6415d79e45ef5fdc6a0cfc837
+  commander (5.0.0) sha256=22ca42866ce5ed1a7f3e9a9c831a23d03b75b3743c7ad0302c3cbcd9eb5f257d
   concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
   config (5.6.1) sha256=a9f0f0f9ffa6d12d43147a3fa1ab8486fe484c3098a350c6a2e0f32430e0d1cc
   connection_pool (2.5.5) sha256=e54ff92855753df1fd7c59fa04a398833355f27dd14c074f8c83a05f72a716ad
@@ -1049,9 +1067,9 @@ CHECKSUMS
   factory_bot (6.5.1) sha256=40581ea7bec0aee05514b8f4f99ed477274bdf1884c1372de5209e60322d6ca9
   factory_bot_rails (6.4.4) sha256=139e17caa2c50f098fddf5e5e1f29e8067352024e91ca1186d018b36589e5c88
   faker (3.8.0) sha256=c147b308df73a90f27a4fc84f18d4c22ef0ad9c2a64b2b61c86fd0ca71753efc
-  faraday (2.14.2) sha256=73ccb9994a9e8648f010e32eca2ae82e41c57860aa10932cda29418b9e0223ad
+  faraday (2.14.3) sha256=1882247e6766615c8220b4392bf1d27f6ebb63d8e28267587cef1fb0bf37f278
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
-  faraday-net_http (3.4.2) sha256=f147758260d3526939bf57ecf911682f94926a3666502e24c69992765875906c
+  faraday-net_http (3.4.4) sha256=0e78af151747ed1b00f33e25973b4bc220d7f16c00c39676817c8b12331eb588
   ferrum (0.17.1) sha256=51d591120fc593e5a13b5d9d6474389f5145bb92a91e36eab147b5d096c8cbe7
   ffi (1.17.3-arm64-darwin) sha256=0c690555d4cee17a7f07c04d59df39b2fba74ec440b19da1f685c6579bb0717f
   ffi (1.17.3-x86_64-darwin) sha256=1f211811eb5cfaa25998322cdd92ab104bfbd26d1c4c08471599c511f2c00bb5
@@ -1139,6 +1157,7 @@ CHECKSUMS
   pagy (9.4.0) sha256=db3f2e043f684155f18f78be62a81e8d033e39b9f97b1e1a8d12ad38d7bce738
   parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parallel_tests (5.7.0) sha256=3f1762c46ca2c223b8af8ef877217f9d76974e191bfa934f2580b58bcf1d005c
+  parlour (9.1.2) sha256=446ce24243e125f0e8c4f9b5722c3b86063d42d8b106c847a7d73a8cc693c382
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
   pg (1.6.3-arm64-darwin) sha256=7240330b572e6355d7c75a7de535edb5dfcbd6295d9c7777df4d9dddfb8c0e5f
   pg (1.6.3-x86_64-darwin) sha256=ee2e04a17c0627225054ffeb43e31a95be9d7e93abda2737ea3ce4a62f2729d6
@@ -1199,26 +1218,26 @@ CHECKSUMS
   rspec-rails (8.0.4) sha256=06235692fc0892683d3d34977e081db867434b3a24ae0dd0c6f3516bad4e22df
   rspec-retry (0.6.2) sha256=6101ba23a38809811ae3484acde4ab481c54d846ac66d5037ccb40131a60d858
   rspec-support (3.13.7) sha256=0640e5570872aafefd79867901deeeeb40b0c9875a36b983d85f54fb7381c47c
-  rubocop (1.86.2) sha256=bb2e97f635eda42c448f2588f4a6ff78f221b8bdfdf65b1e9b07fbd57521b45d
+  rubocop (1.87.0) sha256=b9d9ddf55116a513f8ef2c7ae660662d8b49301f118d3f0df61865b33a5c188d
   rubocop-ast (1.49.1) sha256=4412f3ee70f6fe4546cc489548e0f6fcf76cafcfa80fa03af67098ffed755035
   rubocop-capybara (2.23.0) sha256=f9ea1ba3a7561ee8e88cf76fc378ce517ce5327155f305ee7b5c2500e5aee357
   rubocop-factory_bot (2.28.0) sha256=4b17fc02124444173317e131759d195b0d762844a71a29fe8139c1105d92f0cb
-  rubocop-rails (2.35.3) sha256=6edd45410866912b9b2e90ae3aeafd31d576df2bb2a9c9408f1667a50c32c7de
-  rubocop-rspec (3.9.0) sha256=8fa70a3619408237d789aeecfb9beef40576acc855173e60939d63332fdb55e2
+  rubocop-rails (2.35.4) sha256=3aeaa325439c89950e8327565682ea794065d08e2ecbbfe95032bfa295a35df5
+  rubocop-rspec (3.10.2) sha256=0b3e2ecc592cd10ecbf0095bb58d1e357905276e069643523cc19eb7495f65e2
   rubocop-rspec_rails (2.32.0) sha256=4a0d641c72f6ebb957534f539d9d0a62c47abd8ce0d0aeee1ef4701e892a9100
   ruby-graphviz (1.2.5) sha256=1c2bb44e3f6da9e2b829f5e7fd8d75a521485fb6b4d1fc66ff0f93f906121504
   ruby-next-core (1.1.2) sha256=1b095fe2e45929f2581b3ecdb8d92b601ce4d72c12a466057c10e23b6f0c4512
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   rubyntlm (0.6.5) sha256=47013402b99ae29ee93f930af51edaec8c6008556f4be25705a422b4430314f5
-  rubyzip (3.3.1) sha256=2ed92112c7c43ba2b2527f35e6d99d9c2c99270b640aad5227516436481b1e4e
+  rubyzip (3.4.0) sha256=6de39bc9eba302b635a476d16c9e16b0872ad24517c2f98f2b3a7ea23caff57b
   safely_block (1.0.0) sha256=bea80e084e620adeada62fd98cf461bbb9888d40dc0f06d337df9d01e1a658e5
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
-  selenium-webdriver (4.44.0) sha256=6f1df072529af369589c46f0e01132952aabb250cfd683c274d74dc1eb5d8477
+  selenium-webdriver (4.45.0) sha256=ecac65a4df86ac6f7d707e6dcbacaa9c08b6cf2b966babecfb9653c5aa13e2d1
   semantic_logger (4.18.0) sha256=b00e4480b63d844628ce383e80d564626fe2fdb525ecf378dbc4df7828dead8b
   sentry-rails (6.6.2) sha256=cb49aa43e6eb235d162d365c671b3fd24b7f9037df59b4a49af5af60868ab1ed
   sentry-ruby (6.6.2) sha256=a64aaf757d10058598fe5871de925b2a5a3d78273feb9bca23fff843accc6cd6
   sentry-sidekiq (6.6.2) sha256=0552a74e8e3af7261efb23eebe9e5afb8fe186ec66245e1caaf1c6ff71ad1fa2
-  shoulda-matchers (7.0.1) sha256=b4bfd8744c10e0a36c8ac1a687f921ee7e25ed529e50488d61b79a8688749c77
+  shoulda-matchers (8.0.1) sha256=5dbb46e5765b9da225111b085e0819e8c8a121ff94bba430a153eb1ea2c60288
   sidekiq (6.5.12) sha256=b4f93b2204c42220d0b526a7b8e0c49b5f9da82c1ce1a05d2baf1e8f744c197f
   sidekiq-cron (2.4.0) sha256=25595c5aee0c16d13a89466e5108af047fa4cfbf388199b39e1a600ca39472d4
   signet (0.21.0) sha256=d617e9fbf24928280d39dcfefba9a0372d1c38187ffffd0a9283957a10a8cd5b
@@ -1230,8 +1249,10 @@ CHECKSUMS
   site_prism-all_there (3.0.8) sha256=ce18c10abef29fca1e625d8e962096cba3906fef88a1e4e2fa5bb7cc5bc12720
   skylight (7.1.1) sha256=90b09ad73288ad11322f7db4e25b3f096b522d752a368d2c9e70bc346986e951
   smart_properties (1.17.0) sha256=f9323f8122e932341756ddec8e0ac9ec6e238408a7661508be99439ca6d6384b
-  solargraph (0.59.2) sha256=e771126c494caaee8263739fc340c13b2b1d02e262c0585a3f9da4e3c9a7407c
+  solargraph (0.60.0) sha256=3103766dc6091e0901f0b947ba14def278c17b615ca519d101921310a42487a2
   solargraph-rails (1.3) sha256=0af6159f4fe2b716857884a9d758d124eae2bd64c27cb43028792027f2973114
+  sorbet-runtime (0.6.13297) sha256=f653ac56cf2ba1ff543aaea876a2434acde1d75782fee7e46b0a0a8ee3991a47
+  sord (7.1.0) sha256=e02fd59294da520e50cea80a07fb9bc93db709c552d055871379ae8d8e87601f
   spring (4.6.0) sha256=e9e41f9a56fa5f111df7c85110a7d606ca731dc116c906ba395fd74c9fd474e3
   spring-commands-rspec (1.0.4) sha256=6202e54fa4767452e3641461a83347645af478bf45dddcca9737b43af0dd1a2c
   spring-watcher-listen (2.1.0) sha256=e958bcd956d1026eb95d16b2ef0e241d1ca35a754628bd45040e3d9954a61949
@@ -1272,7 +1293,7 @@ CHECKSUMS
   yabeda (0.14.0) sha256=bc517bf22d692ebd80a29fc9fd2246c257aaf92d10b2735a775e2419351a43bf
   yabeda-prometheus (0.9.1) sha256=b87d80cae8cffbeb527c25d288eafa8eed9c1fb56cf49616db5c8611768cd5fd
   yabeda-rails (0.11.0) sha256=afa2581bd44c8f419cb3f2bbf9f6fb40f817c30476f7caf5d1c55c48d69a5b29
-  yard (0.9.43) sha256=cf8733a8f0485df2a162927e9b5f182215a61f6d22de096b8f402c726a1c5821
+  yard (0.9.44) sha256=eb087e9b631ccd887b049f303d489963945452d5e2a7eb49a5a74a7cf6887f28
   yard-activesupport-concern (0.0.1) sha256=be790cb0efc23e2e87677063598ac8b743586154657bbd9655a7f03ce78390ef
   yard-solargraph (0.1.0) sha256=a19a4619c942181a618fb9458970a9d2534cf7fda69fc43949629a7948a5930e
   zeitwerk (2.8.2) sha256=7212a61311083c604184b1ea2574b9aa05cd14f855a0841c06985cabe9181d12
