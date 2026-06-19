@@ -170,13 +170,13 @@ private
 
   def given_two_trainees_exist_to_recommend
     @trainees = [
-      create(:trainee, :trn_received, trn: "2413295", itt_end_date: Time.zone.today, provider: current_user.organisation),
-      create(:trainee, :trn_received, trn: "4814731", itt_end_date: Time.zone.today + 1.month, provider: current_user.organisation),
+      create(:trainee, :trn_received, trn: "2413295", itt_start_date: 1.year.ago, trainee_start_date: 1.year.ago, itt_end_date: Time.zone.today, provider: current_user.organisation),
+      create(:trainee, :trn_received, trn: "4814731", itt_start_date: 1.year.ago, trainee_start_date: 1.year.ago, itt_end_date: Time.zone.today + 1.month, provider: current_user.organisation),
     ]
   end
 
   def and_a_discarded_duplicate_trainee_exists
-    @duplicate_trainee = create(:trainee, :trn_received, trn: "2413295", discarded_at: 1.day.ago, itt_end_date: Time.zone.today, provider: current_user.organisation)
+    @duplicate_trainee = create(:trainee, :trn_received, trn: "2413295", discarded_at: 1.day.ago, itt_start_date: 1.year.ago, trainee_start_date: 1.year.ago, itt_end_date: Time.zone.today, provider: current_user.organisation)
   end
 
   def then_i_see_how_many_trainees_i_can_recommend

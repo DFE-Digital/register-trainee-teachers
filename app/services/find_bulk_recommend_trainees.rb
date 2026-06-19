@@ -11,6 +11,8 @@ class FindBulkRecommendTrainees
       trainees.itt_end_date IS NULL
     SQL
 
-    Trainee.trn_received.where(itt_end_date_within_six_months)
+    Trainee.trn_received
+      .where(itt_end_date_within_six_months)
+      .with_required_placements_for_award
   end
 end

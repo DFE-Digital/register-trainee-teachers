@@ -106,11 +106,9 @@ class Provider < ApplicationRecord
     trainees.kept
       .where(state: %i[submitted_for_trn trn_received recommended_for_award awarded])
       .where.not(trn: nil)
-      .where(training_route: PLACEMENTS_ROUTES.keys)
-      .left_joins(:placements, :end_academic_cycle)
+      .left_joins(:end_academic_cycle)
       .merge(AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE))
-      .group("trainees.id")
-      .having("COUNT(placements.id) < (#{minimum_placements_case_sql})")
+      .merge(Trainee.without_required_placements_for_award)
   end
 
   def hei?
@@ -142,14 +140,6 @@ class Provider < ApplicationRecord
   end
 
 private
-
-  def minimum_placements_case_sql
-    whens = MINIMUM_PLACEMENTS.map do |route, min|
-      "WHEN trainees.training_route = #{TRAINING_ROUTES[route]} THEN #{min}"
-    end
-
-    "CASE #{whens.join(' ')} ELSE #{MINIMUM_PLACEMENTS.default} END"
-  end
 
   def update_courses
     Course.where(accredited_body_code: code_was).update_all(accredited_body_code: code)
