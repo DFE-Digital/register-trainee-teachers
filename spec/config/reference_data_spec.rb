@@ -19,7 +19,7 @@ RSpec.describe "Reference data integrity" do
       gem_codes: -> { DfEReference::DegreesQuery::GRADES.all.map(&:hesa_code) } },
     { file: "degree_type.yml", v26: :degree_type, v25: :uk_degree,
       gem_codes: -> { DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code) },
-      entry_count: 90, code_format: /^\d{3}$/ },
+      entry_count: 94, code_format: /^\d{3}$/ },
     { file: "disability.yml", v26: :disability, v25: :disability1,
       gem_codes: -> { Hesa::CodeSets::Disabilities::MAPPING.keys } },
     { file: "ethnicities.yml", v26: :ethnicity, v25: :ethnicity,
@@ -173,6 +173,12 @@ RSpec.describe "Reference data integrity" do
         end
         expect(divergences).to be_empty, "#{name} diverges from the gem:\n#{divergences.first(20).join("\n")}"
       end
+    end
+
+    it "degree_type includes every gem type name, including code-less types" do
+      gem_names = DfEReference::DegreesQuery::TYPES.all.map(&:name).uniq
+      missing = gem_names - ReferenceData::DEGREE_TYPES.values.map(&:display_name)
+      expect(missing).to be_empty, "degree type names missing from YAML: #{missing.inspect}"
     end
   end
 

@@ -459,4 +459,20 @@ data:
     display_name: "Not available"
     hesa_codes:
       - "999"
+  - id: "be08f598-0860-4de0-b95a-3c448a16cc99"
+    name: "foundation_degree"
+    display_name: "Foundation degree"
+    hesa_codes:
+  - id: "7022c4c2-ec9a-4eec-98dc-315bfeb1ef3a"
+    name: "foundation_of_arts"
+    display_name: "Foundation of Arts"
+    hesa_codes:
+  - id: "a02be347-1d5b-485a-a845-40c2d4b6ee8f"
+    name: "foundation_of_sciences"
+    display_name: "Foundation of Sciences"
+    hesa_codes:
+  - id: "2b5b8af4-cade-421b-9e3d-026f71f143b7"
+    name: "foundation_degree_of_education"
+    display_name: "Foundation Degree of Education"
+    hesa_codes:
 
