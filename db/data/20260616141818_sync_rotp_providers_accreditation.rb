@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SyncRotpProvidersAccreditation < ActiveRecord::Migration[8.1]
+  # https://trello.com/c/PfJaOqoD/9622-change-some-accredited-providers-in-register-to-align-with-rotp
+  #
   def up
     [
       %w[S13 scitt],
