@@ -37,8 +37,8 @@ module Api
       validates :subject, presence: true
 
       validates :country, api_inclusion: {
-        in: Hesa::CodeSets::Countries::MAPPING.values,
-        valid_values: Hesa::CodeSets::Countries::MAPPING.keys,
+        in: ::ReferenceData::COUNTRIES.values.map(&:display_name),
+        valid_values: ::ReferenceData::COUNTRIES.hesa_codes,
       }, allow_blank: true
 
       with_options if: -> { locale_code == "uk" } do
@@ -52,13 +52,13 @@ module Api
       end
 
       validates :uk_degree, api_inclusion: {
-        in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
-        valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq,
+        in: ::ReferenceData::DEGREE_TYPES.values.map(&:display_name),
+        valid_values: ::ReferenceData::DEGREE_TYPES.hesa_codes,
       }, allow_blank: true, if: -> { locale_code == "uk" }
 
       validates :non_uk_degree, api_inclusion: {
-        in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
-        valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq,
+        in: ::ReferenceData::DEGREE_TYPES.values.map(&:display_name),
+        valid_values: ::ReferenceData::DEGREE_TYPES.hesa_codes,
       }, allow_blank: true, if: -> { locale_code == "non_uk" }
 
       validate :check_for_duplicates
