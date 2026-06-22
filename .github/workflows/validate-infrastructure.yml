@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Validate ${{ matrix.display }}
-        uses: DFE-Digital/github-actions/validate-infra@858469632805ea42b6ccc61d4df75b1650846431
+        uses: DFE-Digital/github-actions/validate-infra@dba482af0e2d638c4fa08803b9d0237cc7c4a194
         with:
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
