@@ -4,11 +4,11 @@
 
 ## Current status: pre-prod only
 
-We're currently only publishing to FauAPI **pre-prod**. The FauAPI platform has a known bug where `schemaUrl` is silently ignored, so the OpenAPI spec doesn't get attached automatically. Once platform bugs are resolved, we'll switch the workflow to target production.
+We're currently only publishing to FauAPI **pre-prod**. The OpenAPI spec is attached via `schema.documentContentValue` (base64-encoded YAML). Once we've verified this works in pre-prod, we'll switch the workflow to target production.
 
 ## How it works
 
-On every deploy to production, a GitHub Actions job (`update-fauapi-catalogue` in `build-and-deploy.yml`) runs `bin/generate_fauapi_manifest` to build the manifest JSON from `config/settings.yml` and the openapi yaml files in `public/openapi/`, then POSTs it to the fauapi platform API and publishes it. Import is idempotent by `name` — repeat imports update rather than duplicate.
+On every deploy to production, a GitHub Actions job (`update-fauapi-catalogue` in `build-and-deploy.yml`) runs `bin/generate_fauapi_manifest` to build the manifest JSON from `config/settings.yml` and the openapi yaml files in `public/openapi/`, then POSTs it to the fauapi platform API and publishes it. The current API version's OpenAPI spec is embedded in the import payload as base64-encoded YAML in `schema.documentContentValue`. Import is idempotent by `name` — repeat imports update rather than duplicate.
 
 The manifest is generated fresh in CI on every deploy — nothing to keep in sync manually. You can run the script locally to inspect the output:
 
@@ -24,7 +24,7 @@ The linked API was created via import with `name: "register-trainee-teachers-api
 
 A `FAUAPI_PP_AUTOMATION_TOKEN` [secret](https://github.com/DFE-Digital/register-trainee-teachers/settings/secrets/actions) is needed in GitHub Actions — this is a bearer token from the fauapi pre-prod management portal.
 
-Production workspace setup hasn't been done yet. When the platform bugs are fixed, create the workspace + API at [apimanagement.education.gov.uk](https://apimanagement.education.gov.uk), generate a `FAUAPI_AUTOMATION_TOKEN` secret, and update the workflow to target the production URL.
+Production workspace setup hasn't been done yet. Once base64 schema upload is verified in pre-prod, create the workspace + API at [apimanagement.education.gov.uk](https://apimanagement.education.gov.uk), generate a `FAUAPI_AUTOMATION_TOKEN` secret, and update the workflow to target the production URL.
 
 ## Links
 
@@ -37,5 +37,4 @@ Production workspace setup hasn't been done yet. When the platform bugs are fixe
 
 The fauapi platform API has some bugs we've reported:
 
-- The OpenAPI spec can't be attached via the import API — `schema.documentContentValue` (the documented upload mechanism) returns HTTP 500 for a real-world spec, likely a request size limit on their end; the schema shown in the catalogue is from a previous manual upload
 - Import response doesn't include the API `id` — we work around this by listing APIs after import
