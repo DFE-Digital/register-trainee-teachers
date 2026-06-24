@@ -7,6 +7,9 @@ metadata:
     - date: "2025-11-19"
       change: "Initial version"
       author: "Register team"
+    - date: "2026-06-11"
+      change: "Add HESA code 13920 for early years (EYTS) courses"
+      author: "Register team"
 
 data:
   - id: [3, 11]
@@ -41,6 +44,8 @@ data:
     name: zero_to_five
     display_name: "Zero to five"
     description: ""
+    hesa_codes:
+      - "13920"
   - id: [2, 7]
     name: two_to_seven
     display_name: "Two to seven"

@@ -2392,6 +2392,9 @@ en:
               blank: Enter the concerns
         api/v20261/hesa_trainee_detail_attributes:
           attributes:
+            course_age_range:
+              early_years_invalid: is invalid. It should be `13920` for the training_route provided
+              reserved_for_early_years: is invalid. It can only be used for early years training routes
             fund_code:
               ineligible: is not valid for this trainee
             funding_method:
