@@ -157,6 +157,32 @@ describe FundingManager do
     end
   end
 
+  describe "#funding_guidance_url" do
+    subject { funding_manager.funding_guidance_url }
+
+    let(:academic_year) { trainee.start_academic_cycle.label.parameterize }
+
+    context "when the training route is an early years route" do
+      let(:training_route) { :early_years_postgrad }
+
+      it "returns the early years funding guidance url for the academic year" do
+        expect(subject).to eq(
+          "https://www.gov.uk/guidance/early-years-initial-teacher-training-#{academic_year}-funding-guidance",
+        )
+      end
+    end
+
+    context "when the training route is not an early years route" do
+      let(:training_route) { :provider_led_postgrad }
+
+      it "returns the itt funding guidance url for the academic year" do
+        expect(subject).to eq(
+          "https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-#{academic_year}",
+        )
+      end
+    end
+  end
+
   describe "#funding_available?" do
     subject { funding_manager.funding_available? }
 
