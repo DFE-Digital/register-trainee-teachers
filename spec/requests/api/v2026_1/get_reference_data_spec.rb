@@ -6,11 +6,8 @@ describe "`GET /reference-data` endpoint" do
   it_behaves_like "a reference data endpoint", "v2026.1"
 
   context "using version v2025.0" do
-    let(:auth_token) { create(:authentication_token) }
-    let(:token) { auth_token.token }
-
     before do
-      get "/api/v2025.0/reference-data", headers: { Authorization: token }
+      get "/api/v2025.0/reference-data"
     end
 
     it "returns status code 404" do
@@ -22,11 +19,8 @@ describe "`GET /reference-data` endpoint" do
   end
 
   context "using version v2026.1" do
-    let(:auth_token) { create(:authentication_token) }
-    let(:token) { auth_token.token }
-
     before do
-      get "/api/v2026.1/reference-data", headers: { Authorization: token }
+      get "/api/v2026.1/reference-data"
     end
 
     it "includes v2026.1 field names" do

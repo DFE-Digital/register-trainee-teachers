@@ -1,16 +1,34 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "a reference data endpoint" do |version|
-  let(:auth_token) { create(:authentication_token) }
-  let(:token) { auth_token.token }
-  let(:reference_data_klass) { "Hesa::ReferenceData::#{version.titleize.gsub(/\.|\s/, '')}".constantize }
+  let(:reference_data_klass) do
+    "Hesa::ReferenceData::#{Api::GetVersionedItem.module_name(version)}".constantize
+  end
 
   describe "GET /api/#{version}/reference-data" do
-    it_behaves_like "a register API endpoint", "/api/#{version}/reference-data"
+    context "without authentication" do
+      before do
+        get "/api/#{version}/reference-data"
+      end
+
+      it "returns status code 200" do
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "when the register_api feature flag is off", feature_register_api: false do
+      before do
+        get "/api/#{version}/reference-data"
+      end
+
+      it "returns status code 404" do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
 
     context "without a field parameter" do
       before do
-        get "/api/#{version}/reference-data", headers: { Authorization: token }
+        get "/api/#{version}/reference-data"
       end
 
       it "returns all reference data fields" do
@@ -57,7 +75,7 @@ RSpec.shared_examples "a reference data endpoint" do |version|
 
     context "with a valid field parameter" do
       before do
-        get "/api/#{version}/reference-data", params: { field: field_name }, headers: { Authorization: token }
+        get "/api/#{version}/reference-data", params: { field: field_name }
       end
 
       let(:field_name) { reference_data_klass.available_fields.first }
@@ -71,7 +89,7 @@ RSpec.shared_examples "a reference data endpoint" do |version|
 
     context "with an unknown field parameter" do
       before do
-        get "/api/#{version}/reference-data", params: { field: "bogus" }, headers: { Authorization: token }
+        get "/api/#{version}/reference-data", params: { field: "bogus" }
       end
 
       it "returns status code 404" do

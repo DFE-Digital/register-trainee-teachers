@@ -4,15 +4,13 @@ module Api
   class ReferenceDataResponse < BaseService
     class UnsupportedVersionError < StandardError; end
 
-    SUPPORTED_FROM = "v2026.1"
-
     def initialize(version:, field: nil)
       @version = version
       @field = field.presence
     end
 
     def call
-      raise(UnsupportedVersionError) unless supported_version?
+      raise(UnsupportedVersionError) unless reference_data_klass.respond_to?(:api_payload)
 
       { json: reference_data_klass.api_payload(field:), status: :ok }
     end
@@ -21,16 +19,8 @@ module Api
 
     attr_reader :version, :field
 
-    def supported_version?
-      version >= SUPPORTED_FROM
-    end
-
     def reference_data_klass
-      "Hesa::ReferenceData::#{version_module}".constantize
-    end
-
-    def version_module
-      version.titleize.gsub(/\.|\s/, "")
+      "Hesa::ReferenceData::#{Api::GetVersionedItem.module_name(version)}".constantize
     end
   end
 end

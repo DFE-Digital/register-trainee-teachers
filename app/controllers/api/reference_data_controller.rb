@@ -2,6 +2,8 @@
 
 module Api
   class ReferenceDataController < Api::BaseController
+    skip_before_action :authenticate!, :update_last_used_at_on_token!
+
     def show
       render(**Api::ReferenceDataResponse.call(version: api_version, field: params[:field]))
     rescue Api::ReferenceDataResponse::UnsupportedVersionError
