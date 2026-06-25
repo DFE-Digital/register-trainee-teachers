@@ -98,6 +98,50 @@ module BulkUpdate
           end
         end
 
+        context "when the row is an early years trainee" do
+          let(:row) { parsed_csv.first }
+
+          before do
+            create(:subject_specialism, name: CourseSubjects::EARLY_YEARS_TEACHING)
+
+            row["training_route"] = "'18"
+            row["course_subject_1"] = "'100510"
+            row["course_age_range"] = "'13920"
+          end
+
+          it "creates a trainee record" do
+            expect { result }.to change { Trainee.count }.by(1)
+
+            expect(result.success).to be(true)
+            expect(Trainee.last.course_min_age).to eq(0)
+            expect(Trainee.last.course_max_age).to eq(5)
+          end
+
+          context "with a non early years course_age_range" do
+            before { row["course_age_range"] = "'13918" }
+
+            it "returns a validation error for course_age_range" do
+              expect { result }.not_to change { Trainee.count }
+
+              expect(result.success).to be(false)
+              expect(result.errors).to include("course_age_range is invalid. It should be `13920` for the training_route provided")
+            end
+          end
+        end
+
+        context "when the row uses the early years course_age_range without an early years training_route" do
+          let(:row) { parsed_csv.first }
+
+          before { row["course_age_range"] = "'13920" }
+
+          it "returns a validation error for course_age_range" do
+            expect { result }.not_to change { Trainee.count }
+
+            expect(result.success).to be(false)
+            expect(result.errors).to include("course_age_range is invalid. It can only be used for early years training routes")
+          end
+        end
+
         context "when the row is valid and does NOT include placement or degree data" do
           let(:row) { parsed_csv.first }
 

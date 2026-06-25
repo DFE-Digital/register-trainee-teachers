@@ -265,6 +265,8 @@ weight: 1
         Notes:
         Where the course maximum age is 11 or less as stated in <code>course_age_range</code>,
         we expect <code>course_subject_1</code> to be “Primary Teaching”. We will return an error if this is not set to HESA code <code>100511</code>.
+        This does not apply to the early years <code>course_age_range</code> (HESA code <code>13920</code>),
+        where we expect <code>course_subject_1</code> to be “Early Years Teaching” (HESA code <code>100510</code>).
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -378,6 +380,11 @@ weight: 1
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
+      </p>
+      <p class="govuk-body">
+        Notes:
+        Trainees on early years training routes must use HESA code <code>13920</code>.
+        <code>13920</code> cannot be used for any other training route.
       </p>
       <p class="govuk-body">
         The following values are invalid for this field:

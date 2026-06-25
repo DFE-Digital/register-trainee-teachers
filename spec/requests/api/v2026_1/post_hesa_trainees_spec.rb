@@ -2161,6 +2161,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
   context "when creating a trainee with early_years_assessment_only route" do
     let(:training_route) { "17" }
     let(:course_subject_1) { "100510" }
+    let(:course_age_range) { "13920" }
     let(:data) do
       super().except(:study_mode, :placements_attributes)
     end
@@ -2188,6 +2189,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
   context "when creating a trainee with early_years_undergrad route" do
     let(:training_route) { "18" }
     let(:course_subject_1) { "100510" }
+    let(:course_age_range) { "13920" }
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2207,6 +2209,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
   context "when creating a trainee with early_years_postgrad route" do
     let(:training_route) { "19" }
     let(:course_subject_1) { "100510" }
+    let(:course_age_range) { "13920" }
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2226,6 +2229,7 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
   context "when creating a trainee with early_years_salaried route" do
     let(:training_route) { "20" }
     let(:course_subject_1) { "100510" }
+    let(:course_age_range) { "13920" }
 
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -2239,6 +2243,95 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
     it "stores the trainee with early_years_salaried training route" do
       trainee = Trainee.last
       expect(trainee.training_route).to eq("early_years_salaried")
+    end
+  end
+
+  context "when course_age_range is the early years value" do
+    let(:course_age_range) { "13920" }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    context "with an early years training_route" do
+      let(:training_route) { "19" }
+      let(:course_subject_1) { "100510" }
+
+      it "creates the trainee" do
+        expect(response).to have_http_status(:created)
+        expect(response.parsed_body[:data][:course_age_range]).to eq("13920")
+      end
+
+      it "stores the early years age range" do
+        trainee = Trainee.last
+
+        expect(trainee.course_min_age).to eq(0)
+        expect(trainee.course_max_age).to eq(5)
+        expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
+      end
+
+      it "stores the early years course_education_phase" do
+        expect(Trainee.last.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:early_years])
+      end
+    end
+
+    context "with a non early years training_route" do
+      it "returns a validation error for course_age_range" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "course_age_range is invalid. It can only be used for early years training routes",
+        )
+      end
+
+      context "with enhanced errors" do
+        let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+        it "returns a validation error for course_age_range" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to eq(
+            "course_age_range" => ["is invalid. It can only be used for early years training routes"],
+          )
+        end
+      end
+    end
+
+    context "with course_subject_1 'primary teaching'" do
+      let(:course_subject_1) { "100511" }
+
+      it "returns a validation error for course_age_range only" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "course_age_range is invalid. It can only be used for early years training routes",
+        )
+      end
+    end
+  end
+
+  context "when an early years trainee uses a non early years course_age_range" do
+    let(:training_route) { "19" }
+    let(:course_subject_1) { "100510" }
+    let(:course_age_range) { "13918" }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "returns a validation error for course_age_range" do
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body[:errors]).to contain_exactly(
+        "course_age_range is invalid. It should be `13920` for the training_route provided",
+      )
+    end
+
+    context "with enhanced errors" do
+      let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
+
+      it "returns a validation error for course_age_range" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to eq(
+          "course_age_range" => ["is invalid. It should be `13920` for the training_route provided"],
+        )
+      end
     end
   end
 
