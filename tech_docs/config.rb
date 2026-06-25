@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "logger"
 require "govuk_tech_docs"
 
 require "config/environment"

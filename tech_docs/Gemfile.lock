@@ -272,6 +272,7 @@ PLATFORMS
 DEPENDENCIES
   config (~> 5.6)
   govuk_tech_docs
+  logger
   middleman-minify-html
   pry
 
