@@ -7,7 +7,8 @@ RSpec.describe "Reference data integrity" do
     { file: "country.yml", v26: :country, v25: :country,
       gem_codes: -> { Hesa::CodeSets::Countries::MAPPING.keys } },
     { file: "course_age_range.yml", v26: :course_age_range, v25: :course_age_range,
-      gem_codes: -> { DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.keys } },
+      gem_codes: -> { DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.keys },
+      v26_only_codes: %w[13920] },
     { file: "course_subject.yml", v26: :course_subject, v25: :course_subject_one,
       gem_codes: -> { Hesa::CodeSets::CourseSubjects::MAPPING.keys } },
     { file: "degree_subject.yml", v26: :degree_subject, v25: :subject,
@@ -109,7 +110,7 @@ RSpec.describe "Reference data integrity" do
       end
 
       it "HESA codes match v2025" do
-        expect(yaml_codes(type[:file])).to eq(normalize(type[:gem_codes].call))
+        expect(yaml_codes(type[:file]) - (type[:v26_only_codes] || [])).to eq(normalize(type[:gem_codes].call))
       end
 
       it "labels match v2025 published" do

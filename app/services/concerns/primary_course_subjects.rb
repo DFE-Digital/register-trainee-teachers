@@ -18,7 +18,13 @@ module PrimaryCourseSubjects
 private
 
   def primary_education_phase?
+    return false if early_years_age_range?
+
     course_max_age && course_max_age <= DfE::ReferenceData::AgeRanges::UPPER_BOUND_PRIMARY_AGE
+  end
+
+  def early_years_age_range?
+    [course_min_age, course_max_age] == DfE::ReferenceData::AgeRanges::ZERO_TO_FIVE
   end
 
   def course_subjects
