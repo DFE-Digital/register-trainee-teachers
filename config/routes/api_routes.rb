@@ -16,6 +16,7 @@ module ApiRoutes
         end
 
         resource :info, controller: :info, only: :show, constraints: RouteConstraints::RegisterApiConstraint
+        resource :reference_data, only: :show, path: "reference-data", constraints: RouteConstraints::RegisterApiConstraint
 
         # NOTE: catch all route
         match "*url" => "base#render_not_found", via: :all

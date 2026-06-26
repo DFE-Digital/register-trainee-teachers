@@ -13,6 +13,10 @@ module Hesa
         )
       end
 
+      def self.withdrawal_reasons_payload
+        Api::ReferenceData::WithdrawalReasons.payload
+      end
+
       attr_reader :values
 
       def initialize(values)
