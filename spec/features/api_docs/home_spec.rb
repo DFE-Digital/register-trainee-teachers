@@ -31,7 +31,7 @@ feature "Home page for Register API documentation" do
   end
 
   def when_i_click_on_the_logo
-    find(".govuk-header__link--homepage", text: "Register trainee teachers").click
+    find(".govuk-header__homepage-link", text: "Register trainee teachers").click
   end
 
   def then_i_should_see_the_register_home_page
