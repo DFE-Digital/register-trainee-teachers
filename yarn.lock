@@ -6067,6 +6067,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.5.16":
+  version: 8.5.16
+  resolution: "postcss@npm:8.5.16"
+  dependencies:
+    nanoid: "npm:^3.3.12"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10c0/625de7a02f662f3a340964d14b487bd5097adf16f5f171e257d19005ba37aea8768ee446557500e88e91ca46b4d14d6cb4a0bf033c6ec0c8c0b660d85719f1ef
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -6333,7 +6344,7 @@ __metadata:
     jest: "npm:^30.4.2"
     jest-environment-jsdom: "npm:^30.4.1"
     jquery: "npm:^4.0.0"
-    postcss: "npm:^8.5.15"
+    postcss: "npm:^8.5.16"
     rails-ujs: "npm:^5.2.8"
     sass: "npm:^1.101.0"
     standard: "npm:^17.1.2"
