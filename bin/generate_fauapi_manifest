@@ -4,12 +4,16 @@
 require "yaml"
 require "json"
 require "fileutils"
+require "base64"
 
 root = File.expand_path("..", __dir__)
 settings = YAML.load_file(File.join(root, "config", "settings.yml"))
 
 current_version = settings.dig("api", "current_version")
 major_version = current_version.split(".").first
+schema_file_name = "#{current_version}.yaml"
+schema_path = File.join(root, "public", "openapi", schema_file_name)
+schema_content = File.read(schema_path)
 
 current_year = Time.now.year
 
@@ -54,6 +58,13 @@ manifest = {
     { name: "live", backendUrl: "https://www.register-trainee-teachers.service.gov.uk", visibility: "Public", enabled: true, backendMode: "None" },
   ],
   releases: releases,
+  schema: {
+    fileName: schema_file_name,
+    name: current_version,
+    schemaType: "openapi",
+    contentType: "application/yaml",
+    documentContentValue: Base64.strict_encode64(schema_content),
+  },
 }
 
 output_path = File.join(root, "public", "fauapi", "register-api.json")
@@ -61,5 +72,6 @@ FileUtils.mkdir_p(File.dirname(output_path))
 File.write(output_path, JSON.pretty_generate(manifest) + "\n")
 
 warn "Generated #{output_path}"
+warn "  schema: #{schema_file_name} (#{schema_content.bytesize} bytes, base64: #{manifest[:schema][:documentContentValue].bytesize} bytes)"
 warn "  majorVersion: #{major_version}"
 warn "  releases: #{releases.map { |r| "#{r[:name]} (#{r[:tag]})" }.join(', ')}"
