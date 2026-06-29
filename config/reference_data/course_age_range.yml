@@ -134,10 +134,6 @@ data:
     name: nine_to_sixteen
     display_name: "Nine to sixteen"
     description: ""
-  - id: [11, 19]
-    name: eleven_to_nineteen
-    display_name: "Eleven to nineteen"
-    description: ""
   - id: [13, 18]
     name: thirteen_to_eighteen
     display_name: "Thirteen to eighteen"
