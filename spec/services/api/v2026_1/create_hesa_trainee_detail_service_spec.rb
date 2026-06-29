@@ -166,6 +166,30 @@ RSpec.describe Api::V20261::CreateHesaTraineeDetailService do
             .to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
         end
       end
+
+      context "when the course_age_range is missing" do
+        let(:trainee) { create(:trainee, course_min_age: 11, course_max_age: 16) }
+
+        it "derives course_age_range from the trainee's range via Trainees::MapCourseAgeRangeToHesa" do
+          subject.call(trainee:)
+
+          expect(trainee.reload.hesa_trainee_detail.course_age_range).to eq("13918")
+        end
+      end
+
+      context "when a hesa_student course_age_range is present" do
+        let(:trainee) { create(:trainee, course_min_age: 11, course_max_age: 16) }
+
+        before do
+          create(:hesa_student, course_age_range: "13915", trainee: trainee)
+        end
+
+        it "prefers the student record's course_age_range over the fallback" do
+          subject.call(trainee:)
+
+          expect(trainee.reload.hesa_trainee_detail.course_age_range).to eq("13915")
+        end
+      end
     end
   end
 end
