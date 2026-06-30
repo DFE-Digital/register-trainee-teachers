@@ -5,6 +5,7 @@ module Api
     class HesaTraineeDetailSerializer
       EXCLUDED_ATTRIBUTES = %w[
         id
+        course_age_range
         course_study_mode
         funding_method
         hesa_disabilities

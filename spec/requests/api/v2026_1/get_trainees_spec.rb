@@ -38,6 +38,33 @@ describe "`GET /trainees` endpoint" do
     end
   end
 
+  context "when trainees are missing a course_age_range" do
+    let!(:trainee_without_stored_course_age_range) do
+      create(:trainee, :with_hesa_trainee_detail, :trn_received, course_min_age: 11, course_max_age: 16, provider: auth_token.provider, start_academic_cycle: start_academic_cycle).tap do |trainee|
+        trainee.hesa_trainee_detail.update!(course_age_range: nil)
+      end
+    end
+
+    let!(:trainee_without_hesa_trainee_detail) do
+      create(:trainee, :trn_received, course_min_age: 11, course_max_age: 16, provider: auth_token.provider, start_academic_cycle: start_academic_cycle)
+    end
+
+    before do
+      get(
+        "/api/v2026.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the course_age_range mapped from the trainee's range" do
+      [trainee_without_stored_course_age_range, trainee_without_hesa_trainee_detail].each do |trainee|
+        serialized_trainee = response.parsed_body["data"].find { |data| data["trainee_id"] == trainee.slug }
+
+        expect(serialized_trainee["course_age_range"]).to eq("13918")
+      end
+    end
+  end
+
   context "filtering out draft trainees" do
     let!(:draft_trainee) { create(:trainee, :draft, :with_hesa_trainee_detail) }
 

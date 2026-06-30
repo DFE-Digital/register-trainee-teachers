@@ -163,6 +163,34 @@ RSpec.describe Api::V20261::TraineeSerializer do
       end
     end
 
+    describe "course_age_range" do
+      context "when the hesa_trainee_detail has a course_age_range" do
+        it "serializes the stored course_age_range" do
+          expect(json["course_age_range"]).to eq(trainee.hesa_trainee_detail.course_age_range)
+        end
+      end
+
+      context "when the hesa_trainee_detail has no course_age_range" do
+        let(:trainee) do
+          create(:trainee, :with_hesa_trainee_detail, course_min_age: 11, course_max_age: 16).tap do |trainee|
+            trainee.hesa_trainee_detail.update!(course_age_range: nil)
+          end
+        end
+
+        it "serializes the course_age_range mapped from the trainee's range" do
+          expect(json["course_age_range"]).to eq("13918")
+        end
+      end
+
+      context "when the trainee has no hesa_trainee_detail" do
+        let(:trainee) { create(:trainee, course_min_age: 11, course_max_age: 16) }
+
+        it "serializes the course_age_range mapped from the trainee's range" do
+          expect(json["course_age_range"]).to eq("13918")
+        end
+      end
+    end
+
     describe "nationality" do
       it "serializes nationality to HESA code" do
         expect(json[:nationality]).to eq("FR")
