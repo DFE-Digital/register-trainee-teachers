@@ -5,7 +5,12 @@ require "rails_helper"
 module Autocomplete
   describe SchoolsController do
     describe "#index" do
+      let(:user) { build_current_user(user: create(:user, :hei)) }
       let(:json_response) { response.parsed_body }
+
+      before do
+        allow(controller).to receive(:current_user).and_return(user)
+      end
 
       context "default response" do
         before do
