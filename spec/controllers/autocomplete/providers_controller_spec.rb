@@ -5,7 +5,12 @@ require "rails_helper"
 module Autocomplete
   describe ProvidersController do
     describe "#index" do
+      let(:user) { build_current_user(user: create(:user, :hei)) }
       let(:json_response) { response.parsed_body }
+
+      before do
+        allow(controller).to receive(:current_user).and_return(user)
+      end
 
       context "default response" do
         before do
@@ -18,7 +23,7 @@ module Autocomplete
         end
 
         it "returns a list of providers" do
-          expect(json_response["providers"].size).to eq(1)
+          expect(json_response["providers"].size).to eq(2)
         end
       end
 
