@@ -18,6 +18,7 @@ module Autocomplete
 
         it "returns forbidden" do
           expect(response).to have_http_status(:forbidden)
+          expect(json_response).to include("error" => "Forbidden")
         end
       end
 

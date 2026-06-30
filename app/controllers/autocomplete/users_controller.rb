@@ -22,7 +22,9 @@ module Autocomplete
   private
 
     def authorize_system_admin!
-      authorize(User, :index?)
+      return if policy(User).index?
+
+      render_json_error(message: "Forbidden", status: :forbidden)
     end
 
     def args
