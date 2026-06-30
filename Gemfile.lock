@@ -559,11 +559,11 @@ GEM
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
-    rails-erd (1.7.2)
-      activerecord (>= 4.2)
-      activesupport (>= 4.2)
+    rails-erd (2.0.2)
+      activerecord (>= 7.0)
+      activesupport (>= 7.0)
       choice (~> 0.2.0)
-      ruby-graphviz (~> 1.2)
+      ostruct
     rails-html-sanitizer (1.7.0)
       loofah (~> 2.25)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
@@ -628,7 +628,7 @@ GEM
     rspec-mocks (3.13.8)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-openapi (0.29.0)
+    rspec-openapi (0.30.0)
       actionpack (>= 5.2.0)
       rails-dom-testing
       rspec-core
@@ -657,7 +657,7 @@ GEM
     rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-capybara (2.23.0)
+    rubocop-capybara (3.0.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.81)
     rubocop-factory_bot (2.28.0)
@@ -677,13 +677,11 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-rspec (~> 3.5)
-    ruby-graphviz (1.2.5)
-      rexml
     ruby-next-core (1.1.2)
     ruby-progressbar (1.13.0)
     rubyntlm (0.6.5)
       base64
-    rubyzip (3.4.0)
+    rubyzip (3.4.1)
     safely_block (1.0.0)
     securerandom (0.4.1)
     selenium-webdriver (4.45.0)
@@ -739,7 +737,7 @@ GEM
     skylight (7.1.1)
       activesupport (>= 7.2.0)
     smart_properties (1.17.0)
-    solargraph (0.60.1)
+    solargraph (0.60.2)
       ast (~> 2.4.3)
       backport (~> 1.2)
       benchmark (~> 0.4)
@@ -755,6 +753,7 @@ GEM
       parser (~> 3.0)
       prism (~> 1.4)
       rbs (>= 3.10.0)
+      rdoc (~> 7.0)
       reverse_markdown (~> 3.0)
       rubocop (~> 1.76)
       sord (~> 7.0)
@@ -766,7 +765,7 @@ GEM
     solargraph-rails (1.3)
       activesupport
       solargraph (>= 0.48.0)
-    sorbet-runtime (0.6.13309)
+    sorbet-runtime (0.6.13321)
     sord (7.1.0)
       commander (~> 5.0)
       parlour (~> 9.1)
@@ -1188,7 +1187,7 @@ CHECKSUMS
   rails (8.1.3) sha256=6d017ba5348c98fc909753a8169b21d44de14d2a0b92d140d1a966834c3c9cd3
   rails-controller-testing (1.0.5) sha256=741448db59366073e86fc965ba403f881c636b79a2c39a48d0486f2607182e94
   rails-dom-testing (2.3.0) sha256=8acc7953a7b911ca44588bf08737bc16719f431a1cc3091a292bca7317925c1d
-  rails-erd (1.7.2) sha256=0b17d0fba25d319d8da8af7a3e5e2149d02d6187cc7351e8be43423f07c48bcd
+  rails-erd (2.0.2) sha256=702ea58d8a976474bb156a002b5c63592f348362600c14affc7ddd852709426c
   rails-html-sanitizer (1.7.0) sha256=28b145cceaf9cc214a9874feaa183c3acba036c9592b19886e0e45efc62b1e89
   rails_semantic_logger (4.20.0) sha256=140831362a263607b193a4f6641ccc3da6f7315649a5678318e0150f1d59d9df
   railties (8.1.3) sha256=913eb0e0cb520aac687ffd74916bd726d48fa21f47833c6292576ef6a286de22
@@ -1214,22 +1213,21 @@ CHECKSUMS
   rspec-core (3.13.6) sha256=a8823c6411667b60a8bca135364351dda34cd55e44ff94c4be4633b37d828b2d
   rspec-expectations (3.13.5) sha256=33a4d3a1d95060aea4c94e9f237030a8f9eae5615e9bd85718fe3a09e4b58836
   rspec-mocks (3.13.8) sha256=086ad3d3d17533f4237643de0b5c42f04b66348c28bf6b9c2d3f4a3b01af1d47
-  rspec-openapi (0.29.0) sha256=e0f0b4c293b3ab9b7b767bbacf3a3f4ef78544cf377db6353c212fea354df777
+  rspec-openapi (0.30.0) sha256=f982616a595c972c89612625a7d069246854b8534aec703ebc4fee0822f11528
   rspec-rails (8.0.4) sha256=06235692fc0892683d3d34977e081db867434b3a24ae0dd0c6f3516bad4e22df
   rspec-retry (0.6.2) sha256=6101ba23a38809811ae3484acde4ab481c54d846ac66d5037ccb40131a60d858
   rspec-support (3.13.7) sha256=0640e5570872aafefd79867901deeeeb40b0c9875a36b983d85f54fb7381c47c
   rubocop (1.88.0) sha256=e420ddf1662d0ef34bc8a2910ac4b396a7ddda0b51a708264405241734b08e0b
   rubocop-ast (1.49.1) sha256=4412f3ee70f6fe4546cc489548e0f6fcf76cafcfa80fa03af67098ffed755035
-  rubocop-capybara (2.23.0) sha256=f9ea1ba3a7561ee8e88cf76fc378ce517ce5327155f305ee7b5c2500e5aee357
+  rubocop-capybara (3.0.0) sha256=7a64655238acda7f8f3c87e37ac825a64c615a79c17c253f1a28270dc3768c4b
   rubocop-factory_bot (2.28.0) sha256=4b17fc02124444173317e131759d195b0d762844a71a29fe8139c1105d92f0cb
   rubocop-rails (2.35.5) sha256=f00b3c936002ba8e9ac62e8607c54bb24cda44b36e41b9c7e4f3872e1b0f3fe3
   rubocop-rspec (3.10.2) sha256=0b3e2ecc592cd10ecbf0095bb58d1e357905276e069643523cc19eb7495f65e2
   rubocop-rspec_rails (2.32.0) sha256=4a0d641c72f6ebb957534f539d9d0a62c47abd8ce0d0aeee1ef4701e892a9100
-  ruby-graphviz (1.2.5) sha256=1c2bb44e3f6da9e2b829f5e7fd8d75a521485fb6b4d1fc66ff0f93f906121504
   ruby-next-core (1.1.2) sha256=1b095fe2e45929f2581b3ecdb8d92b601ce4d72c12a466057c10e23b6f0c4512
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   rubyntlm (0.6.5) sha256=47013402b99ae29ee93f930af51edaec8c6008556f4be25705a422b4430314f5
-  rubyzip (3.4.0) sha256=6de39bc9eba302b635a476d16c9e16b0872ad24517c2f98f2b3a7ea23caff57b
+  rubyzip (3.4.1) sha256=0a79e745b5c25872ebd148457df5665da8530ed8626c993b01457128f173ca02
   safely_block (1.0.0) sha256=bea80e084e620adeada62fd98cf461bbb9888d40dc0f06d337df9d01e1a658e5
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.45.0) sha256=ecac65a4df86ac6f7d707e6dcbacaa9c08b6cf2b966babecfb9653c5aa13e2d1
@@ -1249,9 +1247,9 @@ CHECKSUMS
   site_prism-all_there (3.0.9) sha256=3d9e0b722fa62a3553589130dea23fa50c99dc80f108c851d7480d341d83f4f6
   skylight (7.1.1) sha256=90b09ad73288ad11322f7db4e25b3f096b522d752a368d2c9e70bc346986e951
   smart_properties (1.17.0) sha256=f9323f8122e932341756ddec8e0ac9ec6e238408a7661508be99439ca6d6384b
-  solargraph (0.60.1) sha256=722284943a9819645be286d3ddf3b4155a52dfa6f7d2f88f9f520b6b0fae664f
+  solargraph (0.60.2) sha256=35c8fb31fcdbe8ccd0e0e84862a65b8deb319f86210c5966e41e2fc011e52538
   solargraph-rails (1.3) sha256=0af6159f4fe2b716857884a9d758d124eae2bd64c27cb43028792027f2973114
-  sorbet-runtime (0.6.13309) sha256=3f950900f3d5b640d9baf291327f8ec13ef44552367342cf9eebaaf4a6539774
+  sorbet-runtime (0.6.13321) sha256=55ca445d39703284c2f14175a13a3ff085d247f4f16028076fbb7a83c715f7cc
   sord (7.1.0) sha256=e02fd59294da520e50cea80a07fb9bc93db709c552d055871379ae8d8e87601f
   spring (4.7.0) sha256=f81bf6d41f05518ed5d0128ce5c75fb6dd9c6153f158129c8b85c4461ca0b72c
   spring-commands-rspec (1.0.4) sha256=6202e54fa4767452e3641461a83347645af478bf45dddcca9737b43af0dd1a2c

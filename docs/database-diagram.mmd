@@ -1,0 +1,759 @@
+erDiagram
+	direction TB
+	AcademicCycle {
+		date end_date
+		date start_date
+	}
+	"ActiveRecord::SessionStore::Session" {
+		text data
+		string session_id
+	}
+	"ActiveStorage::Attachment" {
+		integer blob_id FK
+		string name
+		integer record_id FK
+		string record_type
+	}
+	"ActiveStorage::Blob" {
+		integer byte_size
+		string checksum
+		string content_type
+		string filename
+		string key
+		text metadata
+		string service_name
+	}
+	"ActiveStorage::VariantRecord" {
+		integer blob_id FK
+		string variation_digest
+	}
+	Activity {
+		string action_name
+		string controller_name
+		jsonb metadata
+		integer user_id FK
+	}
+	AllocationSubject {
+		date deprecated_on
+		string dttp_id
+		citext name
+	}
+	ApplyApplication {
+		string accredited_body_code FK
+		jsonb application
+		integer apply_id
+		jsonb invalid_data
+		integer recruitment_cycle_year
+		integer state
+	}
+	ApplyApplicationSyncRequest {
+		integer recruitment_cycle_year
+		integer response_code
+		boolean successful
+	}
+	"Audited::Audit" {
+		string action
+		integer associated_id FK
+		string associated_type
+		integer auditable_id FK
+		string auditable_type
+		jsonb audited_changes
+		string comment
+		string remote_address
+		string request_uuid
+		integer user_id FK
+		string user_type
+		string username
+		integer version
+	}
+	AuthenticationToken {
+		integer created_by_id FK
+		date expires_at
+		datetime last_used_at
+		string name
+		integer provider_id FK
+		datetime revoked_at
+		integer revoked_by_id FK
+		string status
+		string token_hash
+	}
+	"Blazer::Audit" {
+		string data_source
+		integer query_id FK
+		text statement
+		integer user_id FK
+	}
+	"Blazer::Check" {
+		string check_type
+		integer creator_id FK
+		text emails
+		datetime last_run_at
+		text message
+		integer query_id FK
+		string schedule
+		text slack_channels
+		string state
+	}
+	"Blazer::Dashboard" {
+		integer creator_id FK
+		string name
+	}
+	"Blazer::DashboardQuery" {
+		integer dashboard_id FK
+		integer position
+		integer query_id FK
+	}
+	"Blazer::Query" {
+		integer creator_id FK
+		string data_source
+		text description
+		string name
+		text statement
+		string status
+	}
+	"BulkUpdate::Placement" {
+		integer provider_id FK
+	}
+	"BulkUpdate::PlacementRow" {
+		integer bulk_update_placement_id FK
+		integer csv_row_number
+		integer school_id FK
+		integer state
+		string trn
+		string urn
+	}
+	"BulkUpdate::RecommendationsUpload" {
+		integer provider_id FK
+	}
+	"BulkUpdate::RecommendationsUploadRow" {
+		string age_range
+		integer bulk_update_recommendations_upload_id FK
+		integer csv_row_number
+		string first_names
+		string hesa_id
+		string last_names
+		integer matched_trainee_id FK
+		string phase
+		string provider_trainee_id
+		string qts_or_eyts
+		string route
+		date standards_met_at
+		string subject
+		string training_partner
+		string trn
+	}
+	"BulkUpdate::RowError" {
+		string error_type
+		integer errored_on_id FK
+		string errored_on_type
+		string message
+	}
+	"BulkUpdate::TraineeUpload" {
+		integer number_of_trainees
+		integer provider_id FK
+		string status
+		datetime submitted_at
+		integer submitted_by_id FK
+		string version
+	}
+	"BulkUpdate::TraineeUploadRow" {
+		integer bulk_update_trainee_upload_id FK
+		jsonb data
+		integer row_number
+	}
+	Course {
+		string accredited_body_code FK
+		string code
+		string course_length
+		integer duration_in_years
+		date full_time_end_date
+		date full_time_start_date
+		integer level
+		integer max_age
+		integer min_age
+		string name
+		date part_time_end_date
+		date part_time_start_date
+		date published_start_date
+		integer qualification
+		integer recruitment_cycle_year
+		integer route
+		integer study_mode
+		string summary
+		uuid uuid
+	}
+	CourseSubject {
+		integer course_id FK
+		integer subject_id FK
+	}
+	Degree {
+		string country
+		uuid dttp_id
+		string grade
+		uuid grade_uuid
+		integer graduation_year
+		string institution
+		uuid institution_uuid
+		integer locale_code
+		string non_uk_degree
+		text other_grade
+		citext slug
+		string subject
+		uuid subject_uuid
+		integer trainee_id FK
+		string uk_degree
+		uuid uk_degree_uuid
+	}
+	Disability {
+		string description
+		string name
+		uuid uuid
+	}
+	"Dttp::Account" {
+		string accreditation_id
+		uuid dttp_id
+		string name
+		jsonb response
+		string ukprn
+		string urn
+	}
+	"Dttp::BursaryDetail" {
+		uuid dttp_id
+		jsonb response
+	}
+	"Dttp::DegreeQualification" {
+		uuid contact_dttp_id FK
+		uuid dttp_id
+		jsonb response
+		integer state
+	}
+	"Dttp::DormantPeriod" {
+		uuid dttp_id
+		uuid placement_assignment_dttp_id FK
+		jsonb response
+	}
+	"Dttp::PlacementAssignment" {
+		uuid academic_year
+		uuid contact_dttp_id FK
+		uuid dttp_id
+		date programme_end_date
+		date programme_start_date
+		uuid provider_dttp_id
+		jsonb response
+		uuid trainee_status
+	}
+	"Dttp::Provider" {
+		uuid dttp_id FK
+		string name
+		jsonb response
+		string ukprn
+	}
+	"Dttp::School" {
+		string dttp_id
+		string name
+		integer status_code
+		string urn
+	}
+	"Dttp::Trainee" {
+		uuid dttp_id FK
+		uuid provider_dttp_id FK
+		jsonb response
+		integer state
+		uuid status
+	}
+	"Dttp::TrainingInitiative" {
+		uuid dttp_id
+		jsonb response
+	}
+	"Dttp::User" {
+		string dttp_id
+		string email
+		string first_name
+		string last_name
+		string provider_dttp_id
+	}
+	FeedbackItem {
+		string email
+		string improvement_suggestion
+		string name
+		string satisfaction_level
+	}
+	"Funding::PaymentSchedule" {
+		integer payable_id FK
+		string payable_type
+	}
+	"Funding::PaymentScheduleRow" {
+		string description
+		integer funding_payment_schedule_id FK
+	}
+	"Funding::PaymentScheduleRowAmount" {
+		integer amount_in_pence
+		integer funding_payment_schedule_row_id FK
+		integer month
+		boolean predicted
+		integer year
+	}
+	"Funding::TraineeSummary" {
+		string academic_year
+		integer payable_id FK
+		string payable_type
+	}
+	"Funding::TraineeSummaryRow" {
+		string cohort_level
+		integer funding_trainee_summary_id FK
+		string lead_school_name
+		string lead_school_urn
+		string route
+		string subject
+		string training_partner_name
+		string training_partner_urn
+		string training_route
+	}
+	"Funding::TraineeSummaryRowAmount" {
+		integer amount_in_pence
+		integer funding_trainee_summary_row_id FK
+		integer number_of_trainees
+		integer payment_type
+		integer tier
+	}
+	FundingMethod {
+		integer academic_cycle_id FK
+		integer amount
+		integer funding_type
+		string training_route
+	}
+	FundingMethodSubject {
+		integer allocation_subject_id FK
+		integer funding_method_id FK
+	}
+	"Hesa::Metadatum" {
+		string course_programme_title
+		string fundability
+		string itt_aim
+		string itt_qualification_aim
+		date pg_apprenticeship_start_date
+		integer placement_school_urn
+		string service_leaver
+		integer study_length
+		string study_length_unit
+		integer trainee_id FK
+		string year_of_course
+	}
+	"Hesa::Student" {
+		string allocated_place
+		string application_choice_id
+		string bursary_level
+		string collection_reference
+		string commencement_date
+		string course_age_range
+		string course_programme_title
+		string course_subject_one
+		string course_subject_three
+		string course_subject_two
+		string date_of_birth
+		json degrees
+		string disability1
+		string disability2
+		string disability3
+		string disability4
+		string disability5
+		string disability6
+		string disability7
+		string disability8
+		string disability9
+		string email
+		string employing_school_urn
+		string end_date
+		string ethnic_background
+		string first_names
+		string fund_code
+		string hesa_committed_at
+		string hesa_id FK
+		string hesa_updated_at
+		string initiatives_two
+		string itt_aim
+		string itt_commencement_date
+		string itt_end_date
+		string itt_key
+		string itt_qualification_aim
+		string itt_start_date
+		string last_name
+		string mode
+		string nationality
+		string ni_number
+		string numhus
+		string pg_apprenticeship_start_date
+		json placements
+		string previous_hesa_id
+		string previous_surname
+		string provider_course_id
+		string provider_trainee_id
+		string reason_for_leaving
+		string rec_id
+		string service_leaver
+		string sex
+		string status
+		string study_length
+		string study_length_unit
+		string surname16
+		string trainee_start_date
+		string training_initiative
+		string training_partner_urn
+		string training_route
+		string trn
+		string ttcid
+		string ukprn
+		string year_of_course
+	}
+	"Hesa::TraineeDetail" {
+		string additional_training_initiative
+		string course_age_range
+		string course_study_mode
+		integer course_year
+		string funding_method
+		jsonb hesa_disabilities
+		string itt_aim
+		string itt_qualification_aim
+		string ni_number
+		date pg_apprenticeship_start_date
+		string previous_last_name
+		integer trainee_id FK
+	}
+	Nationalisation {
+		integer nationality_id FK
+		integer trainee_id FK
+	}
+	Nationality {
+		string name
+	}
+	Persona {
+		string dfe_sign_in_uid
+		datetime discarded_at
+		uuid dttp_id
+		string email
+		string first_name
+		string last_name
+		datetime last_signed_in_at
+		string otp_secret
+		boolean read_only
+		boolean system_admin
+		datetime welcome_email_sent_at
+	}
+	Placement {
+		text address
+		string name
+		string postcode
+		integer school_id FK
+		citext slug
+		integer trainee_id FK
+		string urn
+	}
+	Provider {
+		string accreditation_id
+		boolean accredited
+		boolean apply_sync_enabled
+		string code
+		datetime discarded_at
+		uuid dttp_id FK
+		string name
+		tsvector searchable
+		string ukprn
+	}
+	ProviderUser {
+		integer provider_id FK
+		integer user_id FK
+	}
+	School {
+		date close_date
+		string name
+		date open_date
+		string postcode
+		tsvector searchable
+		string town
+		string urn
+	}
+	SchoolDataDownload {
+		datetime completed_at
+		integer schools_created
+		integer schools_deleted
+		integer schools_updated
+		datetime started_at
+		string status
+		integer training_partners_updated
+	}
+	SignOff {
+		integer academic_cycle_id FK
+		integer provider_id FK
+		string sign_off_type
+		integer user_id FK
+	}
+	Subject {
+		string code
+		string name
+	}
+	SubjectSpecialism {
+		integer allocation_subject_id FK
+		string hecos_code
+		citext name
+	}
+	"SystemAdmin::FundingUpload" {
+		text csv_data
+		integer funding_type
+		integer month
+		integer status
+	}
+	Trainee {
+		jsonb additional_dttp_data
+		text additional_ethnic_background
+		integer application_choice_id
+		integer apply_application_id FK
+		boolean applying_for_bursary
+		boolean applying_for_grant
+		boolean applying_for_scholarship
+		datetime awarded_at
+		integer bursary_tier
+		integer commencement_status
+		integer course_allocation_subject_id FK
+		integer course_education_phase
+		integer course_max_age
+		integer course_min_age
+		text course_subject_one
+		text course_subject_three
+		text course_subject_two
+		uuid course_uuid FK
+		boolean created_from_dttp
+		boolean created_from_hesa
+		date date_of_birth
+		date defer_date
+		string defer_reason
+		integer disability_disclosure
+		datetime discarded_at
+		integer diversity_disclosure
+		uuid dormancy_dttp_id
+		uuid dttp_id FK
+		string dttp_update_sha
+		boolean ebacc
+		text email
+		integer employing_school_id FK
+		boolean employing_school_not_applicable
+		integer end_academic_cycle_id FK
+		text ethnic_background
+		integer ethnic_group
+		text first_names
+		string funding_eligibility
+		boolean hesa_editable
+		string hesa_id FK
+		datetime hesa_updated_at
+		string iqts_country
+		date itt_end_date
+		date itt_start_date
+		text last_name
+		text middle_names
+		date outcome_date
+		uuid placement_assignment_dttp_id
+		integer placement_detail
+		jsonb progress
+		integer provider_id FK
+		text provider_trainee_id
+		datetime recommended_for_award_at
+		string record_source
+		string region
+		date reinstate_date
+		tsvector searchable
+		integer sex
+		citext slug
+		datetime slug_sent_to_trs_at
+		integer start_academic_cycle_id FK
+		integer state
+		integer study_mode
+		boolean submission_ready
+		datetime submitted_for_trn_at
+		date trainee_start_date
+		integer training_initiative
+		integer training_partner_id FK
+		boolean training_partner_not_applicable
+		integer training_route
+		string trn
+	}
+	TraineeDisability {
+		text additional_disability
+		integer disability_id FK
+		integer trainee_id FK
+	}
+	TraineeWithdrawal {
+		string another_reason
+		date date
+		datetime discarded_at
+		enum future_interest
+		string safeguarding_concern_reasons
+		integer trainee_id FK
+		enum trigger
+	}
+	TraineeWithdrawalReason {
+		integer trainee_id FK
+		integer trainee_withdrawal_id FK
+		integer withdrawal_reason_id FK
+	}
+	TrainingPartner {
+		datetime discarded_at
+		string name
+		integer provider_id FK
+		string record_type
+		integer school_id FK
+		citext ukprn
+		citext urn
+	}
+	TrainingPartnerUser {
+		integer training_partner_id FK
+		integer user_id FK
+	}
+	"Trs::TrnRequest" {
+		uuid request_id
+		jsonb response
+		integer state
+		integer trainee_id FK
+	}
+	Upload {
+		integer malware_scan_result
+		string name
+		integer user_id FK
+	}
+	User {
+		string dfe_sign_in_uid
+		datetime discarded_at
+		uuid dttp_id
+		string email
+		string first_name
+		string last_name
+		datetime last_signed_in_at
+		string otp_secret
+		boolean read_only
+		boolean system_admin
+		datetime welcome_email_sent_at
+	}
+	ValidationError {
+		jsonb details
+		string form_object
+		integer user_id FK
+	}
+	WithdrawalReason {
+		string name
+	}
+	Auditable o|--}o "Audited::Audit" : ""
+	Degree o|--}o "Audited::Audit" : ""
+	Nationalisation o|--}o "Audited::Audit" : ""
+	Placement o|--}o "Audited::Audit" : ""
+	Provider o|--}o "Audited::Audit" : ""
+	ProviderUser o|--}o "Audited::Audit" : ""
+	Trainee o|--}o "Audited::Audit" : ""
+	TraineeDisability o|--}o "Audited::Audit" : ""
+	TraineeWithdrawal o|--}o "Audited::Audit" : ""
+	TraineeWithdrawalReason o|--}o "Audited::Audit" : ""
+	User o|--}o "Audited::Audit" : ""
+	Associated o|--}o "Audited::Audit" : ""
+	User o|--}o "Blazer::Query" : ""
+	"Blazer::Query" ||--}o "Blazer::Check" : ""
+	"Blazer::Query" ||--}o "Blazer::DashboardQuery" : ""
+	"Blazer::Query" o|..}o "Blazer::Dashboard" : ""
+	"Blazer::Query" o|--}o "Blazer::Audit" : ""
+	"Blazer::Dashboard" ||--}o "Blazer::DashboardQuery" : ""
+	User o|--}o "Blazer::Dashboard" : ""
+	User o|--}o "Blazer::Check" : ""
+	User o|--}o "Blazer::Audit" : ""
+	"ActiveStorage::VariantRecord" ||--}o "ActiveStorage::Blob" : ""
+	Record ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::VariantRecord" ||--|o "ActiveStorage::Attachment" : ""
+	"BulkUpdate::Placement" ||--|o "ActiveStorage::Attachment" : ""
+	"BulkUpdate::RecommendationsUpload" ||--|o "ActiveStorage::Attachment" : ""
+	"BulkUpdate::TraineeUpload" ||--|o "ActiveStorage::Attachment" : ""
+	Upload ||--|o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" ||--}o "ActiveStorage::Attachment" : ""
+	"ActiveStorage::Blob" o|..|o "ActiveStorage::Blob" : ""
+	Trainee ||--|o "Trs::TrnRequest" : ""
+	Trainee ||--|o "Hesa::TraineeDetail" : ""
+	Trainee o|--}o "Hesa::Student" : ""
+	Trainee ||--|o "Hesa::Metadatum" : ""
+	"Funding::TraineeSummaryRow" ||--}o "Funding::TraineeSummaryRowAmount" : ""
+	"Funding::TraineeSummary" ||--}o "Funding::TraineeSummaryRow" : ""
+	Payable ||--}o "Funding::TraineeSummary" : ""
+	Provider ||--}o "Funding::TraineeSummary" : ""
+	School ||--}o "Funding::TraineeSummary" : ""
+	"Funding::PaymentScheduleRow" ||--}o "Funding::PaymentScheduleRowAmount" : ""
+	"Funding::PaymentSchedule" ||--}o "Funding::PaymentScheduleRow" : ""
+	Payable ||--}o "Funding::PaymentSchedule" : ""
+	Provider ||--}o "Funding::PaymentSchedule" : ""
+	School ||--}o "Funding::PaymentSchedule" : ""
+	"Dttp::Trainee" o|--}o "Dttp::PlacementAssignment" : ""
+	"Dttp::Trainee" o|--}o "Dttp::DegreeQualification" : ""
+	Trainee ||--}o "Dttp::Trainee" : ""
+	Provider o|--}o "Dttp::Trainee" : ""
+	Provider o|--}o "Dttp::Provider" : ""
+	"Dttp::PlacementAssignment" o|--|o "Dttp::DormantPeriod" : ""
+	"BulkUpdate::TraineeUpload" ||--}o "BulkUpdate::TraineeUploadRow" : ""
+	ErroredOn ||--}o "BulkUpdate::RowError" : ""
+	"BulkUpdate::PlacementRow" ||--}o "BulkUpdate::RowError" : ""
+	"BulkUpdate::RecommendationsUploadRow" ||--}o "BulkUpdate::RowError" : ""
+	"BulkUpdate::TraineeUploadRow" ||--}o "BulkUpdate::RowError" : ""
+	Provider ||--}o "BulkUpdate::TraineeUpload" : ""
+	User o|--}o "BulkUpdate::TraineeUpload" : ""
+	"BulkUpdate::TraineeUpload" o|..}o "BulkUpdate::RowError" : ""
+	"BulkUpdate::TraineeUpload" o|..|o "ActiveStorage::Blob" : ""
+	"BulkUpdate::RecommendationsUpload" ||--}o "BulkUpdate::RecommendationsUploadRow" : ""
+	Trainee o|--}o "BulkUpdate::RecommendationsUploadRow" : ""
+	Provider ||--}o "BulkUpdate::RecommendationsUpload" : ""
+	"BulkUpdate::RecommendationsUpload" o|..|o "ActiveStorage::Blob" : ""
+	"BulkUpdate::Placement" ||--}o "BulkUpdate::PlacementRow" : ""
+	School o|--}o "BulkUpdate::PlacementRow" : ""
+	Provider ||--}o "BulkUpdate::Placement" : ""
+	"BulkUpdate::Placement" o|..|o "ActiveStorage::Blob" : ""
+	WithdrawalReason ||--}o TraineeWithdrawalReason : ""
+	WithdrawalReason o|..}o TraineeWithdrawal : ""
+	User ||--}o ValidationError : ""
+	User ||--}o Upload : ""
+	Upload o|..|o "ActiveStorage::Blob" : ""
+	TrainingPartner ||--}o TrainingPartnerUser : ""
+	User ||--}o TrainingPartnerUser : ""
+	School ||--|o TrainingPartner : ""
+	Provider ||--}o TrainingPartner : ""
+	TrainingPartner o|..}o User : ""
+	TrainingPartner o|--}o Trainee : ""
+	Trainee o|--}o TraineeWithdrawalReason : ""
+	TraineeWithdrawal o|--}o TraineeWithdrawalReason : ""
+	Trainee ||--}o TraineeWithdrawal : ""
+	Disability ||--}o TraineeDisability : ""
+	Trainee ||--}o TraineeDisability : ""
+	AllocationSubject ||--}o SubjectSpecialism : ""
+	Subject ||--}o CourseSubject : ""
+	Subject o|..}o Course : ""
+	Provider ||--}o SignOff : ""
+	AcademicCycle ||--}o SignOff : ""
+	User ||--}o SignOff : ""
+	School o|--}o Trainee : ""
+	School o|--}o Placement : ""
+	Provider ||--}o ProviderUser : ""
+	User ||--}o ProviderUser : ""
+	Provider o|..}o User : ""
+	Provider ||--}o Trainee : ""
+	Provider o|..}o "BulkUpdate::RecommendationsUploadRow" : ""
+	Provider ||--}o Course : ""
+	Provider o|--}o ApplyApplication : ""
+	Trainee ||--}o Placement : ""
+	Nationality ||--}o Nationalisation : ""
+	Nationality o|..}o Trainee : ""
+	Trainee ||--}o Nationalisation : ""
+	FundingMethod ||--}o FundingMethodSubject : ""
+	AllocationSubject ||--}o FundingMethodSubject : ""
+	AcademicCycle ||--}o FundingMethod : ""
+	FundingMethod o|..}o AllocationSubject : ""
+	Disability o|..}o Trainee : ""
+	Trainee ||--}o Degree : ""
+	Course ||--}o CourseSubject : ""
+	Course o|--}o Trainee : ""
+	Provider ||--}o AuthenticationToken : ""
+	User ||--}o AuthenticationToken : ""
+	User ||--}o Activity : ""
+	ApplyApplication o|--}o Trainee : ""
+	AllocationSubject o|--}o Trainee : ""
+	AcademicCycle o|--}o Trainee : ""
+	Trainee o|..}o WithdrawalReason : ""

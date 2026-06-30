@@ -38,6 +38,19 @@ feature "edit bursary" do
       then_i_am_redirected_to_the_funding_confirmation_page
       and_the_hesa_trainee_detail_funding_method_is_tier_one
     end
+
+    scenario "the funding guidance link points to the early years guidance for the academic year" do
+      given_an_early_years_postgrad_trainee_exists
+      when_i_visit_the_bursary_page
+      then_the_funding_guidance_link_points_to_the_early_years_guidance
+    end
+  end
+
+  scenario "the funding guidance link points to the itt guidance for non early years routes" do
+    given_a_trainee_exists(:provider_led_postgrad, :with_valid_itt_start_date, :with_hesa_trainee_detail, course_subject_one: course_subject, funding_eligibility: :eligible)
+    and_a_bursary_exists_for_their_subject
+    when_i_visit_the_bursary_page
+    then_the_funding_guidance_link_points_to_the_itt_guidance
   end
 
   scenario "redirects to confirmation when not eligible and subject is not in the fund code exception list" do
@@ -119,6 +132,22 @@ private
 
   def then_i_see_the_bursary_page
     expect(bursary_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_the_funding_guidance_link_points_to_the_early_years_guidance
+    academic_year = trainee.start_academic_cycle.label.parameterize
+    expect(bursary_page).to have_link(
+      "check the funding rules for this academic year",
+      href: "https://www.gov.uk/guidance/early-years-initial-teacher-training-#{academic_year}-funding-guidance",
+    )
+  end
+
+  def then_the_funding_guidance_link_points_to_the_itt_guidance
+    academic_year = trainee.start_academic_cycle.label.parameterize
+    expect(bursary_page).to have_link(
+      "check the funding rules for this academic year",
+      href: "https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-#{academic_year}",
+    )
   end
 
   def and_the_hesa_trainee_detail_funding_method_is_postgraduate_bursary

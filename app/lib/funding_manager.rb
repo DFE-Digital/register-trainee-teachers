@@ -84,7 +84,9 @@ class FundingManager
   end
 
   def funding_guidance_url
-    academic_cycle.label.parameterize
+    academic_year = academic_cycle.label.parameterize
+    key = trainee.early_years_route? ? :early_years_guidance_url : :guidance_url
+    I18n.t("views.forms.funding.bursaries.#{key}", academic_year:)
   end
 
   def funding_guidance_link_text
