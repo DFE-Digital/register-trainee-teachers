@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Autocomplete
-  class UsersController < Autocomplete::ApplicationController
+  class UsersController < Autocomplete::BaseController
+    before_action :authorize_system_admin!
+
     def index
       return error_response if invalid_query?
 
@@ -18,6 +20,12 @@ module Autocomplete
     end
 
   private
+
+    def authorize_system_admin!
+      return if policy(User).index?
+
+      render_json_error(message: "Forbidden", status: :forbidden)
+    end
 
     def args
       { query: params[:query], limit: params[:limit] }.compact

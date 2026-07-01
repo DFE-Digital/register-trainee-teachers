@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Autocomplete
-  class TrainingPartnersController < Autocomplete::ApplicationController
+  class TrainingPartnersController < Autocomplete::BaseController
     def index
       return error_response if invalid_query?
 

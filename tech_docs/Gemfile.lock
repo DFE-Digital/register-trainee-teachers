@@ -10,8 +10,6 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     autoprefixer-rails (10.4.21.0)
       execjs (~> 2)
-    backports (3.25.1)
-    base64 (0.3.0)
     bigdecimal (3.2.2)
     chronic (0.10.2)
     chunky_png (1.4.0)
@@ -33,7 +31,7 @@ GEM
       sass (>= 3.3.0, < 3.5)
     compass-import-once (1.0.5)
       sass (>= 3.2, < 3.5)
-    concurrent-ruby (1.3.4)
+    concurrent-ruby (1.3.7)
     config (5.6.1)
       deep_merge (~> 1.2, >= 1.2.1)
       ostruct
@@ -44,7 +42,7 @@ GEM
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
-    erubis (2.7.0)
+    erubi (1.13.1)
     eventmachine (1.2.7)
     execjs (2.10.0)
     fast_blank (1.0.1)
@@ -78,26 +76,25 @@ GEM
     google-protobuf (4.31.1-x86_64-linux-musl)
       bigdecimal
       rake (>= 13)
-    govuk_tech_docs (5.0.2)
-      autoprefixer-rails (~> 10.2)
-      base64
-      bigdecimal
-      chronic (~> 0.10.2)
-      concurrent-ruby (= 1.3.4)
+    govuk_tech_docs (6.3.0)
+      autoprefixer-rails
+      chronic
+      concurrent-ruby
       csv
-      haml (~> 6.0)
-      middleman (= 4.5.1)
-      middleman-autoprefixer (~> 2.10)
-      middleman-compass (~> 4.0)
+      haml (>= 6, < 8)
+      middleman
+      middleman-autoprefixer
+      middleman-compass
       middleman-livereload
       middleman-search-gds
-      middleman-sprockets (~> 4.0.0)
-      middleman-syntax (~> 3.4)
+      middleman-sprockets (= 4.0.0)
+      middleman-syntax
       mutex_m
       nokogiri
-      openapi3_parser (~> 0.9.0)
-      redcarpet (~> 3.6)
-      sassc-embedded (~> 1.78.0)
+      openapi3_parser
+      redcarpet
+      sassc-embedded
+      schmooze (~> 0.2.0)
       terser (~> 1.2.3)
     haml (6.3.0)
       temple (>= 0.8.2)
@@ -118,44 +115,44 @@ GEM
     logger (1.7.0)
     memoist (0.16.2)
     method_source (1.1.0)
-    middleman (4.5.1)
-      coffee-script (~> 2.2)
-      haml (>= 4.0.5)
-      kramdown (>= 2.3.0)
-      middleman-cli (= 4.5.1)
-      middleman-core (= 4.5.1)
+    middleman (4.6.3)
+      middleman-cli (= 4.6.3)
+      middleman-core (= 4.6.3)
     middleman-autoprefixer (2.10.0)
       autoprefixer-rails (>= 9.1.4)
       middleman-core (>= 3.3.3)
-    middleman-cli (4.5.1)
-      thor (>= 0.17.0, < 1.3.0)
+    middleman-cli (4.6.3)
+      thor (>= 0.17.0, < 2)
     middleman-compass (4.0.1)
       compass (>= 1.0.0, < 2.0.0)
       middleman-core (>= 4.0.0)
-    middleman-core (4.5.1)
-      activesupport (>= 6.1, < 7.1)
+    middleman-core (4.6.3)
+      activesupport (>= 6.1)
       addressable (~> 2.4)
-      backports (~> 3.6)
-      bundler (~> 2.0)
-      contracts (~> 0.13, < 0.17)
+      bundler (> 2.0)
+      coffee-script (~> 2.2)
+      contracts
       dotenv
-      erubis
+      erubi
       execjs (~> 2.0)
       fast_blank
       fastimage (~> 2.0)
+      haml (>= 4.0.5, < 7)
       hamster (~> 3.0)
-      hashie (~> 3.4)
-      i18n (~> 1.6.0)
+      hashie (>= 3.4, < 6.0)
+      i18n (>= 1.6, < 1.15)
+      kramdown (~> 2.4)
       listen (~> 3.0)
       memoist (~> 0.14)
-      padrino-helpers (~> 0.15.0)
+      padrino-helpers (>= 0.15, < 0.17)
       parallel
-      rack (>= 1.4.5, < 3)
+      rack (>= 3)
+      rackup
       sassc (~> 2.0)
       servolux
-      tilt (~> 2.0.9)
+      tilt (~> 2.2)
       toml
-      uglifier (~> 3.0)
+      uglifier (>= 3, < 5)
       webrick
     middleman-livereload (3.4.7)
       em-websocket (~> 0.5.1)
@@ -177,21 +174,21 @@ GEM
     minitest (5.25.5)
     multi_json (1.17.0)
     mutex_m (0.3.0)
-    nokogiri (1.19.3-aarch64-linux-gnu)
+    nokogiri (1.19.4-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.3-aarch64-linux-musl)
+    nokogiri (1.19.4-aarch64-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.19.3-arm-linux-gnu)
+    nokogiri (1.19.4-arm-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.3-arm-linux-musl)
+    nokogiri (1.19.4-arm-linux-musl)
       racc (~> 1.4)
-    nokogiri (1.19.3-arm64-darwin)
+    nokogiri (1.19.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.3-x86_64-darwin)
+    nokogiri (1.19.4-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.19.3-x86_64-linux-gnu)
+    nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.19.3-x86_64-linux-musl)
+    nokogiri (1.19.4-x86_64-linux-musl)
       racc (~> 1.4)
     openapi3_parser (0.9.2)
       commonmarker (~> 0.17)
@@ -208,9 +205,11 @@ GEM
       method_source (~> 1.0)
     public_suffix (7.0.5)
     racc (1.8.1)
-    rack (2.2.23)
+    rack (3.2.6)
     rack-livereload (0.3.17)
       rack
+    rackup (2.3.1)
+      rack (>= 3)
     rake (13.3.0)
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
@@ -239,6 +238,7 @@ GEM
       ffi (~> 1.9)
     sassc-embedded (1.78.0)
       sass-embedded (~> 1.78)
+    schmooze (0.2.0)
     servolux (0.13.0)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
@@ -248,7 +248,7 @@ GEM
     terser (1.2.6)
       execjs (>= 0.3.0, < 3)
     thor (1.2.2)
-    tilt (2.0.11)
+    tilt (2.7.0)
     toml (0.3.0)
       parslet (>= 1.8.0, < 3.0.0)
     tzinfo (2.0.6)
@@ -272,6 +272,7 @@ PLATFORMS
 DEPENDENCIES
   config (~> 5.6)
   govuk_tech_docs
+  logger
   middleman-minify-html
   pry
 
@@ -279,8 +280,6 @@ CHECKSUMS
   activesupport (7.0.8.7) sha256=df4702375de924aae81709c831605317c5417f0bd9e502a0373ff84a067204ff
   addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af
   autoprefixer-rails (10.4.21.0) sha256=71b48caf850fc25275abd96f0b1fdd51c82e1c9b99cd30085cacb05da9c70235
-  backports (3.25.1) sha256=439fbc9db44db9c63cf12001ed2e3a9ddbdb50da560b2bf7cf3fbe6fcae64ad8
-  base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bigdecimal (3.2.2) sha256=39085f76b495eb39a79ce07af716f3a6829bc35eb44f2195e2753749f2fa5adc
   bundler (4.0.12) sha256=7f8b757d28dfb636e7b24fba2344ac6dd13b5b24f4b46d62573d483f211825ac
   chronic (0.10.2) sha256=766f2fcce6ac3cc152249ed0f2b827770d3e517e2e87c5fba7ed74f4889d2dc3
@@ -292,14 +291,14 @@ CHECKSUMS
   compass (1.0.3) sha256=4c7884dc5349d59011fd6c5736a0404008d5609235037741feac9c8ff840d151
   compass-core (1.0.3) sha256=6ac8bb4cabb5bf80d1a7febbacfd35c1aa83e91a7a511637668dffda38be5a79
   compass-import-once (1.0.5) sha256=38978ffed0d332e8526e87e1befd1b6831774ca7d8350c5adb5b9eef167fc72e
-  concurrent-ruby (1.3.4) sha256=d4aa926339b0a86b5b5054a0a8c580163e6f5dcbdfd0f4bb916b1a2570731c32
+  concurrent-ruby (1.3.7) sha256=4412caec3a5ea2e5fdc52076724c071a81f2c0593d83b2ac8cbb8ca63b3151b0
   config (5.6.1) sha256=a9f0f0f9ffa6d12d43147a3fa1ab8486fe484c3098a350c6a2e0f32430e0d1cc
   contracts (0.16.1) sha256=29fddcd80a3cefbdf57bbeb5bab18adc50fc64e3cea311d7cb35c63489058d66
   csv (3.3.5) sha256=6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f
   deep_merge (1.2.2) sha256=83ced3a3d7f95f67de958d2ce41b1874e83c8d94fe2ddbff50c8b4b82323563a
   dotenv (3.1.8) sha256=9e1176060ced581f8e6ce4384e91361817763a76e3c625c8bddc18b35bd392c3
   em-websocket (0.5.3) sha256=f56a92bde4e6cb879256d58ee31f124181f68f8887bd14d53d5d9a292758c6a8
-  erubis (2.7.0) sha256=63653f5174a7997f6f1d6f465fbe1494dcc4bdab1fb8e635f6216989fb1148ba
+  erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   eventmachine (1.2.7) sha256=994016e42aa041477ba9cff45cbe50de2047f25dd418eba003e84f0d16560972
   execjs (2.10.0) sha256=6bcb8be8f0052ff9d370b65d1c080f2406656e150452a0abdb185a133048450d
   fast_blank (1.0.1) sha256=269fc30414fed4e6403bc4a49081e1ea539f8b9226e59276ed1efaefabaa17ea
@@ -319,7 +318,7 @@ CHECKSUMS
   google-protobuf (4.31.1-x86_64-darwin) sha256=bdf067d1456167275ca7ce269922a99d24fcb9071d86429289cd73f0cf536ae4
   google-protobuf (4.31.1-x86_64-linux-gnu) sha256=7def6dbf996dab289dd541a3ee8b201e2c3e35911c274325ad9b483ebffb6dcd
   google-protobuf (4.31.1-x86_64-linux-musl) sha256=7d99d7728d9d7a6fda36130acac2a9947b868e28fe3f4aec4131cebce0d420f9
-  govuk_tech_docs (5.0.2) sha256=103ae851a51cbfba1444db6618f5e349a2529687513554188eb2d726671ed5ca
+  govuk_tech_docs (6.3.0) sha256=50bb39d4d7c8e24d273687b141dc906875b6a5061b2e3a5644b5678c9b6e8886
   haml (6.3.0) sha256=8e6eb87d869639e348852009e74a2a1663d79663ed7e7dbcb38beb1f12bcdd97
   hamster (3.0.0) sha256=5951e3a3ffd15ba854a976ac36ebae9469966f726034ffed0dccdb6d12d434d8
   hashie (3.6.0) sha256=b097778abd066b5b506a07a226037b45f2f1d45f13f7ef552813b122aefb6d8d
@@ -331,11 +330,11 @@ CHECKSUMS
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   memoist (0.16.2) sha256=a52c53a3f25b5875151670b2f3fd44388633486dc0f09f9a7150ead1e3bf3c45
   method_source (1.1.0) sha256=181301c9c45b731b4769bc81e8860e72f9161ad7d66dd99103c9ab84f560f5c5
-  middleman (4.5.1) sha256=2c76818647f1966eb3f3200a212472c35074c693ae79d115891fce5ea7f8a737
+  middleman (4.6.3) sha256=cf6293bf3d7917d495f466358c7d9707843c06347d5db2168e950b24c235704e
   middleman-autoprefixer (2.10.0) sha256=109faec93734a44bffb11fc9cbe4ccd84c1dd300ab70f78014766bcdb5b5b0b3
-  middleman-cli (4.5.1) sha256=cf3e6acfabeae600e618befa317f2cf83bfe02f755e923a33e9a8371370d9647
+  middleman-cli (4.6.3) sha256=03deb5b893f748a5adeaf22ccc1452dfede2de25a4583bb451a0162857eb9974
   middleman-compass (4.0.1) sha256=a2d3253b32214fbb4f2fa93f4336f523fdbe3f92469d63eeaa3702fe3fa278b0
-  middleman-core (4.5.1) sha256=f3163572f99a876b6990ce904cc31c83a09ce1cb8b6e3caf135c6452ddacb0cb
+  middleman-core (4.6.3) sha256=5cab1e1f16b00d26f541a4ca787427e1e0203c34f2d81471c1fae3bf1e7509a8
   middleman-livereload (3.4.7) sha256=1d0307b4862bf49aa272ea38798672d76b7c1a01168ffe8c81791113fd6ddf7a
   middleman-minify-html (3.4.1) sha256=fa3c3b06849b9adc28b4ce01a012cb30a1fb3f6602ad0dc079d270c3229e6ca7
   middleman-search-gds (0.11.2) sha256=97f696311a790a48ca2e46bf120f8860e5bfbd939a78c1ee5ad325867138475e
@@ -344,14 +343,14 @@ CHECKSUMS
   minitest (5.25.5) sha256=391b6c6cb43a4802bfb7c93af1ebe2ac66a210293f4a3fb7db36f2fc7dc2c756
   multi_json (1.17.0) sha256=76581f6c96aebf2e85f8a8b9854829e0988f335e8671cd1a56a1036eb75e4a1b
   mutex_m (0.3.0) sha256=cfcb04ac16b69c4813777022fdceda24e9f798e48092a2b817eb4c0a782b0751
-  nokogiri (1.19.3-aarch64-linux-gnu) sha256=46b89e5d7b9e844c2ee360794240c6ea2a4e6fa0c5892a4ed487db621224b639
-  nokogiri (1.19.3-aarch64-linux-musl) sha256=8392dfdcd21be7a94dbbe9ccc138dea01b97b24cb2dc02a114ca98bfb1d9a0b7
-  nokogiri (1.19.3-arm-linux-gnu) sha256=3919d5ffc334ad778a4a9eb88fda7dcb8b1fb58c8a52ac640c6dcd2f038e774f
-  nokogiri (1.19.3-arm-linux-musl) sha256=9ce1cb6346bb9c67b1550eb537aa183ead91e4b6eadb2f36ade02d8dd2a79fb6
-  nokogiri (1.19.3-arm64-darwin) sha256=71b9bd424b1b7abc18b05052a1a3cfd3627abdca62be280854cc411791357e42
-  nokogiri (1.19.3-x86_64-darwin) sha256=77f3fba57d46c53ab31e62fc6c28f705109d1bf6264356c76f132b2be5728d4d
-  nokogiri (1.19.3-x86_64-linux-gnu) sha256=2f5078620fe12e83669b5b17311b32532a8153d02eee7ad06948b926d6080976
-  nokogiri (1.19.3-x86_64-linux-musl) sha256=248c906d2166eca5efb56d52fdee5f9a1f51d69a72e2b64fdac647b4ce39ea3f
+  nokogiri (1.19.4-aarch64-linux-gnu) sha256=1269fb644a6de405057a53dd5c762b1209b43ca7424f839454d3dbc677c31a8f
+  nokogiri (1.19.4-aarch64-linux-musl) sha256=35c65b9ce72b3bb03207bdbe7067915019dc18c1b9b59139684bd6690fdd01af
+  nokogiri (1.19.4-arm-linux-gnu) sha256=a301313e38bb065d68239e79734bcd6f56fb6efaacebde29e9abf2a4735340ca
+  nokogiri (1.19.4-arm-linux-musl) sha256=588923c101bcfa78869734d247d25b598674323e7f22474fc468f6e5647311eb
+  nokogiri (1.19.4-arm64-darwin) sha256=a46db9853286e6597b36ebc6953817d15acf3a299583eb3f89fdc6f91dd63527
+  nokogiri (1.19.4-x86_64-darwin) sha256=7fd17057d3e1f00e9954a74b3cd76595d3d4a5ef233b7ed9599047c204f70551
+  nokogiri (1.19.4-x86_64-linux-gnu) sha256=379fae440b28915e3f19d752ce2dcf8465ed2b2fbefd2a7ca0dd497bc981a06a
+  nokogiri (1.19.4-x86_64-linux-musl) sha256=17dfb7c1fa194ae02fbf7c51a7afc8d278045ab3fdacfd86f91d02d7b274470b
   openapi3_parser (0.9.2) sha256=1b0ea6409ebe7d4834705d1ad09a2370e3a364b6485b5acc3a7965f0dc4bdb69
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   padrino-helpers (0.15.3) sha256=b8231f148308428db18380bbc8914b4f5b1dd90ffa50e8972373b9b7f553cf4d
@@ -361,8 +360,9 @@ CHECKSUMS
   pry (0.15.2) sha256=12d54b8640d3fa29c9211dd4ffb08f3fd8bf7a4fd9b5a73ce5b59c8709385b6b
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
-  rack (2.2.23) sha256=a8fe9d7e07064770b8ec123663fded8a59ef7e2b6db5cda7173d45a5718ab69c
+  rack (3.2.6) sha256=5ed78e1f73b2e25679bec7d45ee2d4483cc4146eb1be0264fc4d94cb5ef212c2
   rack-livereload (0.3.17) sha256=b1dcf1f7f9b7b320dc2e84406d3450d30edcec0731a171d815f75d4577a59fea
+  rackup (2.3.1) sha256=6c79c26753778e90983761d677a48937ee3192b3ffef6bc963c0950f94688868
   rake (13.3.0) sha256=96f5092d786ff412c62fde76f793cc0541bd84d2eb579caa529aa8a059934493
   rb-fsevent (0.11.2) sha256=43900b972e7301d6570f64b850a5aa67833ee7d87b458ee92805d56b7318aefe
   rb-inotify (0.11.1) sha256=a0a700441239b0ff18eb65e3866236cd78613d6b9f78fea1f9ac47a85e47be6e
@@ -380,12 +380,13 @@ CHECKSUMS
   sass-embedded (1.89.2-x86_64-linux-musl) sha256=05c73be719201d86e6d25c322d286dcdee43bc3ec285555ccd1d135b248c41b1
   sassc (2.4.0) sha256=4c60a2b0a3b36685c83b80d5789401c2f678c1652e3288315a1551d811d9f83e
   sassc-embedded (1.78.0) sha256=98668e621ca8d94b0495288b3a12e86b617683d5c058916654ce80e869606aee
+  schmooze (0.2.0) sha256=615dc42d3bb844ebf31ca807ec13a1fcc755e7f4316d81d90b938f058e857231
   servolux (0.13.0) sha256=1a33c45458f8061d8a989b19d3ad6e5cfad04881b3fe988508a90850a3961519
   sprockets (4.2.2) sha256=761e5a49f1c288704763f73139763564c845a8f856d52fba013458f8af1b59b1
   temple (0.10.3) sha256=df3145fe6577af1e25387eb7f7122d32ed51bdb6f2e7bb0f4fbf07b66151913b
   terser (1.2.6) sha256=6ddf00b93df7015b07e2b9b149e74cd70fa7aa4f0f89a15d9922a6ebd13f37ab
   thor (1.2.2) sha256=2f93c652828cba9fcf4f65f5dc8c306f1a7317e05aad5835a13740122c17f24c
-  tilt (2.0.11) sha256=7b180fc472cbdeb186c85d31c0f2d1e61a2c0d77e1d9fd0ca28482a9d972d6a0
+  tilt (2.7.0) sha256=0d5b9ba69f6a36490c64b0eee9f6e9aad517e20dcc848800a06eb116f08c6ab3
   toml (0.3.0) sha256=0a91d0f76a9036e84e44f95693b12f58d358c1df3ac8e3b5271f2056ecc6e4b9
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   uglifier (3.2.0) sha256=dfbedad6df597d13aed499e038a4779d7f7002214adc57da808633db89ddb872
