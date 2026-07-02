@@ -18,7 +18,7 @@ class ReaccreditPooleScitt < ActiveRecord::Migration[8.1]
       trainee_scope.update_all(
         training_partner_id: nil,
         training_partner_not_applicable: true,
-        touch: true,
+        updated_at: Time.zone.now,
       )
 
       training_partner.discard!
