@@ -9,7 +9,7 @@ metadata:
       author: "Register team"
 
 data:
-  - id: "d6d0c9d6-e897-e711-80d8-005056ac45bb"
+  - id: "9fc53e05-7042-e811-80ff-3863bb3640b8"
     name: "birkbeck_college"
     display_name: "Birkbeck, University of London"
     hesa_codes:
@@ -65,22 +65,22 @@ data:
       - "0141"
   - id: "94407223-7042-e811-80ff-3863bb3640b8"
     name: "st_george_s_hospital_medical_school"
-    display_name: "St George's Hospital Medical School"
+    display_name: "St George’s, University of London"
     hesa_codes:
       - "0145"
   - id: "a7db7129-7042-e811-80ff-3863bb3640b8"
     name: "the_queen_s_university_of_belfast"
-    display_name: "The Queen's University of Belfast"
+    display_name: "Queen’s University Belfast"
     hesa_codes:
       - "0184"
   - id: "3a7af34a-2887-e711-80d8-005056ac45bb"
     name: "the_university_of_keele"
-    display_name: "The University of Keele"
+    display_name: "Keele University"
     hesa_codes:
       - "0121"
-  - id: "e93522b4-49a2-e811-812b-5065f38ba241"
+  - id: "154b9247-7042-e811-80ff-3863bb3640b8"
     name: "university_campus_suffolk"
-    display_name: "University Campus Suffolk"
+    display_name: "University of Suffolk"
     hesa_codes:
       - "0210"
   - id: "1071f34a-2887-e711-80d8-005056ac45bb"
@@ -90,12 +90,12 @@ data:
       - "0116"
   - id: "a4eb7735-7042-e811-80ff-3863bb3640b8"
     name: "university_of_lancaster"
-    display_name: "University of Lancaster"
+    display_name: "Lancaster University"
     hesa_codes:
       - "0123"
   - id: "ea70f34a-2887-e711-80d8-005056ac45bb"
     name: "university_of_newcastle-upon-tyne"
-    display_name: "University of Newcastle-upon-Tyne"
+    display_name: "Newcastle University"
     hesa_codes:
       - "0154"
   - id: "2a71f34a-2887-e711-80d8-005056ac45bb"
@@ -108,7 +108,7 @@ data:
     display_name: "AA School of Architecture"
     hesa_codes:
       - "0323"
-  - id: "fbc24b19-dc88-eb11-a812-000d3addac4e"
+  - id: "2a79b119-1f63-4d3f-bf14-74671d21c7cb"
     name: "abertay_university"
     display_name: "Abertay University"
     hesa_codes:
@@ -180,7 +180,7 @@ data:
       - "0400"
   - id: "0e3e182c-1425-ec11-b6e6-000d3adf095a"
     name: "bimm_limited"
-    display_name: "BIMM Limited"
+    display_name: "BIMM Institute"
     hesa_codes:
       - "0232"
   - id: "123e182c-1425-ec11-b6e6-000d3adf095a"
@@ -333,7 +333,7 @@ data:
     display_name: "Cumbria Institute of the Arts"
     hesa_codes:
       - "0192"
-  - id: "34f35f0b-7042-e811-80ff-3863bb3640b8"
+  - id: "8cec11f4-54e3-473c-92ff-02684f7c262c"
     name: "dartington_college_of_arts"
     display_name: "Dartington College of Arts"
     hesa_codes:
@@ -420,7 +420,7 @@ data:
       - "0363"
   - id: "57f35f0b-7042-e811-80ff-3863bb3640b8"
     name: "glyndwr_university"
-    display_name: "Glyndwr University"
+    display_name: "Wrexham Glyndŵr University"
     hesa_codes:
       - "0087"
   - id: "4b3e182c-1425-ec11-b6e6-000d3adf095a"
@@ -438,7 +438,7 @@ data:
     display_name: "Grŵp NPTC Group"
     hesa_codes:
       - "0335"
-  - id: "513e182c-1425-ec11-b6e6-000d3adf095a"
+  - id: "076e5e11-7042-e811-80ff-3863bb3640b8"
     name: "guildhall_school_of_music_and_drama"
     display_name: "Guildhall School of Music and Drama"
     hesa_codes:
@@ -448,7 +448,7 @@ data:
     display_name: "Hartpury University"
     hesa_codes:
       - "0352"
-  - id: "56bfbf8a-eb97-e711-80d8-005056ac45bb"
+  - id: "1b6e5e11-7042-e811-80ff-3863bb3640b8"
     name: "heythrop_college"
     display_name: "Heythrop College"
     hesa_codes:
@@ -475,7 +475,7 @@ data:
       - "0423"
   - id: "5b3e182c-1425-ec11-b6e6-000d3adf095a"
     name: "institute_of_art_-_london_limited"
-    display_name: "Institute Of Art - London Limited"
+    display_name: "Sotheby’s Institute of Art"
     hesa_codes:
       - "0405"
   - id: "5d3e182c-1425-ec11-b6e6-000d3adf095a"
@@ -483,7 +483,7 @@ data:
     display_name: "Institute of Contemporary Music Performance"
     hesa_codes:
       - "0220"
-  - id: "dcd0c9d6-e897-e711-80d8-005056ac45bb"
+  - id: "dc04827e-668c-42d9-90c2-dcc8a3d0991d"
     name: "institute_of_education"
     display_name: "Institute of Education"
     hesa_codes:
@@ -555,10 +555,10 @@ data:
       - "0064"
   - id: "436e5e11-7042-e811-80ff-3863bb3640b8"
     name: "leeds_college_of_art"
-    display_name: "Leeds College of Art"
+    display_name: "Leeds Arts University"
     hesa_codes:
       - "0211"
-  - id: "496e5e11-7042-e811-80ff-3863bb3640b8"
+  - id: "f1ecc84e-76e5-4497-bb3c-29bb2d0b4af1"
     name: "leeds_college_of_music"
     display_name: "Leeds College of Music"
     hesa_codes:
@@ -754,7 +754,7 @@ data:
       - "0361"
   - id: "20e5a08c-ee97-e711-80d8-005056ac45bb"
     name: "newcastle_college"
-    display_name: "Newcastle College"
+    display_name: "NCG (Newcastle College Group)"
     hesa_codes:
       - "1078"
   - id: "9c7fcac0-4a37-e811-80ef-005056ac45bb"
@@ -771,7 +771,7 @@ data:
     display_name: "Northern College of Acupuncture"
     hesa_codes:
       - "0261"
-  - id: "9a1c7817-7042-e811-80ff-3863bb3640b8"
+  - id: "60fd0669-dc49-442b-b24c-39696e8efd77"
     name: "northern_school_of_contemporary_dance"
     display_name: "Northern School of Contemporary Dance"
     hesa_codes:
@@ -860,7 +860,7 @@ data:
       - "0429"
   - id: "4ff3791d-7042-e811-80ff-3863bb3640b8"
     name: "ravensbourne"
-    display_name: "Ravensbourne"
+    display_name: "Ravensbourne University London"
     hesa_codes:
       - "0030"
   - id: "bd3e182c-1425-ec11-b6e6-000d3adf095a"
@@ -893,7 +893,7 @@ data:
     display_name: "University of Roehampton"
     hesa_codes:
       - "0031"
-  - id: "1882cdd0-e897-e711-80d8-005056ac45bb"
+  - id: "5af3791d-7042-e811-80ff-3863bb3640b8"
     name: "rose_bruford_college"
     display_name: "Rose Bruford College"
     hesa_codes:
@@ -913,7 +913,7 @@ data:
     display_name: "Royal Academy of Music"
     hesa_codes:
       - "0033"
-  - id: "14582527-3fa2-e811-812b-5065f38ba241"
+  - id: "694341df-9475-4e48-aefc-b6b196ffc1ef"
     name: "royal_agricultural_university"
     display_name: "Royal Agricultural University"
     hesa_codes:
@@ -928,7 +928,7 @@ data:
     display_name: "Royal College of Music"
     hesa_codes:
       - "0034"
-  - id: "f4d27ce8-2f12-ec11-b6e6-000d3ab0c211"
+  - id: "ec100b72-97b9-4f64-a255-a6482fdc62bc"
     name: "royal_conservatoire_of_scotland"
     display_name: "Royal Conservatoire of Scotland"
     hesa_codes:
@@ -943,7 +943,7 @@ data:
     display_name: "Royal School of Needlework"
     hesa_codes:
       - "0404"
-  - id: "7b407223-7042-e811-80ff-3863bb3640b8"
+  - id: "641fa7fd-ead3-48ca-be7a-d2a1b35b7b26"
     name: "royal_welsh_college_of_music_and_drama"
     display_name: "Royal Welsh College of Music and Drama"
     hesa_codes:
@@ -970,7 +970,7 @@ data:
       - "0075"
   - id: "c10b1d33-3fa2-e811-812b-5065f38ba241"
     name: "southampton_solent_university"
-    display_name: "Southampton Solent University"
+    display_name: "Solent University, Southampton"
     hesa_codes:
       - "0037"
   - id: "d53e182c-1425-ec11-b6e6-000d3adf095a"
@@ -1025,7 +1025,7 @@ data:
       - "0180"
   - id: "e53e182c-1425-ec11-b6e6-000d3adf095a"
     name: "tedi-london"
-    display_name: "TEDI-London"
+    display_name: "The Engineering and Design Institute London (TEDI-London)"
     hesa_codes:
       - "0435"
   - id: "e33e182c-1425-ec11-b6e6-000d3adf095a"
@@ -1042,7 +1042,7 @@ data:
     display_name: "Teesside University"
     hesa_codes:
       - "0079"
-  - id: "91ea2521-3fa2-e811-812b-5065f38ba241"
+  - id: "c6407223-7042-e811-80ff-3863bb3640b8"
     name: "the_arts_university_bournemouth"
     display_name: "Arts University Bournemouth"
     hesa_codes:
@@ -1184,12 +1184,12 @@ data:
       - "0316"
   - id: "bddb7129-7042-e811-80ff-3863bb3640b8"
     name: "the_school_of_oriental_and_african_studies"
-    display_name: "The School of Oriental and African Studies"
+    display_name: "SOAS, University of London"
     hesa_codes:
       - "0146"
   - id: "133f182c-1425-ec11-b6e6-000d3adf095a"
     name: "the_sherwood_psychotherapy_training_institute_limited"
-    display_name: "The Sherwood Psychotherapy Training Institute Limited"
+    display_name: "The Sherwood Institute"
     hesa_codes:
       - "0322"
   - id: "c4db7129-7042-e811-80ff-3863bb3640b8"
@@ -1359,7 +1359,7 @@ data:
       - "0159"
   - id: "34228041-7042-e811-80ff-3863bb3640b8"
     name: "the_university_of_st_andrews"
-    display_name: "The University of St Andrews"
+    display_name: "University of St Andrews"
     hesa_codes:
       - "0173"
   - id: "3b228041-7042-e811-80ff-3863bb3640b8"
@@ -1377,7 +1377,7 @@ data:
     display_name: "University of Sunderland"
     hesa_codes:
       - "0078"
-  - id: "6a228041-7042-e811-80ff-3863bb3640b8"
+  - id: "c25c467f-9217-430e-a496-4299c9c73b56"
     name: "the_university_of_wales_central_functions"
     display_name: "The University of Wales (central functions)"
     hesa_codes:
@@ -1477,7 +1477,7 @@ data:
       - "0026"
   - id: "dfdb7129-7042-e811-80ff-3863bb3640b8"
     name: "university_of_bolton"
-    display_name: "University of Bolton"
+    display_name: "University of Greater Manchester"
     hesa_codes:
       - "0049"
   - id: "7fed6e2f-7042-e811-80ff-3863bb3640b8"
@@ -1566,7 +1566,7 @@ data:
       - "0162"
   - id: "a823a753-7042-e811-80ff-3863bb3640b8"
     name: "university_of_ulster"
-    display_name: "University of Ulster"
+    display_name: "Ulster University"
     hesa_codes:
       - "0185"
   - id: "b123a753-7042-e811-80ff-3863bb3640b8"
@@ -1623,29 +1623,29 @@ data:
     display_name: "West Dean College"
     hesa_codes:
       - "0312"
-  - id: "c323a753-7042-e811-80ff-3863bb3640b8"
+  - id: "4baa1666-a5c1-4f86-8ec7-07f7fa061fee"
     name: "west_london_institute_of_he"
     display_name: "West London Institute of HE"
     hesa_codes:
       - "0043"
-  - id: "82ff7322-e897-e711-80d8-005056ac45bb"
+  - id: "3c30e11c-7b46-4d59-b979-319fbe8ff919"
     name: "west_suffolk_college"
     display_name: "West Suffolk College"
     hesa_codes:
       - "1190"
-  - id: "cb23a753-7042-e811-80ff-3863bb3640b8"
+  - id: "c6501667-3718-43e3-9390-71bc20ccb6c7"
     name: "wimbledon_school_of_art"
     display_name: "Wimbledon School of Art"
     hesa_codes:
       - "0084"
-  - id: "d123a753-7042-e811-80ff-3863bb3640b8"
+  - id: "5901c6fa-0fe9-4836-86b8-a29bcefb1b3b"
     name: "winchester_school_of_art"
     display_name: "Winchester School of Art"
     hesa_codes:
       - "0045"
   - id: "d723a753-7042-e811-80ff-3863bb3640b8"
     name: "writtle_college"
-    display_name: "Writtle College"
+    display_name: "Writtle University College"
     hesa_codes:
       - "0189"
   - id: "4c71f34a-2887-e711-80d8-005056ac45bb"
@@ -3003,3 +3003,7 @@ data:
     display_name: "Council for National Academic Awards"
     hesa_codes:
       - "9065"
+  - id: "02132969-f5bc-47ca-be9c-b6f6d5b05e1b"
+    name: "other_uk_institution"
+    display_name: "Other UK institution"
+    hesa_codes:
