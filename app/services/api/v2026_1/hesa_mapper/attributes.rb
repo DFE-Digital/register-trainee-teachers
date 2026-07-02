@@ -94,11 +94,11 @@ module Api
         def ethnic_background
           return Diversities::NOT_PROVIDED if params.key?(:ethnicity) && params[:ethnicity].blank?
 
-          ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
+          ::ReferenceData::ETHNICITIES.find_by_hesa_code(params[:ethnicity])&.id
         end
 
         def ethnicity
-          mapped_value = ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
+          mapped_value = ::ReferenceData::ETHNICITIES.find_by_hesa_code(params[:ethnicity])&.id
 
           return InvalidValue.new(params[:ethnicity]) if params[:ethnicity].present? && mapped_value.nil?
 
@@ -114,7 +114,7 @@ module Api
         end
 
         def sex
-          mapped_value = ::Hesa::CodeSets::Sexes::MAPPING[params[:sex]]
+          mapped_value = ::ReferenceData::SEXES.find_by_hesa_code(params[:sex])&.id
 
           return InvalidValue.new(params[:sex]) if params[:sex].present? && mapped_value.nil?
 
@@ -122,7 +122,7 @@ module Api
         end
 
         def training_route
-          mapped_value = ::Hesa::CodeSets::TrainingRoutes::MAPPING[params[:training_route]]
+          mapped_value = ::ReferenceData::TRAINING_ROUTES.find_by_hesa_code(params[:training_route])&.name
 
           return InvalidValue.new(params[:training_route]) if params[:training_route].present? && mapped_value.nil?
 
@@ -130,7 +130,7 @@ module Api
         end
 
         def iqts_country
-          mapped_value = ::Hesa::CodeSets::Countries::MAPPING[params[:iqts_country]]
+          mapped_value = ::ReferenceData::COUNTRIES.find_by_hesa_code(params[:iqts_country])&.display_name
 
           return InvalidValue.new(params[:iqts_country]) if params[:iqts_country].present? && mapped_value.nil?
 
@@ -144,11 +144,11 @@ module Api
         end
 
         def nationality_name
-          RecruitsApi::CodeSets::Nationalities::MAPPING[params[:nationality]]
+          ::ReferenceData::NATIONALITIES.find_by_hesa_code(params[:nationality])&.name
         end
 
         def nationality
-          mapped_value = RecruitsApi::CodeSets::Nationalities::MAPPING[params[:nationality]]
+          mapped_value = ::ReferenceData::NATIONALITIES.find_by_hesa_code(params[:nationality])&.name
 
           return InvalidValue.new(params[:nationality]) if params[:nationality].present? && mapped_value.nil?
 
@@ -165,7 +165,7 @@ module Api
 
         def disabilities
           (1..9).map do |n|
-            ::Hesa::CodeSets::Disabilities::MAPPING[params[:"disability#{n}"]]
+            ::ReferenceData::DISABILITIES.find_by_hesa_code(params[:"disability#{n}"])&.id
           end.compact
         end
 
@@ -182,7 +182,7 @@ module Api
         end
 
         def course_subject_name(attr)
-          mapped_value = ::Hesa::CodeSets::CourseSubjects::MAPPING[params[attr]]
+          mapped_value = ::ReferenceData::COURSE_SUBJECTS.find_by_hesa_code(params[attr])&.id
 
           return InvalidValue.new(params[attr]) if params[attr].present? && mapped_value.nil?
 
@@ -213,11 +213,11 @@ module Api
         end
 
         def study_mode
-          mapped_value = ::Hesa::CodeSets::StudyModes::MAPPING[params[:study_mode]]
+          mapped_value = ::ReferenceData::STUDY_MODES.find_by_hesa_code(params[:study_mode])&.name
 
           return InvalidValue.new(params[:study_mode]) if params[:study_mode].present? && mapped_value.nil?
 
-          TRAINEE_STUDY_MODE_ENUMS.invert[mapped_value]
+          mapped_value
         end
 
         def course_age_range
@@ -313,7 +313,7 @@ module Api
         def training_initiative
           return ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] if veteran_teaching_undergraduate_bursary?
 
-          mapped_value = ::Hesa::CodeSets::TrainingInitiatives::MAPPING[params[:training_initiative]]
+          mapped_value = ::ReferenceData::TRAINING_INITIATIVES.find_by_hesa_code(params[:training_initiative])&.name
 
           return InvalidValue.new(params[:training_initiative]) if params[:training_initiative].present? && mapped_value.nil?
 
@@ -325,10 +325,10 @@ module Api
         end
 
         def funding_eligibility_attribute
-          case params[:fund_code]
-          when ::Hesa::CodeSets::FundCodes::ELIGIBLE
+          case ::ReferenceData::FUND_CODES.find_by_hesa_code(params[:fund_code])&.name
+          when "eligible"
             { funding_eligibility: FUNDING_ELIGIBILITIES[:eligible] }
-          when ::Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
+          when "not_eligible"
             { funding_eligibility: FUNDING_ELIGIBILITIES[:not_eligible] }
           else
             {}

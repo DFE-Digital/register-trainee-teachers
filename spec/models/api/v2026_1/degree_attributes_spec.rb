@@ -20,7 +20,7 @@ RSpec.describe Api::V20261::DegreeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:country)
-        .in_array(Hesa::CodeSets::Countries::MAPPING.values)
+        .in_array(ReferenceData::COUNTRIES.values.map(&:display_name))
         .with_message(/has invalid reference data value of '.*'/)
     }
 
@@ -80,13 +80,13 @@ RSpec.describe Api::V20261::DegreeAttributes do
             subject.validate
 
             expect(subject.errors[:uk_degree]).to contain_exactly(
-              "has invalid reference data value of 'Random subject'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}...",
+              "has invalid reference data value of 'Random subject'. Example values include #{format_reference_data_list(ReferenceData::DEGREE_TYPES.hesa_codes)}...",
             )
           }
         end
 
         context "when included in the list of HESA uk degrees" do
-          DfEReference::DegreesQuery::TYPES.all.map(&:name).each do |name|
+          ReferenceData::DEGREE_TYPES.values.map(&:display_name).each do |name|
             before { subject.uk_degree = name }
 
             it "is expected to allow #{name}" do
@@ -132,13 +132,13 @@ RSpec.describe Api::V20261::DegreeAttributes do
             subject.validate
 
             expect(subject.errors[:non_uk_degree]).to contain_exactly(
-              "has invalid reference data value of 'Random subject'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}...",
+              "has invalid reference data value of 'Random subject'. Example values include #{format_reference_data_list(ReferenceData::DEGREE_TYPES.hesa_codes)}...",
             )
           }
         end
 
         context "when included in the list of HESA non uk degrees" do
-          DfEReference::DegreesQuery::TYPES.all.map(&:name).each do |name|
+          ReferenceData::DEGREE_TYPES.values.map(&:display_name).each do |name|
             before { subject.non_uk_degree = name }
 
             it "is expected to allow #{name}" do

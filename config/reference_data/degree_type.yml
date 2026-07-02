@@ -251,27 +251,27 @@ data:
       - "098"
   - id: "c1695652-c197-e711-80d8-005056ac45bb"
     name: "bed"
-    display_name: "BEd"
+    display_name: "Bachelor of Education"
     hesa_codes:
       - "001"
-  - id: "c5695652-c197-e711-80d8-005056ac45bb"
+  - id: "7ba49954-7595-437c-8df0-6a777c97307b"
     name: "bsc_education"
     display_name: "Bachelor of Science in Education"
     hesa_codes:
       - "003"
-  - id: "c9695652-c197-e711-80d8-005056ac45bb"
+  - id: "c6aeedca-9147-4e88-886a-a90302f3d097"
     name: "btech_education"
     display_name: "Bachelor of Technology in Education"
     hesa_codes:
       - "005"
-  - id: "cd695652-c197-e711-80d8-005056ac45bb"
+  - id: "007a0999-87f7-4afc-8ccd-ce1e1d92c9ac"
     name: "ba_education"
     display_name: "Bachelor of Arts in Education"
     hesa_codes:
       - "007"
-  - id: "d1695652-c197-e711-80d8-005056ac45bb"
+  - id: "da47d378-f4bb-45ec-bda0-14af40ad974e"
     name: "ba_combined_studies_education_of_the_deaf"
-    display_name: "BA Combined Studies/Education of the Deaf"
+    display_name: "Bachelor of Arts in Combined Studies / Education of the Deaf"
     hesa_codes:
       - "009"
   - id: "d5695652-c197-e711-80d8-005056ac45bb"
@@ -426,12 +426,12 @@ data:
       - "304"
   - id: "656a5652-c197-e711-80d8-005056ac45bb"
     name: "dphil"
-    display_name: "Doctor of Philosophy"
+    display_name: "Doctor of Philosophy (DPhil)"
     hesa_codes:
       - "305"
   - id: "676a5652-c197-e711-80d8-005056ac45bb"
     name: "phd"
-    display_name: "PhD"
+    display_name: "Doctor of Philosophy"
     hesa_codes:
       - "306"
   - id: "03d6b7af-499c-49e3-96cc-e63f9beda6e5"
@@ -439,24 +439,40 @@ data:
     display_name: "Doctor of Education"
     hesa_codes:
       - "307"
-  - id: "696a5652-c197-e711-80d8-005056ac45bb"
+  - id: "0584565a-1c98-4c1d-ae64-c241542c0879"
     name: "first_degree"
     display_name: "First Degree"
     hesa_codes:
       - "400"
-  - id: "6b6a5652-c197-e711-80d8-005056ac45bb"
+  - id: "fdafdcd7-5f21-4363-b7d5-c1f44a852af1"
     name: "higher_degree_or_equivalent"
     display_name: "Higher degree or equivalent"
     hesa_codes:
       - "401"
-  - id: "6d6a5652-c197-e711-80d8-005056ac45bb"
+  - id: "03c4fa67-345e-4d09-8e9b-68c36a450947"
     name: "degree_equivalent"
     display_name: "Degree equivalent"
     hesa_codes:
       - "402"
-  - id: "6f6a5652-c197-e711-80d8-005056ac45bb"
+  - id: "3e042de2-a453-47dc-9452-90a23399e9ee"
     name: "unknown"
-    display_name: "Unknown"
+    display_name: "Not available"
     hesa_codes:
       - "999"
+  - id: "be08f598-0860-4de0-b95a-3c448a16cc99"
+    name: "foundation_degree"
+    display_name: "Foundation degree"
+    hesa_codes:
+  - id: "7022c4c2-ec9a-4eec-98dc-315bfeb1ef3a"
+    name: "foundation_of_arts"
+    display_name: "Foundation of Arts"
+    hesa_codes:
+  - id: "a02be347-1d5b-485a-a845-40c2d4b6ee8f"
+    name: "foundation_of_sciences"
+    display_name: "Foundation of Sciences"
+    hesa_codes:
+  - id: "2b5b8af4-cade-421b-9e3d-026f71f143b7"
+    name: "foundation_degree_of_education"
+    display_name: "Foundation Degree of Education"
+    hesa_codes:
 
