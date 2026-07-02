@@ -109,7 +109,7 @@ module Funding
           create(:trainee,
                  funding_eligibility: "eligible",
                  course_allocation_subject: allocation_subject,
-                 start_academic_cycle: academic_cycle,
+                 itt_start_date: academic_cycle.start_date,
                  applying_for_bursary: true,
                  bursary_tier: :tier_one)
         end
