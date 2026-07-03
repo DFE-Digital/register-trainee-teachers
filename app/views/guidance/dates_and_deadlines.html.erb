@@ -53,7 +53,7 @@
         <% end %>
         <% body.with_row do |row| %>
             <% row.with_cell do %>
-              <span class="no-wrap"><%= dates_and_deadlines_academic_cycle.end_date_of_performance_profile.to_fs(:govuk) %></span>
+              <span class="no-wrap"><%= dates_and_deadlines_academic_cycle.previous.end_date_of_performance_profile.to_fs(:govuk) %></span>
             <% end %>
           <% row.with_cell(text: "ITT performance profiles deadline")%>
           <% row.with_cell(text: "You need to check and sign off all the details for your trainees who had outcomes in the previous academic year (#{dates_and_deadlines_academic_cycle.previous.label}). This data will be used for the ITT performance profiles publication.")%>
