@@ -4,6 +4,7 @@ class CourseDetailsForm < TraineeForm
   include CourseFormHelpers
   include DatesHelper
   include HesaCourseAgeRangeSync
+  include HesaCourseStudyModeSync
 
   FIELDS = %i[
     course_uuid
@@ -94,6 +95,7 @@ class CourseDetailsForm < TraineeForm
     if valid?
       update_trainee_attributes
       sync_hesa_course_age_range
+      sync_hesa_course_study_mode
       clear_funding_information if clear_funding_information?
       Trainees::Update.call(trainee:)
       clear_all_course_related_stashes

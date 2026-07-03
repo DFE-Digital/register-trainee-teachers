@@ -684,6 +684,21 @@ describe CourseDetailsForm, type: :model do
           expect(trainee.reload.hesa_trainee_detail).to be_nil
         end
       end
+
+      context "when the study mode is updated and the trainee has a hesa_trainee_detail" do
+        let(:trainee) { create(:trainee, :provider_led_postgrad, study_mode: nil) }
+        let(:params) { super().merge(study_mode: COURSE_STUDY_MODES[:full_time]) }
+
+        before do
+          trainee.create_hesa_trainee_detail!(course_study_mode: "31")
+        end
+
+        it "syncs the course_study_mode to the canonical HESA code for the selected study mode" do
+          expect { subject.save! }
+            .to change { trainee.hesa_trainee_detail.reload.course_study_mode }
+            .from("31").to("01")
+        end
+      end
     end
 
     describe "#stash" do

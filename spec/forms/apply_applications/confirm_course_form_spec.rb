@@ -4,12 +4,12 @@ require "rails_helper"
 
 module ApplyApplications
   describe ConfirmCourseForm, type: :model do
+    subject(:form) { described_class.new(trainee, specialisms, params) }
+
     let(:trainee) { create(:trainee, :with_secondary_course_details, course_age_range:) }
     let(:course_age_range) { [11, 16] }
     let(:specialisms) { trainee.course_subjects }
     let(:params) { {} }
-
-    subject(:form) { described_class.new(trainee, specialisms, params) }
 
     describe "#save" do
       context "when the trainee has a hesa_trainee_detail" do
@@ -42,6 +42,24 @@ module ApplyApplications
           form.save
 
           expect(trainee.reload.hesa_trainee_detail).to be_nil
+        end
+      end
+
+      context "when the study mode is updated and the trainee has a hesa_trainee_detail" do
+        let(:trainee) do
+          create(:trainee, :provider_led_postgrad,
+                 course_uuid: SecureRandom.uuid,
+                 study_mode: COURSE_STUDY_MODES[:full_time])
+        end
+
+        before do
+          trainee.create_hesa_trainee_detail!(course_study_mode: "31")
+        end
+
+        it "syncs the course_study_mode to the canonical HESA code for the selected study mode" do
+          expect { form.save }
+            .to change { trainee.hesa_trainee_detail.reload.course_study_mode }
+            .from("31").to("01")
         end
       end
     end
