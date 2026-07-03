@@ -70,6 +70,10 @@ class AcademicCycle < ApplicationRecord
     end_date.year
   end
 
+  def previous
+    self.class.for_year(start_year - 1)
+  end
+
   def label(text = " to ")
     "#{start_year}#{text}#{start_year + 1}"
   end
