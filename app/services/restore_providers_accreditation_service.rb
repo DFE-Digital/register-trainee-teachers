@@ -12,9 +12,6 @@ class RestoreProvidersAccreditationService
   end
 
   def call
-    ActiveRecord::Base.transaction do
-      provider.update!(name: name, accreditation_id: accreditation_id, accredited: true)
-      TrainingPartner.kept.find_by(provider_id: provider.id)&.discard
-    end
+    provider.update!(name: name, accreditation_id: accreditation_id, accredited: true)
   end
 end

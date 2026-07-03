@@ -22,14 +22,6 @@ RSpec.describe RestoreProvidersAccreditationService do
       expect(provider.accreditation_id).to eq(accreditation_id)
     end
 
-    it "discards a linked training partner when present" do
-      training_partner = create(:training_partner, :scitt, provider: provider, ukprn: provider.ukprn)
-
-      described_class.call(provider:, name:, accreditation_id:)
-
-      expect(training_partner.reload).to be_discarded
-    end
-
     it "preserves provider users" do
       expect {
         described_class.call(provider:, name:, accreditation_id:)
