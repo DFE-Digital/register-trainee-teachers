@@ -23,6 +23,7 @@ module Hesa
         disability9: "disability",
         grade: "degree_grade",
         uk_degree: "degree_type",
+        subject: "degree_subject",
       }.freeze
 
       def self.all

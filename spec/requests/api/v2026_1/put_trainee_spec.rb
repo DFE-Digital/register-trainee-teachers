@@ -290,6 +290,24 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       end
     end
 
+    context "when the trainee has a degree whose type has no HESA code (e.g. a Foundation degree)" do
+      let(:data) { { first_names: "Alice" } }
+
+      before do
+        create(:degree, :uk_degree_with_details, :uk_foundation, trainee:)
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
+      it "still updates the trainee, accepting the code-less degree type" do
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.first_names).to eq("Alice")
+      end
+    end
+
     context "when updating with valid nationality" do
       let(:data) { { nationality: "IE" } }
 
