@@ -2,7 +2,7 @@
 
 class GuidanceController < ApplicationController
   skip_before_action :authenticate
-  helper_method :sign_off_period, :previous_academic_cycle
+  helper_method :sign_off_period, :previous_academic_cycle, :dates_and_deadlines_academic_cycle
 
   def show
     render(layout: "application")
@@ -69,5 +69,9 @@ private
 
   def sign_off_period
     @sign_off_period ||= DetermineSignOffPeriod.call
+  end
+
+  def dates_and_deadlines_academic_cycle
+    @dates_and_deadlines_academic_cycle ||= AcademicCycle.for_date(1.month.from_now)
   end
 end

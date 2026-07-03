@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l">Dates and deadlines for training providers for 2025 to 2026 academic year</h1>
+    <h1 class="govuk-heading-l">Dates and deadlines for training providers for <%= dates_and_deadlines_academic_cycle.label %> academic year</h1>
 
     <p class="govuk-body">
       All providers can add and update trainee data at any time.
@@ -39,24 +39,24 @@
       <% table.with_body do |body| %>
         <% body.with_row do |row| %>
           <% row.with_cell do %>
-              <span class="no-wrap">8 October 2025</span>
+              <span class="no-wrap"><%= dates_and_deadlines_academic_cycle.itt_census_date.to_fs(:govuk) %></span>
           <% end %>
           <% row.with_cell(text: "Census date")%>
           <% row.with_cell(text: "This is the second Wednesday of October every academic year. If a new trainee starts their course after this date, they will not be included in the ITT census publication.")%>
         <% end %>
         <% body.with_row do |row| %>
             <% row.with_cell do %>
-              <span class="no-wrap">31 October 2025</span>
+              <span class="no-wrap"><%= dates_and_deadlines_academic_cycle.itt_census_end_date.to_fs(:govuk) %></span>
             <% end %>
           <% row.with_cell(text: "ITT census deadline")%>
           <% row.with_cell(text: "You need to submit and sign off ITT trainee data before this date. This data will be used for the ITT census publication.")%>
         <% end %>
         <% body.with_row do |row| %>
             <% row.with_cell do %>
-              <span class="no-wrap">27 February 2026</span>
+              <span class="no-wrap"><%= dates_and_deadlines_academic_cycle.end_date_of_performance_profile.to_fs(:govuk) %></span>
             <% end %>
           <% row.with_cell(text: "ITT performance profiles deadline")%>
-          <% row.with_cell(text: "You need to check and sign off all the details for your trainees who had outcomes in the previous academic year (2024 to 2025). This data will be used for the ITT performance profiles publication.")%>
+          <% row.with_cell(text: "You need to check and sign off all the details for your trainees who had outcomes in the previous academic year (#{dates_and_deadlines_academic_cycle.previous.label}). This data will be used for the ITT performance profiles publication.")%>
         <% end %>
       <% end %>
     <% end %>
