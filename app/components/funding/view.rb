@@ -122,6 +122,8 @@ module Funding
     end
 
     def fund_code_row
+      return unless trainee.provider.hei?
+
       fund_code_text = Hesa::CodeSets::FundCodes::MAPPING[fund_code_value] ||
         Hesa::CodeSets::FundCodes::NO_FUND_CODE_PROVIDED
 
