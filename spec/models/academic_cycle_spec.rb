@@ -79,7 +79,7 @@ describe AcademicCycle do
       end
     end
 
-    context "a trainee with commencment_date outside the cycle and itt_start_date inside the cycle" do
+    context "a trainee with commencement_date outside the cycle and itt_start_date inside the cycle" do
       let(:trainee) do
         create(:trainee, itt_start_date: academic_cycle.start_date, trainee_start_date: academic_cycle.start_date - 1.day)
       end
@@ -240,5 +240,16 @@ describe AcademicCycle do
     it { expect(subject.month).to eq 9 }
     it { expect(subject.day).to eq(1) }
     it { expect(subject).to be_a(Date) }
+  end
+
+  describe "#previous" do
+    let(:current_cycle) { create(:academic_cycle, :current) }
+    let!(:previous_cycle) { create(:academic_cycle, previous_cycle: true) }
+
+    subject { current_cycle.previous }
+
+    it "returns the previous academic cycle" do
+      expect(subject).to eq(previous_cycle)
+    end
   end
 end
