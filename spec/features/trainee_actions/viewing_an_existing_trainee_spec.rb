@@ -29,6 +29,16 @@ feature "View trainees" do
     end
   end
 
+  context "when i am a SCITT provider user" do
+    background { given_i_am_authenticated(user: create(:user, :scitt)) }
+
+    scenario "viewing a manually created trainee with a previously answered funding eligibility" do
+      given_a_trainee_exists(:completed, :trn_received, funding_eligibility: :eligible)
+      and_i_visit_the_trainee
+      then_i_should_not_see_the_fund_code_displayed
+    end
+  end
+
   context "when trainee does not belong to me" do
     background { given_i_am_authenticated }
 
@@ -95,6 +105,23 @@ feature "View trainees" do
       and_i_visit_the_trainee_admin_page
       # redirect to trainees index
       expect(trainee_index_page).to be_displayed
+    end
+
+    scenario "viewing fund code for HESA trainee" do
+      trainee_with_fund_code = create(
+        :trainee,
+        :completed,
+        :trn_received,
+        :with_hesa_trainee_detail,
+        hesa_id: "5678",
+        record_source: :hesa_collection,
+        provider: create(:provider, :hei),
+        training_partner: @current_user.training_partners.first,
+        funding_eligibility: :eligible,
+      )
+
+      visit trainee_path(trainee_with_fund_code)
+      then_i_should_see_the_fund_code_displayed
     end
   end
 
@@ -187,5 +214,16 @@ private
 
   def and_i_can_see_the_trainee_show_page
     expect(page).to have_text("Training overview")
+  end
+
+  def then_i_should_see_the_fund_code_displayed
+    expected_text = Hesa::CodeSets::FundCodes::MAPPING[Hesa::CodeSets::FundCodes::ELIGIBLE]
+    expect(page).to have_text("Fund code")
+    expect(page).to have_text(expected_text)
+  end
+
+  def then_i_should_not_see_the_fund_code_displayed
+    expect(page).to have_text("Funding")
+    expect(page).not_to have_text("Fund code")
   end
 end

@@ -4,6 +4,7 @@ module ApplyApplications
   class ConfirmCourseForm
     include ActiveModel::Model
     include CourseFormHelpers
+    include HesaCourseAgeRangeSync
 
     FIELDS = %i[
       uuid
@@ -29,6 +30,7 @@ module ApplyApplications
       update_trainee_attributes unless trainee_confirmed?
       trainee.progress.course_details = mark_as_reviewed
       clear_funding_information if clear_funding_information?
+      sync_hesa_course_age_range
 
       Trainees::Update.call(trainee:)
     end

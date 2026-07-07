@@ -2,6 +2,7 @@
 
 class PublishCourseDetailsForm < TraineeForm
   include CourseFormHelpers
+  include HesaCourseAgeRangeSync
 
   NOT_LISTED = "not_listed"
 
@@ -58,6 +59,7 @@ class PublishCourseDetailsForm < TraineeForm
     return false unless valid?
 
     update_trainee_attributes
+    sync_hesa_course_age_range
     clear_funding_information if clear_funding_information?
     Trainees::Update.call(trainee:)
     clear_all_course_related_stashes

@@ -17,6 +17,7 @@ module Api
         attributes = extract_attributes_from_student_record
         attributes.merge!(extract_attributes_from_metadatum_record(attributes))
         attributes[:funding_method] = ::Trainees::MapFundingToHesa.call(trainee:) if attributes[:funding_method].blank?
+        attributes[:course_age_range] = ::Trainees::MapCourseAgeRangeToHesa.call(trainee:) if attributes[:course_age_range].blank?
         hesa_trainee_detail.assign_attributes(attributes)
 
         hesa_trainee_detail.save!
