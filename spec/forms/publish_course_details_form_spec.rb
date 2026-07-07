@@ -37,6 +37,8 @@ describe PublishCourseDetailsForm, type: :model do
         let(:course_uuid) { SecureRandom.uuid }
         let(:subject_name) { "Physical education" }
         let(:course_level) { "primary" }
+        let(:course_min_age) { 11 }
+        let(:course_max_age) { 16 }
         let(:subject_specialism_form) do
           SubjectSpecialismForm.new(trainee, params: { course_subject_one: subject_name })
         end
@@ -49,7 +51,9 @@ describe PublishCourseDetailsForm, type: :model do
                  uuid: course_uuid,
                  route: route,
                  accredited_body_code: trainee.provider.code,
-                 subject_names: [subject_name])
+                 subject_names: [subject_name],
+                 min_age: course_min_age,
+                 max_age: course_max_age)
 
           subject_specialism_form.stash_or_save!
         end
@@ -60,6 +64,29 @@ describe PublishCourseDetailsForm, type: :model do
 
           it "does not change the trainee's itt start date" do
             expect { subject.save! }.not_to(change { trainee.itt_start_date })
+          end
+        end
+
+        context "when the trainee has a hesa_trainee_detail" do
+          before { trainee.create_hesa_trainee_detail!(course_age_range: nil) }
+
+          it "syncs the hesa course_age_range from the course's age range" do
+            expect { subject.save! }
+              .to change { trainee.reload.hesa_trainee_detail.course_age_range }
+              .from(nil).to("13918")
+          end
+
+          context "without a HESA code for the course's age range" do
+            let(:course_min_age) { 7 }
+            let(:course_max_age) { 16 }
+
+            before { trainee.hesa_trainee_detail.update!(course_age_range: "13918") }
+
+            it "clears the stored code to nil" do
+              expect { subject.save! }
+                .to change { trainee.reload.hesa_trainee_detail.course_age_range }
+                .from("13918").to(nil)
+            end
           end
         end
       end

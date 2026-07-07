@@ -2329,6 +2329,37 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
         expect(trainee.reload.hesa_trainee_detail.funding_method).to eq(Hesa::CodeSets::BursaryLevels::NONE)
       end
     end
+
+    context "when the trainee has no hesa_trainee_detail, the hesa_student has no course_age_range and course_age_range is not in the update payload" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          trainee_route_trait,
+          hesa_id: "0310261553102",
+          funding_eligibility: :not_eligible,
+          applying_for_bursary: false,
+          applying_for_scholarship: false,
+          applying_for_grant: false,
+          bursary_tier: nil,
+          course_min_age: 11,
+          course_max_age: 16,
+        )
+      end
+      let(:data) { { course_year: "2015", itt_aim: "202", itt_qualification_aim: "001" } }
+
+      before do
+        create(:hesa_student, hesa_id: trainee.hesa_id, course_age_range: nil, fund_code: "7", bursary_level: nil)
+        create(:hesa_metadatum, trainee:)
+      end
+
+      it "falls back to Trainees::MapCourseAgeRangeToHesa for course_age_range" do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.hesa_trainee_detail.course_age_range).to eq("13918")
+      end
+    end
   end
 
   context "Updating a newly created trainee" do

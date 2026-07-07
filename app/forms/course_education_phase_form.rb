@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CourseEducationPhaseForm < TraineeForm
+  include HesaCourseAgeRangeSync
+
   FIELDS = %i[
     course_education_phase
   ].freeze
@@ -13,6 +15,7 @@ class CourseEducationPhaseForm < TraineeForm
     if valid?
       trainee.assign_attributes(fields)
       clear_course_subjects if trainee.course_education_phase_changed?
+      sync_hesa_course_age_range
       Trainees::Update.call(trainee:)
       clear_stash
     else

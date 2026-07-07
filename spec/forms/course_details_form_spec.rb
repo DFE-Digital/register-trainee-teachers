@@ -645,6 +645,45 @@ describe CourseDetailsForm, type: :model do
             .from(trainee.course_education_phase).to(COURSE_EDUCATION_PHASE_ENUMS[:primary])
         end
       end
+
+      context "when the trainee has a hesa_trainee_detail" do
+        before do
+          allocation_subject
+          trainee.create_hesa_trainee_detail!(course_age_range: existing_code)
+        end
+
+        context "with a range that has a HESA code" do
+          let(:existing_code) { nil }
+
+          it "syncs the HESA course_age_range code from the saved range" do
+            expect { subject.save! }
+              .to change { trainee.reload.hesa_trainee_detail.course_age_range }
+              .from(nil).to("13919")
+          end
+        end
+
+        context "without a HESA code for the saved range" do
+          let(:existing_code) { "13918" }
+          let(:min_age) { 7 }
+          let(:max_age) { 16 }
+
+          it "clears the stored code to nil" do
+            expect { subject.save! }
+              .to change { trainee.reload.hesa_trainee_detail.course_age_range }
+              .from("13918").to(nil)
+          end
+        end
+      end
+
+      context "when the trainee has no hesa_trainee_detail" do
+        before { allocation_subject }
+
+        it "does not create one" do
+          subject.save!
+
+          expect(trainee.reload.hesa_trainee_detail).to be_nil
+        end
+      end
     end
 
     describe "#stash" do

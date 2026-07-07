@@ -3,6 +3,7 @@
 class CourseDetailsForm < TraineeForm
   include CourseFormHelpers
   include DatesHelper
+  include HesaCourseAgeRangeSync
 
   FIELDS = %i[
     course_uuid
@@ -92,6 +93,7 @@ class CourseDetailsForm < TraineeForm
   def save!
     if valid?
       update_trainee_attributes
+      sync_hesa_course_age_range
       clear_funding_information if clear_funding_information?
       Trainees::Update.call(trainee:)
       clear_all_course_related_stashes

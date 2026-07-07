@@ -48,5 +48,15 @@ describe CourseEducationPhaseForm, type: :model do
         expect(trainee.reload.course_subject_one).not_to be_nil
       end
     end
+
+    context "when the trainee has a hesa_trainee_detail" do
+      before { trainee.create_hesa_trainee_detail!(course_age_range: "13918") }
+
+      it "syncs the hesa course_age_range to match the cleared range" do
+        expect { subject.save! }
+          .to change { trainee.reload.hesa_trainee_detail.course_age_range }
+          .from("13918").to(nil)
+      end
+    end
   end
 end
