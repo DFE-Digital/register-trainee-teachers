@@ -191,6 +191,34 @@ RSpec.describe Api::V20261::TraineeSerializer do
       end
     end
 
+    describe "study_mode" do
+      context "when the hesa_trainee_detail has a course_study_mode" do
+        it "serializes the stored course_study_mode" do
+          expect(json["study_mode"]).to eq(trainee.hesa_trainee_detail.course_study_mode)
+        end
+      end
+
+      context "when the hesa_trainee_detail has no course_study_mode" do
+        let(:trainee) do
+          create(:trainee, :with_hesa_trainee_detail, study_mode: COURSE_STUDY_MODES[:part_time]).tap do |trainee|
+            trainee.hesa_trainee_detail.update!(course_study_mode: nil)
+          end
+        end
+
+        it "serializes the canonical HESA code mapped from the trainee study mode" do
+          expect(json["study_mode"]).to eq("31")
+        end
+      end
+
+      context "when the trainee has no hesa_trainee_detail" do
+        let(:trainee) { create(:trainee, study_mode: COURSE_STUDY_MODES[:full_time]) }
+
+        it "serializes the canonical HESA code mapped from the trainee study mode" do
+          expect(json["study_mode"]).to eq("01")
+        end
+      end
+    end
+
     describe "nationality" do
       it "serializes nationality to HESA code" do
         expect(json[:nationality]).to eq("FR")

@@ -65,6 +65,33 @@ describe "`GET /trainees` endpoint" do
     end
   end
 
+  context "when trainees are missing a course_study_mode" do
+    let!(:trainee_without_stored_course_study_mode) do
+      create(:trainee, :with_hesa_trainee_detail, :trn_received, study_mode: COURSE_STUDY_MODES[:part_time], provider: auth_token.provider, start_academic_cycle: start_academic_cycle).tap do |trainee|
+        trainee.hesa_trainee_detail.update!(course_study_mode: nil)
+      end
+    end
+
+    let!(:trainee_without_hesa_trainee_detail) do
+      create(:trainee, :trn_received, study_mode: COURSE_STUDY_MODES[:part_time], provider: auth_token.provider, start_academic_cycle: start_academic_cycle)
+    end
+
+    before do
+      get(
+        "/api/v2025.0/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the canonical HESA code mapped from the trainee study mode as study_mode" do
+      [trainee_without_stored_course_study_mode, trainee_without_hesa_trainee_detail].each do |trainee|
+        serialized_trainee = response.parsed_body["data"].find { |data| data["trainee_id"] == trainee.slug }
+
+        expect(serialized_trainee["study_mode"]).to eq("31")
+      end
+    end
+  end
+
   context "filtering out draft trainees" do
     let!(:draft_trainee) { create(:trainee, :draft, :with_hesa_trainee_detail) }
 
