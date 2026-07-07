@@ -302,8 +302,10 @@ module Funding
       end
 
       describe "fund code row" do
+        let(:provider) { create(:provider, :hei) }
+
         context "when trainee has eligible funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: :eligible) }
+          let(:trainee) { create(:trainee, :imported_from_hesa, provider: provider, funding_eligibility: :eligible) }
 
           before { render_inline(View.new(data_model: trainee)) }
 
@@ -314,7 +316,7 @@ module Funding
         end
 
         context "when trainee has not eligible funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: :not_eligible) }
+          let(:trainee) { create(:trainee, :imported_from_hesa, provider: provider, funding_eligibility: :not_eligible) }
 
           before { render_inline(View.new(data_model: trainee)) }
 
@@ -325,7 +327,7 @@ module Funding
         end
 
         context "when trainee has no funding eligibility" do
-          let(:trainee) { create(:trainee, :imported_from_hesa, funding_eligibility: nil) }
+          let(:trainee) { create(:trainee, :imported_from_hesa, provider: provider, funding_eligibility: nil) }
 
           before { render_inline(View.new(data_model: trainee)) }
 
@@ -342,6 +344,40 @@ module Funding
 
         it "renders the hesa bursary level along with the code" do
           expect(rendered_content).to have_text("#{hesa_bursary_code} - #{Hesa::CodeSets::BursaryLevels::VALUES[hesa_bursary_code]}")
+        end
+      end
+    end
+
+    context "when trainee belongs to an HEI provider" do
+      describe "fund code row" do
+        let(:provider) { create(:provider, :hei) }
+        let(:trainee) { create(:trainee, :completed, provider: provider, funding_eligibility: :eligible) }
+
+        it "renders the fund code with description" do
+          expect(rendered_content).to have_text("Fund code")
+          expect(rendered_content).to have_text("Eligible for funding from the DfE")
+        end
+      end
+    end
+
+    context "when trainee belongs to a SCITT provider" do
+      describe "fund code row" do
+        let(:provider) { create(:provider, :scitt) }
+
+        context "with a previously answered funding eligibility" do
+          let(:trainee) { create(:trainee, :completed, provider: provider, funding_eligibility: :eligible) }
+
+          it "does not render the fund code row" do
+            expect(rendered_content).not_to have_text("Fund code")
+          end
+        end
+
+        context "without a funding eligibility" do
+          let(:trainee) { create(:trainee, :completed, provider:) }
+
+          it "does not render the fund code row" do
+            expect(rendered_content).not_to have_text("Fund code")
+          end
         end
       end
     end
