@@ -3,7 +3,7 @@ page_title: Placement requirements before changing trainee status
 title: Placement requirements before changing trainee status
 ---
 
-### What is changing
+## What is changing
 
 The register trainee teachers service is now checking if the minimum number of
 required placements have been recorded on each trainee’s record.
@@ -11,7 +11,7 @@ required placements have been recorded on each trainee’s record.
 You can only change a trainee status for qualified teacher status (QTS) or early years
 teacher status (EYTS) once this requirement has been met.
 
-### Who this guidance is for
+## Who this guidance is for
 
 This guidance is for accredited initial teacher training (ITT) providers who use register
 trainee teachers.
@@ -65,6 +65,6 @@ Trainees must have a minimum of 1 placement recorded.
 
 You must add missing placements to trainee records before changing them for QTS or EYTS.
 
-You can [add a placement to an individual trainee’s record in register trainee teachers](/guidance/manually-registering-trainees).
+You can [add a placement to an individual trainee’s record in register trainee teachers service](/guidance/manually-registering-trainees).
 
 You can also [add placements for multiple trainees at once](/guidance/bulk-upload-placement-data).
