@@ -167,7 +167,8 @@ module Api
       end
 
       def course_age_range
-        @trainee&.hesa_trainee_detail&.course_age_range
+        @trainee&.hesa_trainee_detail&.course_age_range.presence ||
+          ::Trainees::MapCourseAgeRangeToHesa.call(trainee: @trainee)
       end
 
       def recommended_for_award_at

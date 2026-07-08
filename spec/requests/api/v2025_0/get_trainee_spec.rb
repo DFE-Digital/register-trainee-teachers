@@ -29,7 +29,7 @@ describe "`GET /api/v2025.0/trainees/:id` endpoint" do
 
   context "when the trainee has a hesa_trainee_detail" do
     let!(:trainee) do
-      create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary, slug: "12345", provider: auth_token.provider)
+      create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary, provider: auth_token.provider)
     end
 
     before do
@@ -47,7 +47,7 @@ describe "`GET /api/v2025.0/trainees/:id` endpoint" do
 
     context "without a funding_method" do
       let!(:trainee) do
-        create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary, slug: "12345", provider: auth_token.provider).tap do |trainee|
+        create(:trainee, :with_hesa_trainee_detail, :with_tiered_bursary, provider: auth_token.provider).tap do |trainee|
           trainee.hesa_trainee_detail.update!(funding_method: nil)
         end
       end
@@ -60,7 +60,7 @@ describe "`GET /api/v2025.0/trainees/:id` endpoint" do
 
   context "when the trainee has no hesa_trainee_detail" do
     let!(:trainee) do
-      create(:trainee, :with_tiered_bursary, slug: "12345", provider: auth_token.provider)
+      create(:trainee, :with_tiered_bursary, provider: auth_token.provider)
     end
 
     before do
@@ -72,6 +72,59 @@ describe "`GET /api/v2025.0/trainees/:id` endpoint" do
 
     it "returns the funding_method mapped from the trainee funding attributes" do
       expect(response.parsed_body["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+    end
+  end
+
+  context "when the trainee has a stored course_age_range" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2025.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the stored course_age_range" do
+      expect(response.parsed_body["course_age_range"]).to eq(trainee.hesa_trainee_detail.course_age_range)
+    end
+  end
+
+  context "when the hesa_trainee_detail has no course_age_range" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, course_min_age: 11, course_max_age: 16, provider: auth_token.provider).tap do |trainee|
+        trainee.hesa_trainee_detail.update!(course_age_range: nil)
+      end
+    end
+
+    before do
+      get(
+        "/api/v2025.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the course_age_range mapped from the trainee's range" do
+      expect(response.parsed_body["course_age_range"]).to eq("13918")
+    end
+  end
+
+  context "when the trainee has no hesa_trainee_detail and is missing a course_age_range" do
+    let!(:trainee) do
+      create(:trainee, course_min_age: 11, course_max_age: 16, provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2025.0/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the course_age_range mapped from the trainee's range" do
+      expect(response.parsed_body["course_age_range"]).to eq("13918")
     end
   end
 

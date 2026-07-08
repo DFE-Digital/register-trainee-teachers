@@ -75,6 +75,59 @@ describe "`GET /api/v2026.1/trainees/:id` endpoint" do
     end
   end
 
+  context "when the trainee has a stored course_age_range" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, slug: "12345", provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2026.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the stored course_age_range" do
+      expect(response.parsed_body["course_age_range"]).to eq(trainee.hesa_trainee_detail.course_age_range)
+    end
+  end
+
+  context "when the hesa_trainee_detail has no course_age_range" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, course_min_age: 11, course_max_age: 16, slug: "12345", provider: auth_token.provider).tap do |trainee|
+        trainee.hesa_trainee_detail.update!(course_age_range: nil)
+      end
+    end
+
+    before do
+      get(
+        "/api/v2026.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the course_age_range mapped from the trainee's range" do
+      expect(response.parsed_body["course_age_range"]).to eq("13918")
+    end
+  end
+
+  context "when the trainee has no hesa_trainee_detail and is missing a course_age_range" do
+    let!(:trainee) do
+      create(:trainee, course_min_age: 11, course_max_age: 16, slug: "12345", provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2026.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the course_age_range mapped from the trainee's range" do
+      expect(response.parsed_body["course_age_range"]).to eq("13918")
+    end
+  end
+
   context "when the trainee does not exist" do
     before do
       get(
