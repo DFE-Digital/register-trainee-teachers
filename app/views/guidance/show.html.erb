@@ -87,6 +87,12 @@
             bulk_upload_placement_data_guidance_path,
           ) %>
       </li>
+      <li>
+        <%= govuk_link_to(
+            "Placement requirements before changing trainee status",
+            placement_requirements_before_changing_trainee_status_guidance_path,
+          ) %>
+      </li>
     </ul>
 
     <% @census_sign_off = sign_off_period == :census_period ? "Sign" : "Signing" %>

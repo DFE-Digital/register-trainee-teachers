@@ -56,6 +56,19 @@ describe GuidanceController do
     end
   end
 
+  describe "#placement_requirements_before_changing_trainee_status" do
+    it "returns a 200 status code" do
+      get :placement_requirements_before_changing_trainee_status
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :placement_requirements_before_changing_trainee_status
+      expect(response).to render_template("guidance")
+      expect(response).to render_template("placement_requirements_before_changing_trainee_status")
+    end
+  end
+
   describe "#manage_placements" do
     it "returns a 200 status code" do
       get :manage_placements
