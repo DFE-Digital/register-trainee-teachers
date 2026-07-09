@@ -24,7 +24,7 @@ features:
   google:
     send_data_to_big_query: false
   integrate_with_trs: false
-  register_api: false
+  register_api: true
   school_data_auto_import: true
 
 current_recruitment_cycle_year: 2026
@@ -36,6 +36,13 @@ apply_applications:
       - 2026
   create:
     recruitment_cycle_year: 2026
+
+api:
+  allowed_versions: [v2026.1]
+
+bulk_update:
+  add_trainees:
+    version: v2026.1
 
 environment:
   name: productiondata
