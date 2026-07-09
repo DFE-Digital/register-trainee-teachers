@@ -27,6 +27,16 @@ features:
   register_api: false
   school_data_auto_import: true
 
+current_recruitment_cycle_year: 2026
+current_default_course_year: 2026
+
+apply_applications:
+  import:
+    recruitment_cycle_years:
+      - 2026
+  create:
+    recruitment_cycle_year: 2026
+
 environment:
   name: productiondata
   display_name: Production Data
