@@ -10,7 +10,6 @@ on:
         type: choice
         options:
           - qa
-          - staging
           - production
       dry-run:
         description: Check slot status only do not create slot
