@@ -234,7 +234,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [sandbox] # productiondata temporarily disabled for testing new academic year
+        environment: [sandbox, productiondata]
     steps:
     - name: Checkout
       uses: actions/checkout@v6
