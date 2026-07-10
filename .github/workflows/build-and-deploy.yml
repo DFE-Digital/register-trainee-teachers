@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Build and push docker image
         id: build-image
@@ -70,7 +70,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: ${{ matrix.linter-type }}
         uses: ./.github/actions/lint/
@@ -112,7 +112,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set Airbyte
         if: (contains(github.event.pull_request.labels.*.name, 'airbyte'))
@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Merge minor dependency updates
         uses: fastify/github-action-merge-dependabot@73ec4cbb5e56df5591eae286972d5b2201ffe90f  # Pinned at v3.15.0
@@ -171,7 +171,7 @@ jobs:
         environment: [qa, staging]
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Deploy app to ${{ matrix.environment }}
       id: deploy_app_before_production
@@ -198,7 +198,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Deploy app to production
       id: deploy_app
@@ -237,7 +237,7 @@ jobs:
         environment: [sandbox] # productiondata temporarily disabled for testing new academic year
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Deploy app to ${{ matrix.environment }}
       id: deploy_app_after_production
