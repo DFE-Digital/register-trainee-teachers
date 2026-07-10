@@ -39,6 +39,7 @@ apply_applications:
 
 api:
   allowed_versions: [v2026.1]
+  current_version: v2026.1
 
 bulk_update:
   add_trainees:
