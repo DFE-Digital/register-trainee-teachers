@@ -51,6 +51,40 @@ describe OtpForm, type: :model do
       end
     end
 
+    describe "validating rate limit" do
+      let(:memory_store) { ActiveSupport::Cache::MemoryStore.new }
+
+      before do
+        allow(Rails).to receive(:cache).and_return(memory_store)
+      end
+
+      context "when the email has not exceeded the limit" do
+        it "is valid" do
+          2.times { expect(form.valid?).to be true }
+        end
+      end
+
+      context "when the email has exceeded the limit" do
+        before do
+          2.times { described_class.new(session:, email:).valid? }
+        end
+
+        it "returns the correct error message" do
+          expect(form.valid?).to be false
+          expect(error_message).to include "Please wait 1 minute before trying again"
+        end
+      end
+
+      context "with an invalid email" do
+        let(:email) { "bad-email" }
+
+        it "does not check the rate limit" do
+          expect(EmailRateLimiter).not_to receive(:call)
+          expect(form.valid?).to be false
+        end
+      end
+    end
+
     describe "validating cool down" do
       context "when should not cool down" do
         let(:otp_form_attempts) { 0 }

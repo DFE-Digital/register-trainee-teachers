@@ -194,6 +194,11 @@ smoke_test:
   username: do-not-store-here
   password: do-not-store-here
 
+otp:
+  throttling:
+    max_requests: 2
+    interval: 60
+
 api:
   throttling:
     max_requests: 100
