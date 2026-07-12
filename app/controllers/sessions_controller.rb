@@ -4,9 +4,11 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate
 
   def callback
+    requested_path = session[:requested_path]
     reset_session
 
     DfESignInUser.begin_session!(session, request.env["omniauth.auth"])
+    session[:requested_path] = requested_path.presence
 
     if current_user
       DfESignInUsers::Update.call(user: current_user, sign_in_user: sign_in_user)
