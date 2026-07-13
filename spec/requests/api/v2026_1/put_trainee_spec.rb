@@ -2896,6 +2896,39 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
         expect(trainee.reload.hesa_trainee_detail.course_age_range).to eq("13918")
       end
     end
+
+    context "when the trainee has no hesa_trainee_detail, the hesa_student has no disabilities and disabilities are not in the update payload" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :disabled,
+          trainee_route_trait,
+          hesa_id: "0310261553104",
+          funding_eligibility: :not_eligible,
+          applying_for_bursary: false,
+          applying_for_scholarship: false,
+          applying_for_grant: false,
+          bursary_tier: nil,
+          course_min_age: 11,
+          course_max_age: 16,
+        )
+      end
+      let(:data) { { course_year: "2015", itt_aim: "202", itt_qualification_aim: "001" } }
+
+      before do
+        trainee.disabilities << create(:disability, :learning_difficulty)
+        create(:hesa_student, hesa_id: trainee.hesa_id, course_age_range: "13918", fund_code: "7", bursary_level: nil)
+        create(:hesa_metadatum, trainee:)
+      end
+
+      it "falls back to Trainees::MapDisabilitiesToHesa for hesa_disabilities" do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.hesa_trainee_detail.hesa_disabilities).to eq("disability1" => "51")
+      end
+    end
   end
 
   context "Updating a newly created trainee" do

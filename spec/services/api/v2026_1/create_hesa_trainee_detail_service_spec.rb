@@ -190,6 +190,33 @@ RSpec.describe Api::V20261::CreateHesaTraineeDetailService do
           expect(trainee.reload.hesa_trainee_detail.course_age_range).to eq("13915")
         end
       end
+
+      context "when hesa_disabilities is missing" do
+        let(:trainee) { create(:trainee, :disabled) }
+
+        before { trainee.disabilities << create(:disability, :learning_difficulty) }
+
+        it "derives hesa_disabilities from the trainee's disabilities via Trainees::MapDisabilitiesToHesa" do
+          subject.call(trainee:)
+
+          expect(trainee.reload.hesa_trainee_detail.hesa_disabilities).to eq("disability1" => "51")
+        end
+      end
+
+      context "when a hesa_student has disabilities" do
+        let(:trainee) { create(:trainee, :disabled) }
+
+        before do
+          trainee.disabilities << create(:disability, :learning_difficulty)
+          create(:hesa_student, disability1: "58", trainee: trainee)
+        end
+
+        it "prefers the student record's disabilities over the fallback" do
+          subject.call(trainee:)
+
+          expect(trainee.reload.hesa_trainee_detail.hesa_disabilities).to eq("disability1" => "58")
+        end
+      end
     end
   end
 end
