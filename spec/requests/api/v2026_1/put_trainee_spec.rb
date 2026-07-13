@@ -295,6 +295,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
 
       before do
         create(:degree, :uk_degree_with_details, :uk_foundation, trainee:)
+
         put(
           endpoint,
           headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -305,6 +306,26 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       it "still updates the trainee, accepting the code-less degree type" do
         expect(response).to have_http_status(:ok)
         expect(trainee.reload.first_names).to eq("Alice")
+      end
+    end
+
+    context "when the stored course_study_mode is missing and study_mode is not provided" do
+      let(:data) { { first_names: "Alice" } }
+
+      before do
+        trainee.update!(study_mode: COURSE_STUDY_MODES[:part_time])
+        trainee.hesa_trainee_detail.update!(course_study_mode: nil)
+
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
+      it "backfills course_study_mode from the trainee's study_mode using the mapper" do
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.hesa_trainee_detail.course_study_mode).to eq("31")
       end
     end
 

@@ -5,6 +5,7 @@ module ApplyApplications
     include ActiveModel::Model
     include CourseFormHelpers
     include HesaCourseAgeRangeSync
+    include HesaCourseStudyModeSync
 
     FIELDS = %i[
       uuid
@@ -31,6 +32,7 @@ module ApplyApplications
       trainee.progress.course_details = mark_as_reviewed
       clear_funding_information if clear_funding_information?
       sync_hesa_course_age_range
+      sync_hesa_course_study_mode
 
       Trainees::Update.call(trainee:)
     end
