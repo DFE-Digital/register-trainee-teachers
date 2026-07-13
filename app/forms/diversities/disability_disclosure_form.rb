@@ -2,6 +2,8 @@
 
 module Diversities
   class DisabilityDisclosureForm < TraineeForm
+    include HesaDisabilitiesSync
+
     FIELDS = %i[
       disability_disclosure
     ].freeze
@@ -19,9 +21,14 @@ module Diversities
     end
 
     def save!
+      return false unless valid?
+
       ActiveRecord::Base.transaction do
         trainee.clear_disabilities if disability_not_provided? || no_disability?
-        super
+        assign_attributes_to_trainee
+        sync_hesa_disabilities
+        Trainees::Update.call(trainee:, update_trs:)
+        clear_stash
       end
     end
 
