@@ -177,6 +177,34 @@ RSpec.describe AuthenticationToken do
     end
   end
 
+  describe "#expired_by_date?" do
+    subject(:authentication_token) { create(:authentication_token, expires_at:) }
+
+    context "when the expiry date is in the past" do
+      let(:expires_at) { 1.day.ago }
+
+      it "returns true" do
+        expect(subject.expired_by_date?).to be(true)
+      end
+    end
+
+    context "when the expiry date is today" do
+      let(:expires_at) { Date.current }
+
+      it "returns true" do
+        expect(subject.expired_by_date?).to be(true)
+      end
+    end
+
+    context "when the expiry date is in the future" do
+      let(:expires_at) { 1.day.from_now }
+
+      it "returns false" do
+        expect(subject.expired_by_date?).to be(false)
+      end
+    end
+  end
+
   describe ".update_last_used_at!" do
     subject(:authentication_token) { create(:authentication_token, last_used_at:) }
 

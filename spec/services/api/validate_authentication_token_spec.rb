@@ -12,6 +12,22 @@ describe Api::ValidateAuthenticationToken do
       end
     end
 
+    context "when the auth_token is active but the expiry date is in the past" do
+      let(:auth_token) { create(:authentication_token, expires_at: 1.day.ago) }
+
+      it "returns false" do
+        expect(described_class.call(auth_token:)).to be(false)
+      end
+    end
+
+    context "when the auth_token is active but the expiry date is today" do
+      let(:auth_token) { create(:authentication_token, expires_at: Date.current) }
+
+      it "returns false" do
+        expect(described_class.call(auth_token:)).to be(false)
+      end
+    end
+
     context "when the auth_token is revoked and the provider is present" do
       let(:auth_token) { create(:authentication_token, :revoked) }
 

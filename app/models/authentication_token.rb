@@ -101,4 +101,8 @@ class AuthenticationToken < ApplicationRecord
 
     update!(last_used_at: Time.current)
   end
+
+  def expired_by_date?
+    expires_at <= Date.current
+  end
 end

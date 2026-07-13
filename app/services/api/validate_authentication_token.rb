@@ -9,7 +9,7 @@ module Api
     end
 
     def call
-      auth_token.present? && auth_token.active? && provider&.kept?
+      auth_token.present? && auth_token.active? && !auth_token.expired_by_date? && provider&.kept?
     end
 
   private
