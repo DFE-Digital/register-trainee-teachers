@@ -162,7 +162,8 @@ module Api
       end
 
       def course_study_mode
-        @trainee&.hesa_trainee_detail&.course_study_mode
+        @trainee&.hesa_trainee_detail&.course_study_mode.presence ||
+          ::Trainees::MapStudyModeToHesa.call(trainee: @trainee)
       end
 
       def course_itt_start_date

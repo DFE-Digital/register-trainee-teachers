@@ -89,6 +89,22 @@ describe PublishCourseDetailsForm, type: :model do
             end
           end
         end
+
+        context "when the study mode is updated and the trainee has a hesa_trainee_detail" do
+          let(:trainee) do
+            create(:trainee, :submitted_for_trn, route, course_subject_one: nil, study_mode: COURSE_STUDY_MODES[:full_time])
+          end
+
+          before do
+            trainee.create_hesa_trainee_detail!(course_study_mode: "31")
+          end
+
+          it "syncs the course_study_mode to the canonical HESA code for the selected study mode" do
+            expect { subject.save! }
+              .to change { trainee.hesa_trainee_detail.reload.course_study_mode }
+              .from("31").to("01")
+          end
+        end
       end
     end
   end

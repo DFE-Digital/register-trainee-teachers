@@ -56,11 +56,29 @@ describe "`GET /api/v2025.0/trainees/:id` endpoint" do
         expect(response.parsed_body["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
       end
     end
+
+    context "with a course_study_mode" do
+      it "returns the stored course_study_mode as study_mode" do
+        expect(response.parsed_body["study_mode"]).to eq(trainee.hesa_trainee_detail.course_study_mode)
+      end
+    end
+
+    context "without a course_study_mode" do
+      let!(:trainee) do
+        create(:trainee, :with_hesa_trainee_detail, study_mode: COURSE_STUDY_MODES[:part_time], slug: "12345", provider: auth_token.provider).tap do |trainee|
+          trainee.hesa_trainee_detail.update!(course_study_mode: nil)
+        end
+      end
+
+      it "returns the canonical HESA code mapped from the trainee study mode" do
+        expect(response.parsed_body["study_mode"]).to eq("31")
+      end
+    end
   end
 
   context "when the trainee has no hesa_trainee_detail" do
     let!(:trainee) do
-      create(:trainee, :with_tiered_bursary, provider: auth_token.provider)
+      create(:trainee, :with_tiered_bursary, study_mode: COURSE_STUDY_MODES[:full_time], slug: "12345", provider: auth_token.provider)
     end
 
     before do
@@ -72,6 +90,10 @@ describe "`GET /api/v2025.0/trainees/:id` endpoint" do
 
     it "returns the funding_method mapped from the trainee funding attributes" do
       expect(response.parsed_body["funding_method"]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+    end
+
+    it "returns the canonical HESA code mapped from the trainee study mode" do
+      expect(response.parsed_body["study_mode"]).to eq("01")
     end
   end
 
