@@ -2,7 +2,7 @@
 
 class OtpForm
   include ActiveModel::Model
-  include ThrottleRequests
+  include ActionView::Helpers::DateHelper
 
   attr_reader :email
 
@@ -12,22 +12,15 @@ class OtpForm
   end
   validate :rate_limit, if: -> { errors.empty? }
 
-  def initialize(session:, email:)
-    @session = session
+  def initialize(email:)
     @email = email&.strip
-
-    super(session:)
-  end
-
-  def raise_throttle_error
-    errors.add(:email, cool_down_message)
   end
 
 private
 
   def rate_limit
-    return unless EmailRateLimiter.call(email:)
+    return unless EmailRateLimiter.call(email: email, scope: :requests)
 
-    errors.add(:email, "Please wait #{time_ago_in_words(Settings.otp.throttling.interval.to_i.seconds.from_now)} before trying again")
+    errors.add(:email, "Please wait #{time_ago_in_words(Settings.otp.throttling.requests.interval.to_i.seconds.from_now)} before trying again")
   end
 end

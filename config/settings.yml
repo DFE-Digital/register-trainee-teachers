@@ -196,8 +196,12 @@ smoke_test:
 
 otp:
   throttling:
-    max_requests: 2
-    interval: 60
+    requests:
+      max_requests: 2
+      interval: 60
+    verifications:
+      max_requests: 5
+      interval: 300
 
 api:
   throttling:
