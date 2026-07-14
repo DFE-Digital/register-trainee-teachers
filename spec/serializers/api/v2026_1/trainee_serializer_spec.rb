@@ -219,6 +219,34 @@ RSpec.describe Api::V20261::TraineeSerializer do
       end
     end
 
+    describe "disabilities" do
+      context "when the hesa_trainee_detail has stored disabilities" do
+        it "serializes the stored disabilities" do
+          expect(json["disability1"]).to eq(trainee.hesa_trainee_detail.hesa_disabilities["disability1"])
+        end
+      end
+
+      context "when the hesa_trainee_detail has no stored disabilities" do
+        let(:trainee) do
+          create(:trainee, :with_hesa_trainee_detail, :disabled_with_disabilities_disclosed).tap do |trainee|
+            trainee.hesa_trainee_detail.update!(hesa_disabilities: {})
+          end
+        end
+
+        it "serializes the disabilities mapped from the trainee's disabilities" do
+          expect(json["disability1"]).to eq("55")
+        end
+      end
+
+      context "when the trainee has no hesa_trainee_detail" do
+        let(:trainee) { create(:trainee, :disabled_with_disabilities_disclosed) }
+
+        it "serializes the disabilities mapped from the trainee's disabilities" do
+          expect(json["disability1"]).to eq("55")
+        end
+      end
+    end
+
     describe "nationality" do
       it "serializes nationality to HESA code" do
         expect(json[:nationality]).to eq("FR")
