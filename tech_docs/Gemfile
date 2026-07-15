@@ -2,8 +2,8 @@
 
 source "https://rubygems.org"
 
+gem "logger"
 gem "config", "~> 5.6"
 gem "govuk_tech_docs"
-gem "logger"
 gem "middleman-minify-html"
 gem "pry"
