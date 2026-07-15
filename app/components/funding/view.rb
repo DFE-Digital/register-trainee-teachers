@@ -37,7 +37,7 @@ module Funding
     delegate :can_apply_for_tiered_bursary?, :can_apply_for_scholarship?, :scholarship_amount,
              :can_apply_for_bursary?, :bursary_amount,
              :can_apply_for_grant?, :grant_amount,
-             :can_apply_for_funding_type?,
+             :can_apply_for_funding_type?, :allocation_subject_name,
              to: :funding_manager
 
     def training_initiative_row
@@ -164,13 +164,17 @@ module Funding
 
       return "#{t(".tiered_bursary_applied_for.#{data_model.bursary_tier}")}#{bursary_funding_hint}".html_safe if data_model.bursary_tier.present?
 
-      return "#{t('.bursary_applied_for')}#{bursary_funding_hint}".html_safe if data_model.applying_for_bursary
+      return "#{t('.bursary_applied_for', subject: allocation_subject_name)}#{bursary_worth_hint}".html_safe if data_model.applying_for_bursary
 
       t(".no_bursary_applied_for")
     end
 
     def bursary_funding_hint
       "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
+    end
+
+    def bursary_worth_hint
+      "<br>#{tag.span("Worth up to #{format_currency(bursary_amount)}", class: 'govuk-hint')}"
     end
 
     def no_funding_methods?

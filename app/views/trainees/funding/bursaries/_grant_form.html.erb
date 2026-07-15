@@ -16,19 +16,20 @@
       </p>
 
       <p class="govuk-body">
-        You can
         <%= govuk_link_to(
           t("views.forms.funding.bursaries.guidance_link_text"),
           @bursary_form.funding_guidance_url,
-          new_tab: true,
-        ) %>.
+          target: "_blank",
+          rel: "noopener noreferrer",
+        ) %> (opens in new tab).
       </p>
 
       <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.grant.title"), size: "m" }) do %>
           <%= f.govuk_radio_button(
             :funding_type,
             FUNDING_TYPE_ENUMS[:grant],
-            label: { text: t("views.forms.funding.funding_type.grant.label") },
+            label: { text: t("views.forms.funding.funding_type.grant.label", amount: format_currency(@bursary_form.grant_amount)) },
+            hint: { text: t("views.forms.funding.funding_type.grant.hint") },
             link_errors: true,
           ) %>
 

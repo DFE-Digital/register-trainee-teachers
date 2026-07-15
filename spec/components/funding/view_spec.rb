@@ -115,7 +115,8 @@ module Funding
         end
 
         it "renders if the trainee selects mathematics" do
-          expect(rendered_content).to have_text("£9,000 estimated bursary")
+          expect(rendered_content).to have_text("#{subject_specialism.allocation_subject.name} bursary")
+          expect(rendered_content).to have_text("Worth up to £9,000")
         end
       end
 
@@ -125,7 +126,7 @@ module Funding
         end
 
         it "doesn't render if the trainee selects drama" do
-          expect(rendered_content).not_to have_text("Bursary applied for")
+          expect(rendered_content).not_to have_text("Worth up to")
         end
       end
     end
@@ -168,7 +169,7 @@ module Funding
           end
 
           it "doesnt not render bursary row" do
-            expect(rendered_content).not_to have_text("Bursary applied for")
+            expect(rendered_content).not_to have_text("Worth up to")
           end
 
           context "and it non-draft" do
@@ -203,8 +204,8 @@ module Funding
             let(:applying_for_bursary) { true }
 
             it "renders" do
-              expect(rendered_content).to have_text("Bursary applied for")
-              expect(rendered_content).to have_text("£24,000 estimated bursary")
+              expect(rendered_content).to have_text("#{trainee.course_allocation_subject.name} bursary")
+              expect(rendered_content).to have_text("Worth up to £24,000")
             end
 
             it "has correct change link" do
@@ -217,7 +218,7 @@ module Funding
 
             it "renders" do
               expect(rendered_content).to have_text("Not funded")
-              expect(rendered_content).not_to have_text("£24,000 estimated bursary")
+              expect(rendered_content).not_to have_text("Worth up to £24,000")
             end
 
             it "has correct change link" do
