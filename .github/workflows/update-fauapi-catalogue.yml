@@ -37,7 +37,7 @@ jobs:
       FAUAPI_TOKEN: ${{ secrets.fauapi_token || secrets.FAUAPI_PP_AUTOMATION_TOKEN }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Generate and publish API to FauAPI
       run: |
