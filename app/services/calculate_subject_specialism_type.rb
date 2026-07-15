@@ -38,7 +38,7 @@ private
   end
 
   def any_subjects_are_modern_languages?
-    subjects.any? { |subject| PUBLISH_MODERN_LANGUAGES.include?(subject) }
+    subjects.intersect?(PUBLISH_MODERN_LANGUAGES)
   end
 
   def single_subject?
