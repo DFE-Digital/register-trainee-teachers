@@ -122,9 +122,7 @@ private
       errors.add(:end_date, :too_old)
     end
 
-    additional_validation = errors.attribute_names.none? do |attribute_name|
-      %i[start_date end_date].include?(attribute_name)
-    end
+    additional_validation = !errors.attribute_names.intersect?(%i[start_date end_date])
 
     if additional_validation && start_date >= end_date
       errors.add(:end_date, :before_or_same_as_start_date)
