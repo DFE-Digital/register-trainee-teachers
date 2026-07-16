@@ -15,7 +15,6 @@ class OtpVerificationsController < ApplicationController
   def create
     if otp_verifications_form.valid?
       OtpSignInUser.begin_session!(session)
-      session[:otp_attempts] = 0
       redirect_to(root_path)
     else
       render("otp/verify")
