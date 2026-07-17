@@ -208,7 +208,7 @@ group :test do
 
   gem "shoulda-matchers", "~> 8.0"
   # Code coverage reporter
-  gem "simplecov", "~> 0.22.0", require: false
+  gem "simplecov", "~> 1.0.1", require: false
   gem "simplecov-json"
 
   # Page objects

@@ -15,15 +15,11 @@ describe OtpVerificationsForm, type: :model do
 
   let(:otp_salt) { ROTP::Base32.random(16) }
   let(:otp_email) { Faker::Internet.email }
-  let(:otp_verifications_form_attempts) { 0 }
-  let(:otp_verifications_form_last_attempt) { Time.zone.now }
 
   let(:session) do
     {
       otp_salt:,
       otp_email:,
-      otp_verifications_form_attempts:,
-      otp_verifications_form_last_attempt:,
     }
   end
 
@@ -31,17 +27,40 @@ describe OtpVerificationsForm, type: :model do
     context "with a user" do
       let(:otp_email) { user.email }
 
-      describe "validating cool down" do
-        context "when should not cool down" do
-          let(:otp_verifications_form_attempts) { 0 }
+      describe "validating rate limit" do
+        let(:memory_store) { ActiveSupport::Cache::MemoryStore.new }
 
-          it { expect(error_message).not_to include "Please wait 1 minute before trying again" }
+        before do
+          allow(Rails).to receive(:cache).and_return(memory_store)
         end
 
-        context "when should cool down" do
-          let(:otp_verifications_form_attempts) { 5 }
+        context "when within the limit" do
+          it { expect(error_message).not_to include "Please wait 5 minutes before trying again" }
+        end
 
-          it { expect(error_message).to include "Please wait 1 minute before trying again" }
+        context "when the limit is exceeded" do
+          before do
+            5.times { described_class.new(session:, code:).valid? }
+          end
+
+          it { expect(error_message).to include "Please wait 5 minutes before trying again" }
+
+          context "with a correct code" do
+            let(:code) { ROTP::TOTP.new(user.otp_secret + otp_salt, issuer: "Register").now }
+
+            it "is not valid" do
+              expect(form.valid?).to be false
+            end
+          end
+        end
+
+        context "when there is no code" do
+          let(:code) { nil }
+
+          it "does not count the attempt" do
+            expect(EmailRateLimiter).not_to receive(:call)
+            expect(form.valid?).to be false
+          end
         end
       end
 
@@ -78,17 +97,23 @@ describe OtpVerificationsForm, type: :model do
 
     # user has submitted an email that is not in our databse
     context "without a user" do
-      describe "validating cool down" do
-        context "when should not cool down" do
-          let(:otp_verifications_form_attempts) { 0 }
+      describe "validating rate limit" do
+        let(:memory_store) { ActiveSupport::Cache::MemoryStore.new }
 
-          it { expect(error_message).not_to include "Please wait 1 minute before trying again" }
+        before do
+          allow(Rails).to receive(:cache).and_return(memory_store)
         end
 
-        context "when should cool down" do
-          let(:otp_verifications_form_attempts) { 5 }
+        context "when within the limit" do
+          it { expect(error_message).not_to include "Please wait 5 minutes before trying again" }
+        end
 
-          it { expect(error_message).to include "Please wait 1 minute before trying again" }
+        context "when the limit is exceeded" do
+          before do
+            5.times { described_class.new(session:, code:).valid? }
+          end
+
+          it { expect(error_message).to include "Please wait 5 minutes before trying again" }
         end
       end
 
