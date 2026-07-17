@@ -253,8 +253,8 @@ module Funding
         let(:applying_for_grant) { true }
 
         it "renders grant text" do
-          expect(rendered_content).to have_text("Grant applied for")
-          expect(rendered_content).to have_text("£25,000 estimated grant")
+          expect(rendered_content).to have_text("#{trainee.course_allocation_subject.name} grant")
+          expect(rendered_content).to have_text("Worth up to £25,000")
         end
       end
 
@@ -280,6 +280,25 @@ module Funding
         it "has correct change link" do
           expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Enter an answer")
         end
+      end
+    end
+
+    context "with scholarship" do
+      let(:trainee) do
+        create(:trainee, :provider_led_postgrad, applying_for_scholarship: true, start_academic_cycle: start_academic_cycle).tap do |trainee|
+          funding_method = create(:funding_method, training_route: :provider_led_postgrad, amount: 300_000, funding_type: FUNDING_TYPE_ENUMS[:scholarship], academic_cycle: start_academic_cycle)
+          allocation_subject = create(:allocation_subject, funding_methods: [funding_method])
+          trainee.update!(course_allocation_subject: allocation_subject)
+        end
+      end
+
+      before do
+        render_inline(View.new(data_model: trainee, editable: true))
+      end
+
+      it "renders scholarship text" do
+        expect(rendered_content).to have_text("#{trainee.course_allocation_subject.name} scholarship")
+        expect(rendered_content).to have_text("Worth up to £300,000")
       end
     end
 

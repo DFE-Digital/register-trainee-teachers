@@ -52,8 +52,9 @@ en:
       training_initiative: &training_initiative Training initiative
       funding_method: &funding_method Funding method
       bursary_applied_for: "%{subject} bursary"
-      scholarship_applied_for: Scholarship applied for
-      grant_applied_for: Grant applied for
+      scholarship_applied_for: "%{subject} scholarship"
+      grant_applied_for: "%{subject} grant"
+      tiered_grant_applied_for: Grant applied for
       no_bursary_applied_for: Not funded
       no_grant_applied_for: Not grant funded
       no_funding_available: Not applicable
