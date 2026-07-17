@@ -286,9 +286,9 @@ module Funding
     context "with scholarship" do
       let(:trainee) do
         create(:trainee, :provider_led_postgrad, applying_for_scholarship: true, start_academic_cycle: start_academic_cycle).tap do |trainee|
-          funding_method = create(:funding_method, training_route: :provider_led_postgrad, amount: 300_000, funding_type: FUNDING_TYPE_ENUMS[:scholarship], academic_cycle: start_academic_cycle)
+          funding_method = create(:funding_method, training_route: :provider_led_postgrad, amount: 300_000, funding_type: FUNDING_TYPE_ENUMS[:scholarship], academic_cycle: trainee.start_academic_cycle)
           allocation_subject = create(:allocation_subject, funding_methods: [funding_method])
-          trainee.update!(course_allocation_subject: allocation_subject)
+          trainee.course_allocation_subject = allocation_subject
         end
       end
 
