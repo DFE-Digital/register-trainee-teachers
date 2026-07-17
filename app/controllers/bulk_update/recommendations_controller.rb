@@ -3,6 +3,8 @@
 module BulkUpdate
   class RecommendationsController < RecommendationsBaseController
     def create
+      authorize(recommendations_upload)
+
       Recommend.call(recommendations_upload:)
 
       redirect_to(bulk_update_recommendations_upload_confirmation_path(recommendations_upload))
