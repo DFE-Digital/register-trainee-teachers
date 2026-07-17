@@ -17,7 +17,7 @@ module AuthenticationTokens
   private
 
     def token
-      @token ||= AuthenticationToken.find(params.expect(:authentication_token_id))
+      @token ||= policy_scope(AuthenticationToken).find(params.expect(:authentication_token_id))
     end
   end
 end
