@@ -134,6 +134,10 @@ module Features
       @sign_in_page ||= PageObjects::SignIn.new
     end
 
+    def sign_in_user_not_found_page
+      @sign_in_user_not_found_page ||= PageObjects::SignInUserNotFound.new
+    end
+
     def otp_page
       @otp_page ||= PageObjects::Otp.new
     end

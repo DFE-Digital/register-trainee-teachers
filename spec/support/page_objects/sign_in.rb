@@ -10,4 +10,12 @@ module PageObjects
 
     element :otp_sign_in_button, ".qa-otp_sign_in_button"
   end
+
+  class SignInUserNotFound < PageObjects::Base
+    set_url "/sign-in/user-not-found"
+
+    element :page_heading, ".govuk-heading-l"
+
+    element :home_button, "main .govuk-button"
+  end
 end
