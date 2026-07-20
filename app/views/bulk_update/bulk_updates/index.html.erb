@@ -5,7 +5,7 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop" >
+  <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl"><%= organisation_name %></span>
       Bulk updates
@@ -19,7 +19,7 @@
       <ul class="govuk-list govuk-list--bullet">
         <li>add new trainees</li>
         <li>add missing placement data</li>
-        <li>choose trainees to gain QTS</li>
+        <li>choose trainees to gain QTS or EYTS</li>
       </ul>
 
       <h2 class="govuk-heading-m">
@@ -41,7 +41,7 @@
       </p>
     <% end %>
 
-    <% if bulk_placements_count.positive?  %>
+    <% if bulk_placements_count.positive? %>
       <h2 class="govuk-heading-m">
         Add missing placement data
       </h2>
@@ -69,9 +69,9 @@
         Choose trainees to gain QTS or EYTS
       </h2>
 
-      <% if bulk_recommend_count.positive?  %>
+      <% if bulk_recommend_count.positive? %>
         <p class="govuk-body">
-          You can update the status of <%= pluralize(bulk_recommend_count, 'trainee') %> for QTS or EYTS.
+          You can update the status of <%= pluralize(bulk_recommend_count, "trainee") %> for QTS or EYTS.
           Trainee statuses will be updated within <span class="app-nowrap">3 working days</span>.
         </p>
 
