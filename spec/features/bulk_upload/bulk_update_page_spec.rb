@@ -3,8 +3,10 @@
 require "rails_helper"
 
 feature "bulk update page" do
+  let(:user) { create(:user) }
+
   before do
-    given_i_am_authenticated
+    given_i_am_authenticated(user:)
   end
 
   context "there are placements to bulk upload" do
@@ -63,6 +65,19 @@ feature "bulk update page" do
     end
   end
 
+  context "when I am a read-only user" do
+    let(:user) { create(:user, read_only: true) }
+
+    before do
+      given_two_trainees_exist_to_recommend
+      and_i_visit_the_bulk_update_page
+    end
+
+    scenario "the bulk change status section is not visible" do
+      then_i_do_not_see_the_bulk_recommend_section
+    end
+  end
+
 private
 
   def and_i_visit_the_bulk_update_page
@@ -91,6 +106,11 @@ private
 
   def then_i_do_not_see_the_bulk_recommend_link
     expect(page).to have_text("You do not have any trainees eligible for a QTS or EYTS status change at the moment")
+  end
+
+  def then_i_do_not_see_the_bulk_recommend_section
+    expect(page).not_to have_text("Choose trainees to gain QTS or EYTS")
+    expect(page).not_to have_link("Change trainee status in bulk", href: new_bulk_update_recommendations_upload_path)
   end
 
   def given_a_salaried_trainee_with_one_placement

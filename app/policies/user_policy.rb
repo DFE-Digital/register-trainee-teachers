@@ -14,7 +14,7 @@ class UserPolicy < ProviderPolicy
   end
 
   def bulk_recommend?
-    !user.system_admin? && !user.training_partner?
+    !user.system_admin? && !user.training_partner? && !user.read_only
   end
 
   def training_partner_user?
