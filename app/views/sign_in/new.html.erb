@@ -6,9 +6,30 @@
     <p class="govuk-body"><%= t(".body") %></p>
 
     <% if FeatureService.enabled?("enable_feedback_link") %>
+      <h2 class="govuk-heading-m"><%= t(".how_to_get_access.heading") %></h2>
+
       <p class="govuk-body">
-        <%= t(".contact_us_html", link: support_email(subject: "Get access to Register trainee teachers")) %>
+        <%= t(".how_to_get_access.contact_us_html", link: support_email(subject: "Get access to Register trainee teachers")) %>
       </p>
+
+      <p class="govuk-body"><%= t(".how_to_get_access.email_must_include") %></p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= t(".how_to_get_access.provider_name") %></li>
+        <li><%= t(".how_to_get_access.dfe_sign_in_email") %></li>
+      </ul>
+
+      <p class="govuk-body"><%= t(".how_to_get_access.more_than_one_person") %></p>
+
+      <div class="govuk-inset-text">
+        <%= t(".how_to_get_access.unknown_contact_html", link: support_email(subject: "Get access to Register trainee teachers")) %>
+      </div>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+      <h2 class="govuk-heading-m"><%= t(".already_requested_access.heading") %></h2>
+
+      <p class="govuk-body"><%= t(".already_requested_access.body") %></p>
     <% end %>
 
     <%= render GovukButtonLinkTo::View.new(body: t(".home_button"), url: root_path) %>
