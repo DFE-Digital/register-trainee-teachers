@@ -3,7 +3,7 @@
 module BulkUpdate
   RecommendationsUploadPolicy = Struct.new(:user, :record) do
     def create?
-      user.provider?
+      user.provider? && !user.read_only
     end
   end
 end
