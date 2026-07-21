@@ -46,6 +46,24 @@ module Diversities
       it "takes any data from the form store and saves it to the database" do
         expect { subject.save! }.to change(trainee, :disability_disclosure).to(disability_not_provided)
       end
+
+      context "when the trainee has a hesa_trainee_detail" do
+        let(:trainee) { create(:trainee, :incomplete, :diversity_disclosed, :disabled) }
+        let(:disabled) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
+
+        before do
+          trainee.disabilities << create(:disability, :learning_difficulty)
+          trainee.create_hesa_trainee_detail!(hesa_disabilities: {})
+          allow(form_store).to receive(:get).and_return({ "disability_disclosure" => disabled })
+          allow(form_store).to receive(:set)
+        end
+
+        it "syncs hesa_trainee_detail.hesa_disabilities via the mapper" do
+          subject.save!
+
+          expect(trainee.reload.hesa_trainee_detail.hesa_disabilities).to eq("disability1" => "51")
+        end
+      end
     end
   end
 end
