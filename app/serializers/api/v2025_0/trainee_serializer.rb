@@ -112,10 +112,15 @@ module Api
       end
 
       def assign_disabilities(attributes)
-        @trainee.hesa_trainee_detail&.hesa_disabilities&.each do |key, disability|
+        hesa_disabilities.each do |key, disability|
           attributes[key] = disability
         end
         attributes
+      end
+
+      def hesa_disabilities
+        @trainee.hesa_trainee_detail&.hesa_disabilities.presence ||
+          ::Trainees::MapDisabilitiesToHesa.call(trainee: @trainee)
       end
 
       def ethnicity
