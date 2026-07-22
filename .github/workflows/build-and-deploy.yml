@@ -215,13 +215,23 @@ jobs:
         basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
         basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
-  update-fauapi-catalogue:
+  update-fauapi-catalogue-preprod:
     name: Update FauAPI catalogue (pre-prod)
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     needs: [deploy-production]
     uses: ./.github/workflows/update-fauapi-catalogue.yml
     secrets:
       fauapi_token: ${{ secrets.FAUAPI_PP_AUTOMATION_TOKEN }}
+
+  update-fauapi-catalogue-production:
+    name: Update FauAPI catalogue (production)
+    if: ${{ success() && github.ref == 'refs/heads/main' }}
+    needs: [deploy-production]
+    uses: ./.github/workflows/update-fauapi-catalogue.yml
+    with:
+      fauapi_url: https://apimanagement.education.gov.uk
+    secrets:
+      fauapi_token: ${{ secrets.FAUAPI_AUTOMATION_TOKEN }}
 
   deploy-after-production:
     name: Parallel deployment after production

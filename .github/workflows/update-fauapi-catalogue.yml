@@ -29,7 +29,7 @@ on:
 
 jobs:
   update-fauapi-catalogue:
-    name: Update FauAPI catalogue (pre-prod)
+    name: Update FauAPI catalogue
     runs-on: ubuntu-latest
     env:
       FAUAPI_URL: ${{ inputs.fauapi_url || github.event.inputs.fauapi_url }}
@@ -86,4 +86,4 @@ jobs:
           exit 1
         fi
 
-        echo "Published API $API_ID to FauAPI catalogue (pre-prod)"
+        echo "Published API $API_ID to FauAPI catalogue ($FAUAPI_URL)"
