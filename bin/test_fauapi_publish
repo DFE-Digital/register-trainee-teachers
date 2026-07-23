@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FAUAPI_URL="https://pp-apimanagement.education.gov.uk"
+FAUAPI_URL="${FAUAPI_URL:-https://pp-apimanagement.education.gov.uk}"
 FAUAPI_API_NAME="register-trainee-teachers-api"
 FAUAPI_TOKEN="${1:-}"
 
 if [ -z "$FAUAPI_TOKEN" ]; then
   echo "usage: bin/test_fauapi_publish <fauapi_token>"
+  echo "       FAUAPI_URL=https://apimanagement.education.gov.uk bin/test_fauapi_publish <fauapi_token>"
   exit 1
 fi
 
@@ -53,4 +54,4 @@ if [[ "$PUBLISH_HTTP_CODE" != 2* ]]; then
   exit 1
 fi
 
-echo "Published API $API_ID to FauAPI catalogue (pre-prod)"
+echo "Published API $API_ID to FauAPI catalogue ($FAUAPI_URL)"
