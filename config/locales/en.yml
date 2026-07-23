@@ -1104,8 +1104,18 @@ en:
   sign_in:
     new:
       heading: Ask for an account to register trainee teachers
-      body: Although you have a DfE Sign-in account, you also need an account for this service.
-      contact_us_html: Contact us at %{link} to ask for an account.
+      body: You have a DfE Sign-in account, but you also need an account for this service.
+      how_to_get_access:
+        heading: How to get access
+        contact_us_html: Ask a colleague who already has access to email %{link} to request access for you.
+        email_must_include: "Their email must include:"
+        provider_name: the name of the accredited provider or training partner you both work for
+        dfe_sign_in_email: the email address you use for DfE Sign-in
+        more_than_one_person: If more than one person needs access, you can include their details in the same email.
+        unknown_contact_html: If you do not know who at your organisation has access, email %{link} and we will send you a list of contacts.
+      already_requested_access:
+        heading: Already requested access?
+        body: If a colleague has already emailed on your behalf, you do not need to do anything else. We will contact you when your account is ready.
       home_button: Return home
     index:
       heading: Sign in to Register trainee teachers
