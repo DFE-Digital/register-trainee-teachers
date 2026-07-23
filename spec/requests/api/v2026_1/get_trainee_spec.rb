@@ -150,6 +150,59 @@ describe "`GET /api/v2026.1/trainees/:id` endpoint" do
     end
   end
 
+  context "when the trainee has stored disabilities" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, :disabled_with_disabilities_disclosed, slug: "12345", provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2026.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the stored disabilities" do
+      expect(response.parsed_body["disability1"]).to eq(trainee.hesa_trainee_detail.hesa_disabilities["disability1"])
+    end
+  end
+
+  context "when the hesa_trainee_detail has no stored disabilities" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, :disabled_with_disabilities_disclosed, slug: "12345", provider: auth_token.provider).tap do |trainee|
+        trainee.hesa_trainee_detail.update!(hesa_disabilities: {})
+      end
+    end
+
+    before do
+      get(
+        "/api/v2026.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the disabilities mapped from the trainee's disabilities" do
+      expect(response.parsed_body["disability1"]).to eq("55")
+    end
+  end
+
+  context "when the trainee has no hesa_trainee_detail and has disabilities" do
+    let!(:trainee) do
+      create(:trainee, :disabled_with_disabilities_disclosed, slug: "12345", provider: auth_token.provider)
+    end
+
+    before do
+      get(
+        "/api/v2026.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+    end
+
+    it "returns the disabilities mapped from the trainee's disabilities" do
+      expect(response.parsed_body["disability1"]).to eq("55")
+    end
+  end
+
   context "when the trainee does not exist" do
     before do
       get(

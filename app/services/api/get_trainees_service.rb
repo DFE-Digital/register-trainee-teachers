@@ -19,6 +19,7 @@ module Api
             :employing_school,
             :training_partner,
             :degrees,
+            :disabilities,
             :hesa_trainee_detail,
             :nationalities,
             { placements: :school },

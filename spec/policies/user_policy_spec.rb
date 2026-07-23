@@ -32,12 +32,16 @@ describe UserPolicy do
   end
 
   context "when bulk_recommend?, bulk_placement?" do
+    let(:read_only_provider_user) { create(:user, providers: [provider], read_only: true) }
+    let(:read_only_provider_user_context) { UserWithOrganisationContext.new(user: read_only_provider_user, session: {}) }
+
     permissions :bulk_recommend?, :bulk_placement? do
       it { is_expected.to permit(provider_user_context) }
 
       it { is_expected.not_to permit(provider_admin_user_context) }
       it { is_expected.not_to permit(training_partner_admin_user_context) }
       it { is_expected.not_to permit(training_partner_user_context) }
+      it { is_expected.not_to permit(read_only_provider_user_context) }
     end
   end
 

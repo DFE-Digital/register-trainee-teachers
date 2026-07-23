@@ -5,16 +5,17 @@ require "rails_helper"
 feature "recommending trainees" do
   include RecommendationsUploadHelper
 
-  before do
-    given_i_am_authenticated
-  end
-
+  let(:user) { create(:user) }
   let(:write_to_disk) { true }
   let(:overwrite) do # one valid date for each trainee created in `given_two_trainees_exist_to_recommend`
     [
       { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
       { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
     ]
+  end
+
+  before do
+    given_i_am_authenticated(user:)
   end
 
   context "given multiple trainees exist to recommend" do
@@ -127,6 +128,15 @@ feature "recommending trainees" do
         and_i_upload_a_csv(create_invalid_recommendations_upload_csv)
         then_i_see_an_error_message_about_file_encoding
       end
+    end
+  end
+
+  context "when I am a read-only user" do
+    let(:user) { create(:user, read_only: true) }
+
+    scenario "I cannot access the bulk change status page" do
+      given_i_am_on_the_recommendations_upload_page
+      then_i_see_the_forbidden_page
     end
   end
 
@@ -278,5 +288,9 @@ private
 
   def then_i_see_the_confirmation
     expect(recommendations_upload_confirmation_page).to have_text("2 trainees gained QTS")
+  end
+
+  def then_i_see_the_forbidden_page
+    expect(page).to have_text("You do not have permission to perform this action")
   end
 end

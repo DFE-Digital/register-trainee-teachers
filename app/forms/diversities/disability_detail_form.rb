@@ -2,6 +2,8 @@
 
 module Diversities
   class DisabilityDetailForm < TraineeForm
+    include HesaDisabilitiesSync
+
     attr_accessor :disability_ids, :additional_disability
 
     validate :disabilities_cannot_be_empty, if: -> { disability_disclosure_form.disabled? && disabilities.empty? }
@@ -16,6 +18,8 @@ module Diversities
         Trainee.transaction do
           trainee.disability_ids = fields[:disability_ids] # This will actually persist the records
           other_trainee_disability&.update!(additional_disability: fields[:additional_disability])
+          sync_hesa_disabilities
+          trainee.hesa_trainee_detail&.save!
         end
 
         clear_stash

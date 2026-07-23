@@ -43,6 +43,64 @@ module Withdrawal
         end
       end
 
+      context "when the trigger is provider" do
+        let(:trigger) { "provider" }
+
+        context "with a reason from the trainee-only list" do
+          let(:reason_id) { WithdrawalReason.where(name: WithdrawalReasons::DOES_NOT_WANT_TO_BECOME_A_TEACHER).first.id }
+          let(:params) { { reason_ids: [reason_id] } }
+
+          it "provides the correct error message" do
+            subject.validate
+
+            expect(subject.errors[:reason_ids]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.invalid"))
+          end
+        end
+
+        context "with a reason from the provider list" do
+          let(:reason_id) { WithdrawalReason.where(name: WithdrawalReasons::PROVIDER_REASONS.first).first.id }
+          let(:params) { { reason_ids: [reason_id] } }
+
+          it "is valid" do
+            expect(subject).to be_valid
+          end
+        end
+
+        context "with a reason id that does not exist" do
+          let(:params) { { reason_ids: [-1] } }
+
+          it "provides the correct error message" do
+            subject.validate
+
+            expect(subject.errors[:reason_ids]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.invalid"))
+          end
+        end
+      end
+
+      context "when the trigger is trainee" do
+        let(:trigger) { "trainee" }
+
+        context "with a reason from the provider-only list" do
+          let(:reason_id) { WithdrawalReason.where(name: WithdrawalReasons::RECORD_ADDED_IN_ERROR).first.id }
+          let(:params) { { reason_ids: [reason_id] } }
+
+          it "provides the correct error message" do
+            subject.validate
+
+            expect(subject.errors[:reason_ids]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.invalid"))
+          end
+        end
+
+        context "with a reason from the trainee list" do
+          let(:reason_id) { WithdrawalReason.where(name: WithdrawalReasons::TRAINEE_REASONS.first).first.id }
+          let(:params) { { reason_ids: [reason_id] } }
+
+          it "is valid" do
+            expect(subject).to be_valid
+          end
+        end
+      end
+
       context "when another reason has been chosen" do
         let(:trigger) { "trainee" }
         let(:another_reason_id) { WithdrawalReason.where(name: "trainee_chose_to_withdraw_another_reason").first.id }
@@ -77,20 +135,25 @@ module Withdrawal
     end
 
     describe "#stash" do
+      let(:reason_ids) { WithdrawalReason.where(name: WithdrawalReasons::TRAINEE_REASONS.first(2)).ids }
+      let(:params) { { reason_ids: } }
+
       it "uses FormStore to temporarily save the fields under a key combination of trainee withdrawal ID and future interest" do
-        expect(form_store).to receive(:set).with(trainee.id, :withdrawal_reasons, { reason_ids: [1, 2], another_reason: nil })
+        expect(form_store).to receive(:set).with(trainee.id, :withdrawal_reasons, { reason_ids: reason_ids, another_reason: nil })
 
         subject.stash
       end
     end
 
     describe "#reasons" do
+      let(:trigger_form) { instance_double(Withdrawal::TriggerForm, trigger:) }
+
       before do
-        allow(subject).to receive(:provider_triggered?).and_return(provider_triggered)
+        allow(Withdrawal::TriggerForm).to receive(:new).and_return(trigger_form)
       end
 
       context "when the trigger is provider" do
-        let(:provider_triggered) { true }
+        let(:trigger) { "provider" }
 
         it "returns provider triggered withdrawal reasons in order" do
           expect(subject.reasons.pluck(:name)).to match_array(WithdrawalReasons::PROVIDER_REASONS)
@@ -98,9 +161,9 @@ module Withdrawal
       end
 
       context "when the trigger is trainee" do
-        let(:provider_triggered) { false }
+        let(:trigger) { "trainee" }
 
-        it "returns provider triggered withdrawal reasons in order" do
+        it "returns trainee triggered withdrawal reasons in order" do
           expect(subject.reasons.pluck(:name)).to match_array(WithdrawalReasons::TRAINEE_REASONS)
         end
       end

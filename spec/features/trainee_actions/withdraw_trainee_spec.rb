@@ -45,6 +45,15 @@ feature "Withdrawing a trainee" do
       and_i_continue(:future_interest)
       then_i_see_the_error_message_for_future_interest_not_chosen
     end
+
+    scenario "reasons that do not match the trigger" do
+      given_a_trainee_only_withdrawal_reason_exists
+      and_i_have_completed_the_withdrawal_steps_choosing_the_provider_trigger
+      when_i_submit_a_reason_that_does_not_match_the_trigger
+      then_i_see_the_error_message_for_invalid_reasons
+      when_i_submit_the_confirmation_page_directly
+      then_the_trainee_is_not_withdrawn
+    end
   end
 
   context "trainee withdrawn" do
@@ -416,6 +425,44 @@ feature "Withdrawing a trainee" do
       trainee_start_date: 10.days.ago,
       itt_end_date: 1.year.from_now,
     )
+  end
+
+  def given_a_trainee_only_withdrawal_reason_exists
+    @trainee_only_reason = create(:withdrawal_reason, name: WithdrawalReasons::DOES_NOT_WANT_TO_BECOME_A_TEACHER)
+  end
+
+  def and_i_have_completed_the_withdrawal_steps_choosing_the_provider_trigger
+    when_i_am_on_the_date_page
+    when_i_choose_today
+    and_i_continue(:date)
+    when_i_am_on_the_trigger_page
+    when_i_choose(:trigger, "We chose to withdraw the trainee")
+    and_i_continue(:trigger)
+    when_i_am_on_the_future_interest_page
+    when_i_choose_future_interest
+    and_i_continue(:future_interest)
+  end
+
+  def when_i_submit_a_reason_that_does_not_match_the_trigger
+    page.driver.submit(
+      :put,
+      "/trainees/#{trainee.slug}/withdrawal/reason",
+      { withdrawal_reason_form: { reason_ids: [@trainee_only_reason.id.to_s] } },
+    )
+  end
+
+  def then_i_see_the_error_message_for_invalid_reasons
+    expect(page).to have_text(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.invalid"))
+  end
+
+  def when_i_submit_the_confirmation_page_directly
+    page.driver.submit(:put, "/trainees/#{trainee.slug}/withdrawal/confirm", {})
+  end
+
+  def then_the_trainee_is_not_withdrawn
+    trainee.reload
+    expect(trainee).not_to be_withdrawn
+    expect(trainee.trainee_withdrawals).to be_empty
   end
 
   def given_a_trainee_exists_to_be_withdrawn_with_no_start_date

@@ -83,9 +83,7 @@ module Api
       end
 
       def valid_reasons
-        return WithdrawalReasons::PROVIDER_REASONS if trigger == "provider"
-
-        WithdrawalReasons::TRAINEE_REASONS
+        WithdrawalReasons.for_trigger(trigger)
       end
 
       def withdrawal_reasons
