@@ -6336,7 +6336,7 @@ __metadata:
     jquery: "npm:^4.0.0"
     postcss: "npm:^8.5.22"
     rails-ujs: "npm:^5.2.8"
-    sass: "npm:^1.101.5"
+    sass: "npm:^1.101.7"
     standard: "npm:^17.1.2"
     stylelint: "npm:^17.14.1"
     stylelint-config-gds: "npm:^3.0.0"
@@ -6403,9 +6403,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.101.5":
-  version: 1.101.5
-  resolution: "sass@npm:1.101.5"
+"sass@npm:^1.101.7":
+  version: 1.101.7
+  resolution: "sass@npm:1.101.7"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^5.0.0"
@@ -6416,7 +6416,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/09b862a2bb39087644672b997dbbb45d5344dae32076bc1320877cb8de70ec4ad98d91a178853b04f0b42fa61ce3d513d1893817382a3835a69746e8a7f2a145
+  checksum: 10c0/26f251b5f6db131fe55abc603a5a9890bdac45bf78199ec9b070a876736862d5b1bad610fbc1b4798022f658da0ba610428f87031f6788773b851620d89e7e60
   languageName: node
   linkType: hard
 
