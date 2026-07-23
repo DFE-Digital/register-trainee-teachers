@@ -121,4 +121,10 @@ module WithdrawalReasons
   ].freeze
 
   SEED = (LEGACY_REASONS + LEGACY_2023_REASONS + REASONS).map { |name| { name: } }.freeze
+
+  def self.for_trigger(trigger)
+    return PROVIDER_REASONS if trigger == "provider"
+
+    TRAINEE_REASONS
+  end
 end

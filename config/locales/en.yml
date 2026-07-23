@@ -1802,6 +1802,7 @@ en:
         withdrawal/reason_form:
           attributes:
             reason_ids:
+              invalid: Select a reason from the list
               trainee:
                 blank: Select why the trainee chose to withdraw
               provider:
