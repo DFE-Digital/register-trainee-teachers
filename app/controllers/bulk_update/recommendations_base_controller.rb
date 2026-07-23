@@ -3,6 +3,7 @@
 module BulkUpdate
   class RecommendationsBaseController < ApplicationController
     before_action :check_for_provider
+    before_action { authorize(current_user, :bulk_recommend?) }
 
     helper_method :recommendations_upload, :bulk_recommend_count,
                   :awardable_rows_count, :error_rows_count, :total_rows_count,
