@@ -65,8 +65,17 @@ module Hesa
       end
 
       def self.api_payload(field: nil)
-        payload = docs_payload.merge(withdrawal_reasons: withdrawal_reasons_payload)
+        payload = docs_payload
+          .transform_values { |data| public_field_payload(data) }
+          .merge(withdrawal_reasons: withdrawal_reasons_payload)
         field.present? ? payload.fetch(field.to_sym) : payload
+      end
+
+      def self.public_field_payload(data)
+        {
+          metadata: data[:metadata].except("source", "change_log"),
+          entries: data[:entries].map { |e| e.transform_keys(hesa_code: :code) },
+        }
       end
     end
   end

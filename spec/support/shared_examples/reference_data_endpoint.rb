@@ -6,7 +6,7 @@ RSpec.shared_examples "a reference data endpoint" do |version|
   end
 
   describe "GET /api/#{version}/reference-data" do
-    context "without authentication" do
+    context "without authentication", openapi: false do
       before do
         get "/api/#{version}/reference-data"
       end
@@ -16,7 +16,7 @@ RSpec.shared_examples "a reference data endpoint" do |version|
       end
     end
 
-    context "when the register_api feature flag is off", feature_register_api: false do
+    context "when the register_api feature flag is off", feature_register_api: false, openapi: false do
       before do
         get "/api/#{version}/reference-data"
       end
@@ -26,7 +26,7 @@ RSpec.shared_examples "a reference data endpoint" do |version|
       end
     end
 
-    context "without a field parameter" do
+    context "without a field parameter", openapi: false do
       before do
         get "/api/#{version}/reference-data"
       end
@@ -52,19 +52,19 @@ RSpec.shared_examples "a reference data endpoint" do |version|
 
         expect(entries).to include(
           hash_including(
-            "slug" => "record_added_in_error",
+            "code" => "record_added_in_error",
             "trigger" => "provider",
             "requires_another_reason" => false,
             "requires_safeguarding_concern_reasons" => false,
           ),
           hash_including(
-            "slug" => "trainee_chose_to_withdraw_another_reason",
+            "code" => "trainee_chose_to_withdraw_another_reason",
             "trigger" => "trainee",
             "requires_another_reason" => true,
             "requires_safeguarding_concern_reasons" => false,
           ),
           hash_including(
-            "slug" => "safeguarding_concerns",
+            "code" => "safeguarding_concerns",
             "trigger" => "provider",
             "requires_another_reason" => false,
             "requires_safeguarding_concern_reasons" => true,
@@ -75,15 +75,15 @@ RSpec.shared_examples "a reference data endpoint" do |version|
 
     context "with a valid field parameter" do
       before do
-        get "/api/#{version}/reference-data", params: { field: field_name }
+        get "/api/#{version}/reference-data", params: { field: "sex" }
       end
-
-      let(:field_name) { reference_data_klass.available_fields.first }
 
       it "returns the unwrapped field payload" do
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).to include("metadata", "entries")
-        expect(response.parsed_body.fetch("metadata")).to include("name" => field_name.to_s)
+        expect(response.parsed_body.fetch("metadata")).to include("name" => "sex")
+        expect(response.parsed_body.fetch("metadata")).not_to have_key("source")
+        expect(response.parsed_body.fetch("metadata")).not_to have_key("change_log")
       end
     end
 
