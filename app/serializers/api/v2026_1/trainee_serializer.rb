@@ -127,7 +127,7 @@ module Api
       end
 
       def ethnicity
-        Hesa::CodeSets::Ethnicities::MAPPING.key(@trainee.ethnic_background)
+        ::ReferenceData::ETHNICITIES.hesa_code_for(@trainee.ethnic_background)
       end
 
       def course_attributes
@@ -155,15 +155,15 @@ module Api
       end
 
       def course_subject_1
-        ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_one)
+        ::ReferenceData::COURSE_SUBJECTS.hesa_code_for(@trainee.course_subject_one)
       end
 
       def course_subject_2
-        ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_two)
+        ::ReferenceData::COURSE_SUBJECTS.hesa_code_for(@trainee.course_subject_two)
       end
 
       def course_subject_3
-        ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_three)
+        ::ReferenceData::COURSE_SUBJECTS.hesa_code_for(@trainee.course_subject_three)
       end
 
       def course_study_mode
@@ -218,25 +218,23 @@ module Api
       def nationality
         return if @trainee.nationalities.blank?
 
-        RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[
-          @trainee.nationalities.first.name,
-        ]
+        ::ReferenceData::NATIONALITIES.hesa_code_for(@trainee.nationalities.first.name)
       end
 
       def training_route
-        ::Hesa::CodeSets::TrainingRoutes::MAPPING.key(@trainee.training_route)
+        ::ReferenceData::TRAINING_ROUTES.hesa_code_for(@trainee.training_route)
       end
 
       def iqts_country
-        ::Hesa::CodeSets::Countries::MAPPING.key(@trainee.iqts_country)
+        ::ReferenceData::COUNTRIES.hesa_code_for(@trainee.iqts_country)
       end
 
       def training_initiative
-        ::Hesa::CodeSets::TrainingInitiatives::MAPPING.key(@trainee.training_initiative)
+        ::ReferenceData::TRAINING_INITIATIVES.hesa_code_for(@trainee.training_initiative)
       end
 
       def sex
-        ::Hesa::CodeSets::Sexes::MAPPING.key(::Trainee.sexes[@trainee.sex])
+        ::ReferenceData::SEXES.hesa_code_for(::Trainee.sexes[@trainee.sex])
       end
 
       def withdrawal_reasons

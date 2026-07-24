@@ -251,6 +251,28 @@ RSpec.describe Api::V20261::TraineeSerializer do
       it "serializes nationality to HESA code" do
         expect(json[:nationality]).to eq("FR")
       end
+
+      context "with a canonical nationality" do
+        let(:trainee) do
+          create(:trainee, :with_training_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information,
+                 :in_progress, :with_placements, nationalities: [build(:nationality, name: "british")])
+        end
+
+        it "serializes the HESA code" do
+          expect(json[:nationality]).to eq("GB")
+        end
+      end
+
+      context "with a superseded nationality label still stored against the trainee" do
+        let(:trainee) do
+          create(:trainee, :with_training_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information,
+                 :in_progress, :with_placements, nationalities: [build(:nationality, name: "cymraes")])
+        end
+
+        it "still serializes the HESA code" do
+          expect(json[:nationality]).to eq("GB")
+        end
+      end
     end
 
     describe "training partner attributes" do
@@ -320,12 +342,20 @@ RSpec.describe Api::V20261::TraineeSerializer do
         expect(json[:training_route]).to eq("15")
       end
 
-      it "includes iqts_country as HESA code in the output" do
-        expect(json[:iqts_country]).to eq(Hesa::CodeSets::Countries::MAPPING.key(trainee.iqts_country))
-      end
-
       it "includes iqts_country in the fields list" do
         expect(json.keys).to include("iqts_country")
+      end
+    end
+
+    context "when the trainee's IQTS country label is also another country's reference data name" do
+      let(:trainee) do
+        create(:trainee, :iqts, :with_training_partner_scitt, :with_hesa_trainee_detail,
+               :with_diversity_information, :in_progress, :with_placements, :with_french_nationality,
+               iqts_country: "Kosovo")
+      end
+
+      it "serializes the country the trainee actually has" do
+        expect(json[:iqts_country]).to eq("QO")
       end
     end
   end

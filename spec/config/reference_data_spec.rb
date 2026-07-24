@@ -329,6 +329,36 @@ RSpec.describe "Reference data integrity" do
         gem: ->(value) { RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[value.downcase] },
         yaml: -> { ReferenceData::NATIONALITIES },
       },
+      "trainee.ethnicity" => {
+        writable: -> { Diversities::BACKGROUNDS.values.flatten },
+        gem: ->(value) { Hesa::CodeSets::Ethnicities::MAPPING.key(value) },
+        yaml: -> { ReferenceData::ETHNICITIES },
+      },
+      "trainee.course_subject" => {
+        writable: -> { Hesa::CodeSets::CourseSubjects::MAPPING.values },
+        gem: ->(value) { Hesa::CodeSets::CourseSubjects::MAPPING.key(value) },
+        yaml: -> { ReferenceData::COURSE_SUBJECTS },
+      },
+      "trainee.training_route" => {
+        writable: -> { TRAINING_ROUTE_ENUMS.keys.map(&:to_s) },
+        gem: ->(value) { Hesa::CodeSets::TrainingRoutes::MAPPING.key(value) },
+        yaml: -> { ReferenceData::TRAINING_ROUTES },
+      },
+      "trainee.training_initiative" => {
+        writable: -> { ROUTE_INITIATIVES_ENUMS.keys.map(&:to_s) },
+        gem: ->(value) { Hesa::CodeSets::TrainingInitiatives::MAPPING.key(value) },
+        yaml: -> { ReferenceData::TRAINING_INITIATIVES },
+      },
+      "trainee.sex" => {
+        writable: -> { Trainee.sexes.values },
+        gem: ->(value) { Hesa::CodeSets::Sexes::MAPPING.key(value) },
+        yaml: -> { ReferenceData::SEXES },
+      },
+      "trainee.iqts_country" => {
+        writable: -> { DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name) },
+        gem: ->(value) { Hesa::CodeSets::Countries::MAPPING.key(value) },
+        yaml: -> { ReferenceData::COUNTRIES },
+      },
     }.each do |field, config|
       it "resolves every writable #{field} label with no gap or mismatch" do
         yaml = config[:yaml].call
