@@ -105,7 +105,7 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
     amazing_print (2.0.0)
-    annotaterb (4.23.0)
+    annotaterb (4.24.0)
       activerecord (>= 6.0.0)
       activesupport (>= 6.0.0)
     anyway_config (2.7.2)
@@ -179,7 +179,7 @@ GEM
     colorize (1.1.0)
     commander (5.0.0)
       highline (~> 3.0.0)
-    concurrent-ruby (1.3.7)
+    concurrent-ruby (1.3.8)
     config (5.6.1)
       deep_merge (~> 1.2, >= 1.2.1)
       ostruct
@@ -988,7 +988,7 @@ CHECKSUMS
   addressable (2.9.0) sha256=7fdf6ac3660f7f4e867a0838be3f6cf722ace541dd97767fa42bc6cfa980c7af
   aes_key_wrap (1.1.0) sha256=b935f4756b37375895db45669e79dfcdc0f7901e12d4e08974d5540c8e0776a5
   amazing_print (2.0.0) sha256=2e36aba46ac78d37ed27ca0e2056afe3583183bb5c64f157c246b267355e5d6a
-  annotaterb (4.23.0) sha256=0fc59b1d40e07bec75d9d9b0cd479493631ce8901e4b59fefc561689f22b4600
+  annotaterb (4.24.0) sha256=3953d3a3fb86ef06639a8d5ea29001e4af1e51cabd147973b1b23524b8fbced6
   anyway_config (2.7.2) sha256=30f6b087c0b41afdd43fe46c81d65a16f052a8489dab453abaeb4ea67aa74bad
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   attr_required (1.0.2) sha256=f0ebfc56b35e874f4d0ae799066dbc1f81efefe2364ca3803dc9ea6a4de6cb99
@@ -1025,7 +1025,7 @@ CHECKSUMS
   coderay (1.1.3) sha256=dc530018a4684512f8f38143cd2a096c9f02a1fc2459edcfe534787a7fc77d4b
   colorize (1.1.0) sha256=30b5237f0603f6662ab8d1fc2bd4a96142b806c6415d79e45ef5fdc6a0cfc837
   commander (5.0.0) sha256=22ca42866ce5ed1a7f3e9a9c831a23d03b75b3743c7ad0302c3cbcd9eb5f257d
-  concurrent-ruby (1.3.7) sha256=4412caec3a5ea2e5fdc52076724c071a81f2c0593d83b2ac8cbb8ca63b3151b0
+  concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
   config (5.6.1) sha256=a9f0f0f9ffa6d12d43147a3fa1ab8486fe484c3098a350c6a2e0f32430e0d1cc
   connection_pool (2.5.5) sha256=e54ff92855753df1fd7c59fa04a398833355f27dd14c074f8c83a05f72a716ad
   crack (1.0.1) sha256=ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e
