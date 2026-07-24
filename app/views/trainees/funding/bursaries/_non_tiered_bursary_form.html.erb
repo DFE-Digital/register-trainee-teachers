@@ -31,19 +31,26 @@
       <% end %>
 
       <p class="govuk-body">
-        You can
         <%= govuk_link_to(
           t("views.forms.funding.bursaries.guidance_link_text"),
           @bursary_form.funding_guidance_url,
-          new_tab: true,
-        ) %>.
+          target: "_blank",
+          rel: "noopener noreferrer",
+        ) %> (opens in new tab).
       </p>
+
+      <% bursary_radio_label = if @bursary_form.bursary_amount.present?
+           t("views.forms.funding.funding_type.bursary.label", amount: format_currency(@bursary_form.bursary_amount))
+         else
+           t("views.forms.funding.funding_type.bursary.label_without_amount")
+         end %>
 
       <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.non_tiered.title"), size: "m" }) do %>
           <%= f.govuk_radio_button(
             :funding_type,
             FUNDING_TYPE_ENUMS[:bursary],
-            label: { text: t("views.forms.funding.funding_type.bursary.label") },
+            label: { text: bursary_radio_label },
+            hint: { text: t("views.forms.funding.funding_type.bursary.hint") },
             link_errors: true,
           ) %>
 
@@ -51,7 +58,8 @@
             <%= f.govuk_radio_button(
               :funding_type,
               FUNDING_TYPE_ENUMS[:scholarship],
-              label: { text: t("views.forms.funding.funding_type.scholarship.label") },
+              label: { text: t("views.forms.funding.funding_type.scholarship.label", amount: format_currency(@bursary_form.scholarship_amount)) },
+              hint: { text: t("views.forms.funding.funding_type.scholarship.hint") },
             ) %>
           <% end %>
 
