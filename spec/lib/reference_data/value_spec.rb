@@ -20,4 +20,18 @@ RSpec.describe ReferenceData::Value do
       expect(training_initiatives.future_teaching_scholars.hesa_code).to be_nil
     end
   end
+
+  describe "#aliases" do
+    it "defaults to an empty array when the entry declares none" do
+      expect(training_routes.provider_led_postgrad.aliases).to eq([])
+    end
+
+    it "exposes aliases declared in the YAML" do
+      value = described_class.from_yaml(
+        { id: "1", name: "computing", display_name: "Computing", aliases: ["Computing and information technology"] }.with_indifferent_access,
+      )
+
+      expect(value.aliases).to eq(["Computing and information technology"])
+    end
+  end
 end

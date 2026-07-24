@@ -137,6 +137,14 @@ data:
 - id: GB
   name: british
   display_name: British
+  aliases:
+    - cymraes
+    - cymro
+    - english
+    - northern irish
+    - prydeinig
+    - scottish
+    - welsh
   hesa_codes:
     - "GB"
     - "FK"
@@ -1021,6 +1029,8 @@ data:
 - id: SH
   name: tristanian
   display_name: Tristanian
+  aliases:
+    - st helenian
   hesa_codes:
     - "SH"
 - id: TN

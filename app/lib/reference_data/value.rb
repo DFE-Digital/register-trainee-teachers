@@ -2,13 +2,14 @@
 
 module ReferenceData
   class Value
-    attr_reader :id, :name, :display_name, :hesa_codes, :start_year, :end_year
+    attr_reader :id, :name, :display_name, :aliases, :hesa_codes, :start_year, :end_year
 
     def self.from_yaml(attrs)
       new(
         id: attrs[:id],
         name: attrs[:name],
         display_name: attrs[:display_name],
+        aliases: attrs[:aliases],
         hesa_codes: attrs[:hesa_codes],
         start_year: attrs[:start_year]&.to_i,
         end_year: attrs[:end_year]&.to_i,
@@ -19,6 +20,7 @@ module ReferenceData
       @id = attrs[:id]
       @name = attrs[:name]
       @display_name = attrs[:display_name]
+      @aliases = attrs[:aliases] || []
       @hesa_codes = attrs[:hesa_codes] || []
       @start_year = attrs[:start_year]
       @end_year = attrs[:end_year]

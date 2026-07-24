@@ -159,4 +159,81 @@ RSpec.describe ReferenceData::Type do
       expect { type.over_time }.to raise_error(NoMethodError)
     end
   end
+
+  describe "#hesa_code_for" do
+    it "looks up by `display_name`" do
+      expect(type.hesa_code_for("Part-time")).to eq("31")
+    end
+
+    it "looks up by `id`" do
+      expect(type.hesa_code_for(1)).to eq("01")
+    end
+
+    it "looks up by `name`" do
+      expect(type.hesa_code_for("full_time")).to eq("01")
+    end
+
+    it "returns nil for unknown values" do
+      expect(type.hesa_code_for("Flexi-time")).to be_nil
+    end
+
+    it "returns nil for a blank value" do
+      countries = ReferenceData::Loader.instance.find("country")
+      ethnicities = ReferenceData::Loader.instance.find("ethnicity")
+
+      expect(countries.hesa_code_for(nil)).to be_nil
+      expect(countries.hesa_code_for("")).to be_nil
+      expect(ethnicities.hesa_code_for(nil)).to be_nil
+    end
+
+    it "returns nil rather than raising when the value has no HESA code" do
+      degree_types = ReferenceData::Loader.instance.find("degree_type")
+      code_less = degree_types.values.find { |value| value.hesa_codes.empty? }
+
+      expect(degree_types.hesa_code_for(code_less.display_name)).to be_nil
+    end
+
+    context "when a `name` shadows another entry's `display_name`" do
+      subject(:countries) { ReferenceData::Loader.instance.find("country") }
+
+      it "resolves to the entry whose `display_name` matches" do
+        expect(countries.hesa_code_for("Kosovo")).to eq("QO")
+        expect(countries.hesa_code_for("United Kingdom, not otherwise specified")).to eq("XK")
+      end
+    end
+
+    context "with a label recorded as an alias" do
+      subject(:degree_subjects) { ReferenceData::Loader.instance.find("degree_subject") }
+
+      it "resolves the alias to the canonical entry's HESA code" do
+        expect(degree_subjects.hesa_code_for("Computing and information technology")).to eq("100367")
+        expect(degree_subjects.hesa_code_for("Sport and exercise sciences")).to eq("100433")
+      end
+
+      it "still resolves the canonical display_name" do
+        expect(degree_subjects.hesa_code_for("Computing")).to eq("100367")
+        expect(degree_subjects.hesa_code_for("Physical education")).to eq("100433")
+      end
+    end
+  end
+
+  describe "aliases are outbound-only" do
+    subject(:degree_subjects) { ReferenceData::Loader.instance.find("degree_subject") }
+
+    it "excludes aliases from `names`" do
+      expect(degree_subjects.names).not_to include("Computing and information technology")
+    end
+
+    it "excludes aliases from `names_with_hesa_codes`" do
+      expect(degree_subjects.names_with_hesa_codes).not_to include("Computing and information technology")
+    end
+
+    it "does not resolve aliases through `find`" do
+      expect(degree_subjects.find("Computing and information technology")).to be_nil
+    end
+
+    it "leaves the code to canonical entry lookup untouched" do
+      expect(degree_subjects.find_by_hesa_code("100367").display_name).to eq("Computing")
+    end
+  end
 end
