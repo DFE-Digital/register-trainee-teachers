@@ -251,6 +251,22 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           uk_degree.reload
         }.not_to change(uk_degree, :attributes)
       end
+
+      context "when the stored country label differs from its HESA display name" do
+        let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country: "Bolivia") }
+
+        it "returns a 409 (conflict) status", openapi: false do
+          put(
+            "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{uk_degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: {
+              data: degrees_attributes,
+            }.to_json,
+          )
+
+          expect(response).to have_http_status(:conflict)
+        end
+      end
     end
 
     context "with an invalid trainee" do

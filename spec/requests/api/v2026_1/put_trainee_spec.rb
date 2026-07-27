@@ -2706,7 +2706,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
     end
 
     context "when updating a trainee to IQTS route" do
-      let(:iqts_country) { Hesa::CodeSets::Countries::MAPPING.keys.sample }
+      let(:iqts_country) { "BO" }
       let(:data) { { training_route: "15", iqts_country: iqts_country } }
 
       before do
@@ -2722,7 +2722,7 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
       it "stores the updated values" do
         trainee.reload
         expect(trainee.training_route).to eq("iqts")
-        expect(trainee.iqts_country).to eq(Hesa::CodeSets::Countries::MAPPING[iqts_country])
+        expect(trainee.iqts_country).to eq("Bolivia")
       end
     end
 

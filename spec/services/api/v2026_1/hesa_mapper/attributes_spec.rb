@@ -34,8 +34,25 @@ RSpec.describe Api::V20261::HesaMapper::Attributes do
     expect(divergences).to be_empty, divergences.join("\n")
   end
 
-  it "maps iqts_country for every code" do
-    divergences = diverging(Hesa::CodeSets::Countries::MAPPING) { |code| mapped(iqts_country: code)[:iqts_country] }
+  it "maps iqts_country to the label the UI writes" do
+    ui_labels = DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name).compact.uniq
+
+    divergences = ui_labels.each_with_object([]) do |ui_label, out|
+      code = ReferenceData::COUNTRIES.hesa_code_for(ui_label)
+      next if code.nil?
+
+      actual = mapped(iqts_country: code)[:iqts_country]
+      out << "#{code}: #{actual.inspect} != #{ui_label.inspect}" if actual != ui_label
+    end
+    expect(divergences).to be_empty, divergences.join("\n")
+  end
+
+  it "maps iqts_country for every code to a label that serializes back to the same code" do
+    divergences = Hesa::CodeSets::Countries::MAPPING.keys.each_with_object([]) do |code, out|
+      stored = mapped(iqts_country: code)[:iqts_country]
+      resolved = ReferenceData::COUNTRIES.hesa_code_for(stored)
+      out << "#{code}: stored #{stored.inspect}, which serializes back as #{resolved.inspect}" if resolved != code
+    end
     expect(divergences).to be_empty, divergences.join("\n")
   end
 
