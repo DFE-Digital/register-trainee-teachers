@@ -160,6 +160,29 @@ RSpec.describe ReferenceData::Type do
     end
   end
 
+  describe "#service_names" do
+    subject(:countries) { ReferenceData::Loader.instance.find("country") }
+
+    it "uses the service label where the entry has one" do
+      expect(countries.service_names).to include("Bolivia")
+      expect(countries.service_names).not_to include("Bolivia [Bolivia, Plurinational State of]")
+    end
+
+    it "falls back to the display_name for entries with no service label" do
+      expect(countries.service_names).to include("Aruba")
+    end
+
+    it "covers every entry" do
+      expect(countries.service_names.size).to eq(countries.values.size)
+    end
+
+    it "resolves every service name back to its own HESA code" do
+      unresolvable = countries.values.reject { |value| countries.hesa_code_for(value.service_name) == value.hesa_codes.first }
+
+      expect(unresolvable).to be_empty
+    end
+  end
+
   describe "#hesa_code_for" do
     it "looks up by `display_name`" do
       expect(type.hesa_code_for("Part-time")).to eq("31")

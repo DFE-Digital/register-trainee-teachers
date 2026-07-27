@@ -34,4 +34,18 @@ RSpec.describe ReferenceData::Value do
       expect(value.aliases).to eq(["Computing and information technology"])
     end
   end
+
+  describe "#service_name" do
+    it "is the name when the entry has one" do
+      value = described_class.from_yaml({ id: "BO", name: "Bolivia", display_name: "Bolivia [Bolivia, Plurinational State of]" }.with_indifferent_access)
+
+      expect(value.service_name).to eq("Bolivia")
+    end
+
+    it "falls back to the display_name when the entry has no name" do
+      value = described_class.from_yaml({ id: "AW", name: "", display_name: "Aruba" }.with_indifferent_access)
+
+      expect(value.service_name).to eq("Aruba")
+    end
+  end
 end

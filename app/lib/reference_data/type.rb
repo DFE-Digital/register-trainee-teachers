@@ -64,6 +64,10 @@ module ReferenceData
       @values_by_hesa_code[hesa_code.to_s]
     end
 
+    def service_names
+      @service_names ||= @values.map(&:service_name)
+    end
+
     def hesa_code_for(value)
       return if value.blank?
 

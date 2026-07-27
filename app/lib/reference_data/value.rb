@@ -43,5 +43,9 @@ module ReferenceData
 
       hesa_codes.first
     end
+
+    def service_name
+      name.presence || display_name
+    end
   end
 end
