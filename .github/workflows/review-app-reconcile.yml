@@ -13,6 +13,8 @@ on:
   push:
     branches:
       - 2855-test
+  
+  # Adding comment to force automated test run
 
 permissions:
   id-token: write
