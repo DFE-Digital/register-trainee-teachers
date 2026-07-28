@@ -20,7 +20,10 @@ module Rotp
 
       it "GETs the providers index and returns the data array" do
         expect(described_class.list).to eq(payload["data"])
-        expect(Client).to have_received(:get).with(described_class.path)
+        expect(Client).to have_received(:get).with(
+          described_class.path,
+          query: { academic_year: Settings.current_recruitment_cycle_year },
+        )
       end
     end
   end
