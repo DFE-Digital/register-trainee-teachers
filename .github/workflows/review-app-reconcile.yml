@@ -13,8 +13,6 @@ on:
   push:
     branches:
       - 2855-test
-  
-  # Adding comment to force automated test run
 
 permissions:
   id-token: write
@@ -23,7 +21,7 @@ permissions:
 
 env:
   GLOBAL_CONFIG_PATH: global_config
-  TF_VARS_PATH: terraform/aks/config
+  TF_VARS_PATH: terraform/aks/workspace-variables
   TERRAFORM_BASE: terraform/aks
   TF_FILE: provider.tf
   SERVICE_NAME: register
