@@ -64,8 +64,8 @@ module ReferenceData
       @values_by_hesa_code[hesa_code.to_s]
     end
 
-    def service_names
-      @service_names ||= @values.map(&:service_name)
+    def resolvable_names
+      @resolvable_names ||= @values.select { |value| value.hesa_codes.present? }.flat_map(&:labels).uniq
     end
 
     def hesa_code_for(value)

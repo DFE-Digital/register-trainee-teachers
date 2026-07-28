@@ -47,5 +47,9 @@ module ReferenceData
     def service_name
       name.presence || display_name
     end
+
+    def labels
+      [name, display_name, *aliases].compact_blank.uniq
+    end
   end
 end

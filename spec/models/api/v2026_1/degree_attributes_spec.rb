@@ -20,7 +20,7 @@ RSpec.describe Api::V20261::DegreeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:country)
-        .in_array(ReferenceData::COUNTRIES.service_names)
+        .in_array(ReferenceData::COUNTRIES.resolvable_names)
         .with_message(/has invalid reference data value of '.*'/)
     }
 

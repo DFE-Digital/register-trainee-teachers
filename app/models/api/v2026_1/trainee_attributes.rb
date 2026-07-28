@@ -174,7 +174,7 @@ module Api
       validates :iqts_country, absence: true, unless: :iqts_route?
 
       validates :iqts_country, api_inclusion: {
-        in: ::ReferenceData::COUNTRIES.service_names,
+        in: ::ReferenceData::COUNTRIES.resolvable_names,
         valid_values: ::ReferenceData::COUNTRIES.hesa_codes,
       }, if: :iqts_route?, allow_blank: true
 

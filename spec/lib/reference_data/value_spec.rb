@@ -48,4 +48,23 @@ RSpec.describe ReferenceData::Value do
       expect(value.service_name).to eq("Aruba")
     end
   end
+
+  describe "#labels" do
+    it "returns every non-blank name that can identify the value" do
+      value = described_class.from_yaml(
+        {
+          id: "BO",
+          name: "Bolivia",
+          display_name: "Bolivia [Bolivia, Plurinational State of]",
+          aliases: ["Bolivia alias"],
+        }.with_indifferent_access,
+      )
+
+      expect(value.labels).to contain_exactly(
+        "Bolivia",
+        "Bolivia [Bolivia, Plurinational State of]",
+        "Bolivia alias",
+      )
+    end
+  end
 end
