@@ -203,6 +203,31 @@ describe "`GET /api/v2026.1/trainees/:id` endpoint" do
     end
   end
 
+  context "when a nationality shares a HESA code" do
+    let!(:trainee) do
+      create(:trainee, :with_hesa_trainee_detail, slug: "12345", provider: auth_token.provider,
+                                                  nationalities: [build(:nationality, name: nationality_name)])
+    end
+
+    before { get("/api/v2026.1/trainees/#{trainee.slug}", headers: { Authorization: "Bearer #{token}" }) }
+
+    context "with the canonical nationality" do
+      let(:nationality_name) { "british" }
+
+      it "serializes the nationality as its HESA code" do
+        expect(response.parsed_body["nationality"]).to eq("GB")
+      end
+    end
+
+    context "with a superseded nationality label" do
+      let(:nationality_name) { "cymraes" }
+
+      it "serializes the nationality as the same HESA code" do
+        expect(response.parsed_body["nationality"]).to eq("GB")
+      end
+    end
+  end
+
   context "when the trainee does not exist" do
     before do
       get(

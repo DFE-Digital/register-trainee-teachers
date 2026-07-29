@@ -146,7 +146,7 @@ module Api
 
         def country_from_mapping
           @country_from_mapping ||= begin
-            mapped_value = ::ReferenceData::COUNTRIES.find_by_hesa_code(@params[:country])&.display_name
+            mapped_value = ::ReferenceData::COUNTRIES.find_by_hesa_code(@params[:country])&.service_name
 
             if @params[:country].present? && mapped_value.nil?
               Api::V20261::HesaMapper::Attributes::InvalidValue.new(@params[:country])

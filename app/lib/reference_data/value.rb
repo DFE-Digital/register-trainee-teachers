@@ -2,13 +2,14 @@
 
 module ReferenceData
   class Value
-    attr_reader :id, :name, :display_name, :hesa_codes, :start_year, :end_year
+    attr_reader :id, :name, :display_name, :aliases, :hesa_codes, :start_year, :end_year
 
     def self.from_yaml(attrs)
       new(
         id: attrs[:id],
         name: attrs[:name],
         display_name: attrs[:display_name],
+        aliases: attrs[:aliases],
         hesa_codes: attrs[:hesa_codes],
         start_year: attrs[:start_year]&.to_i,
         end_year: attrs[:end_year]&.to_i,
@@ -19,6 +20,7 @@ module ReferenceData
       @id = attrs[:id]
       @name = attrs[:name]
       @display_name = attrs[:display_name]
+      @aliases = attrs[:aliases] || []
       @hesa_codes = attrs[:hesa_codes] || []
       @start_year = attrs[:start_year]
       @end_year = attrs[:end_year]
@@ -40,6 +42,14 @@ module ReferenceData
       raise(StandardError, "Multiple HESA codes present") if hesa_codes.size > 1
 
       hesa_codes.first
+    end
+
+    def service_name
+      name.presence || display_name
+    end
+
+    def labels
+      [name, display_name, *aliases].compact_blank.uniq
     end
   end
 end

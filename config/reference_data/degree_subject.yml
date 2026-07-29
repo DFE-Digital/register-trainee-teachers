@@ -1227,6 +1227,8 @@ data:
   - id: "a042524a-b918-457c-bfaf-2e2432785d6d"
     name: "computing_and_information_technology"
     display_name: "Computing"
+    aliases:
+      - "Computing and information technology"
     hesa_codes:
       - "100367"
   - id: "0f8670f0-5dce-e911-a985-000d3ab79618"
@@ -4882,6 +4884,8 @@ data:
   - id: "ba1ffe89-73fb-4de8-a48d-12e644ee5687"
     name: "sport_and_exercise_sciences"
     display_name: "Physical education"
+    aliases:
+      - "Sport and exercise sciences"
     hesa_codes:
       - "100433"
   - id: "bd8670f0-5dce-e911-a985-000d3ab79618"

@@ -88,6 +88,59 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       end
     end
 
+    context "when the posted subject code has an aliased label" do
+      let(:degrees_attributes) do
+        {
+          grade: "02",
+          subject: "100367",
+          institution: "1166",
+          uk_degree: "014",
+          graduation_year: "2015-01-01",
+          country: "XF",
+        }
+      end
+
+      before do
+        post(
+          "/api/v2026.1/trainees/#{trainee.slug}/degrees",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: degrees_attributes }.to_json,
+        )
+      end
+
+      it "stores the canonical label, never the alias" do
+        expect(response).to have_http_status(:created)
+        expect(trainee.degrees.last.subject).to eq("Computing")
+        expect(response.parsed_body.dig("data", "subject")).to eq("100367")
+      end
+    end
+
+    context "when the country label differs from its HESA display name" do
+      let(:degrees_attributes) do
+        {
+          grade: "02",
+          subject: "100425",
+          non_uk_degree: "083",
+          graduation_year: "2015-01-01",
+          country: "BO",
+        }
+      end
+
+      before do
+        post(
+          "/api/v2026.1/trainees/#{trainee.slug}/degrees",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: degrees_attributes }.to_json,
+        )
+      end
+
+      it "stores the label the UI writes and serializes it back as the same code" do
+        expect(response).to have_http_status(:created)
+        expect(trainee.degrees.last.country).to eq("Bolivia")
+        expect(response.parsed_body.dig("data", "country")).to eq("BO")
+      end
+    end
+
     context "with a valid trainee and non uk degree" do
       let(:degrees_attributes) do
         {

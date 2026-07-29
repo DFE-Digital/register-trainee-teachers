@@ -130,7 +130,7 @@ module Api
         end
 
         def iqts_country
-          mapped_value = ::ReferenceData::COUNTRIES.find_by_hesa_code(params[:iqts_country])&.display_name
+          mapped_value = ::ReferenceData::COUNTRIES.find_by_hesa_code(params[:iqts_country])&.service_name
 
           return InvalidValue.new(params[:iqts_country]) if params[:iqts_country].present? && mapped_value.nil?
 

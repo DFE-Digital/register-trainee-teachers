@@ -17,6 +17,30 @@ describe "`GET /trainees/:trainee_slug/degrees/:slug` endpoint" do
       end
     end
 
+    context "with a subject label that shares a HESA code" do
+      let(:trainee) { create(:trainee) }
+      let!(:degree) { create(:degree, :uk_degree_type, trainee: trainee, subject: subject_name) }
+      let(:slug) { degree.slug }
+
+      before { get "/api/v2026.1//trainees/#{trainee_slug}/degrees/#{slug}", headers: { Authorization: token } }
+
+      context "with the canonical label" do
+        let(:subject_name) { "Computing" }
+
+        it "serializes the subject as its HESA code" do
+          expect(response.parsed_body.dig(:data, :subject)).to eq("100367")
+        end
+      end
+
+      context "with the superseded alias label" do
+        let(:subject_name) { "Computing and information technology" }
+
+        it "serializes the subject as the same HESA code" do
+          expect(response.parsed_body.dig(:data, :subject)).to eq("100367")
+        end
+      end
+    end
+
     context "non existant degree" do
       let(:slug) { "non-existant" }
 
