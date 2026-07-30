@@ -38,7 +38,7 @@ private
 
   def filter_users(users)
     if email_query?
-      users.where(email: raw_query.downcase)
+      users.where("email LIKE ?", "#{ActiveRecord::Base.sanitize_sql_like(raw_query.downcase)}%")
     else
       users.search(normalised_query)
     end

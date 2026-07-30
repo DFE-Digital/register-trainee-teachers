@@ -11,6 +11,10 @@ describe UserSearch do
       expect(described_class.call(query: "j.smith@mdx.ac.uk").users).to match([user])
     end
 
+    it "can search by partial email address" do
+      expect(described_class.call(query: "j.smith@mdx").users).to match([user])
+    end
+
     it "can search by email address case-insensitively" do
       expect(described_class.call(query: "J.Smith@MDX.AC.UK").users).to match([user])
     end
