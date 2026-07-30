@@ -32,6 +32,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         {
           data: {
             reasons: [reason.name],
+            withdraw_date: nil,
             withdrawal_date: withdrawal_date,
             trigger: trigger,
             future_interest: future_interest,
