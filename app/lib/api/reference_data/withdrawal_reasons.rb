@@ -31,7 +31,7 @@ module Api
 
       def self.entry_for(slug, trigger)
         {
-          slug: slug,
+          code: slug,
           display_name: I18n.t("components.withdrawal_details.reasons.#{slug}"),
           trigger: trigger,
           requires_another_reason: slug.include?("another_reason"),

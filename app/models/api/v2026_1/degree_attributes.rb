@@ -37,7 +37,7 @@ module Api
       validates :subject, presence: true
 
       validates :country, api_inclusion: {
-        in: ::ReferenceData::COUNTRIES.values.map(&:display_name),
+        in: ::ReferenceData::COUNTRIES.resolvable_names,
         valid_values: ::ReferenceData::COUNTRIES.hesa_codes,
       }, allow_blank: true
 

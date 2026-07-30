@@ -76,10 +76,21 @@ RSpec.describe Hesa::ReferenceData::V20261 do
       expect(payload.keys).to match_array(described_class.available_fields)
     end
 
-    it "matches docs_payload for HESA fields" do
-      described_class::TYPES.each_key do |type_name|
-        expect(payload.fetch(type_name)).to eq(described_class.docs_payload.fetch(type_name))
-      end
+    it "exposes public metadata without source or change_log" do
+      metadata = payload.fetch(:disability).fetch(:metadata)
+
+      expect(metadata).to include(
+        "name" => "disability",
+        "display_name" => "Disability",
+      )
+      expect(metadata).not_to have_key("source")
+      expect(metadata).not_to have_key("change_log")
+    end
+
+    it "renames hesa_code to code on entries" do
+      first_entry = payload.fetch(:disability).fetch(:entries).first
+
+      expect(first_entry.keys).to contain_exactly(:code, :display_name, :start_year, :end_year)
     end
 
     it "includes withdrawal reasons" do

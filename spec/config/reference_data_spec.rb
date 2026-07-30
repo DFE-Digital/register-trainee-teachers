@@ -182,6 +182,50 @@ RSpec.describe "Reference data integrity" do
     end
   end
 
+  describe "alias integrity" do
+    it "has no alias that collides with a canonical label or another alias" do
+      collisions = ReferenceData::Loader.instance.types.flat_map do |type|
+        canonical = type.values.flat_map { |value| [value.name.to_s, value.display_name.to_s] }.reject(&:empty?)
+        seen = {}
+
+        type.values.flat_map do |value|
+          value.aliases.filter_map do |alias_name|
+            owner = seen[alias_name]
+            seen[alias_name] = value.id
+
+            if canonical.include?(alias_name.to_s)
+              "#{type.name}: alias #{alias_name.inspect} on #{value.id.inspect} is already a canonical label"
+            elsif owner
+              "#{type.name}: alias #{alias_name.inspect} claimed by both #{owner.inspect} and #{value.id.inspect}"
+            end
+          end
+        end
+      end
+
+      expect(collisions).to be_empty, "reference data alias collisions:\n#{collisions.join("\n")}"
+    end
+  end
+
+  describe "name lookup integrity" do
+    it "has no entry whose name is another entry's display_name" do
+      collisions = ReferenceData::Loader.instance.types.flat_map do |type|
+        entries_by_display_name = type.values.index_by(&:display_name)
+
+        type.values.filter_map do |value|
+          next if value.name.to_s.empty?
+
+          other = entries_by_display_name[value.name.to_s]
+          next unless other && other.id != value.id
+
+          "#{type.name}: #{value.id.inspect} has name #{value.name.inspect}, " \
+            "which is the display_name of #{other.id.inspect}"
+        end
+      end
+
+      expect(collisions).to be_empty, "reference data name collisions:\n#{collisions.join("\n")}"
+    end
+  end
+
   describe "trainee reference types match the source they replaced" do
     {
       "ethnicity" => {
@@ -247,6 +291,91 @@ RSpec.describe "Reference data integrity" do
           out << "#{code}: #{config[:field]}=#{actual.inspect} != source #{expected.inspect}" if actual != expected
         end
         expect(divergences).to be_empty, "#{name} diverges from source:\n#{divergences.first(20).join("\n")}"
+      end
+    end
+  end
+
+  # The UI still writes gem labels while the v2026 serializers resolve from YAML,
+  # so every label the UI can persist must resolve to the same HESA code the gem gives.
+  describe "no outbound gaps against the writable UI vocabulary" do
+    {
+      "degree.subject" => {
+        writable: -> { DfEReference::DegreesQuery::SUBJECTS.all.map(&:name) },
+        gem: ->(value) { DfEReference::DegreesQuery.find_subject(name: value)&.hecos_code },
+        yaml: -> { ReferenceData::DEGREE_SUBJECTS },
+      },
+      "degree.institution" => {
+        writable: -> { DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) },
+        gem: ->(value) { DfEReference::DegreesQuery.find_institution(name: value)&.hesa_itt_code },
+        yaml: -> { ReferenceData::INSTITUTIONS },
+      },
+      "degree.uk_degree" => {
+        writable: -> { DfEReference::DegreesQuery::TYPES.all.map(&:name) },
+        gem: ->(value) { DfEReference::DegreesQuery.find_type(name: value)&.hesa_itt_code },
+        yaml: -> { ReferenceData::DEGREE_TYPES },
+      },
+      "degree.grade" => {
+        writable: -> { DfEReference::DegreesQuery::SUPPORTED_GRADES_WITH_OTHER.all.map(&:name) },
+        gem: ->(value) { DfEReference::DegreesQuery.find_grade(name: value)&.hesa_code },
+        yaml: -> { ReferenceData::DEGREE_GRADES },
+      },
+      "degree.country" => {
+        writable: -> { DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name) },
+        gem: ->(value) { Hesa::CodeSets::Countries::MAPPING.key(value) },
+        yaml: -> { ReferenceData::COUNTRIES },
+      },
+      "trainee.nationality" => {
+        writable: -> { CodeSets::Nationalities::MAPPING.keys.map(&:to_s) },
+        gem: ->(value) { RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[value.downcase] },
+        yaml: -> { ReferenceData::NATIONALITIES },
+      },
+      "trainee.ethnicity" => {
+        writable: -> { Diversities::BACKGROUNDS.values.flatten },
+        gem: ->(value) { Hesa::CodeSets::Ethnicities::MAPPING.key(value) },
+        yaml: -> { ReferenceData::ETHNICITIES },
+      },
+      "trainee.course_subject" => {
+        writable: -> { Hesa::CodeSets::CourseSubjects::MAPPING.values },
+        gem: ->(value) { Hesa::CodeSets::CourseSubjects::MAPPING.key(value) },
+        yaml: -> { ReferenceData::COURSE_SUBJECTS },
+      },
+      "trainee.training_route" => {
+        writable: -> { TRAINING_ROUTE_ENUMS.keys.map(&:to_s) },
+        gem: ->(value) { Hesa::CodeSets::TrainingRoutes::MAPPING.key(value) },
+        yaml: -> { ReferenceData::TRAINING_ROUTES },
+      },
+      "trainee.training_initiative" => {
+        writable: -> { ROUTE_INITIATIVES_ENUMS.keys.map(&:to_s) },
+        gem: ->(value) { Hesa::CodeSets::TrainingInitiatives::MAPPING.key(value) },
+        yaml: -> { ReferenceData::TRAINING_INITIATIVES },
+      },
+      "trainee.sex" => {
+        writable: -> { Trainee.sexes.values },
+        gem: ->(value) { Hesa::CodeSets::Sexes::MAPPING.key(value) },
+        yaml: -> { ReferenceData::SEXES },
+      },
+      "trainee.iqts_country" => {
+        writable: -> { DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name) },
+        gem: ->(value) { Hesa::CodeSets::Countries::MAPPING.key(value) },
+        yaml: -> { ReferenceData::COUNTRIES },
+      },
+    }.each do |field, config|
+      it "resolves every writable #{field} label with no gap or mismatch" do
+        yaml = config[:yaml].call
+
+        problems = config[:writable].call.compact.uniq.each_with_object([]) do |label, out|
+          gem_code = config[:gem].call(label)
+          next if gem_code.nil? # the gem itself does not resolve it, so no regression is possible
+
+          yaml_code = yaml.hesa_code_for(label)
+          if yaml_code.nil?
+            out << "GAP #{label.inspect}: gem=#{gem_code.inspect} yaml=nil"
+          elsif yaml_code.to_s != gem_code.to_s
+            out << "WRONG #{label.inspect}: gem=#{gem_code.inspect} yaml=#{yaml_code.inspect}"
+          end
+        end
+
+        expect(problems).to be_empty, "#{field} outbound gaps:\n#{problems.first(20).join("\n")}"
       end
     end
   end

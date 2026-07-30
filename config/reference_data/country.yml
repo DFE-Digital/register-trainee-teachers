@@ -10,6 +10,12 @@ metadata:
   - date: "2026-03-17"
     change: "Aligned with v2025.0 reference data (and Hesa::CodeSets::Countries::MAPPING)"
     author: "Register team"
+  - date: "2026-07-27"
+    change: "Moved the service label 'Kosovo' to QO, leaving XK without one. Ids in
+      this file are HESA codes, where XK is 'United Kingdom, not otherwise specified'
+      and Kosovo is QO. The dfe-reference-data gem used by the UI keys Kosovo as XK,
+      which is where the difference comes from."
+    author: "Register team"
 data:
 - id: "AF"
   name: "Afghanistan"
@@ -657,7 +663,7 @@ data:
   hesa_codes:
   - "KR"
 - id: "QO"
-  name: ""
+  name: "Kosovo"
   display_name: "Kosovo"
   hesa_codes:
   - "QO"
@@ -1261,7 +1267,7 @@ data:
   hesa_codes:
   - "AE"
 - id: "XK"
-  name: "Kosovo"
+  name: ""
   display_name: "United Kingdom, not otherwise specified"
   hesa_codes:
   - "XK"

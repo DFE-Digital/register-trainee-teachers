@@ -20,4 +20,51 @@ RSpec.describe ReferenceData::Value do
       expect(training_initiatives.future_teaching_scholars.hesa_code).to be_nil
     end
   end
+
+  describe "#aliases" do
+    it "defaults to an empty array when the entry declares none" do
+      expect(training_routes.provider_led_postgrad.aliases).to eq([])
+    end
+
+    it "exposes aliases declared in the YAML" do
+      value = described_class.from_yaml(
+        { id: "1", name: "computing", display_name: "Computing", aliases: ["Computing and information technology"] }.with_indifferent_access,
+      )
+
+      expect(value.aliases).to eq(["Computing and information technology"])
+    end
+  end
+
+  describe "#service_name" do
+    it "is the name when the entry has one" do
+      value = described_class.from_yaml({ id: "BO", name: "Bolivia", display_name: "Bolivia [Bolivia, Plurinational State of]" }.with_indifferent_access)
+
+      expect(value.service_name).to eq("Bolivia")
+    end
+
+    it "falls back to the display_name when the entry has no name" do
+      value = described_class.from_yaml({ id: "AW", name: "", display_name: "Aruba" }.with_indifferent_access)
+
+      expect(value.service_name).to eq("Aruba")
+    end
+  end
+
+  describe "#labels" do
+    it "returns every non-blank name that can identify the value" do
+      value = described_class.from_yaml(
+        {
+          id: "BO",
+          name: "Bolivia",
+          display_name: "Bolivia [Bolivia, Plurinational State of]",
+          aliases: ["Bolivia alias"],
+        }.with_indifferent_access,
+      )
+
+      expect(value.labels).to contain_exactly(
+        "Bolivia",
+        "Bolivia [Bolivia, Plurinational State of]",
+        "Bolivia alias",
+      )
+    end
+  end
 end

@@ -11,10 +11,18 @@ module ReferenceData
       @values = values
       @values_by_id = @values.index_by(&:id).transform_keys(&:to_s).with_indifferent_access
       @values_by_name = @values.index_by(&:name).transform_keys(&:to_s).with_indifferent_access
+      @values_by_display_name = @values.index_by(&:display_name).transform_keys(&:to_s).with_indifferent_access
       @values_by_hesa_code = {}.tap do |hash|
         @values.each do |value|
           value.hesa_codes.each do |hesa_code|
             hash[hesa_code.to_s] = value
+          end
+        end
+      end
+      @values_by_alias = {}.tap do |hash|
+        @values.each do |value|
+          value.aliases.each do |alias_name|
+            hash[alias_name.to_s] = value
           end
         end
       end
@@ -54,6 +62,18 @@ module ReferenceData
 
     def find_by_hesa_code(hesa_code)
       @values_by_hesa_code[hesa_code.to_s]
+    end
+
+    def resolvable_names
+      @resolvable_names ||= @values.select { |value| value.hesa_codes.present? }.flat_map(&:labels).uniq
+    end
+
+    def hesa_code_for(value)
+      return if value.blank?
+
+      entry = @values_by_display_name[value.to_s] || find(value) || @values_by_alias[value.to_s]
+
+      entry&.hesa_codes&.first
     end
 
     def method_missing(method_name, *args)

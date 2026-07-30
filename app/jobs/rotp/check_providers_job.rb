@@ -7,13 +7,13 @@ module Rotp
     MAX_LISTED = 10
 
     def perform
-      return false unless Rails.env.production?
+      return false unless Rails.env.production? || Rails.env.productiondata?
 
       checker = Rotp::ProviderChecker.new
       download_url = generate_csv_download_url(checker)
 
       TeamsNotifierService.call(
-        title: "RoTP Provider Checker Results [#{Rails.env}]",
+        title: "RoTP Provider Checker Results for #{Settings.current_recruitment_cycle_year} [#{Rails.env}]",
         message: build_message(checker, download_url:),
         icon_emoji: checker.any_discrepancies? ? "🚨" : "✅",
       )

@@ -45,9 +45,41 @@ RSpec.describe Api::V20261::HesaMapper::DegreeAttributes do
     expect(divergences_for(params)).to be_empty
   end
 
-  it "maps every country code the same as the gem" do
-    params = Hesa::CodeSets::Countries::MAPPING.keys.map { |code| { country: code, subject: "100104", non_uk_degree: "051", grade: "01" } }
-    expect(divergences_for(params)).to be_empty
+  def country_stored_for(code)
+    described_class.call({ country: code, subject: "100104", non_uk_degree: "051", grade: "01" })[:country]
+  end
+
+  def country_codes_stored_on_degrees
+    Hesa::CodeSets::Countries::MAPPING.reject { |_, name| Hesa::CodeSets::Countries::UK_COUNTRIES.include?(name) }.keys
+  end
+
+  it "does not store a country for UK degrees, which carry locale_code instead" do
+    uk_codes = Hesa::CodeSets::Countries::MAPPING.keys - country_codes_stored_on_degrees
+
+    expect(uk_codes.map { |code| country_stored_for(code) }).to all(be_nil)
+  end
+
+  it "maps country to the label the UI writes" do
+    ui_labels = DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name).compact.uniq
+    codes = country_codes_stored_on_degrees
+
+    divergences = ui_labels.each_with_object([]) do |ui_label, out|
+      code = ReferenceData::COUNTRIES.hesa_code_for(ui_label)
+      next unless codes.include?(code)
+
+      actual = country_stored_for(code)
+      out << "#{code}: #{actual.inspect} != #{ui_label.inspect}" if actual != ui_label
+    end
+    expect(divergences).to be_empty, divergences.join("\n")
+  end
+
+  it "maps every country code to a label that serializes back to the same code" do
+    divergences = country_codes_stored_on_degrees.each_with_object([]) do |code, out|
+      stored = country_stored_for(code)
+      resolved = ReferenceData::COUNTRIES.hesa_code_for(stored)
+      out << "#{code}: stored #{stored.inspect}, which serializes back as #{resolved.inspect}" if resolved != code
+    end
+    expect(divergences).to be_empty, divergences.join("\n")
   end
 
   it "remaps Institute of Education to UCL the same as the gem" do

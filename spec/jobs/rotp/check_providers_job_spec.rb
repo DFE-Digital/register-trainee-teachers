@@ -67,7 +67,7 @@ module Rotp
       it "sends a clean report to Teams with a success icon" do
         described_class.perform_now
         expect(TeamsNotifierService).to have_received(:call).with(
-          title: include("RoTP Provider Checker Results"),
+          title: "RoTP Provider Checker Results for #{Settings.current_recruitment_cycle_year} [test]",
           message: include(
             "Matched: 2",
             "In RoTP but not Register: 0",
@@ -111,7 +111,7 @@ module Rotp
       it "includes discrepancy details and an alert icon" do
         described_class.perform_now
         expect(TeamsNotifierService).to have_received(:call).with(
-          title: include("RoTP Provider Checker Results"),
+          title: "RoTP Provider Checker Results for #{Settings.current_recruitment_cycle_year} [test]",
           message: include(
             "In RoTP but not Register: 1",
             "Unknown University (Z99)",
@@ -123,9 +123,20 @@ module Rotp
       end
     end
 
-    context "when not in production" do
+    context "when in productiondata" do
       before do
-        allow(Rails.env).to receive(:production?).and_return(false)
+        allow(Rails.env).to receive_messages(production?: false, productiondata?: true)
+      end
+
+      it "runs the checker" do
+        described_class.perform_now
+        expect(TeamsNotifierService).to have_received(:call)
+      end
+    end
+
+    context "when not in production or productiondata" do
+      before do
+        allow(Rails.env).to receive_messages(production?: false, productiondata?: false)
       end
 
       it "does not run" do

@@ -216,6 +216,29 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       end
     end
 
+    context "when the stored country is a HESA display name written by a previous API version" do
+      let!(:degree) do
+        create(
+          :degree,
+          :non_uk_degree_with_details,
+          trainee: trainee,
+          country: "Bolivia [Bolivia, Plurinational State of]",
+          non_uk_degree: "Bachelor of Education Scotland and Northern Ireland",
+        )
+      end
+
+      it "updates the degree and returns a 200 status (ok)" do
+        put(
+          "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: { grade: "02" } }.to_json,
+        )
+
+        expect(response).to have_http_status(:ok)
+        expect(degree.reload.grade).to eq("Upper second-class honours (2:1)")
+      end
+    end
+
     context "with duplicate degree" do
       let(:uk_degree) { build(:degree, :uk_degree_with_details) }
       let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details) }
@@ -250,6 +273,22 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         expect {
           uk_degree.reload
         }.not_to change(uk_degree, :attributes)
+      end
+
+      context "when the stored country label differs from its HESA display name" do
+        let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country: "Bolivia") }
+
+        it "returns a 409 (conflict) status", openapi: false do
+          put(
+            "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{uk_degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: {
+              data: degrees_attributes,
+            }.to_json,
+          )
+
+          expect(response).to have_http_status(:conflict)
+        end
       end
     end
 
