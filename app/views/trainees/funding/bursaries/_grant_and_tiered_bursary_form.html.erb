@@ -8,12 +8,12 @@
       <p class="govuk-body"><%= t("views.forms.funding.bursaries.tiered.description") %></p>
 
       <p class="govuk-body">
-        You can
         <%= govuk_link_to(
           t("views.forms.funding.bursaries.guidance_link_text"),
           @bursary_form.funding_guidance_url,
-          new_tab: true,
-        ) %>.
+          target: "_blank",
+          rel: "noopener noreferrer",
+        ) %> (opens in new tab).
       </p>
 
     <% if @bursary_form.can_apply_for_grant? %>
