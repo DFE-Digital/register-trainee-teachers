@@ -1,0 +1,134 @@
+---
+title: GET /reference-data
+weight: 2
+---
+
+# `GET /reference-data`
+
+<%= preview_warning_if_needed %>
+
+Returns reference data values used by the Register API, including HESA codes and withdrawal reasons.
+
+This endpoint does not require authentication. It is available from v2026.1 onwards.
+
+For human-readable lists of reference data values, see the [reference data documentation](/reference-data/).
+
+## Request
+
+    GET /api/v2026.1/reference-data
+
+## Parameters
+
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **field** | query | string | false | Return a single field only. Valid values are `country`, `course_age_range`, `course_subject`, `degree_subject`, `degree_grade`, `degree_type`, `disability`, `ethnicity`, `fund_code`, `funding_method`, `institution`, `itt_aim`, `nationality`, `itt_qualification_aim`, `sex`, `study_mode`, `training_route`, `training_initiative`, and `withdrawal_reasons`. |
+
+## Response
+
+Without a `field` parameter, the response is an object keyed by field name. Each HESA field has:
+
+* `metadata` — `name`, `display_name`, and `description`
+* `entries` — an array of values with `code`, `display_name`, `start_year`, and `end_year`
+
+`withdrawal_reasons` also includes `triggers`, `future_interest`, and entries with `code`, `display_name`, `trigger`, `requires_another_reason`, and `requires_safeguarding_concern_reasons`.
+
+With a valid `field` parameter, the response is the unwrapped payload for that field only.
+
+## Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 200<span> - All reference data fields</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "sex": {
+        "metadata": {
+          "name": "sex",
+          "display_name": "Sex",
+          "description": ""
+        },
+        "entries": [
+          {
+            "code": "10",
+            "display_name": "Female",
+            "start_year": null,
+            "end_year": null
+          },
+          {
+            "code": "11",
+            "display_name": "Male",
+            "start_year": null,
+            "end_year": null
+          }
+        ]
+      },
+      "withdrawal_reasons": {
+        "metadata": {
+          "name": "withdrawal_reasons",
+          "display_name": "Withdrawal reasons"
+        },
+        "triggers": [
+          "provider",
+          "trainee"
+        ],
+        "future_interest": [
+          "yes",
+          "no",
+          "unknown"
+        ],
+        "entries": [
+          {
+            "code": "record_added_in_error",
+            "display_name": "This training record was added in error",
+            "trigger": "provider",
+            "requires_another_reason": false,
+            "requires_safeguarding_concern_reasons": false
+          }
+        ]
+      }
+    }</pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 200<span> - Single field (`?field=sex`)</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "metadata": {
+        "name": "sex",
+        "display_name": "Sex",
+        "description": ""
+      },
+      "entries": [
+        {
+          "code": "10",
+          "display_name": "Female",
+          "start_year": null,
+          "end_year": null
+        },
+        {
+          "code": "11",
+          "display_name": "Male",
+          "start_year": null,
+          "end_year": null
+        }
+      ]
+    }</pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 404<span> - Unknown field</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Reference data field 'bogus' not found"
+        }
+      ]
+    }</pre>
+  </div>
+</details>
