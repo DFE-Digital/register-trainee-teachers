@@ -2,7 +2,7 @@
 
 module Hesa
   module ReferenceData
-    class V20261 < V20250
+    class V20261 < Base
       TYPES = {
         country: ::ReferenceData::COUNTRIES,
         course_age_range: ::ReferenceData::COURSE_AGE_RANGES,
