@@ -21,38 +21,38 @@ describe Api::GetVersionedItem do
     end
 
     describe "#for" do
-      context "v2025.0" do
+      context "v2026.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
             expect(
               described_class.for(
                 item_type: item_type.to_sym,
                 model: item_model,
-                version: "v2025.0",
+                version: "v2026.1",
               ),
-            ).to be(Object.const_get("Api::V20250::#{expected_module(item_type, item_model)}"))
+            ).to be(Object.const_get("Api::V20261::#{expected_module(item_type, item_model)}"))
           end
         end
       end
     end
 
     describe "#for_#{item_type}" do
-      context "v2025.0" do
+      context "v2026.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.public_send(wrapper_method, model: item_model, version: "v2025.0")).to be(Object.const_get("Api::V20250::#{expected_module(item_type, item_model)}"))
+            expect(described_class.public_send(wrapper_method, model: item_model, version: "v2026.1")).to be(Object.const_get("Api::V20261::#{expected_module(item_type, item_model)}"))
           end
         end
       end
 
-      context "v2025.0 not on the allowed versions" do
+      context "v2026.1 not on the allowed versions" do
         before do
           allow(Settings.api).to receive(:allowed_versions).and_return([])
         end
 
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v2025.0") }.to raise_error(NotImplementedError, "Api::V20250::#{expected_module(item_type, item_model)}")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v2026.1") }.to raise_error(NotImplementedError, "Api::V20261::#{expected_module(item_type, item_model)}")
           end
         end
       end
