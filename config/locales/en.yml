@@ -51,9 +51,10 @@ en:
       title: Funding
       training_initiative: &training_initiative Training initiative
       funding_method: &funding_method Funding method
-      bursary_applied_for: Bursary applied for
-      scholarship_applied_for: Scholarship applied for
-      grant_applied_for: Grant applied for
+      bursary_applied_for: "%{subject} bursary"
+      scholarship_applied_for: "%{subject} scholarship"
+      grant_applied_for: "%{subject} grant"
+      tiered_grant_applied_for: Grant applied for
       no_bursary_applied_for: Not funded
       no_grant_applied_for: Not grant funded
       no_funding_available: Not applicable
@@ -1031,17 +1032,17 @@ en:
             If you’re not sure if the trainee is on an initiative you could check with a colleague or ask the trainee directly.
         bursaries:
           non_tiered:
-            description: You can apply now for a %{amount} bursary for the trainee’s %{subject} course. You must have checked that they’re eligible.
+            description: The trainee may be able to get funding for their %{subject} course.
             early_years_description: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary."
-            title: Funding type
+            title: Choose funding type
           scholarship_and_bursary:
-            description: "The trainee may get funding for their %{subject} course if either:"
-            bursary: you apply now for a %{amount} bursary - you must have checked that they’re eligible
-            scholarship: they apply for a %{amount} scholarship
+            description: "The trainee may be able to get funding for their %{subject} course if either:"
+            bursary: you apply for a bursary
+            scholarship: they apply for a scholarship
           grant:
-            description: The trainee can apply for a %{amount} grant for their %{subject} course.
+            description: The trainee may be able to get funding for their %{subject} course.
             early_years_description: "%{training_route} has a grant available of %{amount}. You need to check if the trainee is eligible for this grant."
-            title: Funding Type
+            title: Choose funding type
           tiered:
             description: Early years graduate entry has bursaries available. You need to check if the trainee is eligible for any of these.
             title: Funding type
@@ -1054,19 +1055,22 @@ en:
             tier_three:
               label: Yes - Tier 3 (£2,000)
               hint: 2:2 honours degree
-          guidance_link_text: check the funding rules for this academic year
+          guidance_link_text: Check the funding eligibility criteria for this academic year
           guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-%{academic_year}
           early_years_guidance_url: https://www.gov.uk/guidance/early-years-initial-teacher-training-%{academic_year}-funding-guidance
         funding_type:
           bursary:
-            label: Bursary
+            label: Bursary (up to %{amount})
+            label_without_amount: Bursary
+            hint: You apply on behalf of the trainee.
             none:
               label: None
           scholarship:
-            label: Scholarship
-            hint: "%{amount} estimated scholarship"
+            label: Scholarship (up to %{amount})
+            hint: The trainee applies directly.
           grant:
-            label: Grant
+            label: Grant (up to %{amount})
+            hint: You apply on behalf of the trainee.
             none:
               label: None
   landing_page:

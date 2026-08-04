@@ -32,11 +32,11 @@ Use reference data whenever you need allowed values for trainees, courses, fundi
 
 ## Current version
 
-* Version: v2025.0
+* Version: v2026.1
 
 ## How to view or download reference data 
 
-You can view or download reference data lists and values using the navigation on the left, under the v2025.0 link. 
+You can view or download reference data lists and values using the navigation on the left, under the v2026.1 link. 
 
 1. Choose the dataset you need. 
 2. Open the list to view or select the link to download the CSV file. 

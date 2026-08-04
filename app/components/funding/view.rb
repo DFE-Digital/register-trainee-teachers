@@ -37,7 +37,7 @@ module Funding
     delegate :can_apply_for_tiered_bursary?, :can_apply_for_scholarship?, :scholarship_amount,
              :can_apply_for_bursary?, :bursary_amount,
              :can_apply_for_grant?, :grant_amount,
-             :can_apply_for_funding_type?,
+             :can_apply_for_funding_type?, :allocation_subject_name,
              to: :funding_manager
 
     def training_initiative_row
@@ -67,7 +67,7 @@ module Funding
     end
 
     def grant_and_bursary_funding_row
-      funding_text = [grant_text, "<br>", funding_method].join.html_safe
+      funding_text = [tiered_grant_text, "<br>", funding_method].join.html_safe
 
       # Set funding_text to nil if applying_for_grant is nil, which means not all the fields were set for the GrantAndTieredBursaryForm
       funding_text = nil if data_model.applying_for_grant.nil?
@@ -93,9 +93,17 @@ module Funding
       !trainee.draft? || can_apply_for_funding_type?
     end
 
+    def tiered_grant_text
+      if data_model.applying_for_grant
+        t(".tiered_grant_applied_for") + "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
+      else
+        t(".no_grant_applied_for")
+      end
+    end
+
     def grant_text
       if data_model.applying_for_grant
-        t(".grant_applied_for") + "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
+        "#{t('.grant_applied_for', subject: allocation_subject_name)}#{amount_hint(grant_amount)}"
       else
         t(".no_grant_applied_for")
       end
@@ -111,8 +119,7 @@ module Funding
     end
 
     def scholarship_funding_row
-      scholarship_text = t(".scholarship_applied_for") +
-        "<br>#{tag.span("#{format_currency(scholarship_amount)} estimated scholarship", class: 'govuk-hint')}"
+      scholarship_text = "#{t('.scholarship_applied_for', subject: allocation_subject_name)}#{amount_hint(scholarship_amount)}"
 
       mappable_field(
         scholarship_text.html_safe,
@@ -164,13 +171,17 @@ module Funding
 
       return "#{t(".tiered_bursary_applied_for.#{data_model.bursary_tier}")}#{bursary_funding_hint}".html_safe if data_model.bursary_tier.present?
 
-      return "#{t('.bursary_applied_for')}#{bursary_funding_hint}".html_safe if data_model.applying_for_bursary
+      return "#{t('.bursary_applied_for', subject: allocation_subject_name)}#{amount_hint(bursary_amount)}".html_safe if data_model.applying_for_bursary
 
       t(".no_bursary_applied_for")
     end
 
     def bursary_funding_hint
       "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
+    end
+
+    def amount_hint(amount)
+      "<br>#{tag.span("Worth up to #{format_currency(amount)}", class: 'govuk-hint')}"
     end
 
     def no_funding_methods?
