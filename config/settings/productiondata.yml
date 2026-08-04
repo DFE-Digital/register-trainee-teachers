@@ -49,3 +49,7 @@ environment:
   name: productiondata
   display_name: Production Data
 
+fauapi:
+  enabled: true
+  base_url: https://pp-apimanagement.education.gov.uk
+

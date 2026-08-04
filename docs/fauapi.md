@@ -1,45 +1,58 @@
 # FauAPI integration
 
-[Find and Use an API](https://find-and-use-an-api.education.gov.uk/) (fauapi) is DfE's central API catalogue. We publish the Register API spec there so it shows up in the directory.
+[Find and Use an API](https://beta-find-and-use-an-api.education.gov.uk/) (fauapi) is DfE's central API catalogue. We publish the Register API spec there so it shows up in the directory. Publishing to it is a requirement for DfE services.
 
-## Current status
+## One catalogue entry per academic year
 
-We publish to both FauAPI **pre-prod** and **production** on every deploy to production. The OpenAPI spec is attached via `schema.documentContentValue` (base64-encoded YAML).
+fauapi treats the major version as part of an API's identity — the public slug is `<name>-<majorVersion>`:
+
+- [register-trainee-teachers-api-v2025](https://beta-find-and-use-an-api.education.gov.uk/api/register-trainee-teachers-api-v2025)
+- `register-trainee-teachers-api-v2026` (once published)
+
+Because our major version is the academic year, each year gets its own catalogue entry. Importing with a new `majorVersion` creates a new entry rather than updating the existing one. Older years stay discoverable.
+
+Within an entry, `releases` covers only that entry's own academic year. Release tags come from `api.current_version` in Settings (`Live` / `Planned` / `Deprecated`).
 
 ## How it works
 
-On every deploy to production, GitHub Actions jobs in `build-and-deploy.yml` call `update-fauapi-catalogue.yml` twice (pre-prod and production). Each run runs `bin/generate_fauapi_manifest` to build the manifest JSON from `config/settings.yml` and the openapi yaml files in `public/openapi/`, then POSTs it to the fauapi platform API and publishes it. The current API version's OpenAPI spec is embedded in the import payload as base64-encoded YAML in `schema.documentContentValue`. Import is idempotent by `name` — repeat imports update rather than duplicate.
+`Fauapi::PublishCatalogueJob` runs weekly via Sidekiq cron (`publish_fauapi_catalogue` in `config/sidekiq_cron_schedule.yml`). It no-ops unless `Settings.fauapi.enabled` is true.
 
-The manifest is generated fresh in CI on every deploy — nothing to keep in sync manually. You can run the script locally to inspect the output:
+| Register env | FauAPI management API |
+|---|---|
+| `production` | `https://apimanagement.education.gov.uk` |
+| `productiondata` | `https://pp-apimanagement.education.gov.uk` |
 
-```bash
-ruby bin/generate_fauapi_manifest
+`Fauapi::PublishCatalogue`:
+
+1. builds one manifest per major from `public/openapi/*.yaml` (`Fauapi::BuildManifests`)
+2. POSTs each to import (`schema.documentContentValue` = base64 OpenAPI YAML) via `Fauapi::Client`
+3. lists APIs, matches on `name` + `majorVersion`, publishes
+
+Import is idempotent per entry.
+
+### Manual run
+
+From a production / productiondata console or Sidekiq UI:
+
+```ruby
+Fauapi::PublishCatalogueJob.perform_later
+# or synchronously:
+Fauapi::PublishCatalogueJob.perform_now
 ```
 
-## Setup that was done
+## Secrets
 
-Pre-prod and production each needed a one-time workspace in the fauapi management portal. Workspaces already exist — to get access, ask an existing dev on the team to add you.
+Automation token is `Settings.fauapi.api_key`, supplied as `SETTINGS__FAUAPI__API_KEY` from Azure Key Vault / AKS for production and productiondata (same pattern as `Settings.trs.api_key`).
 
-The linked API is created via import with `name: "register-trainee-teachers-api"`, `displayName: "Register trainee teachers API"` (no need to create the API by hand in an empty workspace). Note: `displayName` is globally unique across all fauapi workspaces. The CI workflow keeps it updated on each deploy.
-
-GitHub Actions [secrets](https://github.com/DFE-Digital/register-trainee-teachers/settings/secrets/actions) needed:
-
-| Secret | Environment |
-|---|---|
-| `FAUAPI_PP_AUTOMATION_TOKEN` | Pre-prod bearer token from [pp-apimanagement.education.gov.uk](https://pp-apimanagement.education.gov.uk) |
-| `FAUAPI_AUTOMATION_TOKEN` | Production bearer token from [apimanagement.education.gov.uk](https://apimanagement.education.gov.uk) (workspace 51) |
-
-These are GitHub Actions secrets only — not stored in Azure Key Vault.
+Base URL and `enabled` are set in `config/settings/production.yml` and `config/settings/productiondata.yml`.
 
 ## Links
 
 | Environment | Management portal | Catalogue |
 |---|---|---|
 | Pre-prod | [pp-apimanagement.education.gov.uk](https://pp-apimanagement.education.gov.uk) | [pp-find-and-use-an-api.education.gov.uk](https://pp-find-and-use-an-api.education.gov.uk) |
-| Production | [apimanagement.education.gov.uk](https://apimanagement.education.gov.uk) | [find-and-use-an-api.education.gov.uk](https://find-and-use-an-api.education.gov.uk) |
+| Production | [apimanagement.education.gov.uk](https://apimanagement.education.gov.uk) | [beta-find-and-use-an-api.education.gov.uk](https://beta-find-and-use-an-api.education.gov.uk) |
 
-## Known issues (as of March 2026)
+## Known issues
 
-The fauapi platform API has some bugs we've reported:
-
-- Import response doesn't include the API `id` — we work around this by listing APIs after import
+- Import response doesn't include the entry `id` — we list APIs after import and match on name + majorVersion
