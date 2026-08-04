@@ -15,7 +15,7 @@ RSpec.describe Api::V20261::HesaMapper::DegreeAttributes do
 
   def divergences_for(params_list)
     params_list.each_with_object([]) do |params, out|
-      gem_output = normalise(Api::V20250::HesaMapper::DegreeAttributes.call(params))
+      gem_output = normalise(GemDegreeAttributesMapper.call(params))
       yaml_output = normalise(described_class.call(params))
       out << "#{params.inspect}\n  gem:  #{gem_output}\n  yaml: #{yaml_output}" if gem_output != yaml_output
     end
