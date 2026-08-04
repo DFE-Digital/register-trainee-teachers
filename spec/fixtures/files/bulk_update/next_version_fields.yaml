@@ -1,0 +1,3 @@
+---
+- field_name: next_version_graduation_year
+  technical: graduation_year
