@@ -3,12 +3,6 @@
 require "rails_helper"
 
 RSpec.describe BulkUpdate::AddTrainees::V20261::ImportRows do
-  before do
-    stub_const("BulkUpdate::AddTrainees::Config::VERSION", "v2026.1")
-    stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20261)
-    allow(Settings.bulk_update.add_trainees).to receive(:version).and_return("v2026.1")
-  end
-
   describe "#call" do
     let!(:nationality) { create(:nationality, :british) }
     let!(:academic_cycle) { create(:academic_cycle, :current) }

@@ -3,11 +3,6 @@
 require "rails_helper"
 
 describe Reports::BulkTraineeUploadReport do
-  before do
-    stub_const("BulkUpdate::AddTrainees::Config::VERSION", "v2026.1")
-    stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20261)
-  end
-
   context "given an empty trainee upload" do
     let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
