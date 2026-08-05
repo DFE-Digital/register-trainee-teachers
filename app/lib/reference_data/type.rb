@@ -68,12 +68,12 @@ module ReferenceData
       @resolvable_names ||= @values.select { |value| value.hesa_codes.present? }.flat_map(&:labels).uniq
     end
 
+    def labels_for(value)
+      find_by_value(value)&.labels || [value]
+    end
+
     def hesa_code_for(value)
-      return if value.blank?
-
-      entry = @values_by_display_name[value.to_s] || find(value) || @values_by_alias[value.to_s]
-
-      entry&.hesa_codes&.first
+      find_by_value(value)&.hesa_codes&.first
     end
 
     def method_missing(method_name, *args)
@@ -89,6 +89,12 @@ module ReferenceData
     end
 
   private
+
+    def find_by_value(value)
+      return if value.blank?
+
+      @values_by_display_name[value.to_s] || find(value) || @values_by_alias[value.to_s]
+    end
 
     def valid_values_for(year: nil)
       @values.select { |value| value.valid_in?(year:) }
