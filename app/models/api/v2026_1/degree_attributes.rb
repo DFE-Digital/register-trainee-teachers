@@ -30,6 +30,11 @@ module Api
         attribute attr
       end
 
+      DUPLICATE_REFERENCE_DATA = {
+        "country" => ::ReferenceData::COUNTRIES,
+        "subject" => ::ReferenceData::DEGREE_SUBJECTS,
+      }.freeze
+
       attr_reader :existing_degrees
 
       validates :locale_code, presence: true
@@ -86,9 +91,14 @@ module Api
       end
 
       def duplicates
-        existing_degrees&.where(
-          attributes_for_duplicates,
-        )
+        existing_degrees&.where(attributes_for_duplicate_query)
+      end
+
+      def attributes_for_duplicate_query
+        attributes_for_duplicates.to_h do |attribute, value|
+          reference_data = DUPLICATE_REFERENCE_DATA[attribute]
+          [attribute, reference_data ? reference_data.labels_for(value) : value]
+        end
       end
 
       def attributes_for_duplicates
