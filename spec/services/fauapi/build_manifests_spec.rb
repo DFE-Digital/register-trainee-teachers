@@ -26,7 +26,7 @@ RSpec.describe Fauapi::BuildManifests do
     decoded = Base64.strict_decode64(v2026.dig(:schema, :documentContentValue))
 
     expect(v2026.dig(:schema, :fileName)).to eq("v2026.1.yaml")
-    expect(decoded).to eq(File.binread(Rails.root.join("public/openapi/v2026.1.yaml")))
+    expect(decoded).to eq(Rails.public_path.join("openapi/v2026.1.yaml").binread)
   end
 
   it "uses the configured api name" do

@@ -12,7 +12,7 @@ module Fauapi
     def call
       current_version = Settings.api.current_version
 
-      versions_by_major = Dir.glob(Rails.root.join("public/openapi/v*.yaml"))
+      versions_by_major = Rails.root.glob("public/openapi/v*.yaml")
         .map { |path| File.basename(path, ".yaml") }
         .group_by { |version| major_of(version) }
 
@@ -20,7 +20,7 @@ module Fauapi
         versions = versions_by_major[major].sort_by { |version| version_key(version) }
         entry_version = versions.include?(current_version) ? current_version : versions.last
         schema_file = "#{entry_version}.yaml"
-        schema_bytes = File.binread(Rails.root.join("public/openapi", schema_file))
+        schema_bytes = Rails.public_path.join("openapi", schema_file).binread
 
         {
           name: Settings.fauapi.api_name,
