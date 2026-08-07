@@ -15,17 +15,17 @@ Within an entry, `releases` covers only that entry's own academic year. Release 
 
 ## How it works
 
-`Fauapi::PublishCatalogueJob` runs weekly via Sidekiq cron (`publish_fauapi_catalogue` in `config/sidekiq_cron_schedule.yml`). It no-ops unless `Settings.fauapi.enabled` is true.
+`FindAndUseAnApi::PublishCatalogueJob` runs weekly via Sidekiq cron (`publish_fauapi_catalogue` in `config/sidekiq_cron_schedule.yml`). It no-ops unless `Settings.fauapi.enabled` is true.
 
 | Register env | FauAPI management API |
 |---|---|
 | `production` | `https://apimanagement.education.gov.uk` |
 | `productiondata` | `https://pp-apimanagement.education.gov.uk` |
 
-`Fauapi::PublishCatalogue`:
+`FindAndUseAnApi::PublishCatalogue`:
 
-1. builds one manifest per major from `public/openapi/*.yaml` (`Fauapi::BuildManifests`)
-2. POSTs each to import (`schema.documentContentValue` = base64 OpenAPI YAML) via `Fauapi::Client`
+1. builds one manifest per major from `public/openapi/*.yaml` (`FindAndUseAnApi::BuildManifests`)
+2. POSTs each to import (`schema.documentContentValue` = base64 OpenAPI YAML) via `FindAndUseAnApi::Client`
 3. lists APIs, matches on `name` + `majorVersion`, publishes
 
 Import is idempotent per entry.
@@ -35,9 +35,9 @@ Import is idempotent per entry.
 From a production / productiondata console or Sidekiq UI:
 
 ```ruby
-Fauapi::PublishCatalogueJob.perform_later
+FindAndUseAnApi::PublishCatalogueJob.perform_later
 # or synchronously:
-Fauapi::PublishCatalogueJob.perform_now
+FindAndUseAnApi::PublishCatalogueJob.perform_now
 ```
 
 ## Secrets

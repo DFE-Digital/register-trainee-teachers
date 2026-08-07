@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Fauapi
+module FindAndUseAnApi
   class Client
     class Request
       include HTTParty

@@ -67,5 +67,5 @@ check_rotp_providers:
   queue: default
 publish_fauapi_catalogue:
   cron: "0 5 * * 0" # Every Sunday at 05:00.
-  class: "Fauapi::PublishCatalogueJob"
+  class: "FindAndUseAnApi::PublishCatalogueJob"
   queue: default

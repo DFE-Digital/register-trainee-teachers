@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Fauapi::BuildManifests do
+RSpec.describe FindAndUseAnApi::BuildManifests do
   subject(:manifests) { described_class.call }
 
   it "builds one manifest per academic year major" do

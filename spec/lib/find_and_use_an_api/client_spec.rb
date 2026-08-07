@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Fauapi::Client do
+RSpec.describe FindAndUseAnApi::Client do
   let(:base_url) { Settings.fauapi.base_url }
 
   describe ".import" do
@@ -28,7 +28,7 @@ RSpec.describe Fauapi::Client do
       end
 
       it "raises HttpError" do
-        expect { described_class.import(manifest) }.to raise_error(Fauapi::Client::HttpError, /status: 500/)
+        expect { described_class.import(manifest) }.to raise_error(FindAndUseAnApi::Client::HttpError, /status: 500/)
       end
     end
   end

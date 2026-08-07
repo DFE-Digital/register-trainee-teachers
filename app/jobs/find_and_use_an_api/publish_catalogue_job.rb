@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Fauapi
+module FindAndUseAnApi
   class PublishCatalogueJob < ApplicationJob
     queue_as :default
-    retry_on Fauapi::Client::HttpError
+    retry_on FindAndUseAnApi::Client::HttpError
 
     def perform
       return unless Settings.fauapi.enabled
 
-      Fauapi::PublishCatalogue.call
+      FindAndUseAnApi::PublishCatalogue.call
     end
   end
 end

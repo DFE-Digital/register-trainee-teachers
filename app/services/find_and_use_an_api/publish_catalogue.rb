@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Fauapi
+module FindAndUseAnApi
   class PublishCatalogue
     include ServicePattern
 
     class Error < StandardError; end
 
     def call
-      manifests = Fauapi::BuildManifests.call
+      manifests = FindAndUseAnApi::BuildManifests.call
       raise(Error, "No OpenAPI versions found under public/openapi/") if manifests.empty?
 
       manifests.each { |manifest| publish_manifest!(manifest) }
@@ -17,17 +17,17 @@ module Fauapi
 
     def publish_manifest!(manifest)
       major = manifest.fetch(:majorVersion)
-      Rails.logger.info("FauAPI: importing #{Settings.fauapi.api_name} #{major} → #{Settings.fauapi.base_url}")
+      Rails.logger.info("Find and Use an API: importing #{Settings.fauapi.api_name} #{major} → #{Settings.fauapi.base_url}")
 
-      Fauapi::Client.import(manifest)
+      FindAndUseAnApi::Client.import(manifest)
       api_id = find_entry_id!(major)
-      Fauapi::Client.publish(api_id)
+      FindAndUseAnApi::Client.publish(api_id)
 
-      Rails.logger.info("FauAPI: published id=#{api_id} major=#{major}")
+      Rails.logger.info("Find and Use an API: published id=#{api_id} major=#{major}")
     end
 
     def find_entry_id!(major)
-      matches = Fauapi::Client.list_apis.select do |api|
+      matches = FindAndUseAnApi::Client.list_apis.select do |api|
         api["name"] == Settings.fauapi.api_name && api["majorVersion"] == major
       end
 
