@@ -9,7 +9,7 @@ This API version has been **permanently removed** and is no longer supported.
 
 ## What happened?
 
-API version v2025.0 was discontinued on **3rd August 2026** and all its documentation has been removed. This version is no longer available for use.
+API version v2025.0 was discontinued on **1st August 2026** and all its documentation has been removed. This version is no longer available for use.
 
 ## What should I do?
 
