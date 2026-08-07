@@ -3,12 +3,12 @@
 require "rails_helper"
 
 describe Api::Trainees::WithdrawResponse do
-  let(:version) { "v2025.0" }
+  let(:version) { "v2026.1" }
   let(:withdraw_response) { described_class.call(trainee:, params:, version:) }
   let(:params) do
     {
       reasons:,
-      withdraw_date:,
+      withdrawal_date:,
       trigger:,
       future_interest:,
       another_reason:,
@@ -19,7 +19,7 @@ describe Api::Trainees::WithdrawResponse do
   let(:reasons) { [reason.name] }
   let(:trigger) { "provider" }
   let(:future_interest) { "no" }
-  let(:withdraw_date) { Time.zone.today.iso8601 }
+  let(:withdrawal_date) { Time.zone.today.iso8601 }
   let(:another_reason) { "" }
   let(:safeguarding_concern_reasons) { "" }
 
@@ -37,14 +37,14 @@ describe Api::Trainees::WithdrawResponse do
       expect {
         subject
       } .to change { trainee.reload.current_withdrawal&.trigger }.from(nil).to("provider")
-      .and change { trainee.reload.current_withdrawal&.date&.iso8601 }.from(nil).to(withdraw_date)
+      .and change { trainee.reload.current_withdrawal&.date&.iso8601 }.from(nil).to(withdrawal_date)
       .and change { trainee.reload.current_withdrawal&.future_interest }.from(nil).to("no")
       .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
       .and change { trainee.reload.current_withdrawal_reasons&.pluck(:name) }.from(nil).to(reasons)
     end
 
     it "uses the trainee serializer" do
-      expect(Api::V20250::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
+      expect(Api::V20261::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
       subject
     end
@@ -52,13 +52,13 @@ describe Api::Trainees::WithdrawResponse do
     context "with invalid params" do
       let(:trigger) { nil }
       let(:future_interest) { nil }
-      let(:withdraw_date) { nil }
+      let(:withdrawal_date) { nil }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)
 
         expect(subject[:json][:errors]).to contain_exactly(
-          { error: "UnprocessableEntity", message: "withdraw_date Choose a withdrawal date" },
+          { error: "UnprocessableEntity", message: "withdrawal_date Choose a withdrawal date" },
           { error: "UnprocessableEntity", message: "reasons entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger" },
           { error: "UnprocessableEntity", message: "trigger is not included in the list" },
           { error: "UnprocessableEntity", message: "future_interest is not included in the list" },

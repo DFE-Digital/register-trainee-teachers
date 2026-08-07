@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe Hesa::ReferenceData::V20261 do
   include FileHelper
 
-  it "inherits from V20250" do
-    expect(described_class).to be < Hesa::ReferenceData::V20250
+  it "inherits from Base" do
+    expect(described_class).to be < Hesa::ReferenceData::Base
   end
 
   describe "::entries_for" do

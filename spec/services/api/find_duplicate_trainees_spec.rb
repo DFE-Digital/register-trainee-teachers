@@ -13,9 +13,9 @@ describe Api::FindDuplicateTrainees do
       email: "bob@example.com",
     )
   end
-  let(:version) { "v2025.0" }
+  let(:version) { "v2026.1" }
   let(:trainee_attributes) { Api::GetVersionedItem.for_attributes(model: :Trainee, version: version) }
-  let(:serializer_klass) { Api::V20250::TraineeSerializer }
+  let(:serializer_klass) { Api::V20261::TraineeSerializer }
 
   it "does not return trainees for a different provider" do
     attributes = trainee_attributes.new(
@@ -86,7 +86,7 @@ describe Api::FindDuplicateTrainees do
         trainee_attributes: attributes,
         serializer_klass: serializer_klass,
       ),
-    ).to eq([Api::V20250::TraineeSerializer.new(trainee).as_hash])
+    ).to eq([Api::V20261::TraineeSerializer.new(trainee).as_hash])
   end
 
   it "returns trainees that are an inexact match (different email)" do
@@ -105,7 +105,7 @@ describe Api::FindDuplicateTrainees do
         trainee_attributes: attributes,
         serializer_klass: serializer_klass,
       ),
-    ).to eq([Api::V20250::TraineeSerializer.new(trainee).as_hash])
+    ).to eq([Api::V20261::TraineeSerializer.new(trainee).as_hash])
   end
 
   it "returns trainees that are an inexact match (different first name)" do
@@ -124,7 +124,7 @@ describe Api::FindDuplicateTrainees do
         trainee_attributes: attributes,
         serializer_klass: serializer_klass,
       ),
-    ).to eq([Api::V20250::TraineeSerializer.new(trainee).as_hash])
+    ).to eq([Api::V20261::TraineeSerializer.new(trainee).as_hash])
   end
 
   it "does not return discarded trainees as duplicates" do

@@ -5,19 +5,6 @@ require "rails_helper"
 describe "`GET /reference-data` endpoint" do
   it_behaves_like "a reference data endpoint", "v2026.1"
 
-  context "using version v2025.0", openapi: false do
-    before do
-      get "/api/v2025.0/reference-data"
-    end
-
-    it "returns status code 404" do
-      expect(response).to have_http_status(:not_found)
-      expect(response.parsed_body).to eq(
-        "errors" => [{ "error" => "NotFound", "message" => "Reference data is not available for version 'v2025.0'" }],
-      )
-    end
-  end
-
   context "using version v2026.1", openapi: false do
     before do
       get "/api/v2026.1/reference-data"

@@ -27,7 +27,7 @@ feature "References documentation page for Register API" do
   end
 
   def when_i_click_on_a_link_to_another_version
-    click_on "v2025.0"
+    find_link("v2025.0", href: "./v2025.0/index.html").click
   end
 
   def then_i_should_see_the_api_reference_for_the_other_version
