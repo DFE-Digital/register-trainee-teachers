@@ -237,3 +237,9 @@ school_data:
   downloader:
     base_url: "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata%s.csv"
     timeout: 300
+
+fauapi:
+  enabled: false
+  base_url:
+  api_key:
+  api_name: register-trainee-teachers-api

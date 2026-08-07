@@ -65,3 +65,7 @@ check_rotp_providers:
   cron: "0 6 * * 3" # Every Wednesday at 06:00.
   class: "Rotp::CheckProvidersJob"
   queue: default
+publish_fauapi_catalogue:
+  cron: "0 5 * * 0" # Every Sunday at 05:00.
+  class: "FindAndUseAnApi::PublishCatalogueJob"
+  queue: default

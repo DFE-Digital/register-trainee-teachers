@@ -32,6 +32,10 @@ environment:
   name: beta
   display_name: Beta
 
+fauapi:
+  enabled: true
+  base_url: https://apimanagement.education.gov.uk
+
 google_tag_manager:
   auth_id: XYyafYf931M1IT_2vjH8DA
   env_id: 1
