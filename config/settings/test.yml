@@ -31,3 +31,8 @@ api:
 bulk_update:
   add_trainees:
     version: v2025.0
+
+fauapi:
+  enabled: false
+  base_url: https://fauapi.test.example
+  api_key: test-fauapi-token
