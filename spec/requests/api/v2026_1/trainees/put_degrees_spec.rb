@@ -275,8 +275,44 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         }.not_to change(uk_degree, :attributes)
       end
 
-      context "when the stored country label differs from its HESA display name" do
+      context "when the stored country label is the HESA display name" do
+        let(:non_uk_degree) do
+          build(:degree, :non_uk_degree_with_details, country: "Bolivia [Bolivia, Plurinational State of]")
+        end
+
+        it "returns a 409 (conflict) status", openapi: false do
+          put(
+            "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{uk_degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: {
+              data: degrees_attributes,
+            }.to_json,
+          )
+
+          expect(response).to have_http_status(:conflict)
+        end
+      end
+
+      context "when the stored country label is the service label" do
         let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country: "Bolivia") }
+
+        it "returns a 409 (conflict) status", openapi: false do
+          put(
+            "/api/v2026.1/trainees/#{trainee.slug}/degrees/#{uk_degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: {
+              data: degrees_attributes,
+            }.to_json,
+          )
+
+          expect(response).to have_http_status(:conflict)
+        end
+      end
+
+      context "when the stored subject is a superseded alias" do
+        let(:non_uk_degree) do
+          build(:degree, :non_uk_degree_with_details, subject: "Computing and information technology")
+        end
 
         it "returns a 409 (conflict) status", openapi: false do
           put(
