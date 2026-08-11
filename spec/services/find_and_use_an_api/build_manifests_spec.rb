@@ -6,19 +6,27 @@ RSpec.describe FindAndUseAnApi::BuildManifests do
   subject(:manifests) { described_class.call }
 
   it "builds one manifest per academic year major" do
-    expect(manifests.map { |m| m[:majorVersion] }).to eq(%w[v2025 v2026])
+    expect(manifests.map { |m| m[:majorVersion] }).to eq(%w[v2026])
   end
 
   it "scopes releases to each major and tags the current version Live" do
-    v2025 = manifests.find { |m| m[:majorVersion] == "v2025" }
     v2026 = manifests.find { |m| m[:majorVersion] == "v2026" }
 
-    expect(v2025[:releases]).to contain_exactly(
-      hash_including(name: "v2025.0", tag: "Deprecated", isCurrent: true),
-    )
     expect(v2026[:releases]).to contain_exactly(
       hash_including(name: "v2026.1", tag: "Live", isCurrent: true),
     )
+  end
+
+  context "when the current version is newer than the published schemas" do
+    before { allow(Settings.api).to receive(:current_version).and_return("v2027.0") }
+
+    it "tags the older release Deprecated" do
+      v2026 = manifests.find { |m| m[:majorVersion] == "v2026" }
+
+      expect(v2026[:releases]).to contain_exactly(
+        hash_including(name: "v2026.1", tag: "Deprecated", isCurrent: true),
+      )
+    end
   end
 
   it "embeds base64-encoded OpenAPI yaml for the entry version" do
