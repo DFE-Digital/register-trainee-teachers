@@ -284,7 +284,7 @@ module Api
           HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
         } || {}
         hesa_trainee_detail_attributes["fund_code"] ||=
-          Api::V20250::HesaTraineeDetailSerializer::FUND_CODE_FROM_ELIGIBILITY[trainee.funding_eligibility]
+          HesaTraineeDetailSerializer::FUND_CODE_FROM_ELIGIBILITY[trainee.funding_eligibility]
         hesa_trainee_detail_attributes["course_study_mode"] ||=
           ::Trainees::MapStudyModeToHesa.call(trainee:)
 

@@ -82,7 +82,7 @@ RSpec.describe "Reference data integrity" do
   types.each do |type|
     describe type[:file] do
       let(:data) { load_data(type[:file]) }
-      let(:v25_published) { Hesa::ReferenceData::V20250.all[type[:v25]] }
+      let(:v25_published) { GemPublishedReferenceData.all[type[:v25]] }
       let(:except_codes) { type[:except] || [] }
 
       if type[:entry_count]

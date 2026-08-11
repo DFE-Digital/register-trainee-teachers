@@ -30,11 +30,6 @@ describe BulkUpdate::BulkAddTraineesUploadForm, type: :model do
 
   let(:version) { "v2026.1" }
 
-  before do
-    stub_const("BulkUpdate::AddTrainees::Config::VERSION", "v2026.1")
-    stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20261)
-  end
-
   it { expect(described_class::VERSION).to eq(version) }
 
   context "when file is missing" do

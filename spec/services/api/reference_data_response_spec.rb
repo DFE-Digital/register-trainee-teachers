@@ -13,11 +13,11 @@ RSpec.describe Api::ReferenceDataResponse do
       end
     end
 
-    context "with an unsupported version" do
-      it "raises UnsupportedVersionError" do
-        expect(Hesa::ReferenceData::V20250).not_to respond_to(:api_payload)
+    context "with a version that publishes no reference data" do
+      before { stub_const("Hesa::ReferenceData::V20270", Class.new) }
 
-        expect { described_class.call(version: "v2025.0") }
+      it "raises UnsupportedVersionError" do
+        expect { described_class.call(version: "v2027.0") }
           .to raise_error(described_class::UnsupportedVersionError)
       end
     end

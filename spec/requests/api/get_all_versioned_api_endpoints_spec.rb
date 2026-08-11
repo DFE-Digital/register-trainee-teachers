@@ -12,12 +12,6 @@ paths = Rails.application.routes.routes.select { |route| route.verb == "GET" && 
   .select { |path| paths_to_exclude.exclude?(path) }
 
 describe "GET all versioned api endpoints" do
-  context "Version v2025.0" do
-    paths.each do |path|
-      it_behaves_like "register versioned api GET request", "v2025.0", path, true
-    end
-  end
-
   context "Version v2026.1" do
     paths.each do |path|
       it_behaves_like "register versioned api GET request", "v2026.1", path, true

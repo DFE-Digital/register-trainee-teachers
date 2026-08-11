@@ -4,14 +4,11 @@ module Api
   module TraineeStateRestriction
     extend ActiveSupport::Concern
 
-    UNRESTRICTED_VERSIONS = %w[v2025.0].freeze
     RESTRICTED_STATES = %w[recommended_for_award withdrawn awarded].freeze
 
   private
 
     def restrict_awarded_trainee_modification!
-      return if UNRESTRICTED_VERSIONS.include?(version)
-
       if RESTRICTED_STATES.include?(trainee.state)
         render(**transition_error_response)
       end
