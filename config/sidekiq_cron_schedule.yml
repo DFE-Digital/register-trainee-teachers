@@ -3,6 +3,10 @@ delete_cancelled_and_failed_bulk_update_trainee_uploads:
   cron: "0 0 1 * *" # Every month at 00:00 (midnight).
   class: "BulkUpdate::AddTrainees::RemoveCancelledAndFailedJob"
   queue: default
+discard_inactive_users:
+  cron: "0 0 1 * *" # Every month at 00:00 (midnight).
+  class: "DiscardInactiveUsersJob"
+  queue: default
 
 # Jobs that run multiple times a day, sorted by frequency
 malware_scan_uploads:
