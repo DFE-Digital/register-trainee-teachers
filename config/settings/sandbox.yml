@@ -38,3 +38,7 @@ api:
 bulk_update:
   add_trainees:
     version: v2026.1
+
+fauapi:
+  enabled: true
+  base_url: https://pp-apimanagement.education.gov.uk
