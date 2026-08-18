@@ -26,13 +26,7 @@ module Api
       end
 
       def withdrawal_params
-        params.expect(data: allowed_withdrawal_params)
-      end
-
-      def allowed_withdrawal_params
-        return [:withdraw_date, :withdrawal_date, :trigger, :future_interest, :another_reason, :safeguarding_concern_reasons, { reasons: [] }] if version.match?(/2025/)
-
-        [:withdrawal_date, :trigger, :future_interest, :another_reason, :safeguarding_concern_reasons, { reasons: [] }]
+        params.expect(data: attributes_klass::ATTRIBUTES - [:reasons] + [{ reasons: [] }])
       end
     end
   end
