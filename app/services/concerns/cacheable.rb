@@ -9,13 +9,21 @@ module Cacheable
     class << self
       def get(id, key)
         value = redis.get(cache_key_for(id, key))
-        JSON.parse(value) if value.present?
+
+        if value.present?
+          track_read(key, :redis_hit)
+          JSON.parse(value)
+        else
+          track_read(key, :miss)
+          nil
+        end
       end
 
       def set(id, key, values)
         raise(InvalidKeyError) unless self::FORM_SECTION_KEYS.include?(key)
 
         redis.set(cache_key_for(id, key), values.to_json)
+        track_write(key, :redis)
 
         true
       end
@@ -36,6 +44,14 @@ module Cacheable
 
       def redis
         RedisSetup::RedisClient.current
+      end
+
+      def track_read(key, outcome)
+        Yabeda.form_store.reads_total.increment({ key:, outcome: })
+      end
+
+      def track_write(key, backend)
+        Yabeda.form_store.writes_total.increment({ key:, backend: })
       end
     end
   end
