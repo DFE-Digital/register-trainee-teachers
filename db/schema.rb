@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_09_164710) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_14_141525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -782,6 +782,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_164710) do
     t.index ["provider_id", "academic_cycle_id", "sign_off_type"], name: "idx_on_provider_id_academic_cycle_id_sign_off_type_fc3b6ade67", unique: true
     t.index ["provider_id"], name: "index_sign_offs_on_provider_id"
     t.index ["user_id"], name: "index_sign_offs_on_user_id"
+  end
+
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.integer "byte_size", null: false
+    t.datetime "created_at", null: false
+    t.binary "key", null: false
+    t.bigint "key_hash", null: false
+    t.binary "value", null: false
+    t.index ["byte_size"], name: "index_solid_cache_entries_on_byte_size"
+    t.index ["key_hash", "byte_size"], name: "index_solid_cache_entries_on_key_hash_and_byte_size"
+    t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
   end
 
   create_table "subject_specialisms", force: :cascade do |t|
