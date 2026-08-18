@@ -5,16 +5,53 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 3
+  groups:
+    production-minor-and-patch:
+      dependency-type: production
+      update-types:
+      - minor
+      - patch
+    development-dependencies:
+      dependency-type: development
+- package-ecosystem: bundler
+  directory: "/tech_docs"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  cooldown:
+    default-days: 3
+  groups:
+    tech-docs:
+      patterns:
+      - "*"
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 3
+  groups:
+    production-minor-and-patch:
+      dependency-type: production
+      update-types:
+      - minor
+      - patch
+    development-dependencies:
+      dependency-type: development
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 3
+  groups:
+    actions:
+      patterns:
+      - "*"
   labels:
   - DevOps
   - dependencies

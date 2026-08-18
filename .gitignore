@@ -85,7 +85,7 @@ Caddyfile
 !/app/assets/builds/.keep
 .rspec-local
 
-# Generated FauAPI manifest (built by bin/generate_fauapi_manifest, used in CI)
+# Generated FauAPI manifests (local inspection only, if written)
 /public/fauapi
 
 # Ignore docs

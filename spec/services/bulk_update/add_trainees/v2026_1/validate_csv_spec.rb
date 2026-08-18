@@ -22,8 +22,6 @@ module BulkUpdate
       let(:record) { ::BulkUpdate::BulkAddTraineesUploadForm.new(file:) }
 
       before do
-        stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20261)
-
         service.validate!
       end
 

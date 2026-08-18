@@ -33,8 +33,12 @@ google:
     entity_table_checks_enabled: false
 
 api:
-  allowed_versions: [v2025.0-rc, v2025.0, v2026.1]
+  allowed_versions: [v2026.1]
 
 bulk_update:
   add_trainees:
     version: v2026.1
+
+fauapi:
+  enabled: true
+  base_url: https://pp-apimanagement.education.gov.uk

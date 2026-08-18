@@ -45,6 +45,117 @@ paths:
                 version:
                   requested: v2026.1
                   latest: v2025.0
+  "/api/{api_version}/reference-data":
+    get:
+      summary: show
+      tags:
+      - Api::ReferenceDatum
+      parameters:
+      - name: api_version
+        in: path
+        required: true
+        schema:
+          type: string
+        example: v2026.1
+      - name: field
+        in: query
+        required: false
+        schema:
+          type: string
+        example: sex
+      responses:
+        '200':
+          description: returns the unwrapped field payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metadata:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      display_name:
+                        type: string
+                      description:
+                        type: string
+                    required:
+                    - name
+                    - display_name
+                    - description
+                  entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        display_name:
+                          type: string
+                        start_year:
+                          type: 'null'
+                        end_year:
+                          type: 'null'
+                      required:
+                      - code
+                      - display_name
+                      - start_year
+                      - end_year
+                required:
+                - metadata
+                - entries
+              example:
+                metadata:
+                  name: sex
+                  display_name: Sex
+                  description: ''
+                entries:
+                - code: '10'
+                  display_name: Female
+                  start_year:
+                  end_year:
+                - code: '11'
+                  display_name: Male
+                  start_year:
+                  end_year:
+                - code: '12'
+                  display_name: Other
+                  start_year:
+                  end_year:
+                - code: '96'
+                  display_name: Information refused
+                  start_year:
+                  end_year:
+                - code: '99'
+                  display_name: Not available
+                  start_year:
+                  end_year:
+        '404':
+          description: unknown field
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - error
+                      - message
+                required:
+                - errors
+              example:
+                errors:
+                - error: NotFound
+                  message: Reference data field 'bogus' not found
   "/api/{api_version}/trainees":
     get:
       summary: index

@@ -5,7 +5,7 @@ require "rails_helper"
 feature "Search users" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
-    let!(:second_user) { create(:user, system_admin: true) }
+    let!(:second_user) { create(:user, system_admin: true, email: "j.smith@mdx.ac.uk") }
 
     before do
       given_i_am_authenticated(user:)

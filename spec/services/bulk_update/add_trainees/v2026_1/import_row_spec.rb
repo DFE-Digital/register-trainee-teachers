@@ -6,8 +6,6 @@ module BulkUpdate
   module AddTrainees
     RSpec.describe V20261::ImportRow do
       before do
-        stub_const("BulkUpdate::AddTrainees::Config::VERSION", "v2026.1")
-        stub_const("BulkUpdate::AddTrainees::VERSION", BulkUpdate::AddTrainees::V20261)
         create(
           :subject_specialism,
           allocation_subject: allocation_subject,

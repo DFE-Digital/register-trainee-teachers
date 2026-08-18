@@ -43,7 +43,7 @@ gem "stackprof"
 # Logging
 gem "amazing_print", "~> 2.0"
 
-gem "rails_semantic_logger", "~> 4.20.0"
+gem "rails_semantic_logger", "5.0.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -208,7 +208,7 @@ group :test do
 
   gem "shoulda-matchers", "~> 8.0"
   # Code coverage reporter
-  gem "simplecov", "~> 1.0.3", require: false
+  gem "simplecov", "~> 1.1.1", require: false
   gem "simplecov-json"
 
   # Page objects
