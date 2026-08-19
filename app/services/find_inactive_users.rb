@@ -5,7 +5,7 @@ class FindInactiveUsers
 
   attr_reader :cutoff
 
-  def initialize(cutoff: Settings.user_clean_up.inactive_after_days.days.ago)
+  def initialize(cutoff: Settings.discard_inactive_users.inactive_after_days.days.ago)
     @cutoff = cutoff
   end
 

@@ -134,7 +134,7 @@ cookies:
 session_store:
   expire_after_days: 30
 
-user_clean_up:
+discard_inactive_users:
   inactive_after_days: 365
 
 teacher_training_api:

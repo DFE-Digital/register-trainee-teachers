@@ -5,7 +5,7 @@ require "rails_helper"
 describe DiscardInactiveUsersJob do
   include ActiveJob::TestHelper
 
-  let(:cutoff) { Settings.user_clean_up.inactive_after_days.days.ago }
+  let(:cutoff) { Settings.discard_inactive_users.inactive_after_days.days.ago }
 
   let!(:inactive_user) { create(:user, last_signed_in_at: cutoff - 1.day) }
   let!(:active_user) { create(:user, last_signed_in_at: cutoff + 1.day) }

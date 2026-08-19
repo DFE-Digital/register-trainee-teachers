@@ -51,7 +51,7 @@ describe FindInactiveUsers do
 
   context "when no cutoff is given" do
     let!(:user) do
-      create(:user, last_signed_in_at: (Settings.user_clean_up.inactive_after_days + 1).days.ago)
+      create(:user, last_signed_in_at: (Settings.discard_inactive_users.inactive_after_days + 1).days.ago)
     end
 
     it "defaults to the configured inactivity period" do
