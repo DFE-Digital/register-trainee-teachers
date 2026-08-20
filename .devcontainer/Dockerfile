@@ -22,6 +22,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
       libpq \
       yarn \
       shared-mime-info \
+      'sqlite-libs>=3.53.4-r0' \
       git \
       libc6-compat \
       yaml-dev \

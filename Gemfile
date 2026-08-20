@@ -43,7 +43,7 @@ gem "stackprof"
 # Logging
 gem "amazing_print", "~> 2.0"
 
-gem "rails_semantic_logger", "~> 5.1.0"
+gem "rails_semantic_logger", "5.0.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -115,7 +115,7 @@ gem "govuk_markdown"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.9.0"
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.10.0"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.17"

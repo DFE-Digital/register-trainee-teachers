@@ -134,6 +134,9 @@ cookies:
 session_store:
   expire_after_days: 30
 
+discard_inactive_users:
+  inactive_after_days: 365
+
 teacher_training_api:
   base_url: "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1"
 
