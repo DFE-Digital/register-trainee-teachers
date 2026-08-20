@@ -31,7 +31,10 @@
 #  dttp_update_sha                 :string
 #  ebacc                           :boolean          default(FALSE)
 #  email                           :text
+#  employing_school_name           :string
 #  employing_school_not_applicable :boolean          default(FALSE)
+#  employing_school_postcode       :string
+#  employing_school_urn            :string
 #  ethnic_background               :text
 #  ethnic_group                    :integer
 #  first_names                     :text
@@ -613,6 +616,9 @@ private
 
   def clear_employing_school_id
     self.employing_school_id = nil
+    self.employing_school_name = nil
+    self.employing_school_urn = nil
+    self.employing_school_postcode = nil
   end
 
   def clear_training_partner_id

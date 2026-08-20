@@ -33,6 +33,10 @@
 
       component.with_row(**row_helper(@trainee, :training_details).except(:hint_text))
 
+      if @trainee.requires_assessment_only_employing_school?
+        component.with_row(**row_helper(@trainee, :employing_school_details))
+      end
+
       if @trainee.requires_training_partner?
         component.with_row(**row_helper(@trainee, :training_partner_and_employing_school_details))
       end

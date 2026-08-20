@@ -47,7 +47,11 @@ module Trainees
     def form_klass
       case trainee_section_key
       when SCHOOLS_KEY
-        Schools::FormValidator
+        if trainee.requires_assessment_only_employing_school?
+          Schools::AssessmentOnlyEmployingSchoolForm
+        else
+          Schools::FormValidator
+        end
       when FUNDING_KEY
         ::Funding::FormValidator
       else
@@ -70,17 +74,20 @@ module Trainees
     end
 
     def confirm_section_title
-      @confirm_section_title ||= {
-        training_details: "trainee ID",
-        degrees: "degree details",
-        placements: "placement details",
-        funding: "funding details",
-        course_details: "trainee's course details",
-        publish_course_details: "trainee's course details",
-        trainee_start_status: "start date",
-        iqts_country: "international training details",
-        schools: "training partners",
-      }[trainee_section_key.to_sym] || trainee_section_key.gsub("_", " ").gsub("id", "ID")
+      @confirm_section_title ||= begin
+        titles = {
+          training_details: "trainee ID",
+          degrees: "degree details",
+          placements: "placement details",
+          funding: "funding details",
+          course_details: "trainee's course details",
+          publish_course_details: "trainee's course details",
+          trainee_start_status: "start date",
+          iqts_country: "international training details",
+          schools: trainee.requires_assessment_only_employing_school? ? "employing school" : "training partners",
+        }
+        titles[trainee_section_key.to_sym] || trainee_section_key.gsub("_", " ").gsub("id", "ID")
+      end
     end
 
     def flash_message_title
@@ -107,7 +114,15 @@ module Trainees
     end
 
     def build_form
-      trainee_section_key == SCHOOLS_KEY ? form_klass.new(trainee, non_search_validation: true) : form_klass.new(trainee)
+      if trainee_section_key == SCHOOLS_KEY
+        if trainee.requires_assessment_only_employing_school?
+          form_klass.new(trainee)
+        else
+          form_klass.new(trainee, non_search_validation: true)
+        end
+      else
+        form_klass.new(trainee)
+      end
     end
   end
 end

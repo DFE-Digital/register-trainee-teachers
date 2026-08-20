@@ -206,7 +206,7 @@ module RecordDetails
     def change_paths(school_type)
       {
         training_partner: edit_trainee_training_partners_details_path(trainee),
-        employing: edit_trainee_employing_schools_details_path(trainee),
+        employing: trainee.requires_assessment_only_employing_school? ? edit_trainee_employing_schools_path(trainee) : edit_trainee_employing_schools_details_path(trainee),
       }[school_type.to_sym]
     end
   end

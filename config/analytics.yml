@@ -292,7 +292,10 @@ shared:
     - ebacc
     - email
     - employing_school_id
+    - employing_school_name
     - employing_school_not_applicable
+    - employing_school_postcode
+    - employing_school_urn
     - end_academic_cycle_id
     - ethnic_background
     - ethnic_group

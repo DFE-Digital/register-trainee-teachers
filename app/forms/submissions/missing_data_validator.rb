@@ -14,6 +14,7 @@ module Submissions
 
     missing_data_validator :trainee_start_date, form: "TraineeStartDateForm", if: :course_already_started?
     missing_data_validator :placements, form: "PlacementsForm", if: :requires_placements?
+    missing_data_validator :employing_school, form: "Schools::AssessmentOnlyEmployingSchoolForm", if: :requires_assessment_only_employing_school?
 
     def missing_fields
       forms.map(&:missing_fields).tap do |fields|
@@ -29,6 +30,10 @@ module Submissions
       @forms ||= validator_keys.map { |key| validator(key) }
     end
 
+    def optional_fields
+      OPTIONAL_FIELDS
+    end
+
   private
 
     def degrees_form
@@ -36,7 +41,7 @@ module Submissions
     end
 
     def submission_ready
-      errors.add(:trainee, :incomplete) unless missing_fields.excluding(OPTIONAL_FIELDS).empty?
+      errors.add(:trainee, :incomplete) unless missing_fields.excluding(optional_fields).empty?
     end
   end
 end

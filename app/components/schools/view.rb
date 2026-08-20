@@ -19,6 +19,8 @@ module Schools
       data_model.is_a?(Trainee) ? data_model : data_model.trainee
     end
 
+    attr_reader :employing_school
+
     def school_rows
       [
         training_partner_row(not_applicable: training_partner_not_applicable?),
@@ -26,9 +28,17 @@ module Schools
       ].compact
     end
 
+    def summary_title
+      if trainee.requires_assessment_only_employing_school?
+        t("schools.view.employing_school")
+      else
+        t(".summary_title")
+      end
+    end
+
   private
 
-    attr_accessor :data_model, :training_partner, :employing_school, :has_errors, :editable, :header_level
+    attr_accessor :data_model, :training_partner, :has_errors, :editable, :header_level
 
     def training_partner_not_applicable?
       if data_model.is_a?(Schools::FormValidator)
@@ -49,7 +59,7 @@ module Schools
     def change_paths(school_type)
       {
         training_partner: edit_trainee_training_partners_details_path(trainee),
-        employing: edit_trainee_employing_schools_details_path(trainee),
+        employing: trainee.requires_assessment_only_employing_school? ? edit_trainee_employing_schools_path(trainee) : edit_trainee_employing_schools_details_path(trainee),
       }[school_type.to_sym]
     end
 

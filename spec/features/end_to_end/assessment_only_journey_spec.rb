@@ -17,7 +17,7 @@ feature "assessment-only end-to-end journey" do
     and_the_trainee_id_is_complete
     and_the_funding_details_is_complete
     and_the_draft_record_has_been_reviewed
-    and_all_sections_are_complete
+    expect(page).not_to have_text("This trainee record is not complete and cannot be submitted for TRN")
     when_i_submit_for_trn
     then_i_am_redirected_to_the_trn_success_page
   end

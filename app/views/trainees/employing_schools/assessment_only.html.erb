@@ -1,0 +1,68 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.employing_schools.edit_assessment_only", has_errors: @employing_school_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<%= register_form_with model: @employing_school_form, url: trainee_employing_schools_path(@trainee), local: true,
+                       html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= render TraineeName::View.new(@trainee) %>
+
+      <h1 class="govuk-heading-l"><%= t("trainees.employing_schools.edit_assessment_only.heading") %></h1>
+      <p class="govuk-body"><%= t("trainees.employing_schools.edit_assessment_only.lede") %></p>
+
+      <%= f.hidden_field :employing_school_id, id: "school-id" %>
+
+      <%= f.govuk_text_field(
+        :query,
+        label: { text: t("trainees.employing_schools.edit_assessment_only.search_label"), size: "s" },
+        value: query,
+        "data-field" => "schools-autocomplete",
+        width: "three-quarters",
+      ) %>
+
+      <div id="schools-autocomplete-element"
+           class="govuk-!-width-three-quarters"
+           data-default-value="<%= @employing_school_form.school_name %>"
+           data-field-name="schools_assessment_only_employing_school_form[query]"></div>
+
+      <%= govuk_details(
+        summary_text: t("trainees.employing_schools.edit_assessment_only.not_listed"),
+        open: @employing_school_form.open_details?,
+      ) do %>
+        <%= f.govuk_text_field(
+          :employing_school_name,
+          label: { text: t("trainees.employing_schools.edit_assessment_only.school_name"), size: "s" },
+          width: "two-thirds",
+          autocomplete: :off,
+        ) %>
+
+        <%= f.govuk_text_field(
+          :employing_school_urn,
+          label: { text: t("trainees.employing_schools.edit_assessment_only.school_urn"), size: "s" },
+          width: "one-third",
+          autocomplete: :off,
+        ) %>
+
+        <%= f.govuk_text_field(
+          :employing_school_postcode,
+          label: { text: t("trainees.employing_schools.edit_assessment_only.postcode"), size: "s" },
+          class: "govuk-input--width-10 app-!-uppercase",
+          autocomplete: :off,
+        ) %>
+      <% end %>
+
+      <%= t("trainees.employing_schools.edit_assessment_only.gias_help_html").html_safe %>
+
+      <%= f.govuk_submit t("continue") %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @trainee.draft? %>
+  <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+<% end %>
