@@ -76,6 +76,7 @@ module Schools
 
     def fetch_training_partner
       return data_model.training_partner if data_model.respond_to?(:training_partner)
+      return unless data_model.respond_to?(:training_partner_id)
 
       fetch_training_partner_record(data_model.training_partner_id)
     end

@@ -147,6 +147,12 @@ module Sections
 
         it_behaves_like renders_confirmation, :schools
       end
+
+      context "assessment only employing school" do
+        let(:trainee) { create(:trainee, :completed, :with_employing_school) }
+
+        it_behaves_like renders_confirmation, :schools
+      end
     end
 
     def expected_title(section, status)

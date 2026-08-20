@@ -453,6 +453,7 @@ FactoryBot.define do
 
     trait :submitted_for_trn do
       completed
+      with_employing_school
       dttp_id { SecureRandom.uuid }
       submitted_for_trn_at { Time.zone.now }
       state { "submitted_for_trn" }

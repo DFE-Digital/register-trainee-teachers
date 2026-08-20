@@ -101,7 +101,7 @@ module Submissions
       end
 
       context "Trainee with a missing employing school" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_training_partner) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_training_partner, employing_school: nil) }
 
         it "doesn't cause validation errors" do
           expect(subject.valid?).to be(true)
@@ -109,7 +109,7 @@ module Submissions
       end
 
       context "assessment only trainee with a missing employing school" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, employing_school: nil) }
 
         it "causes validation errors" do
           expect(subject.valid?).to be(false)

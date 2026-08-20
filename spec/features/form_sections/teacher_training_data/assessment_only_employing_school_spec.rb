@@ -71,7 +71,7 @@ feature "assessment only employing school" do
   end
 
   scenario "registered trainee cannot be recommended for award without an employing school" do
-    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, employing_school: nil)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     then_i_see_the_award_is_blocked_for_employing_school
