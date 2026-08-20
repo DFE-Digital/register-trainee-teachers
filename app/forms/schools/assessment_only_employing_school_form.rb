@@ -83,13 +83,11 @@ module Schools
     end
 
     def apply_gias_or_manual
-      if prefer_manual_entry?
-        self.employing_school_id = nil
-      elsif school_id.to_i.positive?
+      if school_id.to_i.positive? && !prefer_manual_entry?
         self.employing_school_name = nil
         self.employing_school_urn = nil
         self.employing_school_postcode = nil
-      elsif !results_search_id?
+      elsif prefer_manual_entry? || !results_search_id?
         self.employing_school_id = nil
       end
 
