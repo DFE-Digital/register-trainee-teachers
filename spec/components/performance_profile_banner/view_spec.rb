@@ -54,7 +54,7 @@ describe PerformanceProfileBanner::View do
     end
 
     it "renders the link correctly" do
-      expect(@result).to have_link("Sign off your performance profile", href: "/reports/performance-profiles")
+      expect(@result).to have_link("Sign off your ITT performance profile", href: "/reports/performance-profiles")
     end
   end
 end

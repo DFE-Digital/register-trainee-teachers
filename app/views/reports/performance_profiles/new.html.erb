@@ -21,7 +21,7 @@
         Once you’ve checked your data is correct, you can sign off on behalf of your organisation.
       </p>
 
-      <%= govuk_summary_card(title: "Performance profile information") do |card|
+      <%= govuk_summary_card(title: "ITT performance profile information") do |card|
             card.with_summary_list(rows: [
             { key: { text: "Provider name" }, value: { text: current_user.organisation.name } },
             { key: { text: "UKPRN" }, value: { text: @current_user.organisation.ukprn } },
@@ -33,7 +33,7 @@
         <%= f.govuk_check_box(:sign_off, "confirmed", "not_confirmed", multiple: false, link_errors: true, label: { text: "Yes, the trainee data is correct to the best of my knowledge" }) %>
       <% end %>
 
-      <%= f.govuk_submit("Sign off performance profile") %>
+      <%= f.govuk_submit("Sign off ITT performance profile") %>
     </div>
   </div>
 <%- end -%>

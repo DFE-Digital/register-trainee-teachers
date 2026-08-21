@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Export trainee data for the #{@previous_academic_cycle_label} performance profile sign off") %>
+<%= render PageTitle::View.new(text: "Export trainee data for the #{@previous_academic_cycle_label} ITT performance profile sign off") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -10,10 +10,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
-      Export trainee data for the <%= @previous_academic_cycle_label %> performance profile sign off
+      Export trainee data for the <%= @previous_academic_cycle_label %> ITT performance profile sign off
     </h1>
     <p class="govuk-body">
-      Signing off your list of trainees for the performance profiles publication deadline is <%= @previous_academic_cycle.end_date_of_performance_profile.strftime(Date::DATE_FORMATS[:govuk]) %>.
+      Signing off your list of trainees for the ITT performance profiles publication deadline is <%= @previous_academic_cycle.end_date_of_performance_profile.strftime(Date::DATE_FORMATS[:govuk]) %>.
     </p>
 
     <p class="govuk-body">
@@ -63,7 +63,7 @@
     </p>
 
     <p class="govuk-body">
-      Find out more on <%= govuk_link_to("Signing off your list of trainees for the performance profiles publication", performance_profiles_guidance_path) %> and <%= govuk_link_to("managing your trainee placement data", manage_placements_guidance_path) %>.
+      Find out more on <%= govuk_link_to("Signing off your list of trainees for the ITT performance profiles publication", performance_profiles_guidance_path) %> and <%= govuk_link_to("managing your trainee placement data", manage_placements_guidance_path) %>.
     </p>
 
     <h2 class="govuk-heading-m">
@@ -72,6 +72,6 @@
     <p class="govuk-body">
       If you have checked your data.
     </p>
-    <%= govuk_button_link_to("Continue to performance profile sign off", new_reports_performance_profile_path)%>
+    <%= govuk_button_link_to("Continue to ITT performance profile sign off", new_reports_performance_profile_path)%>
   </div>
 </div>

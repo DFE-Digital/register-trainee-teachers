@@ -34,7 +34,7 @@ feature "performance profile banner" do
         given_i_am_authenticated
         when_i_am_on_the_root_page
         then_i_can_see_the_performance_profile_banner
-        and_i_click_on("Sign off your performance profile")
+        and_i_click_on("Sign off your ITT performance profile")
         and_i_am_on_the_sign_off_your_performance_profile_page
       end
     end
