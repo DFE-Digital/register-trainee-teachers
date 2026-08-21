@@ -1,9 +1,11 @@
 default: &default
   store_options:
-    # Cap age of oldest cache entry to fulfill retention policies
-    # max_age: <%= 60.days.to_i %>
+    # No age expiry, matching the Redis cache this replaces.
+    # The gem defaults to 2 weeks when it is absent.
+    max_age: <%= nil %>
     max_size: <%= 256.megabytes %>
     namespace: <%= Rails.env %>
+    expiry_method: :job
 
 development:
   <<: *default
