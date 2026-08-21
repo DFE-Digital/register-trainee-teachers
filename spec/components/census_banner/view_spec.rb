@@ -54,7 +54,7 @@ describe CensusBanner::View do
     end
 
     it "renders the link correctly" do
-      expect(@result).to have_link("Sign off your census trainee data", href: "/reports/censuses")
+      expect(@result).to have_link("Sign off your ITT census trainee data", href: "/reports/censuses")
     end
   end
 end
