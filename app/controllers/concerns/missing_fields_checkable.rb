@@ -14,7 +14,7 @@ private
   end
 
   def required_missing_fields
-    @required_missing_fields ||= missing_fields.excluding(missing_data_validator.optional_fields)
+    @required_missing_fields ||= missing_fields.excluding(Submissions::MissingDataValidator::OPTIONAL_FIELDS)
   end
 
   def missing_data_validator

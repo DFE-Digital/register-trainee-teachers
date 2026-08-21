@@ -3,20 +3,20 @@
 module Schools
   class AssessmentOnlyEmployingSchoolForm < TraineeForm
     URN_REGEX = /^[0-9]{6}$/
-
-    FIELDS = %i[
-      employing_school_id
+    SEARCH_AGAIN_IDS = %w[results_search_again no_results_search_again].freeze
+    MANUAL_FIELDS = %i[
       employing_school_name
       employing_school_urn
       employing_school_postcode
     ].freeze
+
+    FIELDS = [:employing_school_id, *MANUAL_FIELDS].freeze
 
     NON_TRAINEE_FIELDS = %i[
       query
       results_search_again_query
       no_results_search_again_query
       search_results_found
-      employing_school_not_applicable
     ].freeze
 
     attr_accessor(*(FIELDS + NON_TRAINEE_FIELDS))
@@ -37,11 +37,6 @@ module Schools
     validate :urn_valid
     validate :postcode_valid, if: :manual_entry?
 
-    def initialize(trainee, params: {}, user: nil, store: FormStore, update_trs: true)
-      super
-      apply_gias_or_manual
-    end
-
     def school_name
       return if school_id.to_i.zero?
 
@@ -49,8 +44,7 @@ module Schools
     end
 
     def open_details?
-      manual_entry? ||
-        %i[employing_school_name employing_school_urn employing_school_postcode].intersect?(errors.attribute_names)
+      manual_entry? || MANUAL_FIELDS.intersect?(errors.attribute_names)
     end
 
     def needs_search_results?
@@ -68,53 +62,34 @@ module Schools
       school_id == "no_results_search_again"
     end
 
-    def training_partner_not_applicable?
-      false
-    end
-
-    def employing_school_not_applicable?
-      false
-    end
-
   private
 
     def compute_fields
-      trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
-    end
-
-    def apply_gias_or_manual
-      if school_id.to_i.positive? && !prefer_manual_entry?
-        self.employing_school_name = nil
-        self.employing_school_urn = nil
-        self.employing_school_postcode = nil
-      elsif prefer_manual_entry? || !results_search_id?
-        self.employing_school_id = nil
-      end
-
-      fields.merge!(
-        employing_school_id:,
-        employing_school_name:,
-        employing_school_urn:,
-        employing_school_postcode:,
+      apply_gias_or_manual(
+        trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes),
       )
     end
 
-    def prefer_manual_entry?
-      return false unless manual_fields_present?
+    # Hidden school_id after Change still matches the trainee, so manual wins.
+    def apply_gias_or_manual(attrs)
+      school_id = attrs[:employing_school_id]
+      return attrs if SEARCH_AGAIN_IDS.include?(school_id.to_s)
+
+      if school_id.to_i.positive? && !rely_on_manual_entry?(attrs, school_id)
+        attrs.merge(MANUAL_FIELDS.index_with { nil })
+      else
+        attrs.merge(employing_school_id: nil)
+      end
+    end
+
+    def rely_on_manual_entry?(attrs, school_id)
+      return false unless MANUAL_FIELDS.any? { |field| attrs[field].present? }
 
       school_id.blank? || school_id.to_s == trainee.employing_school_id.to_s
     end
 
-    def manual_fields_present?
-      [employing_school_name, employing_school_urn, employing_school_postcode].any?(&:present?)
-    end
-
     def manual_entry?
-      school_id.to_i.zero? && manual_fields_present?
-    end
-
-    def results_search_id?
-      %w[results_search_again no_results_search_again].include?(school_id.to_s)
+      school_id.to_i.zero? && MANUAL_FIELDS.any? { |field| public_send(field).present? }
     end
 
     def search_query

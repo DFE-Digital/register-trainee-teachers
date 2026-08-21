@@ -14,7 +14,7 @@ class MissingDataBannerView
   end
 
   def header
-    if @missing_fields&.excluding(optional_fields).blank?
+    if @missing_fields&.excluding(Submissions::MissingDataValidator::OPTIONAL_FIELDS).blank?
       I18n.t("views.missing_data_banner_view.header.optional_only", award_type: trainee.award_type)
     else
       I18n.t("views.missing_data_banner_view.header.default", award_type: trainee.award_type)
@@ -79,10 +79,6 @@ private
 
   def display_name(field)
     I18n.t("views.missing_data_view.missing_fields_mapping.#{field}")
-  end
-
-  def optional_fields
-    Submissions::MissingDataValidator.new(trainee:).optional_fields
   end
 
   def employing_school_missing_field?(field)

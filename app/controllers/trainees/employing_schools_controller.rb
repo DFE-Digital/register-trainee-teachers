@@ -7,8 +7,6 @@ module Trainees
 
     helper_method :query
 
-    def index; end
-
     def edit
       render(:assessment_only) if trainee.requires_assessment_only_employing_school?
     end

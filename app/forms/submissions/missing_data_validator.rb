@@ -30,10 +30,6 @@ module Submissions
       @forms ||= validator_keys.map { |key| validator(key) }
     end
 
-    def optional_fields
-      OPTIONAL_FIELDS
-    end
-
   private
 
     def degrees_form
@@ -41,7 +37,7 @@ module Submissions
     end
 
     def submission_ready
-      errors.add(:trainee, :incomplete) unless missing_fields.excluding(optional_fields).empty?
+      errors.add(:trainee, :incomplete) unless missing_fields.excluding(OPTIONAL_FIELDS).empty?
     end
   end
 end

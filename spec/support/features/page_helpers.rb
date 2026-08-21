@@ -346,6 +346,10 @@ module Features
       @employing_schools_search_page ||= PageObjects::Trainees::EmployingSchoolsSearch.new
     end
 
+    def assessment_only_employing_schools_search_page
+      @assessment_only_employing_schools_search_page ||= PageObjects::Trainees::AssessmentOnlyEmployingSchoolsSearch.new
+    end
+
     def edit_training_partner_page
       @edit_training_partner_page ||= PageObjects::Trainees::EditTrainingPartner.new
     end

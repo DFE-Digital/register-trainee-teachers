@@ -104,7 +104,7 @@ private
   end
 
   def and_i_choose_the_school_from_the_results
-    employing_schools_search_page.choose_school(id: @school.id)
+    assessment_only_employing_schools_search_page.choose_school(id: @school.id)
   end
 
   def and_i_continue
@@ -124,7 +124,7 @@ private
   end
 
   def then_i_see_the_selected_school_rehydrated
-    expect(find(:xpath, "//input[@name='schools_assessment_only_employing_school_form[employing_school_id]']", visible: false).value).to eq(@school.id.to_s)
+    expect(edit_employing_school_page.school_id.value).to eq(@school.id.to_s)
   end
 
   def then_the_employing_school_section_is_completed

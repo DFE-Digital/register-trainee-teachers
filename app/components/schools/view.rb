@@ -43,7 +43,7 @@ module Schools
     def training_partner_not_applicable?
       if data_model.is_a?(Schools::FormValidator)
         data_model.training_partner_form.training_partner_not_applicable?
-      else
+      elsif data_model.respond_to?(:training_partner_not_applicable?)
         data_model.training_partner_not_applicable?
       end
     end
@@ -51,7 +51,7 @@ module Schools
     def employing_school_not_applicable?
       if data_model.is_a?(Schools::FormValidator)
         data_model.employing_school_form.school_not_applicable?
-      else
+      elsif data_model.respond_to?(:employing_school_not_applicable?)
         data_model.employing_school_not_applicable?
       end
     end
