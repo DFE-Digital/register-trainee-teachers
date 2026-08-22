@@ -2171,7 +2171,22 @@
           },
           {
             "fieldPath": [
+              "employing_school_name"
+            ]
+          },
+          {
+            "fieldPath": [
               "employing_school_not_applicable"
+            ]
+          },
+          {
+            "fieldPath": [
+              "employing_school_postcode"
+            ]
+          },
+          {
+            "fieldPath": [
+              "employing_school_urn"
             ]
           },
           {

@@ -24,7 +24,8 @@ module Submissions
     validator :iqts_country, form: "IqtsCountryForm", if: :requires_iqts_country?
 
     delegate :requires_training_partner?, :requires_degree?, :apply_application?,
-             :requires_funding?, :requires_iqts_country?, :requires_placements?, to: :trainee
+             :requires_funding?, :requires_iqts_country?, :requires_placements?,
+             :requires_assessment_only_employing_school?, to: :trainee
 
     validate :submission_ready
 

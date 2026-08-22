@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_09_164710) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -873,7 +873,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_164710) do
     t.boolean "ebacc", default: false
     t.text "email"
     t.bigint "employing_school_id"
+    t.string "employing_school_name"
     t.boolean "employing_school_not_applicable", default: false
+    t.string "employing_school_postcode"
+    t.string "employing_school_urn"
     t.bigint "end_academic_cycle_id"
     t.text "ethnic_background"
     t.integer "ethnic_group"

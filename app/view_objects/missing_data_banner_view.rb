@@ -57,6 +57,10 @@ private
   end
 
   def link_path(field)
+    if employing_school_missing_field?(field) && trainee.requires_assessment_only_employing_school?
+      return edit_trainee_employing_schools_path(trainee)
+    end
+
     path_helper = I18n.t("views.missing_data_banner_view.missing_field_link.#{field}")
 
     case path_helper
@@ -75,5 +79,15 @@ private
 
   def display_name(field)
     I18n.t("views.missing_data_view.missing_fields_mapping.#{field}")
+  end
+
+  def employing_school_missing_field?(field)
+    %i[
+      employing_school_id
+      employing_school_name
+      employing_school_urn
+      employing_school_postcode
+      query
+    ].include?(field.to_sym)
   end
 end

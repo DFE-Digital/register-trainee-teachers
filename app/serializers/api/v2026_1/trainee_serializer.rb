@@ -28,7 +28,10 @@ module Api
         training_partner_id
         training_partner_not_applicable
         employing_school_id
+        employing_school_name
         employing_school_not_applicable
+        employing_school_postcode
+        employing_school_urn
         course_allocation_subject_id
         start_academic_cycle_id
         end_academic_cycle_id

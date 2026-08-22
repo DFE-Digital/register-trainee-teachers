@@ -36,6 +36,10 @@ module Features
       expect(check_details_page).not_to have_text("Start section")
     end
 
+    def and_the_record_can_be_submitted_for_trn
+      expect(page).not_to have_text("This trainee record is not complete and cannot be submitted for TRN")
+    end
+
     def when_i_submit_for_trn
       check_details_page.submit_button.click
     end

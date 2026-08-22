@@ -11,7 +11,7 @@ describe MissingDataBannerView do
 
   describe "#content" do
     context "when there is no missing data" do
-      let(:trainee) { create(:trainee, :completed) }
+      let(:trainee) { create(:trainee, :completed, :with_employing_school) }
 
       it "returns nothing" do
         expect(subject).to be_falsey
@@ -19,7 +19,7 @@ describe MissingDataBannerView do
     end
 
     context "when the trainee is missing data" do
-      let(:trainee) { create(:trainee, :completed, :itt_start_date_in_the_past, field => nil) }
+      let(:trainee) { create(:trainee, :completed, :with_employing_school, :itt_start_date_in_the_past, field => nil) }
 
       let(:expected_display_name) { I18n.t("views.missing_data_view.missing_fields_mapping.#{field}") }
       let(:expected_html) do
@@ -57,7 +57,7 @@ describe MissingDataBannerView do
       end
 
       context "placements" do
-        let(:trainee) { create(:trainee, :completed, :itt_start_date_in_the_past, :trn_received) }
+        let(:trainee) { create(:trainee, :completed, :with_employing_school, :itt_start_date_in_the_past, :trn_received) }
 
         it "returns the link to the form containing the missing data" do
           allow(trainee).to receive(:requires_placements?).and_return(true)

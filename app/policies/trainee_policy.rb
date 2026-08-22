@@ -36,6 +36,7 @@ class TraineePolicy
 
   delegate :requires_training_partner?,
            :requires_employing_school?,
+           :requires_assessment_only_employing_school?,
            :requires_itt_start_date?,
            to: :training_route_manager
 

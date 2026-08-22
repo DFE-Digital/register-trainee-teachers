@@ -43,6 +43,28 @@ module Schools
       end
     end
 
+    context "when trainee is assessment only" do
+      let(:trainee) { create(:trainee, :with_employing_school) }
+      let(:form) { AssessmentOnlyEmployingSchoolForm.new(trainee) }
+
+      before do
+        render_inline(View.new(data_model: form, editable: true))
+      end
+
+      it "renders the employing school" do
+        expect(rendered_content).to have_text(trainee.employing_school.name)
+        expect(rendered_content).to have_text(trainee.employing_school.urn)
+      end
+
+      it "does not render a training partner" do
+        expect(rendered_content).not_to have_text("Training partner")
+      end
+
+      it "has the assessment only change link" do
+        expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/employing-schools/edit")
+      end
+    end
+
     context "when trainee is on a school direct tuition fee route" do
       let(:trainee) { create(:trainee, training_partner: training_partner, employing_school: employing_school, training_route: 3) }
 

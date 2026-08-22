@@ -502,6 +502,7 @@ en:
         employing_schools:
           index: Select the employing school
           edit: Employing school
+          edit_assessment_only: What is the trainee’s employing school?
         funding:
           training_initiatives:
             edit: Training initiatives
@@ -686,6 +687,7 @@ en:
             early_years_salaried: *training_partner_and_employing_school
             early_years_undergrad: *training_partner
             teacher_degree_apprenticeship: *training_partner_and_employing_school
+            assessment_only: Employing school
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
@@ -782,6 +784,10 @@ en:
         country: *degree_path
         training_partner_id: &training_partner_path edit_trainee_training_partners_details_path
         employing_school_id: edit_trainee_employing_schools_details_path
+        employing_school_name: edit_trainee_employing_schools_path
+        employing_school_urn: edit_trainee_employing_schools_path
+        employing_school_postcode: edit_trainee_employing_schools_path
+        query: edit_trainee_employing_schools_path
         school_id: *training_partner_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
         trainee_start_date_radio_option: *trainee_start_date_path
@@ -836,6 +842,10 @@ en:
         graduation_year: *graduation_year
         country: *country
         employing_school_id: *employing_school
+        employing_school_name: *employing_school
+        employing_school_urn: *employing_school
+        employing_school_postcode: *employing_school
+        query: *employing_school
         school_id: *training_partner
         training_partner_id: *training_partner
         partner_id: *training_partner
@@ -1279,6 +1289,16 @@ en:
             <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
             <p class="govuk-body">You do not need to provide an employing school if the trainee is funded or employed privately.</p>
+      edit_assessment_only:
+        heading: What is the trainee’s employing school?
+        lede: Enter their most recent employing school, or the school they will be observed in during the assessment period.
+        search_label: Search for a school by its unique reference number (URN), name or postcode
+        not_listed: Employing school is not listed
+        school_name: School or setting name
+        school_urn: School unique reference number (URN) (optional)
+        postcode: Postcode
+        gias_help_html:
+          <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
@@ -2052,6 +2072,16 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
+        schools/assessment_only_employing_school_form:
+          attributes:
+            query:
+              blank: Enter an employing school
+            employing_school_name:
+              blank: Enter a school or setting name
+            employing_school_postcode:
+              blank: Enter a postcode
+            employing_school_urn:
+              invalid_format: Enter a valid school unique reference number (URN). It should be 6 digits long.
         schools/form_validator:
           attributes:
             training_partner_id:

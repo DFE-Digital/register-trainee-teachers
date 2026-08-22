@@ -235,11 +235,13 @@ module Reports
     end
 
     def employing_school_name
-      trainee.employing_school_not_applicable? ? I18n.t(:not_applicable) : trainee.employing_school&.name
+      return I18n.t(:not_applicable) if trainee.employing_school_not_applicable?
+
+      trainee.employing_school&.name || trainee.employing_school_name
     end
 
     def employing_school_urn
-      trainee.employing_school&.urn
+      trainee.employing_school&.urn || trainee.employing_school_urn
     end
 
     def end_academic_year

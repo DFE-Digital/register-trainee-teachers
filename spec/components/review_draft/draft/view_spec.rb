@@ -25,6 +25,11 @@ describe ReviewDraft::Draft::View do
       expect(rendered_content).not_to have_text("Placement details")
       expect(rendered_content).not_to have_text("Lead and employing schools")
     end
+
+    it "renders the employing school section" do
+      expect(rendered_content).to have_css(".employing-school-details", text: "Employing school")
+      expect(rendered_content).not_to have_css(".employing-school-details", text: "Cannot start yet")
+    end
   end
 
   context "when the trainee is on the provider-led route", "feature_routes.provider_led_postgrad": true do

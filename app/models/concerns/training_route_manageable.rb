@@ -6,6 +6,7 @@ module TrainingRouteManageable
            :requires_placements?,
            :minimum_placements,
            :requires_employing_school?,
+           :requires_assessment_only_employing_school?,
            :early_years_route?,
            :undergrad_route?,
            :requires_itt_start_date?,
