@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Sign off your list of trainees from #{@previous_academic_cycle_label} for the performance profiles publication") %>
+<%= render PageTitle::View.new(text: "Sign off your list of trainees from #{@previous_academic_cycle_label} for the ITT performance profiles publication") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -10,7 +10,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
-      Signing off trainees for the performance profiles publication
+      Signing off trainees for the ITT performance profiles publication
     </h1>
 
     <p class="govuk-body">
@@ -18,7 +18,7 @@
       academic year in Register teacher trainees (Register).
     </p>
     <p class="govuk-body">
-      You’ll be asked to sign off performance profile data for registered trainees
+      You’ll be asked to sign off ITT performance profile data for registered trainees
       with a course outcome in the <%= @previous_academic_cycle_label %> academic year, if you were an
       accredited provider at this time.
     </p>
@@ -27,7 +27,7 @@
       teacher status (QTS) or who have withdrawn.
     </p>
     <p class="govuk-body">
-      This performance profile sign off period’s deadline is <%= @sign_off_deadline %>.
+      This ITT performance profile sign off period’s deadline is <%= @sign_off_deadline %>.
     </p>
 
     <h2 class="govuk-heading-m">Find your trainee data</h2>

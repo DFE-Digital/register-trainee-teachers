@@ -7,16 +7,16 @@ Each year, as an accredited provider, you need to sign off your teacher trainee 
 
 If you’re in a partnership, you’re responsible for ensuring your training partners’ trainee data is accurate and signed off by the deadline.
 
-## Why the census sign-off is important
+## Why the ITT census sign-off is important
 
 If your teacher trainee data is accurate and signed off by 31 October 2023, it will help you:
 
 * receive the correct amount of funding owed to you
 * allocate the correct financial support to your trainees when they start their course, if applicable
 
-Your accurate census data also helps the DfE understand new entrants to teacher training in England for the 2023 to 2024 academic year, and to inform future policy.
+Your accurate ITT census data also helps the DfE understand new entrants to teacher training in England for the 2023 to 2024 academic year, and to inform future policy.
 
-If you do not sign off your data by 31 October, your organisation’s data may not be included in the census publication.
+If you do not sign off your data by 31 October, your organisation’s data may not be included in the ITT census publication.
 
 ## Checking your trainee data in the ‘Reports’ section of Register
 
