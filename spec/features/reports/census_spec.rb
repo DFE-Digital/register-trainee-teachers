@@ -149,7 +149,7 @@ private
   end
 
   def and_i_can_see_the_census_information
-    expect(page).to have_css(".govuk-heading-l", text: "ITT census sign off your organisation’s new trainee data for the #{current_academic_cycle_label} academic year")
+    expect(page).to have_css(".govuk-heading-l", text: "Sign off your organisation’s new trainee data for the #{current_academic_cycle_label} academic year")
 
     expect(page).to have_css(".govuk-summary-card__title", text: "ITT census sign off information")
 
