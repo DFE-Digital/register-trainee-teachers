@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe CensusSubmittedEmailMailer do
   context "sending an email to a user" do
+    let!(:current_academic_cycle) { create(:academic_cycle, :current) }
     let(:user) { create(:user) }
     let(:submitted_at) { Time.zone.local(2025, 1, 12, 12, 30) }
     let(:mail) { described_class.generate(user:, submitted_at:) }
@@ -24,6 +25,10 @@ describe CensusSubmittedEmailMailer do
 
     it "includes the submitted at time in the personalisation" do
       expect(mail.govuk_notify_personalisation[:submitted_at]).to eq("12 January 2025 at 12:30pm")
+    end
+
+    it "includes the current year label in the personalisation" do
+      expect(mail.govuk_notify_personalisation[:current_year_label]).to eq(current_academic_cycle.label)
     end
   end
 end
