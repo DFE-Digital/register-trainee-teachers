@@ -81,6 +81,7 @@ FactoryBot.define do
       trn_received
       with_training_partner
       with_primary_course_details
+      with_employing_school
     end
 
     trait :bulk_recommend_from_hesa do
@@ -453,7 +454,6 @@ FactoryBot.define do
 
     trait :submitted_for_trn do
       completed
-      with_employing_school
       dttp_id { SecureRandom.uuid }
       submitted_for_trn_at { Time.zone.now }
       state { "submitted_for_trn" }

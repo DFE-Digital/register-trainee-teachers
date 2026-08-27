@@ -288,7 +288,7 @@ describe Trainee do
         end
 
         context "when trainee is not a draft" do
-          subject { create(:trainee, :submitted_for_trn) }
+          subject { create(:trainee, :submitted_for_trn, :with_employing_school) }
 
           before do
             subject.first_names = nil

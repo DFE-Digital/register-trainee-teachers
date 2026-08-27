@@ -224,7 +224,7 @@ module Trainees
     end
 
     context "with record_completion filter" do
-      let!(:non_draft_trainee) { create(:trainee, :submitted_for_trn) }
+      let!(:non_draft_trainee) { create(:trainee, :submitted_for_trn, :with_employing_school) }
 
       context "complete" do
         let(:filters) { { record_completion: ["complete"] } }

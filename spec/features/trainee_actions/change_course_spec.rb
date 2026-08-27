@@ -109,7 +109,7 @@ private
   end
 
   def and_a_trainee_exists_with_trn_received
-    given_a_trainee_exists(:trn_received, :with_publish_course_details, :pg_teaching_apprenticeship, :with_secondary_education)
+    given_a_trainee_exists(:trn_received, :with_publish_course_details, :pg_teaching_apprenticeship, :with_secondary_education, :with_employing_school)
   end
 
   def and_a_trainee_exists
