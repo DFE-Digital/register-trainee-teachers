@@ -6,6 +6,7 @@ class CensusSubmittedEmailMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       first_name: user.first_name,
+      current_year_label: AcademicCycle.current.label,
       submitted_at: submitted_at.to_fs(:govuk_date_and_time),
     )
 
