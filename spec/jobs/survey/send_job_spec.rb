@@ -35,6 +35,34 @@ module Survey
           described_class.perform_now(trainee:, event_type:)
         end
       end
+
+      context "when trainee email is blank" do
+        let(:event_type) { :withdraw }
+
+        before do
+          trainee.update!(email: "")
+        end
+
+        it "does not call the service" do
+          expect(Withdraw).not_to receive(:call)
+
+          described_class.perform_now(trainee:, event_type:)
+        end
+      end
+
+      context "when trainee email is nil" do
+        let(:event_type) { :award }
+
+        before do
+          trainee.update!(email: nil)
+        end
+
+        it "does not call the service" do
+          expect(Award).not_to receive(:call)
+
+          described_class.perform_now(trainee:, event_type:)
+        end
+      end
     end
 
     context "when the qualtrics_survey feature is disabled", feature_qualtrics_survey: false do
