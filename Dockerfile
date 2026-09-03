@@ -1,36 +1,53 @@
-# This template builds 3 images, to optimise caching:
+# This template builds 2 images, to optimise caching:
 # rails-build: builds gems and node modules
-# middleman-build: builds the Middleman static docs site
 # rails-app: runs the actual app
 
 # Build rails-build image
 FROM ruby:4.0.6-alpine3.23 AS rails-build
 
-ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
+ENV DOCS_HOME=$APP_HOME/tech_docs
 
 WORKDIR $APP_HOME
 
-# Add the timezone (rails-build image) as it's not configured by default in Alpine
+# Add the timezone as it's not configured by default in Alpine
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
 
 COPY .tool-versions Gemfile Gemfile.lock ./
 
-# Install gems and remove gem cache
+# Install gems
 RUN apk add --update --no-cache --virtual build-dependencies \
-    build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev=1.3.2-r0 && \
-    apk add --update --no-cache icu-libs libpq shared-mime-info 'sqlite-libs>=3.53.4-r0' yaml yarn zlib=1.3.2-r0 && \
+      build-base \
+      cmake \
+      g++ \
+      git \
+      icu-dev \
+      libc6-compat \
+      libxml2-dev \
+      libxslt-dev \
+      linux-headers \
+      npm \
+      pkgconf \
+      postgresql-dev \
+      yaml-dev \
+      zlib-dev=1.3.2-r0 && \
+    apk add --update --no-cache \
+      icu-libs \
+      libpq \
+      shared-mime-info \
+      'sqlite-libs>=3.53.4-r0' \
+      yaml \
+      yarn \
+      zlib=1.3.2-r0 && \
     # Special configuration for charlock_holmes gem - requires explicit ICU library paths
     # due to its native C++ extension that often fails to build in Alpine Linux environments
-    bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
-    bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
-    bundle config build.charlock_holmes --with-cxxflags="-std=c++17" && \
-    bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
-    bundle install --jobs=4 && \
-    rm -rf /usr/local/bundle/cache && \
-    apk del build-dependencies
+    bundle config set build.charlock_holmes --with-icu-dir=/usr/lib && \
+    bundle config set build.charlock_holmes --with-opt-include=/usr/include/icu && \
+    bundle config set build.charlock_holmes --with-cxxflags="-std=c++17" && \
+    bundle config set build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
+    bundle install --jobs=4
 
 # Install corepack and enable yarn
 RUN yarn global add corepack@0.34.0
@@ -43,45 +60,27 @@ RUN yarn install --immutable
 # Copy all files to /app (except what is defined in .dockerignore)
 COPY . .
 
+# Set up documentation gems
+WORKDIR $DOCS_HOME
+COPY tech_docs/Gemfile tech_docs/Gemfile.lock $DOCS_HOME
+RUN bundle install --jobs=4
+
+# Build documentation pages
+RUN bundle exec rake tech_docs:csv:generate
+RUN bundle exec rake tech_docs:reference_data:generate
+RUN bundle exec rake tech_docs:build
+
+# Remove build dependencies
+RUN rm -rf /usr/local/bundle/cache \
+  && apk del build-dependencies
+
+WORKDIR $APP_HOME
+
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
-
-###
-
-# Build Middleman docs image
-FROM ruby:4.0.6-alpine3.23 AS middleman-build
-
-ENV BUNDLE_PATH=/usr/local/bundle
-ENV APP_HOME=/app
-ENV DOCS_HOME=$APP_HOME/tech_docs
-
-RUN apk add --update --no-cache tzdata && \
-    cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
-    echo "Europe/London" > /etc/timezone
-
-RUN apk add --no-cache libxml2
-RUN apk add --update --no-cache npm git build-base postgresql-dev
-
-COPY --from=rails-build /usr/local/bundle /usr/local/bundle
-
-WORKDIR $DOCS_HOME
-
-COPY tech_docs/Gemfile tech_docs/Gemfile.lock $DOCS_HOME
-
-RUN bundle install --jobs=4
-
-WORKDIR $APP_HOME
-
-COPY . .
-
-WORKDIR $DOCS_HOME
-
-RUN bundle exec rake tech_docs:csv:generate
-RUN bundle exec rake tech_docs:reference_data:generate
-RUN bundle exec rake tech_docs:build
 
 ###
 
@@ -103,10 +102,6 @@ RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info \
 
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
 COPY --from=rails-build /app/ .
-
-COPY --from=middleman-build /app/public/api-docs/ $APP_HOME/public/api-docs/
-COPY --from=middleman-build /app/public/csv-docs/ $APP_HOME/public/csv-docs/
-COPY --from=middleman-build /app/public/reference-data/ $APP_HOME/public/reference-data/
 
 RUN echo export PATH=/usr/local/bin:\$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
