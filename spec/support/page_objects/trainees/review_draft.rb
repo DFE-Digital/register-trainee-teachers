@@ -19,6 +19,7 @@ module PageObjects
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
       section :funding_section, PageObjects::Sections::Funding, ".app-task-list__item.funding"
       section :training_partner_and_employing_schools_section, PageObjects::Sections::SchoolsDetails, ".app-task-list__item.school-details"
+      section :employing_school_details_section, PageObjects::Sections::SchoolsDetails, ".app-task-list__item.employing-school-details"
       section :iqts_country_section, PageObjects::Sections::IqtsCountry, ".app-task-list__item.iqts-country-details"
 
       element :review_this_record_link, "#check-details"
@@ -50,6 +51,10 @@ module PageObjects
 
       def has_training_partner_and_employing_school_information_completed?
         training_partner_and_employing_schools_section.status.text == STATUS_COMPLETED
+      end
+
+      def has_employing_school_completed?
+        employing_school_details_section.status.text == STATUS_COMPLETED
       end
     end
   end

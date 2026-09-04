@@ -52,7 +52,11 @@ module Sections
     def form_klass
       case section
       when :schools
-        Schools::FormValidator
+        if trainee.requires_assessment_only_employing_school?
+          Schools::AssessmentOnlyEmployingSchoolForm
+        else
+          Schools::FormValidator
+        end
       when :funding
         Funding::FormValidator
       when :trainee_data
@@ -118,8 +122,8 @@ module Sections
           review: "trainee_training_details_confirm_path",
         },
         schools: {
-          incomplete: "edit_trainee_training_partners_path",
-          in_progress_invalid: "edit_trainee_training_partners_path",
+          incomplete: trainee.requires_assessment_only_employing_school? ? "edit_trainee_employing_schools_path" : "edit_trainee_training_partners_path",
+          in_progress_invalid: trainee.requires_assessment_only_employing_school? ? "edit_trainee_employing_schools_path" : "edit_trainee_training_partners_path",
           in_progress_valid: "trainee_schools_confirm_path",
           review: "trainee_schools_confirm_path",
         },
@@ -168,7 +172,11 @@ module Sections
     end
 
     def section_title
-      I18n.t("components.sections.titles.#{section}")
+      if section == :schools && trainee.requires_assessment_only_employing_school?
+        I18n.t("components.review_draft.draft.schools.titles.assessment_only")
+      else
+        I18n.t("components.sections.titles.#{section}")
+      end
     end
 
     def section_status

@@ -19,6 +19,10 @@ class TrainingRouteManager
     EMPLOYING_SCHOOL_ROUTES.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
   end
 
+  def requires_assessment_only_employing_school?
+    training_route == TRAINING_ROUTE_ENUMS[:assessment_only]
+  end
+
   def requires_itt_start_date?
     enabled?(:pg_teaching_apprenticeship)
   end

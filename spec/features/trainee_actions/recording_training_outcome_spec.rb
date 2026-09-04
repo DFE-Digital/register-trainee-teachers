@@ -10,7 +10,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "trainee cannot be recommended for award due to missing degrees" do
-    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :without_degrees)
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :without_degrees, :with_employing_school)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     then_i_see_the_stop_page_with_missing("Degrees")
@@ -24,7 +24,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "submit empty form" do
-    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :with_employing_school)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     and_i_see_the_correct_title_for_non_early_years
@@ -40,7 +40,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "choosing today records the outcome" do
-    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :with_employing_school)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     when_i_choose_today
@@ -52,7 +52,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "choosing yesterday records the outcome", skip: skip_test_due_to_first_day_of_current_academic_year? do
-    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :with_employing_school)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     when_i_choose_yesterday
@@ -65,7 +65,7 @@ feature "Recording a training outcome" do
 
   context "choosing 'Another date'" do
     before do
-      given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
+      given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :with_employing_school)
       and_i_am_on_the_trainee_record_page
       and_i_click_on_record_training_outcome
       when_i_choose("Another date")
@@ -93,7 +93,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "cancelling changes" do
-    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date)
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, :with_employing_school)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     when_i_choose_today

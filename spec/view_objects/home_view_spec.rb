@@ -66,11 +66,11 @@ describe HomeView do
   end
 
   describe "#badges" do
-    let(:not_started_trainee) { create(:trainee, :trn_received, itt_start_date: current_academic_cycle.end_date + 2.months) }
-    let(:in_training_trainees) { create_list(:trainee, 2, :trn_received) }
+    let(:not_started_trainee) { create(:trainee, :trn_received, :with_employing_school, itt_start_date: current_academic_cycle.end_date + 2.months) }
+    let(:in_training_trainees) { create_list(:trainee, 2, :trn_received, :with_employing_school) }
     let(:awarded_this_year_trainee) { create(:trainee, :awarded, end_academic_cycle: current_academic_cycle) }
     let(:awarded_last_year_trainee) { create(:trainee, :awarded, end_academic_cycle: previous_academic_cycle) }
-    let(:deferred_trainees) { create_list(:trainee, 2, :deferred) }
+    let(:deferred_trainees) { create_list(:trainee, 2, :deferred, :with_employing_school) }
     let(:incomplete_trainee) { create(:trainee, :trn_received, :incomplete) }
 
     let(:trainees) do

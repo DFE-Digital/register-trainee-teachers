@@ -81,6 +81,7 @@ FactoryBot.define do
       trn_received
       with_training_partner
       with_primary_course_details
+      with_employing_school
     end
 
     trait :bulk_recommend_from_hesa do

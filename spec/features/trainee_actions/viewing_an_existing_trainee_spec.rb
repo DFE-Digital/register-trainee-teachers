@@ -15,7 +15,7 @@ feature "View trainees" do
     end
 
     scenario "viewing the personal details of a registered trainee" do
-      given_a_trainee_exists(:submitted_with_start_date)
+      given_a_trainee_exists(:submitted_with_start_date, :with_employing_school)
       when_i_view_the_trainee_index_page
       then_i_see_the_trainee_data_on_the(trainee_index_page)
       and_i_click_the_trainee_name_on_the(trainee_index_page)
@@ -51,7 +51,7 @@ feature "View trainees" do
   end
 
   context "when i am a training partner user", feature_user_can_have_multiple_organisations: true do
-    let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, training_partner: @current_user.training_partners.first) }
+    let(:trainee) { create(:trainee, :submitted_for_trn, :with_employing_school, trainee_start_date: nil, training_partner: @current_user.training_partners.first) }
 
     background { given_i_am_authenticated_as_a_training_partner_user }
 

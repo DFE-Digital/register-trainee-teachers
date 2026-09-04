@@ -55,6 +55,18 @@ module TaskListHelper
         ).status,
       }
 
+    when :employing_school_details
+      {
+        task_name: "Employing school",
+        path: edit_trainee_employing_schools_path(trainee),
+        confirm_path: trainee_schools_confirm_path(trainee),
+        classes: "employing-school-details",
+        status: ProgressService.call(
+          validator: Schools::AssessmentOnlyEmployingSchoolForm.new(trainee),
+          progress_value: trainee.progress.schools,
+        ).status,
+      }
+
     when :training_partner_and_employing_school_details
       {
         task_name: training_partner_and_employing_school_details_title(trainee.training_route),

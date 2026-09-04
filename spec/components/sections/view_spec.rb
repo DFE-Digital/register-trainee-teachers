@@ -72,6 +72,8 @@ module Sections
       it_behaves_like renders_incomplete_section, :trainee_data, :incomplete
 
       context "requires school" do
+        let(:trainee) { create(:trainee, :incomplete, :school_direct_salaried, start_academic_cycle: AcademicCycle.first) }
+
         it_behaves_like renders_incomplete_section, :schools, :incomplete
       end
 
@@ -113,7 +115,7 @@ module Sections
       it_behaves_like renders_incomplete_section, :trainee_data, :in_progress_valid
 
       context "requires school" do
-        let(:trainee) { create(:trainee, :with_training_partner, :in_progress) }
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_training_partner, :in_progress, :with_employing_school) }
 
         it_behaves_like renders_incomplete_section, :schools, :in_progress_valid
       end
@@ -141,7 +143,13 @@ module Sections
       it_behaves_like renders_confirmation, :funding
 
       context "requires school" do
-        let(:trainee) { create(:trainee, :with_training_partner, :completed) }
+        let(:trainee) { create(:trainee, :school_direct_salaried, :with_training_partner, :completed, :with_employing_school) }
+
+        it_behaves_like renders_confirmation, :schools
+      end
+
+      context "assessment only employing school" do
+        let(:trainee) { create(:trainee, :completed, :with_employing_school) }
 
         it_behaves_like renders_confirmation, :schools
       end
