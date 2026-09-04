@@ -235,3 +235,5 @@ gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Rails console colours
 gem "colorize"
+
+gem "solid_cache", "~> 1.0"

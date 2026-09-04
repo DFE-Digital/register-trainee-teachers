@@ -41,15 +41,15 @@ feature "census sign off" do
         given_i_am_authenticated
         and_i_am_on_the_root_page
         and_i_can_see_the_census_banner
-        and_i_click_on("Sign off your census")
+        and_i_click_on("Sign off your ITT census")
         and_i_am_on_the_sign_off_your_census_page
 
-        when_i_click_on("Continue to census sign off")
+        when_i_click_on("Continue to ITT census sign off")
         and_i_am_on_the_itt_census_sign_off_for_the_academic_year_page
         and_i_can_see_the_census_information
-        and_i_click_on("Sign off census")
+        and_i_click_on("Sign off ITT census")
         and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
-        and_i_click_on("Sign off census")
+        and_i_click_on("Sign off ITT census")
 
         then_i_am_on_the_census_confirmation_page
         and_the_provider_has_census_signed_off
@@ -61,12 +61,12 @@ feature "census sign off" do
         and_i_click_on("Trainees with their academic start year in #{current_academic_cycle_label} report")
         and_i_am_on_the_sign_off_your_census_page
 
-        when_i_click_on("Continue to census sign off")
+        when_i_click_on("Continue to ITT census sign off")
         and_i_am_on_the_itt_census_sign_off_for_the_academic_year_page
         and_i_can_see_the_census_information
         and_i_am_on_the_itt_census_sign_off_for_the_academic_year_page
         and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
-        and_i_click_on("Sign off census")
+        and_i_click_on("Sign off ITT census")
 
         then_i_am_on_the_census_confirmation_page
         and_the_provider_has_census_signed_off
@@ -79,12 +79,12 @@ feature "census sign off" do
         and_i_click_on("Trainees with their academic start year in #{current_academic_cycle_label} report")
         and_i_am_on_the_sign_off_your_census_page
 
-        when_i_click_on("Continue to census sign off")
+        when_i_click_on("Continue to ITT census sign off")
         and_i_am_on_the_itt_census_sign_off_for_the_academic_year_page
         and_i_can_see_the_census_information
         and_i_am_on_the_itt_census_sign_off_for_the_academic_year_page
         and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
-        and_i_click_on("Sign off census")
+        and_i_click_on("Sign off ITT census")
 
         then_i_am_on_the_census_confirmation_page
         and_the_provider_has_census_signed_off
@@ -149,9 +149,9 @@ private
   end
 
   def and_i_can_see_the_census_information
-    expect(page).to have_css(".govuk-heading-l", text: "Census sign off your organisation’s new trainee data for the #{current_academic_cycle_label} academic year")
+    expect(page).to have_css(".govuk-heading-l", text: "Sign off your organisation’s new trainee data for the #{current_academic_cycle_label} academic year")
 
-    expect(page).to have_css(".govuk-summary-card__title", text: "Census sign off information")
+    expect(page).to have_css(".govuk-summary-card__title", text: "ITT census sign off information")
 
     expect(page).to have_css(".govuk-summary-list__key", text: "Provider name")
     expect(page).to have_css(".govuk-summary-list__value", text: current_user.providers.first.name)

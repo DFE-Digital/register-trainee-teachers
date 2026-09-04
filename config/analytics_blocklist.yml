@@ -389,6 +389,13 @@ shared:
     - data
     - created_at
     - updated_at
+  solid_cache_entries:
+    - id
+    - key
+    - value
+    - created_at
+    - key_hash
+    - byte_size
   trainee_disabilities:
     - id
     - trainee_id

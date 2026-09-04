@@ -23,4 +23,14 @@ Yabeda.configure do
               per: :request,
               tags: %i[method controller action]
   end
+
+  group :form_store do
+    counter :reads_total,
+            comment: "Total number of form store reads, by outcome",
+            tags: %i[key outcome]
+
+    counter :writes_total,
+            comment: "Total number of form store writes, by backend",
+            tags: %i[key backend]
+  end
 end

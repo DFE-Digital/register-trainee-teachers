@@ -7,7 +7,7 @@ module Survey
     sidekiq_options retry: 3
 
     def perform(trainee:, event_type:)
-      return unless FeatureService.enabled?(:qualtrics_survey)
+      return unless FeatureService.enabled?(:qualtrics_survey) && trainee.email.present?
 
       case event_type
       when :withdraw

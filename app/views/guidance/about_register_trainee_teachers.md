@@ -62,9 +62,9 @@ When you sign into Register you will see ‘Draft trainees’ and ‘Registered 
 
 ## How trainee data is used in the initial teacher training (ITT) census publication
 
-The DfE publishes a census each academic year of trainee teachers who are starting their training. This is to get an idea of who could be entering the teaching workforce and to plan teacher recruitment activities.
+The DfE publishes an ITT census each academic year of trainee teachers who are starting their training. This is to get an idea of who could be entering the teaching workforce and to plan teacher recruitment activities.
 
-Once you register your new trainees, your trainee data gets analysed and filtered for the ITT census publication. Not all your new trainees will be included in the ITT census publication. To understand what data will be used read the [Initial Teacher Training Census methodology](https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology).
+Once you register your new trainees, your trainee data gets analysed and filtered for the ITT census publication. Not all of your new trainees will be included in the ITT census publication. To understand what data will be used read the [Initial Teacher Training Census methodology](https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-census-methodology).
 
 The ITT census happens in September and October every year. We‘ll notify you about the exact dates each year.
 
