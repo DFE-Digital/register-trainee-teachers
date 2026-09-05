@@ -22,8 +22,13 @@ module Cacheable
       def set(id, key, values)
         raise(InvalidKeyError) unless self::FORM_SECTION_KEYS.include?(key)
 
-        redis.set(cache_key_for(id, key), values.to_json)
+        json = values.to_json
+
+        redis.set(cache_key_for(id, key), json)
         track_write(key, :redis)
+
+        Rails.cache.write(cache_key_for(id, key), json)
+        track_write(key, :solid_cache)
 
         true
       end
@@ -31,6 +36,7 @@ module Cacheable
       def clear_all(id)
         self::FORM_SECTION_KEYS.each do |key|
           redis.set(cache_key_for(id, key), nil)
+          Rails.cache.delete(cache_key_for(id, key))
         end
       end
 
