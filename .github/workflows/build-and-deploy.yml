@@ -53,7 +53,7 @@ jobs:
         linter-type: [rubocop, scss, dfe_analytics, javascript_lint_and_test]
         include:
           - linter-type: rubocop
-            command: docker compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
+            command: docker compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang --no-parallel'
           - linter-type: scss
             command: |
               docker compose exec -T web /bin/sh -c "yarn install --immutable"
