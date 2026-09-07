@@ -3,7 +3,7 @@
 # rails-app: runs the actual app
 
 # Build rails-build image
-FROM ruby:4.0.6-alpine3.23 AS rails-build
+FROM ruby:4.0.6-alpine3.24 AS rails-build
 
 ENV APP_HOME=/app
 ENV DOCS_HOME=$APP_HOME/tech_docs
@@ -85,7 +85,7 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 ###
 
 # Build final rails-app image
-FROM ruby:4.0.6-alpine3.23 AS rails-app
+FROM ruby:4.0.6-alpine3.24 AS rails-app
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
 
