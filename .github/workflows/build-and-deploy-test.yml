@@ -55,17 +55,26 @@ jobs:
         linter-type: [rubocop, scss, dfe_analytics, javascript_lint_and_test]
         include:
           - linter-type: rubocop
-            command: docker compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
+            command: |
+              free -h
+              docker stats --no-stream
+              docker compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
           - linter-type: scss
             command: |
+              free -h
+              docker stats --no-stream
               docker compose exec -T web /bin/sh -c "yarn install --immutable"
               docker compose exec -T web /bin/sh -c "yarn run scss:lint"
           - linter-type: dfe_analytics
             command: |
+              free -h
+              docker stats --no-stream
               docker compose exec -T web /bin/sh -c "bundle exec rails db:setup"
               docker compose exec -T web /bin/sh -c 'bundle exec rake dfe:analytics:check'
           - linter-type: javascript_lint_and_test
             command: |
+              free -h
+              docker stats --no-stream
               docker compose exec -T web /bin/sh -c "yarn install --immutable"
               docker compose exec -T web /bin/sh -c "yarn run standard $(git ls-files '**.js' | tr '\n' ' ')"
               docker compose exec -T web /bin/sh -c 'yarn run test'
@@ -93,7 +102,7 @@ jobs:
 
   test:
     name: Test
-    needs: [build]
+    needs: [lint]
     uses: ./.github/workflows/tests.yml
     secrets: inherit
     with:
