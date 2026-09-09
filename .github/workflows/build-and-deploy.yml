@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy - test
 concurrency: build_and_deploy_${{ github.ref_name }}
 
 on:
@@ -7,6 +7,7 @@ on:
     - main
   pull_request:
     types: [opened, reopened, synchronize, labeled]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -71,6 +72,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      
+      - name: Monitor memory
+        run: |
+          while true; do
+            echo "===== $(date) ====="
+            free -h
+            sleep 30
+          done &
 
       - name: ${{ matrix.linter-type }}
         uses: ./.github/actions/lint/
