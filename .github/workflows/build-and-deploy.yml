@@ -1,4 +1,4 @@
-name: Build and Deploy - test
+name: Build and Deploy
 concurrency: build_and_deploy_${{ github.ref_name }}
 
 on:
@@ -7,7 +7,6 @@ on:
     - main
   pull_request:
     types: [opened, reopened, synchronize, labeled]
-  workflow_dispatch:
 
 permissions:
   contents: write
