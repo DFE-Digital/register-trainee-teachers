@@ -5,6 +5,7 @@ on:
   push:
    branches:
     - main
+    - 9798-workflow-test
   pull_request:
     types: [opened, reopened, synchronize, labeled]
 
