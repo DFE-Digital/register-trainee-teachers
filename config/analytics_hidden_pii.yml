@@ -19,6 +19,6 @@ shared:
     - trn
   users:
     - dfe_sign_in_uid
-    - email
+    - email: extrahidden
     - first_name
     - last_name
