@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: c0376a52fcab5608d0d11c56a536395ba76f3798
+  revision: 69e1eac56d64776d138c194ede080114ddb336e4
   branch: support-multiple-policy-tags
   specs:
     dfe-analytics (1.15.17)
