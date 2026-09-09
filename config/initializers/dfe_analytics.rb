@@ -64,4 +64,7 @@ DfE::Analytics.configure do |config|
     # Set bigquery airbyte vars
     config.bigquery_hidden_policy_tag = "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766"
   end
+
+  # Disable sending of database events
+  config.database_events_enabled = false
 end
