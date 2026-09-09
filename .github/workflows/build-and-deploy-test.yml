@@ -72,6 +72,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+      
+      - name: Monitor memory
+        run: |
+          while true; do
+            echo "===== $(date) ====="
+            free -h
+            sleep 30
+          done &
 
       - name: ${{ matrix.linter-type }}
         uses: ./.github/actions/lint/
