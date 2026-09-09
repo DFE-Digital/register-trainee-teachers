@@ -2156,6 +2156,57 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
       expect(response).to have_http_status(:created)
       expect(Trainee.last.study_mode).to be_nil
     end
+
+    it "does not require an employing school" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+    end
+
+    it "does not mark the employing school as not applicable" do
+      expect(Trainee.last.employing_school_not_applicable).to be(false)
+    end
+
+    context "when employing_school_urn is a school in GIAS" do
+      let(:employing_school) { create(:school) }
+      let(:data) { super().merge(employing_school_urn: employing_school.urn) }
+
+      it "sets employing_school_urn to employing_school#urn" do
+        expect(response).to have_http_status(:created)
+        expect(response.parsed_body[:data][:employing_school_urn]).to eq(employing_school.urn)
+      end
+
+      it "stores the employing school against the trainee" do
+        expect(Trainee.last.employing_school).to eq(employing_school)
+        expect(Trainee.last.employing_school_not_applicable).to be(false)
+      end
+    end
+
+    context "when employing_school_urn is not applicable" do
+      let(:data) { super().merge(employing_school_urn: "900020") }
+
+      it "creates the trainee without an employing school" do
+        expect(response).to have_http_status(:created)
+        expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+      end
+
+      it "does not mark the employing school as not applicable" do
+        trainee = Trainee.last
+
+        expect(trainee.employing_school_id).to be_nil
+        expect(trainee.employing_school_not_applicable).to be(false)
+      end
+    end
+
+    context "when employing_school_urn does not match a school in GIAS" do
+      let(:data) { super().merge(employing_school_urn: "123456") }
+
+      it "returns unprocessible entity HTTP code and a validation error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include(
+          "employing_school_id is invalid. The URN '123456' does not match any known schools",
+        )
+      end
+    end
   end
 
   context "when creating a trainee with early_years_assessment_only route" do

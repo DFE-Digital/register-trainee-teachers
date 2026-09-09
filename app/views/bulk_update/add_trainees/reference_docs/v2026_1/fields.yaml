@@ -346,9 +346,12 @@
 - field_name: employing_school_urn
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY
-  description:
-    This field collects the employing school for School Direct salaried
-    trainees.
+  description: |-
+    This field collects the employing school for School Direct salaried and Assessment only trainees.
+
+    Assessment only trainees need an employing school before you can change their QTS status, but you can add it later.
+
+    On the Assessment only training route, the placeholder values below do not record an employing school.
   format: Must be a 6-digit number
   example: |-
     - `115795` - Cheltenham College

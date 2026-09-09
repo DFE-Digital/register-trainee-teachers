@@ -14,7 +14,8 @@ module Api
 
       attr_reader :trainee
 
-      delegate :itt_start_date, :can_recommend_for_award?, :requires_degree?, :requires_placements?, to: :trainee, prefix: true
+      delegate :itt_start_date, :can_recommend_for_award?, :requires_degree?, :requires_placements?,
+               :requires_assessment_only_employing_school?, :employing_school_recorded?, to: :trainee, prefix: true
 
       validates :qts_standards_met_date,
                 presence: true,
@@ -47,6 +48,10 @@ module Api
 
       def trainee_placements_missing?
         placements.size < trainee.minimum_placements
+      end
+
+      def trainee_employing_school_missing?
+        !trainee_employing_school_recorded?
       end
 
     private
