@@ -43,7 +43,7 @@ gem "stackprof"
 # Logging
 gem "amazing_print", "~> 2.0"
 
-gem "rails_semantic_logger", "5.0.0"
+gem "rails_semantic_logger", "5.2.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -78,7 +78,7 @@ gem "base32"
 gem "rotp"
 
 # Full text search
-gem "pg_search", "~> 2.3"
+gem "pg_search", "~> 2.4"
 
 # Tracking changes to models
 gem "audited", "~> 5.8"
