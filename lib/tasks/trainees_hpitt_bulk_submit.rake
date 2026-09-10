@@ -3,7 +3,7 @@
 namespace :trainees do
   desc "Submits all of the HPITT records for TRN"
   task hpitt_bulk_submit: :environment do
-    provider = Provider.find_by!(code: "HPITT")
+    provider = Provider.find_by!(code: Provider::TEACH_FIRST_PROVIDER_CODE)
 
     current_interval = 0
     interval_increment = 15
