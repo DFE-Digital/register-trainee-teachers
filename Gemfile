@@ -203,12 +203,12 @@ end
 
 group :test do
   # Headless browser testing kit
-  gem "cuprite", "~> 0.17"
+  gem "cuprite", "~> 0.18"
   gem "selenium-webdriver"
 
   gem "shoulda-matchers", "~> 8.0"
   # Code coverage reporter
-  gem "simplecov", "~> 1.1.1", require: false
+  gem "simplecov", "~> 1.2.0", require: false
   gem "simplecov-json"
 
   # Page objects
