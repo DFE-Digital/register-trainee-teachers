@@ -1,5 +1,5 @@
 nodejs 24.13.0
-ruby 3.4.9
+ruby 4.0.6
 terraform 1.14.5
 azure-cli 2.84.0
 kubectl 1.27.3
