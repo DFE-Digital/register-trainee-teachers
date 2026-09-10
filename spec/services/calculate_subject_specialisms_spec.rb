@@ -18,6 +18,14 @@ describe CalculateSubjectSpecialisms do
       end
     end
 
+    context "Design and technology" do
+      let(:subjects) { ["Design and technology"] }
+
+      it "includes Electronics among the specialism options" do
+        expect(subject[:course_subject_one]).to include(CourseSubjects::ELECTRONICS)
+      end
+    end
+
     context "publish course has one primary subject with other topics" do
       context "one other subject" do
         let(:subjects) { ["Primary with modern languages"] }
