@@ -23,7 +23,6 @@ RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.configure do |config|
   config.before do
-    RedisSetup::RedisClient.current.flushdb
     Faker::Number.unique.clear
   end
 
