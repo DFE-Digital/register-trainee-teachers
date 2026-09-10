@@ -8,11 +8,18 @@ module Cacheable
   included do
     class << self
       def get(id, key)
-        value = redis.get(cache_key_for(id, key))
+        solid_cache_value = Rails.cache.read(cache_key_for(id, key))
 
-        if value.present?
+        if solid_cache_value.present?
+          track_read(key, :solid_cache_hit)
+          return JSON.parse(solid_cache_value)
+        end
+
+        redis_value = redis.get(cache_key_for(id, key))
+
+        if redis_value.present?
           track_read(key, :redis_hit)
-          JSON.parse(value)
+          JSON.parse(redis_value)
         else
           track_read(key, :miss)
           nil
