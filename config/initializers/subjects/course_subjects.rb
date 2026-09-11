@@ -26,6 +26,7 @@ unless defined?(CourseSubjects)
     DRAMA = "drama"
     EARLY_YEARS_TEACHING = "early years teaching"
     ECONOMICS = "economics"
+    ELECTRONICS = "Electronics"
     ENGLISH_AS_SECOND_LANGUAGE = "English as a second or other language"
     ENGLISH_STUDIES = "English studies"
     ENVIRONMENTAL_SCIENCES = "environmental sciences"
@@ -104,6 +105,7 @@ unless defined?(CourseSubjects)
       DRAMA => ::DegreeSubjects::DRAMA,
       EARLY_YEARS_TEACHING => ::DegreeSubjects::EARLY_YEARS_TEACHING,
       ECONOMICS => ::DegreeSubjects::ECONOMICS,
+      ELECTRONICS => nil,
       ENGLISH_AS_SECOND_LANGUAGE => ::DegreeSubjects::ENGLISH_AS_A_SECOND_LANGUAGE,
       ENGLISH_STUDIES => ::DegreeSubjects::ENGLISH_STUDIES,
       ENVIRONMENTAL_SCIENCES => ::DegreeSubjects::ENVIRONMENTAL_SCIENCES,

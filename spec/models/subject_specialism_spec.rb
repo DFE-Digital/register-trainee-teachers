@@ -24,4 +24,15 @@ describe SubjectSpecialism do
 
     it { is_expected.to contain_exactly(secondary_specialism) }
   end
+
+  describe "Electronics under Design and technology" do
+    let!(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::DESIGN_AND_TECHNOLOGY) }
+    let!(:electronics) do
+      create(:subject_specialism, name: CourseSubjects::ELECTRONICS, allocation_subject: allocation_subject)
+    end
+
+    it "belongs to the Design and technology allocation subject" do
+      expect(electronics.allocation_subject.name).to eq(AllocationSubjects::DESIGN_AND_TECHNOLOGY)
+    end
+  end
 end
