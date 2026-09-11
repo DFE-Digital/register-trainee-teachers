@@ -93,7 +93,7 @@ module Trainees
         urn = lookup("Placement 1 URN")&.strip
         return if urn.blank?
 
-        school = School.find_by(urn:)
+        school = School.open.find_by(urn:)
         raise(Error, "Placement school not recognised: #{urn}") if school.nil?
 
         trainee.placements.find_or_create_by!(school:)
