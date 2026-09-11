@@ -78,7 +78,7 @@ gem "base32"
 gem "rotp"
 
 # Full text search
-gem "pg_search", "~> 2.3"
+gem "pg_search", "~> 2.4"
 
 # Tracking changes to models
 gem "audited", "~> 5.8"
