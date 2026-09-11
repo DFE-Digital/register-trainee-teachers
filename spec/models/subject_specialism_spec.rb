@@ -28,7 +28,7 @@ describe SubjectSpecialism do
   describe "Electronics under Design and technology" do
     let!(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::DESIGN_AND_TECHNOLOGY) }
     let!(:electronics) do
-      create(:subject_specialism, name: CourseSubjects::ELECTRONICS, allocation_subject:)
+      create(:subject_specialism, name: CourseSubjects::ELECTRONICS, allocation_subject: allocation_subject)
     end
 
     it "belongs to the Design and technology allocation subject" do
