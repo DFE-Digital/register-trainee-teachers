@@ -38,12 +38,12 @@ describe Cacheable do
         solid_cache.write(dummy_class.cache_key_for(id, key), solid_cache_values.to_json)
       end
 
-      it "returns the Redis value" do
-        expect(dummy_class.get(id, key)).to eq(redis_values)
+      it "returns the Solid Cache value" do
+        expect(dummy_class.get(id, key)).to eq(solid_cache_values)
       end
 
-      it "counts a redis hit" do
-        expect(Yabeda.form_store.reads_total).to receive(:increment).with({ key: key, outcome: :redis_hit })
+      it "counts a solid cache hit" do
+        expect(Yabeda.form_store.reads_total).to receive(:increment).with({ key: key, outcome: :solid_cache_hit })
 
         dummy_class.get(id, key)
       end
@@ -54,12 +54,28 @@ describe Cacheable do
         solid_cache.write(dummy_class.cache_key_for(id, key), values.to_json)
       end
 
-      it "does not read it, so that a rolling deploy cannot serve stale data" do
-        expect(dummy_class.get(id, key)).to be_nil
+      it "returns the stored value" do
+        expect(dummy_class.get(id, key)).to eq(values)
       end
 
-      it "counts a miss" do
-        expect(Yabeda.form_store.reads_total).to receive(:increment).with({ key: key, outcome: :miss })
+      it "does not read Redis" do
+        expect(dummy_class).not_to receive(:redis)
+
+        dummy_class.get(id, key)
+      end
+    end
+
+    context "when the entry exists in Redis only" do
+      before do
+        dummy_class.redis.set(dummy_class.cache_key_for(id, key), values.to_json)
+      end
+
+      it "falls back to Redis" do
+        expect(dummy_class.get(id, key)).to eq(values)
+      end
+
+      it "counts a redis hit" do
+        expect(Yabeda.form_store.reads_total).to receive(:increment).with({ key: key, outcome: :redis_hit })
 
         dummy_class.get(id, key)
       end
