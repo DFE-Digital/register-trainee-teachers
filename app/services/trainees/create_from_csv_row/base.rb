@@ -54,6 +54,7 @@ module Trainees
       def after_actions
         sanitise_funding!
         create_degrees!
+        create_placement!
         validate_and_set_progress!
       end
 
@@ -86,6 +87,16 @@ module Trainees
           trainee: trainee,
           csv_row: csv_row.to_hash.compact.select { |column_name, _| column_name.start_with?("Degree") },
         )
+      end
+
+      def create_placement!
+        urn = lookup("Placement 1 URN")&.strip
+        return if urn.blank?
+
+        school = School.open.find_by(urn:)
+        raise(Error, "Placement school not recognised: #{urn}") if school.nil?
+
+        trainee.placements.find_or_create_by!(school:)
       end
 
       def ethnic_background
