@@ -483,7 +483,10 @@ weight: 1
         string (limited to 6 characters)
       </p>
       <p class="govuk-body">
-        The Unique Reference Number (URN) of the employing school for School Direct salaried trainees.
+        The Unique Reference Number (URN) of the employing school for School Direct salaried and Assessment only trainees.
+      </p>
+      <p class="govuk-body">
+        Assessment only trainees need an employing school before you can change their QTS status, but you can add it later.
       </p>
       <p class="govuk-body">
         Example:
@@ -494,6 +497,12 @@ weight: 1
         <li><code>900020</code> - Other establishment without a URN</li>
         <li><code>900030</code> - Not available</li>
       </ul>
+      <p class="govuk-body">
+        Notes: On the Assessment only training route, the placeholder values above do not record an
+        employing school. A trainee sent one of them still needs a real employing school before you
+        can update their QTS or EYTS status, and an employing school that has already been recorded
+        cannot be removed through the API.
+      </p>
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">

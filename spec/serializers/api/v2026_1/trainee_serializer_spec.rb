@@ -293,6 +293,35 @@ RSpec.describe Api::V20261::TraineeSerializer do
       it "serializes training_route as '16'" do
         expect(json[:training_route]).to eq("16")
       end
+
+      it "serializes employing_school_urn as nil without an employing school" do
+        expect(json[:employing_school_urn]).to be_nil
+      end
+
+      context "with an employing school in GIAS" do
+        let(:employing_school) { create(:school) }
+
+        before { trainee.update!(employing_school:) }
+
+        it "serializes the employing school urn" do
+          expect(json[:employing_school_urn]).to eq(employing_school.urn)
+        end
+      end
+
+      context "with an employing school that is not in GIAS" do
+        before do
+          trainee.update!(
+            employing_school_name: "Oak House School",
+            employing_school_urn: "123456",
+            employing_school_postcode: "SW1A 1AA",
+          )
+        end
+
+        it "does not serialize the employing school" do
+          expect(json[:employing_school_urn]).to be_nil
+          expect(json).not_to include(:employing_school_name, :employing_school_postcode)
+        end
+      end
     end
 
     context "when trainee is on early_years_assessment_only route" do

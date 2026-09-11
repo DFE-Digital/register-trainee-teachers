@@ -8,6 +8,9 @@ module Api
         if record.trainee_requires_placements? && record.trainee_placements_missing?
           record.errors.add(:placements, :invalid, minimum: record.trainee.minimum_placements, training_route: record.trainee.training_route)
         end
+        if record.trainee_requires_assessment_only_employing_school? && record.trainee_employing_school_missing?
+          record.errors.add(:employing_school_urn, :blank)
+        end
         record.errors.add(:state) unless record.trainee_can_recommend_for_award?
       end
     end
