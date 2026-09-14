@@ -3,8 +3,8 @@
 Register has three sign in modes and only one is active at a time.
 `Settings.features.sign_in_method` selects which one.
 
-- `dfe-sign-in` is the default and is used in staging, sandbox, pen, production data and production.
-- `otp` is the fallback for when DfE Sign-in (DSI) is unavailable.
+- `dfe-sign-in` is the default and is used in staging, sandbox, production data and production.
+- `otp` is the fallback for when DSI is unavailable.
 - `persona` is used in development, review and QA.
 
 ## Basic Auth
@@ -16,7 +16,7 @@ it unless `features.basic_auth` is set to `false`. The `/metrics` path is not pr
 ## DSI
 
 DSI is DfE's identity service, used by services across the organisation including Register to
-authenticate their users. You need a DfE Sign in account to access the staging, sandbox, pen,
+authenticate their users. You need a DfE Sign in account to access the staging, sandbox,
 production data and production environments.
 
 It uses OpenID Connect (OIDC) on top of OAuth 2.0. Register uses it to authenticate only. DSI
@@ -119,7 +119,7 @@ No environment uses it by default. It is switched on by setting
 `Settings.features.sign_in_method` to `otp`, which also removes the DSI routes because the modes
 are mutually exclusive.
 
-The user still needs a record in Register. A code only proves that the person owns the mailbox.
+The user still needs a record in Register. A code only proves that the person has access to the mailbox.
 
 Sign out only ends the Register session, because there is no identity provider to sign out of.
 
@@ -187,12 +187,3 @@ creates the users, their providers and a set of trainees.
 ### Configuration
 
 Enabled when `Settings.features.sign_in_method == "persona"`.
-
-## TRS
-
-To work with TRS locally, you will need to set the following information in your `development.local.yml`:
-
-```yml
-trs:
-  base_url: https://dev.teacher-qualifications-api.education.gov.uk/
-  api_key: dev password
