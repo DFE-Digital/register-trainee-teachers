@@ -4,7 +4,7 @@ Register has three sign in modes and only one is active at a time.
 `Settings.features.sign_in_method` selects which one.
 
 - `dfe-sign-in` is the default and is used in staging, sandbox, pen, production data and production.
-- `otp` is the fallback for when DSI is unavailable.
+- `otp` is the fallback for when DfE Sign-in (DSI) is unavailable.
 - `persona` is used in development, review and QA.
 
 ## Basic Auth
