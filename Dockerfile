@@ -61,6 +61,7 @@ RUN yarn install --immutable
 COPY . .
 
 # Set up documentation gems
+ENV BUNDLE_PATH=/usr/local/docs-bundle
 WORKDIR $DOCS_HOME
 COPY tech_docs/Gemfile tech_docs/Gemfile.lock $DOCS_HOME
 RUN bundle install --jobs=4
@@ -70,11 +71,15 @@ RUN bundle exec rake tech_docs:csv:generate
 RUN bundle exec rake tech_docs:reference_data:generate
 RUN bundle exec rake tech_docs:build
 
+# Re-install/check Rails gems after building the docs
+ENV BUNDLE_PATH=/usr/local/bundle
+WORKDIR $APP_HOME
+RUN bundle install --jobs=4 && \
+    bundle check
+
 # Remove build dependencies
 RUN rm -rf /usr/local/bundle/cache \
   && apk del build-dependencies
-
-WORKDIR $APP_HOME
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
