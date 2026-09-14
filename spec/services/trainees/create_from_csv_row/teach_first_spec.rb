@@ -270,6 +270,43 @@ module Trainees
           end
         end
 
+        context "when a placement URN is provided" do
+          let(:placement_urn) { "9876543" }
+
+          before do
+            create(:school, urn: placement_urn)
+            csv_row.merge!({ "Placement 1 URN" => placement_urn })
+            described_class.call(csv_row:)
+          end
+
+          it "creates a placement at that school" do
+            expect(trainee.placements.count).to eq(1)
+            expect(trainee.placements.first.school.urn).to eq(placement_urn)
+          end
+        end
+
+        context "when no placement URN is provided" do
+          before do
+            described_class.call(csv_row:)
+          end
+
+          it "doesn't create a placement" do
+            expect(trainee.placements).to be_empty
+          end
+        end
+
+        context "when the placement URN isn't recognised" do
+          before do
+            csv_row.merge!({ "Placement 1 URN" => "0000001" })
+          end
+
+          it "raises an error" do
+            expect {
+              described_class.call(csv_row:)
+            }.to raise_error(Base::Error, "Placement school not recognised: 0000001")
+          end
+        end
+
         context "when nationality is provided as 'other'" do
           before do
             csv_row.merge!({ "Nationality" => "other" })
