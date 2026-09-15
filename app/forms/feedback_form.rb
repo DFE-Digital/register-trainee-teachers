@@ -25,7 +25,7 @@ class FeedbackForm
     FormStore.set(store_id, FORM_STORE_KEY, fields)
   end
 
-  # rubocop:disable Naming/PredicateMethod
+  # rubocop:disable-next Naming/PredicateMethod
   def save
     return false unless valid?
 
@@ -34,7 +34,6 @@ class FeedbackForm
     clear_stash
     true
   end
-  # rubocop:enable Naming/PredicateMethod
 
   def stashed?
     fields_from_store.present?

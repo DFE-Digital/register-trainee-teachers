@@ -4,7 +4,7 @@ require "bullet" unless Rails.env.local?
 
 using Bullet::Ext::Object
 
-# rubocop:disable Rails/Delegate
+# rubocop:disable-next Rails/Delegate
 module Bullet
   module SimpleDelegatorHelpers
     def bullet_primary_key_value
@@ -16,4 +16,3 @@ module Bullet
     end
   end
 end
-# rubocop:enable Rails/Delegate

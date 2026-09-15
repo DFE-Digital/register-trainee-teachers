@@ -27,7 +27,7 @@ module ApplyApplications
 
     private
 
-      # rubocop:disable Lint/NestedMethodDefinition
+      # rubocop:disable-next Lint/NestedMethodDefinition
       def trainee(degrees = [])
         @trainee ||= Trainee.new(
           id: 0,
@@ -55,7 +55,6 @@ module ApplyApplications
           end
         end
       end
-      # rubocop:enable Lint/NestedMethodDefinition
 
       def degree
         Degree.new(
