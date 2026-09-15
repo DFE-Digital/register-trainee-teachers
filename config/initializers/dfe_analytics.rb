@@ -60,8 +60,5 @@ DfE::Analytics.configure do |config|
 
     # Perform airbyte checks on startup and allow airbyte config generation
     config.airbyte_enabled = Rails.env.development? || ENV["BIGQUERY_AIRBYTE_DATASET"].present?
-
-    # Set bigquery airbyte vars
-    config.bigquery_hidden_policy_tag = "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766"
   end
 end
