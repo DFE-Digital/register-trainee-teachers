@@ -119,6 +119,7 @@ gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/df
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", branch: "support-multiple-policy-tags"
+# gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", branch: "main"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
