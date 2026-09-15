@@ -1,10 +1,10 @@
-variable hosted_zone {
-  type = map(any)
+variable "hosted_zone" {
+  type    = map(any)
   default = {}
 }
 
 variable "multiple_hosted_zones" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -30,4 +30,14 @@ variable "rate_limit" {
     match_values = optional(string)
   }))
   default = null
+}
+
+variable "allow_aks" {
+  type    = bool
+  default = false
+}
+
+variable "block_ip" {
+  type    = bool
+  default = false
 }
