@@ -18,4 +18,6 @@ Sentry.init do |config|
   config.release = ENV.fetch("COMMIT_SHA", nil)
 
   config.sdk_logger.level = Logger::INFO
+
+  config.rails.structured_logging.enabled = false
 end
