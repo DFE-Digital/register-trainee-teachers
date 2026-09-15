@@ -26,7 +26,7 @@ unless defined?(CourseSubjects)
     DRAMA = "drama"
     EARLY_YEARS_TEACHING = "early years teaching"
     ECONOMICS = "economics"
-    ELECTRONICS = "Electronics"
+    ELECTRONICS = "electronics"
     ENGLISH_AS_SECOND_LANGUAGE = "English as a second or other language"
     ENGLISH_STUDIES = "English studies"
     ENVIRONMENTAL_SCIENCES = "environmental sciences"
