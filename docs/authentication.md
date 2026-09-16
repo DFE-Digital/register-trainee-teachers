@@ -129,9 +129,8 @@ Authentication Flow:
 2. Register validates the email and allows two requests a minute.
 3. Register stores the email and a new salt in the session.
 4. If the email belongs to a user, Register generates a code and sends it with GOV.UK Notify. If it
-   does not, nothing is sent but the client still sees the next page, so the form cannot be used to
-   find out who has an account.
-5. The client enters the code at `/sign-in-code`.
+   does not, nothing is sent. In both cases the client is redirected to `/sign-in-code`.
+5. The client enters the code.
 6. Register rebuilds the code from the user's secret and the salt, then compares it. Five attempts
    are allowed every five minutes and the code is valid for ten minutes.
 7. If the code matches, Register stores the email in the session and deletes the salt so the code
@@ -183,6 +182,9 @@ You can add your own persona locally, see [setting up development](setup-develop
 
 Personas are not created when you sign in. They come from `bin/rails example_data:generate`, which
 creates the users, their providers and a set of trainees.
+
+On review apps the database is reset and the example data is created again on every deploy. Anything
+you create on a review app is lost on the next deploy.
 
 ### Configuration
 
