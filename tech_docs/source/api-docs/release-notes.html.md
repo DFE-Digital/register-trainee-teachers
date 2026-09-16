@@ -53,7 +53,7 @@ This is available for testing in the [sandbox environment](https://sandbox.regis
   | `withdraw_reasons` | `withdrawal_reasons` |
 
 * Handling of course subject for primary courses:
-  * An error will be returned if the age range is primary (max age 11 or less) but the `course_subject_1` is not [`100511` (Primary Teaching)](/reference-data/v2026.0/course-subject.html#reference-data:~:text=100511).
+  * An error will be returned if the age range is primary (max age 11 or less) but the `course_subject_1` is not [`100511` (Primary Teaching)](/reference-data/v2026.1/course-subject.html#reference-data:~:text=100511).
 * Funding rules have been updated to include the 2026 to 2027 academic year funding.
 
 ## v2025.0 — 1 September 2025

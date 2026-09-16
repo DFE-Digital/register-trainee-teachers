@@ -36,9 +36,10 @@ module Api
           params[:data]&.keys&.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) } || []
         end
 
-        def initialize(params:, update: false)
+        def initialize(params:, update: false, current_training_route: nil)
           @params = params
           @update = update
+          @current_training_route = current_training_route
         end
 
         def call
@@ -47,7 +48,7 @@ module Api
 
       private
 
-        attr_reader :params, :update
+        attr_reader :params, :update, :current_training_route
 
         def mapped_params
           mapped_params = params.except(*ATTRIBUTES).merge({
@@ -294,16 +295,26 @@ module Api
               end
             {
               employing_school_id: employing_school_id,
-              employing_school_not_applicable: employing_school_id.nil?,
+              employing_school_not_applicable: employing_school_id.nil? && !assessment_only_route?,
             }
           elsif params.key?(:employing_school_urn) && NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
             {
               employing_school_id: nil,
-              employing_school_not_applicable: true,
+              employing_school_not_applicable: !assessment_only_route?,
             }
+          elsif update || assessment_only_route?
+            {}
           else
-            { employing_school_not_applicable: true } unless update
+            { employing_school_not_applicable: true }
           end
+        end
+
+        # An employing school always applies on the assessment only route, so a missing or
+        # placeholder URN leaves the trainee without one rather than marking it not applicable.
+        def assessment_only_route?
+          route = training_route.is_a?(InvalidValue) ? nil : training_route
+
+          (route.presence || current_training_route) == TRAINING_ROUTE_ENUMS[:assessment_only]
         end
 
         def training_initiative_attributes

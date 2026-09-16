@@ -100,6 +100,7 @@ module Api
              nationalisations_attributes: nationality_attributes }],
         ),
         update: true,
+        current_training_route: trainee.training_route,
       )
     end
 
