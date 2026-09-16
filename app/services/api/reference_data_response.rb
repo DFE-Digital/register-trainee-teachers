@@ -21,6 +21,8 @@ module Api
 
     def reference_data_klass
       "Hesa::ReferenceData::#{Api::GetVersionedItem.module_name(version)}".constantize
+    rescue NameError
+      raise(UnsupportedVersionError)
     end
   end
 end

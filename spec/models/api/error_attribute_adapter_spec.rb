@@ -18,6 +18,10 @@ RSpec.describe Api::ErrorAttributeAdapter do
       expect(Api::V20261::DegreeAttributes.attribute_mappings[:graduation_year]).to eq("degree_graduation_year")
     end
 
+    it "inherits API attribute names from the parent version" do
+      expect(Api::V20270::TraineeAttributes.human_attribute_name(:course_subject_one)).to eq("course_subject_1")
+    end
+
     def next_version_import_rows
       fields_path = Rails.root.join("spec/fixtures/files/bulk_update/next_version_fields.yaml")
 

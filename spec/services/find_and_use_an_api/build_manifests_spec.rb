@@ -5,39 +5,59 @@ require "rails_helper"
 RSpec.describe FindAndUseAnApi::BuildManifests do
   subject(:manifests) { described_class.call }
 
-  it "builds one manifest per academic year major" do
-    expect(manifests.map { |m| m[:majorVersion] }).to eq(%w[v2026])
-  end
+  context "when only v2026.1 is allowed" do
+    before { allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2026.1]) }
 
-  it "scopes releases to each major and tags the current version Live" do
-    v2026 = manifests.find { |m| m[:majorVersion] == "v2026" }
+    it "builds one manifest per academic year major" do
+      expect(manifests.map { |m| m[:majorVersion] }).to eq(%w[v2026])
+    end
 
-    expect(v2026[:releases]).to contain_exactly(
-      hash_including(name: "v2026.1", tag: "Live", isCurrent: true),
-    )
-  end
-
-  context "when the current version is newer than the published schemas" do
-    before { allow(Settings.api).to receive(:current_version).and_return("v2027.0") }
-
-    it "tags the older release Deprecated" do
+    it "scopes releases to each major and tags the current version Live" do
       v2026 = manifests.find { |m| m[:majorVersion] == "v2026" }
 
       expect(v2026[:releases]).to contain_exactly(
-        hash_including(name: "v2026.1", tag: "Deprecated", isCurrent: true),
+        hash_including(name: "v2026.1", tag: "Live", isCurrent: true),
       )
+    end
+
+    context "when the current version is newer than the published schemas" do
+      before { allow(Settings.api).to receive(:current_version).and_return("v2027.0") }
+
+      it "tags the older release Deprecated" do
+        v2026 = manifests.find { |m| m[:majorVersion] == "v2026" }
+
+        expect(v2026[:releases]).to contain_exactly(
+          hash_including(name: "v2026.1", tag: "Deprecated", isCurrent: true),
+        )
+      end
+    end
+
+    it "embeds base64-encoded OpenAPI yaml for the entry version" do
+      v2026 = manifests.find { |m| m[:majorVersion] == "v2026" }
+      decoded = Base64.strict_decode64(v2026.dig(:schema, :documentContentValue))
+
+      expect(v2026.dig(:schema, :fileName)).to eq("v2026.1.yaml")
+      expect(decoded).to eq(Rails.public_path.join("openapi/v2026.1.yaml").binread)
+    end
+
+    it "uses the configured api name" do
+      expect(manifests.map { |m| m[:name] }.uniq).to eq([Settings.fauapi.api_name])
     end
   end
 
-  it "embeds base64-encoded OpenAPI yaml for the entry version" do
-    v2026 = manifests.find { |m| m[:majorVersion] == "v2026" }
-    decoded = Base64.strict_decode64(v2026.dig(:schema, :documentContentValue))
+  context "when v2027.0 is allowed" do
+    before { allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2026.1 v2027.0]) }
 
-    expect(v2026.dig(:schema, :fileName)).to eq("v2026.1.yaml")
-    expect(decoded).to eq(Rails.public_path.join("openapi/v2026.1.yaml").binread)
-  end
+    it "builds a manifest per academic year major" do
+      expect(manifests.map { |m| m[:majorVersion] }).to eq(%w[v2026 v2027])
+    end
 
-  it "uses the configured api name" do
-    expect(manifests.map { |m| m[:name] }.uniq).to eq([Settings.fauapi.api_name])
+    it "tags v2027.0 as Planned while v2026.1 is current" do
+      v2027 = manifests.find { |m| m[:majorVersion] == "v2027" }
+
+      expect(v2027[:releases]).to contain_exactly(
+        hash_including(name: "v2027.0", tag: "Planned", isCurrent: true),
+      )
+    end
   end
 end
