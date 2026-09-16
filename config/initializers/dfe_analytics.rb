@@ -53,15 +53,4 @@ DfE::Analytics.configure do |config|
   # instead of the BigQuery API JSON Key. Note that this also will also
   # use a new version of the BigQuery streaming APIs.
   config.azure_federated_auth = true
-
-  if Rails.env.in?(%w[development review qa production])
-    # Path of airbyte stream config file relative to the App root (Rails.root)
-    config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
-
-    # Perform airbyte checks on startup and allow airbyte config generation
-    config.airbyte_enabled = Rails.env.development? || ENV["BIGQUERY_AIRBYTE_DATASET"].present?
-
-    # Set bigquery airbyte vars
-    config.bigquery_hidden_policy_tag = "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766"
-  end
 end
