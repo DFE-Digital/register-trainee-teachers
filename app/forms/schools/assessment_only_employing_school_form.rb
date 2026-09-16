@@ -33,7 +33,6 @@ module Schools
 
     validate :school_present
     validates :employing_school_name, presence: true, if: :manual_entry?
-    validates :employing_school_postcode, presence: true, if: :manual_entry?
     validate :urn_valid
     validate :postcode_valid, if: :manual_entry?
 
