@@ -8,6 +8,8 @@ The Schema can be kept up-to-date by running the api specs with the OPENAPI env 
 
 ```bash
 OPENAPI=1 bundle exec rspec spec/requests/api/v2026_1/
+# in-progress version (development, review, test only):
+OPENAPI=1 bundle exec rspec spec/requests/api/v2027_0/
 ```
 
 This will overwrite the existing schema but _should_ preserve manually made changes.

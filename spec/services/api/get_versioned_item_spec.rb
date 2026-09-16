@@ -21,26 +21,30 @@ describe Api::GetVersionedItem do
     end
 
     describe "#for" do
-      context "v2026.1" do
-        item_models.each do |item_model|
-          it "#{item_model} has been implemented" do
-            expect(
-              described_class.for(
-                item_type: item_type.to_sym,
-                model: item_model,
-                version: "v2026.1",
-              ),
-            ).to be(Object.const_get("Api::V20261::#{expected_module(item_type, item_model)}"))
+      %w[v2026.1 v2027.0].each do |version|
+        context version do
+          item_models.each do |item_model|
+            it "#{item_model} has been implemented" do
+              expect(
+                described_class.for(
+                  item_type: item_type.to_sym,
+                  model: item_model,
+                  version: version,
+                ),
+              ).to be(Object.const_get("Api::#{described_class.module_name(version)}::#{expected_module(item_type, item_model)}"))
+            end
           end
         end
       end
     end
 
     describe "#for_#{item_type}" do
-      context "v2026.1" do
-        item_models.each do |item_model|
-          it "#{item_model} has been implemented" do
-            expect(described_class.public_send(wrapper_method, model: item_model, version: "v2026.1")).to be(Object.const_get("Api::V20261::#{expected_module(item_type, item_model)}"))
+      %w[v2026.1 v2027.0].each do |version|
+        context version do
+          item_models.each do |item_model|
+            it "#{item_model} has been implemented" do
+              expect(described_class.public_send(wrapper_method, model: item_model, version: version)).to be(Object.const_get("Api::#{described_class.module_name(version)}::#{expected_module(item_type, item_model)}"))
+            end
           end
         end
       end

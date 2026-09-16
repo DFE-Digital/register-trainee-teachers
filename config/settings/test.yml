@@ -26,7 +26,7 @@ govuk_notify:
   feedback_submitted_email_template_id: feedback-submitted-uuid
 
 api:
-  allowed_versions: [v2026.1]
+  allowed_versions: [v2026.1, v2027.0]
 
 bulk_update:
   add_trainees:
