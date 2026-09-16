@@ -44,6 +44,15 @@ describe "A user authenticates via Email Sign-in" do
       and_enter_an_incorrect_otp
       then_i_am_redirected_to_the_otp_form
     end
+
+    scenario "signing out", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_submit_my_email
+      and_enter_my_otp
+      then_i_am_redirected_to_the_root_path
+      when_i_sign_out
+      then_i_am_signed_out
+    end
   end
 
   context "as a system admin" do
@@ -99,6 +108,15 @@ private
 
   def and_i_can_access_the_support_interface
     click_on("Support")
+  end
+
+  def when_i_sign_out
+    click_on("Sign out")
+  end
+
+  def then_i_am_signed_out
+    expect(page).to have_text("Sign in")
+    expect(page).not_to have_text("Sign out")
   end
 
   def then_i_am_redirected_to_the_otp_form
