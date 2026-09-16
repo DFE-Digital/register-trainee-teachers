@@ -250,6 +250,14 @@ module Trs
               expect(subject["trainingSubjectReferences"]).to include("999003")
             end
           end
+
+          context "electronics" do
+            let(:course_subject) { ::CourseSubjects::ELECTRONICS }
+
+            it "sets subject reference to 999003" do
+              expect(subject["trainingSubjectReferences"]).to include("999003")
+            end
+          end
         end
       end
     end
