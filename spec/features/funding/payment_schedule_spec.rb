@@ -115,6 +115,10 @@ private
 
   def then_i_should_see_a_message_to_say_there_are_no_payments
     expect(payment_schedule_page).to have_text("There are no scheduled payments right now.")
+    expect(payment_schedule_page).to have_text(
+      "Contact ITT.FUNDING@education.gov.uk if you think there should be scheduled payments.",
+    )
+    expect(payment_schedule_page).to have_link("ITT.FUNDING@education.gov.uk")
   end
 
   def and_i_should_see_the_predicted_payments

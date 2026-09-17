@@ -43,5 +43,14 @@ describe SupportEmailHelper do
         end
       end
     end
+
+    context "with email" do
+      subject { helper.support_email(email: "user@example.com") }
+
+      it has_correct_formatting do
+        expected_output = "<a class=\"govuk-link app-!-overflow-break-word\" href=\"mailto:user@example.com\">user@example.com</a>"
+        expect(subject).to eq(expected_output)
+      end
+    end
   end
 end
