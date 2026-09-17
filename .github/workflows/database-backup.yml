@@ -227,57 +227,59 @@ jobs:
         teams-message: 'Backup failure'
         teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
 
-  restore_staging:
-    needs: [restore_and_sanitise]
-    name: Restore database (staging)
-    if: ${{ github.event_name == 'schedule' }}
-    runs-on: ubuntu-latest
-    environment:
-      name: staging
+  # Temporarily suspend restore to staging for ITHC
+  #
+  # restore_staging:
+  #   needs: [restore_and_sanitise]
+  #   name: Restore database (staging)
+  #   if: ${{ github.event_name == 'schedule' }}
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: staging
 
-    steps:
-    - uses: actions/checkout@v7
-      name: Checkout
+  #   steps:
+  #   - uses: actions/checkout@v7
+  #     name: Checkout
 
-    - name: Set env variable
-      run: echo "SANITISED_FILE_NAME=register_sanitised_$(date +"%F")" >> $GITHUB_ENV
+  #   - name: Set env variable
+  #     run: echo "SANITISED_FILE_NAME=register_sanitised_$(date +"%F")" >> $GITHUB_ENV
 
-    - name: Download Backup
-      run: |
-        az storage blob download --container-name database-backup \
-        --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
-        --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
+  #   - name: Download Backup
+  #     run: |
+  #       az storage blob download --container-name database-backup \
+  #       --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
+  #       --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
 
-    - uses: azure/login@v3
-      with:
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  #   - uses: azure/login@v3
+  #     with:
+  #       tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #       subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #       client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
-    - name: Install kubectl
-      uses: DFE-Digital/github-actions/set-kubectl@master
+  #   - name: Install kubectl
+  #     uses: DFE-Digital/github-actions/set-kubectl@master
 
-    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-      with:
-        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+  #   - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+  #     with:
+  #       azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #       azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #       azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
-    - name: K8 setup
-      shell: bash
-      run: |
-        make ci staging get-cluster-credentials
-        make install-konduit
+  #   - name: K8 setup
+  #     shell: bash
+  #     run: |
+  #       make ci staging get-cluster-credentials
+  #       make install-konduit
 
-    - name: Restore backup to staging database
-      shell: bash
-      run: |
-        bin/konduit.sh -n bat-production -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
+  #   - name: Restore backup to staging database
+  #     shell: bash
+  #     run: |
+  #       bin/konduit.sh -n bat-production -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
 
-    - name: Check for Failure
-      uses: ./.github/actions/send-teams-notification/
-      if: ${{ failure() }}
-      with:
-        teams-title: Staging Restore Failure
-        teams-message: 'Daily restore failure for staging'
-        teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
+  #   - name: Check for Failure
+  #     uses: ./.github/actions/send-teams-notification/
+  #     if: ${{ failure() }}
+  #     with:
+  #       teams-title: Staging Restore Failure
+  #       teams-message: 'Daily restore failure for staging'
+  #       teams-webhook: ${{ secrets.TEAMS_WEBHOOK_URL }}
