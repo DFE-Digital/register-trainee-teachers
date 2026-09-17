@@ -1560,9 +1560,6 @@ en:
             email:
               blank: Enter the user’s email address
               taken: Enter a unique email address
-            dttp_id:
-              invalid: Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949
-              taken: Enter a unique DTTP ID
         upload:
           attributes:
             file:
