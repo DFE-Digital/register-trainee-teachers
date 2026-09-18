@@ -4,7 +4,7 @@ module PageObjects
   module SystemAdmin
     module PendingAwards
       class PendingAwardsSummary < PageObjects::Base
-        set_url "/system-admin/pending_awards"
+        set_url "/system-admin/pending-status-change"
 
         class SortBy < SitePrism::Section
           element :days_waiting, "a", text: "Days waiting"
