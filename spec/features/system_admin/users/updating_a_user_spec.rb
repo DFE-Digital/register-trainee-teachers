@@ -5,7 +5,6 @@ require "rails_helper"
 feature "Editing a user" do
   let(:system_admin) { create(:user, system_admin: true) }
   let(:user) { create(:user) }
-  let(:dttp_id) { SecureRandom.uuid }
 
   before do
     given_i_am_authenticated(user: system_admin)
