@@ -23,7 +23,7 @@ track_validation_errors: false
 blazer_database_url: postgresql://localhost/register_trainee_teacher_data_development
 
 api:
-  allowed_versions: [v2026.1]
+  allowed_versions: [v2026.1, v2027.0]
 
 rotp:
   base_url: "https://register-training-providers-staging.test.teacherservices.cloud/api"

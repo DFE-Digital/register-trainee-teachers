@@ -14,6 +14,7 @@ module FindAndUseAnApi
 
       versions_by_major = Rails.root.glob("public/openapi/v*.yaml")
         .map { |path| File.basename(path, ".yaml") }
+        .select { |version| Settings.api.allowed_versions.include?(version) }
         .group_by { |version| major_of(version) }
 
       versions_by_major.keys.sort_by { |major| version_key(major) }.map do |major|

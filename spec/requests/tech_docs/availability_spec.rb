@@ -2,105 +2,41 @@
 
 require "rails_helper"
 
-RSpec.describe "Tech docs availability", skip: "TechDocs::Availability middleware is not currently being used" do
-  describe "/api-docs" do
-    context "when allowed_versions excludes v2026.1" do
+RSpec.describe "OpenAPI yaml availability" do
+  describe "/openapi" do
+    context "when allowed_versions excludes v2027.0" do
       before do
-        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0])
+        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2026.1])
       end
 
-      it "returns 200 for v2025.0" do
-        get "/api-docs/v2025.0/"
+      it "returns 200 for v2026.1" do
+        get "/openapi/v2026.1.yaml"
 
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:ok)
       end
 
-      it "returns 404 for v2026.1" do
-        get "/api-docs/v2026.1/"
+      it "returns 404 for v2027.0" do
+        get "/openapi/v2027.0.yaml"
 
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    context "when allowed_versions includes v2026.1" do
+    context "when allowed_versions includes v2027.0" do
       before do
-        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0 v2026.1])
+        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2026.1 v2027.0])
       end
 
-      %w[v2025.0 v2026.1].each do |version|
-        it "returns 200 for #{version}" do
-          get "/api-docs/#{version}/"
+      it "returns 200 for v2026.1" do
+        get "/openapi/v2026.1.yaml"
 
-          expect(response).to have_http_status(:ok)
-        end
-      end
-    end
-  end
-
-  describe "/reference-data" do
-    context "when allowed_versions excludes v2026.1" do
-      before do
-        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0])
+        expect(response).to have_http_status(:ok)
       end
 
-      it "returns 200 for v2025.0" do
-        get "/reference-data/v2025.0/"
+      it "returns 200 for v2027.0" do
+        get "/openapi/v2027.0.yaml"
 
-        expect(response).to have_http_status(:success)
-      end
-
-      it "returns 404 for v2026.1" do
-        get "/reference-data/v2026.1/"
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when allowed_versions includes v2026.1" do
-      before do
-        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0 v2026.1])
-      end
-
-      %w[v2025.0 v2026.1].each do |version|
-        it "returns 200 for #{version}" do
-          get "/reference-data/#{version}/"
-
-          expect(response).to have_http_status(:ok)
-        end
-      end
-    end
-  end
-
-  describe "/csv-docs" do
-    context "when allowed_versions excludes v2026.1" do
-      before do
-        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0])
-      end
-
-      it "returns 200 for v2025.0" do
-        get "/csv-docs/v2025.0/"
-
-        expect(response).to have_http_status(:success)
-      end
-
-      it "returns 404 for v2026.1" do
-        get "/csv-docs/v2026.1/"
-
-        expect(response).to have_http_status(:not_found)
-      end
-    end
-
-    context "when allowed_versions includes v2026.1" do
-      before do
-        allow(Settings.api).to receive(:allowed_versions).and_return(%w[v2025.0-rc v2025.0 v2026.1])
-      end
-
-      %w[v2025.0 v2026.1].each do |version|
-        it "returns 200 for #{version}" do
-          get "/csv-docs/#{version}/"
-
-          expect(response).to have_http_status(:ok)
-        end
+        expect(response).to have_http_status(:ok)
       end
     end
   end
