@@ -95,9 +95,24 @@ module Schools
     context "with a manual school but no postcode" do
       let(:params) { { "employing_school_name" => "Oak House School" } }
 
-      it "requires a postcode" do
+      it "is valid" do
+        expect(subject).to be_valid
+      end
+    end
+
+    context "with a manual school and an invalid postcode" do
+      let(:params) do
+        {
+          "employing_school_name" => "Oak House School",
+          "employing_school_postcode" => "567abc",
+        }
+      end
+
+      it "is invalid" do
         expect(subject).not_to be_valid
-        expect(subject.errors[:employing_school_postcode]).to be_present
+        expect(subject.errors[:employing_school_postcode]).to include(
+          I18n.t("activemodel.errors.validators.postcode.invalid"),
+        )
       end
     end
   end
