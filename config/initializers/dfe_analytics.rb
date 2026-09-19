@@ -23,11 +23,11 @@ DfE::Analytics.configure do |config|
 
   # The name of the BigQuery project we’re writing to.
   #
-  config.bigquery_project_id = Settings.google.big_query.project_id
+  config.bigquery_project_id = "data-insights-test-462115"
 
   # The name of the BigQuery dataset we're writing to.
   #
-  config.bigquery_dataset = Settings.google.big_query.dataset
+  config.bigquery_dataset = "register_events_dr_test_qa"
 
   # Passed directly to the retries: option on the BigQuery client
   #
@@ -54,14 +54,18 @@ DfE::Analytics.configure do |config|
   # use a new version of the BigQuery streaming APIs.
   config.azure_federated_auth = true
 
-  if Rails.env.in?(%w[development review qa production])
-    # Path of airbyte stream config file relative to the App root (Rails.root)
-    config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
-
-    # Perform airbyte checks on startup and allow airbyte config generation
-    config.airbyte_enabled = Rails.env.development? || ENV["BIGQUERY_AIRBYTE_DATASET"].present?
-
-    # Set bigquery airbyte vars
-    config.bigquery_hidden_policy_tag = "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766"
-  end
+  config.google_cloud_credentials = {
+    universe_domain: "googleapis.com",
+    type: "external_account",
+    audience: "//iam.googleapis.com/projects/242041527027/locations/global/workloadIdentityPools/azure-cip-identity-pool/providers/azure-cip-oidc-provider",
+    subject_token_type: "urn:ietf:params:oauth:token-type:jwt",
+    token_url: "https://sts.googleapis.com/v1/token",
+    credential_source: {
+      url: "https://login.microsoftonline.com/9c7d9dd3-840c-4b3f-818e-552865082e16/oauth2/v2.0/token",
+    },
+    service_account_impersonation_url: "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/register-bigquery-dr-test-qa@data-insights-test-462115.iam.gserviceaccount.com:generateAccessToken",
+    service_account_impersonation: {
+      token_lifetime_seconds: 3600,
+    },
+  }
 end
