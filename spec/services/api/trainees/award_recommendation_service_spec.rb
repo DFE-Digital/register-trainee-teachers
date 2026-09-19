@@ -7,7 +7,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
   describe "::call" do
     describe "success" do
-      let(:trainee) { create(:trainee, :trn_received) }
+      let(:trainee) { create(:trainee, :trn_received, :with_employing_school) }
       let(:params) do
         {
           qts_standards_met_date: Time.zone.today.iso8601,
@@ -42,7 +42,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
     describe "failure" do
       context "when qts_standards_met_date is nil" do
-        let(:trainee) { create(:trainee, :trn_received) }
+        let(:trainee) { create(:trainee, :trn_received, :with_employing_school) }
         let(:params) do
           {
             qts_standards_met_date: nil,
@@ -59,7 +59,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       context "when qts_standards_met_date is empty" do
-        let(:trainee) { create(:trainee, :trn_received) }
+        let(:trainee) { create(:trainee, :trn_received, :with_employing_school) }
         let(:params) do
           {
             qts_standards_met_date: "",
@@ -76,7 +76,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       context "when qts_standards_met_date is invalid" do
-        let(:trainee) { create(:trainee, :trn_received) }
+        let(:trainee) { create(:trainee, :trn_received, :with_employing_school) }
         let(:params) do
           {
             qts_standards_met_date: "abc",
@@ -93,7 +93,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       context "when qts_standards_met_date is in the future" do
-        let(:trainee) { create(:trainee, :trn_received) }
+        let(:trainee) { create(:trainee, :trn_received, :with_employing_school) }
         let(:params) do
           {
             qts_standards_met_date: Time.zone.tomorrow.iso8601,
@@ -110,7 +110,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       context "when qts_standards_met_date is before trainee's itt_start_date" do
-        let(:trainee) { create(:trainee, :trn_received, :itt_start_date_in_the_future) }
+        let(:trainee) { create(:trainee, :trn_received, :with_employing_school, :itt_start_date_in_the_future) }
         let(:params) do
           {
             qts_standards_met_date: Time.zone.today.iso8601,
@@ -127,7 +127,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       context "when trainee's state is not trn_received" do
-        let(:trainee) { create(:trainee, :submitted_for_trn) }
+        let(:trainee) { create(:trainee, :submitted_for_trn, :with_employing_school) }
         let(:params) do
           {
             qts_standards_met_date: Time.zone.today.iso8601,
@@ -260,7 +260,88 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       context "when trainee on assessment_only route has no placements" do
-        let(:trainee) { create(:trainee, :without_placements, :trn_received, training_route: :assessment_only) }
+        let(:trainee) { create(:trainee, :without_placements, :trn_received, :with_employing_school, training_route: :assessment_only) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
+      context "when trainee on assessment_only route has no employing school" do
+        let(:trainee) { create(:trainee, :trn_received, training_route: :assessment_only) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("employing_school_urn must be completed before qts_standards_met_date")
+          expect(trainee.recommended_for_award?).to be(false)
+        end
+      end
+
+      context "when trainee on assessment_only route has an employing school that is not applicable" do
+        let(:trainee) do
+          create(
+            :trainee,
+            :trn_received,
+            training_route: :assessment_only,
+            employing_school_not_applicable: true,
+          )
+        end
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("employing_school_urn must be completed before qts_standards_met_date")
+          expect(trainee.recommended_for_award?).to be(false)
+        end
+      end
+
+      context "when trainee on assessment_only route has an employing school that is not in GIAS" do
+        let(:trainee) do
+          create(
+            :trainee,
+            :trn_received,
+            training_route: :assessment_only,
+            employing_school_name: "Oak House School",
+            employing_school_postcode: "SW1A 1AA",
+          )
+        end
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
+      context "when trainee on early_years_assessment_only route has no employing school" do
+        let(:trainee) { create(:trainee, :trn_received, :early_years_assessment_only) }
         let(:params) do
           {
             qts_standards_met_date: Time.zone.today.iso8601,

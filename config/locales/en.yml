@@ -2274,6 +2274,8 @@ en:
           attributes:
             degree_id:
               invalid: must be completed before qts_standards_met_date
+            employing_school_urn:
+              blank: must be completed before qts_standards_met_date
             placements:
               invalid: "must be at least %{minimum} for the %{training_route} training route"
             state:
