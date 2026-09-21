@@ -1296,7 +1296,7 @@ en:
         not_listed: Employing school is not listed
         school_name: School or setting name
         school_urn: School unique reference number (URN) (optional)
-        postcode: Postcode
+        postcode: Postcode (optional)
         gias_help_html:
           <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
     subject_specialisms:

@@ -62,6 +62,19 @@ feature "assessment only employing school" do
     and_i_see_the_manual_school
   end
 
+  scenario "registered trainee sees a manual employing school on confirm" do
+    given_a_trainee_exists(:trn_received, :with_valid_past_itt_start_date, employing_school: nil)
+    and_i_am_on_the_trainee_record_page
+    and_i_click_to_enter_employing_school
+    when_i_enter_a_manual_school
+    and_i_continue
+    then_i_am_on_the_confirm_page
+    and_i_see_the_manual_school
+
+    when_i_update_the_record
+    then_i_see_the_manual_school_on_the_record
+  end
+
   scenario "submitting the search page empty" do
     given_an_assessment_only_draft_exists
     when_i_visit_the_review_draft_page
@@ -148,6 +161,20 @@ private
 
   def then_i_see_the_empty_school_error
     expect(page).to have_text("Enter an employing school")
+  end
+
+  def and_i_click_to_enter_employing_school
+    click_on "Enter an answer"
+  end
+
+  def when_i_update_the_record
+    click_on "Update record"
+  end
+
+  def then_i_see_the_manual_school_on_the_record
+    expect(page).to have_text("Trainee employing school updated")
+    expect(page).to have_text("Oak House School")
+    expect(page).to have_text("SW1A 1AA")
   end
 
   def and_i_click_on_record_training_outcome

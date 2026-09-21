@@ -63,6 +63,25 @@ module Schools
       it "has the assessment only change link" do
         expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/employing-schools/edit")
       end
+
+      context "with a manual employing school on the form" do
+        let(:trainee) { create(:trainee, :trn_received, employing_school: nil) }
+        let(:form) do
+          AssessmentOnlyEmployingSchoolForm.new(
+            trainee,
+            params: {
+              "employing_school_name" => "Oak House School",
+              "employing_school_postcode" => "SW1A 1AA",
+            },
+          )
+        end
+
+        it "renders the manual school details" do
+          expect(rendered_content).to have_text("Oak House School")
+          expect(rendered_content).to have_text("SW1A 1AA")
+          expect(rendered_content).not_to have_text("Employing school is missing")
+        end
+      end
     end
 
     context "when trainee is on a school direct tuition fee route" do
