@@ -27,8 +27,8 @@
   "devDependencies": {
     "esbuild": "^0.28.2",
     "esbuild-jest-transform": "^2.0.1",
-    "jest": "^30.5.1",
-    "jest-environment-jsdom": "^30.5.1",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
     "postcss": "^8.5.28",
     "standard": "^17.1.2",
     "stylelint": "^17.15.0",
