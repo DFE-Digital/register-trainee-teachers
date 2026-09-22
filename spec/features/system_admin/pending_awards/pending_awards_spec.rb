@@ -57,11 +57,11 @@ feature "pending awards" do
   end
 
   def and_i_visit_the_pending_awards_page
-    visit "/system-admin/pending_awards"
+    visit "/system-admin/pending-status-change"
   end
 
   def then_i_see_the_pending_awards_page
-    expect(page).to have_text("Trainees Pending Award")
+    expect(page).to have_text("Pending status change")
   end
 
   def and_i_see_the_trainee

@@ -82,9 +82,28 @@ module Schools
     end
 
     def fetch_employing_school
-      return data_model.employing_school if data_model.respond_to?(:employing_school)
+      school = data_model.employing_school if data_model.respond_to?(:employing_school)
+      school ||= fetch_school(data_model.employing_school_id) if data_model.respond_to?(:employing_school_id)
+      return school if school.present?
 
-      fetch_school(data_model.employing_school_id)
+      manual_employing_school
+    end
+
+    def manual_employing_school
+      name = employing_school_field(:employing_school_name)
+      return if name.blank?
+
+      DisplaySchool.new(
+        name: name,
+        urn: employing_school_field(:employing_school_urn),
+        town: nil,
+        postcode: employing_school_field(:employing_school_postcode),
+      )
+    end
+
+    def employing_school_field(field)
+      value = data_model.public_send(field) if data_model.respond_to?(field)
+      value.presence || trainee.public_send(field)
     end
 
     def fetch_school(id)

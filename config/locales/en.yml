@@ -1296,7 +1296,7 @@ en:
         not_listed: Employing school is not listed
         school_name: School or setting name
         school_urn: School unique reference number (URN) (optional)
-        postcode: Postcode
+        postcode: Postcode (optional)
         gias_help_html:
           <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
     subject_specialisms:
@@ -1560,9 +1560,6 @@ en:
             email:
               blank: Enter the user’s email address
               taken: Enter a unique email address
-            dttp_id:
-              invalid: Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949
-              taken: Enter a unique DTTP ID
         upload:
           attributes:
             file:
@@ -2078,8 +2075,6 @@ en:
               blank: Enter an employing school
             employing_school_name:
               blank: Enter a school or setting name
-            employing_school_postcode:
-              blank: Enter a postcode
             employing_school_urn:
               invalid_format: Enter a valid school unique reference number (URN). It should be 6 digits long.
         schools/form_validator:
@@ -2323,6 +2318,7 @@ en:
     validation_errors:
       index:
         heading: Validation errors
+        description: This report highlights areas of potential interest, primarily used by Product/UX to investigate and improve based on the volume of errors.
         attribute_error: Attribute error
         error_count: Error count
         form: Form

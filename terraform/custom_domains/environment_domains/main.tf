@@ -13,4 +13,6 @@ module "domains" {
   cached_paths          = try(each.value.cached_paths, [])
   redirect_rules        = try(each.value.redirect_rules, null)
   rate_limit            = try(var.rate_limit, null)
+  allow_aks             = var.allow_aks
+  block_ip              = var.block_ip
 }

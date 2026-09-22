@@ -52,7 +52,7 @@ class OtpSignInUser
     session.destroy
   end
 
-  def logout_url
+  def logout_url(_request)
     "/"
   end
 end
