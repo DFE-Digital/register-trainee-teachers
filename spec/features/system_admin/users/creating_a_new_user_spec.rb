@@ -4,7 +4,6 @@ require "rails_helper"
 
 feature "Creating a new user" do
   let(:user) { create(:user, system_admin: true) }
-  let(:dttp_id) { SecureRandom.uuid }
 
   before do
     given_i_am_authenticated(user:)
@@ -18,7 +17,6 @@ feature "Creating a new user" do
         and_i_fill_in_first_name
         and_i_fill_in_last_name
         and_i_fill_in_email
-        and_i_fill_in_dttp_id
         when_i_save_the_form
         then_i_am_taken_to_the_user_show_page
       end
