@@ -15,7 +15,7 @@ module SystemAdminRoutes
 
         resources :dead_jobs, only: %i[index show update destroy]
         resources :pending_trns, only: %i[index show]
-        resources :pending_awards, only: %i[index show]
+        resources :pending_awards, only: %i[index], path: "pending-status-change"
         resources :duplicate_apply_applications, only: %i[index show]
 
         get "funding-uploads", to: "funding_uploads#index", as: :funding_uploads
