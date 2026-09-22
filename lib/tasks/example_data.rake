@@ -108,7 +108,7 @@ namespace :example_data do
       )
 
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
-      FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
+      FactoryBot.create(:payment_schedule, :for_full_year, payable: provider) unless persona_attributes[:without_payment_schedule]
       FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_and_multiple_amounts, payable: provider)
 
       FactoryBot.create(:authentication_token, :revoked, provider: provider, revoked_by: persona)
@@ -352,7 +352,7 @@ namespace :example_data do
       )
 
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
-      FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
+      FactoryBot.create(:payment_schedule, :for_full_year, payable: provider) unless persona_attributes[:without_payment_schedule]
       FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_and_multiple_amounts, payable: provider)
 
       FactoryBot.create(:authentication_token, provider:)

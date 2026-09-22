@@ -7,6 +7,7 @@ base_url: https://localhost:5000
 support_email: becomingateacher@digital.education.gov.uk
 feedback_email: Registertraineeteachers@education.gov.uk
 data_email: registerateacher@education.gov.uk
+funding_email: ITT.FUNDING@education.gov.uk
 
 log_level: info
 

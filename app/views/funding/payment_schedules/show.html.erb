@@ -89,6 +89,7 @@
       <p class="govuk-body"><%= t("funding.payment_schedule.no_data") %></p>
       <p class="govuk-body">
         <%= t("funding.payment_schedule.contact_info", email: support_email(
+          email: Settings.funding_email,
           subject: t("funding.view.title")
         )).html_safe %>
       </p>
