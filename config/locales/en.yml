@@ -2321,6 +2321,7 @@ en:
     validation_errors:
       index:
         heading: Validation errors
+        description: This report highlights areas of potential interest, primarily used by Product/UX to investigate and improve based on the volume of errors.
         attribute_error: Attribute error
         error_count: Error count
         form: Form
