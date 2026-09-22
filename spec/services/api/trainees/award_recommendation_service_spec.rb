@@ -340,6 +340,29 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         end
       end
 
+      context "when trainee on assessment_only route has an employing school with no postcode" do
+        let(:trainee) do
+          create(
+            :trainee,
+            :trn_received,
+            training_route: :assessment_only,
+            employing_school_name: "Oak House School",
+          )
+        end
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
       context "when trainee on early_years_assessment_only route has no employing school" do
         let(:trainee) { create(:trainee, :trn_received, :early_years_assessment_only) }
         let(:params) do

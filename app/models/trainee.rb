@@ -596,10 +596,10 @@ class Trainee < ApplicationRecord
     current_withdrawal&.withdrawal_reasons
   end
 
-  # A GIAS school, or the name and postcode of one that isn't in GIAS.
+  # A GIAS school, or the name of one that isn't in GIAS. Not the postcode too,
+  # as schools outside the UK don't have one.
   def employing_school_recorded?
-    employing_school_id.present? ||
-      (employing_school_name.present? && employing_school_postcode.present?)
+    employing_school_id.present? || employing_school_name.present?
   end
 
 private
