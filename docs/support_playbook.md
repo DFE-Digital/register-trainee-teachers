@@ -180,10 +180,6 @@ Register support may need to communicate with the trainee and provider to ensure
 
 ## Managing the Sidekiq queue
 
-### via the UI
-
-`system-admin/dead_jobs/` uses the methods below to list failed trainees. You can also download the list along with errors via `download (.csv)`.
-
 ### Console commands
 
 #### Inspect jobs in a queue
