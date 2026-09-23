@@ -31,7 +31,7 @@ module RegisterTraineeTeachers
     config.middleware.use(Rack::Deflater)
     config.middleware.insert_before(ActionDispatch::Static, TechDocs::TrailingSlashRedirect)
     # Restrict unpublished OpenAPI yaml (e.g. v2027.0) to allowed_versions envs.
-    config.middleware.insert_before(ActionDispatch::Static, TechDocs::Availability)
+    config.middleware.insert_before(ActionDispatch::Static, OpenApi::Availability)
     config.active_job.queue_adapter = :sidekiq
 
     # Configure session store to use ActiveRecord.
