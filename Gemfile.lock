@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 55c392c9e4e10031f306697724047231df5561e5
-  tag: v1.15.17
+  revision: 3367c90f9e2566f9b27b87abee13b4070f6b663f
+  tag: v1.16.0
   specs:
-    dfe-analytics (1.15.17)
+    dfe-analytics (1.16.0)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.24)
+      json (< 3)
       multi_xml (~> 0.6.0)
       request_store_rails (~> 2)
 
@@ -1044,7 +1045,7 @@ CHECKSUMS
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   deep_merge (1.2.2) sha256=83ced3a3d7f95f67de958d2ce41b1874e83c8d94fe2ddbff50c8b4b82323563a
-  dfe-analytics (1.15.17)
+  dfe-analytics (1.16.0)
   dfe-reference-data (3.10.0)
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   discard (2.0.0) sha256=0fc520786b4d7b9b1ea8b2b3dadbb13c3e41d2ce7d297d04869baf1c9e30d2c0
