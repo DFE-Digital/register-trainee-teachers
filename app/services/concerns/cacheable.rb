@@ -41,10 +41,10 @@ module Cacheable
       end
 
       def clear_all(id)
-        self::FORM_SECTION_KEYS.each do |key|
-          redis.set(cache_key_for(id, key), nil)
-          Rails.cache.delete(cache_key_for(id, key))
-        end
+        keys = self::FORM_SECTION_KEYS.map { |key| cache_key_for(id, key) }
+
+        keys.each { |key| redis.set(key, nil) }
+        Rails.cache.delete_multi(keys)
       end
 
       def cache_key_for(id, key)
