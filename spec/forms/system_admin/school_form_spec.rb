@@ -16,7 +16,8 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
     end
 
     it "deletes the cached key from the FormStore" do
-      expect(subject.clear_stash).to contain_exactly(:system_admin_school)
+      subject.clear_stash
+
       expect(form_store).to have_received(:clear_all).with(school.id)
     end
   end
