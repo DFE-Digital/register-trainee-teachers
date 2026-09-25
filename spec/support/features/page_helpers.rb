@@ -490,14 +490,6 @@ module Features
       @lead_schools_trainee_summary_page ||= PageObjects::SystemAdmin::Funding::LeadSchoolsTraineeSummary.new
     end
 
-    def admin_dead_jobs_page
-      @admin_dead_jobs_page ||= PageObjects::SystemAdmin::DeadJobs::DeadBackgroundJobs.new
-    end
-
-    def admin_dead_jobs_trs_update_trainee
-      @admin_dead_jobs_trs_update_trainee ||= PageObjects::SystemAdmin::DeadJobs::TrsUpdateTrainee.new
-    end
-
     def admin_pending_trns_page
       @admin_pending_trns_page ||= PageObjects::SystemAdmin::PendingTrns::PendingTrnsSummary.new
     end

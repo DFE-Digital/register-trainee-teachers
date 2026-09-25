@@ -13,7 +13,6 @@ module SystemAdminRoutes
         mount Sidekiq::Web, at: "/sidekiq", constraints: RouteConstraints::SystemAdminConstraint.new
         get "/sidekiq", to: redirect("/sign-in"), status: 302
 
-        resources :dead_jobs, only: %i[index show update destroy]
         resources :pending_trns, only: %i[index show]
         resources :pending_awards, only: %i[index], path: "pending-status-change"
         resources :duplicate_apply_applications, only: %i[index show]
