@@ -134,6 +134,24 @@ describe OtpVerificationsForm, type: :model do
           end
         end
       end
+
+      describe "validating the code" do
+        it { expect(error_message).to include "The code is incorrect or has expired" }
+      end
+    end
+
+    context "with a deleted user" do
+      let(:otp_email) { user.email }
+
+      before { user.discard! }
+
+      describe "validating the code" do
+        context "when the code is correct" do
+          let(:code) { ROTP::TOTP.new(user.otp_secret + otp_salt, issuer: "Register").now }
+
+          it { expect(error_message).to include "The code is incorrect or has expired" }
+        end
+      end
     end
   end
 end
