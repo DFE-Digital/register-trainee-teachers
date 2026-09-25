@@ -19,7 +19,7 @@ environment:
   display_name: Review
 
 api:
-  allowed_versions: [v2026.1]
+  allowed_versions: [v2026.1, v2027.0]
 
 bulk_update:
   add_trainees:

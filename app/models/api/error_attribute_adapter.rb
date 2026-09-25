@@ -43,8 +43,22 @@ module Api
         elsif (nested_api_attribute_name = NESTED_API_ATTRIBUTE_NAMES[attr.to_sym])
           nested_api_attribute_name
         else
-          I18n.t("activemodel.attributes.#{model_name.i18n_key}.#{attr}", default: attr.to_s)
+          translated_attribute_name(attr) || attr.to_s
         end || super
+      end
+
+      def translated_attribute_name(attr)
+        lookup_ancestors.each do |klass|
+          next unless klass.respond_to?(:model_name)
+
+          translation = I18n.t(
+            "activemodel.attributes.#{klass.model_name.i18n_key}.#{attr}",
+            default: nil,
+          )
+          return translation if translation.present?
+        end
+
+        nil
       end
     end
 

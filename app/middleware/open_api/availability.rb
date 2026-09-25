@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module TechDocs
+module OpenApi
   class Availability
-    PATHS = %r{\A/(api-docs|reference-data|csv-docs)/(v[\d.]+-?\w*)}
+    PATH = %r{\A/openapi/(v[\d.]+-?\w*)\.ya?ml\z}
 
     def initialize(app)
       @app = app
@@ -11,8 +11,8 @@ module TechDocs
     def call(env)
       path = env["PATH_INFO"]
 
-      if (match = path.match(PATHS))
-        version = match[2]
+      if (match = path.match(PATH))
+        version = match[1]
         return [404, {}, ["Not found"]] unless Settings.api.allowed_versions.include?(version)
       end
 
