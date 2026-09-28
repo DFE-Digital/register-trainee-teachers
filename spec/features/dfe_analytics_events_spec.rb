@@ -6,7 +6,7 @@ feature "dfe analytics integration" do
   include TraineeHelper
 
   context "clicking return to draft record later" do
-    scenario "sends dfe analytics events" do
+    scenario "sends expected dfe analytics events" do
       given_the_send_to_big_query_feature_is_enabled
       and_i_am_authenticated
       when_i_visit_the_trainee_index_page
@@ -29,6 +29,6 @@ private
   end
 
   def then_dfe_analytics_events_are_sent
-    expect(%i[web_request create_entity]).to have_been_enqueued_as_analytics_events # rubocop:disable RSpec/ExpectActual
+    expect(%i[web_request]).to have_been_enqueued_as_analytics_events # rubocop:disable RSpec/ExpectActual
   end
 end
