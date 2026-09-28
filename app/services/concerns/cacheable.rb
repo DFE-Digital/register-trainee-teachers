@@ -8,18 +8,11 @@ module Cacheable
   included do
     class << self
       def get(id, key)
-        solid_cache_value = Rails.cache.read(cache_key_for(id, key))
+        value = Rails.cache.read(cache_key_for(id, key))
 
-        if solid_cache_value.present?
+        if value.present?
           track_read(key, :solid_cache_hit)
-          return JSON.parse(solid_cache_value)
-        end
-
-        redis_value = redis.get(cache_key_for(id, key))
-
-        if redis_value.present?
-          track_read(key, :redis_hit)
-          JSON.parse(redis_value)
+          JSON.parse(value)
         else
           track_read(key, :miss)
           nil
@@ -29,12 +22,7 @@ module Cacheable
       def set(id, key, values)
         raise(InvalidKeyError) unless self::FORM_SECTION_KEYS.include?(key)
 
-        json = values.to_json
-
-        redis.set(cache_key_for(id, key), json)
-        track_write(key, :redis)
-
-        Rails.cache.write(cache_key_for(id, key), json)
+        Rails.cache.write(cache_key_for(id, key), values.to_json)
         track_write(key, :solid_cache)
 
         true
@@ -42,7 +30,6 @@ module Cacheable
 
       def clear_all(id)
         self::FORM_SECTION_KEYS.each do |key|
-          redis.set(cache_key_for(id, key), nil)
           Rails.cache.delete(cache_key_for(id, key))
         end
       end
@@ -53,10 +40,6 @@ module Cacheable
         else
           "#{id}_#{key}"
         end
-      end
-
-      def redis
-        RedisSetup::RedisClient.current
       end
 
       def track_read(key, outcome)
