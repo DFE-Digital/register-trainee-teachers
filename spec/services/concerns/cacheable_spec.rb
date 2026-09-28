@@ -5,7 +5,7 @@ require "rails_helper"
 describe Cacheable do
   let(:dummy_class) do
     Class.new { include Cacheable }.tap do |klass|
-      klass.const_set(:FORM_SECTION_KEYS, %i[contact_details])
+      klass.const_set(:FORM_SECTION_KEYS, %i[contact_details personal_details])
     end
   end
 
@@ -138,6 +138,14 @@ describe Cacheable do
       dummy_class.clear_all(id)
 
       expect(solid_cache.read(dummy_class.cache_key_for(id, key))).to be_nil
+    end
+
+    it "clears every section from Solid Cache in a single call" do
+      expect(solid_cache).to receive(:delete_multi).once.with(
+        [dummy_class.cache_key_for(id, :contact_details), dummy_class.cache_key_for(id, :personal_details)],
+      )
+
+      dummy_class.clear_all(id)
     end
   end
 end
