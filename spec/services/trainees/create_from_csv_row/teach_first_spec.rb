@@ -241,6 +241,18 @@ module Trainees
               expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
             end
           end
+
+          context "when disability is provided as 'Not Provided'" do
+            before do
+              csv_row.merge!({ "Disabilities" => "Not Provided" })
+              described_class.call(csv_row:)
+            end
+
+            it "treats it the same as 'Not provided'" do
+              expect(trainee.disabilities).to be_empty
+              expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
+            end
+          end
         end
 
         context "when the trainee's course is in the primary age range but subject isn't" do
@@ -326,6 +338,17 @@ module Trainees
 
           it "doesn't error and leaves the nationality blank" do
             expect(trainee.nationalities.pluck(:name)).to include("british")
+          end
+        end
+
+        context "when nationality is provided as 'irish'" do
+          before do
+            csv_row.merge!({ "Nationality" => "irish" })
+            described_class.call(csv_row:)
+          end
+
+          it "keeps the nationality as irish" do
+            expect(trainee.nationalities.pluck(:name)).to eq(["irish"])
           end
         end
       end
