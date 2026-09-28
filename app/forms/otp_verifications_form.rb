@@ -6,13 +6,13 @@ class OtpVerificationsForm
 
   validates :code, presence: true
   validate :rate_limit, if: -> { errors.empty? }
-  validate :code_is_correct?, if: -> { errors.empty? }
+  validate :code_valid, if: -> { errors.empty? }
 
   def initialize(session:, code:)
     @session = session
     @code = code
 
-    @user = User.find_by(email: session[:otp_email])
+    @user = User.kept.find_by(email: session[:otp_email])
     @salt = session[:otp_salt]
   end
 
@@ -29,10 +29,8 @@ private
   end
 
   # 600 = 10 mins validity
-  def code_is_correct?
-    return false unless code.present? && user
-
-    if totp.verify(code, drift_behind: 600).blank?
+  def code_valid
+    if user.nil? || totp.verify(code, drift_behind: 600).blank?
       errors.add(:code, :invalid_code)
     end
   end

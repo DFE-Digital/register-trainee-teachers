@@ -53,6 +53,38 @@ describe "A user authenticates via Email Sign-in" do
       when_i_sign_out
       then_i_am_signed_out
     end
+
+    scenario "signing in with a different capitalisation of the email", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_submit_my_email_with_a_different_capitalisation
+      then_a_sign_in_code_is_sent_to_my_email
+      and_enter_my_otp
+      then_i_am_redirected_to_the_root_path
+      and_i_should_see_the_link_to_sign_out
+    end
+
+    scenario "attempting to sign in with a different capitalisation of the email and an invalid code", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_submit_my_email_with_a_different_capitalisation
+      and_enter_an_incorrect_otp
+      then_i_am_redirected_to_the_otp_form
+    end
+
+    scenario "attempting to sign in with an email that has no account", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_submit_an_email_that_has_no_account
+      and_enter_an_incorrect_otp
+      then_i_am_redirected_to_the_otp_form
+    end
+
+    scenario "attempting to sign in after my account has been deleted", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_my_account_has_been_deleted
+      and_submit_my_email
+      then_no_sign_in_code_is_sent
+      and_enter_my_otp
+      then_i_am_redirected_to_the_otp_form
+    end
   end
 
   context "as a system admin" do
@@ -78,6 +110,28 @@ private
   def and_submit_my_email
     otp_page.email.fill_in(with: user.email)
     otp_page.submit.click
+  end
+
+  def and_submit_my_email_with_a_different_capitalisation
+    otp_page.email.fill_in(with: user.email.upcase)
+    otp_page.submit.click
+  end
+
+  def and_submit_an_email_that_has_no_account
+    otp_page.email.fill_in(with: "no.account@example.org")
+    otp_page.submit.click
+  end
+
+  def and_my_account_has_been_deleted
+    user.discard!
+  end
+
+  def then_a_sign_in_code_is_sent_to_my_email
+    expect(OtpMailer).to have_received(:generate).with(name: user.name, email: user.email, code: code)
+  end
+
+  def then_no_sign_in_code_is_sent
+    expect(OtpMailer).not_to have_received(:generate)
   end
 
   def and_enter_my_otp

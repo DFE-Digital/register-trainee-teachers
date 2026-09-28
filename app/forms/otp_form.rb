@@ -13,7 +13,7 @@ class OtpForm
   validate :rate_limit, if: -> { errors.empty? }
 
   def initialize(email:)
-    @email = email&.strip
+    @email = email&.strip&.downcase
   end
 
 private

@@ -83,5 +83,13 @@ describe OtpForm, type: :model do
     it "strips whitespace from the email" do
       expect(form.email).to eql("email@example.com")
     end
+
+    context "with capital letters" do
+      let(:email) { "Email@Example.com" }
+
+      it "downcases the email" do
+        expect(form.email).to eql("email@example.com")
+      end
+    end
   end
 end
