@@ -145,8 +145,10 @@ module Trainees
       end
 
       def parse_standard_disabilities
+        mapping = ::Hesa::CodeSets::Disabilities::NAME_MAPPING.transform_keys(&:downcase)
+
         lookup("Disabilities").split(",").map(&:strip)
-          .map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }
+          .map { |disability| mapping[disability.downcase] }
           .compact
       end
 
@@ -252,7 +254,7 @@ module Trainees
       def nationalities
         return [] if lookup("Nationality").downcase == "other"
 
-        british_nationalities = /english|scottish|welsh|irish/i
+        british_nationalities = /english|scottish|welsh/i
         lookup("Nationality").gsub(british_nationalities, "british").split(",").compact
       end
 
