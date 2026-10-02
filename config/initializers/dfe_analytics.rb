@@ -57,11 +57,6 @@ DfE::Analytics.configure do |config|
   # Whether to send database events
   config.database_events_enabled = false
 
-  if Rails.env.in?(%w[development review qa production])
-    # Path of airbyte stream config file relative to the App root (Rails.root)
-    config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
-
-    # Perform airbyte checks on startup and allow airbyte config generation
-    config.airbyte_enabled = Rails.env.development? || ENV["BIGQUERY_AIRBYTE_DATASET"].present?
-  end
+  # Perform airbyte checks on startup and allow airbyte config generation
+  config.airbyte_enabled = Rails.env.in?(%w[review qa production]) && ENV["BIGQUERY_AIRBYTE_DATASET"].present?
 end
