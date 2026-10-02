@@ -11,7 +11,7 @@ module ApiRoutes
             resources :placements, param: :placement_slug, only: %I[index show create update destroy]
             resources :award_recommendations, only: :create, path: "update-qts-or-eyts-status"
             post "recommend-for-qts", to: "award_recommendations#create",
-                 constraints: RouteConstraints::RecommendForQtsConstraint
+                                      constraints: RouteConstraints::RecommendForQtsConstraint
             resources :deferrals, only: :create, path: :defer
           end
         end
