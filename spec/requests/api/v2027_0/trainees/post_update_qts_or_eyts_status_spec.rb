@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-# Route alias — full coverage in post_recommend_for_qts_spec.rb
 RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status" do
   let(:token) { create(:authentication_token, provider: trainee.provider).token }
 
@@ -14,34 +13,264 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
     )
   end
 
-  let(:current_time) { Time.zone.now }
+  describe "success" do
+    let(:current_time) { Time.zone.now }
 
-  before { Timecop.freeze(current_time) }
-  after { Timecop.return }
+    before do
+      Timecop.freeze(current_time)
+    end
 
-  it "works the same as the old recommend-for-qts endpoint" do
-    post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
-         headers: { authorization: "Bearer #{token}" },
-         params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
+    after do
+      Timecop.return
+    end
 
-    expect(response).to have_http_status(:accepted)
-    expect(response.parsed_body[:data][:recommended_for_award_at]).to eq(current_time.iso8601)
-  end
-
-  context "when the trainee is on the assessment_only route without an employing school" do
-    let(:trainee) { create(:trainee, :trn_received, training_route: :assessment_only) }
-
-    it "does not change the qts status" do
+    it "changes the QTS or EYTS status of the trainee" do
       post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
            headers: { authorization: "Bearer #{token}" },
-           params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
+           params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+      expect(response).to have_http_status(:accepted)
+      expect(response.parsed_body[:data][:recommended_for_award_at]).to eq(current_time.iso8601)
+      expect(response.parsed_body[:data][:outcome_date]).to eq(current_time.to_date.iso8601)
+      expect(response.parsed_body).not_to have_key(:errors)
+    end
+  end
+
+  describe "failure" do
+    context "when the trainee cannot be found" do
+      let(:other_trainee) { create(:trainee, :trn_received) }
+
+      it "returns status code 404" do
+        post "/api/v2027.0/trainees/#{other_trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "NotFound",
+          "message" => "Trainee(s) not found",
+        )
+      end
+    end
+
+    context "when the trainee has insufficient placements" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :without_placements,
+          :trn_received,
+          training_route: :provider_led_postgrad,
+        )
+      end
+
+      it "does not change the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+
+        trainee.reload
+        expect(trainee.recommended_for_award_at).to be_nil
+        expect(trainee.recommended_for_award?).to be(false)
+
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "UnprocessableEntity",
+          "message" => "placements must be at least 2 for the provider_led_postgrad training route",
+        )
+      end
+    end
+
+    context "when the trainee is on salaried route with 1 placement" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :trn_received,
+          :school_direct_salaried,
+          placements: create_list(:placement, 1, :with_school),
+        )
+      end
+
+      it "does not change the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+
+        trainee.reload
+        expect(trainee.recommended_for_award_at).to be_nil
+        expect(trainee.recommended_for_award?).to be(false)
+
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "UnprocessableEntity",
+          "message" => "placements must be at least 2 for the school_direct_salaried training route",
+        )
+      end
+    end
+
+    context "when the trainee is on salaried route with 2 placements" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :trn_received,
+          :school_direct_salaried,
+          placements: create_list(:placement, 2, :with_school),
+        )
+      end
+
+      it "changes the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:accepted)
+        expect(response.parsed_body[:data][:recommended_for_award_at]).to be_present
+        expect(trainee.reload.recommended_for_award?).to be(true)
+      end
+    end
+
+    context "when the trainee is on salaried route with no placements" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :without_placements,
+          :trn_received,
+          :school_direct_salaried,
+        )
+      end
+
+      it "does not change the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+
+        trainee.reload
+        expect(trainee.recommended_for_award_at).to be_nil
+        expect(trainee.recommended_for_award?).to be(false)
+
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "UnprocessableEntity",
+          "message" => "placements must be at least 2 for the school_direct_salaried training route",
+        )
+      end
+    end
+
+    context "when the trainee is on iQTS route with 1 placement" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :trn_received,
+          :iqts,
+          placements: create_list(:placement, 1, :with_school),
+        )
+      end
+
+      it "changes the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:accepted)
+        expect(response.parsed_body[:data][:recommended_for_award_at]).to be_present
+        expect(trainee.reload.recommended_for_award?).to be(true)
+      end
+    end
+
+    context "when the trainee is on iQTS route with no placements" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :without_placements,
+          :trn_received,
+          :iqts,
+        )
+      end
+
+      it "does not change the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+
+        trainee.reload
+        expect(trainee.recommended_for_award_at).to be_nil
+        expect(trainee.recommended_for_award?).to be(false)
+
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "UnprocessableEntity",
+          "message" => "placements must be at least 1 for the iqts training route",
+        )
+      end
+    end
+
+    context "when the trainee has no degree information" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :without_degrees,
+          :trn_received,
+          :with_employing_school,
+        )
+      end
+
+      it "does not change the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(trainee.recommended_for_award_at).to be_nil
+        expect(trainee.recommended_for_award?).to be(false)
+
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "UnprocessableEntity",
+          "message" => "degree_id must be completed before qts_or_eyts_requirements_met_date",
+        )
+      end
+    end
+
+    context "when the trainee is on the assessment_only route without an employing school" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :trn_received,
+          training_route: :assessment_only,
+        )
+      end
+
+      it "does not change the QTS or EYTS status of the trainee" do
+        post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+
+        trainee.reload
+        expect(trainee.recommended_for_award?).to be(false)
+
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "UnprocessableEntity",
+          "message" => "employing_school_urn must be completed before qts_or_eyts_requirements_met_date",
+        )
+      end
+    end
+
+    it "does not change the QTS or EYTS status of the trainee" do
+      post "/api/v2027.0/trainees/#{trainee.slug}/update-qts-or-eyts-status",
+           headers: { authorization: "Bearer #{token}" },
+           params: { data: { qts_or_eyts_requirements_met_date: nil } }, as: :json
 
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(trainee.reload.recommended_for_award?).to be(false)
+      expect(trainee.recommended_for_award_at).to be_nil
+      expect(trainee.recommended_for_award?).to be(false)
 
       expect(response.parsed_body[:errors]).to contain_exactly(
         "error" => "UnprocessableEntity",
-        "message" => "employing_school_urn must be completed before qts_standards_met_date",
+        "message" => "qts_or_eyts_requirements_met_date can't be blank. Enter a date the trainee met the QTS or EYTS requirements.",
       )
     end
   end

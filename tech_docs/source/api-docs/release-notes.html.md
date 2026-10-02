@@ -5,6 +5,13 @@ weight: 2
 
 # Release notes
 
+## v2027.0 (in development)
+
+### Changes
+
+* Removed deprecated `POST /trainees/{trainee_id}/recommend-for-qts`. Use `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
+* Renamed request field `qts_standards_met_date` to `qts_or_eyts_requirements_met_date` on `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
+
 ## v2026.1 — 20 March 2026
 
 ### Changes

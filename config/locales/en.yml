@@ -2271,12 +2271,25 @@ en:
             employing_school_urn:
               blank: must be completed before qts_standards_met_date
             placements:
-              invalid: "must be at least %{minimum} for the %{training_route} training route"
+              invalid: &placements_invalid "must be at least %{minimum} for the %{training_route} training route"
             state:
-              invalid: must be selected as trn_received
+              invalid: &state_invalid must be selected as trn_received
             qts_standards_met_date:
               blank: can't be blank. Enter a date the trainee met the QTS or EYTS requirements.
               itt_start_date: &qts_itt_start_date must be after itt_start_date
+        api/v20270/award_recommendation_service:
+          attributes:
+            degree_id:
+              invalid: must be completed before qts_or_eyts_requirements_met_date
+            employing_school_urn:
+              blank: must be completed before qts_or_eyts_requirements_met_date
+            placements:
+              invalid: *placements_invalid
+            state:
+              invalid: *state_invalid
+            qts_or_eyts_requirements_met_date:
+              blank: can't be blank. Enter a date the trainee met the QTS or EYTS requirements.
+              itt_start_date: *qts_itt_start_date
         api/trainees/deferral_service:
           attributes:
             state:

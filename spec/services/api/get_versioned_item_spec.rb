@@ -63,7 +63,7 @@ describe Api::GetVersionedItem do
     end
   end
 
-  it_behaves_like "get versioned item", :service, %i[map_hesa_attributes degree placement update_trainee]
+  it_behaves_like "get versioned item", :service, %i[map_hesa_attributes degree placement update_trainee award_recommendation]
   it_behaves_like "get versioned item", :attributes, %i[degree hesa_trainee_detail nationality placement trainee withdrawal trainee_filter_params]
   it_behaves_like "get versioned item", :serializer, %i[degree hesa_trainee_detail placement trainee]
 end
