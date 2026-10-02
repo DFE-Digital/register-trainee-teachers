@@ -1264,14 +1264,13 @@ en:
       edit:
         heading: Training partner
         hint: <span class="govuk-label govuk-label--m govuk-!-margin-bottom-0">Search for a training partner</span><span class="govuk-hint govuk-!-font-size-16">Enter a name, postcode, URN or UKPRN</span>
-        description: <p>The training partner is the organisation and point of contact for training providers, placements and partner schools.</p><p>The training partner you select will be able to view the trainee’s record.</p><p>You do not need to provide a training partner if the trainee is funded or employed directly.</p>
+        description: <p>The training partner is the organisation and point of contact for training providers, placements and partner schools.</p><p>The training partner you select will be able to view the trainee’s record.</p><p>You do not need to provide a training partner if the trainee is funded or employed privately.</p>
         not_applicable_details:
           summary_text: Training partner is not listed, or the trainee is funded or employed privately
           label_text: Training partner is not applicable
           body:
             <p class="govuk-body">If the training partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the training partner, contact %{contact_link}</a></p>
-            <p class="govuk-body">You do not need to provide a training partner if the trainee is funded or employed privately.</p>
     employing_schools:
       details:
         edit:

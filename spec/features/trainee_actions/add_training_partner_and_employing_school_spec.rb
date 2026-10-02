@@ -138,7 +138,7 @@ feature "add training partner and employing school" do
       "The training partner you select will be able to view the trainee’s record.",
     )
     expect(edit_training_partner_page).to have_text(
-      "You do not need to provide a training partner if the trainee is funded or employed directly.",
+      "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
     expect(edit_training_partner_page).to have_text("Search for a training partner")
     expect(edit_training_partner_page).to have_text("Enter a name, postcode, URN or UKPRN")
