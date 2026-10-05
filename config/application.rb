@@ -34,6 +34,9 @@ module RegisterTraineeTeachers
     config.middleware.insert_before(ActionDispatch::Static, OpenApi::Availability)
     config.active_job.queue_adapter = :sidekiq
 
+    config.mission_control.jobs.adapters = [:solid_queue]
+    config.mission_control.jobs.http_basic_auth_enabled = false
+
     # Configure session store to use ActiveRecord.
     # - key: Sets the name of the session cookie.
     # - httponly: Prevents client-side scripts from accessing the cookie.
