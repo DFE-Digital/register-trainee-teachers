@@ -12,7 +12,8 @@ module "domains" {
   null_host_header      = try(each.value.null_host_header, false)
   cached_paths          = try(each.value.cached_paths, [])
   redirect_rules        = try(each.value.redirect_rules, null)
-  rate_limit            = try(var.rate_limit, null)
-  allow_aks             = var.allow_aks
-  block_ip              = var.block_ip
+  rate_limit            = each.value.fwpolicy ? try(var.rate_limit, null) : null
+  allow_aks             = each.value.fwpolicy ? var.allow_aks : null
+  block_ip              = each.value.fwpolicy ? var.block_ip : null
+  dont_block_nonprod    = each.value.fwpolicy ? false : true
 }
