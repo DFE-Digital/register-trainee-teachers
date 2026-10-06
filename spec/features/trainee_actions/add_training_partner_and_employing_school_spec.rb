@@ -132,14 +132,16 @@ feature "add training partner and employing school" do
   def then_i_see_the_training_partner_edit_page
     expect(edit_training_partner_page).to be_displayed
     expect(edit_training_partner_page).to have_text(
-      "The training partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.",
+      "The training partner is the organisation and point of contact for training providers, placements and partner schools.",
     )
     expect(edit_training_partner_page).to have_text(
-      "The training partner you select will be able to view trainee’s record.",
+      "The training partner you select will be able to view the trainee’s record.",
     )
     expect(edit_training_partner_page).to have_text(
-      "Search for a training partner by name, postcode, school URN or training provider UKPRN",
+      "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
+    expect(edit_training_partner_page).to have_text("Search for a training partner")
+    expect(edit_training_partner_page).to have_text("Enter a name, postcode, URN or UKPRN")
     expect(edit_training_partner_page).to have_text(
       "If the training partner is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
     )
