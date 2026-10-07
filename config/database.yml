@@ -1,7 +1,8 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  # Solid Queue needs +2, verify with bin/rails solid_queue:check
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5).to_i + 2 %>
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
   host: <%= ENV["DB_HOSTNAME"] %>

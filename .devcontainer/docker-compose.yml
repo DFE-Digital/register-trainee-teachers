@@ -43,3 +43,21 @@ services:
       - REDIS_URL=redis://redis:6379
       - REDIS_QUEUE_URL=redis://redis:6379/0
       - REDIS_CACHE_URL=redis://redis:6379/1
+
+  solid-queue:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: bin/jobs
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=developmentpassword
+      - SETTINGS__APPLICATION=register-trainee-teachers-bg-jobs
+      - REDIS_HOST=redis
+      - REDIS_URL=redis://redis:6379
+      - REDIS_QUEUE_URL=redis://redis:6379/0
+      - REDIS_CACHE_URL=redis://redis:6379/1

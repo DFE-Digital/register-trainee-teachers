@@ -33,6 +33,10 @@ module RegisterTraineeTeachers
     # Restrict unpublished OpenAPI yaml (e.g. v2027.0) to allowed_versions envs.
     config.middleware.insert_before(ActionDispatch::Static, OpenApi::Availability)
     config.active_job.queue_adapter = :sidekiq
+    config.solid_queue.shutdown_timeout = 25.seconds
+
+    config.mission_control.jobs.adapters = [:solid_queue]
+    config.mission_control.jobs.http_basic_auth_enabled = false
 
     # Configure session store to use ActiveRecord.
     # - key: Sets the name of the session cookie.

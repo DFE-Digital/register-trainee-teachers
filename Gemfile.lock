@@ -331,6 +331,10 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
+    importmap-rails (2.2.3)
+      actionpack (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      railties (>= 6.0.0)
     io-console (0.9.2)
     irb (1.18.0)
       pp (>= 0.6.0)
@@ -411,6 +415,16 @@ GEM
     minitest (6.0.6)
       drb (~> 2.0)
       prism (~> 1.5)
+    mission_control-jobs (1.3.1)
+      actioncable (>= 7.1)
+      actionpack (>= 7.1)
+      activejob (>= 7.1)
+      activerecord (>= 7.1)
+      importmap-rails (>= 1.2.1)
+      irb (~> 1.13)
+      railties (>= 7.1)
+      stimulus-rails
+      turbo-rails
     msgpack (1.8.4)
     multi_json (1.21.1)
     multi_xml (0.6.0)
@@ -762,6 +776,13 @@ GEM
       activejob (>= 7.2)
       activerecord (>= 7.2)
       railties (>= 7.2)
+    solid_queue (1.7.0)
+      activejob (>= 7.1)
+      activerecord (>= 7.1)
+      concurrent-ruby (>= 1.3.1)
+      fugit (~> 1.11)
+      railties (>= 7.1)
+      thor (>= 1.3.1)
     sorbet-runtime (0.6.13421)
     sord (7.1.0)
       commander (~> 5.0)
@@ -785,6 +806,8 @@ GEM
       sprockets (>= 3.0.0)
     stackprof (0.2.28)
     stateful_enum (0.9.0)
+    stimulus-rails (1.3.4)
+      railties (>= 6.0.0)
     store_model (4.6.1)
       activerecord (>= 7.0)
     stringio (3.2.0)
@@ -915,6 +938,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.11)
   mechanize
   memory_profiler
+  mission_control-jobs (~> 1.3)
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
@@ -959,6 +983,7 @@ DEPENDENCIES
   solargraph
   solargraph-rails
   solid_cache (~> 1.0)
+  solid_queue (~> 1.7)
   spring
   spring-commands-rspec (~> 1.0)
   spring-watcher-listen (~> 2.1.0)
@@ -1094,6 +1119,7 @@ CHECKSUMS
   http-cookie (1.1.6) sha256=ba4b82be64de61dc281243dac70e3c382c45142f20268ed9276a3670c93feaa9
   httparty (0.24.2) sha256=8fca6a54aa0c4aa4303a0fd33e5e2156175d6a5334f714263b458abd7fda9c38
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
+  importmap-rails (2.2.3) sha256=7101be2a4dc97cf1558fb8f573a718404c5f6bcfe94f304bf1f39e444feeb16a
   io-console (0.9.2) sha256=efa74f891dd03c0939a931dfc6e74c2813d904763d456ea9762b0525e748db08
   irb (1.18.0) sha256=de9454a0703a54704b9811a5ef31a60c86949fbf4013fcf244fabc7c775248e3
   jaro_winkler (1.7.0) sha256=8daa05a5cd05bf7d27c1c65caa8ab0d47c05419d80210feaa17126db24044ada
@@ -1123,6 +1149,7 @@ CHECKSUMS
   mime-types-data (3.2026.0701) sha256=cd8811e1fb89d836499ba0582368a10ee74cef929ba956d1d5ddca045e6a730f
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
+  mission_control-jobs (1.3.1) sha256=3230be224069b39fee2893eecd27c1c334fb5467290bf575e88b5c9121287b26
   msgpack (1.8.4) sha256=4411c22d350dd1c20250f7eada3cca2695438c2f769cf0782f0cd065d90a3e7b
   multi_json (1.21.1) sha256=e6126a31808e3b4d19f483c775ceac34df190dffa62adfb63a165ee14ba68080
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
@@ -1244,6 +1271,7 @@ CHECKSUMS
   solargraph (0.60.3) sha256=3f2252faa27cc628a16a4aac1ba0bc0b06b0250194a8713da0ff42adb20bb19d
   solargraph-rails (1.3) sha256=0af6159f4fe2b716857884a9d758d124eae2bd64c27cb43028792027f2973114
   solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41
+  solid_queue (1.7.0) sha256=6566b70b801d1c317c81bba7bcdd5677c019afac584a30374b4164002ca356d3
   sorbet-runtime (0.6.13421) sha256=a19fac29c0f9dde55ab203ddc57c0e6f68d644ef951e09f41a092cc64cce5262
   sord (7.1.0) sha256=e02fd59294da520e50cea80a07fb9bc93db709c552d055871379ae8d8e87601f
   spring (4.7.0) sha256=f81bf6d41f05518ed5d0128ce5c75fb6dd9c6153f158129c8b85c4461ca0b72c
@@ -1253,6 +1281,7 @@ CHECKSUMS
   sprockets-rails (3.5.2) sha256=a9e88e6ce9f8c912d349aa5401509165ec42326baf9e942a85de4b76dbc4119e
   stackprof (0.2.28) sha256=4ec2ace02f386012b40ca20ef80c030ad711831f59511da12e83b34efb0f9a04
   stateful_enum (0.9.0) sha256=4aaaf890ddf9a108a596775e862a7972015730d762a82a8209b9778a3aed35e5
+  stimulus-rails (1.3.4) sha256=765676ffa1f33af64ce026d26b48e8ffb2e0b94e0f50e9119e11d6107d67cb06
   store_model (4.6.1) sha256=afb1d7c2c0934e511f427abe40abcacff77253544be19478724d599a6fbd47d8
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   strong_migrations (2.8.0) sha256=cb9c0f8160e60f3e9c0e76098d57a6f61825b9618e8eb41cebbd1c1079874439

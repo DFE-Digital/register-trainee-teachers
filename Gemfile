@@ -237,3 +237,6 @@ gem "tzinfo-data", platforms: %i[windows jruby]
 gem "colorize"
 
 gem "solid_cache", "~> 1.0"
+
+gem "mission_control-jobs", "~> 1.3"
+gem "solid_queue", "~> 1.7"
