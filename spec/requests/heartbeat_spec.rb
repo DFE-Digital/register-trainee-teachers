@@ -47,7 +47,56 @@ describe "heartbeat requests" do
           database: true,
           redis: true,
           sidekiq_processes: true,
+          solid_queue_processes: true,
         } }.to_json)
+      end
+    end
+
+    context "when a Solid Queue queue has jobs" do
+      before do
+        SolidQueue::Job.create!(class_name: "DeleteEmptyTraineesJob", queue_name: "default")
+      end
+
+      context "with a live worker for the queue" do
+        before do
+          create_solid_queue_worker(queues: "default", last_heartbeat_at: Time.current)
+        end
+
+        it "sets the solid queue check to true" do
+          get "/healthcheck"
+
+          expect(response.parsed_body["checks"]).to include("solid_queue_processes" => true)
+        end
+      end
+
+      context "without a worker for the queue" do
+        before do
+          create_solid_queue_worker(queues: "trs", last_heartbeat_at: Time.current)
+        end
+
+        it "returns 503" do
+          get "/healthcheck"
+
+          expect(response).to have_http_status :service_unavailable
+        end
+
+        it "sets the solid queue check to false" do
+          get "/healthcheck"
+
+          expect(response.parsed_body["checks"]).to include("solid_queue_processes" => false)
+        end
+      end
+
+      context "with a worker whose heartbeat has stopped" do
+        before do
+          create_solid_queue_worker(queues: "default", last_heartbeat_at: 10.minutes.ago)
+        end
+
+        it "sets the solid queue check to false" do
+          get "/healthcheck"
+
+          expect(response.parsed_body["checks"]).to include("solid_queue_processes" => false)
+        end
       end
     end
 
@@ -111,6 +160,17 @@ describe "heartbeat requests" do
         expect(json_response["checks"]).to include("database" => false)
       end
     end
+  end
+
+  def create_solid_queue_worker(queues:, last_heartbeat_at:)
+    SolidQueue::Process.create!(
+      kind: "Worker",
+      name: "worker-#{SecureRandom.hex(4)}",
+      pid: 1,
+      hostname: "test",
+      last_heartbeat_at: last_heartbeat_at,
+      metadata: { queues: },
+    )
   end
 
   describe "GET /sha" do
