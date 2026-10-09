@@ -32,6 +32,30 @@ feature "pending awards" do
       and_i_see_that_the_job_status_is_retrying
     end
 
+    scenario "shows the job as dead when it failed in Solid Queue" do
+      given_there_are_no_jobs_in_sidekiq
+      when_the_job_failed_in_solid_queue
+      and_i_visit_the_pending_awards_page
+      then_i_see_the_pending_awards_page
+      and_i_see_that_the_job_status_is_dead
+    end
+
+    scenario "shows the job as retrying when Solid Queue will run it again" do
+      given_there_are_no_jobs_in_sidekiq
+      when_the_job_is_waiting_to_be_retried_in_solid_queue
+      and_i_visit_the_pending_awards_page
+      then_i_see_the_pending_awards_page
+      and_i_see_that_the_job_status_is_retrying
+    end
+
+    scenario "doesn't show a delayed first run as retrying" do
+      given_there_are_no_jobs_in_sidekiq
+      when_the_job_is_scheduled_for_its_first_run_in_solid_queue
+      and_i_visit_the_pending_awards_page
+      then_i_see_the_pending_awards_page
+      and_i_see_that_the_job_status_is_unknown
+    end
+
     scenario "shows details for individual trainees recommended for award" do
       when_there_are_no_jobs_in_the_retry_or_dead_queue
       and_i_visit_the_pending_awards_page
@@ -104,11 +128,46 @@ feature "pending awards" do
     allow(Trs::FindRetryJobs).to receive(:call).and_return({})
   end
 
+  def given_there_are_no_jobs_in_sidekiq
+    allow(Sidekiq::DeadSet).to receive(:new).and_return([])
+    allow(Sidekiq::RetrySet).to receive(:new).and_return([])
+  end
+
+  def when_the_job_failed_in_solid_queue
+    job = create_solid_queue_job
+    job.ready_execution.destroy!
+    job.failed_with(StandardError.new("TRS error"))
+  end
+
+  def when_the_job_is_waiting_to_be_retried_in_solid_queue
+    create_solid_queue_job(scheduled_at: 2.hours.from_now, executions: 1)
+  end
+
+  def when_the_job_is_scheduled_for_its_first_run_in_solid_queue
+    create_solid_queue_job(scheduled_at: 1.minute.from_now)
+  end
+
+  def create_solid_queue_job(scheduled_at: nil, executions: 0)
+    active_job = Trs::UpdateProfessionalStatusJob.new(trainee)
+
+    SolidQueue::Job.create!(
+      class_name: active_job.class.name,
+      queue_name: active_job.queue_name,
+      active_job_id: active_job.job_id,
+      arguments: active_job.serialize.merge("executions" => executions),
+      scheduled_at: scheduled_at,
+    )
+  end
+
   def and_i_see_that_the_job_status_is_dead
     expect(page).to have_text("dead")
   end
 
   def and_i_see_that_the_job_status_is_retrying
     expect(page).to have_text("retrying")
+  end
+
+  def and_i_see_that_the_job_status_is_unknown
+    expect(page).to have_text("unknown")
   end
 end
