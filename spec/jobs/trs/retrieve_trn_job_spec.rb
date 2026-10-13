@@ -186,9 +186,19 @@ module Trs
 
       it "raises a TraineeAttributeError" do
         expect {
-          described_class.perform_now(trn_request, timeout_date)
+          described_class.new.perform(trn_request, timeout_date)
         }.to raise_error(RetrieveTrnJob::TraineeAttributeError, error_msg)
       end
+    end
+
+    context "when TRS keeps returning an HTTP error" do
+      let(:failing_job) { described_class.new(trn_request, timeout_date) }
+
+      before do
+        allow(RetrieveTrn).to receive(:call).and_raise(Client::HttpError, "failed")
+      end
+
+      it_behaves_like "a job that retries on failure", attempts: 11
     end
   end
 end

@@ -49,5 +49,17 @@ module Trs
         described_class.perform_now(trainee)
       end
     end
+
+    describe "retries" do
+      let(:trainee) { create(:trainee, :draft) }
+      let(:failing_job) { described_class.new(trainee) }
+
+      before do
+        enable_features(:integrate_with_trs)
+        allow(Trs::RegisterForTrn).to receive(:call).and_raise(StandardError, "failed")
+      end
+
+      it_behaves_like "a job that retries on failure", attempts: 1
+    end
   end
 end

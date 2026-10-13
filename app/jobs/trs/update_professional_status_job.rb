@@ -3,7 +3,6 @@
 module Trs
   class UpdateProfessionalStatusJob < ApplicationJob
     queue_as :trs
-    retry_on Client::HttpError
 
     def perform(trainee)
       return unless FeatureService.enabled?(:integrate_with_trs)

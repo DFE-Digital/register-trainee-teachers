@@ -2,7 +2,7 @@
 
 module Trs
   class RegisterForTrnJob < ApplicationJob
-    sidekiq_options retry: 0
+    retry_on StandardError, attempts: 1
     queue_as :trs
 
     def perform(trainee)
