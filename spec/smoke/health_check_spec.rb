@@ -20,7 +20,6 @@ describe "system health check spec", smoke: true do
           checks: {
             database: true,
             redis: true,
-            sidekiq_processes: true,
             solid_queue_processes: true,
           },
         }.to_json,
