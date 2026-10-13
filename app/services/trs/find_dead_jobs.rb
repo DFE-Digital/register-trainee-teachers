@@ -2,10 +2,6 @@
 
 module Trs
   class FindDeadJobs < BaseFindJobs
-    def sidekiq_class
-      Sidekiq::DeadSet
-    end
-
   private
 
     def solid_queue_executions

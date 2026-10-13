@@ -7,28 +7,6 @@ module Trs
     JOB_CLASS = "Trs::UpdateProfessionalStatusJob"
 
     def call
-      sidekiq_jobs.merge(solid_queue_jobs)
-    end
-
-  private
-
-    def sidekiq_jobs
-      sidekiq_class.new
-      .select { |job| job.item["wrapped"] == JOB_CLASS }
-      .sort_by { |job| job.item["enqueued_at"] }
-      .to_h do |job|
-        [
-          job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i,
-          {
-            job_id: job.item["jid"],
-            error_message: parse_error(job.item["error_message"]),
-            scheduled_at: job.at,
-          },
-        ]
-      end
-    end
-
-    def solid_queue_jobs
       solid_queue_executions
       .select { |execution| execution.job.class_name == JOB_CLASS }
       .sort_by(&:created_at)
@@ -43,6 +21,8 @@ module Trs
         ]
       end
     end
+
+  private
 
     def parse_error(error)
       return error unless error&.include?("body: ")
