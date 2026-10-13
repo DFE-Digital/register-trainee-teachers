@@ -4,7 +4,7 @@ module Survey
   class SendJob < ApplicationJob
     queue_as :default
 
-    sidekiq_options retry: 3
+    retry_on StandardError, wait: :polynomially_longer, attempts: 4
 
     def perform(trainee:, event_type:)
       return unless FeatureService.enabled?(:qualtrics_survey) && trainee.email.present?
