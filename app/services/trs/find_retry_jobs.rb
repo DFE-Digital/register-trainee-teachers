@@ -2,10 +2,6 @@
 
 module Trs
   class FindRetryJobs < BaseFindJobs
-    def sidekiq_class
-      Sidekiq::RetrySet
-    end
-
   private
 
     def solid_queue_executions
