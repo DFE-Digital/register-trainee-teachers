@@ -3,7 +3,6 @@
 module Rotp
   class CheckProvidersJob < ApplicationJob
     queue_as :default
-    retry_on Rotp::Client::HttpError
     MAX_LISTED = 10
 
     def perform

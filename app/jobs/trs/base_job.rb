@@ -2,6 +2,6 @@
 
 module Trs
   class BaseJob < ApplicationJob
-    sidekiq_options retry: 10
+    retry_on StandardError, wait: :polynomially_longer, attempts: 11
   end
 end
