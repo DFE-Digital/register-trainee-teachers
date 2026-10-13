@@ -1,0 +1,18 @@
+dispatchers:
+  - polling_interval: 1
+    batch_size: 500
+workers:
+  - queues:
+      - high_priority
+      - default
+      - trs
+      - apply
+      - hesa
+      - dttp
+      - mailers
+      - dfe_analytics
+      - others
+      - bulk_update
+    threads: 5
+    processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
+    polling_interval: 1

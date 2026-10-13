@@ -1,0 +1,5 @@
+workers:
+  - queues: bulk_add_trainees
+    threads: 2
+    processes: 1
+    polling_interval: 1

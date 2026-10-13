@@ -48,3 +48,17 @@ services:
       - DB_PASSWORD=developmentpassword
       - SETTINGS__APPLICATION=register-trainee-teachers-bg-jobs
       - REDIS_QUEUE_URL=redis://redis:6379
+  solid-queue:
+    image: ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
+    command: bin/jobs
+    depends_on:
+      - web
+      - db
+      - redis
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=developmentpassword
+      - SETTINGS__APPLICATION=register-trainee-teachers-bg-jobs
+      - REDIS_QUEUE_URL=redis://redis:6379
+      - REDIS_CACHE_URL=redis://redis:6379/1
