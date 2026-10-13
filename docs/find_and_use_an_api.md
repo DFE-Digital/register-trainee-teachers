@@ -15,7 +15,7 @@ Within an entry, `releases` covers only that entry's own academic year. Release 
 
 ## How it works
 
-`FindAndUseAnApi::PublishCatalogueJob` runs weekly via Sidekiq cron (`publish_fauapi_catalogue` in `config/sidekiq_cron_schedule.yml`). It no-ops unless `Settings.fauapi.enabled` is true.
+`FindAndUseAnApi::PublishCatalogueJob` runs weekly via Solid Queue (`publish_fauapi_catalogue` in `config/recurring.yml`). It no-ops unless `Settings.fauapi.enabled` is true.
 
 | Register env | FauAPI management API |
 |---|---|
@@ -32,7 +32,7 @@ Import is idempotent per entry.
 
 ### Manual run
 
-From a production / productiondata console or Sidekiq UI:
+From a production / productiondata console or Mission Control (`/system-admin/jobs`):
 
 ```ruby
 FindAndUseAnApi::PublishCatalogueJob.perform_later
