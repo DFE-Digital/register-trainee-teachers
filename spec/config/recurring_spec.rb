@@ -8,20 +8,12 @@ describe "config/recurring.yml" do
     config.map { |key, options| SolidQueue::RecurringTask.from_configuration(key, **options.symbolize_keys) }
   end
 
-  let(:sidekiq_cron_jobs) { YAML.load_file(Rails.root.join("config/sidekiq_cron_schedule.yml")) }
-
   it "only has valid tasks" do
     expect(tasks).to all(be_valid)
   end
 
-  it "schedules every sidekiq-cron job at the same time on the same queue" do
-    sidekiq_cron_jobs.each do |key, job|
-      expect(tasks.find { |task| task.key == key }).to have_attributes(
-        class_name: job["class"],
-        queue_name: job["queue"],
-        schedule: job["cron"],
-      )
-    end
+  it "doesn't schedule Sidekiq jobs" do
+    expect(tasks.map(&:class_name)).not_to include(a_string_starting_with("Sidekiq::"))
   end
 
   it "removes duplicate failed Solid Queue jobs every 5 minutes" do
