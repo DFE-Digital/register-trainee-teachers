@@ -29,7 +29,7 @@
     "esbuild-jest-transform": "^2.0.1",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
-    "postcss": "^8.5.28",
+    "postcss": "^8.5.29",
     "standard": "^17.1.2",
     "stylelint": "^17.16.0",
     "stylelint-config-gds": "^3.0.0",
