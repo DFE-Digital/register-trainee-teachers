@@ -111,6 +111,15 @@ class Provider < ApplicationRecord
       .merge(Trainee.without_required_placements_for_award)
   end
 
+  def trainees_for_placements_report
+    trainees.kept
+      .where.not(trn: nil)
+      .joins(:placements)
+      .merge(Placement.unscoped.created_in_academic_cycle)
+      .distinct
+      .includes(placements: :school)
+  end
+
   def hei?
     accreditation_id&.starts_with?("1") || accreditation_id == NIOT_ACCREDITATION_ID
   end

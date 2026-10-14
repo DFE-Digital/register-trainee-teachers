@@ -18,6 +18,7 @@ feature "viewing reports index" do
 
     scenario "shows the correct content" do
       then_i_should_see_the_performance_period_content
+      then_i_should_see_the_placements_report_in_position_two
     end
 
     context "the provider performance profile has been signed off" do
@@ -30,6 +31,7 @@ feature "viewing reports index" do
 
       scenario "shows the correct content" do
         then_i_should_see_the_outside_period_content
+        then_i_should_see_the_placements_report
       end
     end
   end
@@ -44,6 +46,7 @@ feature "viewing reports index" do
 
     scenario "shows the correct content" do
       then_i_should_see_the_census_period_content
+      then_i_should_see_the_placements_report_in_position_two
     end
   end
 
@@ -57,6 +60,7 @@ feature "viewing reports index" do
 
     scenario "shows the correct content" do
       then_i_should_see_the_outside_period_content
+      then_i_should_see_the_placements_report
     end
   end
 
@@ -88,5 +92,20 @@ private
 
   def then_i_should_see_the_outside_period_content
     expect(reports_page).to have_text("No reports are currently available.")
+  end
+
+  def then_i_should_see_the_placements_report
+    expect(reports_page).to have_placements_heading
+    expect(reports_page).to have_placements_report_link
+    expect(reports_page.placements_report_link.text).to eq(
+      "#{current_academic_cycle.label} placements report",
+    )
+  end
+
+  def then_i_should_see_the_placements_report_in_position_two
+    then_i_should_see_the_placements_report
+
+    headings = reports_page.find(".govuk-grid-column-two-thirds-from-desktop").all("h2").map(&:text)
+    expect(headings.index("Placements")).to eq(1)
   end
 end
