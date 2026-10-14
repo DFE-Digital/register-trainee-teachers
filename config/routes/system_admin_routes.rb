@@ -4,14 +4,8 @@ module SystemAdminRoutes
   def self.extended(router)
     router.instance_exec do
       scope module: :system_admin, path: "system-admin", constraints: RouteConstraints::SystemAdminConstraint.new do
-        require "sidekiq/web"
-        require "sidekiq/cron/web"
-
         mount Blazer::Engine, at: "/blazer", constraints: RouteConstraints::SystemAdminConstraint.new
         get "/blazer", to: redirect("/sign-in"), status: 302
-
-        mount Sidekiq::Web, at: "/sidekiq", constraints: RouteConstraints::SystemAdminConstraint.new
-        get "/sidekiq", to: redirect("/sign-in"), status: 302
 
         mount MissionControl::Jobs::Engine, at: "/jobs", constraints: RouteConstraints::SystemAdminConstraint.new
 

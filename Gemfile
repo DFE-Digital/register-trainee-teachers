@@ -37,7 +37,6 @@ gem "discard", "~> 2.0"
 # Sentry
 gem "sentry-rails"
 gem "sentry-ruby"
-gem "sentry-sidekiq"
 gem "stackprof"
 
 # Logging
@@ -52,9 +51,7 @@ gem "request_store", "~> 1.7"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
-# Background job processor
-gem "sidekiq", "~> 6.5"
-gem "sidekiq-cron", "~> 2.4"
+gem "redis", "~> 4.8"
 
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
