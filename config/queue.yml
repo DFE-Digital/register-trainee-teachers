@@ -1,0 +1,50 @@
+default: &default
+  dispatchers:
+    - polling_interval: 1
+      batch_size: 500
+  workers:
+    - queues:
+        - high_priority
+        - default
+        - trs
+        - apply
+        - hesa
+        - dttp
+        - mailers
+        - dfe_analytics
+        - others
+        - bulk_update
+      threads: 5
+      processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
+      polling_interval: 1
+    - queues: bulk_add_trainees
+      threads: 2
+      processes: 1
+      polling_interval: 1
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+qa:
+  <<: *default
+
+review:
+  <<: *default
+
+pen:
+  <<: *default
+
+staging:
+  <<: *default
+
+sandbox:
+  <<: *default
+
+productiondata:
+  <<: *default
+
+production:
+  <<: *default
