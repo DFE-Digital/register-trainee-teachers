@@ -14,7 +14,4 @@ Sidekiq.configure_client do |config|
   }
 end
 
-# Sidekiq Cron
-if Settings.sidekiq.schedule_file && Sidekiq.server?
-  Sidekiq::Cron::Job.load_from_hash!(YAML.load_file(Settings.sidekiq.schedule_file))
-end
+Sidekiq::Cron::Job.destroy_all! if Sidekiq.server?
