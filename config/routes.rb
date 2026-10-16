@@ -85,6 +85,7 @@ Rails.application.routes.draw do
         end
 
         resources :claims_degrees, path: "claims-degrees", only: %i[index]
+        resources :placements, path: "placements", only: %i[index]
       end
     end
   end

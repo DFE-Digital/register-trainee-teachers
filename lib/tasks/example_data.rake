@@ -269,13 +269,19 @@ namespace :example_data do
               trainee.applying_for_scholarship = true if funding_manager.can_apply_for_scholarship?
             end
 
-            # Make *roughly* 10% of a persona's awarded trainees applicable for placement
-            if state == :awarded && sample_index < sample_size * 10.0 / 100
-              trainee.trn = Faker::Number.number(digits: 7)
+            # Give ~10% of awarded trainees placements (Ofsted report / placement UI).
+            # Leave the rest without so bulk-add-placements still has work to do.
+            add_placements = state == :awarded && sample_index < sample_size * 10.0 / 100
+            if add_placements
+              trainee.trn = Faker::Number.number(digits: 7) if trainee.trn.blank?
             end
 
             FormStore.clear_all(trainee.id)
             trainee.save!
+
+            if add_placements && trainee.trn.present?
+              FactoryBot.create_list(:placement, 2, :with_school, trainee:)
+            end
 
             # Make *roughly* 75% of submitted_for_trn trainees have trainee withdraw reason
             if state == :withdrawn && sample_index < sample_size * 75.0 / 100
@@ -403,6 +409,10 @@ namespace :example_data do
 
             trainee = FactoryBot.create(:trainee, route, state, attrs)
             FormStore.clear_all(trainee.id)
+
+            if state == :awarded && trainee.trn.present?
+              FactoryBot.create_list(:placement, 2, :with_school, trainee:)
+            end
           end
         end
       end
