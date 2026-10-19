@@ -1571,11 +1571,12 @@ en:
               blank: Enter the token name
   activemodel:
     attributes:
-      api/v20261/trainee_attributes:
+      api/v20261/trainee_attributes: &v20261_trainee_attributes
         application_choice_id: application_id
         course_subject_one: course_subject_1
         course_subject_two: course_subject_2
         course_subject_three: course_subject_3
+      api/v20270/trainee_attributes: *v20261_trainee_attributes
       course_details_form:
         itt_start_date: &itt_start_date ITT start date
         itt_end_date: &itt_end_date Expected end date
@@ -2144,7 +2145,7 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/v20261/trainee_attributes:
+        api/v20261/trainee_attributes: &v20261_trainee_attributes_errors
           attributes:
             inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
             inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
@@ -2205,6 +2206,7 @@ en:
               invalid: is invalid. The URN '%{value}' does not match any known schools
               csv:
                 invalid: Employing School URN is invalid. The URN '%{value}' does not match any known schools
+        api/v20270/trainee_attributes: *v20261_trainee_attributes_errors
         api/v20261/withdrawal_attributes:
           attributes:
             reasons:
