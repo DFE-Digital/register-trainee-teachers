@@ -335,9 +335,9 @@ module Api
 
       def valid_training_routes
         routes = if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
-                   ::ReferenceData::TRAINING_ROUTES.names_with_hesa_codes.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+                   ::ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: start_year).excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
                  else
-                   ::ReferenceData::TRAINING_ROUTES.names_with_hesa_codes
+                   ::ReferenceData::TRAINING_ROUTES.names_with_hesa_codes(year: start_year)
                  end
 
         routes - UNSUPPORTED_TRAINING_ROUTES
