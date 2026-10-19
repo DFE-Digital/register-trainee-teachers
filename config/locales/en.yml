@@ -1438,6 +1438,7 @@ en:
           school_direct_tuition_fee: School direct (fee funded)
           pg_teaching_apprenticeship: Teaching apprenticeship (postgraduate)
           hpitt_postgrad: HPITT
+          teach_learn_change: &teach_learn_change Teach Learn Change
           opt_in_undergrad: Opt-in (undergraduate)
           teacher_degree_apprenticeship: &teacher_degree_apprenticeship Teacher degree apprenticeship (salaried)
           itt: &itt_routes
@@ -1453,6 +1454,7 @@ en:
             school_direct_salaried: School direct
             school_direct_tuition_fee: School direct (fee funded)
             hpitt_postgrad: HPITT
+            teach_learn_change: *teach_learn_change
             opt_in_undergrad: Opt-in
             teacher_degree_apprenticeship: *teacher_degree_apprenticeship
         states:
