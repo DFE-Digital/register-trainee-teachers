@@ -272,8 +272,8 @@ namespace :example_data do
             # Give ~10% of awarded trainees placements (Ofsted report / placement UI).
             # Leave the rest without so bulk-add-placements still has work to do.
             add_placements = state == :awarded && sample_index < sample_size * 10.0 / 100
-            if add_placements
-              trainee.trn = Faker::Number.number(digits: 7) if trainee.trn.blank?
+            if add_placements && trainee.trn.blank?
+              trainee.trn = Faker::Number.number(digits: 7)
             end
 
             FormStore.clear_all(trainee.id)
