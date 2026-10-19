@@ -41,8 +41,8 @@ private
     create(
       :placement,
       :with_school,
-      trainee:,
-      school:,
+      trainee: trainee,
+      school: school,
       created_at: current_academic_cycle.start_date + 1.day,
     )
   end
