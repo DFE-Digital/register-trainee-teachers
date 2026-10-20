@@ -24,7 +24,7 @@ RSpec.describe Api::ReferenceDataResponse do
 
     context "with a version that has no reference data class" do
       it "raises UnsupportedVersionError" do
-        expect { described_class.call(version: "v2027.0") }
+        expect { described_class.call(version: "v2025.0") }
           .to raise_error(described_class::UnsupportedVersionError)
       end
     end
