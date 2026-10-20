@@ -24,6 +24,10 @@ module Hesa
         training_initiative: ::ReferenceData::TRAINING_INITIATIVES,
       }.freeze
 
+      EXCLUDED_VALUES = {
+        training_route: [TRAINING_ROUTE_ENUMS[:teach_learn_change]],
+      }.freeze
+
       def self.all
         self::TYPES.each_with_object({}) do |(name, type), hash|
           hash[name] = values_for(name, type)
@@ -34,6 +38,8 @@ module Hesa
       def self.entries_for(type_name, type)
         rows = []
         type.values.each do |value|
+          next if self::EXCLUDED_VALUES.fetch(type_name.to_sym, []).include?(value.name)
+
           Array(value.hesa_codes).each do |code|
             rows << {
               hesa_code: code,
