@@ -8,6 +8,8 @@ module PageObjects
       element :performance_profiles_link, ".performance-profiles"
       element :performance_profiles_guidance_link, "#performance-profiles-guidance"
       element :bulk_recommend_link, ".bulk-recommend"
+      element :placements_heading, "h2", text: "Placements"
+      element :placements_report_link, ".placements-report"
     end
   end
 end
