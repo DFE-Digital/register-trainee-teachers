@@ -1,0 +1,47 @@
+<% page_title = "Subject records" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= render "system_admin/tab_nav" %>
+    <%= render "sub_nav" %>
+    <%= render "year_selector" %>
+
+    <h2 class="govuk-heading-m">Per-subject allocations &mdash; <%= academic_cycle.label %></h2>
+
+    <% if @records.empty? %>
+      <p class="govuk-body">No subject allocations are recorded for this academic year.</p>
+    <% else %>
+      <p class="govuk-body-s govuk-hint">The change tag compares each amount with the same route, funding type and subject in the previous academic year<%= " (#{funding_query.previous_cycle.label})" if funding_query.previous_cycle %>.</p>
+
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Subject</th>
+            <th scope="col" class="govuk-table__header">Training route</th>
+            <th scope="col" class="govuk-table__header">Funding type</th>
+            <th scope="col" class="govuk-table__header govuk-table__header--numeric">Amount</th>
+            <th scope="col" class="govuk-table__header">Change</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @records.each do |record| %>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-!-font-weight-regular"><%= funding_subject_link(record[:subject], record[:subject_id], academic_year: academic_cycle.start_year) %></th>
+              <td class="govuk-table__cell"><%= funding_route_tag_link(record[:training_route], academic_year: academic_cycle.start_year) %></td>
+              <td class="govuk-table__cell"><%= funding_type_tag(record[:funding_type]) %></td>
+              <td class="govuk-table__cell govuk-table__cell--numeric"><%= funding_amount_display(record[:amount], funding_type: record[:funding_type], availability: record[:availability]) %></td>
+              <td class="govuk-table__cell">
+                <%= funding_change_tag(record[:change]) %>
+                <% if record[:previous_amount].present? && record[:change].to_s.in?(%w[increase decrease]) %>
+                  <span class="govuk-hint govuk-!-margin-0 govuk-!-font-size-16">was <%= format_currency(record[:previous_amount]) %></span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

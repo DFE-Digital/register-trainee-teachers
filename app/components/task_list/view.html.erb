@@ -19,6 +19,11 @@
         ) %>
       <% end %>
 
+      <% if row.error_text.present? %>
+        <br>
+        <span class="govuk-error-message govuk-!-margin-bottom-0"><span class="govuk-visually-hidden">Error:</span> <%= row.error_text %></span>
+      <% end %>
+
       <% if row.hint_text.present? %>
         <br>
         <span class="app-task-list__hint govuk-hint"><%= row.hint_text %></span>

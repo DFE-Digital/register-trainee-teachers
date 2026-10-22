@@ -1,0 +1,28 @@
+<% page_title = funding_route_name(@training_route) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(text: "Back to requirements", href: funding_management_requirements_path(academic_year: academic_cycle.start_year)) %>
+
+    <span class="govuk-caption-l"><%= academic_cycle.label %></span>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <p class="govuk-body">Funding bands for this route, with the subjects each band applies to.</p>
+
+    <% @bands.each do |band| %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-6">
+        <%= funding_type_label(band.funding_type) %> &mdash; <%= funding_amount_display(band.amount, funding_type: band.funding_type, availability: band.availability) %>
+      </h2>
+      <% subjects = band.allocation_subjects.sort_by(&:name) %>
+      <% if subjects.any? %>
+        <ul class="govuk-list govuk-list--bullet">
+          <% subjects.each do |subject| %>
+            <li><%= funding_subject_link(subject.name, subject.id, academic_year: academic_cycle.start_year) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="govuk-body govuk-hint">No specific subjects recorded for this band.</p>
+      <% end %>
+    <% end %>
+  </div>
+</div>

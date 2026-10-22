@@ -1,0 +1,49 @@
+<%# Shared funding-entries table. locals: entries (array of row hashes); %>
+<%# deletable (optional, default false) — adds a per-record Delete action. %>
+<% deletable = local_assigns.fetch(:deletable, false) %>
+<div style="overflow-x:auto;">
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <% if deletable %>
+          <th scope="col" class="govuk-table__header">
+            <input type="checkbox" id="select-all-funding" aria-label="Select all funding records">
+          </th>
+        <% end %>
+        <th scope="col" class="govuk-table__header">Entry ID</th>
+        <th scope="col" class="govuk-table__header">Academic year</th>
+        <th scope="col" class="govuk-table__header">Funding method</th>
+        <th scope="col" class="govuk-table__header">Funding type</th>
+        <th scope="col" class="govuk-table__header">Training route</th>
+        <th scope="col" class="govuk-table__header">Subject</th>
+        <th scope="col" class="govuk-table__header">Degree relevance</th>
+        <th scope="col" class="govuk-table__header">School</th>
+        <th scope="col" class="govuk-table__header">Training year</th>
+        <th scope="col" class="govuk-table__header govuk-table__header--numeric">Amount</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% entries.each do |row| %>
+        <tr class="govuk-table__row">
+          <% if deletable %>
+            <td class="govuk-table__cell">
+              <input type="checkbox" name="funding_method_ids[]" value="<%= row[:funding_method_id] %>"
+                     id="select-<%= row[:funding_method_id] %>-<%= row[:subject_id] %>"
+                     class="funding-select" aria-label="Select <%= row[:entry_id] %> — <%= row[:subject] %>">
+            </td>
+          <% end %>
+          <td class="govuk-table__cell govuk-!-font-weight-bold"><%= govuk_link_to(row[:entry_id], funding_management_entry_path(row[:funding_method_id], academic_year: row[:academic_year_start]), no_visited_state: true) %></td>
+          <td class="govuk-table__cell"><%= row[:academic_year] %></td>
+          <td class="govuk-table__cell"><%= funding_method_cell(row[:funding_method], row[:funding_type], row[:training_route]) %></td>
+          <td class="govuk-table__cell"><%= funding_type_tag(row[:funding_type]) %></td>
+          <td class="govuk-table__cell"><%= govuk_link_to(route_enum_name(row[:training_route]), funding_management_funding_method_path(row[:training_route], academic_year: row[:academic_year_start]), no_visited_state: true) %></td>
+          <td class="govuk-table__cell"><%= funding_subject_link(row[:subject], row[:subject_id], academic_year: row[:academic_year_start]) %></td>
+          <td class="govuk-table__cell"><%= degree_relevance_tag(row[:degree_relevance]) || tag.span("—", class: "govuk-hint govuk-!-margin-0") %></td>
+          <td class="govuk-table__cell"><%= school_disadvantage_tag(row[:school_disadvantage]) || tag.span("—", class: "govuk-hint govuk-!-margin-0") %></td>
+          <td class="govuk-table__cell"><%= training_year_label(row[:training_year], row[:academic_year_start]) || tag.span("—", class: "govuk-hint govuk-!-margin-0") %></td>
+          <td class="govuk-table__cell govuk-table__cell--numeric"><%= funding_amount_display(row[:amount], funding_type: row[:funding_type], availability: row[:availability]) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

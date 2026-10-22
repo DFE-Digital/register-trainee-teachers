@@ -1,0 +1,12 @@
+<%# Only asked for a bursary: grants and scholarships have one funding method, set by the wizard. %>
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Bursary type", step: "funding_method" } do |f| %>
+  <%= f.govuk_collection_radio_buttons(
+        :funding_method,
+        funding_method_options(draft["funding_type"]),
+        :first,
+        :last,
+        ->(option) { funding_method_hint(option.first) },
+        bold_labels: false,
+        legend: { text: "Select bursary type", size: "l", tag: "h1" },
+      ) %>
+<% end %>

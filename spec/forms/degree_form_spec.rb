@@ -177,6 +177,14 @@ describe DegreeForm, type: :model do
     it "save degree" do
       expect(subject.save!).to be_truthy
     end
+
+    it "checks the funding again, as the degree changed" do
+      allow(Funding::RecheckAfterChange).to receive(:call)
+
+      subject.save!
+
+      expect(Funding::RecheckAfterChange).to have_received(:call).with(trainee: trainee, changed: :degree)
+    end
   end
 
   describe "#destroy!" do

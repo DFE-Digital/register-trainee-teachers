@@ -1,0 +1,9 @@
+<% year = academic_cycle.start_year %>
+<nav class="app-sub-navigation govuk-!-margin-bottom-6" aria-label="Funding management">
+  <ul class="govuk-list" style="display:flex; flex-wrap:wrap; gap:8px 20px; margin:0; padding-bottom:10px; border-bottom:1px solid #b1b4b6;">
+    <li><%= govuk_link_to "Requirements", funding_management_requirements_path(academic_year: year), no_visited_state: true %></li>
+    <li><%= govuk_link_to "Drafts", funding_management_drafts_path, no_visited_state: true %></li>
+    <li><%= govuk_link_to "Subject records", funding_management_subject_records_path(academic_year: year), no_visited_state: true %></li>
+    <li><%= govuk_link_to "Reports", funding_management_reports_path(academic_year: year), no_visited_state: true %></li>
+  </ul>
+</nav>

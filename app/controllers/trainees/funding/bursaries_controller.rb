@@ -3,6 +3,10 @@
 module Trainees
   module Funding
     class BursariesController < BaseController
+      include FundingPrerequisitesCheckable
+
+      before_action :funding_method_applicable
+
       def edit
         funding_manager
         @bursary_form = form.new(trainee)
@@ -20,6 +24,16 @@ module Trainees
       end
 
     private
+
+      # With the eligibility step, there's nothing to choose when the trainee
+      # isn't eligible, the year's funding isn't signed off, or there's no
+      # funding for the route and subject (for example no EYTDA amounts yet).
+      def funding_method_applicable
+        return unless FeatureService.enabled?(:funding_eligibility_step)
+        return if funding_manager.funding_open? && !funding_manager.no_funding?
+
+        redirect_to(trainee_funding_confirm_path(trainee))
+      end
 
       def form_params
         if params.key?(:funding_grant_and_tiered_bursary_form)
@@ -45,7 +59,11 @@ module Trainees
       end
 
       def funding_manager
-        @funding_manager ||= FundingManager.new(trainee)
+        @funding_manager ||= if FeatureService.enabled?(:funding_eligibility_step)
+                               FundingManager.new(trainee, funding_eligibility: ::Funding::EligibilityForm.new(trainee).funding_eligibility)
+                             else
+                               FundingManager.new(trainee)
+                             end
       end
     end
   end

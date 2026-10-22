@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_21_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -26,6 +26,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
   create_table "academic_cycles", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "end_date", null: false
+    t.boolean "published", default: false, null: false
     t.date "start_date", null: false
     t.datetime "updated_at", null: false
 
@@ -487,12 +488,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
 
   create_table "funding_methods", force: :cascade do |t|
     t.bigint "academic_cycle_id"
-    t.integer "amount", null: false
+    t.integer "amount"
+    t.integer "availability", default: 0, null: false
     t.datetime "created_at", null: false
+    t.integer "degree_relevance"
+    t.string "funding_method"
     t.integer "funding_type"
+    t.integer "reference_number"
+    t.integer "school_disadvantage"
     t.string "training_route", null: false
+    t.integer "training_year"
     t.datetime "updated_at", null: false
+    t.index ["academic_cycle_id", "reference_number"], name: "idx_on_academic_cycle_id_reference_number_51dbb7359c", unique: true
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
+    t.check_constraint "availability = 0 AND amount IS NOT NULL OR availability = 1 AND amount IS NULL", name: "funding_methods_amount_matches_availability"
   end
 
   create_table "funding_payment_schedule_row_amounts", force: :cascade do |t|
@@ -520,6 +529,32 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
     t.string "payable_type"
     t.datetime "updated_at", null: false
     t.index ["payable_id", "payable_type"], name: "index_funding_payment_schedules_on_payable_id_and_payable_type"
+  end
+
+  create_table "funding_publication_requests", force: :cascade do |t|
+    t.bigint "academic_cycle_id", null: false
+    t.datetime "created_at", null: false
+    t.text "decision_notes"
+    t.datetime "reviewed_at"
+    t.bigint "reviewed_by_id"
+    t.integer "state", default: 0, null: false
+    t.datetime "submitted_at"
+    t.bigint "submitted_by_id"
+    t.datetime "updated_at", null: false
+    t.index ["academic_cycle_id"], name: "index_funding_publication_requests_on_academic_cycle_id"
+  end
+
+  create_table "funding_school_designations", force: :cascade do |t|
+    t.bigint "academic_cycle_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "created_by_id"
+    t.integer "designation", null: false
+    t.bigint "school_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_cycle_id"], name: "index_funding_school_designations_on_academic_cycle_id"
+    t.index ["created_by_id"], name: "index_funding_school_designations_on_created_by_id"
+    t.index ["school_id", "academic_cycle_id"], name: "idx_funding_school_designations_unique", unique: true
+    t.index ["school_id"], name: "index_funding_school_designations_on_school_id"
   end
 
   create_table "funding_trainee_summaries", force: :cascade do |t|
@@ -733,6 +768,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
     t.index ["searchable"], name: "index_providers_on_searchable", using: :gin
   end
 
+  create_table "relevant_degree_mappings", force: :cascade do |t|
+    t.bigint "academic_cycle_id", null: false
+    t.bigint "allocation_subject_id", null: false
+    t.string "cah_level_1_code", null: false
+    t.string "cah_level_2_code", null: false
+    t.datetime "created_at", null: false
+    t.bigint "created_by_id"
+    t.string "hecos_code", null: false
+    t.integer "reference_number"
+    t.datetime "updated_at", null: false
+    t.index ["academic_cycle_id", "allocation_subject_id", "hecos_code"], name: "idx_relevant_degree_mappings_unique", unique: true
+    t.index ["academic_cycle_id"], name: "index_relevant_degree_mappings_on_academic_cycle_id"
+    t.index ["allocation_subject_id"], name: "index_relevant_degree_mappings_on_allocation_subject_id"
+    t.index ["created_by_id"], name: "index_relevant_degree_mappings_on_created_by_id"
+    t.index ["reference_number"], name: "index_relevant_degree_mappings_on_reference_number", unique: true
+  end
+
   create_table "school_data_downloads", force: :cascade do |t|
     t.datetime "completed_at"
     t.datetime "created_at", null: false
@@ -891,6 +943,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
     t.bigint "end_academic_cycle_id"
     t.text "ethnic_background"
     t.integer "ethnic_group"
+    t.boolean "extended_course_confirmed", default: false, null: false
     t.text "first_names"
     t.string "funding_eligibility"
     t.boolean "hesa_editable", default: false
@@ -900,6 +953,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
     t.date "itt_end_date"
     t.date "itt_start_date"
     t.text "last_name"
+    t.boolean "level_five_qualification"
     t.text "middle_names"
     t.date "outcome_date"
     t.uuid "placement_assignment_dttp_id"
@@ -1055,11 +1109,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_120000) do
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
+  add_foreign_key "funding_school_designations", "academic_cycles"
+  add_foreign_key "funding_school_designations", "schools"
+  add_foreign_key "funding_school_designations", "users", column: "created_by_id"
   add_foreign_key "hesa_trainee_details", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
   add_foreign_key "provider_users", "providers"
   add_foreign_key "provider_users", "users"
+  add_foreign_key "relevant_degree_mappings", "academic_cycles"
+  add_foreign_key "relevant_degree_mappings", "allocation_subjects"
+  add_foreign_key "relevant_degree_mappings", "users", column: "created_by_id"
   add_foreign_key "sign_offs", "academic_cycles"
   add_foreign_key "sign_offs", "providers"
   add_foreign_key "sign_offs", "users"

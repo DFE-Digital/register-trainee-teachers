@@ -8,6 +8,14 @@ features:
   publish_course_details: true
   user_can_have_multiple_organisations: true
   funding: true
+  # Funding management, the funding eligibility journey and the EYTDA route, to review.
+  funding_management: true
+  funding_management_edit: true
+  funding_management_approval: true
+  funding_eligibility_step: true
+  funding_draft_amounts_in_journey: true
+  routes:
+    early_years_teacher_degree_apprenticeship: true
   google:
     send_data_to_big_query: true
 

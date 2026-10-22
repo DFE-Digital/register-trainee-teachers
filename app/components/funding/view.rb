@@ -5,6 +5,11 @@ module Funding
     include SanitizeHelper
     include FundingHelper
 
+    FUNDING_ELIGIBILITY_LABELS = {
+      "eligible" => "Yes",
+      "not_eligible" => "No",
+    }.freeze
+
     def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
@@ -20,8 +25,16 @@ module Funding
       t(".title")
     end
 
+    # Internal testing with draft amounts: shown above the funding summary.
+    def draft_amounts_banner_heading
+      return unless eligibility_step? && funding_manager.using_draft_amounts?
+
+      t("views.forms.funding.amount_not_signed_off.draft_heading", academic_year: trainee.start_academic_cycle.label)
+    end
+
     def funding_detail_rows
       [
+        funding_eligibility_row,
         training_initiative_row,
         funding_method_row,
         fund_code_row,
@@ -40,6 +53,22 @@ module Funding
              :can_apply_for_funding_type?, :allocation_subject_name,
              to: :funding_manager
 
+    # Only with the funding eligibility step.
+    def funding_eligibility_row
+      return unless eligibility_step?
+
+      label = t(".funding_eligibility")
+      return mappable_field(t(".amount_not_signed_off"), label, nil) if funding_manager.eligibility_content_key == :not_signed_off
+      # No-funding routes and subjects aren't asked the question.
+      return mappable_field(t(".no_funding_available"), label, nil) if funding_manager.no_funding?
+
+      mappable_field(
+        FUNDING_ELIGIBILITY_LABELS[data_model.funding_eligibility],
+        label,
+        edit_trainee_funding_funding_eligibility_path(trainee),
+      )
+    end
+
     def training_initiative_row
       mappable_field(
         training_initiative,
@@ -49,7 +78,16 @@ module Funding
     end
 
     def funding_method_row
+      if eligibility_step? && !funding_manager.funding_signed_off? && !funding_manager.draft_amounts_usable?
+        return mappable_field(t(".amount_not_signed_off"), t(".funding_method"), nil)
+      end
+
       return if (no_funding_methods? && data_model.bursary_tier.blank?) || data_model.training_initiative == "troops_to_teachers"
+
+      # Funding management marks the type "not available" for the trainee's unrelated degree.
+      if !can_apply_for_funding_type? && degree_unavailable_types.any?
+        return mappable_field(degree_unavailable_text, t(".funding_method"), nil)
+      end
 
       if can_apply_for_tiered_bursary?
         if can_apply_for_grant?
@@ -103,7 +141,7 @@ module Funding
 
     def grant_text
       if data_model.applying_for_grant
-        "#{t('.grant_applied_for', subject: allocation_subject_name)}#{amount_hint(grant_amount)}"
+        "#{t('.grant_applied_for', subject: allocation_subject_name)}#{grant_hint}"
       else
         t(".no_grant_applied_for")
       end
@@ -180,6 +218,13 @@ module Funding
       "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
     end
 
+    # Routes funded per training year (EYTDA) show the current year's grant.
+    def grant_hint
+      return amount_hint(grant_amount) unless funding_manager.yearly_route?
+
+      "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant (#{funding_manager.training_year_label})", class: 'govuk-hint')}"
+    end
+
     def amount_hint(amount)
       "<br>#{tag.span("Worth up to #{format_currency(amount)}", class: 'govuk-hint')}"
     end
@@ -188,12 +233,30 @@ module Funding
       !trainee.start_academic_cycle || trainee.start_academic_cycle.funding_methods.none?
     end
 
+    def degree_unavailable_types
+      @degree_unavailable_types ||= Array(funding_manager.try(:unavailable_for_degree_types))
+    end
+
+    def degree_unavailable_text
+      tags = degree_unavailable_types.map { |type| tag.strong(FundingMethod.not_available_label(type), class: "govuk-tag govuk-tag--grey") }
+      reason = tag.span("Unrelated degree (#{funding_manager.unrelated_degree_subject})", class: "govuk-hint govuk-!-margin-0")
+      safe_join([safe_join(tags, " "), tag.br, reason])
+    end
+
+    def eligibility_step?
+      FeatureService.enabled?(:funding_eligibility_step)
+    end
+
     def mappable_field(field_value, field_label, action_url)
       { field_value:, field_label:, action_url: }
     end
 
     def funding_manager
-      @funding_manager ||= FundingManager.new(trainee)
+      @funding_manager ||= if FeatureService.enabled?(:funding_eligibility_step)
+                             FundingManager.new(trainee, funding_eligibility: data_model.try(:funding_eligibility))
+                           else
+                             FundingManager.new(trainee)
+                           end
     end
 
     def hesa_student

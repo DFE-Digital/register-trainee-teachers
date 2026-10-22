@@ -16,6 +16,7 @@ module ConfirmDetailsHelper
       "schools" => "trainee_schools_confirm_path",
       "funding" => "trainee_funding_confirm_path",
       "iqts-country" => "trainee_iqts_country_confirm_path",
+      "level-five-declaration" => "trainee_level_five_declaration_confirm_path",
     }
 
     public_send(routes[section_key.dasherize], trainee)

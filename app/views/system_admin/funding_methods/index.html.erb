@@ -1,0 +1,96 @@
+<% page_title = "Funding requirements" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= render "system_admin/tab_nav" %>
+    <%= render "system_admin/funding_nav", active: :requirements %>
+    <%= render "sub_nav" %>
+
+    <% if flash[:success] %>
+      <%= govuk_notification_banner(title_text: "Success", success: true) do |banner| %>
+        <% banner.with_heading(text: flash[:success]) %>
+      <% end %>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <%= govuk_notification_banner(title_text: "Important") do |banner| %>
+        <% banner.with_heading(text: flash[:alert]) %>
+      <% end %>
+    <% end %>
+
+    <p class="govuk-body">Read-only view of the funding attached to each training route, from the funding reference data (bursaries, scholarships and grants). Amounts are seeded from configuration.</p>
+
+    <%= render "filters", year_cycles: requirement_year_cycles, url: funding_management_requirements_path, subjects: funded_subjects,
+                               show_all_years: !viewing_draft_year?,
+                               clear_url: (viewing_draft_year? ? funding_management_requirements_path(academic_year: academic_cycle.start_year) : funding_management_requirements_path) %>
+
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+      <%= all_years? ? "ITT Funding requirements — all academic years" : "#{academic_cycle.label} ITT Funding requirements" %>
+      <% unless all_years? %>&nbsp;<%= academic_year_status_tag(academic_cycle) %><% end %>
+    </h2>
+
+    <% if FeatureService.enabled?("funding_management_edit") %>
+      <% if all_years? %>
+        <div class="govuk-inset-text">
+          To add funding for a future academic year, use <%= govuk_link_to "Drafts", funding_management_drafts_path, no_visited_state: true %>.
+          Funding that has gone live can only be changed by a Register developer.
+        </div>
+      <% else %>
+        <%= render "publish_controls", cycle: academic_cycle %>
+      <% end %>
+    <% end %>
+
+    <% if @entries.empty? %>
+      <p class="govuk-body"><%= all_years? ? "No funding is recorded." : "No funding is recorded for this academic year." %></p>
+    <% else %>
+      <p class="govuk-body govuk-!-margin-bottom-2"><strong><%= number_with_delimiter(@entries.total_count) %></strong> <%= "funding entry".pluralize(@entries.total_count) %></p>
+
+      <% if !all_years? && can_delete_draft? %>
+        <%= form_with url: funding_management_destroy_selected_path(academic_year: academic_cycle.start_year), method: :delete, id: "funding-delete-form" do %>
+          <%= render "entries_table", entries: @entries, deletable: true %>
+          <div id="funding-delete-actions" hidden>
+            <button class="govuk-button govuk-button--warning" data-module="govuk-button">Delete selected funding</button>
+          </div>
+        <% end %>
+
+        <%= javascript_tag nonce: true do -%>
+          (function () {
+            var form = document.getElementById('funding-delete-form');
+            if (!form) return;
+            var actions = document.getElementById('funding-delete-actions');
+            var selectAll = document.getElementById('select-all-funding');
+            var boxes = form.querySelectorAll('.funding-select');
+            function update() {
+              var any = false;
+              boxes.forEach(function (b) { if (b.checked) { any = true; } });
+              if (actions) { actions.hidden = !any; }
+            }
+            boxes.forEach(function (b) { b.addEventListener('change', update); });
+            if (selectAll) {
+              selectAll.addEventListener('change', function () {
+                boxes.forEach(function (b) { b.checked = selectAll.checked; });
+                update();
+              });
+            }
+            update();
+          })();
+        <% end %>
+      <% else %>
+        <%= render "entries_table", entries: @entries %>
+      <% end %>
+
+      <%= render Paginator::View.new(scope: @entries) %>
+    <% end %>
+
+    <% if @carried_forward_entries.present? %>
+      <h2 class="govuk-heading-m govuk-!-margin-top-6">Carried forward from <%= @carried_forward_source.label %></h2>
+      <div class="govuk-inset-text">
+        Early years teacher degree apprenticeship (EYTDA) amounts from <%= @carried_forward_source.label %> apply to this year,
+        as none have been added for it. The training years are shown for trainees starting in <%= academic_cycle.label %>.
+      </div>
+      <%= render "entries_table", entries: @carried_forward_entries %>
+    <% end %>
+  </div>
+</div>

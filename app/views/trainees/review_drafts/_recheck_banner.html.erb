@@ -1,0 +1,55 @@
+<%# Sections to check again after the Level 5 declaration, course details, degree or employing school changed. %>
+<% course_details = course_details_recheck?(trainee) %>
+<% changed = funding_recheck_changed(trainee) %>
+<% removed = funding_removed_reason(trainee) %>
+<% schools = schools_recheck?(trainee) %>
+<% if course_details || changed || removed || schools %>
+  <% scope = "views.forms.funding.recheck" %>
+  <% sections = [
+       (t("#{scope}.sections.course_details") if course_details),
+       (t("#{scope}.sections.funding") if changed && !removed),
+       (t("#{scope}.sections.schools") if schools),
+     ].compact.to_sentence(last_word_connector: " and ") %>
+  <% heading = if removed && sections.present?
+                 t("#{scope}.heading_removed_and_check", sections:)
+               elsif removed
+                 t("#{scope}.heading_removed")
+               else
+                 t("#{scope}.heading", sections:)
+               end %>
+  <% level_five_funding = changed == t("#{scope}.changes.level_five_declaration") %>
+  <% level_five_removed = removed == "level_five_declaration" %>
+  <% sentences = if schools && changed == t("#{scope}.changes.course_details") && !removed && !course_details
+                   [t("#{scope}.draft_record_both")]
+                 elsif course_details && level_five_removed
+                   [t("#{scope}.draft_record_course_details_and_funding_removed"), (t("#{scope}.draft_record_schools") if schools)].compact
+                 else
+                   [
+                     (t("#{scope}.draft_record_course_details_and_funding") if course_details && level_five_funding),
+                     (t("#{scope}.draft_record_course_details") if course_details && !level_five_funding),
+                     (t("#{scope}.draft_record_removed.#{removed}") if removed),
+                     (t("#{scope}.draft_record", changed:) if changed && !(course_details && level_five_funding)),
+                     (t("#{scope}.draft_record_schools") if schools),
+                   ].compact
+                 end %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= govuk_notification_banner(title_text: "Important") do |banner| %>
+        <% banner.with_heading(text: heading) %>
+        <p class="govuk-body"><%= sentences.join(" ") %></p>
+        <p class="govuk-body">
+          <% links = [] %>
+          <% links << govuk_link_to(t("#{scope}.link_course_details"), trainee_course_details_confirm_path(trainee), class: "govuk-notification-banner__link") if course_details %>
+          <%# Funding opens once the course details are complete, so its link waits for them. %>
+          <% if changed && funding_options(trainee) == :funding_active %>
+            <% links << govuk_link_to(t("#{scope}.link"), trainee_funding_confirm_path(trainee), class: "govuk-notification-banner__link") %>
+          <% elsif removed && funding_options(trainee) == :funding_active %>
+            <% links << govuk_link_to(t("#{scope}.link_removed"), row_helper(trainee, :funding_active)[:path], class: "govuk-notification-banner__link") %>
+          <% end %>
+          <% links << govuk_link_to(t("#{scope}.link_schools"), trainee_schools_confirm_path(trainee), class: "govuk-notification-banner__link") if schools %>
+          <%= safe_join(links, tag.br) %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+<% end %>

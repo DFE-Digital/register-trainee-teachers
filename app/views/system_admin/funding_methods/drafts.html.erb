@@ -1,0 +1,80 @@
+<% page_title = "Draft funding requirements" %>
+<% edit_on = FeatureService.enabled?("funding_management_edit") %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= render "system_admin/tab_nav" %>
+    <%= render "system_admin/funding_nav", active: :requirements %>
+    <%= render "sub_nav" %>
+
+    <% if flash[:success] %>
+      <%= govuk_notification_banner(title_text: "Success", success: true) do |banner| %>
+        <% banner.with_heading(text: flash[:success]) %>
+      <% end %>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <%= govuk_notification_banner(title_text: "Important") do |banner| %>
+        <% banner.with_heading(text: flash[:alert]) %>
+      <% end %>
+    <% end %>
+
+    <p class="govuk-body">Funding requirements for future academic years that have not gone live yet. Sign off a draft when its funding is ready; it then goes live on the academic year&rsquo;s start date.</p>
+
+    <% if edit_on && addable_cycles.any? %>
+      <%= govuk_button_link_to "Add funding", funding_management_add_start_path(academic_year: addable_cycles.last.start_year) %>
+    <% end %>
+
+    <% if @draft_cycles.empty? %>
+      <p class="govuk-body">There are no drafts in progress.</p>
+    <% else %>
+      <div style="overflow-x:auto;">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Name</th>
+              <th scope="col" class="govuk-table__header">Academic year</th>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric">Entries</th>
+              <th scope="col" class="govuk-table__header">Status</th>
+              <th scope="col" class="govuk-table__header">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @draft_cycles.each do |cycle| %>
+              <% name = "#{short_academic_year(cycle)} requirements" %>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  <%= govuk_link_to name, funding_management_requirements_path(academic_year: cycle.start_year), no_visited_state: true %>
+                </th>
+                <td class="govuk-table__cell"><%= cycle.label %></td>
+                <td class="govuk-table__cell govuk-table__cell--numeric"><%= number_with_delimiter(@entry_counts.fetch(cycle.id, 0)) %></td>
+                <td class="govuk-table__cell"><%= draft_status_tag(cycle) %></td>
+                <td class="govuk-table__cell">
+                  <ul class="govuk-list govuk-!-margin-0 app-button-row">
+                    <% if edit_on && (cycle.draft? || cycle.eytda_funding_draftable?) %>
+                      <li><%= govuk_link_to "Sign off", funding_management_draft_sign_off_path(academic_year: cycle.start_year), no_visited_state: true, visually_hidden_suffix: name %></li>
+                    <% elsif edit_on && cycle.ready_for_release? %>
+                      <li>
+                        <%= button_to(funding_management_reopen_draft_path(academic_year: cycle.start_year), method: :post,
+                                      class: "app-link-button", form_class: "govuk-!-margin-0") do %>
+                          Reopen<span class="govuk-visually-hidden"> <%= name %></span>
+                        <% end %>
+                      </li>
+                    <% elsif cycle.awaiting_publication_approval? %>
+                      <li><%= govuk_link_to "Review sign-off", funding_management_review_publication_path(academic_year: cycle.start_year), no_visited_state: true, visually_hidden_suffix: "for #{name}" %></li>
+                    <% end %>
+                    <% if can_delete_draft?(cycle) %>
+                      <li><%= govuk_link_to "Delete", funding_management_delete_draft_path(academic_year: cycle.start_year), class: "link--delete", no_visited_state: true, visually_hidden_suffix: name %></li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

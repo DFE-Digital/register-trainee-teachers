@@ -52,6 +52,8 @@ module Trainees
     end
 
     def estimated_course_duration
+      # EYTDA: 2 years with a level 5 qualification, 3 years without (Level 5 declaration).
+      return trainee.level_five_course_years.years if trainee.requires_level_five_declaration?
       return 3.years if UNDERGRAD_ROUTES.include?(training_route)
       return 2.years if trainee.part_time?
 

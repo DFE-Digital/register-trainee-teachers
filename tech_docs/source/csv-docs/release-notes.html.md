@@ -5,6 +5,14 @@ weight: 2
 
 # Release notes
 
+## Upcoming — 2027 to 2028 academic year
+
+### Changes
+
+* Added support for the Early years teacher degree apprenticeship training route (HESA code `23`), for trainees starting in the 2027 to 2028 academic year or later
+* `course_year` must be `1` to `4` for the Early years teacher degree apprenticeship
+* `employing_school_urn` is required for the Early years teacher degree apprenticeship
+
 ## v2026.1 — 20 March 2026
 
 ### Changes

@@ -1,0 +1,16 @@
+<%# Why the amount applies: the trainee's degree and employing school, when the funding depends on them. %>
+<% if (degree = @funding_manager.degree_explanation) %>
+  <p class="govuk-body">
+    <% if degree[:key] == :relevant %>
+      <%= t("views.forms.funding.bursaries.explanation.degree.relevant", degree: degree[:degree], subject: @funding_manager.allocation_subject_name) %>
+    <% else %>
+      <%= t("views.forms.funding.bursaries.explanation.degree.not_relevant", count: degree[:degrees].size, degrees: degree[:degrees].to_sentence, subject: @funding_manager.allocation_subject_name) %>
+    <% end %>
+  </p>
+<% end %>
+
+<% if (school = @funding_manager.employing_school_explanation) %>
+  <p class="govuk-body">
+    <%= t("views.forms.funding.bursaries.explanation.employing_school.#{school[:key]}", school: school[:school]) %>
+  </p>
+<% end %>

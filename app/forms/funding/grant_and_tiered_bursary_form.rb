@@ -24,7 +24,7 @@ module Funding
 
     attr_accessor(*FIELDS)
 
-    validates :custom_applying_for_grant, inclusion: { in: %w[yes no] }, if: :can_apply_for_grant?
+    validates :custom_applying_for_grant, inclusion: { in: %w[yes no] }, if: :grant_question?
 
     validates :custom_bursary_tier, inclusion: { in: Trainee.bursary_tiers.keys + [NONE_TYPE] }
 
@@ -35,6 +35,12 @@ module Funding
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)
       super
+    end
+
+    # With the funding eligibility step, the grant question is answered on the
+    # eligibility page, so this form only manages the tiered bursary.
+    def grant_question?
+      can_apply_for_grant? && !eligibility_step?
     end
 
     def save!
@@ -86,18 +92,25 @@ module Funding
     end
 
     def grant_and_tiered_bursary_params
-      {
+      attributes = {
         applying_for_bursary: params[:custom_bursary_tier] != NONE_TYPE,
         applying_for_grant: calculate_applying_for_grant,
         applying_for_scholarship: false,
         bursary_tier: params[:custom_bursary_tier] == NONE_TYPE ? nil : params[:custom_bursary_tier],
       }
+      # Answered on the eligibility page, so leave the trainee's value untouched.
+      attributes.delete(:applying_for_grant) if eligibility_step?
+      attributes
     end
 
     def calculate_applying_for_grant
       return false unless can_apply_for_grant?
 
       params[:custom_applying_for_grant].nil? ? nil : params[:custom_applying_for_grant] == "yes"
+    end
+
+    def eligibility_step?
+      FeatureService.enabled?(:funding_eligibility_step)
     end
 
     def fields_to_ignore_before_save

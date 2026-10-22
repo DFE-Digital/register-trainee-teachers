@@ -1,0 +1,54 @@
+<% name = "#{short_academic_year(academic_cycle)} funding requirements" %>
+<% go_live = academic_cycle.start_date.to_fs(:govuk) %>
+<%# 2026 to 2027 EYTDA funding goes live as soon as it's approved: the year has started. %>
+<% live_on_approval = academic_cycle.eytda_only_funding_year? && academic_cycle.start_date <= Time.zone.today %>
+<% page_title = "Approve #{name}" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(href: funding_management_draft_sign_off_path(academic_year: academic_cycle.start_year)) %>
+
+    <span class="govuk-caption-l">Draft funding requirements</span>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= govuk_summary_list(actions: false) do |list| %>
+      <% list.with_row do |row| %>
+        <% row.with_key(text: "Funding requirements") %>
+        <% row.with_value(text: "#{short_academic_year(academic_cycle)} requirements (#{pluralize(@entry_count, 'entry')})") %>
+      <% end %>
+      <% list.with_row do |row| %>
+        <% row.with_key(text: "Academic year") %>
+        <% row.with_value(text: academic_cycle.label) %>
+      <% end %>
+      <% list.with_row do |row| %>
+        <% row.with_key(text: "Goes live on") %>
+        <% row.with_value(text: sign_off_goes_live_text(academic_cycle)) %>
+      <% end %>
+    <% end %>
+
+    <p class="govuk-body">
+      By approving, you confirm that you have reviewed and approve the documented
+      <strong><%= name %></strong> (<%= pluralize(@entry_count, "entry") %>)
+      <% if live_on_approval %>
+        to go live straight away for Early years teacher degree apprenticeship (EYTDA) trainees.
+      <% else %>
+        to go live on <strong><%= go_live %></strong>, the start of the <%= academic_cycle.label %> academic year.
+      <% end %>
+    </p>
+
+    <% if live_on_approval %>
+      <%= govuk_warning_text(text: "These funding requirements go live as soon as you approve them. After that, any amendment will need a Register developer to make it.") %>
+    <% else %>
+      <%= govuk_warning_text(text: "After these funding requirements go live on #{go_live}, any amendment will need a Register developer to make it.") %>
+
+      <p class="govuk-body">Until then, you can reopen them for editing from Drafts.</p>
+    <% end %>
+
+    <%= form_with url: funding_management_draft_sign_off_path(academic_year: academic_cycle.start_year), method: :post do %>
+      <div class="app-button-row">
+        <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">Approve</button>
+        <%= govuk_button_link_to "Cancel", funding_management_drafts_path, secondary: true %>
+      </div>
+    <% end %>
+  </div>
+</div>

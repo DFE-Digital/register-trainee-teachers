@@ -35,6 +35,23 @@ module Schools
       it "takes any data from the form store and saves it to the database" do
         expect { subject.save! }.to change(trainee, :employing_school_id).to(school_id)
       end
+
+      it "checks the funding again when the employing school changes" do
+        allow(Funding::RecheckAfterChange).to receive(:call)
+
+        subject.save!
+
+        expect(Funding::RecheckAfterChange).to have_received(:call).with(trainee: trainee, changed: :employing_school)
+      end
+
+      it "doesn't check the funding again when the employing school is the same" do
+        trainee.update!(employing_school_id: school_id)
+        allow(Funding::RecheckAfterChange).to receive(:call)
+
+        subject.save!
+
+        expect(Funding::RecheckAfterChange).not_to have_received(:call)
+      end
     end
 
     context "empty form data" do

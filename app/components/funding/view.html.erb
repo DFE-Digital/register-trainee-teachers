@@ -1,3 +1,8 @@
+<% if (heading = draft_amounts_banner_heading) %>
+  <%= govuk_notification_banner(title_text: t("views.forms.funding.amount_not_signed_off.title")) do |banner| %>
+    <% banner.with_heading(text: heading) %>
+  <% end %>
+<% end %>
 <%= render MappableSummary::View.new(
   trainee: trainee,
   title: title,

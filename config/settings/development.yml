@@ -10,6 +10,13 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   funding: true
+  funding_management: true
+  funding_management_edit: true
+  funding_management_approval: true
+  funding_eligibility_step: true
+  funding_draft_amounts_in_journey: true
+  routes:
+    early_years_teacher_degree_apprenticeship: true
 
 pagination:
   records_per_page: 30

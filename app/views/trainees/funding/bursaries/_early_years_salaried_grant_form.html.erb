@@ -1,0 +1,45 @@
+<%= register_form_with(model: @bursary_form, url: trainee_funding_bursary_path(@trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= render TraineeName::View.new(@trainee) %>
+      <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.grants.edit") %></h1>
+
+      <p class="govuk-body">
+        <%= t(
+          "views.forms.funding.bursaries.early_years_salaried_grant.description",
+          total: format_currency(@bursary_form.grant_amount),
+          training_grant: format_currency(FundingManager::EARLY_YEARS_SALARIED_TRAINING_GRANT),
+          employer_incentive: format_currency(FundingManager::EARLY_YEARS_SALARIED_EMPLOYER_INCENTIVE),
+        ) %>
+      </p>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(
+          t("views.forms.funding.bursaries.guidance_link_text"),
+          @bursary_form.funding_guidance_url,
+          target: "_blank",
+          rel: "noopener noreferrer",
+        ) %> (opens in new tab).
+      </p>
+
+      <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.early_years_salaried_grant.question"), size: "m" }) do %>
+        <%= f.govuk_radio_button(
+          :funding_type,
+          FUNDING_TYPE_ENUMS[:grant],
+          label: { text: "Yes" },
+          link_errors: true,
+        ) %>
+
+        <%= f.govuk_radio_button(
+          :funding_type,
+          f.object.class::NONE_TYPE,
+          label: { text: "No" },
+        ) %>
+      <% end %>
+
+      <%= f.govuk_submit %>
+    </div>
+  </div>
+<% end %>

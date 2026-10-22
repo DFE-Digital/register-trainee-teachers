@@ -1,0 +1,9 @@
+<div class="govuk-inset-text">
+  <p class="govuk-body govuk-!-margin-bottom-1">Route: <%= t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}") %></p>
+  <% if @funding_manager.allocation_subject_name.present? %>
+    <p class="govuk-body govuk-!-margin-bottom-1">Subject: <%= @funding_manager.allocation_subject_name %></p>
+  <% end %>
+  <% if @trainee.start_academic_cycle.present? %>
+    <p class="govuk-body govuk-!-margin-bottom-0">Academic year: <%= @trainee.start_academic_cycle.label %></p>
+  <% end %>
+</div>

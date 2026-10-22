@@ -2,6 +2,8 @@
 
 module Trainees
   class IttDatesController < BaseController
+    include CoursePrerequisitesCheckable
+
     include Publishable
 
     before_action :check_if_itt_dates_can_be_taken_from_course
