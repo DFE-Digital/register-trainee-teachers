@@ -18,18 +18,18 @@ feature "Funding management — roll over funding",
 
   scenario "rolls the previous year's funding into an empty draft year" do
     visit "/system-admin/funding-management/requirements?academic_year=#{target.start_year}"
-    expect(page).to have_content("No funding is recorded for this academic year.")
+    expect(page).to have_text("No funding is recorded for this academic year.")
     expect(page).to have_link("Roll over funding from #{source.label}")
 
     click_on "Roll over funding from #{source.label}"
 
-    expect(page).to have_content("copies 1 funding record")
-    expect(page).to have_content(source.label)
+    expect(page).to have_text("copies 1 funding record")
+    expect(page).to have_text(source.label)
     click_on "Roll over funding"
 
-    expect(page).to have_content("Rolled over 1 funding record from #{source.label} into #{target.label}")
-    expect(page).to have_content("Provider led postgraduate")
-    expect(page).to have_content("£29,000")
+    expect(page).to have_text("Rolled over 1 funding record from #{source.label} into #{target.label}")
+    expect(page).to have_text("Provider led postgraduate")
+    expect(page).to have_text("£29,000")
     expect(target.reload.funding_methods.count).to eq(1)
     # once populated it is no longer offered
     expect(page).not_to have_link("Roll over funding from #{source.label}")
@@ -38,6 +38,7 @@ feature "Funding management — roll over funding",
   scenario "roll over is not offered once the year already has funding" do
     create(:funding_method, academic_cycle: target)
     visit "/system-admin/funding-management/requirements?academic_year=#{target.start_year}"
+    expect(page).to have_css("h1")
     expect(page).not_to have_link(/Roll over funding/)
   end
 end

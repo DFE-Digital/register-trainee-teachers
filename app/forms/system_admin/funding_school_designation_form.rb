@@ -29,7 +29,7 @@ module SystemAdmin
       return false unless valid?
 
       FundingSchoolDesignation.create!(
-        school: @school, academic_cycle:, designation:, created_by:,
+        school: @school, academic_cycle: academic_cycle, designation: designation, created_by: created_by,
       )
     end
 

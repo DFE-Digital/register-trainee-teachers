@@ -91,7 +91,7 @@ module Wizards
       start_year = draft["academic_year"].to_i
       return false unless start_year.positive? && start_year <= STUDENT_FINANCE_LAST_START_YEAR
 
-      routes = Array(draft["training_routes"]).reject(&:blank?)
+      routes = Array(draft["training_routes"]).compact_blank
       routes.any? { |route| postgraduate_route?(route) }
     end
 
@@ -129,7 +129,7 @@ module Wizards
       index = STEPS.index(step)
       return nil if index.nil? || index.zero?
 
-      STEPS[0...index].reverse.find { |candidate| self.class.applicable_step?(candidate, @draft) }
+      STEPS[0...index].rfind { |candidate| self.class.applicable_step?(candidate, @draft) }
     end
 
     def position = applicable_steps.index(step)&.+(1)

@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "funding for a trainee without a relevant degree" do
+  # The years' funding is signed off, as it will be by the time trainees start.
+  before { AcademicCycle.find_each { |cycle| cycle.update!(published: true) } }
+
   background { given_i_am_authenticated }
 
   let(:cycle) { AcademicCycle.current || create(:academic_cycle, :current) }

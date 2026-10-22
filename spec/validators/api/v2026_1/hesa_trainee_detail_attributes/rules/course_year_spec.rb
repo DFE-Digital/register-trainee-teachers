@@ -13,7 +13,7 @@ RSpec.describe Api::V20261::HesaTraineeDetailAttributes::Rules::CourseYear do
   context "when the route is the Early years teacher degree apprenticeship" do
     let(:training_route) { TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship] }
 
-    %w[1 2 3 4].each do |year|
+    %w[1 2 3].each do |year|
       context "with course year #{year}" do
         let(:course_year) { year }
 
@@ -21,14 +21,14 @@ RSpec.describe Api::V20261::HesaTraineeDetailAttributes::Rules::CourseYear do
       end
     end
 
-    %w[0 5].each do |year|
+    %w[0 4].each do |year|
       context "with course year #{year}" do
         let(:course_year) { year }
 
         it "is invalid" do
           expect(result.valid?).to be(false)
           expect(result.error_type).to eq(:training_year_invalid)
-          expect(result.error_details).to eq(training_years: 4)
+          expect(result.error_details).to eq(training_years: 3)
         end
       end
     end

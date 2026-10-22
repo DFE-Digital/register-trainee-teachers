@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "edit funding eligibility", feature_funding_eligibility_step: true do
+  # The years' funding is signed off, as it will be by the time trainees start.
+  before { AcademicCycle.find_each { |cycle| cycle.update!(published: true) } }
+
   background { given_i_am_authenticated }
 
   context "with a draft trainee" do

@@ -61,7 +61,7 @@ module SystemAdmin
     end
 
     def subject
-      @allocation_subject = AllocationSubject.find(params[:id])
+      @allocation_subject = AllocationSubject.find(params.expect(:id))
 
       # Every academic year in which this subject has funding — powers the
       # subject page's own year filter (default: all years).
@@ -105,7 +105,7 @@ module SystemAdmin
     def destroy_selected
       return publication_redirect(alert: "Only draft funding can be deleted.") unless can_delete_draft?
 
-      ids = Array(params[:funding_method_ids]).reject(&:blank?).uniq
+      ids = Array(params[:funding_method_ids]).compact_blank.uniq
       return publication_redirect(alert: "Select at least one funding record to delete.") if ids.empty?
 
       records = academic_cycle.funding_methods.where(id: ids)
@@ -191,7 +191,7 @@ module SystemAdmin
         end
     end
 
-    def academic_cycle = @academic_cycle
+    attr_reader :academic_cycle
 
     # The list is unscoped (all academic years) unless a specific year is chosen
     # in the filter. Blank or "all" => all years.
@@ -232,7 +232,7 @@ module SystemAdmin
       return if cycle.nil?
 
       AcademicCycle.joins(:funding_methods)
-        .where("academic_cycles.start_date < ?", cycle.start_date)
+        .where(academic_cycles: { start_date: ...cycle.start_date })
         .distinct.order(start_date: :desc).first
     end
 

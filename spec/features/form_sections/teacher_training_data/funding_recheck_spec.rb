@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "checking the funding again after the degree or employing school changes", feature_funding_eligibility_step: true do
+  # The years' funding is signed off, as it will be by the time trainees start.
+  before { AcademicCycle.find_each { |cycle| cycle.update!(published: true) } }
+
   background { given_i_am_authenticated }
 
   let(:cycle) { AcademicCycle.current || create(:academic_cycle, :current) }
@@ -109,8 +112,7 @@ private
   end
 
   def and_i_see_the_recheck_banner(text)
-    within(".govuk-notification-banner") do
-      expect(page).to have_text("Check the funding again")
+    within(".govuk-notification-banner", text: "Check the funding again") do
       expect(page).to have_text(text)
     end
   end

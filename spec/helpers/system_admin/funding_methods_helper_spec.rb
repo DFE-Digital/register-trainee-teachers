@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module SystemAdmin
-  describe FundingMethodsHelper, type: :helper do
+  describe FundingMethodsHelper do
     describe "#funding_method_options" do
       it "offers one Early years tiered bursary option instead of Tier 1, 2 and 3" do
         expect(helper.funding_method_options("bursary")).to eq([

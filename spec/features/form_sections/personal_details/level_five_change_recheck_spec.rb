@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "confirming the course details and adding the funding again after the level 5 declaration changes" do
+  # The years' funding is signed off, as it will be by the time trainees start.
+  before { AcademicCycle.find_each { |cycle| cycle.update!(published: true) } }
+
   background { given_i_am_authenticated }
 
   scenario "course details go back to in progress and the funding is removed, to be added again" do
@@ -100,7 +103,7 @@ private
   end
 
   def then_i_see_the_banner(heading, text)
-    within(".govuk-notification-banner") do
+    within(".govuk-notification-banner", text: heading) do
       expect(page).to have_css(".govuk-notification-banner__heading", text: heading)
       expect(page).to have_text(text)
     end

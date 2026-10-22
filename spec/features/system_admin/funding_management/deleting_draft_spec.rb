@@ -12,7 +12,7 @@ feature "Funding management — delete draft funding",
     subject = create(:allocation_subject, name: subject_name)
     method = create(:funding_method,
                     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad], funding_type: :bursary,
-                    amount:, academic_cycle: cycle)
+                    amount: amount, academic_cycle: cycle)
     method.allocation_subjects << subject
     [method, subject]
   end
@@ -40,8 +40,8 @@ feature "Funding management — delete draft funding",
     check "select-#{method2.id}-#{subject2.id}"
     click_button "Delete selected funding", visible: :all
 
-    expect(page).to have_content("Deleted 2 funding records")
-    expect(page).to have_content("No funding is recorded for this academic year.")
+    expect(page).to have_text("Deleted 2 funding records")
+    expect(page).to have_text("No funding is recorded for this academic year.")
     expect(draft.reload.funding_methods.count).to eq(0)
   end
 

@@ -32,9 +32,10 @@ module SystemAdmin
     end
 
     # Imports the valid rows. Populates `added` (Schools) and `skipped`
-    # ([{ urn:, error: }]). Returns true if anything was added.
+    # ([{ urn:, error: }]), and returns the schools added. Does nothing if the
+    # form isn't valid (see `errors`).
     def import!
-      return false unless valid?
+      return [] unless valid?
 
       @added = []
       @skipped = []
@@ -43,15 +44,15 @@ module SystemAdmin
         urns.each do |urn|
           result = ::Funding::ResolveSchoolForDesignation.call(urn:, academic_cycle:)
           if result.ok?
-            FundingSchoolDesignation.create!(school: result.school, academic_cycle:, designation:, created_by:)
+            FundingSchoolDesignation.create!(school: result.school, academic_cycle: academic_cycle, designation: designation, created_by: created_by)
             @added << result.school
           else
-            @skipped << { urn:, error: result.error }
+            @skipped << { urn: urn, error: result.error }
           end
         end
       end
 
-      @added.any?
+      @added
     end
 
     def urns

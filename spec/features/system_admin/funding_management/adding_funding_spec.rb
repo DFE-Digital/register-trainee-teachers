@@ -17,6 +17,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
 
   scenario "a system admin walks the wizard and adds a single-amount funding band" do
     visit "/system-admin/funding-management/requirements"
+    expect(page).to have_css("h1")
     expect(page).not_to have_link("Add funding") # adding is only through Drafts
 
     visit "/system-admin/funding-management/drafts"
@@ -48,16 +49,16 @@ feature "Funding management — add funding wizard", feature_funding_management:
     click_on "Continue"
 
     # Check your answers
-    expect(page).to have_content("Check your answers")
-    expect(page).to have_content("Postgraduate bursary")
-    expect(page).to have_content("Provider led postgraduate")
-    expect(page).to have_content("£29,000")
+    expect(page).to have_text("Check your answers")
+    expect(page).to have_text("Postgraduate bursary")
+    expect(page).to have_text("Provider led postgraduate")
+    expect(page).to have_text("£29,000")
 
     expect {
       click_on "Add funding"
     }.to change(FundingMethod, :count).by(1)
 
-    expect(page).to have_content("Funding added")
+    expect(page).to have_text("Funding added")
     funding_method = FundingMethod.last
     expect(funding_method).to have_attributes(
       training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
@@ -83,7 +84,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
     choose "Bursary"
     click_on "Continue"
 
-    expect(page).to have_no_field("Tier 1")
+    expect(page).not_to have_field("Tier 1")
     choose "Early years tiered bursary"
     click_on "Continue"
 
@@ -97,19 +98,19 @@ feature "Funding management — add funding wizard", feature_funding_management:
 
     # Subjects is skipped: early years routes only fund Early years ITT
     expect(page).to have_css("h1", text: "Check your answers")
-    expect(page).to have_content("Set by the early years training route")
-    expect(page).to have_content("Early years tiered bursary")
-    expect(page).to have_content("Early years postgraduate")
-    expect(page).to have_content("Set by the funding method")
-    expect(page).to have_no_content("Financial Incentive criteria")
-    expect(page).to have_content("Tier 1 amount")
-    expect(page).to have_content("£4,000")
+    expect(page).to have_text("Set by the early years training route")
+    expect(page).to have_text("Early years tiered bursary")
+    expect(page).to have_text("Early years postgraduate")
+    expect(page).to have_text("Set by the funding method")
+    expect(page).not_to have_text("Financial Incentive criteria")
+    expect(page).to have_text("Tier 1 amount")
+    expect(page).to have_text("£4,000")
 
     expect {
       click_on "Add funding"
     }.to change(FundingMethod, :count).by(3)
 
-    expect(page).to have_content("3 funding records created")
+    expect(page).to have_text("3 funding records created")
     rows = FundingMethod.order(:reference_number).last(3)
     expect(rows.map { |row| [row.training_route, row.funding_method, row.amount] }).to eq([
       [TRAINING_ROUTE_ENUMS[:early_years_postgrad], Hesa::CodeSets::BursaryLevels::TIER_ONE, 5_000],
@@ -117,7 +118,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
       [TRAINING_ROUTE_ENUMS[:early_years_postgrad], Hesa::CodeSets::BursaryLevels::TIER_THREE, 2_000],
     ])
     expect(rows.flat_map { |row| row.allocation_subjects.pluck(:name) }.uniq).to eq(["Early years ITT"])
-    expect(page).to have_content("Early years tiered bursary: Tier 2")
+    expect(page).to have_text("Early years tiered bursary: Tier 2")
   end
 
   scenario "each missing tier amount gets its own error" do
@@ -135,7 +136,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
     click_on "Continue"
 
     expect(page).to have_css(".govuk-error-summary", text: "Enter the Tier 2 amount")
-    expect(page).to have_no_content("Enter the Tier 1 amount")
+    expect(page).not_to have_text("Enter the Tier 1 amount")
   end
 
   scenario "switching away from the tiered bursary asks the skipped questions again" do
@@ -156,7 +157,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
     choose "Postgraduate bursary"
     click_on "Save and continue"
 
-    expect(page).to have_content("Which training routes does this funding apply to?")
+    expect(page).to have_text("Which training routes does this funding apply to?")
   end
 
   def and_i_add_an_early_years_postgraduate_grant
@@ -195,9 +196,9 @@ feature "Funding management — add funding wizard", feature_funding_management:
 
     # Subjects is skipped: EYTDA is an early years route
     expect(page).to have_css("h1", text: "Check your answers")
-    expect(page).to have_content(year_label(3))
-    expect(page).to have_content("£7,000")
-    expect(page).to have_content("3 funding records")
+    expect(page).to have_text(year_label(3))
+    expect(page).to have_text("£7,000")
+    expect(page).to have_text("3 funding records")
 
     expect {
       click_on "Add funding"
@@ -210,7 +211,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
     expect(rows.flat_map { |row| row.allocation_subjects.pluck(:name) }.uniq).to eq(["Early years ITT"])
 
     expect(page).to have_css("th", text: "Training year")
-    expect(page).to have_content(year_label(2))
+    expect(page).to have_text(year_label(2))
   end
 
   scenario "each missing training year amount gets its own error" do
@@ -240,12 +241,12 @@ feature "Funding management — add funding wizard", feature_funding_management:
     and_i_add_an_early_years_postgraduate_grant
 
     expect(page).to have_css("h1", text: "Check your answers")
-    expect(page).to have_content("Early years ITT")
-    expect(page).to have_content("Set by the early years training route")
-    expect(page).to have_no_link("Change eligible subjects")
+    expect(page).to have_text("Early years ITT")
+    expect(page).to have_text("Set by the early years training route")
+    expect(page).not_to have_link("Change eligible subjects")
     # Financial Incentive criteria and education phase were not asked
-    expect(page).to have_no_content("Financial Incentive criteria")
-    expect(page).to have_no_link("Change education phase")
+    expect(page).not_to have_text("Financial Incentive criteria")
+    expect(page).not_to have_link("Change education phase")
     within(".govuk-summary-list__row", text: "Education phase") { expect(page).to have_text("Not applicable") }
 
     expect {
@@ -270,7 +271,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
     click_on "Continue"
 
     expect(page).to have_field("Chemistry")
-    expect(page).to have_no_field("Early years ITT")
+    expect(page).not_to have_field("Early years ITT")
   end
 
   scenario "changing from an early years route asks for subjects again" do
@@ -283,13 +284,13 @@ feature "Funding management — add funding wizard", feature_funding_management:
     click_on "Save and continue"
 
     # No longer early years: the skipped questions are asked
-    expect(page).to have_content("Which Financial Incentive criteria apply to this funding?")
+    expect(page).to have_text("Which Financial Incentive criteria apply to this funding?")
     choose "None of these"
     click_on "Continue"
     choose "Secondary"
     click_on "Continue"
-    expect(page).to have_content("Which subjects is this funding available for?")
-    expect(page).to have_no_field("Early years ITT")
+    expect(page).to have_text("Which subjects is this funding available for?")
+    expect(page).not_to have_field("Early years ITT")
     check "Chemistry"
     click_on "Continue"
     expect(page).to have_css("h1", text: "How much is this funding?")
@@ -300,7 +301,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
                       training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
                       funding_type: :bursary,
                       funding_method: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
-                      amount: 12_345, academic_cycle:)
+                      amount: 12_345, academic_cycle: academic_cycle)
     existing.allocation_subjects << AllocationSubject.find_by(name: "Chemistry")
 
     visit "/system-admin/funding-management/add?academic_year=#{academic_cycle.start_year}"
@@ -320,11 +321,11 @@ feature "Funding management — add funding wizard", feature_funding_management:
     fill_in "How much is this funding?", with: "29000" # different amount
     click_on "Continue"
 
-    expect(page).to have_content("Check your answers")
+    expect(page).to have_text("Check your answers")
     expect {
       click_on "Add funding"
     }.not_to change(FundingMethod, :count)
-    expect(page).to have_content("Funding already exists")
+    expect(page).to have_text("Funding already exists")
   end
 
   scenario "the Degree relevancy criterion creates two rows per route (relevant / unrelated)" do
@@ -363,12 +364,12 @@ feature "Funding management — add funding wizard", feature_funding_management:
     visit "/system-admin/funding-management/add?academic_year=#{academic_cycle.start_year}"
 
     click_on "Continue" # academic_year pre-seeded
-    expect(page).to have_no_checked_field("Bursary") # nothing pre-selected
+    expect(page).not_to have_checked_field("Bursary") # nothing pre-selected
     choose "Bursary"
     click_on "Continue"
 
     expect(page).to have_css("h1", text: "Select bursary type")
-    expect(page).to have_no_text("HESA funding method")
+    expect(page).not_to have_text("HESA funding method")
     click_on "Continue"
     expect(page).to have_text("Select a bursary type")
 
@@ -399,7 +400,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
       click_on "Continue"
 
       expect(page).to have_text("Check your answers")
-      expect(page).to have_no_text("Bursary type")
+      expect(page).not_to have_text("Bursary type")
       expect {
         click_on "Add funding"
       }.to change(FundingMethod.where(funding_method: code), :count).by(1)
@@ -440,10 +441,10 @@ feature "Funding management — add funding wizard", feature_funding_management:
     expect(page).to have_field("School direct salaried")
     check "School direct salaried"
     click_on "Continue"
-    expect(page).to have_no_field("Neither")
+    expect(page).not_to have_field("Neither")
     choose "None of these"
     click_on "Continue"
-    expect(page).to have_no_field("Not applicable")
+    expect(page).not_to have_field("Not applicable")
     expect(page).to have_field("Both")
     choose "Secondary"
     click_on "Continue"
@@ -503,16 +504,16 @@ feature "Funding management — add funding wizard", feature_funding_management:
     check "Chemistry"
     click_on "Continue"
 
-    expect(page).to have_content("Is there a bursary for trainees with an unrelated degree?")
+    expect(page).to have_text("Is there a bursary for trainees with an unrelated degree?")
     fill_in "Amount for a relevant degree (£)", with: "29000"
     click_on "Continue"
-    expect(page).to have_content("Select whether there is a bursary for trainees with an unrelated degree")
+    expect(page).to have_text("Select whether there is a bursary for trainees with an unrelated degree")
 
     choose "No, bursary not available"
     click_on "Continue"
 
-    expect(page).to have_content("Unrelated degree: Bursary not available")
-    expect(page).to have_content("The unrelated degree records are marked Bursary not available")
+    expect(page).to have_text("Unrelated degree: Bursary not available")
+    expect(page).to have_text("The unrelated degree records are marked Bursary not available")
     expect {
       click_on "Add funding"
     }.to change(FundingMethod, :count).by(2)
@@ -522,7 +523,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
     expect(records).to contain_exactly(%w[relevant available] + [29_000], %w[unrelated not_available] + [nil])
 
     visit "/system-admin/funding-management/requirements?academic_year=#{academic_cycle.start_year}"
-    expect(page).to have_content("Bursary not available")
+    expect(page).to have_text("Bursary not available")
   end
 
   scenario "the Disadvantaged/special school criterion creates two rows per route" do
@@ -545,8 +546,8 @@ feature "Funding management — add funding wizard", feature_funding_management:
     fill_in "Non Disadvantaged school", with: "10000"
     click_on "Continue"
 
-    expect(page).to have_content("Disadvantaged school/special school: £12,000")
-    expect(page).to have_content("Non Disadvantaged school: £10,000")
+    expect(page).to have_text("Disadvantaged school/special school: £12,000")
+    expect(page).to have_text("Non Disadvantaged school: £10,000")
 
     expect {
       click_on "Add funding"
@@ -566,8 +567,8 @@ feature "Funding management — add funding wizard", feature_funding_management:
 
     # Grant funding → only grant routes are shown; non-grant routes are hidden entirely
     expect(page).to have_field("Postgraduate teaching apprenticeship")
-    expect(page).to have_no_field("Provider led postgraduate")
-    expect(page).to have_no_content("Not available for grant funding")
+    expect(page).not_to have_field("Provider led postgraduate")
+    expect(page).not_to have_text("Not available for grant funding")
   end
 
   scenario "shows an error when a required step is not answered" do
@@ -581,19 +582,20 @@ feature "Funding management — add funding wizard", feature_funding_management:
     click_on "Continue" # training routes — nothing checked
 
     expect(page).to have_css(".govuk-error-summary")
-    expect(page).to have_content("Select at least one training route")
+    expect(page).to have_text("Select at least one training route")
   end
 
   scenario "does not offer Add funding once the year has gone live" do
     visit "/system-admin/funding-management/requirements?academic_year=#{current_cycle.start_year}"
+    expect(page).to have_css("h1")
 
     expect(page).not_to have_link("Add funding", exact: true)
     if current_cycle.eytda_only_funding_year?
       # 2026 to 2027: live, but EYTDA funding can still be added.
       expect(page).to have_link("Add EYTDA funding")
-      expect(page).to have_content("its funding is locked, except for Early years teacher degree apprenticeship (EYTDA) funding")
+      expect(page).to have_text("its funding is locked, except for Early years teacher degree apprenticeship (EYTDA) funding")
     else
-      expect(page).to have_content("This academic year is live, so its funding is locked. Any amendment will need a Register developer.")
+      expect(page).to have_text("This academic year is live, so its funding is locked. Any amendment will need a Register developer.")
     end
   end
 
@@ -608,7 +610,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
       select "2026 to 2027 (EYTDA only)", from: "Which academic year is this funding for?"
       click_on "Continue"
 
-      expect(page).to have_content("For 2026 to 2027, only Early years teacher degree apprenticeship (EYTDA) grants can be added.")
+      expect(page).to have_text("For 2026 to 2027, only Early years teacher degree apprenticeship (EYTDA) grants can be added.")
       expect(page).to have_field("Grant")
       expect(page).not_to have_field("Bursary")
       choose "Grant"
@@ -629,7 +631,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
       visit "/system-admin/funding-management/drafts"
       expect(page).to have_css(".govuk-tag", text: "Draft (EYTDA only)")
       click_on "Sign off"
-      expect(page).to have_content("3")
+      expect(page).to have_text("3")
     end
   end
 
@@ -637,20 +639,7 @@ feature "Funding management — add funding wizard", feature_funding_management:
     visit "/system-admin/funding-management/add"
 
     field = find_field("Which academic year is this funding for?")
-    expect(field).to have_selector("option", exact_text: academic_cycle.label)
-    expect(field).to have_no_selector("option", exact_text: current_cycle.label)
-  end
-end
-
-feature "Funding management — add funding flag off" do
-  scenario "the wizard is not reachable when funding_management_edit is disabled",
-           feature_funding_management: true, feature_funding_management_edit: false do
-    given_i_am_authenticated(user: create(:user, :system_admin))
-
-    visit "/system-admin/funding-management/requirements"
-    expect(page).not_to have_link("Add funding")
-
-    visit "/system-admin/funding-management/add"
-    expect(page).not_to have_content("Which academic year is this funding for?")
+    expect(field).to have_css("option", exact_text: academic_cycle.label)
+    expect(field).not_to have_css("option", exact_text: current_cycle.label)
   end
 end

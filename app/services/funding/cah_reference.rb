@@ -20,7 +20,10 @@ module Funding
         l1 = CAH::CAH_CATEGORIES_L1.one(level_1_code)
         return [] if l1.nil?
 
-        l1.l2_children.filter_map { |l2_id| l2 = CAH::CAH_CATEGORIES_L2.one(l2_id); [l2.id, titleize(l2.name)] if l2 }
+        l1.l2_children.filter_map { |l2_id|
+          l2 = CAH::CAH_CATEGORIES_L2.one(l2_id)
+          [l2.id, titleize(l2.name)] if l2
+        }
       end
 
       # [[hecos_code, "Name (code)"], …] — the HECoS codes that sit under a CAH

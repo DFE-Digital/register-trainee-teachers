@@ -30,7 +30,7 @@ module Funding
       methods.map(&:training_route).uniq.sort.map do |training_route|
         route_methods = methods.select { |m| m.training_route == training_route }
         {
-          training_route:,
+          training_route: training_route,
           amounts: FUNDING_TYPES.index_with do |funding_type|
             route_methods.select { |m| m.funding_type == funding_type }.filter_map(&:amount).uniq.sort.reverse
           end,

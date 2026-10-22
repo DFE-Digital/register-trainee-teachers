@@ -55,11 +55,11 @@ module SystemAdmin
     end
 
     def selected_routes
-      Array(training_routes).reject(&:blank?)
+      Array(training_routes).compact_blank
     end
 
     def selected_subjects
-      AllocationSubject.where(id: Array(allocation_subject_ids).reject(&:blank?))
+      AllocationSubject.where(id: Array(allocation_subject_ids).compact_blank)
     end
 
     def save!
@@ -169,7 +169,7 @@ module SystemAdmin
 
     def existing_combination?(route, cell, subject)
       FundingMethod
-        .where(academic_cycle:, funding_type:, training_route: route,
+        .where(academic_cycle: academic_cycle, funding_type: funding_type, training_route: route,
                degree_relevance: cell.degree_relevance, school_disadvantage: cell.school_disadvantage,
                training_year: cell.training_year,
                funding_method: stored_funding_method(cell))

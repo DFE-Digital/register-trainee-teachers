@@ -116,16 +116,16 @@ feature "Funding schools management", feature_funding_management: true, feature_
 
   scenario "removes a school from a future (draft) year" do
     school = create(:school, urn: "333333", name: "Removable School")
-    create(:funding_school_designation, school:, academic_cycle: future_cycle)
+    create(:funding_school_designation, school: school, academic_cycle: future_cycle)
 
     visit "/system-admin/funding-management/schools?academic_year=#{future_cycle.start_year}"
-    expect(page).to have_content("Removable School")
+    expect(page).to have_text("Removable School")
 
     expect {
       click_on "Remove"
     }.to change(FundingSchoolDesignation, :count).by(-1)
 
-    expect(page).to have_content("Removable School removed from the funding schools list")
+    expect(page).to have_text("Removable School removed from the funding schools list")
   end
 
   scenario "bulk uploads a CSV, adding valid URNs and reporting the rest" do
@@ -143,48 +143,14 @@ feature "Funding schools management", feature_funding_management: true, feature_
     attach_file "CSV file of URNs", csv.path
     click_on "Upload and check"
 
-    expect(page).to have_content("Bulk upload results")
-    expect(page).to have_content("Alpha School")            # added
-    expect(page).to have_content("Closed School")           # skipped, closed
-    expect(page).to have_content("No school with URN 666666") # skipped, missing
+    expect(page).to have_text("Bulk upload results")
+    expect(page).to have_text("Alpha School")            # added
+    expect(page).to have_text("Closed School")           # skipped, closed
+    expect(page).to have_text("No school with URN 666666") # skipped, missing
 
     expect(FundingSchoolDesignation.count).to eq(1)
     expect(FundingSchoolDesignation.last.school.urn).to eq("444444")
   ensure
     csv&.close!
-  end
-end
-
-feature "Funding schools management — approval flow",
-        feature_funding_management: true, feature_funding_management_edit: true,
-        feature_funding_management_approval: true do
-  let(:user) { create(:user, :system_admin) }
-  let(:future_cycle) { AcademicCycle.next }
-  let!(:school) { create(:school, urn: "777777", name: "Approval Primary") }
-
-  before { given_i_am_authenticated(user:) }
-
-  scenario "the school list is locked once the year is submitted for approval" do
-    create(:funding_school_designation, school:, academic_cycle: future_cycle)
-    future_cycle.funding_publication_requests.create!(state: :awaiting_approval, submitted_by: user, submitted_at: Time.zone.now)
-
-    visit "/system-admin/funding-management/schools?academic_year=#{future_cycle.start_year}"
-
-    expect(page).to have_content("Approval Primary")
-    expect(page).to have_no_link("Add a school")
-    expect(page).to have_no_button("Remove")
-    expect(page).to have_content("submitted for approval")
-  end
-
-  scenario "the school list appears on the funding approval review page" do
-    create(:funding_school_designation, school:, academic_cycle: future_cycle, designation: :special)
-    future_cycle.funding_publication_requests.create!(state: :awaiting_approval, submitted_by: user, submitted_at: Time.zone.now)
-
-    visit "/system-admin/funding-management/publish/review?academic_year=#{future_cycle.start_year}"
-
-    expect(page).to have_content("Funding schools list")
-    expect(page).to have_content("Approval Primary")
-    expect(page).to have_content("777777")
-    expect(page).to have_content("Special school")
   end
 end

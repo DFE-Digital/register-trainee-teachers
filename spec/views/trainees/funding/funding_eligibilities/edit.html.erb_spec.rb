@@ -7,6 +7,7 @@ describe "trainees/funding/funding_eligibilities/edit", feature_funding_eligibil
   # without seeding funding methods, academic cycles or allocation subjects.
   let!(:academic_cycle) { AcademicCycle.current || create(:academic_cycle, :current) }
   let(:trainee) { create(:trainee, :provider_led_postgrad) }
+  let(:year) { trainee.start_academic_cycle.label }
   let(:can_apply_for_grant) { false }
   let(:offer_exception_subject) { false }
   let(:funding_manager) do
@@ -43,7 +44,7 @@ describe "trainees/funding/funding_eligibilities/edit", feature_funding_eligibil
       expect(rendered).to have_text("Has the trainee been approved for UK Student Finance?")
       expect(rendered).to have_text("This determines whether the trainee can be considered for a bursary or scholarship.")
       expect(rendered).to have_text("Bursaries and scholarships are available to trainees")
-      expect(rendered).to have_link("Funding: initial teacher training (ITT), academic year 2026 to 2027 (opens in new tab)")
+      expect(rendered).to have_link("Funding: initial teacher training (ITT), academic year #{year} (opens in new tab)")
       expect(rendered).to have_field(type: "radio", count: 2)
     end
 
@@ -84,7 +85,7 @@ describe "trainees/funding/funding_eligibilities/edit", feature_funding_eligibil
     it "asks the training bursary and grant questions on the same screen" do
       expect(rendered).to have_text("Is the trainee eligible for a training bursary?")
       expect(rendered).to have_text("Should the provider be awarded a grant?")
-      expect(rendered).to have_link("Early years initial teacher training: 2026 to 2027 funding guidance (opens in new tab)")
+      expect(rendered).to have_link("Early years initial teacher training: #{year} funding guidance (opens in new tab)")
     end
   end
 
@@ -104,7 +105,7 @@ describe "trainees/funding/funding_eligibilities/edit", feature_funding_eligibil
 
     it "shows the no-funding information, no question, and a way to continue" do
       expect(rendered).to have_text("There is no bursary, scholarship or grant funding available on the")
-      expect(rendered).to have_text("route for the academic year 2026 to 2027")
+      expect(rendered).to have_text("route for the academic year #{year}")
       expect(rendered).to have_link("itt.funding@education.gov.uk", href: "mailto:itt.funding@education.gov.uk")
       expect(rendered).to have_link("Continue")
       expect(rendered).not_to have_field(type: "radio")
@@ -117,7 +118,7 @@ describe "trainees/funding/funding_eligibilities/edit", feature_funding_eligibil
 
     it "shows the early-years no-funding information and no question" do
       expect(rendered).to have_text("There is no training bursary or training grant available on the")
-      expect(rendered).to have_link("Early years initial teacher training: 2026 to 2027 funding guidance (opens in new tab)")
+      expect(rendered).to have_link("Early years initial teacher training: #{year} funding guidance (opens in new tab)")
       expect(rendered).not_to have_field(type: "radio")
     end
   end
@@ -128,7 +129,7 @@ describe "trainees/funding/funding_eligibilities/edit", feature_funding_eligibil
 
     it "shows subject-specific no-funding information and no question" do
       expect(rendered).to have_text("available for Drama on the")
-      expect(rendered).to have_text("route for the academic year 2026 to 2027")
+      expect(rendered).to have_text("route for the academic year #{year}")
       expect(rendered).to have_link("itt.funding@education.gov.uk", href: "mailto:itt.funding@education.gov.uk")
       expect(rendered).not_to have_field(type: "radio")
     end

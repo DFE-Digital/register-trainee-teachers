@@ -2541,6 +2541,12 @@ en:
         create:
           success: *file_uploaded
   system_admin:
+    funding_schools:
+      destroy:
+        locked: This year's school list is locked and cannot be changed.
+    relevant_degrees:
+      destroy:
+        locked: This year is locked and cannot be changed.
     users:
       create:
         success: User has been successfully added.

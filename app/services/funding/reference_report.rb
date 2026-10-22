@@ -50,7 +50,7 @@ module Funding
     end
 
     def to_h
-      { title:, academic_year: academic_cycle.label, columns: COLUMNS, rows: }
+      { title: title, academic_year: academic_cycle.label, columns: COLUMNS, rows: rows }
     end
 
     def filename(format)

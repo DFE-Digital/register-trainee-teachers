@@ -20,7 +20,7 @@ module SystemAdmin
       AcademicCycle.for_year(academic_year.to_i)
     end
 
-    def selected_hecos = Array(hecos_codes).reject(&:blank?)
+    def selected_hecos = Array(hecos_codes).compact_blank
 
   private
 

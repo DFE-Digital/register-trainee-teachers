@@ -228,7 +228,7 @@ module SystemAdmin
     # Award type (QTS / EYTS) derived from the selected routes — used to show
     # the derived value alongside the QTS answer on Check your answers.
     def derived_award_types(routes)
-      Array(routes).reject(&:blank?).map { |route|
+      Array(routes).compact_blank.map { |route|
         TRAINING_ROUTE_AWARD_TYPE[route.to_sym]
       }.compact.uniq
     end
@@ -270,7 +270,7 @@ module SystemAdmin
 
     # Subject name that links to the subject's detailed funding requirement.
     # Opens on "all academic years" (the subject page has its own year filter).
-    def funding_subject_link(name, subject_id, academic_year: "all")
+    def funding_subject_link(name, subject_id)
       govuk_link_to(name, funding_management_subject_path(subject_id, academic_year: "all"), no_visited_state: true)
     end
 

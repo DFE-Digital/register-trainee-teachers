@@ -3,7 +3,8 @@
 require "rails_helper"
 
 describe FundingManager do
-  let(:current_cycle) { AcademicCycle.current || create(:academic_cycle, :current) }
+  # The current year's funding is signed off, as it will be by the time trainees start.
+  let(:current_cycle) { (AcademicCycle.current || create(:academic_cycle, :current)).tap { |cycle| cycle.update!(published: true) } }
   let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::MATHEMATICS) }
   let(:trainee) do
     build(:trainee, training_route: route, course_allocation_subject: allocation_subject, start_academic_cycle: cycle,
@@ -98,12 +99,18 @@ describe FundingManager do
       end
 
       it "waits for the year's EYTDA funding to be signed off" do
+        cycle.update!(published: false)
+
         expect(funding_manager.eligibility_content_key).to eq(:not_signed_off)
       end
     end
 
     context "when the route is Teacher degree apprenticeship" do
       let(:route) { TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] }
+      # The pilot grant is for trainees starting before 2027 to 2028.
+      let(:cycle) do
+        AcademicCycle.for_year(2026) || create(:academic_cycle, start_date: Date.new(2026, 8, 1), end_date: Date.new(2027, 7, 31))
+      end
 
       it "asks the grant question for mathematics before 2027 to 2028 (the pilot)" do
         expect(cycle.start_year).to be < described_class::FUNDING_MANAGEMENT_START_YEAR

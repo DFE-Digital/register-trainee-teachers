@@ -55,7 +55,7 @@
     <% else %>
       <ul class="govuk-list govuk-list--bullet">
         <% subjects.each do |subject| %>
-          <li><%= funding_subject_link(subject.name, subject.id, academic_year: academic_cycle.start_year) %></li>
+          <li><%= funding_subject_link(subject.name, subject.id) %></li>
         <% end %>
       </ul>
     <% end %>

@@ -63,7 +63,7 @@ module Funding
       end
 
       context "when funding eligibility changes to not eligible and the trainee is not in the fund-code exception list" do
-        let(:academic_cycle) { create(:academic_cycle, :current) }
+        let(:academic_cycle) { create(:academic_cycle, :current, published: true) }
         let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::BIOLOGY) }
         let(:trainee) do
           create(:trainee,
@@ -103,13 +103,18 @@ module Funding
       end
 
       context "when funding eligibility changes to not eligible but the trainee is in the fund-code exception list" do
-        let(:academic_cycle) { create(:academic_cycle, :current) }
+        # The exception only covers trainees starting in 2025 to 2026 or 2026 to 2027.
+        let(:academic_cycle) do
+          AcademicCycle.for_year(2026) || create(:academic_cycle, start_date: Date.new(2026, 8, 1), end_date: Date.new(2027, 7, 31))
+        end
         let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::PHYSICS) }
         let(:trainee) do
           create(:trainee,
                  funding_eligibility: "eligible",
                  course_allocation_subject: allocation_subject,
                  start_academic_cycle: academic_cycle,
+                 itt_start_date: Date.new(2026, 9, 1),
+                 trainee_start_date: Date.new(2026, 9, 1),
                  applying_for_bursary: true,
                  bursary_tier: :tier_one)
         end
@@ -127,7 +132,7 @@ module Funding
     end
 
     describe "the grant question (early years postgraduate)" do
-      let(:academic_cycle) { create(:academic_cycle, :current) }
+      let(:academic_cycle) { create(:academic_cycle, :current, published: true) }
       let(:allocation_subject) { create(:allocation_subject, name: AllocationSubjects::EARLY_YEARS_ITT) }
       let(:trainee) do
         create(:trainee,

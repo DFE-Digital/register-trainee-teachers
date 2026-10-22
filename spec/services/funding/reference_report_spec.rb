@@ -10,7 +10,7 @@ module Funding
     subject(:report) { described_class.new(academic_cycle) }
 
     before do
-      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad], funding_type: :bursary, amount: 29_000, academic_cycle:).tap { |m| m.allocation_subjects << chemistry }
+      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad], funding_type: :bursary, amount: 29_000, academic_cycle: academic_cycle).tap { |m| m.allocation_subjects << chemistry }
     end
 
     describe "#to_csv" do
@@ -31,7 +31,7 @@ module Funding
 
     describe "#rows_by_funding_type" do
       before do
-        create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship], funding_type: :grant, amount: 15_000, academic_cycle:)
+        create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship], funding_type: :grant, amount: 15_000, academic_cycle: academic_cycle)
       end
 
       it "groups rows by funding type in bursary, scholarship, grant order" do

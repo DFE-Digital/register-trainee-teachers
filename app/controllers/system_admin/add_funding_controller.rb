@@ -46,6 +46,21 @@ module SystemAdmin
       render(step_template)
     end
 
+    def create
+      @form = build_funding_method_form
+
+      if @form.save!
+        count = @form.created_funding_methods.size
+        reset_draft
+        redirect_to(
+          funding_management_requirements_path(academic_year: @form.academic_year),
+          flash: { success: "Funding added — #{count} funding #{'record'.pluralize(count)} created" },
+        )
+      else
+        render(:check)
+      end
+    end
+
     def update
       submitted = submitted_params
       # On the training-routes step, drop any route that the earlier answers make
@@ -87,21 +102,6 @@ module SystemAdmin
       redirect_to(funding_management_add_start_path) and return if draft["academic_year"].blank?
 
       @form = build_funding_method_form
-    end
-
-    def create
-      @form = build_funding_method_form
-
-      if @form.save!
-        count = @form.created_funding_methods.size
-        reset_draft
-        redirect_to(
-          funding_management_requirements_path(academic_year: @form.academic_year),
-          flash: { success: "Funding added — #{count} funding #{'record'.pluralize(count)} created" },
-        )
-      else
-        render(:check)
-      end
     end
 
   private

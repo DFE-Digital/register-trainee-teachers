@@ -5,10 +5,8 @@ require "rails_helper"
 module SystemAdmin
   describe RelevantDegreeMappingForm do
     let(:cycle) { create(:academic_cycle, next_cycle: true) }
-    let(:subject) { create(:allocation_subject, name: "Biology") }
     # CAH01 → CAH01-01 → HECoS codes (from the reference data)
     let(:hecos) { ::Funding::CahReference.hecos_codes_for("CAH01-01").first(2) }
-
     let(:valid_params) do
       {
         academic_year: cycle.start_year,
@@ -18,6 +16,8 @@ module SystemAdmin
         hecos_codes: hecos,
       }
     end
+
+    subject { create(:allocation_subject, name: "Biology") }
 
     it "creates one record per HECoS code, each with a DRCAH reference" do
       form = described_class.new(valid_params)
@@ -44,7 +44,7 @@ module SystemAdmin
     it "rejects HECoS codes that do not belong to the chosen CAH level 2" do
       form = described_class.new(valid_params.merge(hecos_codes: ["999999"]))
       expect(form.save!).to be(false)
-      expect(form.errors[:hecos_codes].join).to match(/belong to the chosen CAH level 2/)
+      expect(form.errors[:hecos_codes].join).to include("belong to the chosen CAH level 2")
     end
 
     it "rejects an invalid CAH level 2 for the chosen level 1" do
@@ -57,14 +57,14 @@ module SystemAdmin
       live = AcademicCycle.current || create(:academic_cycle, :current)
       form = described_class.new(valid_params.merge(academic_year: live.start_year))
       expect(form.save!).to be(false)
-      expect(form.errors[:academic_year].join).to match(/live or has ended/)
+      expect(form.errors[:academic_year].join).to include("live or has ended")
     end
 
     it "rejects HECoS codes already recorded for the subject in the year" do
       described_class.new(valid_params).save!
       dup = described_class.new(valid_params)
       expect(dup.save!).to be(false)
-      expect(dup.errors[:base].join).to match(/already recorded for this subject and year/)
+      expect(dup.errors[:base].join).to include("already recorded for this subject and year")
     end
   end
 end

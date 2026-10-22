@@ -53,6 +53,25 @@ module SystemAdmin
       render(step_template)
     end
 
+    def create
+      @form = build_form
+      @form.created_by = audit_user
+
+      if @form.save!
+        subject = AllocationSubject.find_by(id: @form.allocation_subject_id)
+        year = @form.academic_year
+        count = @form.created_mappings.size
+        references = @form.created_mappings.map(&:reference)
+        reset_draft
+        redirect_to(
+          funding_management_relevant_degrees_path(academic_year: year),
+          flash: { success: "#{count} relevant degree #{'record'.pluralize(count)} added for #{subject&.name} (#{references.first}–#{references.last})" },
+        )
+      else
+        render(:check)
+      end
+    end
+
     def update
       submitted = submitted_params
       @step_form = step_form(submitted)
@@ -75,32 +94,13 @@ module SystemAdmin
       @form = build_form
     end
 
-    def create
-      @form = build_form
-      @form.created_by = audit_user
-
-      if @form.save!
-        subject = AllocationSubject.find_by(id: @form.allocation_subject_id)
-        year = @form.academic_year
-        count = @form.created_mappings.size
-        references = @form.created_mappings.map(&:reference)
-        reset_draft
-        redirect_to(
-          funding_management_relevant_degrees_path(academic_year: year),
-          flash: { success: "#{count} relevant degree #{'record'.pluralize(count)} added for #{subject&.name} (#{references.first}–#{references.last})" },
-        )
-      else
-        render(:check)
-      end
-    end
-
     def destroy
-      mapping = RelevantDegreeMapping.find(params[:id])
+      mapping = RelevantDegreeMapping.find(params.expect(:id))
       year = mapping.academic_cycle.start_year
 
       unless can_manage_relevant_degrees?(mapping.academic_cycle)
         redirect_to(funding_management_relevant_degrees_path(academic_year: year),
-                    flash: { alert: "This year is locked and cannot be changed." })
+                    flash: { alert: t(".locked") })
         return
       end
 
@@ -125,9 +125,7 @@ module SystemAdmin
         AcademicCycle.current
     end
 
-    def academic_cycle
-      @academic_cycle
-    end
+    attr_reader :academic_cycle
 
     def can_manage_relevant_degrees?(cycle)
       helpers.funding_year_editable?(cycle)

@@ -25,7 +25,7 @@ module SystemAdmin
       AcademicCycle.for_year(academic_year.to_i)
     end
 
-    def selected_hecos = Array(hecos_codes).reject(&:blank?)
+    def selected_hecos = Array(hecos_codes).compact_blank
 
     # One record per selected HECoS code — each gets its own DRCAH reference.
     def save!
@@ -34,8 +34,8 @@ module SystemAdmin
       @created_mappings = ActiveRecord::Base.transaction do
         selected_hecos.map do |code|
           RelevantDegreeMapping.create!(
-            academic_cycle:, allocation_subject_id:, cah_level_1_code:,
-            cah_level_2_code:, hecos_code: code, created_by:,
+            academic_cycle: academic_cycle, allocation_subject_id: allocation_subject_id, cah_level_1_code: cah_level_1_code,
+            cah_level_2_code: cah_level_2_code, hecos_code: code, created_by: created_by
           )
         end
       end
@@ -75,7 +75,7 @@ module SystemAdmin
     def validate_not_duplicate
       return if academic_cycle.nil? || allocation_subject_id.blank? || selected_hecos.empty?
 
-      existing = RelevantDegreeMapping.where(academic_cycle:, allocation_subject_id:, hecos_code: selected_hecos).pluck(:hecos_code)
+      existing = RelevantDegreeMapping.where(academic_cycle: academic_cycle, allocation_subject_id: allocation_subject_id, hecos_code: selected_hecos).pluck(:hecos_code)
       return if existing.empty?
 
       names = existing.map { |code| "#{::Funding::CahReference.hecos_name(code)} (#{code})" }

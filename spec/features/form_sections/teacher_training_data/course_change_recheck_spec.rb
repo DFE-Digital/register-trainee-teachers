@@ -3,6 +3,9 @@
 require "rails_helper"
 
 feature "adding the funding and checking the employing school again after the course details change", feature_funding_eligibility_step: true do
+  # The years' funding is signed off, as it will be by the time trainees start.
+  before { AcademicCycle.find_each { |cycle| cycle.update!(published: true) } }
+
   background { given_i_am_authenticated }
 
   let(:cycle) { AcademicCycle.current || create(:academic_cycle, :current) }
@@ -70,7 +73,7 @@ private
   end
 
   def then_i_see_the_banner(heading, text)
-    within(".govuk-notification-banner") do
+    within(".govuk-notification-banner", text: heading) do
       expect(page).to have_css(".govuk-notification-banner__heading", text: heading)
       expect(page).to have_text(text)
     end

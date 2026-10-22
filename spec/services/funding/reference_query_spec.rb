@@ -13,10 +13,10 @@ module Funding
 
     before do
       # provider-led postgrad: two bursary bands by subject
-      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad], funding_type: :bursary, amount: 29_000, academic_cycle:).tap { |m| m.allocation_subjects << chemistry }
-      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad], funding_type: :bursary, amount: 20_000, academic_cycle:).tap { |m| m.allocation_subjects << french }
+      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad], funding_type: :bursary, amount: 29_000, academic_cycle: academic_cycle).tap { |m| m.allocation_subjects << chemistry }
+      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad], funding_type: :bursary, amount: 20_000, academic_cycle: academic_cycle).tap { |m| m.allocation_subjects << french }
       # school direct salaried: a grant
-      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried], funding_type: :grant, amount: 16_000, academic_cycle:).tap { |m| m.allocation_subjects << maths }
+      create(:funding_method, training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried], funding_type: :grant, amount: 16_000, academic_cycle: academic_cycle).tap { |m| m.allocation_subjects << maths }
     end
 
     describe "#requirements" do

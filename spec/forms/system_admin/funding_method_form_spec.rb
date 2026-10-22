@@ -27,7 +27,7 @@ module SystemAdmin
           funding_method: "early_years_tiered",
           financial_incentives: "neither",
           training_routes: [TRAINING_ROUTE_ENUMS[:early_years_postgrad]],
-          amount_tier_one: "5000", amount_tier_two: "4000", amount_tier_three: "2000",
+          amount_tier_one: "5000", amount_tier_two: "4000", amount_tier_three: "2000"
         )
       end
 
@@ -161,7 +161,7 @@ module SystemAdmin
           training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
           funding_type: "bursary",
           amount: 29_000,
-          academic_cycle:,
+          academic_cycle: academic_cycle,
         )
         expect(funding_method.allocation_subjects).to contain_exactly(chemistry, physics)
       end
@@ -203,25 +203,25 @@ module SystemAdmin
 
       it "rejects mixing QTS and EYTS routes in one submission" do
         form = described_class.new(valid_params.merge(
-          funding_type: "grant",
-          training_routes: [
-            TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship], # QTS
-            TRAINING_ROUTE_ENUMS[:early_years_salaried],        # EYTS
-          ],
-        ))
+                                     funding_type: "grant",
+                                     training_routes: [
+                                       TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship], # QTS
+                                       TRAINING_ROUTE_ENUMS[:early_years_salaried],        # EYTS
+                                     ],
+                                   ))
         expect(form.save!).to be(false)
-        expect(form.errors[:training_routes].join).to match(/QTS and EYTS funding must be added separately/)
+        expect(form.errors[:training_routes].join).to include("QTS and EYTS funding must be added separately")
       end
 
       it "allows several routes that share one award type" do
         form = described_class.new(valid_params.merge(
-          funding_type: "grant",
-          training_routes: [
-            TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],  # QTS
-            TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship], # QTS
-          ],
-          allocation_subject_ids: [chemistry.id],
-        ))
+                                     funding_type: "grant",
+                                     training_routes: [
+                                       TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],  # QTS
+                                       TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship], # QTS
+                                     ],
+                                     allocation_subject_ids: [chemistry.id],
+                                   ))
         expect { form.save! }.to change(FundingMethod, :count).by(2)
       end
 
@@ -250,7 +250,7 @@ module SystemAdmin
 
         duplicate = described_class.new(valid_params.merge(amount: "5000", allocation_subject_ids: [chemistry.id]))
         expect(duplicate.save!).to be(false)
-        expect(duplicate.errors[:base].join).to match(/Funding already exists/)
+        expect(duplicate.errors[:base].join).to include("Funding already exists")
       end
 
       it "allows the same route and type for a different subject" do
@@ -272,9 +272,9 @@ module SystemAdmin
         described_class.new(valid_params.merge(allocation_subject_ids: [chemistry.id])).save! # degree_relevance nil
 
         split = described_class.new(valid_params.merge(
-          financial_incentives: "degree_relevancy", amount_relevant: "29000", amount_unrelated: "25000", amount_unrelated_available: "yes",
-          allocation_subject_ids: [chemistry.id],
-        ))
+                                      financial_incentives: "degree_relevancy", amount_relevant: "29000", amount_unrelated: "25000", amount_unrelated_available: "yes",
+                                      allocation_subject_ids: [chemistry.id]
+                                    ))
         expect { split.save! }.to change(FundingMethod, :count).by(2)
       end
     end

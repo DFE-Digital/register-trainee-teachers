@@ -27,8 +27,8 @@ module SystemAdmin
     # each subject's integer id, so cast them or the saved choices show unticked.
     def allocation_subject_ids = Array(@allocation_subject_ids).compact_blank.map(&:to_i)
 
-    def selected_routes = Array(training_routes).reject(&:blank?)
-    def selected_subject_ids = Array(allocation_subject_ids).reject(&:blank?)
+    def selected_routes = Array(training_routes).compact_blank
+    def selected_subject_ids = Array(allocation_subject_ids).compact_blank
 
     # The chosen year, when it has gone live and only EYTDA funding can be added (2026 to 2027).
     def eytda_only_cycle

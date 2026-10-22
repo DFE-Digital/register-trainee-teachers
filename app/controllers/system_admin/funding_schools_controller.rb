@@ -85,24 +85,19 @@ module SystemAdmin
 
     def bulk_create
       @form = FundingSchoolDesignationBulkForm.new(bulk_params.merge(created_by: audit_user))
-      if @form.import!
-        render(:bulk_result)
-      elsif @form.errors.any?
-        render(:bulk_new)
-      else
-        # Valid form but every row was skipped — still show the result summary.
-        render(:bulk_result)
-      end
+      @form.import!
+      # A valid form shows the result summary, even if every row was skipped.
+      render(@form.errors.any? ? :bulk_new : :bulk_result)
     end
 
     def destroy
-      designation = FundingSchoolDesignation.find(params[:id])
+      designation = FundingSchoolDesignation.find(params.expect(:id))
       year = designation.academic_cycle.start_year
       name = designation.school.name
 
       unless can_manage_schools?(designation.academic_cycle)
         redirect_to(funding_management_schools_path(academic_year: year),
-                    flash: { alert: "This year's school list is locked and cannot be changed." })
+                    flash: { alert: t(".locked") })
         return
       end
 
@@ -128,9 +123,7 @@ module SystemAdmin
         AcademicCycle.current
     end
 
-    def academic_cycle
-      @academic_cycle
-    end
+    attr_reader :academic_cycle
 
     # Whether schools can still be managed for a cycle. Mirrors funding
     # requirements exactly: editable only while the year is a draft — once

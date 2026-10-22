@@ -25,11 +25,11 @@ module Funding
         return Result.new(error: "No school with URN #{urn} was found. Schools must already exist in Register.")
       end
       if school.close_date.present?
-        return Result.new(school:, error: "#{school.name} (URN #{urn}) is closed and cannot be added.")
+        return Result.new(school: school, error: "#{school.name} (URN #{urn}) is closed and cannot be added.")
       end
 
       if !ignore_duplicate && academic_cycle && FundingSchoolDesignation.exists?(school:, academic_cycle:)
-        return Result.new(school:, error: "#{school.name} is already on the list for #{academic_cycle.label}.")
+        return Result.new(school: school, error: "#{school.name} is already on the list for #{academic_cycle.label}.")
       end
 
       Result.new(school:)

@@ -28,7 +28,7 @@
         <tbody class="govuk-table__body">
           <% @records.each do |record| %>
             <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header govuk-!-font-weight-regular"><%= funding_subject_link(record[:subject], record[:subject_id], academic_year: academic_cycle.start_year) %></th>
+              <th scope="row" class="govuk-table__header govuk-!-font-weight-regular"><%= funding_subject_link(record[:subject], record[:subject_id]) %></th>
               <td class="govuk-table__cell"><%= funding_route_tag_link(record[:training_route], academic_year: academic_cycle.start_year) %></td>
               <td class="govuk-table__cell"><%= funding_type_tag(record[:funding_type]) %></td>
               <td class="govuk-table__cell govuk-table__cell--numeric"><%= funding_amount_display(record[:amount], funding_type: record[:funding_type], availability: record[:availability]) %></td>
