@@ -2,6 +2,8 @@
 
 module Schools
   class EmployingSchoolForm < Form
+    prepend RechecksFunding
+
     EMPLOYING_SCHOOL_NOT_APPLICABLE_OPTION = Struct.new(:id, :name)
 
     FIELDS = %i[

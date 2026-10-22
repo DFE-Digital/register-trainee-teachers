@@ -16,7 +16,7 @@
         ) %> (opens in new tab).
       </p>
 
-    <% if @bursary_form.can_apply_for_grant? %>
+    <% if @bursary_form.grant_question? %>
       <%= f.govuk_radio_buttons_fieldset(:custom_applying_for_grant, legend: { text: "Should the provider be awarded a grant?", size: "m" }) do %>
             <%= f.govuk_radio_button(
               :custom_applying_for_grant,

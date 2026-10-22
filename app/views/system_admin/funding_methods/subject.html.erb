@@ -1,0 +1,61 @@
+<% page_title = @allocation_subject.name %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(text: "Back to subject records", href: funding_management_subject_records_path(academic_year: academic_cycle.start_year)) %>
+
+    <span class="govuk-caption-l"><%= all_years? ? "All academic years" : academic_cycle.label %></span>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <p class="govuk-body">Funding available for this subject across training routes.</p>
+
+    <%= render "filters", year_cycles: @subject_cycles, url: funding_management_subject_path(@allocation_subject) %>
+
+    <% if @entries.empty? %>
+      <p class="govuk-body">No funding is recorded for this subject.</p>
+    <% else %>
+      <p class="govuk-body govuk-!-margin-bottom-2"><strong><%= number_with_delimiter(@entries.total_count) %></strong> <%= "funding entry".pluralize(@entries.total_count) %></p>
+      <div style="overflow-x:auto;">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Entry ID</th>
+              <th scope="col" class="govuk-table__header">Academic year</th>
+              <th scope="col" class="govuk-table__header">Funding method</th>
+              <th scope="col" class="govuk-table__header">Funding type</th>
+              <th scope="col" class="govuk-table__header">Training route</th>
+              <th scope="col" class="govuk-table__header">Subject</th>
+              <th scope="col" class="govuk-table__header">Degree relevance</th>
+              <th scope="col" class="govuk-table__header">Training year</th>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric">Amount</th>
+              <th scope="col" class="govuk-table__header">Change</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @entries.each do |row| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell govuk-!-font-weight-bold"><%= govuk_link_to(row[:entry_id], funding_management_entry_path(row[:funding_method_id], academic_year: row[:academic_year_start]), no_visited_state: true) %></td>
+                <td class="govuk-table__cell"><%= row[:academic_year] %></td>
+                <td class="govuk-table__cell"><%= funding_method_cell(row[:funding_method], row[:funding_type], row[:training_route]) %></td>
+                <td class="govuk-table__cell"><%= funding_type_tag(row[:funding_type]) %></td>
+                <td class="govuk-table__cell"><%= govuk_link_to(route_enum_name(row[:training_route]), funding_management_funding_method_path(row[:training_route], academic_year: row[:academic_year_start]), no_visited_state: true) %></td>
+                <td class="govuk-table__cell"><%= row[:subject] %></td>
+                <td class="govuk-table__cell"><%= degree_relevance_tag(row[:degree_relevance]) || tag.span("—", class: "govuk-hint govuk-!-margin-0") %></td>
+                <td class="govuk-table__cell"><%= training_year_label(row[:training_year], row[:academic_year_start]) || tag.span("—", class: "govuk-hint govuk-!-margin-0") %></td>
+                <td class="govuk-table__cell govuk-table__cell--numeric"><%= funding_amount_display(row[:amount], funding_type: row[:funding_type], availability: row[:availability]) %></td>
+                <td class="govuk-table__cell">
+                  <%= funding_change_tag(row[:change]) %>
+                  <% if row[:previous_amount].present? && row[:change].to_s.in?(%w[increase decrease]) %>
+                    <span class="govuk-hint govuk-!-margin-0 govuk-!-font-size-16">was <%= format_currency(row[:previous_amount]) %></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <%= render Paginator::View.new(scope: @entries) %>
+    <% end %>
+  </div>
+</div>

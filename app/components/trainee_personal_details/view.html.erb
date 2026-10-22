@@ -16,6 +16,12 @@
   </div>
 <% end %>
 
+<% if trainee.requires_level_five_declaration? %>
+  <div class="level-five-declaration-details">
+    <%= render LevelFiveDeclaration::View.new(data_model: trainee, editable: trainee_editable?) %>
+  </div>
+<% end %>
+
 <% if trainee.requires_degree? %>
   <% if trainee.degrees.any? %>
     <div class="degree-details">

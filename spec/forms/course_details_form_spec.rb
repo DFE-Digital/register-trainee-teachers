@@ -702,7 +702,7 @@ describe CourseDetailsForm, type: :model do
     end
 
     describe "#stash" do
-      let(:fields) { params.merge({ course_uuid: nil }) }
+      let(:fields) { params.merge({ course_uuid: nil, extended_course_confirmed: false }) }
 
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
         expect(form_store).to receive(:set).with(trainee.id, :course_details, fields)

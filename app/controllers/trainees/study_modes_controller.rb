@@ -2,6 +2,8 @@
 
 module Trainees
   class StudyModesController < BaseController
+    include CoursePrerequisitesCheckable
+
     include Publishable
 
     before_action :check_if_study_mode_can_be_taken_from_course

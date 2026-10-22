@@ -29,6 +29,14 @@ module Funding
 
     self.table_name = "funding_trainee_summary_rows"
 
+    # Spreadsheet labels for routes funded per training year end with the year,
+    # for example "EYITT Teacher Degree Apprenticeship Year 2".
+    TRAINING_YEAR_SUFFIX = /\s+Year\s+\d+\z/
+
+    def self.route_without_training_year(label)
+      label.to_s.sub(TRAINING_YEAR_SUFFIX, "")
+    end
+
     before_save :sync_lead_school_and_partner_name
 
     belongs_to :trainee_summary,
@@ -52,12 +60,18 @@ module Funding
       opt_in_undergrad: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
       school_direct_tuition_fee: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
       teacher_degree_apprenticeship: TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
+      early_years_teacher_degree_apprenticeship: TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship],
     }
 
     def route
       return super if training_route.nil?
 
-      self.class.human_attribute_name(training_route)
+      [self.class.human_attribute_name(training_route), training_year_label].compact.join(" ")
+    end
+
+    # "Year 2" when the spreadsheet row is for one training year.
+    def training_year_label
+      self[:route].to_s[TRAINING_YEAR_SUFFIX]&.strip
     end
 
     def sync_lead_school_and_partner_name

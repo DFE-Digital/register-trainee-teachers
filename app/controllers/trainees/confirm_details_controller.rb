@@ -2,6 +2,9 @@
 
 module Trainees
   class ConfirmDetailsController < BaseController
+    include FundingPrerequisitesCheckable
+    include CoursePrerequisitesCheckable
+
     before_action :load_form, :load_missing_data_view
 
     helper_method :trainee_section_key
@@ -84,6 +87,7 @@ module Trainees
           publish_course_details: "trainee's course details",
           trainee_start_status: "start date",
           iqts_country: "international training details",
+          level_five_declaration: "level 5 declaration",
           schools: trainee.requires_assessment_only_employing_school? ? "employing school" : "training partners",
         }
         titles[trainee_section_key.to_sym] || trainee_section_key.gsub("_", " ").gsub("id", "ID")
@@ -96,7 +100,21 @@ module Trainees
 
     def toggle_trainee_progress_field
       trainee.progress.public_send("#{trainee_progress_key}=", mark_as_completed_params)
+      # Confirming the course details, funding, or training partner and employing school, again answers the check after a change.
+      if mark_as_completed_params
+        trainee.progress.clear_course_details_recheck if course_page?
+        trainee.progress.clear_funding_recheck if trainee_section_key == FUNDING_KEY
+        trainee.progress.clear_schools_recheck if trainee_section_key == SCHOOLS_KEY
+      end
       trainee.save!
+    end
+
+    def funding_page?
+      trainee_section_key == FUNDING_KEY
+    end
+
+    def course_page?
+      %w[course_details publish_course_details].include?(trainee_section_key)
     end
 
     def mark_as_completed_params

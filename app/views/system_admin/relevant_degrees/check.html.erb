@@ -1,0 +1,67 @@
+<% change = ->(step, hidden) { { text: "Change", href: funding_management_relevant_degree_step_path(step:, from: "check"), visually_hidden_text: hidden } } %>
+<% cycle = AcademicCycle.for_year(draft["academic_year"].to_i) %>
+<% subject = AllocationSubject.find_by(id: draft["allocation_subject_id"]) %>
+<% hecos = Array(draft["hecos_codes"]).reject(&:blank?) %>
+<% list = ->(items) { content_tag(:ul, safe_join(items.map { |i| content_tag(:li, i) }), class: "govuk-list govuk-!-margin-0") } %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: "Check your answers", has_errors: @form.errors.present?) %>
+    <%= govuk_back_link(href: funding_management_relevant_degree_step_path(step: "hecos")) %>
+
+    <span class="govuk-caption-l">Add relevant degrees</span>
+    <h1 class="govuk-heading-l">Check your answers</h1>
+
+    <% if @form.errors.present? %>
+      <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">There is a problem</h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <% @form.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= govuk_summary_list do |sl| %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Academic year") %>
+        <% row.with_value(text: cycle&.label || draft["academic_year"]) %>
+        <% row.with_action(**change.call("academic_year", "academic year")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "ITT subject") %>
+        <% row.with_value(text: subject&.name) %>
+        <% row.with_action(**change.call("subject", "ITT subject")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "CAH level 1 category") %>
+        <% row.with_value(text: "#{Funding::CahReference.level_1_name(draft['cah_level_1_code'])} (#{draft['cah_level_1_code']})") %>
+        <% row.with_action(**change.call("cah_level_1", "CAH level 1 category")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "CAH level 2 category") %>
+        <% level_2 = "#{Funding::CahReference.level_2_name(draft['cah_level_2_code'])} (#{draft['cah_level_2_code']})" %>
+        <% if cah_level_2_automatic? %>
+          <% row.with_value(text: safe_join([level_2, tag.br, content_tag(:span, "Set by the CAH level 1 category", class: "govuk-hint govuk-!-margin-0")])) %>
+        <% else %>
+          <% row.with_value(text: level_2) %>
+          <% row.with_action(**change.call("cah_level_2", "CAH level 2 category")) %>
+        <% end %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Applicable HECoS codes") %>
+        <% row.with_value(text: list.call(hecos.map { |c| "#{Funding::CahReference.hecos_name(c)} (#{c})" })) %>
+        <% row.with_action(**change.call("hecos", "applicable HECoS codes")) %>
+      <% end %>
+    <% end %>
+
+    <%= form_with url: funding_management_relevant_degrees_path, method: :post do %>
+      <button class="govuk-button" data-module="govuk-button">Add relevant degrees</button>
+    <% end %>
+  </div>
+</div>

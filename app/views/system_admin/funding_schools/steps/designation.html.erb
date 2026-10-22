@@ -1,0 +1,5 @@
+<%= render layout: "system_admin/funding_schools/steps/wrapper", locals: { title: "Designation", step: "designation" } do |f| %>
+  <%= f.govuk_collection_radio_buttons :designation,
+        [["disadvantaged", "Disadvantaged school"], ["special", "Special school"]], :first, :last,
+        legend: { text: "How is this school designated?", size: "l", tag: "h1" } %>
+<% end %>

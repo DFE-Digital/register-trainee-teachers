@@ -1,0 +1,70 @@
+<% page_title = "Funding entry #{@funding_method.reference}" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(text: "Back to funding management", href: funding_management_requirements_path(academic_year: academic_cycle.start_year)) %>
+
+    <span class="govuk-caption-l">Funding entry</span>
+    <h1 class="govuk-heading-l"><%= @funding_method.reference %></h1>
+
+    <%= govuk_summary_list do |sl| %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Entry ID") %>
+        <% row.with_value(text: @funding_method.reference) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Academic year") %>
+        <% row.with_value(text: safe_join([academic_cycle.label, academic_year_status_tag(academic_cycle)], " ")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Funding method") %>
+        <% row.with_value(text: funding_method_cell(@funding_method.funding_method, @funding_method.funding_type, @funding_method.training_route)) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Funding type") %>
+        <% row.with_value(text: funding_type_tag(@funding_method.funding_type)) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Training route") %>
+        <% row.with_value(text: govuk_link_to(route_enum_name(@funding_method.training_route), funding_management_funding_method_path(@funding_method.training_route, academic_year: academic_cycle.start_year), no_visited_state: true)) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Degree relevance") %>
+        <% row.with_value(text: degree_relevance_tag(@funding_method.degree_relevance) || tag.span("Applies regardless of degree", class: "govuk-hint govuk-!-margin-0")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Employing school") %>
+        <% row.with_value(text: school_disadvantage_tag(@funding_method.school_disadvantage) || tag.span("Applies regardless of school", class: "govuk-hint govuk-!-margin-0")) %>
+      <% end %>
+      <% if @funding_method.training_year %>
+        <% sl.with_row do |row| %>
+          <% row.with_key(text: "Training year") %>
+          <% row.with_value(text: training_year_label(@funding_method.training_year, @funding_method.academic_cycle.start_year)) %>
+        <% end %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Amount") %>
+        <% row.with_value(text: funding_amount_display(@funding_method.amount, funding_type: @funding_method.funding_type, availability: @funding_method.availability)) %>
+      <% end %>
+    <% end %>
+
+    <h2 class="govuk-heading-m">Eligible subjects</h2>
+    <% subjects = @funding_method.allocation_subjects.sort_by(&:name) %>
+    <% if subjects.empty? %>
+      <p class="govuk-body">No subjects are attached to this funding entry.</p>
+    <% else %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% subjects.each do |subject| %>
+          <li><%= funding_subject_link(subject.name, subject.id) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if can_delete_draft? %>
+      <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-top-6 govuk-!-margin-bottom-4">
+      <%= button_to "Delete this funding record",
+            funding_management_destroy_entry_path(@funding_method.id, academic_year: academic_cycle.start_year),
+            method: :delete, class: "govuk-button govuk-button--warning", data: { module: "govuk-button" } %>
+    <% end %>
+  </div>
+</div>

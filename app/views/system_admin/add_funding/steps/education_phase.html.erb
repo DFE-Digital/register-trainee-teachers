@@ -1,0 +1,4 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Education phase", step: "education_phase" } do |f| %>
+  <%= f.govuk_collection_radio_buttons :education_phase, education_phase_options, :first, :last,
+        legend: { text: "Which education phase does this funding apply to?", size: "l", tag: "h1" } %>
+<% end %>

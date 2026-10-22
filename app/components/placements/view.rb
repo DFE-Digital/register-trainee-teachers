@@ -16,6 +16,11 @@ module Placements
       data_model.is_a?(Trainee) ? data_model : data_model.trainee
     end
 
+    # Early years teacher degree apprentices have their own placement requirements.
+    def eytda?
+      trainee.training_route == TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship]
+    end
+
     def render_inset?
       placement_records.size < 2
     end

@@ -6,14 +6,48 @@
       <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.grants.edit") %></h1>
 
-      <p class="govuk-body">
-        <%= t(
-          (@trainee.early_years_route? ? "views.forms.funding.bursaries.grant.early_years_description" : "views.forms.funding.bursaries.grant.description"),
-          amount: format_currency(@bursary_form.grant_amount),
-          subject: @bursary_form.allocation_subject_name,
-          training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
-        ) %>
-      </p>
+      <% if @bursary_form.yearly_route? %>
+        <p class="govuk-body">
+          <%= t(
+            "views.forms.funding.bursaries.grant.yearly_description",
+            training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
+          ) %>
+        </p>
+
+        <% if @funding_manager.shortened_by_level_five? %>
+          <p class="govuk-body">
+            <%= t("views.forms.funding.bursaries.grant.level_five_years", years: @funding_manager.training_years, first_year: @funding_manager.funded_years.first, last_year: @funding_manager.funded_years.last) %>
+          </p>
+        <% end %>
+
+        <h2 class="govuk-heading-m">
+          <%= t("views.forms.funding.bursaries.grant.yearly_heading", academic_year: @trainee.start_academic_cycle.label) %>
+        </h2>
+        <% if @funding_manager.funding_carried_forward? %>
+          <p class="govuk-body">
+            <%= t("views.forms.funding.bursaries.grant.carried_forward", academic_year: @funding_manager.funding_cycle.label) %>
+          </p>
+        <% end %>
+        <%= govuk_summary_list(actions: false) do |summary_list| %>
+          <% @bursary_form.grant_amounts_by_year.each do |year, amount| %>
+            <% summary_list.with_row do |row| %>
+              <% row.with_key(text: @bursary_form.training_year_label(year)) %>
+              <% row.with_value(text: format_currency(amount)) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p class="govuk-body">
+          <%= t(
+            (@trainee.early_years_route? ? "views.forms.funding.bursaries.grant.early_years_description" : "views.forms.funding.bursaries.grant.description"),
+            amount: format_currency(@bursary_form.grant_amount),
+            subject: @bursary_form.allocation_subject_name,
+            training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
+          ) %>
+        </p>
+      <% end %>
+
+      <%= render "explanations" %>
 
       <p class="govuk-body">
         <%= govuk_link_to(
@@ -28,8 +62,8 @@
           <%= f.govuk_radio_button(
             :funding_type,
             FUNDING_TYPE_ENUMS[:grant],
-            label: { text: t("views.forms.funding.funding_type.grant.label", amount: format_currency(@bursary_form.grant_amount)) },
-            hint: { text: t("views.forms.funding.funding_type.grant.hint") },
+            label: { text: @bursary_form.yearly_route? ? t("views.forms.funding.funding_type.grant.yearly_label") : t("views.forms.funding.funding_type.grant.label", amount: format_currency(@bursary_form.grant_amount)) },
+            hint: { text: @bursary_form.yearly_route? ? t("views.forms.funding.funding_type.grant.yearly_hint", training_year: @bursary_form.training_year_label) : t("views.forms.funding.funding_type.grant.hint") },
             link_errors: true,
           ) %>
 

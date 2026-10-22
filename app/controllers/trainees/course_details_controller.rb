@@ -2,6 +2,8 @@
 
 module Trainees
   class CourseDetailsController < BaseController
+    include CoursePrerequisitesCheckable
+
     include Appliable
 
     DATE_CONVERSION = {

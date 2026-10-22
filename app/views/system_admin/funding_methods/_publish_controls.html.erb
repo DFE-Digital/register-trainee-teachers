@@ -1,0 +1,78 @@
+<%# Funding actions for a single academic year. locals: cycle. %>
+<%# Sign off has one route: the Drafts sign-off journey (review → approve → %>
+<%# confirmation). A signed-off year can be reopened until it goes live. %>
+<% future = !cycle.past? && !cycle.live? %>
+<% request = cycle.pending_publication_request %>
+<% name = "#{short_academic_year(cycle)} funding requirements" %>
+<%# Adding is part of drafting: offered on a draft year that already has records %>
+<%# (started from Drafts). Live funding needs a Register developer. %>
+<% draft_in_progress = can_add_funding?(cycle) && cycle.funding_methods.exists? %>
+<%# 2026 to 2027 has gone live, but EYTDA funding can still be drafted and signed off. %>
+<% eytda_only = eytda_only_funding_cycle?(cycle) %>
+
+<div class="app-button-row govuk-!-margin-bottom-4">
+  <% if draft_in_progress %>
+    <%= govuk_button_link_to "Add funding", funding_management_add_start_path(academic_year: cycle.start_year) %>
+  <% end %>
+
+  <% if eytda_only %>
+    <%= govuk_button_link_to "Add EYTDA funding", funding_management_add_start_path(academic_year: cycle.start_year) %>
+    <% if cycle.draft_funding_methods.exists? %>
+      <%= govuk_button_link_to "Sign off EYTDA funding",
+            funding_management_draft_sign_off_path(academic_year: cycle.start_year),
+            secondary: true, class: "app-button-row__end" %>
+    <% end %>
+  <% end %>
+
+  <% if future %>
+    <% if can_roll_over?(cycle) %>
+      <%= govuk_button_link_to "Roll over funding from #{roll_over_source(cycle).label}",
+            funding_management_roll_over_path(academic_year: cycle.start_year),
+            secondary: true, class: "app-button-row__end" %>
+    <% elsif cycle.draft? && cycle.funding_methods.exists? %>
+      <%= govuk_button_link_to "Sign off",
+            funding_management_draft_sign_off_path(academic_year: cycle.start_year),
+            secondary: true, class: "app-button-row__end" %>
+    <% elsif cycle.ready_for_release? %>
+      <%= button_to("Reopen for editing",
+            funding_management_reopen_draft_path(academic_year: cycle.start_year),
+            method: :post, class: "govuk-button govuk-button--secondary",
+            form_class: "app-button-row__end", data: { module: "govuk-button" }) %>
+    <% elsif cycle.awaiting_publication_approval? %>
+      <%= govuk_button_link_to "Review draft funding",
+            funding_management_review_publication_path(academic_year: cycle.start_year),
+            secondary: true, class: "app-button-row__end" %>
+    <% end %>
+  <% end %>
+</div>
+
+<% if can_add_funding?(cycle) && !draft_in_progress %>
+  <div class="govuk-inset-text">
+    To add funding to <%= cycle.label %>, use <%= govuk_link_to "Drafts", funding_management_drafts_path, no_visited_state: true %>.
+  </div>
+<% end %>
+
+<% if eytda_only %>
+  <div class="govuk-inset-text">
+    This academic year is live, so its funding is locked, except for Early years teacher degree apprenticeship (EYTDA)
+    funding. EYTDA funding can be added and signed off until it is approved.
+  </div>
+<% elsif cycle.funding_locked? %>
+  <div class="govuk-inset-text">
+    This academic year is <%= cycle.live? ? "live" : "in the past" %>, so its funding is locked.
+    Any amendment will need a Register developer.
+  </div>
+<% elsif cycle.ready_for_release? %>
+  <div class="govuk-inset-text">
+    <%= name.sub(/\A./, &:upcase) %> are signed off and will go live on <%= cycle.start_date.to_fs(:govuk) %>.
+    Reopen them for editing to make changes before then.
+  </div>
+<% end %>
+
+<% if cycle.awaiting_publication_approval? && request %>
+  <div class="govuk-inset-text">
+    Submitted for approval by <strong><%= request.submitted_by&.name || "a colleague" %></strong>
+    on <%= request.submitted_at&.strftime("%-d %B %Y") %>. Editing is locked until it is approved or rejected.
+    Review the draft funding to approve or reject it.
+  </div>
+<% end %>

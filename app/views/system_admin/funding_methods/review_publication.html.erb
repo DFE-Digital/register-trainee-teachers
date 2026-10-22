@@ -1,0 +1,76 @@
+<% page_title = "Review #{academic_cycle.label} funding" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(text: "Back to funding management", href: funding_management_requirements_path(academic_year: academic_cycle.start_year)) %>
+
+    <span class="govuk-caption-l">Funding management</span>
+    <h1 class="govuk-heading-l">Review <%= academic_cycle.label %> funding before release</h1>
+
+    <div class="govuk-inset-text">
+      Submitted for approval by <strong><%= @publication_request.submitted_by&.name || "a colleague" %></strong>
+      on <%= @publication_request.submitted_at&.strftime("%-d %B %Y") %>.
+      Check the draft funding and the funding schools list below, then approve them to mark them ready for release, or reject back to draft.
+    </div>
+
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Draft funding &mdash; <%= academic_cycle.label %></h2>
+      <%= academic_year_status_tag(academic_cycle) %>
+    </div>
+
+    <% if @entries.empty? %>
+      <p class="govuk-body govuk-!-margin-top-2">No funding is recorded for this academic year.</p>
+    <% else %>
+      <p class="govuk-body govuk-!-margin-top-2 govuk-!-margin-bottom-2"><strong><%= @entries.size %></strong> <%= "funding entry".pluralize(@entries.size) %> to review</p>
+      <%= render "entries_table", entries: @entries %>
+    <% end %>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-6 govuk-!-margin-bottom-2">Funding schools list &mdash; <%= academic_cycle.label %></h2>
+    <% if @school_designations.empty? %>
+      <p class="govuk-body">No schools have been added to the disadvantaged / special school list for this year.</p>
+    <% else %>
+      <p class="govuk-body govuk-!-margin-bottom-2"><strong><%= @school_designations.size %></strong> <%= "school".pluralize(@school_designations.size) %> to review</p>
+      <div style="overflow-x:auto;">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">URN</th>
+              <th scope="col" class="govuk-table__header">School</th>
+              <th scope="col" class="govuk-table__header">Town</th>
+              <th scope="col" class="govuk-table__header">Designation</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @school_designations.each do |d| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><%= d.school.urn %></td>
+                <td class="govuk-table__cell"><%= d.school.name %></td>
+                <td class="govuk-table__cell"><%= d.school.town %></td>
+                <td class="govuk-table__cell"><%= govuk_tag(text: d.designation_label, colour: d.disadvantaged? ? "magenta" : "purple") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-6">
+
+    <div class="app-button-row govuk-!-margin-bottom-4">
+      <%= button_to "Approve funding",
+            funding_management_approve_publication_path(academic_year: academic_cycle.start_year),
+            method: :post, class: "govuk-button", data: { module: "govuk-button" } %>
+      <%= button_to "Withdraw submission",
+            funding_management_withdraw_publication_path(academic_year: academic_cycle.start_year),
+            method: :post, class: "govuk-button govuk-button--secondary", data: { module: "govuk-button" } %>
+    </div>
+
+    <%= form_with url: funding_management_reject_publication_path(academic_year: academic_cycle.start_year), method: :post do %>
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <label class="govuk-label" for="decision_notes">Reason for rejection (optional)</label>
+        <textarea class="govuk-textarea" id="decision_notes" name="decision_notes" rows="3"></textarea>
+      </div>
+      <button class="govuk-button govuk-button--warning" data-module="govuk-button">Reject and return to draft</button>
+    <% end %>
+  </div>
+</div>

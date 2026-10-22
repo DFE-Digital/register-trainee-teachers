@@ -22,6 +22,8 @@ module Submissions
     validator :schools, form: "Schools::FormValidator", if: :requires_training_partner?
     validator :funding, form: "Funding::FormValidator", if: :requires_funding?
     validator :iqts_country, form: "IqtsCountryForm", if: :requires_iqts_country?
+    # Asked of draft EYTDA trainees; records submitted before it existed aren't missing data.
+    validator :level_five_declaration, form: "LevelFiveDeclarationForm", if: :validate_level_five_declaration?
 
     delegate :requires_training_partner?, :requires_degree?, :apply_application?,
              :requires_funding?, :requires_iqts_country?, :requires_placements?,
@@ -31,6 +33,10 @@ module Submissions
 
     def initialize(trainee:)
       @trainee = trainee
+    end
+
+    def validate_level_five_declaration?
+      trainee.draft? && trainee.requires_level_five_declaration?
     end
 
     def validate_degree?

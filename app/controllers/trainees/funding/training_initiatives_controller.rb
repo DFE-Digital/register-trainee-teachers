@@ -3,6 +3,8 @@
 module Trainees
   module Funding
     class TrainingInitiativesController < BaseController
+      include FundingPrerequisitesCheckable
+
       def edit
         @training_initiatives_form = ::Funding::TrainingInitiativesForm.new(trainee)
       end

@@ -271,6 +271,83 @@ module Submissions
       end
     end
 
+    describe "funding that needs the degree first" do
+      let(:cycle) { AcademicCycle.current || create(:academic_cycle, :current) }
+      let(:mathematics) { create(:allocation_subject, name: AllocationSubjects::MATHEMATICS) }
+      let(:trainee) do
+        create(:trainee, :provider_led_postgrad, course_allocation_subject: mathematics, start_academic_cycle: cycle,
+                                                 progress: Progress.new(course_details: true))
+      end
+
+      subject { described_class.new(trainee:) }
+
+      before do
+        enable_features(:funding_eligibility_step)
+        trainee.degrees.destroy_all
+        funding_method = create(:funding_method, training_route: trainee.training_route, academic_cycle: cycle, degree_relevance: :relevant)
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: mathematics)
+      end
+
+      it "lists the funding message" do
+        expect(subject).not_to be_valid
+        expect(subject.errors[:funding]).to eq(["Funding for this route requires the previous degree to be completed first"])
+      end
+    end
+
+    describe "funding to be confirmed again after the employing school changed" do
+      let(:trainee) do
+        create(:trainee, :school_direct_salaried, :with_employing_school, start_academic_cycle: AcademicCycle.current || create(:academic_cycle, :current),
+                                                                          progress: Progress.new(course_details: true, funding: false, funding_recheck_employing_school: true))
+      end
+
+      subject { described_class.new(trainee:) }
+
+      before { enable_features(:funding_eligibility_step) }
+
+      it "lists the funding message" do
+        expect(subject).not_to be_valid
+        expect(subject.errors[:funding]).to eq(["Funding needs to be confirmed again because the employing school changed"])
+      end
+    end
+
+    describe "the employing school to be confirmed again after the course details changed" do
+      let(:trainee) do
+        create(:trainee, :school_direct_salaried, :with_employing_school, start_academic_cycle: AcademicCycle.current || create(:academic_cycle, :current),
+                                                                          progress: Progress.new(course_details: true, schools: false, schools_recheck_course_details: true))
+      end
+
+      subject { described_class.new(trainee:) }
+
+      before { enable_features(:funding_eligibility_step) }
+
+      it "lists the message" do
+        expect(subject).not_to be_valid
+        expect(subject.errors[:schools]).to eq(["Training partner and employing school needs to be confirmed again because the course details changed"])
+      end
+    end
+
+    describe "the level 5 declaration" do
+      subject { described_class.new(trainee:) }
+
+      context "for an EYTDA trainee" do
+        let(:trainee) { create(:trainee, :early_years_teacher_degree_apprenticeship) }
+
+        it "is needed for a TRN" do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:level_five_declaration]).to eq(["Level 5 declaration not started"])
+        end
+      end
+
+      context "for another route" do
+        let(:trainee) { create(:trainee, :provider_led_postgrad) }
+
+        it "isn't asked" do
+          subject.valid?
+          expect(subject.errors[:level_five_declaration]).to be_empty
+        end
+      end
+    end
+
     describe "#all_sections_complete?" do
       subject { described_class.new(trainee:) }
 

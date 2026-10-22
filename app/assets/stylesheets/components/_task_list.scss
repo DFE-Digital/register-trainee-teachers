@@ -46,3 +46,8 @@
 .app-task-list__key {
   @include govuk-responsive-margin(1, "right");
 }
+
+.app-task-list__item--error {
+  border-left: $govuk-border-width solid $govuk-error-colour;
+  padding-left: govuk-spacing(3);
+}
