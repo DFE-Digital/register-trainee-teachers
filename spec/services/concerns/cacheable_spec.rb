@@ -81,6 +81,38 @@ describe Cacheable do
       end
     end
 
+    context "when Redis holds a cleared stash" do
+      before do
+        dummy_class.redis.set(dummy_class.cache_key_for(id, key), nil.to_json)
+      end
+
+      it "returns nil" do
+        expect(dummy_class.get(id, key)).to be_nil
+      end
+
+      it "counts a miss" do
+        expect(Yabeda.form_store.reads_total).to receive(:increment).with({ key: key, outcome: :miss })
+
+        dummy_class.get(id, key)
+      end
+    end
+
+    context "when Redis holds an empty hash" do
+      before do
+        dummy_class.redis.set(dummy_class.cache_key_for(id, key), {}.to_json)
+      end
+
+      it "returns the empty hash" do
+        expect(dummy_class.get(id, key)).to eq({})
+      end
+
+      it "counts a miss" do
+        expect(Yabeda.form_store.reads_total).to receive(:increment).with({ key: key, outcome: :miss })
+
+        dummy_class.get(id, key)
+      end
+    end
+
     context "when the entry does not exist" do
       it "returns nil" do
         expect(dummy_class.get(id, key)).to be_nil
