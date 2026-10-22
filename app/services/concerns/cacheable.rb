@@ -16,14 +16,10 @@ module Cacheable
         end
 
         redis_value = redis.get(cache_key_for(id, key))
+        value = JSON.parse(redis_value) if redis_value.present?
 
-        if redis_value.present?
-          track_read(key, :redis_hit)
-          JSON.parse(redis_value)
-        else
-          track_read(key, :miss)
-          nil
-        end
+        track_read(key, value.present? ? :redis_hit : :miss)
+        value
       end
 
       def set(id, key, values)
