@@ -59,7 +59,6 @@ module "airbyte" {
   repl_password      = data.azurerm_key_vault_secret.airbyte_replication_password[0].value
   server_url         = "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}"
   connection_status  = var.connection_status
-  connection_streams = local.connection_streams
 
   cluster           = var.cluster
   namespace         = var.namespace
@@ -87,6 +86,5 @@ variable "connection_status" {
 }
 
 locals {
-  connection_streams = var.airbyte_enabled ? file("workspace-variables/airbyte_stream_config.json") : null
   gcp_dataset_name   = replace("${var.service_short}_airbyte_${local.app_name_suffix}", "-", "_")
 }

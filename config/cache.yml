@@ -3,7 +3,8 @@ default: &default
     # No age expiry, matching the Redis cache this replaces.
     # The gem defaults to 2 weeks when it is absent.
     max_age: <%= nil %>
-    max_size: <%= 256.megabytes %>
+    # Raised from the 256 MB the install generator sets.
+    max_size: <%= 1.gigabyte %>
     namespace: <%= Rails.env %>
     expiry_method: :job
 
