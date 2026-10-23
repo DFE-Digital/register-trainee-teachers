@@ -2404,6 +2404,37 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
     end
   end
 
+  context "when creating a trainee with teach_learn_change route" do
+    let(:training_route) { "22" }
+    let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
+
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    context "when invalid - teach_learn_change before 2027" do
+      let(:cycle_year) { 2026 }
+
+      it do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to include(
+          /training_route has invalid reference data value of/,
+        )
+      end
+    end
+
+    context "when invalid - teach_learn_change is not supported in v2026.1" do
+      let(:cycle_year) { 2027 }
+
+      it do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to include(
+          /training_route has invalid reference data value of/,
+        )
+      end
+    end
+  end
+
   context "when creating a trainee with IQTS route" do
     let(:training_route) { "15" }
     let(:iqts_country) { "BO" }

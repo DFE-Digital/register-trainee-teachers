@@ -62,6 +62,11 @@ feature "Filtering trainees" do
       then_only_assessment_only_trainee_is_visible
     end
 
+    scenario "can filter by teach learn change training route" do
+      when_i_filter_by_teach_learn_change
+      then_only_teach_learn_change_trainee_is_visible
+    end
+
     scenario "can clear filters" do
       when_i_filter_by_subject("Biology")
       then_only_biology_trainees_are_visible
@@ -190,6 +195,7 @@ private
   def given_registered_trainees_exist_in_the_system
     @assessment_only_trainee ||= create(:trainee, :submitted_for_trn, :with_employing_school, training_route: TRAINING_ROUTE_ENUMS[:assessment_only])
     @provider_led_postgrad_trainee ||= create(:trainee, :submitted_for_trn, training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+    @teach_learn_change_trainee ||= create(:trainee, :submitted_for_trn, training_route: TRAINING_ROUTE_ENUMS[:teach_learn_change])
     @biology_trainee ||= create(:trainee, :submitted_for_trn, :with_employing_school, :with_subject_specialism, subject_name: CourseSubjects::BIOLOGY)
     @history_trainee ||= create(:trainee, :submitted_for_trn, :with_employing_school, :with_subject_specialism, subject_name: CourseSubjects::HISTORY)
     @searchable_trainee ||= create(:trainee, :submitted_for_trn, :with_employing_school, trn: "123")
@@ -255,6 +261,11 @@ private
 
   def when_i_filter_by_assessment_only
     trainee_index_page.assessment_only_checkbox.click
+    trainee_index_page.apply_filters.click
+  end
+
+  def when_i_filter_by_teach_learn_change
+    trainee_index_page.teach_learn_change_checkbox.click
     trainee_index_page.apply_filters.click
   end
 
@@ -404,6 +415,11 @@ private
   def then_only_assessment_only_trainee_is_visible
     expect(trainee_index_page).to have_text(full_name(@assessment_only_trainee))
     expect(trainee_index_page).not_to have_text(full_name(@provider_led_postgrad_trainee))
+  end
+
+  def then_only_teach_learn_change_trainee_is_visible
+    expect(trainee_index_page).to have_text(full_name(@teach_learn_change_trainee))
+    expect(trainee_index_page).not_to have_text(full_name(@assessment_only_trainee))
   end
 
   def then_only_the_early_years_trainee_is_visible
