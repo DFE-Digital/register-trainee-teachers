@@ -117,7 +117,7 @@ class ReferenceDataGenerator2026
       ---
       title: #{version_dir}
       weight: #{index + 3}
-      hide_in_navigation: false
+      hide_in_navigation: #{version_dir == 'v2027.0'}
       ---
 
       # #{version_dir}
