@@ -2377,6 +2377,15 @@ describe "`POST /api/v2027.0/trainees` endpoint" do
       end
     end
 
+    context "when hesa_id is not provided" do
+      let(:data) { super().except(:hesa_id).merge(iqts_country:) }
+
+      it "creates a trainee without a hesa_id" do
+        expect(response).to have_http_status(:created)
+        expect(Trainee.last.hesa_id).to be_nil
+      end
+    end
+
     context "when iqts_country is not provided" do
       it "returns a validation error" do
         expect(response).to have_http_status(:unprocessable_entity)

@@ -44,6 +44,12 @@ RSpec.describe Api::V20261::TraineeAttributes do
     end
 
     describe "hesa_id" do
+      context "when the training route is iQTS" do
+        subject { described_class.new(training_route: TRAINING_ROUTE_ENUMS[:iqts]) }
+
+        it { is_expected.not_to validate_presence_of(:hesa_id) }
+      end
+
       describe "length" do
         subject { described_class.new(hesa_id: SecureRandom.random_number(10**character_length).to_s.rjust(character_length, "0")) }
 

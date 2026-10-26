@@ -26,7 +26,7 @@
 
     Previously assigned 13 character HUSID are accepted.
   example: "`12100071451234560`"
-  validation: Mandatory
+  validation: Conditional - mandatory unless training_route is 15 (iQTS)
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L72
 - field_name: first_names
   technical: first_names
