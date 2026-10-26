@@ -5,24 +5,14 @@ module Cacheable
 
   class InvalidKeyError < StandardError; end
 
-  class << self
-    def skip_reads
-      previous = Thread.current[:cacheable_skip_reads]
-      Thread.current[:cacheable_skip_reads] = true
-      yield
-    ensure
-      Thread.current[:cacheable_skip_reads] = previous
-    end
-
-    def skip_reads?
-      Thread.current[:cacheable_skip_reads]
-    end
+  def self.skip_reads(&)
+    Current.set(skip_cacheable_reads: true, &)
   end
 
   included do
     class << self
       def get(id, key)
-        return if Cacheable.skip_reads?
+        return if Current.skip_cacheable_reads
 
         solid_cache_value = Rails.cache.read(cache_key_for(id, key))
 
