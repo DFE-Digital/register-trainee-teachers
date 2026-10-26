@@ -2829,6 +2829,40 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
     end
 
+    context "when updating an IQTS trainee without a hesa_id" do
+      let(:trainee_route_trait) { TRAINING_ROUTE_ENUMS[:iqts] }
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          trainee_route_trait,
+          :with_no_funding_hesa_trainee_detail,
+          :with_training_partner,
+          :with_employing_school,
+          :with_diversity_information,
+          iqts_country: Hesa::CodeSets::Countries::MAPPING.values.sample,
+          hesa_id: nil,
+          first_names: "Bob",
+        )
+      end
+      let(:data) { { first_names: "Jane" } }
+
+      before do
+        put(endpoint, params: params.to_json, headers: { Authorization: "Bearer #{token}", **json_headers })
+      end
+
+      it "updates the trainee" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:first_names]).to eq("Jane")
+      end
+
+      it "stores the updated values without a hesa_id" do
+        trainee.reload
+        expect(trainee.first_names).to eq("Jane")
+        expect(trainee.hesa_id).to be_nil
+      end
+    end
+
     context "when the trainee has no hesa_trainee_detail, the hesa_student has no bursary_level and funding_method is not in the update payload" do
       let(:trainee) do
         create(
