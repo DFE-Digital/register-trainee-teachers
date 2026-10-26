@@ -303,6 +303,12 @@ describe Trainee do
             expect(Submissions::MissingDataValidator).to receive(:new).with(trainee: subject).and_return(double(valid?: true))
             subject.save
           end
+
+          it "does not read from solid_cache_entries or Redis when computing submission_ready" do
+            expect(Rails.cache).not_to receive(:read)
+            expect(FormStore).not_to receive(:redis)
+            subject.save
+          end
         end
       end
 

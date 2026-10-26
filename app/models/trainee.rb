@@ -409,11 +409,13 @@ class Trainee < ApplicationRecord
   def trn_received!(new_trn = nil)
     raise(StateTransitionError, "Cannot transition to :trn_received without a trn") unless new_trn || trn
 
-    # Skip deferred and withdrawn to avoid state change but to still register trn
-    receive_trn! unless deferred? || withdrawn?
-
     # A deferred trainee will probably already have a trn - don't overwrite that!
-    update!(trn: new_trn) unless trn
+    self.trn ||= new_trn
+
+    # Skip deferred and withdrawn to avoid state change but to still register trn
+    receive_trn unless deferred? || withdrawn?
+
+    save!
   end
 
   def award_qts!(awarded_at)
@@ -642,7 +644,7 @@ private
     validate_trn = draft_and_apply || draft?
 
     submission_klass = validate_trn ? Submissions::TrnValidator : Submissions::MissingDataValidator
-    self.submission_ready = submission_klass.new(trainee: self).valid?
+    self.submission_ready = Cacheable.skip_reads { submission_klass.new(trainee: self).valid? }
   end
 
   def set_academic_cycles
