@@ -3,7 +3,6 @@
 module TeacherTrainingApi
   class PublishProviderCheckerJob < ApplicationJob
     queue_as :default
-    retry_on TeacherTrainingApi::Client::HttpError
 
     MAX_MISSING_PROVIDERS_TO_DISPLAY = 10
 

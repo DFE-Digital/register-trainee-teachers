@@ -78,5 +78,15 @@ module Survey
         described_class.perform_now(trainee: trainee, event_type: :withdraw)
       end
     end
+
+    context "when the survey keeps failing", feature_qualtrics_survey: true do
+      let(:failing_job) { described_class.new(trainee: trainee, event_type: :withdraw) }
+
+      before do
+        allow(Withdraw).to receive(:call).and_raise(StandardError, "failed")
+      end
+
+      it_behaves_like "a job that retries on failure", attempts: 4
+    end
   end
 end

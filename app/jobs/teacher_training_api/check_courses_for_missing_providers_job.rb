@@ -3,7 +3,6 @@
 module TeacherTrainingApi
   class CheckCoursesForMissingProvidersJob < ApplicationJob
     queue_as :default
-    retry_on TeacherTrainingApi::Client::HttpError
 
     def perform(recruitment_cycle_year: Settings.current_recruitment_cycle_year)
       return false unless Rails.env.production? || Rails.env.productiondata?

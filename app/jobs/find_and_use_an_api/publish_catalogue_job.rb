@@ -3,7 +3,6 @@
 module FindAndUseAnApi
   class PublishCatalogueJob < ApplicationJob
     queue_as :default
-    retry_on FindAndUseAnApi::Client::HttpError
 
     def perform
       return unless Settings.fauapi.enabled

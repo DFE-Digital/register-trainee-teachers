@@ -20,4 +20,5 @@ Sentry.init do |config|
   config.sdk_logger.level = Logger::INFO
 
   config.rails.structured_logging.enabled = false
+  config.rails.active_job_report_on_retry_error = true
 end
