@@ -32,7 +32,7 @@ module RegisterTraineeTeachers
     config.middleware.insert_before(ActionDispatch::Static, TechDocs::TrailingSlashRedirect)
     # Restrict unpublished OpenAPI yaml (e.g. v2027.0) to allowed_versions envs.
     config.middleware.insert_before(ActionDispatch::Static, OpenApi::Availability)
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :solid_queue
     config.solid_queue.shutdown_timeout = 25.seconds
 
     config.mission_control.jobs.adapters = [:solid_queue]
