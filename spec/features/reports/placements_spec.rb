@@ -32,6 +32,7 @@ private
   def create_trainee_with_current_academic_year_placement
     trainee = create(
       :trainee,
+      :provider_led_postgrad,
       :trn_received,
       :with_secondary_education,
       provider: current_user.organisation,

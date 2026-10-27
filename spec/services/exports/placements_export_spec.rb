@@ -13,6 +13,7 @@ describe Exports::PlacementsExport do
     let(:trainee) do
       create(
         :trainee,
+        :provider_led_postgrad,
         :trn_received,
         :with_secondary_education,
         provider: provider,
@@ -90,7 +91,7 @@ describe Exports::PlacementsExport do
     context "when a trainee only has placements from a previous academic year" do
       let(:trainees) { Trainee.where(id: other_trainee.id) }
       let(:other_trainee) do
-        create(:trainee, :trn_received, provider: provider, trn: "7800243")
+        create(:trainee, :provider_led_postgrad, :trn_received, provider: provider, trn: "7800243")
       end
 
       before do

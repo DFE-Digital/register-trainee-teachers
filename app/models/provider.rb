@@ -114,6 +114,7 @@ class Provider < ApplicationRecord
   def trainees_for_placements_report
     trainees.kept
       .where.not(trn: nil)
+      .where(training_route: PLACEMENTS_ROUTES.keys)
       .joins(:placements)
       .merge(Placement.unscoped.created_in_academic_cycle)
       .distinct
