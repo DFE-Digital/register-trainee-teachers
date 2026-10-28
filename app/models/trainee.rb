@@ -413,9 +413,11 @@ class Trainee < ApplicationRecord
     self.trn ||= new_trn
 
     # Skip deferred and withdrawn to avoid state change but to still register trn
-    receive_trn unless deferred? || withdrawn?
-
-    save!
+    if deferred? || withdrawn?
+      save!
+    else
+      receive_trn!
+    end
   end
 
   def award_qts!(awarded_at)
