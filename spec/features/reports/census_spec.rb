@@ -90,6 +90,15 @@ feature "census sign off" do
         and_the_provider_has_census_signed_off
       end
 
+      scenario "trainees from a previous cycle with an undone withdrawal after the census date are not exported" do
+        given_i_am_authenticated
+        and_provider_has_a_new_starter_trainee
+        and_provider_has_a_previous_cycle_trainee_with_an_undone_withdrawal_after_the_census_date
+
+        when_i_visit_the_sign_off_your_census_page
+        then_i_see_one_trainee_available_to_export
+      end
+
       context "census signed off" do
         scenario "sign off your census page" do
           given_i_am_authenticated
@@ -210,6 +219,35 @@ private
     expect(page).to have_css(".govuk-notification-banner__content", text: "You can edit your user details")
 
     expect(page).to have_link("user details", href: "/system-admin/users/#{@current_user.id}")
+  end
+
+  def and_provider_has_a_new_starter_trainee
+    create(
+      :trainee,
+      :trn_received,
+      provider: current_user.providers.first,
+      itt_start_date: AcademicCycle.current.start_date,
+      trainee_start_date: AcademicCycle.current.start_date,
+      training_route: :provider_led_postgrad,
+    )
+  end
+
+  def and_provider_has_a_previous_cycle_trainee_with_an_undone_withdrawal_after_the_census_date
+    trainee = create(
+      :trainee,
+      :withdrawn,
+      provider: current_user.providers.first,
+      itt_start_date: AcademicCycle.previous.start_date,
+      trainee_start_date: AcademicCycle.previous.start_date,
+      training_route: :provider_led_postgrad,
+      withdrawal_date: AcademicCycle.current.second_wednesday_of_october + 1.day,
+    )
+    trainee.current_withdrawal.discard!
+    create(:trainee_withdrawal, trainee: trainee, date: AcademicCycle.previous.start_date + 3.months)
+  end
+
+  def then_i_see_one_trainee_available_to_export
+    expect(page).to have_link("Export #{current_academic_cycle_label} trainee data (1 trainee)")
   end
 
   def and_i_see_there_is_a_problem

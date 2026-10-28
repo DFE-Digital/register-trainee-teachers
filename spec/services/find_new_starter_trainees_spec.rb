@@ -97,4 +97,24 @@ describe FindNewStarterTrainees do
       expect(subject).not_to include(withdrawn_trainee)
     end
   end
+
+  context "when trainee from a previous academic cycle has an undone withdrawal after census cutoff" do
+    let(:withdrawn_trainee) do
+      trainee = create(
+        :trainee,
+        :withdrawn,
+        withdrawal_date: census_date + 1.day,
+        itt_start_date: previous_academic_cycle.start_date,
+        start_academic_cycle: previous_academic_cycle,
+        training_route: :provider_led_postgrad,
+      )
+      trainee.current_withdrawal.discard!
+      create(:trainee_withdrawal, trainee: trainee, date: previous_academic_cycle.start_date + 3.months)
+      trainee
+    end
+
+    it "does not include the trainee" do
+      expect(subject).not_to include(withdrawn_trainee)
+    end
+  end
 end
