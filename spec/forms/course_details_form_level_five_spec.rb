@@ -80,15 +80,27 @@ describe CourseDetailsForm, type: :model do
       end
     end
 
-    context "with an expected end date past the latest year allowed" do
-      let(:end_date) { { end_day: "1", end_month: "9", end_year: (Time.zone.now.year + 6).to_s } }
+    context "with an expected end date past the latest year on other routes" do
+      let(:end_date) { { end_day: "1", end_month: "9", end_year: (Time.zone.now.year + 10).to_s } }
+
+      it "accepts the date but asks the provider to confirm the longer course" do
+        expect(form.errors[:itt_end_date]).to be_empty
+        expect(form.course_longer_than_usual?).to be(true)
+        expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the course is longer than 2 years"])
+      end
+
+      context "when the provider confirms it" do
+        let(:confirmed) { { extended_course_confirmed: "1" } }
+
+        it { expect(form.errors).to be_empty }
+      end
+    end
+
+    context "with a year that isn't 4 digits" do
+      let(:end_date) { { end_day: "1", end_month: "9", end_year: "20299" } }
       let(:confirmed) { { extended_course_confirmed: "1" } }
 
-      it "says which year is the latest, and doesn't ask about the course length" do
-        expect(form.errors[:itt_end_date]).to eq(["Enter an Expected end date in #{Time.zone.now.year + 5} or earlier"])
-        expect(form.course_longer_than_usual?).to be(false)
-        expect(form.errors[:extended_course_confirmed]).to be_empty
-      end
+      it { expect(form.errors[:itt_end_date]).to eq(["Enter a valid Expected end date"]) }
     end
 
     context "part time" do
@@ -98,6 +110,15 @@ describe CourseDetailsForm, type: :model do
       it "needs no declaration" do
         expect(form.errors).to be_empty
         expect(form.course_longer_than_usual?).to be(false)
+      end
+
+      context "with an expected end date past the latest year allowed" do
+        let(:end_date) { { end_day: "1", end_month: "9", end_year: (Time.zone.now.year + 6).to_s } }
+
+        it "says which year is the latest" do
+          expect(form.errors[:itt_end_date]).to eq(["Enter an Expected end date in #{Time.zone.now.year + 5} or earlier"])
+          expect(form.errors[:extended_course_confirmed]).to be_empty
+        end
       end
     end
   end

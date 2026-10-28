@@ -13,7 +13,7 @@ const templateHTML = (start, end) => `
   <input type="radio" name="course_details_form[study_mode]" value="part_time">
   ${dateFields('itt_start_date', start)}
   ${dateFields('itt_end_date', end)}
-  <div data-module="app-course-length" data-usual-years="2" data-latest-year="2031" data-full-time="true"
+  <div data-module="app-course-length" data-usual-years="2" data-full-time="true"
        data-warning="This course is {length}. Courses for trainees with a level 5 qualification are usually 2 years." hidden>
     <input type="hidden" data-course-length-shown value="">
     <span data-course-length-text></span>
@@ -75,11 +75,18 @@ describe('CourseLengthWarning', () => {
     expect(shown()).toEqual('')
   })
 
-  it('does not show it for an end date past the latest year allowed', () => {
-    setEndYear('2035')
+  it('shows it for an end date many years ahead', () => {
+    setEndYear('2036')
+
+    expect(section().hidden).toBe(false)
+    expect(shown()).toEqual('1')
+    expect(document.querySelector('[data-course-length-text]').textContent).toContain('This course is 10 years.')
+  })
+
+  it('does not show it for a year that is not 4 digits', () => {
+    setEndYear('20299')
 
     expect(section().hidden).toBe(true)
-    expect(shown()).toEqual('')
   })
 
   it('does not show it for a part-time course', () => {

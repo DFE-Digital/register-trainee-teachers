@@ -77,7 +77,6 @@
         <%= tag.div(hidden: !longer,
                     data: { module: "app-course-length",
                             usual_years: years,
-                            latest_year: @course_details_form.latest_end_year,
                             full_time: @course_details_form.study_mode.to_s == COURSE_STUDY_MODES[:full_time],
                             warning: t(warning_key, years: years, length: "{length}") }) do %>
           <%= f.hidden_field(:course_length_warning_shown, value: longer ? "1" : "", data: { course_length_shown: true }) %>

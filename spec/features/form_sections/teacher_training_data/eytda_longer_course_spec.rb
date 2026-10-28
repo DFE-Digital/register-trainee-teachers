@@ -19,6 +19,16 @@ feature "confirming an EYTDA course that's longer than usual" do
     and_the_declaration_is_saved
   end
 
+  scenario "an end date past the latest year on other routes is allowed once confirmed" do
+    given_an_eytda_trainee_with_a_level_five_qualification
+
+    when_i_enter_the_course_dates("01/09/2027", "01/09/2037")
+    then_i_see_the_course_length_warning_without_an_error("10 years")
+
+    when_i_confirm_the_longer_course
+    then_the_confirm_page_shows_the_course_length("10 years")
+  end
+
   scenario "the warning isn't shown before the course is longer than usual" do
     given_an_eytda_trainee_with_a_level_five_qualification
 
@@ -49,8 +59,8 @@ private
     click_on("Continue")
   end
 
-  def then_i_see_the_course_length_warning_without_an_error
-    expect(page).to have_css(".govuk-warning-text", text: "This course is 3 years. " \
+  def then_i_see_the_course_length_warning_without_an_error(length = "3 years")
+    expect(page).to have_css(".govuk-warning-text", text: "This course is #{length}. " \
                                                           "Courses for trainees with a level 5 qualification are usually 2 years.")
     expect(page).to have_unchecked_field("I confirm the course is longer than 2 years")
     expect(page).not_to have_css(".govuk-error-summary")
@@ -70,9 +80,9 @@ private
     click_on("Continue")
   end
 
-  def then_the_confirm_page_shows_the_course_length
+  def then_the_confirm_page_shows_the_course_length(length = "3 years")
     expect(page).to have_text("Course length")
-    expect(page).to have_text("3 years")
+    expect(page).to have_text(length)
     expect(page).to have_text("Confirmed as longer than the usual 2 years for a trainee with a level 5 qualification")
   end
 

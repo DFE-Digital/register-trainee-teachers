@@ -57,8 +57,7 @@ export default class CourseLengthWarning {
     const end = dateFrom(this.form, 'itt_end_date')
     let longer = false
 
-    // An end date past the latest year allowed gets an error instead.
-    if (this.fullTime() && start && end && end.getFullYear() <= Number(this.section.dataset.latestYear)) {
+    if (this.fullTime() && start && end) {
       const usualEnd = new Date(start)
       usualEnd.setFullYear(start.getFullYear() + Number(this.section.dataset.usualYears))
       longer = end > usualEnd
