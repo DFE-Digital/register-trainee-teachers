@@ -42,7 +42,9 @@ section in the trainee show page `/trainees/:slug`
 
 Sometimes the different jobs that send trainee info to TRS (such as
 `Trs::UpdateTraineeJob` and `Trs::UpdateProfessionalStatus`) will produce an
-error. You can view these failed jobs in the Sidekiq UI.
+error. You can view these failed jobs under Failed jobs in Mission Control
+(`/system-admin/jobs`). Jobs that failed before the move to Solid Queue are
+still in the Sidekiq UI.
 
 Sometimes a trainee will have both a failed update job, and a failed update
 professional status job. In this case, make sure to re-run the update job
@@ -178,7 +180,44 @@ All record changes should be sent to TRS unless otherwise specified or impossibl
 
 Register support may need to communicate with the trainee and provider to ensure that they understand the error and the resolution.
 
+## Managing the Solid Queue queue
+
+Mission Control (`/system-admin/jobs`) shows the queues, failed jobs, workers and
+recurring tasks. Failed jobs can be retried or discarded there. Recurring tasks
+can be started with Run now.
+
+### Console commands
+
+#### Inspect jobs in a queue
+
+```ruby
+SolidQueue::Job.where(queue_name: "trs", finished_at: nil).select { _1.arguments.to_s.include? "122803" } # select jobs containing user id value 122803
+```
+
+#### Tally by job type
+
+```ruby
+SolidQueue::Job.where(queue_name: "default", finished_at: nil).group(:class_name).count
+```
+
+#### Failed jobs
+
+```ruby
+include Hashable
+
+failed = SolidQueue::FailedExecution.includes(:job)
+
+# unique user ids
+failed.map { deep_dig(_1.job.arguments["arguments"][0], "_aj_globalid").split("/").last }.uniq.count
+# eg count 405 errors
+failed.select { _1.message.starts_with? "status: 405" }.count
+# retry
+failed.select { _1.message.starts_with? "status: 405" }.each(&:retry)
+```
+
 ## Managing the Sidekiq queue
+
+Jobs enqueued before the move to Solid Queue stay in Sidekiq until they have run.
 
 ### Console commands
 
@@ -339,8 +378,8 @@ This command will:
       ApplyApplication.where(apply_id: application_choice_ids).delete_all
       ```
 
-5. **Initiate Sidekiq Jobs on Register**
-    * Trigger the following Sidekiq jobs to complete the process:
+5. **Initiate Jobs on Register**
+    * Trigger the following recurring tasks with Run now in Mission Control (`/system-admin/jobs`) to complete the process:
       * `import_applications_from_apply`
       * `create_trainees_from_apply`
 

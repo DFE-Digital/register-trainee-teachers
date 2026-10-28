@@ -3,7 +3,6 @@
 module TeacherTrainingApi
   class ImportCoursesJob < ApplicationJob
     queue_as :default
-    retry_on TeacherTrainingApi::Client::HttpError
 
     def perform(request_uri: nil)
       return unless FeatureService.enabled?("import_courses_from_ttapi")
