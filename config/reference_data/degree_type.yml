@@ -399,6 +399,11 @@ data:
     display_name: "Master in Science"
     hesa_codes:
       - "218"
+  - id: "63a0f59c-2bda-4dd6-bd24-0f5b868d22b0"
+    name: "mcomp"
+    display_name: "Master of Computing"
+    hesa_codes:
+      - "219"
   - id: "5b6a5652-c197-e711-80d8-005056ac45bb"
     name: "dd"
     display_name: "Doctor of Divinity"
