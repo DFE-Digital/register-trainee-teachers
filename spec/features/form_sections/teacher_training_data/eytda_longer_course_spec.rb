@@ -9,11 +9,21 @@ feature "confirming an EYTDA course that's longer than usual" do
     given_an_eytda_trainee_with_a_level_five_qualification
 
     when_i_enter_the_course_dates("01/09/2027", "01/09/2030")
+    then_i_see_the_course_length_warning_without_an_error
+
+    when_i_continue_without_confirming
     then_i_am_asked_to_confirm_the_longer_course
 
     when_i_confirm_the_longer_course
     then_the_confirm_page_shows_the_course_length
     and_the_declaration_is_saved
+  end
+
+  scenario "the warning isn't shown before the course is longer than usual" do
+    given_an_eytda_trainee_with_a_level_five_qualification
+
+    course_details_page.load(id: trainee.slug)
+    then_the_course_length_section_is_hidden
   end
 
   scenario "an end date within the usual length needs no declaration" do
@@ -39,11 +49,20 @@ private
     click_on("Continue")
   end
 
+  def then_i_see_the_course_length_warning_without_an_error
+    expect(page).to have_css(".govuk-warning-text", text: "This course is 3 years. " \
+                                                          "Courses for trainees with a level 5 qualification are usually 2 years.")
+    expect(page).to have_unchecked_field("I confirm the course is longer than 2 years")
+    expect(page).not_to have_css(".govuk-error-summary")
+  end
+
+  def when_i_continue_without_confirming
+    click_on("Continue")
+  end
+
   def then_i_am_asked_to_confirm_the_longer_course
     expect(page).to have_css(".govuk-error-summary", text: "Confirm the course is longer than 2 years")
-    expect(page).to have_text("The trainee holds a level 5 qualification, so the course is usually 2 years. " \
-                              "The dates you entered make it 3 years (1 September 2027 to 1 September 2030).")
-    expect(page).not_to have_text("The expected end date must be between")
+    expect(page).to have_css(".govuk-warning-text", text: "This course is 3 years.")
   end
 
   def when_i_confirm_the_longer_course
@@ -59,6 +78,10 @@ private
 
   def and_the_declaration_is_saved
     expect(trainee.reload).to have_attributes(itt_end_date: Date.new(2030, 9, 1), extended_course_confirmed: true)
+  end
+
+  def then_the_course_length_section_is_hidden
+    expect(page).to have_css("[data-module='app-course-length'][hidden]", visible: :hidden)
   end
 
   def then_i_see_the_confirm_page_without_a_course_length

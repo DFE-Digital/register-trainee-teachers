@@ -30,6 +30,7 @@ module Trainees
       if @course_details_form.stash_or_save!
         redirect_to(relevant_redirect_path)
       else
+        @course_details_form.warn_about_course_length
         render(:edit)
       end
     end

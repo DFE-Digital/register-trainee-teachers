@@ -49,7 +49,22 @@ describe CourseDetailsForm, type: :model do
         expect(form.errors[:itt_end_date]).to be_empty
         expect(form.course_longer_than_usual?).to be(true)
         expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the course is longer than 2 years"])
-        expect(form.show_extended_course_declaration?).to be(true)
+        expect(form.course_length_section?).to be(true)
+      end
+
+      it "warns rather than shows an error the first time" do
+        form.warn_about_course_length
+        expect(form.errors[:extended_course_confirmed]).to be_empty
+        expect(form).not_to be_valid
+      end
+
+      context "when the provider has already seen the warning" do
+        let(:confirmed) { { course_length_warning_shown: "1" } }
+
+        it "shows the error" do
+          form.warn_about_course_length
+          expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the course is longer than 2 years"])
+        end
       end
 
       context "when the provider confirms it" do
@@ -62,6 +77,17 @@ describe CourseDetailsForm, type: :model do
         let(:confirmed) { { extended_course_confirmed: "0" } }
 
         it { expect(form.errors[:extended_course_confirmed]).to be_present }
+      end
+    end
+
+    context "with an expected end date past the latest year allowed" do
+      let(:end_date) { { end_day: "1", end_month: "9", end_year: (Time.zone.now.year + 6).to_s } }
+      let(:confirmed) { { extended_course_confirmed: "1" } }
+
+      it "says which year is the latest, and doesn't ask about the course length" do
+        expect(form.errors[:itt_end_date]).to eq(["Enter an Expected end date in #{Time.zone.now.year + 5} or earlier"])
+        expect(form.course_longer_than_usual?).to be(false)
+        expect(form.errors[:extended_course_confirmed]).to be_empty
       end
     end
 

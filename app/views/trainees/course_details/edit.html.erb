@@ -67,24 +67,37 @@
                             legend: { text: t("publish_course_details.view.itt_end_date").html_safe, size: "s" },
                             hint: { text: end_date_hint }) %>
 
-      <% if @course_details_form.show_extended_course_declaration? %>
-        <%# EYTDA: a full-time course longer than the usual 2 or 3 years needs confirming. %>
+      <% if @course_details_form.course_length_section? %>
+        <%# EYTDA: a full-time course longer than the usual 2 or 3 years shows a warning and needs confirming. %>
+        <%# The page script shows and hides it as the dates change. %>
         <% scope = "activemodel.errors.models.course_details_form.attributes.extended_course_confirmed" %>
-        <% years = @course_details_form.level_five_course_years %>
-        <%= f.govuk_check_boxes_fieldset(:extended_course_confirmed,
-                                         multiple: false,
-                                         small: true,
-                                         legend: { text: t("#{scope}.legend"), size: "s" },
-                                         hint: { text: t("#{scope}.#{@trainee.level_five_qualification ? 'hint_level_five' : 'hint_no_level_five'}",
-                                                         years: years,
-                                                         length: course_length_text(@course_details_form.itt_start_date, @course_details_form.itt_end_date),
-                                                         start: @course_details_form.itt_start_date.to_fs(:govuk),
-                                                         finish: @course_details_form.itt_end_date.to_fs(:govuk)) }) do %>
-          <%= f.govuk_check_box(:extended_course_confirmed, 1, 0,
-                                multiple: false,
-                                link_errors: true,
-                                checked: @course_details_form.extended_course_confirmed?,
-                                label: { text: t("#{scope}.label", years:) }) %>
+        <% years = @trainee.level_five_course_years %>
+        <% warning_key = "#{scope}.#{@trainee.level_five_qualification ? 'warning_level_five' : 'warning_no_level_five'}" %>
+        <% longer = @course_details_form.course_longer_than_usual? %>
+        <%= tag.div(hidden: !longer,
+                    data: { module: "app-course-length",
+                            usual_years: years,
+                            latest_year: @course_details_form.latest_end_year,
+                            full_time: @course_details_form.study_mode.to_s == COURSE_STUDY_MODES[:full_time],
+                            warning: t(warning_key, years: years, length: "{length}") }) do %>
+          <%= f.hidden_field(:course_length_warning_shown, value: longer ? "1" : "", data: { course_length_shown: true }) %>
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-visually-hidden">Warning</span>
+              <span data-course-length-text><%= t(warning_key, years: years, length: course_length_text(@course_details_form.itt_start_date, @course_details_form.itt_end_date)) if longer %></span>
+            </strong>
+          </div>
+          <%= f.govuk_check_boxes_fieldset(:extended_course_confirmed,
+                                           multiple: false,
+                                           small: true,
+                                           legend: { text: t("#{scope}.legend"), size: "s" }) do %>
+            <%= f.govuk_check_box(:extended_course_confirmed, 1, 0,
+                                  multiple: false,
+                                  link_errors: true,
+                                  checked: @course_details_form.extended_course_confirmed?,
+                                  label: { text: t("#{scope}.label", years:) }) %>
+          <% end %>
         <% end %>
       <% end %>
 

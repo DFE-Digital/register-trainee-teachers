@@ -27,6 +27,7 @@ class CourseDetailsForm < TraineeForm
     primary_course_subjects
     training_route
     extended_course_confirmed
+    course_length_warning_shown
   ].freeze
 
   COURSE_DATES = %i[
@@ -114,6 +115,7 @@ class CourseDetailsForm < TraineeForm
   # Any end date is allowed, but the provider confirms a longer course.
   def course_longer_than_usual?
     return false unless level_five_end_date && itt_end_date.is_a?(Date)
+    return false if end_year.to_i > latest_end_year
 
     itt_end_date > level_five_end_date
   end
@@ -123,9 +125,25 @@ class CourseDetailsForm < TraineeForm
     ActiveModel::Type::Boolean.new.cast(extended_course_confirmed) == true
   end
 
-  # Ask for the declaration when it's needed, or show the one already given.
-  def show_extended_course_declaration?
-    errors.include?(:extended_course_confirmed) || (course_longer_than_usual? && extended_course_confirmed?)
+  # The Course length section is on the page for an EYTDA trainee with the Level 5
+  # question answered. It shows when the course is longer than usual.
+  def course_length_section?
+    trainee.requires_level_five_declaration? && !trainee.level_five_qualification.nil?
+  end
+
+  # The latest year an expected end date can be in, on any route.
+  def latest_end_year
+    next_year + MAX_END_YEARS
+  end
+
+  # The page sends this once the provider has seen the Course length warning.
+  def course_length_warning_shown?
+    ActiveModel::Type::Boolean.new.cast(course_length_warning_shown) == true
+  end
+
+  # The first time a longer course comes up, warn rather than show an error.
+  def warn_about_course_length
+    errors.delete(:extended_course_confirmed) unless course_length_warning_shown?
   end
 
   def save!
@@ -348,8 +366,8 @@ private
 
     if [end_day, end_month, end_year].all?(&:blank?)
       errors.add(:itt_end_date, :blank)
-    elsif end_year.to_i > max_years
-      errors.add(:itt_end_date, :future)
+    elsif end_year.to_i > latest_end_year
+      errors.add(:itt_end_date, :future, year: latest_end_year)
     elsif !itt_end_date.is_a?(Date)
       errors.add(:itt_end_date, :invalid)
     elsif itt_end_date < 10.years.ago
@@ -361,6 +379,10 @@ private
     if additional_validation && itt_start_date >= itt_end_date
       errors.add(:itt_end_date, :before_or_same_as_start_date)
     end
+  end
+
+  def fields_to_ignore_before_stash
+    %i[course_length_warning_shown]
   end
 
   # A blank expected end date is filled in from the Level 5 declaration.
@@ -390,10 +412,6 @@ private
 
   def next_year
     Time.zone.now.year.next
-  end
-
-  def max_years
-    next_year + MAX_END_YEARS
   end
 
   def before_academic_cycle_starts?(date)
