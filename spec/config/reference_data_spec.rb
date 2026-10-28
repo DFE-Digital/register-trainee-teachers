@@ -19,7 +19,7 @@ RSpec.describe "Reference data integrity" do
       gem_codes: -> { DfEReference::DegreesQuery::GRADES.all.map(&:hesa_code) } },
     { file: "degree_type.yml", v26: :degree_type, v25: :uk_degree,
       gem_codes: -> { DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code) },
-      entry_count: 94, code_format: /^\d{3}$/ },
+      entry_count: 95, code_format: /^\d{3}$/ },
     { file: "disability.yml", v26: :disability, v25: :disability1,
       gem_codes: -> { Hesa::CodeSets::Disabilities::MAPPING.keys } },
     { file: "ethnicities.yml", v26: :ethnicity, v25: :ethnicity,
