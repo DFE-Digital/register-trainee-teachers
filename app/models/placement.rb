@@ -36,6 +36,9 @@ class Placement < ApplicationRecord
 
   scope :with_urn, -> { where.not(urn: nil) }
   scope :with_school, -> { joins(:school) }
+  scope :created_in_academic_cycle, lambda { |cycle = AcademicCycle.current|
+    where(created_at: cycle.start_date.beginning_of_day..cycle.end_date.end_of_day)
+  }
 
   def name
     school&.name || super

@@ -1,0 +1,13 @@
+<% if current_user.organisation.is_a?(Provider) %>
+  <h2 class="govuk-heading-m">
+    Placements
+  </h2>
+  <ul class="govuk-list govuk-list--spaced">
+    <li>
+      <p>
+        <%= govuk_link_to "#{@current_academic_cycle_label} placements report", reports_placements_path(:csv), class: "placements-report" %>
+        - Download placement data added in the <%= @current_academic_cycle_label %> academic year.
+      </p>
+    </li>
+  </ul>
+<% end %>

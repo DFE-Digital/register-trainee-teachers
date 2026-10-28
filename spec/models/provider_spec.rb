@@ -311,6 +311,57 @@ describe Provider do
     end
   end
 
+  describe "#trainees_for_placements_report" do
+    let!(:current_cycle) { create(:academic_cycle, :current) }
+    let!(:previous_cycle) { create(:academic_cycle, :previous) }
+    let(:provider) { create(:provider) }
+    let(:other_provider) { create(:provider) }
+    let(:trainee) { create(:trainee, :provider_led_postgrad, :trn_received, provider:) }
+    let(:other_provider_trainee) { create(:trainee, :provider_led_postgrad, :trn_received, provider: other_provider) }
+
+    before do
+      create(:placement, trainee: trainee, created_at: current_cycle.start_date + 1.day)
+      create(:placement, trainee: other_provider_trainee, created_at: current_cycle.start_date + 1.day)
+    end
+
+    it "includes trainees with placements created in the current academic year" do
+      expect(provider.trainees_for_placements_report).to contain_exactly(trainee)
+    end
+
+    it "does not include trainees from other providers" do
+      expect(provider.trainees_for_placements_report).not_to include(other_provider_trainee)
+    end
+
+    context "when the trainee only has placements from a previous academic year" do
+      before do
+        trainee.placements.destroy_all
+        create(:placement, trainee: trainee, created_at: previous_cycle.start_date + 1.day)
+      end
+
+      it "does not include the trainee" do
+        expect(provider.trainees_for_placements_report).to be_empty
+      end
+    end
+
+    context "when the trainee has no TRN" do
+      let(:trainee) { create(:trainee, :provider_led_postgrad, :submitted_for_trn, provider: provider, trn: nil) }
+
+      it "does not include the trainee" do
+        expect(provider.trainees_for_placements_report).to be_empty
+      end
+    end
+
+    %i[assessment_only early_years_assessment_only].each do |route|
+      context "when the trainee is #{route}" do
+        let(:trainee) { create(:trainee, route, :trn_received, provider:) }
+
+        it "does not include the trainee" do
+          expect(provider.trainees_for_placements_report).not_to include(trainee)
+        end
+      end
+    end
+  end
+
   describe "hei?" do
     context "when the accreditation_id begins with 1" do
       subject { build(:provider, accreditation_id: "123456").hei? }
