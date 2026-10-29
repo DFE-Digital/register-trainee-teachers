@@ -49,6 +49,8 @@ en:
   funding:
     view:
       title: Funding
+      funding_eligibility: &funding_eligibility Funding eligibility
+      amount_not_signed_off: Amount not signed off
       training_initiative: &training_initiative Training initiative
       funding_method: &funding_method Funding method
       bursary_applied_for: "%{subject} bursary"
@@ -149,6 +151,17 @@ en:
     view:
       title: International training details
       iqts_country: &iqts_country Country or territory of training
+  level_five_declaration:
+    view:
+      title: &level_five_declaration Level 5 declaration
+      level_five_qualification: &level_five_qualification Level 5 qualification
+      course_duration: Course duration
+      expected_end_date: Expected end date
+      years:
+        one: "%{count} year"
+        other: "%{count} years"
+      "yes": "Yes"
+      "no": "No"
   deferral_details:
     view:
       defer_date_label: Date of deferral
@@ -312,6 +325,10 @@ en:
       age_range: Age range
       itt_start_date: ITT start date
       itt_end_date: Expected end date
+      course_length: Course length
+      course_length_confirmed:
+        level_five: Confirmed as longer than the usual %{years} years for a trainee with a level 5 qualification
+        no_level_five: Confirmed as longer than the usual %{years} years for a trainee without a level 5 qualification
       route: Training route
       course_details: Course details
       details_not_on_publish: Course details added manually
@@ -438,6 +455,8 @@ en:
           new: Add undergraduate degree
         iqts_country:
           edit: Which country or territory is the trainee studying in?
+        level_five_declaration:
+          edit: Level 5 declaration
         outcome_date:
           edit: "When did the trainee’s QTS status change?"
           eyts_edit: "When did the trainee’s EYTS status change?"
@@ -505,6 +524,8 @@ en:
         funding:
           training_initiatives:
             edit: Training initiatives
+          funding_eligibilities:
+            edit: *funding_eligibility
           bursaries:
             edit: Funding
           grants:
@@ -607,6 +628,7 @@ en:
           applying_for_grant: Funding method updated
           applying_for_bursary: Funding method updated
           iqts_country: Country or territory of training updated
+          level_five_qualification: Level 5 qualification updated
           hesa_editable: Editing enabled
           accredited_provider_change: "Accredited provider changed from %{old_accredited_provider} to %{new_accredited_provider}"
         degree:
@@ -654,6 +676,7 @@ en:
         funding: Funding details
         funding_inactive: Funding details cannot be started yet
         iqts_country: International training details
+        level_five_declaration: *level_five_declaration
       statuses:
         not_provided: not provided
         incomplete: not started
@@ -686,6 +709,7 @@ en:
             early_years_salaried: *training_partner_and_employing_school
             early_years_undergrad: *training_partner
             teacher_degree_apprenticeship: *training_partner_and_employing_school
+            early_years_teacher_degree_apprenticeship: *training_partner_and_employing_school
             assessment_only: Employing school
     personas:
       view:
@@ -767,6 +791,7 @@ en:
         itt_start_date: *course_path
         itt_end_date: *course_path
         main_age_range: *course_path
+        funding_eligibility: edit_trainee_funding_funding_eligibility_path
         training_initiative: edit_trainee_funding_training_initiative_path
         applying_for_bursary: &funding_method_path edit_trainee_funding_bursary_path
         applying_for_grant: *funding_method_path
@@ -794,6 +819,7 @@ en:
         study_mode: *course_path
         primary_course_subjects: *course_path
         iqts_country: edit_trainee_iqts_country_path
+        level_five_qualification: edit_trainee_level_five_declaration_path
         placement_detail: trainee_placements_confirm_path
         placements: trainee_placements_confirm_path
         degree_ids: trainee_degrees_confirm_path
@@ -826,6 +852,7 @@ en:
         main_age_range: *course_age_range
         itt_start_date: *itt_start_date
         itt_end_date: *itt_end_date
+        funding_eligibility: *funding_eligibility
         training_initiative: *training_initiative
         applying_for_bursary: *funding_method
         applying_for_grant: *funding_method
@@ -854,6 +881,7 @@ en:
         study_mode: *study_mode
         primary_course_subjects: *course_subject
         iqts_country: Country or territory of training
+        level_five_qualification: *level_five_qualification
         placement_detail: Placement details
         placements: Placements
         degree_ids: Degrees
@@ -974,6 +1002,12 @@ en:
           disabled: Yes, they shared that they’re disabled
           no_disability: They shared that they’re not disabled
       placement_details:
+        eytda_requirements:
+          intro: Early years teacher degree apprentices must do 3 placements before they can be awarded EYTS.
+          must_do: "They must do:"
+          alternative_setting: a placement in an alternative setting, such as a family hub or Children’s Centre
+          supplementary_setting: a placement in a supplementary setting, if they cannot teach children aged 0 to 5 in the setting where they work
+          any_time: These can be added at any time.
         label_names:
           has_placement_detail: "Yes, I can add at least one of them now"
           no_placement_detail: "No, I’ll add them later"
@@ -1031,7 +1065,143 @@ en:
           pg_teaching_apprenticeship: teaching apprenticeship postgrad
           provider_led_undergrad: primary and secondary undergrad
           teacher_degree_apprenticeship: teaching apprenticeship
+      # Trainees::CoursePrerequisites: what course details depend on.
+      course_prerequisites:
+        level_five_declaration:
+          summary: Course details for this route require the level 5 declaration to be completed first
+          task: Complete the level 5 declaration before adding course details
       funding:
+        amount_not_signed_off:
+          title: Amount not signed off
+          heading: Funding amounts for %{academic_year} haven’t been signed off. You can add funding once they have.
+          draft_heading: These amounts are from the %{academic_year} draft and haven’t been signed off. Use them for testing only. You can’t request a TRN with them.
+          trn_blocked: Funding uses %{academic_year} amounts that haven’t been signed off. You can’t request a TRN until they have.
+        # FundingManager#funding_prerequisites: details the funding depends on.
+        prerequisites:
+          degree:
+            summary: Funding for this route requires the previous degree to be completed first
+            task: Complete the degree before adding funding
+          employing_school:
+            summary: Funding for this route requires the employing school to be completed first
+            task: Complete the employing school before adding funding
+        # Funding::RecheckAfterChange and Trainees::RecheckAfterCourseChange: the course details,
+        # degree or employing school changed after the funding (or employing school) was added.
+        recheck:
+          changes:
+            level_five_declaration: level 5 declaration
+            course_details: course details
+            degree: degree
+            employing_school: employing school
+          # The draft record banner heading names each section to check again.
+          sections:
+            course_details: course details
+            funding: funding
+            schools: employing school
+          heading: Check the %{sections} again
+          heading_removed: Add the funding again
+          heading_removed_and_check: Add the funding and check the %{sections} again
+          link: Check the funding
+          link_course_details: Check the course details
+          link_schools: Check the employing school
+          link_removed: Add the funding
+          draft_record: The %{changed} changed, so check the funding is still right.
+          draft_record_course_details: The level 5 declaration changed, so check the course details are still right.
+          draft_record_course_details_and_funding: The level 5 declaration changed, so check the course details and funding are still right.
+          draft_record_course_details_and_funding_removed: The level 5 declaration changed, so check the course details are still right. The funding was removed, so add it again.
+          draft_record_schools: The course details changed, so check the employing school is still right.
+          draft_record_both: The course details changed, so check the funding and employing school are still right.
+          draft_record_removed:
+            route: The training route changed, so the funding was removed.
+            subject: The course subject changed, so the funding was removed.
+            course_details: The course details changed, so the funding was removed.
+            level_five_declaration: The level 5 declaration changed, so the funding was removed.
+          task: "%{changed} changed. Check and confirm the funding"
+          task_removed:
+            route: Training route changed. Add the funding again
+            subject: Course subject changed. Add the funding again
+            course_details: Course details changed. Add the funding again
+            level_five_declaration: Level 5 declaration changed. Add the funding again
+          task_schools: Course details changed. Check and confirm the employing school
+          task_course_details: Level 5 declaration changed. Check and confirm the course details
+          confirm_heading: The %{changed} changed after the funding was added
+          confirm_body: Check the funding below is still right, change it if you need to, then confirm the section is complete.
+          confirm_heading_course_details: The level 5 declaration changed after the course details were added
+          confirm_body_course_details: Check the course details below are still right, especially the expected end date, change them if you need to, then confirm the section is complete.
+          trn_course_details: Course details needs to be confirmed again because the level 5 declaration changed
+          confirm_heading_schools: The course details changed after the employing school was added
+          confirm_body_schools: Check the training partner and employing school are still right, change them if you need to, then confirm the section is complete.
+          trn: Funding needs to be confirmed again because the %{changed} changed
+          trn_schools: Training partner and employing school needs to be confirmed again because the course details changed
+        # Funding eligibility step (funding_eligibility_step flag). One block per
+        # FundingManager#eligibility_content_key. Guidance links use the trainee's year.
+        funding_eligibilities:
+          continue: Continue
+          not_signed_off:
+            description: We’ll ask whether the trainee is eligible for funding once the %{academic_year} funding has been signed off. Continue to the training initiatives.
+          bursary_scholarship:
+            question: Has the trainee been approved for UK Student Finance?
+            hint: This determines whether the trainee can be considered for a bursary or scholarship.
+            description_html: >-
+              Bursaries and scholarships are available to trainees on tuition-fee-based teacher training courses in England that lead to the award of qualified teacher status (QTS).
+            student_finance_html: >-
+              Trainees are only eligible for a bursary or scholarship if they <a class="govuk-link" href="https://www.gov.uk/student-finance/who-qualifies">qualify for student finance criteria</a>.
+            student_finance_offer_exception_html: >-
+              Trainees are only eligible for a bursary or scholarship if they <a class="govuk-link" href="https://www.gov.uk/student-finance/who-qualifies">qualify for student finance criteria</a>, unless they received an offer for a languages or physics course before 5pm on 7 May 2026.
+            guidance_intro: "For information about how to determine if a trainee qualifies for bursary or scholarship funding, refer to the guidance:"
+            guidance_link_text: "Funding: initial teacher training (ITT), academic year %{academic_year}"
+          grant:
+            question: Is the trainee eligible for grant funding?
+            description_html: >-
+              We give grants to ITT providers to contribute to the trainee’s salary and training costs. This applies to trainees on salaried and apprenticeship routes (%{academic_year} academic year).
+            guidance_intro: "For information about grant eligibility for salaried routes, including employment contract requirements, refer to the guidance:"
+            guidance_link_text: "Funding: initial teacher training (ITT), academic year %{academic_year}"
+          training_bursary:
+            question: Is the trainee eligible for a training bursary?
+            description_html: >-
+              The trainee may be eligible for a training bursary, depending on the level of degree they already hold. We pay this bursary to EYITT providers, who forward it to trainees.
+            guidance_intro: "For information about training bursary eligibility and tier determination for Early Years Postgraduate routes, refer to the guidance:"
+            guidance_link_text: "Early years initial teacher training: %{academic_year} funding guidance"
+          training_grant:
+            question: Is the trainee eligible for a training grant?
+            description_html: >-
+              Early years ITT (EYITT) providers will receive training grant funding to cover course fees.
+            guidance_intro: "For information about grant eligibility for Early Years Salaried routes, refer to the guidance:"
+            guidance_link_text: "Early years initial teacher training: %{academic_year} funding guidance"
+          training_grant_by_year:
+            question: Is the trainee eligible for a training grant?
+            description_html: >-
+              Early years ITT (EYITT) providers receive a training grant for each year of the early years teacher degree apprenticeship.
+            guidance_intro: "For information about grant eligibility for the early years teacher degree apprenticeship, refer to the guidance:"
+            guidance_link_text: "Early years initial teacher training: %{academic_year} funding guidance"
+          no_funding:
+            description_html: >-
+              There is no bursary, scholarship or grant funding available on the %{route} route for the academic year %{academic_year}.
+            guidance_intro: "For a complete overview of which routes have access to funding in the %{academic_year} academic year, refer to the guidance:"
+            guidance_link_text: "Funding: initial teacher training (ITT), academic year %{academic_year}"
+            contact_html: >-
+              If you believe there is funding available for this route and course, please contact your training provider or email the Department for Education at <a class="govuk-link" href="mailto:itt.funding@education.gov.uk">itt.funding@education.gov.uk</a>.
+          no_funding_early_years:
+            description_html: >-
+              There is no training bursary or training grant available on the %{route} route for the academic year %{academic_year}.
+            guidance_intro: "For a complete overview of which Early Years routes have access to funding in the %{academic_year} academic year, refer to the guidance:"
+            guidance_link_text: "Early years initial teacher training: %{academic_year} funding guidance"
+            contact_html: >-
+              If you believe there is funding available for this route and course, please contact your training provider or email the Department for Education at <a class="govuk-link" href="mailto:itt.funding@education.gov.uk">itt.funding@education.gov.uk</a>.
+          # The type is only for a relevant degree, and the trainee's degree isn't relevant.
+          no_funding_degree:
+            description_html: >-
+              A %{funding_type} isn’t available for %{subject} because the trainee’s degree (%{degree}) isn’t relevant to the subject. There’s no other funding for %{subject} on this route.
+            guidance_intro: "For information about which degrees are relevant to each subject in the %{academic_year} academic year, refer to the guidance:"
+            guidance_link_text: "Funding: initial teacher training (ITT), academic year %{academic_year}"
+            contact_html: >-
+              If you believe the trainee’s degree is relevant to the subject, please contact your training provider or email the Department for Education at <a class="govuk-link" href="mailto:itt.funding@education.gov.uk">itt.funding@education.gov.uk</a>.
+          no_funding_subject:
+            description_html: >-
+              There is no bursary, scholarship or grant funding available for %{subject} on the %{route} route for the academic year %{academic_year}.
+            guidance_intro: "For information about which subjects have funding in the %{academic_year} academic year, refer to the guidance:"
+            guidance_link_text: "Funding: initial teacher training (ITT), academic year %{academic_year}"
+            contact_html: >-
+              If you believe there is funding available for this route and subject, please contact your training provider or email the Department for Education at <a class="govuk-link" href="mailto:itt.funding@education.gov.uk">itt.funding@education.gov.uk</a>.
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
           title_two: Is the trainee on either of these training initiatives?
@@ -1040,6 +1210,16 @@ en:
             They provide incentives and support for people training to teach.<br><br>
             If you’re not sure if the trainee is on an initiative you could check with a colleague or ask the trainee directly.
         bursaries:
+          # FundingManager#degree_explanation and #employing_school_explanation.
+          explanation:
+            degree:
+              relevant: The trainee’s degree in %{degree} is relevant or related to their %{subject} ITT course.
+              not_relevant:
+                one: The trainee’s degree in %{degrees} is not relevant or related to their %{subject} ITT course.
+                other: The trainee’s degrees in %{degrees} are not relevant or related to their %{subject} ITT course.
+            employing_school:
+              listed: The employing school, %{school}, is a secondary school or special school we have identified as having a high need for teachers.
+              not_listed: The employing school, %{school}, is not a secondary school or special school we have identified as having a high need for teachers.
           non_tiered:
             description: The trainee may be able to get funding for their %{subject} course.
             early_years_description: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary."
@@ -1051,7 +1231,14 @@ en:
           grant:
             description: The trainee may be able to get funding for their %{subject} course.
             early_years_description: "%{training_route} has a grant available of %{amount}. You need to check if the trainee is eligible for this grant."
+            yearly_description: "%{training_route} has a grant available for each training year. You need to check if the trainee is eligible for this grant."
+            yearly_heading: Grant for trainees starting in %{academic_year}
+            level_five_years: The trainee holds a level 5 qualification, so their course is %{years} years and they get the grants for Year %{first_year} and Year %{last_year}.
+            carried_forward: These amounts were set for %{academic_year} and apply to trainees starting in later years until new amounts are added.
             title: Choose funding type
+          early_years_salaried_grant:
+            question: Should the provider be awarded a grant?
+            description: "Early years graduate employment based has a grant available of %{total}. This is made up of a %{training_grant} training grant paid to the provider and a %{employer_incentive} employer incentive paid to the trainee’s employer."
           tiered:
             description: Early years graduate entry has bursaries available. You need to check if the trainee is eligible for any of these.
             title: Funding type
@@ -1080,6 +1267,8 @@ en:
           grant:
             label: Grant (up to %{amount})
             hint: You apply on behalf of the trainee.
+            yearly_label: Yes, apply for a grant
+            yearly_hint: You apply on behalf of the trainee. The grant is paid each training year. This trainee is in %{training_year}.
             none:
               label: None
   landing_page:
@@ -1321,6 +1510,7 @@ en:
           postgrad_fee_funded: Postgraduate (fee funded)
           postgrad_salaried: Postgraduate (salaried)
           undergrad_fee_funded: Undergraduate (fee funded)
+          undergrad_salaried: Undergraduate (salaried)
           other: Other
     start_statuses:
       edit:
@@ -1360,6 +1550,19 @@ en:
       edit:
         label: Which country or territory is the trainee studying in?
         hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time.
+    level_five_declarations:
+      edit:
+        heading: Level 5 declaration
+        duration_intro: "The early years teacher degree apprenticeship is shorter for trainees who already hold a level 5 qualification. Their answer sets the course duration:"
+        with_level_five_html: with a level 5 qualification, <strong>2 years</strong>, funded as Year 2 and Year 3
+        without_level_five_html: without a level 5 qualification, <strong>3 years</strong>
+        examples: Level 5 qualifications include foundation degrees, higher national diplomas (HND) and diplomas of higher education (DipHE).
+        change_warning: If you change this answer, the course details will need to be checked and confirmed again, and the funding will be removed so you can add it again.
+        question: Does the trainee hold a level 5 qualification?
+        "yes": "Yes"
+        "no": "No"
+        yes_hint: The course duration will be set at 2 years
+        no_hint: The course duration will be set at 3 years
     withdrawals:
       start:
         show:
@@ -1440,6 +1643,7 @@ en:
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergraduate)
           teacher_degree_apprenticeship: &teacher_degree_apprenticeship Teacher degree apprenticeship (salaried)
+          early_years_teacher_degree_apprenticeship: Early years teacher degree apprenticeship (EYTDA)
           itt: &itt_routes
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
@@ -1455,6 +1659,7 @@ en:
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
             teacher_degree_apprenticeship: *teacher_degree_apprenticeship
+            early_years_teacher_degree_apprenticeship: Early years teacher degree apprenticeship (salaried)
         states:
           draft: Draft
           apply_draft: Apply Draft
@@ -1848,6 +2053,13 @@ en:
             date:
               blank: &withdrawal_date_blank Enter the date the trainee withdrew
               invalid: *withdrawal_date_blank
+        funding/eligibility_form:
+          attributes:
+            funding_eligibility:
+              blank: Select the funding eligibility for this trainee
+              inclusion: Select the funding eligibility for this trainee
+            custom_applying_for_grant:
+              inclusion: Select if the provider should be awarded a grant
         funding/training_initiatives_form:
           attributes:
             training_initiative:
@@ -1961,13 +2173,21 @@ en:
                 <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
             itt_end_date:
               blank: Enter an Expected end date
-              future: Enter an Expected end date closer to today
+              future: Enter an Expected end date in %{year} or earlier
               invalid: Enter a valid Expected end date
               too_old: Enter a valid Expected end date
               before_or_same_as_start_date: The Expected end date must be after the start date
               hint_html:
                 <p class="govuk-body govuk-hint">The end date of the Initial Teacher Training part of their course.</p>
                 <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
+              level_five_hint_html: " <p class=\"govuk-body govuk-hint\">For a full-time course, leave this blank to set it from the level 5 declaration: %{years} years after the ITT start date. You can enter a later date if the course is longer.</p>"
+            # EYTDA: a full-time course longer than the usual 2 or 3 years set by the Level 5 declaration.
+            extended_course_confirmed:
+              blank: Confirm the course is longer than %{years} years
+              legend: Course length
+              warning_level_five: This course is %{length}. Courses for trainees with a level 5 qualification are usually %{years} years.
+              warning_no_level_five: This course is %{length}. Courses for trainees without a level 5 qualification are usually %{years} years.
+              label: I confirm the course is longer than %{years} years
         publish_course_details_form:
           attributes:
             course_uuid:
@@ -2093,6 +2313,8 @@ en:
               blank: Enter a partner unique reference number (URN), name or postcode
         funding/form_validator:
           attributes:
+            funding_eligibility:
+              blank: Select the funding eligibility for this trainee
             training_initiative:
               blank: Select if the trainee is on a training initiative
             applying_for_grant:
@@ -2121,6 +2343,10 @@ en:
           attributes:
             iqts_country:
               blank: Enter the country or territory the trainee is studying in
+        level_five_declaration_form:
+          attributes:
+            level_five_qualification:
+              inclusion: Select yes if the trainee holds a level 5 qualification
         otp_form:
           attributes:
             email:
@@ -2225,6 +2451,8 @@ en:
             course_age_range:
               early_years_invalid: is invalid. It should be `13920` for the training_route provided
               reserved_for_early_years: is invalid. It can only be used for early years training routes
+            course_year:
+              training_year_invalid: must be the year of training, from 1 to %{training_years}, for the training_route provided
             fund_code:
               ineligible: is not valid for this trainee
             funding_method:
@@ -2313,6 +2541,12 @@ en:
         create:
           success: *file_uploaded
   system_admin:
+    funding_schools:
+      destroy:
+        locked: This year's school list is locked and cannot be changed.
+    relevant_degrees:
+      destroy:
+        locked: This year is locked and cannot be changed.
     users:
       create:
         success: User has been successfully added.

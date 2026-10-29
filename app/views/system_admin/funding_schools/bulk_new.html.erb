@@ -1,0 +1,31 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: "Bulk upload schools", has_errors: @form.errors.present?) %>
+    <%= govuk_back_link(text: "Back to funding schools", href: funding_management_schools_path) %>
+
+    <span class="govuk-caption-l">Funding schools management</span>
+    <h1 class="govuk-heading-l">Bulk upload schools (CSV)</h1>
+
+    <p class="govuk-body">
+      Upload a CSV file of school URNs (one URN per line, or a single <code>urn</code> column).
+      Every URN is checked the same way as a single add — it must be a real, open school in
+      Register. Rows that fail are reported and skipped; the rest are added.
+    </p>
+
+    <%= register_form_with model: @form, url: funding_management_bulk_create_schools_path, method: :post, multipart: true do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_collection_select :academic_year, addable_cycles, :start_year, :label,
+            label: { text: "Which academic year does this apply to?", size: "s" },
+            hint: { text: "Only future academic years can be changed." } %>
+
+      <%= f.govuk_collection_radio_buttons :designation,
+            [["disadvantaged", "Disadvantaged school"], ["special", "Special school"]], :first, :last,
+            legend: { text: "How are these schools designated?", size: "s" } %>
+
+      <%= f.govuk_file_field :file, label: { text: "CSV file of URNs", size: "s" } %>
+
+      <%= f.govuk_submit "Upload and check" %>
+    <% end %>
+  </div>
+</div>

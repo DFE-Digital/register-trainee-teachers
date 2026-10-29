@@ -1,0 +1,126 @@
+<% page_title = "Funding schools management" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= render "system_admin/tab_nav" %>
+    <%= render "system_admin/funding_nav", active: :schools %>
+
+    <% if flash[:success] %>
+      <%= govuk_notification_banner(title_text: "Success", success: true) { |b| b.with_heading(text: flash[:success]) } %>
+    <% end %>
+    <% if flash[:alert] %>
+      <%= govuk_notification_banner(title_text: "Important") { |b| b.with_heading(text: flash[:alert]) } %>
+    <% end %>
+
+    <p class="govuk-body">
+      Schools recorded as disadvantaged or special schools for funding, by academic year.
+      Only schools already in Register can be added, and only for future academic years.
+    </p>
+
+    <%# Academic-year filter %>
+    <div class="govuk-!-margin-bottom-6">
+      <%= form_with url: funding_management_schools_path, method: :get do %>
+        <div class="govuk-form-group govuk-!-margin-bottom-0" style="max-width:20em;">
+          <label class="govuk-label" for="academic_year">Academic year</label>
+          <select name="academic_year" id="academic_year" class="govuk-select" data-filter-select>
+            <option value="all" <%= "selected" if all_years? %>>All academic years</option>
+            <% AcademicCycle.order(start_date: :desc).each do |cycle| %>
+              <option value="<%= cycle.start_year %>" <%= "selected" if !all_years? && cycle == academic_cycle %>>
+                <%= cycle.label %> &mdash; <%= academic_year_status_label(cycle) %>
+              </option>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
+      <%= javascript_tag nonce: true do -%>
+        (function () {
+          document.querySelectorAll('[data-filter-select]').forEach(function (s) {
+            s.addEventListener('change', function () {
+              if (this.form.requestSubmit) { this.form.requestSubmit(); } else { this.form.submit(); }
+            });
+          });
+        })();
+      <% end %>
+    </div>
+
+    <% editable = all_years? ? addable_cycles.any? : funding_year_editable?(academic_cycle) %>
+
+    <% unless all_years? %>
+      <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+        <%= academic_cycle&.label %> school list&nbsp;<%= academic_year_status_tag(academic_cycle) if academic_cycle %>
+      </h2>
+    <% end %>
+
+    <% if FeatureService.enabled?("funding_management_edit") && editable %>
+      <div class="app-button-row govuk-!-margin-bottom-4">
+        <%= govuk_button_link_to "Add a school", funding_management_new_school_path(academic_year: (academic_cycle&.start_year unless all_years?)) %>
+        <%= govuk_button_link_to "Bulk upload (CSV)", funding_management_bulk_new_schools_path(academic_year: (academic_cycle&.start_year unless all_years?)), secondary: true %>
+      </div>
+    <% end %>
+
+    <% if !all_years? && academic_cycle && editable && academic_cycle.draft? %>
+      <div class="govuk-inset-text">
+        This school list is in <strong>draft</strong>. It is signed off and released together with the
+        <%= govuk_link_to "funding requirements", funding_management_requirements_path(academic_year: academic_cycle.start_year), no_visited_state: true %>
+        for this year, and goes live on <%= academic_cycle.start_date.strftime("%-d %B %Y") %>.
+      </div>
+    <% end %>
+
+    <% if !all_years? && academic_cycle && !editable && FeatureService.enabled?("funding_management_edit") %>
+      <div class="govuk-inset-text">
+        <% if academic_cycle.funding_locked? %>
+          This academic year is <%= academic_cycle.live? ? "live" : "in the past" %>, so its school list is locked.
+        <% elsif academic_cycle.awaiting_publication_approval? %>
+          This year's funding — including the school list — has been submitted for approval, so the list is locked until it is approved or rejected.
+        <% elsif academic_cycle.published? %>
+          This year's funding — including the school list — has been signed off and will go live on <%= academic_cycle.start_date.strftime("%-d %B %Y") %>. The list is locked until it is reopened for editing from Drafts.
+        <% end %>
+        The school list is signed off together with the
+        <%= govuk_link_to "funding requirements", funding_management_requirements_path(academic_year: academic_cycle.start_year), no_visited_state: true %>
+        for this year.
+      </div>
+    <% end %>
+
+    <% if @designations.empty? %>
+      <p class="govuk-body"><%= all_years? ? "No schools have been added." : "No schools have been added for #{academic_cycle&.label}." %></p>
+    <% else %>
+      <p class="govuk-body govuk-!-margin-bottom-2"><strong><%= @designations.size %></strong> <%= "school".pluralize(@designations.size) %></p>
+      <div style="overflow-x:auto;">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">URN</th>
+              <th scope="col" class="govuk-table__header">School</th>
+              <th scope="col" class="govuk-table__header">Town</th>
+              <th scope="col" class="govuk-table__header">Designation</th>
+              <th scope="col" class="govuk-table__header">Academic year</th>
+              <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @designations.each do |d| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell"><%= d.school.urn %></td>
+                <td class="govuk-table__cell"><%= d.school.name %></td>
+                <td class="govuk-table__cell"><%= d.school.town %></td>
+                <td class="govuk-table__cell">
+                  <%= govuk_tag(text: d.designation_label, colour: d.disadvantaged? ? "magenta" : "purple") %>
+                </td>
+                <td class="govuk-table__cell"><%= d.academic_cycle.label %></td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">
+                  <% if can_manage_schools?(d.academic_cycle) %>
+                    <%= button_to "Remove", funding_management_school_path(d.id, academic_year: d.academic_cycle.start_year),
+                          method: :delete, class: "govuk-button govuk-button--warning govuk-!-margin-0",
+                          data: { module: "govuk-button" }, form: { style: "display:inline;" } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

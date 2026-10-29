@@ -47,6 +47,7 @@ module Trainees
       other_grade
       employing_school_id
       iqts_country
+      level_five_qualification
       withdraw_date
       hesa_editable
       provider_id

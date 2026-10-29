@@ -37,6 +37,12 @@
           </div>
         <% end %>
 
+        <% if @form.respond_to?(:draft_funding?) && @form.draft_funding? %>
+          <div class="govuk-inset-text">
+            <p class="govuk-body"><%= t("views.forms.funding.amount_not_signed_off.trn_blocked", academic_year: @trainee.start_academic_cycle&.label) %></p>
+          </div>
+        <% end %>
+
         <%= render RouteIndicator::View.new(trainee: @trainee) %>
       </div>
     </div>

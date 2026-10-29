@@ -30,9 +30,29 @@ module Trainees
       end
 
       context "trainee has undergrade training route" do
-        let(:trainee_attributes) { { training_route: UNDERGRAD_ROUTES.keys.sample } }
+        let(:trainee_attributes) { { training_route: UNDERGRAD_ROUTES.keys.excluding(TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship]).sample } }
 
         it { is_expected.to eq(trainee.trainee_start_date + 3.years) }
+      end
+
+      context "trainee is on the Early years teacher degree apprenticeship" do
+        let(:trainee_attributes) { { training_route: TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship] } }
+
+        it "is 3 years until the level 5 declaration is answered" do
+          expect(subject).to eq(trainee.trainee_start_date + 3.years)
+        end
+
+        context "with a level 5 qualification" do
+          let(:trainee_attributes) { { training_route: TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship], level_five_qualification: true } }
+
+          it { is_expected.to eq(trainee.trainee_start_date + 2.years) }
+        end
+
+        context "without a level 5 qualification" do
+          let(:trainee_attributes) { { training_route: TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship], level_five_qualification: false } }
+
+          it { is_expected.to eq(trainee.trainee_start_date + 3.years) }
+        end
       end
     end
 

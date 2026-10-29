@@ -27,6 +27,7 @@ module Funding
              :can_apply_for_grant?, :grant_amount, :bursary_amount,
              :scholarship_amount, :allocation_subject_name,
              :funding_guidance_link_text, :funding_guidance_url,
+             :yearly_route?, :training_year_label, :grant_amounts_by_year,
              to: :funding_manager
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)

@@ -69,6 +69,8 @@ features:
     school_direct_tuition_fee: true
     iqts: true
     teacher_degree_apprenticeship: true
+    # Off until the TRS route type ID for EYTDA is known (HESA code 23 is set).
+    early_years_teacher_degree_apprenticeship: false
     hpitt_postgrad: true
   google:
     send_data_to_big_query: false
@@ -89,6 +91,15 @@ features:
   maintenance_banner: false
   change_accredited_provider: true
   funding_uploads: true
+  funding_management: false
+  funding_management_edit: false
+  funding_management_approval: false
+  # The funding eligibility question at the start of the funding section.
+  funding_eligibility_step: false
+  # Internal testing only: the trainee journey uses draft (not signed off)
+  # funding amounts, under the "Amount not signed off" banner. No TRN can be
+  # requested with them. Never turn on in production.
+  funding_draft_amounts_in_journey: false
   register_api: true
   bulk_add_trainees: true
   token_management: true

@@ -1,0 +1,29 @@
+<% page_title = "Roll over funding into #{academic_cycle.label}" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(text: "Back to funding management", href: funding_management_requirements_path(academic_year: academic_cycle.start_year)) %>
+
+    <span class="govuk-caption-l">Funding management</span>
+    <h1 class="govuk-heading-l">Roll over funding into <%= academic_cycle.label %></h1>
+
+    <p class="govuk-body">
+      This copies <strong><%= pluralize(@source_count, "funding record") %></strong> from
+      <strong><%= @source.label %></strong> into <strong><%= academic_cycle.label %></strong> as
+      <strong>draft</strong> funding.
+    </p>
+
+    <div class="govuk-inset-text">
+      Amounts, funding types, routes, methods and eligible subjects are copied exactly as they are for
+      <%= @source.label %>. Nothing goes live — you can then edit the differences and submit the year for
+      approval.
+    </div>
+
+    <%= form_with url: funding_management_create_roll_over_path(academic_year: academic_cycle.start_year), method: :post do %>
+      <div class="app-button-row">
+        <button class="govuk-button" data-module="govuk-button">Roll over funding</button>
+        <%= govuk_link_to "Cancel", funding_management_requirements_path(academic_year: academic_cycle.start_year), class: "govuk-link govuk-!-margin-left-3" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -37,6 +37,7 @@
 #  employing_school_urn            :string
 #  ethnic_background               :text
 #  ethnic_group                    :integer
+#  extended_course_confirmed       :boolean          default(FALSE), not null
 #  first_names                     :text
 #  funding_eligibility             :string
 #  hesa_editable                   :boolean          default(FALSE)
@@ -45,6 +46,7 @@
 #  itt_end_date                    :date
 #  itt_start_date                  :date
 #  last_name                       :text
+#  level_five_qualification        :boolean
 #  middle_names                    :text
 #  outcome_date                    :date
 #  placement_detail                :integer
@@ -386,6 +388,8 @@ class Trainee < ApplicationRecord
   before_save :set_submission_ready, if: :awaiting_action?
   before_save :set_academic_cycles
   before_save :update_searchable
+  # Runs after the before_save callbacks, so a start date in another year (set_academic_cycles) counts as a change.
+  before_update :recheck_after_course_change
 
   after_touch :set_submission_ready
 
@@ -651,6 +655,11 @@ private
 
   def set_academic_cycles
     Trainees::SetAcademicCycles.call(trainee: self)
+  end
+
+  # The re-check changes progress after set_submission_ready ran, so work it out again.
+  def recheck_after_course_change
+    set_submission_ready if Trainees::RecheckAfterCourseChange.call(trainee: self) && awaiting_action?
   end
 
   def update_searchable

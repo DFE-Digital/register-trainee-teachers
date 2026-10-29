@@ -27,6 +27,71 @@ module SystemAdminRoutes
           end
         end
 
+        # Funding management — "Add funding" wizard (write; gated by
+        # funding_management_edit). Declared before the read-only scope so the
+        # /add paths are not swallowed by the /:training_route catch-all.
+        scope path: "funding-management/add", as: :funding_management_add do
+          get   "/",              to: "add_funding#start",  as: :start
+          get   "/check-answers", to: "add_funding#check",  as: :check
+          post  "/",              to: "add_funding#create", as: :create
+          get   "/:step",         to: "add_funding#show",   as: :step
+          patch "/:step",         to: "add_funding#update"
+        end
+
+        # Funding management (read-only browse of funding reference data)
+        scope path: "funding-management", as: :funding_management do
+          get "/", to: "funding_management#index", as: :root
+          get "/requirements", to: "funding_methods#index", as: :requirements
+          get "/drafts", to: "funding_methods#drafts", as: :drafts
+          get "/drafts/:academic_year/delete", to: "funding_methods#confirm_delete_draft", as: :delete_draft, constraints: { academic_year: /\d{4}/ }
+          delete "/drafts/:academic_year", to: "funding_methods#destroy_draft", as: :destroy_draft, constraints: { academic_year: /\d{4}/ }
+          # One-person sign off: review → approve (declaration) → confirmation; reopen until go-live.
+          constraints(academic_year: /\d{4}/) do
+            get "/drafts/:academic_year/sign-off", to: "draft_sign_offs#show", as: :draft_sign_off
+            get "/drafts/:academic_year/sign-off/approve", to: "draft_sign_offs#approve", as: :approve_draft_sign_off
+            post "/drafts/:academic_year/sign-off", to: "draft_sign_offs#create"
+            get "/drafts/:academic_year/sign-off/confirmation", to: "draft_sign_offs#confirmation", as: :draft_sign_off_confirmation
+            post "/drafts/:academic_year/reopen", to: "draft_sign_offs#reopen", as: :reopen_draft
+          end
+          get "/roll-over", to: "funding_methods#roll_over", as: :roll_over
+          post "/roll-over", to: "funding_methods#create_roll_over", as: :create_roll_over
+          # Delete draft funding (draft years only)
+          delete "/delete-selected", to: "funding_methods#destroy_selected", as: :destroy_selected
+          delete "/entries/:id", to: "funding_methods#destroy_entry", as: :destroy_entry, constraints: { id: /\d+/ }
+          # Sign off is only through the Drafts sign-off journey (draft_sign_offs). These
+          # steps finish a submission made under the old two-person flow, if one is still
+          # awaiting approval; no new submissions can be made.
+          get "/publish/review", to: "funding_methods#review_publication", as: :review_publication
+          post "/publish/approve", to: "funding_methods#approve_publication", as: :approve_publication
+          post "/publish/reject", to: "funding_methods#reject_publication", as: :reject_publication
+          post "/publish/withdraw", to: "funding_methods#withdraw_publication", as: :withdraw_publication
+          get "/reports", to: "funding_methods#reports", as: :reports
+          get "/subject-records", to: "funding_methods#subject_records", as: :subject_records
+          # Structured view was merged into Reports; keep old links working.
+          get "/structured-view", to: redirect { |_params, request| "/system-admin/funding-management/reports#{"?#{request.query_string}" if request.query_string.present?}" }
+          get "/schools", to: "funding_schools#index", as: :schools
+          # Add a school: one question per page (academic year → designation →
+          # school), then check the school's details and confirm.
+          get "/schools/new", to: "funding_schools#start", as: :new_school
+          get "/schools/add/check", to: "funding_schools#check", as: :school_check
+          get "/schools/add/:step", to: "funding_schools#show", as: :school_step
+          patch "/schools/add/:step", to: "funding_schools#update"
+          post "/schools/confirm", to: "funding_schools#save", as: :save_school
+          get "/schools/bulk-upload", to: "funding_schools#bulk_new", as: :bulk_new_schools
+          post "/schools/bulk-upload", to: "funding_schools#bulk_create", as: :bulk_create_schools
+          delete "/schools/:id", to: "funding_schools#destroy", as: :school, constraints: { id: /\d+/ }
+          get "/relevant-degrees", to: "relevant_degrees#index", as: :relevant_degrees
+          get "/relevant-degrees/add", to: "relevant_degrees#start", as: :new_relevant_degree
+          get "/relevant-degrees/add/check-answers", to: "relevant_degrees#check", as: :relevant_degree_check
+          post "/relevant-degrees", to: "relevant_degrees#create"
+          get "/relevant-degrees/add/:step", to: "relevant_degrees#show", as: :relevant_degree_step
+          patch "/relevant-degrees/add/:step", to: "relevant_degrees#update"
+          delete "/relevant-degrees/:id", to: "relevant_degrees#destroy", as: :relevant_degree, constraints: { id: /\d+/ }
+          get "/entries/:id", to: "funding_methods#entry", as: :entry, constraints: { id: /\d+/ }
+          get "/subjects/:id", to: "funding_methods#subject", as: :subject, constraints: { id: /\d+/ }
+          get "/:training_route", to: "funding_methods#show", as: :funding_method, constraints: { training_route: /[a-z_]+/ }
+        end
+
         resources :providers, only: %i[index new create show edit update destroy] do
           resources :users, controller: "providers/users", only: %i[index edit update]
 

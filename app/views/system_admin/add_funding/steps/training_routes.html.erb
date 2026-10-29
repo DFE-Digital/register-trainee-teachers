@@ -1,0 +1,23 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Training routes", step: "training_routes" } do |f| %>
+  <% eytda_only = eytda_only_add_funding_cycle(draft["academic_year"]) %>
+  <% if route_applicability.any_applicable? %>
+    <%= f.govuk_check_boxes_fieldset :training_routes,
+          legend: { text: "Which training routes does this funding apply to?", size: "l", tag: "h1" },
+          hint: { text: eytda_only ? eytda_only_message(eytda_only) : "One funding record is created for each route selected. Only routes that match your earlier answers are shown." } do %>
+      <% training_route_buckets.each do |bucket_name, routes| %>
+        <% applicable_routes = routes.select { |value, _name| route_applicability.applicable?(value) && (eytda_only.nil? || value.to_s == FundingManager::EYTDA_ROUTE) } %>
+        <% next if applicable_routes.empty? %>
+        <h2 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-4"><%= bucket_name %></h2>
+        <% applicable_routes.each do |value, name| %>
+          <%= f.govuk_check_box :training_routes, value, label: { text: name }, small: true %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <h1 class="govuk-heading-l">Which training routes does this funding apply to?</h1>
+    <div class="govuk-inset-text">
+      No training routes match your earlier answers (funding type or funding method).
+      Go back and change one of those before choosing a route.
+    </div>
+  <% end %>
+<% end %>

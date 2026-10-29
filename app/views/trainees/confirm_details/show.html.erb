@@ -7,6 +7,23 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= render ReviewSummary::View.new(form: @form, invalid_data_view: @missing_data_view) %>
+
+    <% if trainee_section_key == "funding" && @trainee.draft? && (changed = funding_recheck_changed(@trainee)) %>
+      <%= govuk_notification_banner(title_text: "Important") do |banner| %>
+        <% banner.with_heading(text: t("views.forms.funding.recheck.confirm_heading", changed:)) %>
+        <p class="govuk-body"><%= t("views.forms.funding.recheck.confirm_body") %></p>
+      <% end %>
+    <% elsif %w[course_details publish_course_details].include?(trainee_section_key) && @trainee.draft? && course_details_recheck?(@trainee) %>
+      <%= govuk_notification_banner(title_text: "Important") do |banner| %>
+        <% banner.with_heading(text: t("views.forms.funding.recheck.confirm_heading_course_details")) %>
+        <p class="govuk-body"><%= t("views.forms.funding.recheck.confirm_body_course_details") %></p>
+      <% end %>
+    <% elsif trainee_section_key == "schools" && @trainee.draft? && schools_recheck?(@trainee) %>
+      <%= govuk_notification_banner(title_text: "Important") do |banner| %>
+        <% banner.with_heading(text: t("views.forms.funding.recheck.confirm_heading_schools")) %>
+        <p class="govuk-body"><%= t("views.forms.funding.recheck.confirm_body_schools") %></p>
+      <% end %>
+    <% end %>
   </div>
 </div>
 

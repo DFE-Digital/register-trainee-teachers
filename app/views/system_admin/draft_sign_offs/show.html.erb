@@ -1,0 +1,43 @@
+<% name = "#{short_academic_year(academic_cycle)} funding requirements" %>
+<% page_title = "Sign off #{name}" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(text: "Back to drafts", href: funding_management_drafts_path) %>
+
+    <span class="govuk-caption-l">Draft funding requirements</span>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <%= govuk_summary_list(actions: false) do |list| %>
+          <% list.with_row do |row| %>
+            <% row.with_key(text: "Academic year") %>
+            <% row.with_value(text: academic_cycle.label) %>
+          <% end %>
+          <% list.with_row do |row| %>
+            <% row.with_key(text: "Goes live on") %>
+            <% row.with_value(text: sign_off_goes_live_text(academic_cycle)) %>
+          <% end %>
+          <% list.with_row do |row| %>
+            <% row.with_key(text: "Entries") %>
+            <% row.with_value(text: number_with_delimiter(@entries.size)) %>
+          <% end %>
+          <% list.with_row do |row| %>
+            <% row.with_key(text: "Status") %>
+            <% row.with_value(text: draft_status_tag(academic_cycle)) %>
+          <% end %>
+        <% end %>
+
+        <p class="govuk-body">Check each funding requirement below before you sign off.</p>
+      </div>
+    </div>
+
+    <%= render "system_admin/funding_methods/entries_table", entries: @entries %>
+
+    <div class="app-button-row">
+      <%= govuk_button_link_to "Sign off", funding_management_approve_draft_sign_off_path(academic_year: academic_cycle.start_year) %>
+      <%= govuk_button_link_to "Cancel", funding_management_drafts_path, secondary: true %>
+    </div>
+  </div>
+</div>

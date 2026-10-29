@@ -1,0 +1,30 @@
+<%= render layout: "system_admin/relevant_degrees/steps/wrapper", locals: { title: "Applicable HECoS codes", step: "hecos" } do |f| %>
+  <% hecos = ::Funding::CahReference.hecos_options(draft["cah_level_2_code"]) %>
+  <%= f.govuk_check_boxes_fieldset :hecos_codes,
+        legend: { text: "Applicable HECoS codes for #{::Funding::CahReference.level_2_name(draft['cah_level_2_code'])}", size: "l", tag: "h1" },
+        hint: { text: "Select every degree subject (HECoS code) that counts as a relevant degree." } do %>
+    <div class="govuk-checkboxes__item">
+      <input class="govuk-checkboxes__input" type="checkbox" id="hecos-select-all" data-hecos-select-all>
+      <label class="govuk-label govuk-checkboxes__label" for="hecos-select-all"><strong>Select all</strong></label>
+    </div>
+    <% hecos.each do |code, label| %>
+      <%= f.govuk_check_box :hecos_codes, code, label: { text: label }, small: true %>
+    <% end %>
+  <% end %>
+
+  <%= javascript_tag nonce: true do -%>
+    (function () {
+      var selectAll = document.querySelector('[data-hecos-select-all]');
+      if (!selectAll) return;
+      var boxes = document.querySelectorAll('input[name="relevant_degree_step_form[hecos_codes][]"]');
+      function allChecked() { return boxes.length > 0 && Array.prototype.every.call(boxes, function (b) { return b.checked; }); }
+      selectAll.checked = allChecked();
+      selectAll.addEventListener('change', function () {
+        boxes.forEach(function (b) { b.checked = selectAll.checked; });
+      });
+      boxes.forEach(function (b) {
+        b.addEventListener('change', function () { selectAll.checked = allChecked(); });
+      });
+    })();
+  <% end %>
+<% end %>

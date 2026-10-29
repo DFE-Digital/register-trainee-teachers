@@ -1,0 +1,7 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Funding type", step: "funding_type" } do |f| %>
+  <% eytda_only = eytda_only_add_funding_cycle(draft["academic_year"]) %>
+  <% options = eytda_only ? funding_type_options.select { |value, _label| value.to_s == "grant" } : funding_type_options %>
+  <%= f.govuk_collection_radio_buttons :funding_type, options, :first, :last,
+        legend: { text: "What type of funding is this?", size: "l", tag: "h1" },
+        hint: (eytda_only ? { text: eytda_only_message(eytda_only) } : nil) %>
+<% end %>

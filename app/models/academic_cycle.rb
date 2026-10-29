@@ -6,6 +6,7 @@
 #
 #  id         :bigint           not null, primary key
 #  end_date   :date             not null
+#  published  :boolean          default(FALSE), not null
 #  start_date :date             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -16,6 +17,7 @@
 #
 class AcademicCycle < ApplicationRecord
   has_many :funding_methods
+  has_many :funding_publication_requests, dependent: :destroy
 
   validates :start_date, :end_date, presence: true
   validate :start_date_before_end_date
@@ -81,6 +83,72 @@ class AcademicCycle < ApplicationRecord
   def current?
     (start_date.beginning_of_day..end_date.end_of_day).cover?(Time.zone.now)
   end
+
+  # Funding-management status of the year, combining the calendar with the
+  # `published` flag:
+  #   :past      — the year has ended (end_date < today)
+  #   :live      — the current year (start_date <= today <= end_date)
+  #   :published — a future year whose funding has been explicitly published
+  #   :draft     — a future year, funding still provisional
+  def status
+    today = Time.zone.now.to_date
+    return :past if end_date < today
+    return :live if (start_date..end_date).cover?(today)
+    return :awaiting_approval if awaiting_publication_approval?
+
+    published? ? :published : :draft
+  end
+
+  def past?  = status == :past
+  def live?  = status == :live
+  def draft? = status == :draft
+  def awaiting_publication_approval? = funding_publication_requests.awaiting_approval.exists?
+
+  # Approved, waiting for the year's start date to go live (shown as "Ready for release").
+  def ready_for_release? = status == :published
+
+  # Not live yet: draft, awaiting approval or ready for release. These years are
+  # listed under Drafts; Requirements shows them once they go live.
+  def pre_release? = %i[draft awaiting_approval published].include?(status)
+
+  # A year funding management runs only for EYTDA (2026 to 2027): other routes
+  # keep their rules in code. EYTDA funding can be drafted for it, and signed
+  # off, even after it has gone live.
+  def eytda_only_funding_year?
+    !past? && start_year >= FundingManager::EYTDA_FUNDING_MANAGEMENT_START_YEAR &&
+      start_year < FundingManager::FUNDING_MANAGEMENT_START_YEAR
+  end
+
+  # EYTDA funding can still be added, changed or signed off for this year.
+  def eytda_funding_draftable?
+    eytda_only_funding_year? && !published? && !awaiting_publication_approval?
+  end
+
+  # Locked for every route except EYTDA (it has gone live, but EYTDA can still be drafted).
+  def locked_except_eytda?
+    funding_locked? && eytda_funding_draftable?
+  end
+
+  # The funding records Drafts and sign-off look after for this year: only EYTDA's
+  # in a year funding management runs only for EYTDA (the others are older data).
+  def draft_funding_methods
+    eytda_only_funding_year? ? funding_methods.where(training_route: FundingManager::EYTDA_ROUTE) : funding_methods
+  end
+
+  # Signed-off EYTDA funding for a year that has already started.
+  def eytda_funding_approved? = eytda_only_funding_year? && published?
+
+  # The approval behind a Ready for release year (who approved it and when).
+  def latest_approval = funding_publication_requests.approved.latest_first.first
+
+  # Funding reference data for a year is locked once the year has gone live (or
+  # ended) — it is in use registering trainees and must not change. Only future
+  # years can have funding added or removed. Independent of any feature flag or
+  # approval state; those add further, softer locks on top of this one.
+  def funding_locked? = live? || past?
+
+  # The open submit→decision cycle, if one is in progress.
+  def pending_publication_request = funding_publication_requests.awaiting_approval.latest_first.first
 
   def in_performance_profile_range?(date)
     performance_profile_date_range.cover?(date)

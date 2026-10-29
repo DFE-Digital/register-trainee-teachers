@@ -8,5 +8,9 @@
   { name: "Pending TRN", url: pending_trns_path },
   { name: "Pending status change", url: pending_awards_path },
   { name: "Duplicate Apply applications", url: duplicate_apply_applications_path },
-  ({ name: "Funding", url: funding_uploads_path } if FeatureService.enabled?("funding_uploads")),
+  (if FeatureService.enabled?("funding_management")
+     { name: "Funding", url: funding_management_root_path }
+   elsif FeatureService.enabled?("funding_uploads")
+     { name: "Funding", url: funding_uploads_path }
+   end),
 ], size: :compact) %>

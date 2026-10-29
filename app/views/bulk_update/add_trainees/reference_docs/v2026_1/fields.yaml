@@ -213,7 +213,7 @@
     This field describes the route by which the student has accessed Initial
     Teacher Training provision.
   format: "[Training Route reference codes](/reference-data/v2026.1/training-route.html)"
-  example: "`03` for example is code to use if it is School Direct salaried"
+  example: "`03` for example is code to use if it is School Direct salaried. Use `23` for the Early years teacher degree apprenticeship (from 2027 to 2028)."
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/trainee.rb#L213-L215
   page_title: Training route
@@ -323,8 +323,9 @@
     - `1` - First year
     - `2` - Second year
     - `3` - Third year
+    - `4` - Fourth year
   example: "`1` as an example of using the code for First year."
-  validation: Mandatory
+  validation: "Mandatory. Must be `1` to `4` for the Early years teacher degree apprenticeship (training route `23`), as it decides which training year's grant applies."
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L28
   page_title: Course year
 - field_name: training_partner_urn

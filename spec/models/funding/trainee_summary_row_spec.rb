@@ -37,6 +37,7 @@ module Funding
             opt_in_undergrad: "opt_in_undergrad",
             school_direct_tuition_fee: "school_direct_tuition_fee",
             teacher_degree_apprenticeship: "teacher_degree_apprenticeship",
+            early_years_teacher_degree_apprenticeship: "early_years_teacher_degree_apprenticeship",
           )
           .backed_by_column_of_type(:string)
       end
