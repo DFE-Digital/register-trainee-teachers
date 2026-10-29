@@ -155,6 +155,27 @@ describe Cacheable do
     end
   end
 
+  describe ".skip_reads" do
+    before do
+      dummy_class.set(id, key, values)
+    end
+
+    it "returns nil without reading Solid Cache or Redis inside the block" do
+      expect(solid_cache).not_to receive(:read)
+      expect(dummy_class).not_to receive(:redis)
+
+      result = described_class.skip_reads { dummy_class.get(id, key) }
+
+      expect(result).to be_nil
+    end
+
+    it "restores reads after the block" do
+      described_class.skip_reads { dummy_class.get(id, key) }
+
+      expect(dummy_class.get(id, key)).to eq(values)
+    end
+  end
+
   describe "#clear_all" do
     before do
       dummy_class.set(id, key, values)
