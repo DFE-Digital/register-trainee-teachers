@@ -20,6 +20,14 @@ class ApplicationController < ActionController::Base
     render "errors/forbidden", status: :forbidden, formats: [:html]
   end
 
+  # Bots request HTML pages as JSON. There is no template for that format, and
+  # letting it raise turns into a 500.
+  rescue_from ActionView::MissingTemplate do |exception|
+    raise exception if request.format.html?
+
+    head :not_acceptable
+  end
+
   before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required?(request.path) }
 
   helper_method :current_user, :authenticated?, :audit_user, :trainee_editable?
