@@ -19,7 +19,7 @@ You’ll need to have the libraries below to be able to develop the application 
 
 ### Install build dependencies with ASDF
 
-The required versions of build tools is defined in [.tool-versions](.tool-versions). These can be automatically installed with [asdf-vm](https://asdf-vm.com/), see their [installation instructions](https://asdf-vm.com/#/core-manage-asdf).
+The required versions of build tools is defined in [.tool-versions](../.tool-versions). These can be automatically installed with [asdf-vm](https://asdf-vm.com/), see their [installation instructions](https://asdf-vm.com/#/core-manage-asdf).
 
 Install the plugins and versions specified in `.tool-versions`
 
