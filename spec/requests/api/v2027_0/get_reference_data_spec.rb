@@ -3,16 +3,27 @@
 require "rails_helper"
 
 describe "`GET /reference-data` endpoint" do
+  it_behaves_like "a reference data endpoint", "v2027.0"
+
   context "using version v2027.0", openapi: false do
     before do
       get "/api/v2027.0/reference-data"
     end
 
-    it "returns 404" do
-      expect(response).to have_http_status(:not_found)
-      expect(response.parsed_body).to eq(
-        "errors" => [{ "error" => "NotFound", "message" => "Reference data is not available for version 'v2027.0'" }],
+    it "includes v2027.0 field names" do
+      expect(response.parsed_body.keys).to include("course_subject", "degree_type", "disability")
+    end
+
+    it "matches api_payload for a sample field" do
+      expect(response.parsed_body.fetch("sex")).to eq(
+        Hesa::ReferenceData::V20270.api_payload(field: :sex).deep_stringify_keys,
       )
+    end
+
+    it "includes the teach learn change training route" do
+      codes = response.parsed_body.dig("training_route", "entries").pluck("code")
+
+      expect(codes).to include("22")
     end
   end
 end

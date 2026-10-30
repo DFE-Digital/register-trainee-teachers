@@ -6,6 +6,9 @@ metadata:
     - date: "2025-11-26"
       change: "Initial version"
       author: "Register team"
+    - date: "2026-10-15"
+      change: "Add HESA code 22 for Teach Learn Change from 2027"
+      author: "Register team"
 
 data:
   - id: 0
@@ -93,3 +96,10 @@ data:
     description: "Teacher Degree Apprenticeship"
     hesa_codes:
       - "14"
+  - id: 15
+    name: "teach_learn_change"
+    display_name: "Teach Learn Change"
+    description: "Teach Learn Change"
+    start_year: 2027
+    hesa_codes:
+      - "22"
