@@ -88,4 +88,25 @@ describe ApplicationController do
       end
     end
   end
+
+  describe "missing templates" do
+    controller do
+      skip_before_action :authenticate
+      skip_before_action :check_organisation_context_is_set
+
+      def index
+        render :missing
+      end
+    end
+
+    it "returns not acceptable when the request format is not html" do
+      get :index, format: :json
+
+      expect(response).to have_http_status(:not_acceptable)
+    end
+
+    it "raises when the html template is missing" do
+      expect { get :index }.to raise_error(ActionView::MissingTemplate)
+    end
+  end
 end
