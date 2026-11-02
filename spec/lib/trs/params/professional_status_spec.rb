@@ -59,6 +59,16 @@ module Trs
           end
         end
 
+        context "with degree type information from the hesa trainee detail" do
+          let(:expected_degree_id) { "dba69141-4101-4e05-80e0-524e3967d589" }
+          let(:hesa_trainee_detail) { build(:hesa_trainee_detail, itt_qualification_aim: "028") }
+          let(:trainee) { create(:trainee, :completed, :trn_received, hesa_trainee_detail:) }
+
+          it "includes a degree type mapping" do
+            expect(subject["degreeTypeId"]).to eq(expected_degree_id)
+          end
+        end
+
         context "trainee is deferred" do
           let(:trainee) { create(:trainee, :deferred) }
 
