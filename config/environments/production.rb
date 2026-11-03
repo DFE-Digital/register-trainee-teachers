@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/integer/time"
-require Rails.root.join("config/initializers/redis")
 require_dependency Rails.root.join("app/lib/custom_log_formatter")
 
 Rails.application.configure do
