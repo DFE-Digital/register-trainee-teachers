@@ -33,7 +33,6 @@ feature "pending awards" do
     end
 
     scenario "shows the job as dead when it failed in Solid Queue" do
-      given_there_are_no_jobs_in_sidekiq
       when_the_job_failed_in_solid_queue
       and_i_visit_the_pending_awards_page
       then_i_see_the_pending_awards_page
@@ -41,7 +40,6 @@ feature "pending awards" do
     end
 
     scenario "shows the job as retrying when Solid Queue will run it again" do
-      given_there_are_no_jobs_in_sidekiq
       when_the_job_is_waiting_to_be_retried_in_solid_queue
       and_i_visit_the_pending_awards_page
       then_i_see_the_pending_awards_page
@@ -49,7 +47,6 @@ feature "pending awards" do
     end
 
     scenario "doesn't show a delayed first run as retrying" do
-      given_there_are_no_jobs_in_sidekiq
       when_the_job_is_scheduled_for_its_first_run_in_solid_queue
       and_i_visit_the_pending_awards_page
       then_i_see_the_pending_awards_page
@@ -126,11 +123,6 @@ feature "pending awards" do
   def when_there_are_no_jobs_in_the_retry_or_dead_queue
     allow(Trs::FindDeadJobs).to receive(:call).and_return({})
     allow(Trs::FindRetryJobs).to receive(:call).and_return({})
-  end
-
-  def given_there_are_no_jobs_in_sidekiq
-    allow(Sidekiq::DeadSet).to receive(:new).and_return([])
-    allow(Sidekiq::RetrySet).to receive(:new).and_return([])
   end
 
   def when_the_job_failed_in_solid_queue

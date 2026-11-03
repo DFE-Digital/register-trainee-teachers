@@ -121,9 +121,6 @@ jobs:
   poll_delay_hours: 1
   max_poll_duration_days: 4
 
-sidekiq:
-  schedule_file: "config/sidekiq_cron_schedule.yml"
-
 pagination:
   records_per_page: 100
 

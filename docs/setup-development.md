@@ -29,8 +29,6 @@ To start all the processes you’ll need to first create a local `Procfile.dev` 
 web: bin/rails server -p 3000
 js: yarn build --watch
 css: yarn build:css --watch
-worker1: bundle exec sidekiq -t 25 -C config/sidekiq.default.yml
-worker2: bundle exec sidekiq -t 25 -C config/sidekiq.bulk-add-trainees.yml
 jobs: bin/jobs
 docs: cd tech_docs && bundle exec middleman serve
 ```

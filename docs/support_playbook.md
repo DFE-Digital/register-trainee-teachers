@@ -43,8 +43,7 @@ section in the trainee show page `/trainees/:slug`
 Sometimes the different jobs that send trainee info to TRS (such as
 `Trs::UpdateTraineeJob` and `Trs::UpdateProfessionalStatus`) will produce an
 error. You can view these failed jobs under Failed jobs in Mission Control
-(`/system-admin/jobs`). Jobs that failed before the move to Solid Queue are
-still in the Sidekiq UI.
+(`/system-admin/jobs`).
 
 Sometimes a trainee will have both a failed update job, and a failed update
 professional status job. In this case, make sure to re-run the update job
@@ -213,41 +212,6 @@ failed.map { deep_dig(_1.job.arguments["arguments"][0], "_aj_globalid").split("/
 failed.select { _1.message.starts_with? "status: 405" }.count
 # retry
 failed.select { _1.message.starts_with? "status: 405" }.each(&:retry)
-```
-
-## Managing the Sidekiq queue
-
-Jobs enqueued before the move to Solid Queue stay in Sidekiq until they have run.
-
-### Console commands
-
-#### Inspect jobs in a queue
-
-```ruby
-trs_queue = Sidekiq::Queue.new("trs")
-trs_queue.select { 1.value.include? "122803" } # select jobs containing user id value 122803
-```
-
-#### Tally by job type
-
-```ruby
-default_queue = Sidekiq::Queue.new("default")
-default_queue.map { 1["wrapped"] }.tally
-```
-
-#### Dead jobs
-
-```ruby
-include Hashable
-
-ds = Sidekiq::DeadSet.new
-
-# unique user ids
-ds.map { deep_dig(_1.args[0]["arguments"][0], "_aj_globalid").split("/").last }.uniq.count
-# eg count 405 errors
-ds.select { _1.item["error_message"].starts_with? "status: 405" }.count
-# retry
-ds.select { _1.item["error_message"].starts_with? "status: 405" }.map(&:retry)
 ```
 
 ## Settings

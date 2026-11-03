@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-describe SidekiqJobsHelper do
-  include SidekiqJobsHelper
+describe JobsHelper do
+  include JobsHelper
 
   around { |example| Timecop.freeze { example.run } }
 
@@ -46,7 +46,7 @@ describe SidekiqJobsHelper do
       end
     end
 
-    context "when there is no job in Sidekiq" do
+    context "when there is no job" do
       before do
         allow(Trs::FindDeadJobs).to receive(:call).and_return({})
         allow(Trs::FindRetryJobs).to receive(:call).and_return({})
@@ -93,7 +93,7 @@ describe SidekiqJobsHelper do
       end
     end
 
-    context "when there is no job in Sidekiq" do
+    context "when there is no job" do
       before do
         allow(Trs::FindDeadJobs).to receive(:call).and_return({})
         allow(Trs::FindRetryJobs).to receive(:call).and_return({})

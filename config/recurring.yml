@@ -24,10 +24,6 @@ malware_scan_uploads:
   schedule: "*/20 * * * *" # Every 20 minutes of every day.
   class: "MalwareScanningJob"
   queue: default
-remove_duplicate_dead_jobs:
-  schedule: "*/5 * * * *" # Every 5 minutes of every day.
-  class: "Sidekiq::RemoveDeadDuplicatesJob"
-  queue: default
 remove_duplicate_failed_jobs:
   schedule: "*/5 * * * *" # Every 5 minutes of every day.
   class: "SolidQueue::RemoveFailedDuplicatesJob"
