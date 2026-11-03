@@ -1,6 +1,7 @@
 name: Monitor Database logical replication
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 0,6,12,18 * * *"
 
@@ -27,7 +28,7 @@ jobs:
       uses: actions/checkout@v7
 
     - name: Monitor ${{ matrix.environment }}
-      uses: DFE-Digital/github-actions/monitor-postgres-wal@master
+      uses: DFE-Digital/github-actions/monitor-postgres-wal@monitor-postgres-fix
       with:
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
