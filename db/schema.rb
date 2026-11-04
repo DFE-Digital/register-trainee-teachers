@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_03_153527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -733,6 +733,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
     t.index ["searchable"], name: "index_providers_on_searchable", using: :gin
   end
 
+  create_table "relevant_degree_subjects", force: :cascade do |t|
+    t.bigint "academic_cycle_id", null: false
+    t.bigint "allocation_subject_id", null: false
+    t.datetime "created_at", null: false
+    t.string "hecos_code", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_cycle_id", "allocation_subject_id", "hecos_code"], name: "idx_relevant_degree_subjects_unique", unique: true
+    t.index ["academic_cycle_id"], name: "index_relevant_degree_subjects_on_academic_cycle_id"
+    t.index ["allocation_subject_id"], name: "index_relevant_degree_subjects_on_allocation_subject_id"
+  end
+
   create_table "school_data_downloads", force: :cascade do |t|
     t.datetime "completed_at"
     t.datetime "created_at", null: false
@@ -1210,6 +1221,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
   add_foreign_key "nationalisations", "trainees"
   add_foreign_key "provider_users", "providers"
   add_foreign_key "provider_users", "users"
+  add_foreign_key "relevant_degree_subjects", "academic_cycles"
+  add_foreign_key "relevant_degree_subjects", "allocation_subjects"
   add_foreign_key "sign_offs", "academic_cycles"
   add_foreign_key "sign_offs", "providers"
   add_foreign_key "sign_offs", "users"
