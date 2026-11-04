@@ -27,6 +27,7 @@ shared:
     - state
     - updated_at
   audits:
+    - sync_mode: incremental_deduped_history
     - id
     - auditable_id
     - auditable_type
