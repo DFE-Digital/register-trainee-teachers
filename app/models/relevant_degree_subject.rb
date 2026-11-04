@@ -31,8 +31,8 @@ class RelevantDegreeSubject < ApplicationRecord
   normalizes :hecos_code, with: ->(code) { code.strip }
 
   validates :hecos_code,
-    presence: true,
-    uniqueness: { scope: %i[academic_cycle_id allocation_subject_id] },
-    inclusion: { in: ->(_) { ReferenceData::DEGREE_SUBJECTS.hesa_codes }, allow_blank: true },
-    exclusion: { in: PLACEHOLDER_HECOS_CODES }
+            presence: true,
+            uniqueness: { scope: %i[academic_cycle_id allocation_subject_id] },
+            inclusion: { in: ->(_) { ReferenceData::DEGREE_SUBJECTS.hesa_codes }, allow_blank: true },
+            exclusion: { in: PLACEHOLDER_HECOS_CODES }
 end
