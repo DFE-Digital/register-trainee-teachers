@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_04_152407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -20,6 +20,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "funding_school_designation_type", ["disadvantaged", "special"]
   create_enum "future_interest_type", ["yes", "no", "unknown"]
   create_enum "trigger_type", ["provider", "trainee"]
 
@@ -520,6 +521,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
     t.string "payable_type"
     t.datetime "updated_at", null: false
     t.index ["payable_id", "payable_type"], name: "index_funding_payment_schedules_on_payable_id_and_payable_type"
+  end
+
+  create_table "funding_school_designations", force: :cascade do |t|
+    t.bigint "academic_cycle_id", null: false
+    t.datetime "created_at", null: false
+    t.enum "designation", null: false, enum_type: "funding_school_designation_type"
+    t.bigint "school_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_cycle_id"], name: "index_funding_school_designations_on_academic_cycle_id"
+    t.index ["school_id", "academic_cycle_id"], name: "idx_funding_school_designations_unique", unique: true
+    t.index ["school_id"], name: "index_funding_school_designations_on_school_id"
   end
 
   create_table "funding_trainee_summaries", force: :cascade do |t|
@@ -1205,6 +1217,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
+  add_foreign_key "funding_school_designations", "academic_cycles"
+  add_foreign_key "funding_school_designations", "schools"
   add_foreign_key "hesa_trainee_details", "trainees"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
