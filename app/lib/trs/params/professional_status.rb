@@ -91,7 +91,9 @@ module Trs
       def degree_type_id
         return nil if itt_qualification_aim.blank?
 
-        ::CodeSets::Trs::DEGREE_TYPES[itt_qualification_aim]
+        degree_type = ::ReferenceData::ITT_QUALIFICATION_AIMS.find_by_hesa_code(itt_qualification_aim)&.display_name || itt_qualification_aim
+
+        ::CodeSets::Trs::DEGREE_TYPES[degree_type]
       end
 
       def training_subject_references
