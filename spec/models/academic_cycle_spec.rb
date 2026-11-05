@@ -13,6 +13,10 @@ describe AcademicCycle do
 
   it { is_expected.to be_valid }
 
+  describe "associations" do
+    it { is_expected.to have_many(:funding_school_designations) }
+  end
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:start_date) }
     it { is_expected.to validate_presence_of(:end_date) }
