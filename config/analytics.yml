@@ -137,6 +137,13 @@ shared:
     - training_route
     - updated_at
     - updated_at
+  funding_school_designations:
+    - academic_cycle_id
+    - created_at
+    - designation
+    - id
+    - school_id
+    - updated_at
   hesa_metadata:
     - course_programme_title
     - created_at
