@@ -45,7 +45,7 @@ Then run the following command:
 
 To run the processes seperately, you can do the following:
 
-1. Run `bundle exec rails server` to launch the app on http://localhost:5000
+1. Run `bundle exec rails server -p 3000` to launch the app on http://localhost:3000
 2. Run `yarn build --watch` for js
 3. Run `yarn build:css --watch` for css
 4. Run `cd tech_docs && bundle exec middleman serve` to launch the docs on http://localhost:4567
