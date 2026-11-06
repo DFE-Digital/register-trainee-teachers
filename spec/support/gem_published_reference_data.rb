@@ -2,7 +2,7 @@
 
 # Copy of Hesa::ReferenceData::V20250 (removed in ff0e76ac4), kept so specs can check the YAML
 # labels still match the gem. Do not update it to match v2026.1.
-# rubocop:disable Rails/RedundantActiveRecordAllMethod
+# rubocop:disable-next Rails/RedundantActiveRecordAllMethod
 module GemPublishedReferenceData
   DEFAULT_CASE_ATTRIBUTES = %i[
     subject
@@ -71,4 +71,3 @@ module GemPublishedReferenceData
     end.freeze
   end
 end
-# rubocop:enable Rails/RedundantActiveRecordAllMethod

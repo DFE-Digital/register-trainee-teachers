@@ -252,11 +252,11 @@ private
   end
 
   def when_i_select_an_existing_school
-    find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@school.id)
+    find(:xpath, "//input[@name='placement[school_id]']", visible: :all).set(@school.id)
   end
 
   def when_i_select_another_existing_school
-    find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@other_school.id)
+    find(:xpath, "//input[@name='placement[school_id]']", visible: :all).set(@other_school.id)
   end
 
   def and_i_click_continue
@@ -294,9 +294,9 @@ private
   end
 
   def when_i_enter_details_for_a_new_school
-    fill_in("School or setting name", with: "St. Alice's Primary School", visible: false)
-    fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: false)
-    fill_in("Postcode", with: "OX1 1AA", visible: false)
+    fill_in("School or setting name", with: "St. Alice's Primary School", visible: :all)
+    fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: :all)
+    fill_in("Postcode", with: "OX1 1AA", visible: :all)
   end
 
   def and_i_see_the_first_placement_ready_for_confirmation

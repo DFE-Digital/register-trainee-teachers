@@ -138,7 +138,7 @@ private
 
   def when_i_select_an_existing_school(school: school_one)
     find(:xpath, "//input[@name='placement[school_search]']").set("")
-    find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(school.id)
+    find(:xpath, "//input[@name='placement[school_id]']", visible: :all).set(school.id)
   end
   alias_method :and_i_select_an_existing_school, :when_i_select_an_existing_school
 
