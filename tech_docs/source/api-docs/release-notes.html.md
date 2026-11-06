@@ -11,11 +11,13 @@ weight: 2
 
 * Removed deprecated `POST /trainees/{trainee_id}/recommend-for-qts`. Use `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
 * Renamed request field `qts_standards_met_date` to `qts_or_eyts_requirements_met_date` on `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
+* `hesa_id` is no longer required when `training_route` is HPITT ([HESA code `21`](/reference-data/v2026.1/training-route.html)), matching iQTS.
 
 ## v2026.1 — 20 March 2026
 
 ### Changes
 
+* `hesa_id` is no longer required when `training_route` is HPITT ([HESA code `21`](/reference-data/v2026.1/training-route.html)), matching iQTS.
 * Added [`GET /reference-data`](/api-docs/v2026.1/endpoints/get-reference-data.html) — returns HESA reference data and withdrawal reasons. Optional `field` query parameter returns a single field.
 * Renamed `POST /trainees/{trainee_id}/recommend-for-qts` to `POST /trainees/{trainee_id}/update-qts-or-eyts-status`. [The old URL](/api-docs/v2026.1/endpoints/post-trainees-trainee-id-recommend-for-qts.html) is still supported but deprecated. Move to [the new URL](/api-docs/v2026.1/endpoints/post-trainees-trainee-id-update-qts-or-eyts-status.html) before the 2027 academic year.
 * Added support for the iQTS training route ([HESA code `15`](/reference-data/v2026.1/training-route.html))
