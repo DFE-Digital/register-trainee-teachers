@@ -15,6 +15,7 @@ TRAINING_ROUTE_ENUMS = {
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
   hpitt_postgrad: "hpitt_postgrad",
   teacher_degree_apprenticeship: "teacher_degree_apprenticeship",
+  early_years_teacher_degree_apprenticeship: "early_years_teacher_degree_apprenticeship",
 }.freeze
 
 TRAINING_ROUTE_TYPES = {
@@ -23,6 +24,7 @@ TRAINING_ROUTE_TYPES = {
     TRAINING_ROUTE_ENUMS[:early_years_postgrad],
   ],
   postgrad_salaried: [
+    TRAINING_ROUTE_ENUMS[:school_direct_salaried],
     TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     TRAINING_ROUTE_ENUMS[:early_years_salaried],
     TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
@@ -37,6 +39,7 @@ TRAINING_ROUTE_TYPES = {
     TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
     TRAINING_ROUTE_ENUMS[:iqts],
     TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
+    TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship],
   ],
 }.freeze
 
@@ -69,6 +72,7 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
   TRAINING_ROUTE_ENUMS[:iqts] => 12,
   TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
+  TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship] => 15,
 }.freeze
 
 ROUTE_INITIATIVES = {
@@ -95,7 +99,8 @@ TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
 }.freeze
 
 UNDERGRAD_ROUTES = TRAINING_ROUTES.select { |training_route|
-  TRAINING_ROUTE_ENUMS.values_at(:early_years_undergrad, :provider_led_undergrad, :opt_in_undergrad, :teacher_degree_apprenticeship).include?(training_route)
+  TRAINING_ROUTE_ENUMS.values_at(:early_years_undergrad, :provider_led_undergrad, :opt_in_undergrad, :teacher_degree_apprenticeship,
+                                 :early_years_teacher_degree_apprenticeship).include?(training_route)
 }.freeze
 
 PLACEMENTS_ROUTES = TRAINING_ROUTES.select { |training_route|
@@ -112,12 +117,14 @@ TRAINING_PARTNER_ROUTES = %i[
   early_years_undergrad
   iqts
   teacher_degree_apprenticeship
+  early_years_teacher_degree_apprenticeship
 ].freeze
 EMPLOYING_SCHOOL_ROUTES = %i[
   school_direct_salaried
   pg_teaching_apprenticeship
   early_years_salaried
   teacher_degree_apprenticeship
+  early_years_teacher_degree_apprenticeship
 ].freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
@@ -143,6 +150,7 @@ TRAINING_ROUTE_AWARD_TYPE = {
   hpitt_postgrad: QTS_AWARD_TYPE,
   iqts: QTS_AWARD_TYPE,
   teacher_degree_apprenticeship: QTS_AWARD_TYPE,
+  early_years_teacher_degree_apprenticeship: EYTS_AWARD_TYPE,
 }.freeze
 
 EARLY_YEARS_ROUTE_NAME_PREFIX = "early_years"

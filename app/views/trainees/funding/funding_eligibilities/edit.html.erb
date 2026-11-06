@@ -1,0 +1,79 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.funding.funding_eligibilities.edit",
+                               has_errors: @funding_eligibility_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<% content_key = @funding_manager.eligibility_content_key %>
+<% i18n_scope = "views.forms.funding.funding_eligibilities.#{content_key}" %>
+<% academic_year = @trainee.start_academic_cycle&.label %>
+
+<% if content_key == :not_signed_off %>
+  <%= render("not_signed_off", i18n_scope:, academic_year:) %>
+<% elsif @funding_manager.no_funding? %>
+  <%= render("no_funding", i18n_scope:, academic_year:) %>
+<% else %>
+  <%= register_form_with(model: @funding_eligibility_form,
+                           url: trainee_funding_funding_eligibility_path(@trainee),
+                           method: :put,
+                           local: true) do |f| %>
+    <%= f.govuk_error_summary %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <% if @funding_manager.using_draft_amounts? %>
+          <%= render "trainees/funding/amount_not_signed_off_banner", academic_year: @funding_manager.funding_cycle&.label, draft: true %>
+        <% end %>
+        <%= render TraineeName::View.new(@trainee) %>
+        <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.funding_eligibilities.edit") %></h1>
+
+        <%= render "funding_context" %>
+
+        <p class="govuk-body"><%= t("#{i18n_scope}.description_html", academic_year:).html_safe %></p>
+
+        <% if content_key == :bursary_scholarship %>
+          <% student_finance_key = @funding_manager.offer_exception_subject? ? "student_finance_offer_exception_html" : "student_finance_html" %>
+          <p class="govuk-body"><%= t("#{i18n_scope}.#{student_finance_key}").html_safe %></p>
+        <% end %>
+
+        <p class="govuk-body">
+          <%= t("#{i18n_scope}.guidance_intro") %>
+          <%= govuk_link_to(t("#{i18n_scope}.guidance_link_text", academic_year:), @funding_manager.funding_guidance_url, new_tab: true) %>
+        </p>
+
+        <%= f.govuk_radio_buttons_fieldset(:funding_eligibility,
+                                           legend: {
+                                             text: t("#{i18n_scope}.question"),
+                                             size: "m",
+                                           },
+                                           hint: { text: t("#{i18n_scope}.hint", default: nil) }) do %>
+          <%= f.govuk_radio_button(
+            :funding_eligibility,
+            FUNDING_ELIGIBILITIES[:eligible],
+            label: { text: "Yes" },
+            link_errors: true,
+          ) %>
+          <%= f.govuk_radio_button(
+            :funding_eligibility,
+            FUNDING_ELIGIBILITIES[:not_eligible],
+            label: { text: "No" },
+          ) %>
+        <% end %>
+
+        <% if content_key == :training_bursary %>
+          <%= f.govuk_radio_buttons_fieldset(:custom_applying_for_grant,
+                                             legend: {
+                                               text: "Should the provider be awarded a grant?",
+                                               size: "m",
+                                             }) do %>
+            <%= f.govuk_radio_button(:custom_applying_for_grant, "yes", label: { text: "Yes" }, link_errors: true) %>
+            <%= f.govuk_radio_button(:custom_applying_for_grant, "no", label: { text: "No" }) %>
+          <% end %>
+        <% end %>
+
+        <%= f.govuk_submit %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

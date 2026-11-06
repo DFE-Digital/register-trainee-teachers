@@ -367,7 +367,8 @@ describe CourseDetailsForm, type: :model do
             end
 
             it "returns an error message for itt end date" do
-              expect(subject.errors.messages[:itt_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_end_date.future")
+              expect(subject.errors.messages[:itt_end_date]).to include I18n.t("activemodel.errors.models.course_details_form.attributes.itt_end_date.future",
+                                                                               year: Time.zone.now.year + 5)
             end
           end
 
@@ -702,7 +703,7 @@ describe CourseDetailsForm, type: :model do
     end
 
     describe "#stash" do
-      let(:fields) { params.merge({ course_uuid: nil }) }
+      let(:fields) { params.merge({ course_uuid: nil, extended_course_confirmed: false }) }
 
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and course_details" do
         expect(form_store).to receive(:set).with(trainee.id, :course_details, fields)

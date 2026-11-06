@@ -1,0 +1,156 @@
+<% change = ->(step, hidden) { { text: "Change", href: funding_management_add_step_path(step:, from: "check"), visually_hidden_text: hidden } } %>
+<% cycle = AcademicCycle.for_year(draft["academic_year"].to_i) %>
+<% routes = Array(draft["training_routes"]).reject(&:blank?) %>
+<% subject_names = AllocationSubject.where(id: Array(draft["allocation_subject_ids"]).reject(&:blank?)).order(:name).pluck(:name) %>
+<% list = ->(items) { content_tag(:ul, safe_join(items.map { |i| content_tag(:li, i) }), class: "govuk-list govuk-!-margin-0") } %>
+<% amount_cells = Funding::AmountMatrix.for(financial_incentive: draft["financial_incentives"], funding_method: draft["funding_method"],
+                                           training_routes: draft["training_routes"], start_year: draft["academic_year"]) %>
+<% yearly = Funding::AmountMatrix.yearly?(draft["training_routes"]) %>
+<% tiered = Wizards::AddFundingWizard.early_years_tiered?(draft) %>
+<% early_years = Wizards::AddFundingWizard.early_years_routes?(draft) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: "Check your answers", has_errors: @form.errors.present?) %>
+    <%= govuk_back_link(href: funding_management_add_step_path(step: Wizards::AddFundingWizard.last_applicable_step(draft))) %>
+
+    <span class="govuk-caption-l">Add funding</span>
+    <h1 class="govuk-heading-l">Check your answers</h1>
+
+    <% if @form.errors.present? %>
+      <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">There is a problem</h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <% @form.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= govuk_summary_list do |sl| %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Academic year") %>
+        <% row.with_value(text: cycle&.label || draft["academic_year"]) %>
+        <% row.with_action(**change.call("academic_year", "academic year")) %>
+      <% end %>
+
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Funding type") %>
+        <% row.with_value(text: funding_type_tag(draft["funding_type"])) %>
+        <% row.with_action(**change.call("funding_type", "funding type")) %>
+      <% end %>
+
+      <%# Grants and scholarships have one funding method, set by the wizard: no row. %>
+      <% if Wizards::AddFundingWizard.applicable_step?("funding_method", draft) %>
+        <% sl.with_row do |row| %>
+          <% row.with_key(text: "Bursary type") %>
+          <% row.with_value(text: funding_method_label(draft["funding_method"])) %>
+          <% row.with_action(**change.call("funding_method", "bursary type")) %>
+        <% end %>
+      <% end %>
+
+      <% if derived_award_types(routes).any? %>
+        <% sl.with_row do |row| %>
+          <% row.with_key(text: "Award type") %>
+          <% row.with_value(text: "#{derived_award_types(routes).join(', ')} (from the selected routes)") %>
+        <% end %>
+      <% end %>
+
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Education phase") %>
+        <% if early_years %>
+          <% row.with_value(text: safe_join([education_phase_label(draft["education_phase"]), content_tag(:span, "Set by the early years training route", class: "govuk-hint govuk-!-margin-0")], tag.br)) %>
+        <% else %>
+          <% row.with_value(text: education_phase_label(draft["education_phase"])) %>
+          <% row.with_action(**change.call("education_phase", "education phase")) %>
+        <% end %>
+      <% end %>
+
+      <% unless tiered || early_years %>
+        <% sl.with_row do |row| %>
+          <% row.with_key(text: "Financial Incentive criteria") %>
+          <% row.with_value(text: Funding::AmountMatrix.incentive_label(draft["financial_incentives"])) %>
+          <% row.with_action(**change.call("financial_incentives", "Financial Incentive criteria")) %>
+        <% end %>
+      <% end %>
+
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Training routes") %>
+        <% if tiered %>
+          <% row.with_value(text: safe_join([list.call(routes.map { |r| route_enum_name(r) }), content_tag(:span, "Set by the funding method", class: "govuk-hint govuk-!-margin-0")])) %>
+        <% else %>
+          <% row.with_value(text: list.call(routes.map { |r| route_enum_name(r) })) %>
+          <% row.with_action(**change.call("training_routes", "training routes")) %>
+        <% end %>
+      <% end %>
+
+      <% if Wizards::AddFundingWizard.applicable_step?("exception", draft) %>
+        <% sl.with_row do |row| %>
+          <% row.with_key(text: "Exception (Student Finance)") %>
+          <% row.with_value(text: yes_no_label(draft["student_finance_exception"])) %>
+          <% row.with_action(**change.call("exception", "exception")) %>
+        <% end %>
+      <% end %>
+
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Eligible subjects") %>
+        <% if Funding::EligibleSubjects.automatic?(routes) %>
+          <% row.with_value(text: safe_join([list.call(subject_names), content_tag(:span, "Set by the early years training route", class: "govuk-hint govuk-!-margin-0")])) %>
+        <% else %>
+          <% row.with_value(text: list.call(subject_names)) %>
+          <% row.with_action(**change.call("subjects", "eligible subjects")) %>
+        <% end %>
+      <% end %>
+
+      <% if tiered || yearly %>
+        <% amount_cells.each do |cell| %>
+          <% sl.with_row do |row| %>
+            <% row.with_key(text: cell.label) %>
+            <% row.with_value(text: format_currency(draft[cell.key.to_s].to_i)) %>
+            <% row.with_action(**change.call("amount", cell.label.downcase)) %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% sl.with_row do |row| %>
+          <% row.with_key(text: "Amount") %>
+          <% if amount_cells.size == 1 %>
+            <% row.with_value(text: format_currency(draft[amount_cells.first.key.to_s].to_i)) %>
+          <% else %>
+            <% row.with_value(text: list.call(amount_cells.map do |c|
+                 if c.optional? && draft[c.availability_key.to_s] == "no"
+                   "Unrelated degree: #{FundingMethod.not_available_label(draft["funding_type"])}"
+                 else
+                   "#{c.label}: #{format_currency(draft[c.key.to_s].to_i)}"
+                 end
+               end)) %>
+          <% end %>
+          <% row.with_action(**change.call("amount", "amount")) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% split_note = { Funding::AmountMatrix::DEGREE_RELEVANCY => "relevant / unrelated degree", Funding::AmountMatrix::DISADVANTAGED_SPECIAL => "disadvantaged / non-disadvantaged school" }[draft["financial_incentives"]] %>
+    <div class="govuk-inset-text">
+      This will create <strong><%= pluralize(routes.size * amount_cells.size, "funding record") %></strong> &mdash;
+      <% if yearly %>
+        one per training year, each linked to the selected subjects.
+      <% elsif tiered %>
+        one per tier (Tier 1, Tier 2 and Tier 3), each linked to the selected subjects.
+      <% else %>
+        one per training route<%= split_note ? " × #{split_note}" : "" %>, each linked to the selected subjects.
+      <% end %>
+      <% if amount_cells.any? { |c| c.optional? && draft[c.availability_key.to_s] == "no" } %>
+        The unrelated degree records are marked <strong><%= FundingMethod.not_available_label(draft["funding_type"]) %></strong>.
+      <% end %>
+    </div>
+
+    <%= form_with url: funding_management_add_create_path, method: :post do %>
+      <button class="govuk-button" data-module="govuk-button">Add funding</button>
+    <% end %>
+  </div>
+</div>

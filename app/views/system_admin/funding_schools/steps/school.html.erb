@@ -1,0 +1,15 @@
+<%# Type-ahead school search (URN, name or postcode) using the shared schools %>
+<%# autocomplete. Without JavaScript the field takes a 6-digit URN. %>
+<%= render layout: "system_admin/funding_schools/steps/wrapper",
+           locals: { title: "School", step: "school", form_html: { data: { module: "app-schools-autocomplete" } } } do |f| %>
+  <%= f.hidden_field :school_id, id: "school-id" %>
+  <%= f.govuk_text_field :school_search,
+        label: { text: "Which school is it?", size: "l", tag: "h1" },
+        hint: { text: "Search by URN, school name or postcode." },
+        "data-field" => "schools-autocomplete",
+        class: "govuk-input govuk-!-width-two-thirds" %>
+  <div id="schools-autocomplete-element"
+       data-default-value="<%= @step_form.school_search %>"
+       data-field-name="funding_school_designation_step_form[school_search]"
+       class="app-!-autocomplete--max-width-two-thirds"></div>
+<% end %>

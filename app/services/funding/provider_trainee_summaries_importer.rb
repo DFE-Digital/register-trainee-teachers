@@ -13,6 +13,7 @@ module Funding
         "Undergraduate opt-in" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
         "School Direct tuition fee" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
         "Teacher Degree Apprenticeship" => TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
+        "EYITT Teacher Degree Apprenticeship" => TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship],
       }.freeze
 
       def to_h
@@ -23,8 +24,11 @@ module Funding
 
     private
 
+      # Routes funded per training year have one row per year, with the year at
+      # the end of the label, for example "EYITT Teacher Degree Apprenticeship Year 2".
       def training_route
-        TRAINING_ROUTES.fetch(route, {})[cohort_level] || TRAINING_ROUTES[route]
+        label = Funding::TraineeSummaryRow.route_without_training_year(route)
+        TRAINING_ROUTES.fetch(label, {})[cohort_level] || TRAINING_ROUTES[label]
       end
 
       def cohort_level
@@ -61,6 +65,7 @@ module Funding
         { payment_type: "bursary", amount: "Tier 1 Amount", number_of_trainees: "Tier 1 Trainees", tier: 1 },
         { payment_type: "bursary", amount: "Tier 2 Amount", number_of_trainees: "Tier 2 Trainees", tier: 2 },
         { payment_type: "bursary", amount: "Tier 3 Amount", number_of_trainees: "Tier 3 Trainees", tier: 3 },
+        { payment_type: "grant", amount: "Grant Amount", number_of_trainees: "Grant Trainees", tier: nil },
       ]
     end
 

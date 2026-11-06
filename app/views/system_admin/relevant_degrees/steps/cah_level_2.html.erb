@@ -1,0 +1,6 @@
+<%= render layout: "system_admin/relevant_degrees/steps/wrapper", locals: { title: "CAH level 2 category", step: "cah_level_2" } do |f| %>
+  <% level_1 = draft["cah_level_1_code"] %>
+  <% options = ::Funding::CahReference.level_2_options(level_1).map { |code, name| [code, "#{name} (#{code})"] } %>
+  <%= f.govuk_collection_radio_buttons :cah_level_2_code, options, :first, :last,
+        legend: { text: "Which CAH level 2 category in #{::Funding::CahReference.level_1_name(level_1)}?", size: "l", tag: "h1" } %>
+<% end %>

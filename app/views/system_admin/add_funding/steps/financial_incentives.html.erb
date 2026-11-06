@@ -1,0 +1,10 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Financial Incentive criteria", step: "financial_incentives" } do |f| %>
+  <%= f.govuk_collection_radio_buttons :financial_incentives,
+        [
+          [Funding::AmountMatrix::DEGREE_RELEVANCY, "Degree relevancy"],
+          [Funding::AmountMatrix::DISADVANTAGED_SPECIAL, "Disadvantaged or special school"],
+          [Funding::AmountMatrix::NEITHER, "None of these"],
+        ], :first, :last,
+        legend: { text: "Which Financial Incentive criteria apply to this funding?", size: "l", tag: "h1" },
+        hint: { text: "This decides how the funding amount is captured on a later step. Only one can apply." } %>
+<% end %>

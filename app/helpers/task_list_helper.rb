@@ -143,7 +143,7 @@ module TaskListHelper
     when :funding_active
       {
         task_name: "Funding",
-        path: edit_trainee_funding_training_initiative_path(trainee),
+        path: FeatureService.enabled?(:funding_eligibility_step) ? edit_trainee_funding_funding_eligibility_path(trainee) : edit_trainee_funding_training_initiative_path(trainee),
         confirm_path: trainee_funding_confirm_path(trainee),
         status: ProgressService.call(
           validator: Funding::FormValidator.new(trainee),
@@ -161,6 +161,18 @@ module TaskListHelper
         classes: "funding",
         hint_text: "Complete course details first",
         active: false,
+      }
+
+    when :level_five_declaration_details
+      {
+        task_name: "Level 5 declaration",
+        path: edit_trainee_level_five_declaration_path(trainee),
+        confirm_path: trainee_level_five_declaration_confirm_path(trainee),
+        status: ProgressService.call(
+          validator: LevelFiveDeclarationForm.new(trainee),
+          progress_value: trainee.progress.level_five_declaration,
+        ).status,
+        classes: "level-five-declaration-details",
       }
 
     when :iqts_country_details

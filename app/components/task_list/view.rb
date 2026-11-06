@@ -14,16 +14,17 @@ private
   end
 
   class Row < GovukComponent::Base
-    attr_accessor :task_name, :status, :hint_text, :active, :classes
+    attr_accessor :task_name, :status, :hint_text, :error_text, :active, :classes
 
-    def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, active: true, classes: [])
-      @classes = [default_classes, classes]
+    def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, error_text: nil, active: true, classes: [])
+      @classes = [default_classes, classes, ("app-task-list__item--error" if error_text)]
 
       @task_name = task_name
       @path = path
       @confirm_path = confirm_path
       @status = status
       @hint_text = hint_text
+      @error_text = error_text
       @active = active
     end
 

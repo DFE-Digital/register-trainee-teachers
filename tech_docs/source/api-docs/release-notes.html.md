@@ -12,6 +12,14 @@ weight: 2
 * Removed deprecated `POST /trainees/{trainee_id}/recommend-for-qts`. Use `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
 * Renamed request field `qts_standards_met_date` to `qts_or_eyts_requirements_met_date` on `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
 
+## Upcoming — 2027 to 2028 academic year
+
+### Changes
+
+* Added support for the Early years teacher degree apprenticeship training route ([HESA code `23`](/reference-data/v2026.1/training-route.html)), for trainees starting in the 2027 to 2028 academic year or later
+* `course_year` must be `1` to `3` for the Early years teacher degree apprenticeship. It decides which training year's grant applies.
+* `employing_school_urn` is required for the Early years teacher degree apprenticeship
+
 ## v2026.1 — 20 March 2026
 
 ### Changes

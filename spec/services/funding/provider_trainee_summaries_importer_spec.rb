@@ -19,6 +19,7 @@ module Funding
             "Undergraduate opt-in" => "opt_in_undergrad",
             "School Direct tuition fee" => "school_direct_tuition_fee",
             "Teacher Degree Apprenticeship" => "teacher_degree_apprenticeship",
+            "EYITT Teacher Degree Apprenticeship" => "early_years_teacher_degree_apprenticeship",
           )
         end
       end
@@ -284,6 +285,50 @@ module Funding
 
       it "returns a list of missing provider accreditation ids" do
         expect(subject).to eq(["4444"])
+      end
+    end
+
+    context "with Early years teacher degree apprenticeship rows" do
+      let!(:provider) { create(:provider, accreditation_id: "5555") }
+      let(:row) do
+        {
+          "Provider" => "5555",
+          "Provider name" => "Provider 5",
+          "Academic Year" => "2028/29",
+          "Subject" => "Early years ITT",
+          "Lead School" => "Little Oaks Nursery School",
+          "Lead School ID" => "0005",
+          "Cohort Level" => "UG",
+        }
+      end
+      let(:summaries_attributes) do
+        {
+          "5555" => [
+            row.merge("Route" => "EYITT Teacher Degree Apprenticeship Year 1", "Grant Amount" => "16,500", "Grant Trainees" => "4"),
+            row.merge("Route" => "EYITT Teacher Degree Apprenticeship Year 2", "Grant Amount" => "11,000", "Grant Trainees" => "3"),
+          ],
+        }
+      end
+      let(:rows) { provider.funding_trainee_summaries.last.rows.order(:id) }
+
+      before { described_class.call(attributes: summaries_attributes) }
+
+      it "maps each training year row to the EYTDA route" do
+        expect(rows.map(&:training_route)).to all(eq("early_years_teacher_degree_apprenticeship"))
+      end
+
+      it "keeps the training year in the route label" do
+        expect(rows.map(&:route)).to eq([
+          "#{I18n.t('activerecord.attributes.trainee.training_routes.itt.early_years_teacher_degree_apprenticeship')} Year 1",
+          "#{I18n.t('activerecord.attributes.trainee.training_routes.itt.early_years_teacher_degree_apprenticeship')} Year 2",
+        ])
+      end
+
+      it "imports the grant amounts" do
+        amounts = rows.map { |summary_row| summary_row.amounts.sole }
+        expect(amounts.map(&:payment_type)).to all(eq("grant"))
+        expect(amounts.map(&:amount_in_pence)).to eq([1_650_000, 1_100_000])
+        expect(amounts.map(&:number_of_trainees)).to eq([4, 3])
       end
     end
   end

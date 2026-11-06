@@ -1,0 +1,25 @@
+<div class="govuk-!-margin-bottom-6">
+  <%= form_with url: funding_management_requirements_path, method: :get do %>
+    <div class="govuk-form-group govuk-!-margin-bottom-0" style="max-width:22em;">
+      <label class="govuk-label" for="academic_year">Academic year</label>
+      <select name="academic_year" id="academic_year" class="govuk-select">
+        <option value="all" <%= "selected" if all_years? %>>All academic years</option>
+        <% academic_cycles.each do |cycle| %>
+          <option value="<%= cycle.start_year %>" <%= "selected" if !all_years? && cycle == academic_cycle %>>
+            <%= cycle.label %> &mdash; <%= academic_year_status_label(cycle) %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+  <% end %>
+
+  <%= javascript_tag nonce: true do -%>
+    (function () {
+      var select = document.getElementById('academic_year');
+      if (!select) return;
+      select.addEventListener('change', function () {
+        if (this.form.requestSubmit) { this.form.requestSubmit(); } else { this.form.submit(); }
+      });
+    })();
+  <% end %>
+</div>

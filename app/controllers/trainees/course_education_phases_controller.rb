@@ -2,6 +2,8 @@
 
 module Trainees
   class CourseEducationPhasesController < BaseController
+    include CoursePrerequisitesCheckable
+
     def edit
       @course_education_phase_form = ::CourseEducationPhaseForm.new(trainee)
     end

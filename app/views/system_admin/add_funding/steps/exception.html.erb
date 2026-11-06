@@ -1,0 +1,6 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Exception (Student Finance)", step: "exception" } do |f| %>
+  <%= f.govuk_collection_radio_buttons :student_finance_exception, yes_no_options, :first, :last,
+        legend: { text: "Exception (Student Finance)", size: "l", tag: "h1" },
+        hint: { text: "Is a student finance exception allowed for this funding?" },
+        inline: true %>
+<% end %>

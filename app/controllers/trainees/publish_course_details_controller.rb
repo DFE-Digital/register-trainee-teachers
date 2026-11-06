@@ -2,6 +2,8 @@
 
 module Trainees
   class PublishCourseDetailsController < BaseController
+    include CoursePrerequisitesCheckable
+
     include Publishable
 
     before_action :redirect_to_course_years_page, only: :edit

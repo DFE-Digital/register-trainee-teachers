@@ -1,0 +1,8 @@
+<%# Funding sub-navigation, shared across the funding areas. %>
+<%# locals: active — one of :upload, :requirements, :schools (marks current). %>
+<%= render TabNavigation::View.new(aria_label: "Funding", items: [
+  { name: "Funding upload", url: funding_uploads_path, current: active == :upload },
+  { name: "Funding requirements", url: funding_management_requirements_path, current: active == :requirements },
+  { name: "Funding schools management", url: funding_management_schools_path, current: active == :schools },
+  { name: "Relevant degree CAH management", url: funding_management_relevant_degrees_path, current: active == :relevant_degrees },
+]) %>

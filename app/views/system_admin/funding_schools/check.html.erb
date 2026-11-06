@@ -1,0 +1,67 @@
+<% change = ->(step, hidden) { { text: "Change", href: funding_management_school_step_path(step:, from: "check"), visually_hidden_text: hidden } } %>
+<% school = @form.school %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: "Check this is the right school", has_errors: @form.errors.present?) %>
+    <%= govuk_back_link(href: funding_management_school_step_path(step: "school")) %>
+
+    <span class="govuk-caption-l">Add a school</span>
+    <h1 class="govuk-heading-l">Check this is the right school</h1>
+
+    <% if @form.errors.present? %>
+      <div class="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 class="govuk-error-summary__title">There is a problem</h2>
+          <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+              <% @form.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= govuk_summary_list do |sl| %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "School") %>
+        <% row.with_value(text: school&.name) %>
+        <% row.with_action(**change.call("school", "school")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "URN") %>
+        <% row.with_value(text: school&.urn) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Town") %>
+        <% row.with_value(text: school&.town.presence || "—") %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Postcode") %>
+        <% row.with_value(text: school&.postcode.presence || "—") %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Status") %>
+        <% row.with_value(text: school&.close_date ? govuk_tag(text: "Closed", colour: "grey") : govuk_tag(text: "Open", colour: "green")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Academic year") %>
+        <% row.with_value(text: @form.academic_cycle&.label) %>
+        <% row.with_action(**change.call("academic_year", "academic year")) %>
+      <% end %>
+      <% sl.with_row do |row| %>
+        <% row.with_key(text: "Designation") %>
+        <% row.with_value(text: @form.designation_label) %>
+        <% row.with_action(**change.call("designation", "designation")) %>
+      <% end %>
+    <% end %>
+
+    <%= form_with url: funding_management_save_school_path, method: :post do %>
+      <div class="app-button-row">
+        <button class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">Confirm and add</button>
+        <%= govuk_link_to "Cancel", funding_management_schools_path(academic_year: @form.academic_year), no_visited_state: true %>
+      </div>
+    <% end %>
+  </div>
+</div>

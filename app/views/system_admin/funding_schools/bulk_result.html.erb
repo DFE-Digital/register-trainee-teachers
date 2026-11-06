@@ -1,0 +1,50 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: "Bulk upload results") %>
+    <%= govuk_back_link(text: "Back to funding schools", href: funding_management_schools_path(academic_year: @form.academic_year)) %>
+
+    <span class="govuk-caption-l">Funding schools management</span>
+    <h1 class="govuk-heading-l">Bulk upload results</h1>
+
+    <% if @form.added.any? %>
+      <%= govuk_notification_banner(title_text: "Success", success: true) do |b| %>
+        <% b.with_heading(text: "#{@form.added.size} #{'school'.pluralize(@form.added.size)} added to the #{@form.academic_cycle&.label} #{@form.designation_label} list") %>
+      <% end %>
+    <% end %>
+
+    <h2 class="govuk-heading-m">Added (<%= @form.added.size %>)</h2>
+    <% if @form.added.empty? %>
+      <p class="govuk-body">No schools were added.</p>
+    <% else %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% @form.added.each do |school| %>
+          <li><%= school.urn %> — <%= school.name %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if @form.skipped.any? %>
+      <h2 class="govuk-heading-m">Skipped (<%= @form.skipped.size %>)</h2>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">URN</th>
+            <th scope="col" class="govuk-table__header">Reason</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @form.skipped.each do |row| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell"><%= row[:urn] %></td>
+              <td class="govuk-table__cell"><%= row[:error] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <p class="govuk-body govuk-!-margin-top-4">
+      <%= govuk_button_link_to "Back to funding schools", funding_management_schools_path(academic_year: @form.academic_year) %>
+    </p>
+  </div>
+</div>

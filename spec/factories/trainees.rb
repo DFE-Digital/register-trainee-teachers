@@ -437,6 +437,11 @@ FactoryBot.define do
       training_route { TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] }
     end
 
+    trait :early_years_teacher_degree_apprenticeship do
+      training_route { TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship] }
+      with_early_years_course_details
+    end
+
     trait :iqts do
       training_route { TRAINING_ROUTE_ENUMS[:iqts] }
       iqts_country { CodeSets::Countries::MAPPING.keys.sample }

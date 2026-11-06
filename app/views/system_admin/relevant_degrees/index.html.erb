@@ -1,0 +1,94 @@
+<% page_title = "Relevant degree CAH management" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= render "system_admin/tab_nav" %>
+    <%= render "system_admin/funding_nav", active: :relevant_degrees %>
+
+    <% if flash[:success] %>
+      <%= govuk_notification_banner(title_text: "Success", success: true) { |b| b.with_heading(text: flash[:success]) } %>
+    <% end %>
+    <% if flash[:alert] %>
+      <%= govuk_notification_banner(title_text: "Important") { |b| b.with_heading(text: flash[:alert]) } %>
+    <% end %>
+
+    <p class="govuk-body">
+      The degrees that count as a <strong>relevant degree</strong> for each ITT subject, by academic year —
+      grouped by CAH category and listed as HECoS codes. Only future academic years can be changed.
+    </p>
+
+    <%# Academic-year filter %>
+    <div class="govuk-!-margin-bottom-6">
+      <%= form_with url: funding_management_relevant_degrees_path, method: :get do %>
+        <div class="govuk-form-group govuk-!-margin-bottom-0" style="max-width:22em;">
+          <label class="govuk-label" for="academic_year">Academic year</label>
+          <select name="academic_year" id="academic_year" class="govuk-select" data-filter-select>
+            <option value="all" <%= "selected" if all_years? %>>All academic years</option>
+            <% AcademicCycle.order(start_date: :desc).each do |cycle| %>
+              <option value="<%= cycle.start_year %>" <%= "selected" if !all_years? && cycle == academic_cycle %>>
+                <%= cycle.label %> &mdash; <%= academic_year_status_label(cycle) %>
+              </option>
+            <% end %>
+          </select>
+        </div>
+      <% end %>
+      <%= javascript_tag nonce: true do -%>
+        (function () {
+          document.querySelectorAll('[data-filter-select]').forEach(function (s) {
+            s.addEventListener('change', function () {
+              if (this.form.requestSubmit) { this.form.requestSubmit(); } else { this.form.submit(); }
+            });
+          });
+        })();
+      <% end %>
+    </div>
+
+    <% editable = all_years? ? addable_cycles.any? : can_manage_relevant_degrees?(academic_cycle) %>
+    <% if FeatureService.enabled?("funding_management_edit") && editable %>
+      <div class="app-button-row govuk-!-margin-bottom-4">
+        <%= govuk_button_link_to "Add relevant degrees", funding_management_new_relevant_degree_path(academic_year: (academic_cycle&.start_year unless all_years?)) %>
+      </div>
+    <% end %>
+
+    <% if @mappings.empty? %>
+      <p class="govuk-body"><%= all_years? ? "No relevant degrees recorded." : "No relevant degrees recorded for #{academic_cycle&.label}." %></p>
+    <% else %>
+      <div style="overflow-x:auto;">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">ID</th>
+              <th scope="col" class="govuk-table__header">Academic year</th>
+              <th scope="col" class="govuk-table__header">ITT subject</th>
+              <th scope="col" class="govuk-table__header">CAH level 1</th>
+              <th scope="col" class="govuk-table__header">CAH level 2</th>
+              <th scope="col" class="govuk-table__header">HECoS code</th>
+              <th scope="col" class="govuk-table__header"><span class="govuk-visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @mappings.each do |m| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell govuk-!-font-weight-bold"><%= m.reference %></td>
+                <td class="govuk-table__cell"><%= m.academic_cycle.label %></td>
+                <td class="govuk-table__cell"><%= m.allocation_subject.name %></td>
+                <td class="govuk-table__cell"><%= m.cah_level_1_name %> <span class="govuk-hint govuk-!-margin-0"><%= m.cah_level_1_code %></span></td>
+                <td class="govuk-table__cell"><%= m.cah_level_2_name %> <span class="govuk-hint govuk-!-margin-0"><%= m.cah_level_2_code %></span></td>
+                <td class="govuk-table__cell"><%= m.hecos_name %> <span class="govuk-hint govuk-!-margin-0"><%= m.hecos_code %></span></td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">
+                  <% if can_manage_relevant_degrees?(m.academic_cycle) %>
+                    <%= button_to "Remove", funding_management_relevant_degree_path(m.id, academic_year: m.academic_cycle.start_year),
+                          method: :delete, class: "govuk-button govuk-button--warning govuk-!-margin-0",
+                          data: { module: "govuk-button" }, form: { style: "display:inline;" } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

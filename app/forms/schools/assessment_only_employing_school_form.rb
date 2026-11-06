@@ -2,6 +2,8 @@
 
 module Schools
   class AssessmentOnlyEmployingSchoolForm < TraineeForm
+    prepend RechecksFunding
+
     URN_REGEX = /^[0-9]{6}$/
     SEARCH_AGAIN_IDS = %w[results_search_again no_results_search_again].freeze
     MANUAL_FIELDS = %i[

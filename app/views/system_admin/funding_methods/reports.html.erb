@@ -1,0 +1,55 @@
+<% page_title = "Reports" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= render "system_admin/tab_nav" %>
+    <%= render "sub_nav" %>
+    <%= render "year_selector" %>
+
+    <h2 class="govuk-heading-m"><%= @report.title %></h2>
+
+    <p class="govuk-body">One row per funding band (route &times; amount) with its eligible subjects, grouped by funding type.</p>
+
+    <p class="govuk-body">
+      Download:
+      <%= govuk_link_to "CSV", funding_management_reports_path(academic_year: academic_cycle.start_year, format: :csv), no_visited_state: true %>
+      &middot;
+      <%= govuk_link_to "JSON", funding_management_reports_path(academic_year: academic_cycle.start_year, format: :json), no_visited_state: true %>
+    </p>
+
+    <% if @report.rows.empty? %>
+      <p class="govuk-body">No funding is recorded for this academic year.</p>
+    <% else %>
+      <% @report.rows_by_funding_type.each do |funding_type, rows| %>
+        <% yearly = rows.any? { |row| row[:training_year] } %>
+        <table class="govuk-table govuk-!-margin-top-6">
+          <caption class="govuk-table__caption govuk-table__caption--s"><%= funding_type_label(funding_type) %></caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Training route</th>
+              <% if yearly %>
+                <th scope="col" class="govuk-table__header">Training year</th>
+              <% end %>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric">Amount</th>
+              <th scope="col" class="govuk-table__header">Subjects</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% rows.each do |row| %>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header govuk-!-font-weight-regular"><%= funding_route_name(row[:training_route]) %></th>
+                <% if yearly %>
+                  <td class="govuk-table__cell"><%= training_year_label(row[:training_year], academic_cycle.start_year) || tag.span("—", class: "govuk-hint govuk-!-margin-0") %></td>
+                <% end %>
+                <td class="govuk-table__cell govuk-table__cell--numeric"><%= funding_amount_display(row[:amount], funding_type: row[:funding_type], availability: row[:availability]) %></td>
+                <td class="govuk-table__cell"><%= row[:subjects].presence&.gsub("; ", ", ") || content_tag(:span, "None recorded", class: "govuk-hint govuk-!-margin-0") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class TrainingRouteManager
+  # Early years teacher degree apprenticeship course length, in years, by
+  # whether the trainee holds a level 5 qualification.
+  LEVEL_FIVE_COURSE_YEARS = { true => 2, false => 3 }.freeze
+
   delegate :training_route, to: :trainee
 
   def initialize(trainee)
@@ -33,6 +37,20 @@ class TrainingRouteManager
 
   def requires_iqts_country?
     training_route == TRAINING_ROUTE_ENUMS[:iqts]
+  end
+
+  # Early years teacher degree apprenticeship trainees declare whether they hold
+  # a level 5 qualification.
+  def requires_level_five_declaration?
+    training_route == TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship]
+  end
+
+  # The EYTDA course is shorter for trainees who already hold a level 5
+  # qualification: 2 years, otherwise (or until it's declared) 3 years.
+  def level_five_course_years
+    return unless requires_level_five_declaration?
+
+    LEVEL_FIVE_COURSE_YEARS.fetch(trainee.level_five_qualification == true)
   end
 
   def award_type

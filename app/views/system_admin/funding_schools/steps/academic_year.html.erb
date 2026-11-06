@@ -1,0 +1,5 @@
+<%= render layout: "system_admin/funding_schools/steps/wrapper", locals: { title: "Academic year", step: "academic_year" } do |f| %>
+  <%= f.govuk_collection_radio_buttons :academic_year, addable_cycles.sort_by(&:start_year), :start_year, :label,
+        legend: { text: "Which academic year does this school apply to?", size: "l", tag: "h1" },
+        hint: { text: "Only years that have not gone live can be changed." } %>
+<% end %>

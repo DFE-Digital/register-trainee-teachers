@@ -183,6 +183,7 @@ module Funding
               FundingManager,
               applicable_available_funding: :grant_and_tiered_bursary,
               can_apply_for_funding_type?: true,
+              funding_prerequisites: [],
             )
           end
           let(:funding_method) { create(:funding_method, :bursary, training_route: :provider_led_postgrad) }

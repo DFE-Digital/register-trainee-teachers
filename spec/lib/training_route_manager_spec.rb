@@ -198,7 +198,8 @@ describe TrainingRouteManager do
       end
     end
 
-    (EMPLOYING_SCHOOL_ROUTES - %i[early_years_salaried]).each do |route|
+    # Early years routes need no placements, even when salaried (see above).
+    EMPLOYING_SCHOOL_ROUTES.reject { |route| EARLY_YEARS_TRAINING_ROUTES.key?(route.to_s) }.each do |route|
       context "for salaried route #{route}" do
         let(:trainee) { Struct.new(:training_route).new(TRAINING_ROUTE_ENUMS[route]) }
 

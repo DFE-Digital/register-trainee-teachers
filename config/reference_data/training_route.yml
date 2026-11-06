@@ -93,3 +93,10 @@ data:
     description: "Teacher Degree Apprenticeship"
     hesa_codes:
       - "14"
+  - id: 15
+    name: "early_years_teacher_degree_apprenticeship"
+    display_name: "Early Years Teacher Degree Apprenticeship"
+    description: "Early Years Teacher Degree Apprenticeship"
+    start_year: 2027
+    hesa_codes:
+      - "23"
