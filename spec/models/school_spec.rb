@@ -8,6 +8,7 @@ describe School do
     it { is_expected.to have_many(:funding_trainee_summaries) }
     it { is_expected.to have_many(:training_partner_trainees) }
     it { is_expected.to have_many(:employing_school_trainees) }
+    it { is_expected.to have_many(:funding_school_designations) }
   end
 
   context "callbacks" do

@@ -35,6 +35,7 @@ class School < ApplicationRecord
   has_many :employing_school_trainees, class_name: "Trainee", foreign_key: :employing_school_id, inverse_of: :employing_school
 
   has_many :placements
+  has_many :funding_school_designations
 
   pg_search_scope :search,
                   against: %i[urn name town postcode],

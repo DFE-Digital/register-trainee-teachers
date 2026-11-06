@@ -16,6 +16,7 @@
 #
 class AcademicCycle < ApplicationRecord
   has_many :funding_methods
+  has_many :funding_school_designations
 
   validates :start_date, :end_date, presence: true
   validate :start_date_before_end_date
