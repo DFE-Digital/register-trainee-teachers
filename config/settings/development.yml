@@ -10,6 +10,8 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   funding: true
+  routes:
+    teach_learn_change: true
 
 pagination:
   records_per_page: 30
