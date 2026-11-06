@@ -30,7 +30,7 @@ module Hesa
         end.freeze
       end
 
-      # rubocop:disable Style/HashEachMethods
+      # rubocop:disable-next Style/HashEachMethods
       def self.entries_for(type_name, type)
         rows = []
         type.values.each do |value|
@@ -45,7 +45,6 @@ module Hesa
         end
         rows.sort_by { |entry| entry[:hesa_code] }
       end
-      # rubocop:enable Style/HashEachMethods
 
       def self.values_for(type_name, type)
         entries_for(type_name, type).map { |entry| [entry[:hesa_code], entry[:display_name]] }

@@ -128,7 +128,7 @@ private
   end
 
   def when_i_select_an_existing_school
-    find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@school.id)
+    find(:xpath, "//input[@name='placement[school_id]']", visible: :all).set(@school.id)
   end
 
   def and_i_click_continue
