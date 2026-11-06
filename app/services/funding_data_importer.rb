@@ -6,7 +6,6 @@ class FundingDataImporter
   end
 
   def import_data
-    @funding_upload.pending!
     case @funding_upload.funding_type
     when "provider_payment_schedule"
       import_provider_payment_schedules
@@ -19,9 +18,9 @@ class FundingDataImporter
     else
       return false
     end
-    @funding_upload.processed!
-  rescue StandardError
-    @funding_upload.failed!
+    @funding_upload.process!
+  rescue StandardError => e
+    @funding_upload.fail!(e)
   end
 
 private

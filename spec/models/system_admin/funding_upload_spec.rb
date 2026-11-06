@@ -20,5 +20,39 @@ module SystemAdmin
         end
       end
     end
+
+    describe "events" do
+      subject { create(:funding_upload) }
+
+      describe "#process!" do
+        it do
+          expect {
+            subject.process!
+          }.to change(subject, :status).from("pending").to("processed")
+        end
+      end
+
+      describe "#fail!" do
+        context "when an error is passed" do
+          it "sets the status to failed with the error class and message" do
+            expect {
+              subject.fail!(ArgumentError.new("something went wrong"))
+            }.to change(subject, :status).from("pending").to("failed")
+
+            expect(subject.reload.error_message).to eq("ArgumentError: something went wrong")
+          end
+        end
+
+        context "when no error is passed" do
+          it "sets the status to failed without an error message" do
+            expect {
+              subject.fail!
+            }.to change(subject, :status).from("pending").to("failed")
+
+            expect(subject.reload.error_message).to be_nil
+          end
+        end
+      end
+    end
   end
 end

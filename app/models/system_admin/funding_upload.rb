@@ -28,7 +28,19 @@ module SystemAdmin
       provider_payment_schedule: 3,
     }
 
-    enum :status, { pending: 0, processed: 1, failed: 2 }
+    enum :status, { pending: 0, processed: 1, failed: 2 } do
+      event :process do
+        transition %i[pending] => :processed
+      end
+
+      event :fail do
+        before do |error|
+          self.error_message = "#{error.class}: #{error.message}" if error
+        end
+
+        transition %i[pending] => :failed
+      end
+    end
 
     def self.recently_processed_upload_for(funding_type)
       where(funding_type: funding_type, status: :processed).order(created_at: :desc).first
