@@ -106,7 +106,7 @@ module Api
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
-      validates :hesa_id, presence: true, unless: :iqts_route?
+      validates :hesa_id, presence: true, unless: :hesa_id_optional?
       validates :study_mode, presence: true, if: :requires_study_mode?
       validates :email, presence: true, length: { maximum: 255 }
       validate { |record| EmailFormatValidator.new(record).validate }
@@ -517,6 +517,14 @@ module Api
 
       def iqts_route?
         training_route == TRAINING_ROUTE_ENUMS[:iqts]
+      end
+
+      def hpitt_route?
+        training_route == TRAINING_ROUTE_ENUMS[:hpitt_postgrad]
+      end
+
+      def hesa_id_optional?
+        iqts_route? || hpitt_route?
       end
     end
   end

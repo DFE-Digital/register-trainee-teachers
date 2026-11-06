@@ -2402,6 +2402,15 @@ describe "`POST /api/v2026.1/trainees` endpoint" do
       trainee = Trainee.last
       expect(trainee.training_route).to eq("hpitt_postgrad")
     end
+
+    context "when hesa_id is not provided" do
+      let(:data) { super().except(:hesa_id) }
+
+      it "creates a trainee without a hesa_id" do
+        expect(response).to have_http_status(:created)
+        expect(Trainee.last.hesa_id).to be_nil
+      end
+    end
   end
 
   context "when creating a trainee with IQTS route" do

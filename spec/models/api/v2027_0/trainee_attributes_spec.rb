@@ -50,6 +50,12 @@ RSpec.describe Api::V20270::TraineeAttributes do
         it { is_expected.not_to validate_presence_of(:hesa_id) }
       end
 
+      context "when the training route is HPITT" do
+        subject { described_class.new(training_route: TRAINING_ROUTE_ENUMS[:hpitt_postgrad]) }
+
+        it { is_expected.not_to validate_presence_of(:hesa_id) }
+      end
+
       describe "length" do
         subject { described_class.new(hesa_id: SecureRandom.random_number(10**character_length).to_s.rjust(character_length, "0")) }
 
