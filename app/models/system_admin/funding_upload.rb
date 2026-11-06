@@ -4,13 +4,14 @@
 #
 # Table name: funding_uploads
 #
-#  id           :bigint           not null, primary key
-#  csv_data     :text
-#  funding_type :integer
-#  month        :integer
-#  status       :integer          default("pending")
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id            :bigint           not null, primary key
+#  csv_data      :text
+#  error_message :string
+#  funding_type  :integer
+#  month         :integer
+#  status        :integer          default("pending")
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
 #
 # Indexes
 #
