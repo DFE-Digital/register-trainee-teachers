@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_06_131224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -560,6 +560,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_01_105615) do
   create_table "funding_uploads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "csv_data"
+    t.string "error_message"
     t.integer "funding_type"
     t.integer "month"
     t.integer "status", default: 0
