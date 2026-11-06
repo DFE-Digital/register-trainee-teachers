@@ -5,7 +5,7 @@ require "rails_helper"
 module ErrorSummary
   describe View, type: :component do
     context "when there are errors" do
-      let(:error_markup) {  "<li>This is an error item</li>".html_safe }
+      let(:error_markup) { "<li>This is an error item</li>".html_safe }
 
       before do
         render_inline(described_class.new(renderable: true)) do

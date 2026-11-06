@@ -60,3 +60,8 @@ RSpec/IndexedLet:
 
 RSpec/Output:
   Enabled: false
+
+# Prefer have_enqueued_job over receive(:perform_later). Existing specs use the
+# receive/have_received style; revisit as a deliberate migration later.
+RSpecRails/ReceivePerformLater:
+  Enabled: false

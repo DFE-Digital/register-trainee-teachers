@@ -893,6 +893,7 @@ private
   end
 
   def when_i_click_the_guidance_link
+    @original_window = current_window
     @guidance_window = window_opened_by do
       click_on "guidance on how add trainee information to the CSV template"
     end
@@ -907,7 +908,7 @@ private
       then_i_receive_the_empty_csv_file
     end
     @guidance_window.close
-    switch_to_window(windows.first)
+    switch_to_window(@original_window)
   end
 
   def when_i_visit_the_csv_docs_home_path

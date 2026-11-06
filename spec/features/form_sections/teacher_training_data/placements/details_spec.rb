@@ -47,9 +47,9 @@ private
   end
 
   def when_i_enter_details_for_a_new_school
-    fill_in("School or setting name", with: "St. Alice's Primary School", visible: false)
-    fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: false)
-    fill_in("Postcode", with: "OX1 1AA", visible: false)
+    fill_in("School or setting name", with: "St. Alice's Primary School", visible: :all)
+    fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: :all)
+    fill_in("Postcode", with: "OX1 1AA", visible: :all)
   end
 
   def then_i_see_the_confirmation_page
