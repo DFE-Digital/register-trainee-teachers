@@ -4,7 +4,9 @@ require "rails_helper"
 
 module Sections
   describe View do
-    let(:trainees_sections_component) do
+    let(:trainees_sections_component) { new_trainees_sections_component }
+
+    def new_trainees_sections_component
       form = Submissions::TrnValidator.new(trainee:)
       described_class.new(trainee: trainee, section: section, form: form, editable: true)
     end
@@ -95,7 +97,7 @@ module Sections
 
         before {
           trainee.progress.course_details = true
-          render_inline(trainees_sections_component)
+          render_inline(new_trainees_sections_component)
         }
 
         it_behaves_like renders_incomplete_section, :funding, :incomplete
@@ -123,7 +125,7 @@ module Sections
       context "trainee in progress funding section" do
         before do
           trainee.progress.course_details = true
-          render_inline(trainees_sections_component)
+          render_inline(new_trainees_sections_component)
         end
 
         it_behaves_like renders_incomplete_section, :funding, :in_progress_valid
