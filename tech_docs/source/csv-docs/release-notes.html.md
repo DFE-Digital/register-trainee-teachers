@@ -9,6 +9,7 @@ weight: 2
 
 ### Changes
 
+* `hesa_id` is no longer required when `training_route` is HPITT (HESA code `21`), matching iQTS
 * Added support for the iQTS training route (HESA code `15`)
 * New `iqts_country` column. Mandatory when the training route is iQTS. Accepts a valid HESA country code.
 * Added support for the Assessment only training route (HESA code `16`)
