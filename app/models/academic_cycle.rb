@@ -126,7 +126,7 @@ class AcademicCycle < ApplicationRecord
 
   alias_method :itt_census_date, :second_wednesday_of_october
 
-  alias_method :itt_census_end_date, :last_day_of_october
+  alias_method :itt_census_end_date, :tenth_of_november
 
   def performance_profile_date_range
     @performance_profile_date_range ||= second_monday_of_january..end_date_of_performance_profile
