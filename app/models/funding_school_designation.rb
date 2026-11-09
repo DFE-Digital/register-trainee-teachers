@@ -5,7 +5,7 @@
 # Table name: funding_school_designations
 #
 #  id                :bigint           not null, primary key
-#  designation       :enum             not null
+#  designation       :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  academic_cycle_id :bigint           not null

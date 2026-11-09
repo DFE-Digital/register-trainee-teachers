@@ -16,6 +16,6 @@ describe FundingSchoolDesignation do
   end
 
   describe "enums" do
-    it { is_expected.to define_enum_for(:designation).with_values(disadvantaged: "disadvantaged", special: "special").backed_by_column_of_type(:enum) }
+    it { is_expected.to define_enum_for(:designation).with_values(disadvantaged: "disadvantaged", special: "special").backed_by_column_of_type(:string) }
   end
 end

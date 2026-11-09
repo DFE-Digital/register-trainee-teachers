@@ -20,7 +20,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_04_152407) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "funding_school_designation_type", ["disadvantaged", "special"]
   create_enum "future_interest_type", ["yes", "no", "unknown"]
   create_enum "trigger_type", ["provider", "trainee"]
 
@@ -526,7 +525,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_04_152407) do
   create_table "funding_school_designations", force: :cascade do |t|
     t.bigint "academic_cycle_id", null: false
     t.datetime "created_at", null: false
-    t.enum "designation", null: false, enum_type: "funding_school_designation_type"
+    t.string "designation", null: false
     t.bigint "school_id", null: false
     t.datetime "updated_at", null: false
     t.index ["academic_cycle_id"], name: "index_funding_school_designations_on_academic_cycle_id"
