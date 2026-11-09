@@ -211,9 +211,9 @@ describe AcademicCycle do
   describe "#in_census_range?" do
     it "returns whether a date is in the census range" do
       expect(academic_cycle.in_census_range?(academic_cycle.first_day_of_september)).to be true
-      expect(academic_cycle.in_census_range?(academic_cycle.last_day_of_october)).to be true
+      expect(academic_cycle.in_census_range?(academic_cycle.tenth_of_november)).to be true
       expect(academic_cycle.in_census_range?(academic_cycle.first_day_of_september - 1.day)).to be false
-      expect(academic_cycle.in_census_range?(academic_cycle.last_day_of_october + 1.day)).to be false
+      expect(academic_cycle.in_census_range?(academic_cycle.tenth_of_november + 1.day)).to be false
     end
   end
 
@@ -231,6 +231,14 @@ describe AcademicCycle do
 
     it { expect(subject.month).to eq 10 }
     it { expect(subject.day).to eq(31) }
+    it { expect(subject).to be_a(Date) }
+  end
+
+  describe "#tenth_of_november" do
+    subject { academic_cycle.tenth_of_november }
+
+    it { expect(subject.month).to eq 11 }
+    it { expect(subject.day).to eq(10) }
     it { expect(subject).to be_a(Date) }
   end
 
