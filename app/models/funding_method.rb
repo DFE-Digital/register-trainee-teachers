@@ -4,13 +4,15 @@
 #
 # Table name: funding_methods
 #
-#  id                :bigint           not null, primary key
-#  amount            :integer          not null
-#  funding_type      :integer
-#  training_route    :string           not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  academic_cycle_id :bigint
+#  id                  :bigint           not null, primary key
+#  amount              :integer          not null
+#  degree_relevance    :string
+#  funding_type        :integer
+#  school_disadvantage :string
+#  training_route      :string           not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  academic_cycle_id   :bigint
 #
 # Indexes
 #
@@ -30,4 +32,6 @@ class FundingMethod < ApplicationRecord
   validates :amount, presence: true
 
   enum :funding_type, FUNDING_TYPES
+  enum :degree_relevance, { relevant: "relevant", unrelated: "unrelated" }, prefix: :degree
+  enum :school_disadvantage, { disadvantaged: "disadvantaged", non_disadvantaged: "non_disadvantaged" }, prefix: :school
 end
