@@ -36,7 +36,7 @@ describe SubjectSpecialismForm, type: :model do
     let(:params) { { course_subject_one: "special" } }
 
     it "uses FormStore to temporarily save the fields under a key combination of trainee ID and subject_specialism" do
-      expect(form_store).to receive(:set).with(trainee.id, :subject_specialism,  subject.fields)
+      expect(form_store).to receive(:set).with(trainee.id, :subject_specialism, subject.fields)
       subject.stash
     end
   end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/NestedGroups
+# rubocop:disable-next RSpec/NestedGroups
 describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
   let(:trainee_route_trait) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
   let(:trainee) do
@@ -3472,4 +3472,3 @@ describe "`PUT /api/v2026.1/trainees/:id` endpoint" do
     end
   end
 end
-# rubocop:enable RSpec/NestedGroups
