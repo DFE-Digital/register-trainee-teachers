@@ -226,7 +226,7 @@ describe AcademicCycle do
     it { expect(subject).to be_a(Date) }
   end
 
-  describe "#last_day_of_octoberr" do
+  describe "#last_day_of_october" do
     subject { academic_cycle.last_day_of_october }
 
     it { expect(subject.month).to eq 10 }
