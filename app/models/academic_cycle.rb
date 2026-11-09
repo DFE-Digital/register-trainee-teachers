@@ -10,10 +10,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-# Indexes
-#
-#  academic_cycles_date_range  (tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)) USING gist
-#
 class AcademicCycle < ApplicationRecord
   has_many :funding_methods
 
@@ -118,6 +114,10 @@ class AcademicCycle < ApplicationRecord
     Date.new(start_year, 10, -1)
   end
 
+  def tenth_of_november
+    Date.new(start_year, 11, 10)
+  end
+
   def in_census_range?(date)
     census_date_range.cover?(date)
   end
@@ -133,7 +133,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def census_date_range
-    @census_date_range ||= first_day_of_september..last_day_of_october
+    @census_date_range ||= first_day_of_september..tenth_of_november
   end
 
 private
