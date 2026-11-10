@@ -161,7 +161,7 @@ group :development, :test do
   gem "bullet"
 
   # Testing framework
-  gem "rspec-rails", "~> 8.0.4"
+  gem "rspec-rails", "~> 8.1.0"
 
   gem "rails-controller-testing"
 
