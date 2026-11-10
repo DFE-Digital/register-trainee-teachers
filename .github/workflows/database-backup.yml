@@ -93,7 +93,7 @@ jobs:
       name: production
     services:
       postgres:
-        image: postgres:11.10
+        image: postgres:17
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -152,6 +152,8 @@ jobs:
 
     - name: Setup postgres client
       uses: DFE-Digital/github-actions/install-postgres-client@master
+      with:
+        version: '17'
 
     - name: Restore backup to aks productiondata database
       shell: bash
