@@ -245,9 +245,8 @@ describe CourseDetailsForm, type: :model do
           let(:academic_cycle) { build(:academic_cycle, start_date: "2021-09-01", end_date: "2022-08-31") }
 
           before do
-            # rubocop:disable RSpec/SubjectStub
+            # rubocop:disable-next RSpec/SubjectStub
             allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
-            # rubocop:enable RSpec/SubjectStub
             subject.valid?
           end
 
@@ -259,9 +258,8 @@ describe CourseDetailsForm, type: :model do
             let(:academic_cycle) { build(:academic_cycle, start_date: "2020-09-01", end_date: "2021-08-31") }
 
             before do
-              # rubocop:disable RSpec/SubjectStub
+              # rubocop:disable-next RSpec/SubjectStub
               allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
-              # rubocop:enable RSpec/SubjectStub
               subject.valid?
             end
 
@@ -278,9 +276,8 @@ describe CourseDetailsForm, type: :model do
             let(:academic_cycle) { build(:academic_cycle) }
 
             before do
-              # rubocop:disable RSpec/SubjectStub
+              # rubocop:disable-next RSpec/SubjectStub
               allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
-              # rubocop:enable RSpec/SubjectStub
               subject.valid?
             end
 
@@ -315,9 +312,8 @@ describe CourseDetailsForm, type: :model do
             let(:academic_cycle) { build(:academic_cycle, start_date: "2021-09-01", end_date: "2022-08-31") }
 
             before do
-              # rubocop:disable RSpec/SubjectStub
+              # rubocop:disable-next RSpec/SubjectStub
               allow(subject).to receive(:academic_cycle).and_return(academic_cycle)
-              # rubocop:enable RSpec/SubjectStub
               subject.valid?
             end
 

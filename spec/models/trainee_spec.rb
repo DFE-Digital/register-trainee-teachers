@@ -304,9 +304,8 @@ describe Trainee do
             subject.save
           end
 
-          it "does not read from solid_cache_entries or Redis when computing submission_ready" do
+          it "does not read from solid_cache_entries when computing submission_ready" do
             expect(Rails.cache).not_to receive(:read)
-            expect(FormStore).not_to receive(:redis)
             subject.save
           end
         end

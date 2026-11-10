@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "edit ethnic group" do
-  background  do
+  background do
     given_i_am_authenticated
     given_a_trainee_exists(:diversity_disclosed, :disability_not_provided)
   end

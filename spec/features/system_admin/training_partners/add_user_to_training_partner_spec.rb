@@ -89,7 +89,7 @@ feature "Add user to training partners" do
 
   def when_i_select_a_training_partner
     fill_in "system-admin-user-training-partners-form-query-field", with: school_training_partner.name
-    first("input#training-partners-id", visible: false).set(school_training_partner.id)
+    first("input#training-partners-id", visible: :all).set(school_training_partner.id)
   end
 
   def and_i_click_the_submit_button

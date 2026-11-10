@@ -118,7 +118,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.10.2"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.16.1"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.16.2"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
@@ -161,7 +161,7 @@ group :development, :test do
   gem "bullet"
 
   # Testing framework
-  gem "rspec-rails", "~> 8.0.4"
+  gem "rspec-rails", "~> 8.1.0"
 
   gem "rails-controller-testing"
 
@@ -203,12 +203,12 @@ end
 
 group :test do
   # Headless browser testing kit
-  gem "cuprite", "~> 0.17"
+  gem "cuprite", "~> 0.20"
   gem "selenium-webdriver"
 
   gem "shoulda-matchers", "~> 8.0"
   # Code coverage reporter
-  gem "simplecov", "~> 1.1.1", require: false
+  gem "simplecov", "~> 1.3.2", require: false
   gem "simplecov-json"
 
   # Page objects
