@@ -26,7 +26,7 @@ Add a file to config/settings called development.local.yml containing the follow
 To start all the processes you’ll need to first create a local `Procfile.dev` file with the following:
 
 ```
-web: bin/rails server -p 3000
+web: bin/rails server -p 5000
 js: yarn build --watch
 css: yarn build:css --watch
 worker1: bundle exec sidekiq -t 25 -C config/sidekiq.default.yml
@@ -45,7 +45,7 @@ Then run the following command:
 
 To run the processes seperately, you can do the following:
 
-1. Run `bundle exec rails server -p 3000` to launch the app on http://localhost:3000
+1. Run `bundle exec rails server` to launch the app on http://localhost:5000
 2. Run `yarn build --watch` for js
 3. Run `yarn build:css --watch` for css
 4. Run `cd tech_docs && bundle exec middleman serve` to launch the docs on http://localhost:4567
