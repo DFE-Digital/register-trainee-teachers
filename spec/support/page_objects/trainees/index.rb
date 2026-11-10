@@ -27,6 +27,7 @@ module PageObjects
       element :record_source_api_checkbox, "#record_source-api"
       element :record_source_csv_checkbox, "#record_source-csv"
       element :provider_led_postgrad_checkbox, "#training_route-provider_led_postgrad"
+      element :teach_learn_change_checkbox, "#training_route-teach_learn_change"
       element :subject, "#subject"
       element :provider_filter, "#provider"
 

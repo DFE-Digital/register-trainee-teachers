@@ -19,5 +19,11 @@ describe "`GET /reference-data` endpoint" do
         Hesa::ReferenceData::V20261.api_payload(field: :sex).deep_stringify_keys,
       )
     end
+
+    it "excludes the teach learn change training route" do
+      codes = response.parsed_body.dig("training_route", "entries").pluck("code")
+
+      expect(codes).not_to include("22")
+    end
   end
 end

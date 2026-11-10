@@ -127,6 +127,27 @@ module BulkUpdate
           end
         end
 
+        context "when the row is a teach_learn_change trainee" do
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/v2026_1/five_trainees_with_degree.csv").read }
+          let(:row) { parsed_csv.first }
+
+          before do
+            AcademicCycle.for_year(2027) || create(:academic_cycle, cycle_year: 2027)
+
+            row["training_route"] = "'22"
+            row["itt_start_date"] = "'2027-09-01"
+            row["trainee_start_date"] = "'2027-09-01"
+            row["itt_end_date"] = "'2028-07-01"
+          end
+
+          it "returns a validation error for training_route" do
+            expect { result }.not_to change { Trainee.count }
+
+            expect(result.success).to be(false)
+            expect(result.errors).to include(/training_route has invalid reference data value of/)
+          end
+        end
+
         context "when the row uses the early years course_age_range without an early years training_route" do
           let(:row) { parsed_csv.first }
 

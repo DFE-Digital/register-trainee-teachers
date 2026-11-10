@@ -45,6 +45,17 @@ feature "Create trainee journey" do
     and_trainee_record_source_is_set_to_manual
   end
 
+  scenario "setting up a Teach Learn Change record", "feature_routes.teach_learn_change": true do
+    and_i_select_teach_learn_change_route
+    and_i_save_the_form
+    then_i_should_see_the_new_trainee_overview
+    and_trainee_record_source_is_set_to_manual
+  end
+
+  scenario "teach learn change radio button should not be shown", "feature_routes.teach_learn_change": false do
+    and_i_should_not_see_teach_learn_change_route
+  end
+
 private
 
   def when_i_am_viewing_the_list_of_trainees
@@ -71,9 +82,18 @@ private
     new_trainee_page.teacher_degree_apprenticeship.click
   end
 
+  def and_i_select_teach_learn_change_route
+    new_trainee_page.teach_learn_change.click
+  end
+
   def and_i_should_not_see_school_direct_tuition_fee_route
     expect(new_trainee_page).to be_displayed
     expect(new_trainee_page).not_to have_school_direct_tuition_fee
+  end
+
+  def and_i_should_not_see_teach_learn_change_route
+    expect(new_trainee_page).to be_displayed
+    expect(new_trainee_page).not_to have_teach_learn_change
   end
 
   def and_i_save_the_form

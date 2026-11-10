@@ -22,6 +22,7 @@ describe Trainee do
         TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
         TRAINING_ROUTE_ENUMS[:iqts] => 12,
         TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
+        TRAINING_ROUTE_ENUMS[:teach_learn_change] => 15,
       )
     end
 
