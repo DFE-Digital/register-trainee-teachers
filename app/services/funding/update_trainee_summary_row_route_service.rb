@@ -10,7 +10,7 @@ module Funding
       ).freeze
 
       def initialize(route, cohort_level)
-        @route        = route.strip
+        @route        = Funding::TraineeSummaryRow.route_without_training_year(route.strip)
         @cohort_level = cohort_level.to_s.strip
       end
 

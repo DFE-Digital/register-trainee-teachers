@@ -1,0 +1,79 @@
+<%# Shared filter bar for the entries tables. locals: %>
+<%#   year_cycles — collection for the academic-year dropdown %>
+<%#   url — form action %>
+<%#   subjects — (optional) collection for a Subject dropdown; omit to hide it %>
+<%#   show_all_years — (optional, default true) offer "All academic years" %>
+<%#   clear_url — (optional, default url) where "Clear filters" goes %>
+<% subjects = local_assigns[:subjects] %>
+<% show_all_years = local_assigns.fetch(:show_all_years, true) %>
+<% clear_url = local_assigns.fetch(:clear_url, url) %>
+<div class="govuk-!-margin-bottom-6">
+  <%= form_with url: url, method: :get do %>
+    <div class="app-filter-row">
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <label class="govuk-label" for="academic_year">Academic year</label>
+        <select name="academic_year" id="academic_year" class="govuk-select" data-filter-select>
+          <% if show_all_years %>
+            <option value="all" <%= "selected" if all_years? %>>All academic years</option>
+          <% end %>
+          <% year_cycles.each do |cycle| %>
+            <option value="<%= cycle.start_year %>" <%= "selected" if !all_years? && cycle == academic_cycle %>><%= cycle.label %> &mdash; <%= academic_year_status_label(cycle) %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <label class="govuk-label" for="funding_type">Funding type</label>
+        <select name="funding_type" id="funding_type" class="govuk-select" data-filter-select>
+          <%= options_for_select([["All funding types", ""]] + funding_type_options.map { |value, label| [label, value] }, params[:funding_type]) %>
+        </select>
+      </div>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <label class="govuk-label" for="training_route">Training route</label>
+        <select name="training_route" id="training_route" class="govuk-select" data-filter-select>
+          <%= options_for_select([["All training routes", ""]] + training_route_options.map { |value, label| [label, value] }, params[:training_route]) %>
+        </select>
+      </div>
+
+      <% if subjects.present? %>
+        <div class="govuk-form-group govuk-!-margin-bottom-2">
+          <label class="govuk-label" for="subject_id">Subject</label>
+          <select name="subject_id" id="subject_id" class="govuk-select" data-filter-select>
+            <%= options_for_select([["All subjects", ""]] + subjects.map { |s| [s.name, s.id.to_s] }, params[:subject_id]) %>
+          </select>
+        </div>
+      <% end %>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <label class="govuk-label" for="degree_relevance">Degree relevance</label>
+        <select name="degree_relevance" id="degree_relevance" class="govuk-select" data-filter-select>
+          <%= options_for_select([["All degree relevance", ""], %w[Relevant relevant], %w[Unrelated unrelated], ["Not applicable", "none"]], params[:degree_relevance]) %>
+        </select>
+      </div>
+
+      <div class="govuk-form-group govuk-!-margin-bottom-2">
+        <label class="govuk-label" for="school_disadvantage">School</label>
+        <select name="school_disadvantage" id="school_disadvantage" class="govuk-select" data-filter-select>
+          <%= options_for_select([["All schools", ""], ["Disadvantaged/special", "disadvantaged"], ["Non disadvantaged", "non_disadvantaged"], ["Not applicable", "none"]], params[:school_disadvantage]) %>
+        </select>
+      </div>
+    </div>
+
+    <div class="app-button-row govuk-!-margin-top-2">
+      <button class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0" data-module="govuk-button">Apply filters</button>
+      <%= govuk_link_to "Clear filters", clear_url, class: "govuk-link govuk-!-margin-left-3", no_visited_state: true %>
+    </div>
+  <% end %>
+
+  <%# Progressive enhancement: auto-submit on change when JS is available. %>
+  <%= javascript_tag nonce: true do -%>
+    (function () {
+      document.querySelectorAll('[data-filter-select]').forEach(function (select) {
+        select.addEventListener('change', function () {
+          if (this.form.requestSubmit) { this.form.requestSubmit(); } else { this.form.submit(); }
+        });
+      });
+    })();
+  <% end %>
+</div>

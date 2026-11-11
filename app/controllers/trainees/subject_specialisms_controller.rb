@@ -2,6 +2,8 @@
 
 module Trainees
   class SubjectSpecialismsController < BaseController
+    include CoursePrerequisitesCheckable
+
     include Publishable
 
     helper_method :position, :course_subject_attribute_name

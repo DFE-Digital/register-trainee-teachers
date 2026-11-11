@@ -1,0 +1,25 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render TraineeName::View.new(@trainee) %>
+    <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.funding_eligibilities.edit") %></h1>
+
+    <p class="govuk-body"><%= t("#{i18n_scope}.description_html",
+                                subject: @funding_manager.allocation_subject_name,
+                                route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
+                                academic_year: academic_year,
+                                degree: @funding_manager.try(:unrelated_degree_subject),
+                                funding_type: Array(@funding_manager.try(:unavailable_for_degree_types)).first || "bursary").html_safe %></p>
+
+    <p class="govuk-body">
+      <%= t("#{i18n_scope}.guidance_intro", academic_year:) %>
+      <%= govuk_link_to(t("#{i18n_scope}.guidance_link_text", academic_year:), @funding_manager.funding_guidance_url, new_tab: true) %>
+    </p>
+
+    <p class="govuk-body"><%= t("#{i18n_scope}.contact_html").html_safe %></p>
+
+    <%= govuk_button_link_to(
+      t("views.forms.funding.funding_eligibilities.continue"),
+      edit_trainee_funding_training_initiative_path(@trainee),
+    ) %>
+  </div>
+</div>

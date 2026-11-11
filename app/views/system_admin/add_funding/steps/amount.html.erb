@@ -1,0 +1,48 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Amount", step: "amount" } do |f| %>
+  <% cells = Funding::AmountMatrix.for(financial_incentive: draft["financial_incentives"], funding_method: draft["funding_method"],
+                                      training_routes: draft["training_routes"], start_year: draft["academic_year"]) %>
+  <% if Funding::AmountMatrix.yearly?(draft["training_routes"]) %>
+    <%= f.govuk_fieldset legend: { text: "Early years teacher degree apprenticeship amounts", size: "l", tag: "h1" }, described_by: "yearly-amounts-hint" do %>
+      <% from_year = AcademicCycle.for_year(draft["academic_year"].to_i)&.label %>
+      <div class="govuk-hint" id="yearly-amounts-hint">
+        Enter the grant amount for each year of the apprenticeship, in whole pounds. Year 1 starts in the academic year you chose.
+        <% if from_year %>These amounts apply to trainees starting in <%= from_year %> and every later year, until amounts are added for a later year.<% end %>
+      </div>
+      <% cells.each do |cell| %>
+        <%= f.govuk_number_field cell.key, label: { text: cell.label }, prefix_text: "£", min: 0, width: 10 %>
+      <% end %>
+    <% end %>
+  <% elsif Funding::AmountMatrix.early_years_tiered?(draft["funding_method"]) %>
+    <%= f.govuk_fieldset legend: { text: "Early years tiered bursary amounts", size: "l", tag: "h1" }, described_by: "early-years-tiered-amounts-hint" do %>
+      <div class="govuk-hint" id="early-years-tiered-amounts-hint">Enter the bursary amount for each tier, in whole pounds.</div>
+      <% cells.each do |cell| %>
+        <%= f.govuk_number_field cell.key, label: { text: cell.label }, prefix_text: "£", min: 0, width: 10 %>
+      <% end %>
+    <% end %>
+  <% elsif cells.size == 1 %>
+    <%= f.govuk_number_field cells.first.key, label: { text: cells.first.label, size: "l", tag: "h1" },
+          prefix_text: "£", min: 0, width: 10, hint: { text: "Whole pounds, for example 29000" } %>
+  <% else %>
+    <h1 class="govuk-heading-l">Funding amounts</h1>
+    <p class="govuk-body">Enter an amount for each combination below.</p>
+    <% type_word = Funding::AmountMatrix.funding_type_word(draft["funding_type"]) %>
+    <% cells.each do |cell| %>
+      <% if cell.optional? %>
+        <%# The unrelated degree amount can be marked "not available" instead. %>
+        <%= f.govuk_radio_buttons_fieldset cell.availability_key,
+              legend: { text: Funding::AmountMatrix.availability_question(draft["funding_type"]), size: "m", tag: "h2" } do %>
+          <%= f.govuk_radio_button cell.availability_key, "yes", label: { text: "Yes" }, link_errors: true do %>
+            <%= f.govuk_number_field cell.key, label: { text: cell.label }, prefix_text: "£",
+                  min: 0, width: 10, hint: { text: "Whole pounds, for example 29000" } %>
+          <% end %>
+          <%= f.govuk_radio_button cell.availability_key, "no",
+                label: { text: "No, #{type_word} not available" },
+                hint: { text: "There’s no #{type_word} for trainees with an unrelated degree." } %>
+        <% end %>
+      <% else %>
+        <%= f.govuk_number_field cell.key, label: { text: cell.label }, prefix_text: "£",
+              min: 0, width: 10, hint: { text: "Whole pounds, for example 29000" } %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

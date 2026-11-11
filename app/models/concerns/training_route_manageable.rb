@@ -14,6 +14,8 @@ module TrainingRouteManageable
            :requires_degree?,
            :requires_funding?,
            :requires_iqts_country?,
+           :requires_level_five_declaration?,
+           :level_five_course_years,
            to: :training_route_manager
 
   def training_route_manager

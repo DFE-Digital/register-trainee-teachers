@@ -5,6 +5,29 @@ weight: 2
 
 # Release notes
 
+## Upcoming — 2027 to 2028 academic year
+
+### New values
+
+The following new value has been added. It can be used for trainees starting in the 2027 to 2028 academic year or later.
+
+#### Training route
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">Label</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">23</td>
+      <td class="govuk-table__cell">Early Years Teacher Degree Apprenticeship</td>
+    </tr>
+  </tbody>
+</table>
+
 ## v2026.1 — 20 March 2026
 
 ### New values

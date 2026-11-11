@@ -1,0 +1,18 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%# The year whose amounts apply: EYTDA amounts can come from an earlier year. %>
+    <%= render "trainees/funding/amount_not_signed_off_banner", academic_year: @funding_manager.funding_cycle&.label || academic_year %>
+
+    <%= render TraineeName::View.new(@trainee) %>
+    <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.funding_eligibilities.edit") %></h1>
+
+    <%= render "funding_context" %>
+
+    <p class="govuk-body"><%= t("#{i18n_scope}.description", academic_year:) %></p>
+
+    <%= govuk_button_link_to(
+      t("views.forms.funding.funding_eligibilities.continue"),
+      edit_trainee_funding_training_initiative_path(@trainee),
+    ) %>
+  </div>
+</div>

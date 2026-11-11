@@ -1,0 +1,12 @@
+<%= render layout: "system_admin/relevant_degrees/steps/wrapper", locals: { title: "ITT subject", step: "subject" } do |f| %>
+  <%= render FormComponents::Autocomplete::View.new(
+        f,
+        attribute_name: :allocation_subject_id,
+        form_field: f.govuk_collection_select(
+          :allocation_subject_id, AllocationSubject.where(deprecated_on: nil).order(:name), :id, :name,
+          label: { text: "Which ITT subject are these relevant degrees for?", size: "l", tag: "h1" },
+          hint: { text: "Start typing the subject, for example chemistry." },
+          options: { include_blank: true },
+        ),
+      ) %>
+<% end %>

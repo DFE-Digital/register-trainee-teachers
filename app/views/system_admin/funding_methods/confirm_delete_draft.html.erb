@@ -1,0 +1,25 @@
+<% name = "#{short_academic_year(academic_cycle)} requirements" %>
+<% page_title = "Are you sure you want to delete #{name}?" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <%= govuk_back_link(text: "Back to drafts", href: funding_management_drafts_path) %>
+
+    <span class="govuk-caption-l">Draft funding requirements</span>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <p class="govuk-body">
+      This will delete all <%= pluralize(@record_count, "#{'Early years teacher degree apprenticeship (EYTDA) ' if academic_cycle.eytda_only_funding_year?}funding record") %> for <%= academic_cycle.label %>,
+      with their subjects. The academic year itself is kept, so you can add funding to it again.
+    </p>
+
+    <%= govuk_warning_text(text: "You cannot undo this.") %>
+
+    <%= form_with url: funding_management_destroy_draft_path(academic_year: academic_cycle.start_year), method: :delete do %>
+      <div class="app-button-row">
+        <button class="govuk-button govuk-button--warning" data-module="govuk-button">Delete draft funding</button>
+        <%= govuk_link_to "Cancel", funding_management_drafts_path, no_visited_state: true %>
+      </div>
+    <% end %>
+  </div>
+</div>

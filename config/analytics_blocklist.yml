@@ -247,6 +247,25 @@ shared:
     - payable_type
     - created_at
     - updated_at
+  funding_publication_requests:
+    - id
+    - academic_cycle_id
+    - state
+    - submitted_by_id
+    - submitted_at
+    - reviewed_by_id
+    - reviewed_at
+    - decision_notes
+    - created_at
+    - updated_at
+  funding_school_designations:
+    - id
+    - school_id
+    - academic_cycle_id
+    - designation
+    - created_by_id
+    - created_at
+    - updated_at
   funding_trainee_summaries:
     - id
     - payable_id
@@ -370,6 +389,17 @@ shared:
     - hesa_disabilities
   providers:
     - searchable
+  relevant_degree_mappings:
+    - id
+    - academic_cycle_id
+    - allocation_subject_id
+    - cah_level_1_code
+    - cah_level_2_code
+    - hecos_code
+    - reference_number
+    - created_by_id
+    - created_at
+    - updated_at
   school_data_downloads:
     - id
     - completed_at

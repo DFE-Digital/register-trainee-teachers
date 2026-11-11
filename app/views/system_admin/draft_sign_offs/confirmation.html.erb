@@ -1,0 +1,41 @@
+<% name = "#{short_academic_year(academic_cycle)} funding requirements" %>
+<% go_live = academic_cycle.start_date.to_fs(:govuk) %>
+<% page_title = "#{name.sub(/\A./, &:upcase)} approved" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: page_title) %>
+
+    <% if academic_cycle.eytda_funding_approved? && academic_cycle.live? %>
+      <%= govuk_panel(title_text: page_title, text: "They are now live for Early years teacher degree apprenticeship (EYTDA) trainees") %>
+
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p class="govuk-body"><%= academic_cycle.label %> has already started, so the EYTDA funding requirements are live now and appear on Requirements.</p>
+      <p class="govuk-body">Any amendment will need a Register developer.</p>
+    <% else %>
+      <%= govuk_panel(title_text: page_title, text: "They will go live on #{go_live}") %>
+
+      <h2 class="govuk-heading-m">What happens next</h2>
+      <p class="govuk-body">The status is now <strong>Ready for release</strong>. On <%= go_live %> the funding requirements go live and appear on Requirements.</p>
+      <p class="govuk-body">Until then, you can reopen them for editing from Drafts. After they go live, any amendment will need a Register developer.</p>
+    <% end %>
+
+    <%= govuk_summary_list(actions: false) do |list| %>
+      <% list.with_row do |row| %>
+        <% row.with_key(text: "Status") %>
+        <% row.with_value(text: academic_year_status_tag(academic_cycle)) %>
+      <% end %>
+      <% if @approval %>
+        <% list.with_row do |row| %>
+          <% row.with_key(text: "Approved by") %>
+          <% row.with_value(text: @approval.reviewed_by&.name || "Unknown") %>
+        <% end %>
+        <% list.with_row do |row| %>
+          <% row.with_key(text: "Approved on") %>
+          <% row.with_value(text: @approval.reviewed_at&.to_fs(:govuk)) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <p class="govuk-body"><%= govuk_link_to "Back to drafts", funding_management_drafts_path, no_visited_state: true %></p>
+  </div>
+</div>

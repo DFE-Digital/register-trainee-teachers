@@ -1,0 +1,21 @@
+<%# Shared shell for each Add relevant degrees step. locals: title, step. %>
+<% previous_step = wizard_previous_step %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: title, has_errors: @step_form.errors.present?) %>
+
+    <%= govuk_back_link(
+          href: previous_step ? funding_management_relevant_degree_step_path(step: previous_step, from: (editing? ? "check" : nil)) :
+                                 funding_management_relevant_degrees_path) %>
+
+    <span class="govuk-caption-l">Add relevant degrees</span>
+
+    <%= register_form_with model: @step_form,
+          url: funding_management_relevant_degree_step_path(step:, from: (editing? ? "check" : nil)),
+          method: :patch do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= yield f %>
+      <%= f.govuk_submit(editing? ? "Save and continue" : "Continue") %>
+    <% end %>
+  </div>
+</div>

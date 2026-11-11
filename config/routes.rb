@@ -162,6 +162,7 @@ Rails.application.routes.draw do
 
       namespace :funding do
         concerns :confirmable
+        resource :funding_eligibility, only: %i[edit update], path: "/funding-eligibility"
         resource :training_initiative, only: %i[edit update], path: "/training-initiative"
         resource :bursary, only: %i[edit update], path: "/bursary"
       end
@@ -219,6 +220,7 @@ Rails.application.routes.draw do
       resource :employing_schools, only: %i[update edit], path: "/employing-schools"
 
       resource :iqts_country, concerns: :confirmable, only: %i[edit update], path: "iqts-country"
+      resource :level_five_declaration, concerns: :confirmable, only: %i[edit update], path: "level-five-declaration"
 
       namespace :apply_applications, path: "/apply-application" do
         resource :trainee_data, only: %i[update edit], path: "/trainee-data"

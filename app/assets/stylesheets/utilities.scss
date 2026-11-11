@@ -11,3 +11,73 @@
 .app-\!-overflow-break-word {
   overflow-wrap: break-word !important;
 }
+
+// A row of action buttons that stays on one line at all viewports (unlike
+// govuk-button-group, which stacks below the tablet breakpoint). Keeps a
+// button_to <form> inline and removes the trailing button margin.
+.app-button-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: govuk-spacing(3);
+
+  form {
+    margin: 0;
+  }
+
+  .govuk-button {
+    margin-bottom: 0;
+  }
+
+  // Push an item (e.g. a button_to <form>) to the far right of the row.
+  .app-button-row__end {
+    margin-left: auto;
+  }
+}
+
+// A submit button styled to read as a plain link (for button_to actions that
+// belong inline, e.g. a per-row Sign off). Uses the GOV.UK link colours.
+.app-link-button {
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: $govuk-link-colour;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: $govuk-link-hover-colour;
+  }
+
+  &:focus {
+    @include govuk-focused-text;
+  }
+}
+
+// A grid of filter dropdowns: one column on mobile, two on tablet, three on
+// desktop. Selects fill their column so every row lines up.
+.app-filter-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: govuk-spacing(2) govuk-spacing(4);
+
+  @include govuk-media-query($from: tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include govuk-media-query($from: desktop) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .govuk-form-group {
+    min-width: 0;
+  }
+
+  .govuk-select {
+    width: 100%;
+    min-width: 0;
+  }
+}

@@ -5,6 +5,18 @@ require "rails_helper"
 describe CourseDetailsHelper do
   include CourseDetailsHelper
 
+  describe "#course_length_text" do
+    it "gives whole years and months from the start to the end date" do
+      start = Date.new(2027, 9, 1)
+
+      expect(helper.course_length_text(start, Date.new(2030, 9, 1))).to eq("3 years")
+      expect(helper.course_length_text(start, Date.new(2030, 3, 1))).to eq("2 years and 6 months")
+      expect(helper.course_length_text(start, Date.new(2029, 9, 30))).to eq("2 years")
+      expect(helper.course_length_text(start, Date.new(2028, 10, 1))).to eq("1 year and 1 month")
+      expect(helper.course_length_text(start, Date.new(2027, 9, 20))).to eq("0 months")
+    end
+  end
+
   describe "#course_subjects_options" do
     before do
       create(:subject_specialism, name: CourseSubjects::TRAVEL_AND_TOURISM)

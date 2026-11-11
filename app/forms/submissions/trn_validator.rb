@@ -23,6 +23,16 @@ module Submissions
       progress == :completed ? :expanded : :collapsed
     end
 
+    # Funding chosen from draft amounts (internal testing only) can't be used to
+    # request a TRN.
+    def draft_funding?
+      return false unless FeatureService.enabled?(:funding_draft_amounts_in_journey)
+      return false unless trainee.requires_funding?
+      return false unless trainee.applying_for_bursary || trainee.applying_for_scholarship || trainee.applying_for_grant
+
+      FundingManager.new(trainee).using_draft_amounts?
+    end
+
     def all_sections_complete?
       @all_sections_complete ||= sections_validation_status.values.all? do |status|
         status == Progress::STATUSES[:completed]
@@ -48,6 +58,7 @@ module Submissions
     def draft_trainee_sections
       [
         :personal_details, :contact_details, :diversity,
+        *(:level_five_declaration if trainee.requires_level_five_declaration?),
         *(:degrees if @trainee.requires_degree?),
         :course_details, :training_details,
         *(:schools if trainee.requires_training_partner?),
@@ -69,12 +80,26 @@ module Submissions
     end
 
     def submission_ready
+      if draft_funding?
+        errors.add(:funding, I18n.t("views.forms.funding.amount_not_signed_off.trn_blocked", academic_year: trainee.start_academic_cycle&.label))
+      end
+
       unless all_sections_complete?
         sections.each do |section|
           next unless sections_validation_status[section] != Progress::STATUSES[:completed]
 
           if section == :funding && funding_options(trainee) == :funding_inactive
             errors.add(section, I18n.t("components.sections.titles.funding_inactive"))
+          elsif section == :funding && funding_prerequisites.any?
+            funding_prerequisites.each do |prerequisite|
+              errors.add(section, I18n.t("views.forms.funding.prerequisites.#{prerequisite}.summary"))
+            end
+          elsif section == :funding && (changed = funding_recheck_changed(trainee))
+            errors.add(section, I18n.t("views.forms.funding.recheck.trn", changed:))
+          elsif section == :course_details && course_details_recheck?(trainee)
+            errors.add(section, I18n.t("views.forms.funding.recheck.trn_course_details"))
+          elsif section == :schools && schools_recheck?(trainee)
+            errors.add(section, I18n.t("views.forms.funding.recheck.trn_schools"))
           elsif section == :placements
             error_message = "#{I18n.t("components.sections.titles.#{section}")} #{I18n.t("components.sections.statuses.#{progress_service(:placements).status}")}"
 
@@ -86,6 +111,10 @@ module Submissions
           end
         end
       end
+    end
+
+    def funding_prerequisites
+      @funding_prerequisites ||= FundingManager.new(trainee).funding_prerequisites
     end
 
     def progress_service(progress_key)

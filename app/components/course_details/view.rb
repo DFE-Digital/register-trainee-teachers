@@ -27,6 +27,7 @@ module CourseDetails
         study_mode_row,
         course_date_row(itt_start_date, :start),
         course_date_row(itt_end_date, :end),
+        course_length_row,
       ].compact
     end
 
@@ -82,6 +83,24 @@ module CourseDetails
 
     def course_date_row(value, context)
       default_mappable_field(value, t("components.course_detail.itt_#{context}_date").html_safe)
+    end
+
+    # EYTDA: a course the provider confirmed is longer than the usual 2 or 3 years.
+    def course_length_row
+      return unless extended_course_confirmed? && trainee.level_five_course_years
+
+      start_date = data_model.itt_start_date
+      end_date = data_model.itt_end_date
+      return unless start_date.is_a?(Date) && end_date.is_a?(Date)
+
+      key = trainee.level_five_qualification ? :level_five : :no_level_five
+      value = tag.div(course_length_text(start_date, end_date)) +
+        tag.span(t("components.course_detail.course_length_confirmed.#{key}", years: trainee.level_five_course_years), class: "govuk-hint")
+      default_mappable_field(value, t("components.course_detail.course_length"))
+    end
+
+    def extended_course_confirmed?
+      data_model.is_a?(CourseDetailsForm) ? data_model.extended_course_confirmed? : trainee.extended_course_confirmed
     end
 
     def non_early_year_route?

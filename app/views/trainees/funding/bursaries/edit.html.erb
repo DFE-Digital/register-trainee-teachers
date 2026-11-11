@@ -10,4 +10,12 @@
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
-<%= render "#{@funding_manager.applicable_available_funding}_form" %>
+<% if @funding_manager.using_draft_amounts? %>
+  <%= render "trainees/funding/amount_not_signed_off_banner", academic_year: @funding_manager.funding_cycle.label, draft: true %>
+<% end %>
+
+<% if @funding_manager.early_years_salaried_grant? %>
+  <%= render "early_years_salaried_grant_form" %>
+<% else %>
+  <%= render "#{@funding_manager.applicable_available_funding}_form" %>
+<% end %>

@@ -1,0 +1,14 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Academic year", step: "academic_year" } do |f| %>
+  <% options = addable_cycle_options %>
+  <% eytda_only = add_funding_cycles.select { |cycle| eytda_only_funding_cycle?(cycle) } %>
+  <% if options.any? %>
+    <% hint = "Only future years are listed. Funding cannot be added to a year once it has gone live." %>
+    <% hint += " #{eytda_only.map(&:label).to_sentence} has gone live, but Early years teacher degree apprenticeship (EYTDA) funding can still be added to it." if eytda_only.any? %>
+    <%= f.govuk_collection_select :academic_year, options, :first, :last,
+          label: { text: "Which academic year is this funding for?", size: "l", tag: "h1" },
+          hint: { text: hint } %>
+  <% else %>
+    <h1 class="govuk-heading-l">Which academic year is this funding for?</h1>
+    <div class="govuk-inset-text">There are no future academic years that funding can be added to.</div>
+  <% end %>
+<% end %>

@@ -2,6 +2,8 @@
 
 module Trainees
   class CourseYearsController < BaseController
+    include CoursePrerequisitesCheckable
+
     def edit
       @course_years_form = CourseYearsForm.new(trainee:)
     end

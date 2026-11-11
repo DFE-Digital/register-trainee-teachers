@@ -1,0 +1,26 @@
+<%# Shared shell for each "Add a school" question. locals: title, step, form_html (optional). %>
+<% form_html = local_assigns.fetch(:form_html, {}) %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render PageTitle::View.new(text: title, has_errors: @step_form.errors.present?) %>
+
+    <%= govuk_back_link(
+          href: if editing?
+                  funding_management_school_check_path
+                elsif previous_step
+                  funding_management_school_step_path(step: previous_step)
+                else
+                  funding_management_schools_path(academic_year: draft["academic_year"])
+                end) %>
+
+    <span class="govuk-caption-l">Add a school</span>
+
+    <%= register_form_with model: @step_form,
+          url: funding_management_school_step_path(step:, from: (editing? ? "check" : nil)),
+          method: :patch, html: form_html do |f| %>
+      <%= f.govuk_error_summary %>
+      <%= yield f %>
+      <%= f.govuk_submit(editing? ? "Save and continue" : "Continue") %>
+    <% end %>
+  </div>
+</div>

@@ -3,6 +3,7 @@ shared:
     - created_at
     - end_date
     - id
+    - published
     - start_date
     - updated_at
   activities:
@@ -130,11 +131,17 @@ shared:
   funding_methods:
     - academic_cycle_id
     - amount
+    - availability
     - created_at
     - created_at
+    - degree_relevance
+    - funding_method
     - funding_type
     - id
+    - reference_number
+    - school_disadvantage
     - training_route
+    - training_year
     - updated_at
     - updated_at
   hesa_metadata:
@@ -309,6 +316,8 @@ shared:
     - itt_end_date
     - itt_start_date
     - last_name
+    - level_five_qualification
+    - extended_course_confirmed
     - middle_names
     - training_partner_id
     - placement_detail

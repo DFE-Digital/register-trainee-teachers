@@ -89,14 +89,22 @@ class DegreeForm
     return false unless valid?
 
     degree.attributes = fields.merge(uuids)
+    changed = degree.new_record? || degree.changed?
     degree.save!(context: locale_code.to_sym)
     degrees_form.delete_degree_on_store(slug)
+    Funding::ClearUnavailableForDegree.call(trainee: degree.trainee)
+    Funding::RecheckAfterChange.call(trainee: degree.trainee, changed: :degree) if changed
     true
   end
 
   def destroy!
     degrees_form.delete_degree_on_store(slug)
-    degree.destroy! unless degree.new_record?
+    return if degree.new_record?
+
+    degree.destroy!.tap do
+      Funding::ClearUnavailableForDegree.call(trainee: degree.trainee)
+      Funding::RecheckAfterChange.call(trainee: degree.trainee, changed: :degree)
+    end
   end
 
   def save_and_return_invalid_data!

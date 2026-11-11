@@ -32,6 +32,7 @@ class FormStore
     employing_school
     training_partner
     schools
+    funding_eligibility
     training_initiative
     bursary
     grant_and_tiered_bursary
@@ -43,6 +44,7 @@ class FormStore
     course_education_phase
     training_details
     iqts_country
+    level_five_declaration
     training_routes
     delete_trainee
     change_accredited_provider

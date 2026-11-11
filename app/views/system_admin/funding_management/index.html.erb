@@ -1,0 +1,46 @@
+<% page_title = "Funding management" %>
+<%= render PageTitle::View.new(text: page_title) %>
+
+<h1 class="govuk-heading-l"><%= page_title %></h1>
+
+<%= render "system_admin/tab_nav" %>
+
+<p class="govuk-body">Choose a funding area to manage.</p>
+
+<% sections = [
+  (["Funding upload", [
+    ["Funding upload",
+     "Upload the monthly funding data spreadsheets and review what was imported.",
+     funding_uploads_path],
+  ]] if FeatureService.enabled?("funding_uploads")),
+  ["ITT funding requirements management", [
+    ["Funding requirements",
+     "View and manage ITT funding requirements by academic year, including bursaries, scholarships and grants.",
+     funding_management_requirements_path],
+    ["Funding schools management",
+     "Manage the schools that funding depends on, such as disadvantaged and special schools.",
+     funding_management_schools_path],
+    ["Relevant degree CAH management",
+     "Define which degrees (by CAH category and HECoS code) count as a relevant degree for each ITT subject.",
+     funding_management_relevant_degrees_path],
+  ]],
+].compact %>
+
+<% sections.each_with_index do |(heading, modules), index| %>
+  <% if index.positive? %>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+  <% end %>
+
+  <h2 class="govuk-heading-m"><%= heading %></h2>
+
+  <ul class="govuk-list">
+    <% modules.each do |name, description, path| %>
+      <li class="govuk-!-margin-bottom-6">
+        <h3 class="govuk-body govuk-!-margin-bottom-1">
+          <%= govuk_link_to name, path, no_visited_state: true %>
+        </h3>
+        <p class="govuk-body govuk-!-margin-bottom-0"><%= description %></p>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

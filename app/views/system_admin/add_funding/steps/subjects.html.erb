@@ -1,0 +1,7 @@
+<%= render layout: "system_admin/add_funding/steps/wrapper", locals: { title: "Eligible subjects", step: "subjects" } do |f| %>
+  <%= f.govuk_collection_check_boxes :allocation_subject_ids,
+        Funding::EligibleSubjects.for(draft["training_routes"]), :id, :name,
+        legend: { text: "Which subjects is this funding available for?", size: "l", tag: "h1" },
+        hint: { text: "Select all subjects this funding applies to." },
+        small: true %>
+<% end %>

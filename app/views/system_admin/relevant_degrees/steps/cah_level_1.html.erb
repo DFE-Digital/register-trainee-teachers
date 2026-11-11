@@ -1,0 +1,6 @@
+<%= render layout: "system_admin/relevant_degrees/steps/wrapper", locals: { title: "CAH level 1 category", step: "cah_level_1" } do |f| %>
+  <% options = ::Funding::CahReference.level_1_options.map { |code, name| [code, "#{name} (#{code})"] } %>
+  <%= f.govuk_collection_radio_buttons :cah_level_1_code, options, :first, :last,
+        legend: { text: "Which CAH level 1 category do the degrees belong to?", size: "l", tag: "h1" },
+        hint: { text: "Select the category the degrees are grouped under." } %>
+<% end %>

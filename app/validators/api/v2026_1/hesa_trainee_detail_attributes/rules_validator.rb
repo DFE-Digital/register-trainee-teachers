@@ -18,6 +18,9 @@ module Api
 
           validation_result = Rules::CourseAgeRange.call(record)
           record.errors.add(:course_age_range, validation_result.error_type, **validation_result.error_details) unless validation_result.valid?
+
+          validation_result = Rules::CourseYear.call(record)
+          record.errors.add(:course_year, validation_result.error_type, **validation_result.error_details) unless validation_result.valid?
         end
       end
     end

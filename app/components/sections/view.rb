@@ -78,6 +78,7 @@ module Sections
         funding: Funding::View,
         trainee_data: ApplyApplications::TraineeData::View,
         iqts_country: IqtsCountry::View,
+        level_five_declaration: LevelFiveDeclaration::View,
         placements: PlacementDetails::View,
       }[section]
     end
@@ -128,8 +129,8 @@ module Sections
           review: "trainee_schools_confirm_path",
         },
         funding: {
-          incomplete: "edit_trainee_funding_training_initiative_path",
-          in_progress_invalid: "edit_trainee_funding_training_initiative_path",
+          incomplete: funding_start_path,
+          in_progress_invalid: funding_start_path,
           in_progress_valid: "trainee_funding_confirm_path",
           review: "trainee_funding_confirm_path",
         },
@@ -138,6 +139,12 @@ module Sections
           in_progress_invalid: "edit_trainee_apply_applications_trainee_data_path",
           in_progress_valid: "edit_trainee_apply_applications_trainee_data_path",
           review: "edit_trainee_apply_applications_trainee_data_path",
+        },
+        level_five_declaration: {
+          incomplete: "edit_trainee_level_five_declaration_path",
+          in_progress_invalid: "edit_trainee_level_five_declaration_path",
+          in_progress_valid: "trainee_level_five_declaration_confirm_path",
+          review: "trainee_level_five_declaration_confirm_path",
         },
         iqts_country: {
           incomplete: "edit_trainee_iqts_country_path",
@@ -190,6 +197,11 @@ module Sections
     def link_text
       link_text = I18n.t("components.sections.link_texts.#{progress_status}")
       "#{link_text}<span class=\"govuk-visually-hidden\"> #{section_title.downcase}</span>".html_safe
+    end
+
+    # The first funding page: funding eligibility with the eligibility step.
+    def funding_start_path
+      FeatureService.enabled?(:funding_eligibility_step) ? "edit_trainee_funding_funding_eligibility_path" : "edit_trainee_funding_training_initiative_path"
     end
 
     def path_for_incomplete_course_details(trainee)

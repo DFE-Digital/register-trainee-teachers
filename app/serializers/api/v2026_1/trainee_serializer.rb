@@ -44,6 +44,8 @@ module Api
         applying_for_grant
         applying_for_scholarship
         bursary_tier
+        level_five_qualification
+        extended_course_confirmed
         funding_eligibility
         course_subject_one
         course_subject_two

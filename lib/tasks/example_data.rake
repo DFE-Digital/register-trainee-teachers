@@ -322,6 +322,9 @@ namespace :example_data do
         end
       end
     end
+
+    # Review apps: funding to try the funding journeys with (lib/tasks/demo_funding.rake).
+    Rake::Task["example_data:demo_funding"].invoke if Rails.env.review?
   end
 
   desc "Create a smaller set of personas, providers and trainees (approx 10% of full size)"

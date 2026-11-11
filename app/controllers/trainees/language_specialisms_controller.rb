@@ -2,6 +2,8 @@
 
 module Trainees
   class LanguageSpecialismsController < BaseController
+    include CoursePrerequisitesCheckable
+
     include Publishable
 
     before_action :setup_form

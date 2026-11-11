@@ -11,6 +11,7 @@
 <div class="govuk-grid-row">
   <div class ="govuk-grid-column-full">
     <%= render "system_admin/tab_nav" %>
+    <%= render "system_admin/funding_nav", active: :upload if FeatureService.enabled?("funding_management") %>
 
     <p class="govuk-body">Funding information for all accredited providers can be uploaded to Register at the beginning of every month.</p>
     <p class="govuk-body">There are 4 x CSV files to upload separately:</p>

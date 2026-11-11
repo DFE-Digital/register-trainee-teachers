@@ -7,6 +7,18 @@ module CourseDetailsHelper
     to_options(course_subjects)
   end
 
+  # "3 years", "2 years and 6 months" or "1 month": whole months from the start
+  # date to the end date.
+  def course_length_text(start_date, end_date)
+    months = ((end_date.year * 12) + end_date.month) - ((start_date.year * 12) + start_date.month)
+    months -= 1 if end_date.day < start_date.day
+    years, remaining = months.divmod(12)
+    [
+      (pluralize(years, "year") if years.positive?),
+      (pluralize(remaining, "month") if remaining.positive? || years.zero?),
+    ].compact.join(" and ")
+  end
+
   def filter_course_subjects_options
     to_options(all_subjects, first_value: "All subjects")
   end

@@ -28,6 +28,8 @@ module Funding
             "Tier 2 Trainees",
             "Tier 3 Amount",
             "Tier 3 Trainees",
+            "Grant Amount",
+            "Grant Trainees",
           ]
         end
       end
