@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: f3e4a76013f8ab2118daa2d97a4e8aefcdc02edc
-  tag: v1.16.2
+  revision: bc5e04296a8e3f96064d226a9c62d49cc82d3450
+  branch: airbyte-configurable-sync-mode
   specs:
     dfe-analytics (1.16.2)
       google-cloud-bigquery (~> 1.38)
