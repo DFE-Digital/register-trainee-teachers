@@ -197,7 +197,7 @@ GEM
     csv (3.3.7)
     csv-safe (3.3.3)
       csv (~> 3.0)
-    cuprite (0.20)
+    cuprite (0.20.1)
       capybara (~> 3.0)
       ferrum (~> 0.20.1)
     data_migrate (11.3.1)
@@ -1064,7 +1064,7 @@ CHECKSUMS
   cssbundling-rails (1.4.3) sha256=53aecd5a7d24ac9c8fcd92975acd0e830fead4ee4583d3d3d49bb64651946e41
   csv (3.3.7) sha256=15a3f16f6628da8664d455eb634e7f22031bcf53044923caf56975109e71b9f8
   csv-safe (3.3.3) sha256=2b0d8e73f45fef0bc2730b422bb5610450225275014a25fd8386beaa6e53c472
-  cuprite (0.20) sha256=7e112967d07242041032c28569ea221759a130fe361a80b8179758f203135340
+  cuprite (0.20.1) sha256=98694e0ca7be79f066db4dcdb46fada42fb058c2c38aafd9c1d1567bc4b08994
   data_migrate (11.3.1) sha256=18b9b2189d15e482d5335f3fc2248b8b447204bd8257ded872dd077737168ffb
   database_cleaner-active_record (2.2.2) sha256=88296b9f3088c31f7c0d4fcec10f68e4b71c96698043916de59b04debec10388
   database_cleaner-core (2.0.1) sha256=8646574c32162e59ed7b5258a97a208d3c44551b854e510994f24683865d846c
