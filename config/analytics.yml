@@ -209,6 +209,13 @@ shared:
     - accredited
     - updated_at
     - discarded_at
+  relevant_degree_subjects:
+    - academic_cycle_id
+    - allocation_subject_id
+    - created_at
+    - hecos_code
+    - id
+    - updated_at
   schools:
     - close_date
     - created_at
