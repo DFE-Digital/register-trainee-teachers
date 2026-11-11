@@ -15,6 +15,7 @@ describe AcademicCycle do
 
   describe "associations" do
     it { is_expected.to have_many(:relevant_degree_subjects) }
+    it { is_expected.to have_many(:funding_school_designations) }
   end
 
   describe "validations" do

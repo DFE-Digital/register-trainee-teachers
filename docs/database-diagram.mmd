@@ -326,6 +326,11 @@ erDiagram
 		integer allocation_subject_id FK
 		integer funding_method_id FK
 	}
+	FundingSchoolDesignation {
+		integer academic_cycle_id FK
+		string designation
+		integer school_id FK
+	}
 	"Hesa::Metadatum" {
 		string course_programme_title
 		string fundability
@@ -742,6 +747,7 @@ erDiagram
 		string name
 	}
 	AcademicCycle ||--}o FundingMethod : ""
+	AcademicCycle ||--}o FundingSchoolDesignation : ""
 	AcademicCycle ||--}o RelevantDegreeSubject : ""
 	"ActiveStorage::Blob" ||--|o "ActiveStorage::Attachment" : ""
 	"ActiveStorage::VariantRecord" ||--|o "ActiveStorage::Attachment" : ""
@@ -818,6 +824,7 @@ erDiagram
 	"Funding::TraineeSummary" ||--}o "Funding::TraineeSummaryRow" : ""
 	"Funding::TraineeSummaryRow" ||--}o "Funding::TraineeSummaryRowAmount" : ""
 	FundingMethod ||--}o FundingMethodSubject : ""
+	School ||--}o FundingSchoolDesignation : ""
 	Trainee ||--|o "Hesa::Metadatum" : ""
 	Trainee o|--}o "Hesa::Student" : ""
 	Trainee ||--|o "Hesa::TraineeDetail" : ""
