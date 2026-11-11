@@ -18,14 +18,6 @@ shared:
     - id
     - name
     - updated_at
-  apply_applications:
-    - accredited_body_code
-    - apply_id
-    - created_at
-    - id
-    - recruitment_cycle_year
-    - state
-    - updated_at
   bulk_update_row_errors:
     - id
     - created_at
