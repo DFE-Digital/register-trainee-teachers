@@ -81,10 +81,24 @@ private
   def user_by_email
     return if email.blank?
 
-    User.kept.find_by(
+    user = User.kept.find_by(
       "LOWER(email) = ?",
-      email&.downcase,
+      email.downcase,
     )
+    return if user.nil?
+
+    if user.dfe_sign_in_uid.present? && !uids_match?(user.dfe_sign_in_uid)
+      Rails.logger.warn(
+        "DSI sign-in refused: dfe_sign_in_uid mismatch for user_id=#{user.id}",
+      )
+      return
+    end
+
+    user
+  end
+
+  def uids_match?(stored_uid)
+    stored_uid.downcase == dfe_sign_in_uid&.downcase
   end
 
   def signed_in_from_dfe?

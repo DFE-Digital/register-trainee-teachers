@@ -31,9 +31,12 @@ admin has to create the user in Register first and attach them to a provider or 
 Signing in never creates a record. A user with no record is sent to `/sign-in/user-not-found`.
 
 On the first sign in the DSI `sub` is stored on the record as `dfe_sign_in_uid` and from then on
-that is what matches the person to their record instead of their email. Removing a user is a soft
-delete (`discarded_at`) and every lookup is scoped to `User.kept`, so a removed user loses access
-on their next request.
+that is what matches the person to their record instead of their email. A stored ID is never
+overwritten. If the email matches a user that already has a different ID, sign in is refused and
+logged with the Register user id only. When the ID matches and the email from DSI has changed, the
+stored email is updated and that change is logged with the Register user id only. Removing a user
+is a soft delete (`discarded_at`) and every lookup is scoped to `User.kept`, so a removed user
+loses access on their next request.
 
 ```mermaid
 sequenceDiagram
@@ -54,9 +57,11 @@ sequenceDiagram
     R->>R: verify the ID token
     R->>R: reset the session and store the identity
     R->>DB: find the user by sub, then by email
-    alt user found
-        R->>DB: stamp last_signed_in_at and store the sub
+    alt user found by sub, or by email with no stored sub
+        R->>DB: stamp last_signed_in_at, names, email; store sub only if blank
         R-->>C: redirect to the path first requested
+    else email matches a user with a different sub
+        R-->>C: refuse sign in, redirect to /sign-in/user-not-found
     else no user
         R-->>C: redirect to /sign-in/user-not-found
     end
@@ -77,11 +82,13 @@ Authentication Flow:
    expiry and nonce.
 7. Register resets the session and stores the identity from the ID token (email, sub, name). The
    session itself is kept in the database and the cookie holds only the session id.
-8. Register looks up the user record by DSI sub, falling back to email. If there is no record the
-   session is discarded and the client is sent to `/sign-in/user-not-found`.
-9. If the user is found, `last_signed_in_at` is stamped and the DSI sub is stored against the
-   record. The client is redirected to the path originally requested, or to `/organisations` if
-   they belong to more than one.
+8. Register looks up the user record by DSI sub, falling back to email (case-insensitive). If the
+   email matches a user that already has a different sub, sign in is refused. If there is no
+   record, or sign in is refused, the session is discarded and the client is sent to
+   `/sign-in/user-not-found`.
+9. If the user is found, `last_signed_in_at`, email and name are refreshed from DSI. The DSI sub is
+   stored only when the record has none. The client is redirected to the path originally
+   requested, or to `/organisations` if they belong to more than one.
 10. The session lasts two hours of inactivity. DSI is not contacted again until sign out.
 
 ### Sign out
