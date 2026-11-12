@@ -87,7 +87,7 @@ private
     )
     return if user.nil?
 
-    if user.dfe_sign_in_uid.present? && !uids_match?(user.dfe_sign_in_uid)
+    if dfe_uid_mismatch?(user)
       Rails.logger.warn(
         "DSI sign-in refused: dfe_sign_in_uid mismatch for user_id=#{user.id}",
       )
@@ -97,8 +97,18 @@ private
     user
   end
 
+  def dfe_uid_mismatch?(user)
+    return false if persona_sign_in?
+
+    user.dfe_sign_in_uid.present? && !uids_match?(user.dfe_sign_in_uid)
+  end
+
   def uids_match?(stored_uid)
     stored_uid.downcase == dfe_sign_in_uid&.downcase
+  end
+
+  def persona_sign_in?
+    @provider == "developer"
   end
 
   def signed_in_from_dfe?
