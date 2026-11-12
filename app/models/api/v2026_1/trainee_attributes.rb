@@ -206,7 +206,7 @@ module Api
         new_hesa_trainee_detail_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
 
         if new_hesa_trainee_detail_attributes.present?
-          self.hesa_trainee_detail_attributes = V20261::HesaTraineeDetailAttributes.new(
+          self.hesa_trainee_detail_attributes = self.class.module_parent::HesaTraineeDetailAttributes.new(
             new_hesa_trainee_detail_attributes.merge(trainee_attributes: self),
             record_source:,
           )
@@ -248,7 +248,7 @@ module Api
         return if new_hesa_attributes.blank?
 
         updated_hesa_attributes = hesa_trainee_detail_attributes ||
-          V20261::HesaTraineeDetailAttributes.new({ trainee_attributes: self })
+          self.class.module_parent::HesaTraineeDetailAttributes.new({ trainee_attributes: self })
 
         updated_hesa_attributes.assign_attributes(new_hesa_attributes)
 
