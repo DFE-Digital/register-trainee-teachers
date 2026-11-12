@@ -79,5 +79,21 @@ describe FundingDataImporter do
         expect(funding_upload.reload.failed?).to be true
       end
     end
+
+    context "when the import raises an error" do
+      let(:funding_upload) { create(:funding_upload, :provider_payment_schedule) }
+      let(:error_message) { "something went wrong" }
+
+      before do
+        allow(Funding::Parsers::ProviderPaymentSchedules).to receive(:to_attributes)
+          .and_raise(ArgumentError, error_message)
+      end
+
+      it "stores the error class and message" do
+        importer = FundingDataImporter.new(funding_upload)
+        importer.import_data
+        expect(funding_upload.reload.error_message).to eq("ArgumentError: #{error_message}")
+      end
+    end
   end
 end

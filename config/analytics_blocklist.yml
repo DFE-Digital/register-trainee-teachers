@@ -282,6 +282,7 @@ shared:
     - funding_type
     - status
     - csv_data
+    - error_message
     - created_at
     - updated_at
   hesa_students:
