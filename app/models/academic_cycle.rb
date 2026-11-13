@@ -97,7 +97,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def last_day_of_february
-    Date.new(end_year, 11, -1)
+    Date.new(end_year, 11, 30)
   end
 
   def first_day_of_october
