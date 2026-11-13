@@ -89,13 +89,15 @@ class AcademicCycle < ApplicationRecord
   end
 
   def second_monday_of_january
-    return first_day_of_year.next_week(:monday) + 7 if first_day_of_year.wday > 1
+    Date.new(end_year, 11, 10)
 
-    first_day_of_year.next_week(:monday)
+    # return first_day_of_year.next_week(:monday) + 7 if first_day_of_year.wday > 1
+
+    # first_day_of_year.next_week(:monday)
   end
 
   def last_day_of_february
-    Date.new(end_year + 1, 2, -1)
+    Date.new(end_year, 11, 30)
   end
 
   def first_day_of_october
@@ -116,10 +118,6 @@ class AcademicCycle < ApplicationRecord
     Date.new(start_year, 10, -1)
   end
 
-  def tenth_of_november
-    Date.new(start_year, 11, 10)
-  end
-
   def in_census_range?(date)
     census_date_range.cover?(date)
   end
@@ -128,14 +126,14 @@ class AcademicCycle < ApplicationRecord
 
   alias_method :itt_census_date, :second_wednesday_of_october
 
-  alias_method :itt_census_end_date, :tenth_of_november
+  alias_method :itt_census_end_date, :last_day_of_october
 
   def performance_profile_date_range
     @performance_profile_date_range ||= second_monday_of_january..end_date_of_performance_profile
   end
 
   def census_date_range
-    @census_date_range ||= first_day_of_september..tenth_of_november
+    @census_date_range ||= first_day_of_september..last_day_of_october
   end
 
 private

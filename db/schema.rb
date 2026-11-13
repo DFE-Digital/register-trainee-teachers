@@ -523,10 +523,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_131224) do
   end
 
   create_table "funding_school_designations", force: :cascade do |t|
-    t.bigint "academic_cycle_id", null: false
-    t.datetime "created_at", null: false
-    t.string "designation", null: false
     t.bigint "school_id", null: false
+    t.bigint "academic_cycle_id", null: false
+    t.string "designation", null: false
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["academic_cycle_id"], name: "index_funding_school_designations_on_academic_cycle_id"
     t.index ["school_id", "academic_cycle_id"], name: "idx_funding_school_designations_unique", unique: true
@@ -571,11 +571,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_131224) do
   create_table "funding_uploads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "csv_data"
-    t.string "error_message"
     t.integer "funding_type"
     t.integer "month"
     t.integer "status", default: 0
     t.datetime "updated_at", null: false
+    t.string "error_message"
     t.index ["funding_type"], name: "index_funding_uploads_on_funding_type"
     t.index ["month"], name: "index_funding_uploads_on_month"
     t.index ["status"], name: "index_funding_uploads_on_status"
@@ -748,8 +748,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_131224) do
   create_table "relevant_degree_subjects", force: :cascade do |t|
     t.bigint "academic_cycle_id", null: false
     t.bigint "allocation_subject_id", null: false
-    t.datetime "created_at", null: false
     t.string "hecos_code", null: false
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["academic_cycle_id", "allocation_subject_id", "hecos_code"], name: "idx_relevant_degree_subjects_unique", unique: true
     t.index ["academic_cycle_id"], name: "index_relevant_degree_subjects_on_academic_cycle_id"

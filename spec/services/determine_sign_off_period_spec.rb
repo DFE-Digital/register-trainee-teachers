@@ -14,7 +14,7 @@ describe DetermineSignOffPeriod do
 
     current_year = Time.zone.today.year
     census_period_range = [*Date.new(current_year, 9, 1)..Date.new(current_year, 11, 7)]
-    jan_to_feb_range = Date.new(Time.zone.today.year, 1, 1)..Date.new(Time.zone.today.year, 2, 7)
+    jan_to_feb_range = Date.new(Time.zone.today.year, 11, 10)..Date.new(Time.zone.today.year, 11, -1)
     december_range = Date.new(Time.zone.today.year, 12, 1)..Date.new(Time.zone.today.year, 12, 31)
     performance_period_range = [*jan_to_feb_range, *december_range]
     all_dates = [*Date.new(current_year, 1, 1)..Date.new(current_year, 12, 31)]

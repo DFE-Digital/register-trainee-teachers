@@ -4,7 +4,7 @@ module PerformanceProfileBanner
   class View < ApplicationComponent
     DEFAULT_ACADEMIC_CYCLE_START_DATE = "1 August"
 
-    def initialize(previous_academic_cycle: AcademicCycle.previous, sign_off_period: DetermineSignOffPeriod.call, provider:)
+    def initialize(previous_academic_cycle: AcademicCycle.current, sign_off_period: DetermineSignOffPeriod.call, provider:)
       @previous_academic_cycle = previous_academic_cycle
       @provider = provider
       @sign_off_period = sign_off_period
