@@ -10,6 +10,7 @@ features:
   funding: true
   google:
     send_data_to_big_query: true
+  sign_off_period: performance_period
 
 pagination:
   records_per_page: 30

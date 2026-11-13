@@ -5,7 +5,7 @@ class DetermineSignOffPeriod
 
   VALID_PERIODS = %i[census_period performance_period outside_period].freeze
 
-  def initialize(previous_academic_cycle: AcademicCycle.previous)
+  def initialize(previous_academic_cycle: AcademicCycle.current)
     @previous_academic_cycle = previous_academic_cycle
   end
 
