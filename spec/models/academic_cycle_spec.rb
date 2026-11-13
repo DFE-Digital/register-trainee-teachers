@@ -201,7 +201,7 @@ describe AcademicCycle do
 
     it { expect(subject.month).to eq 11 }
     # it { expect(subject.wday).to eq 1 }
-    it { expect(subject.day).to eq 1 }
+    it { expect(subject.day).to eq 10 }
     it { expect(subject).to be_a(Date) }
   end
 
