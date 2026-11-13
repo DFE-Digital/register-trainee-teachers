@@ -16,4 +16,9 @@ describe FundingMethod do
     it { is_expected.to have_many(:funding_method_subjects) }
     it { is_expected.to have_many(:allocation_subjects).through(:funding_method_subjects) }
   end
+
+  describe "enums" do
+    it { is_expected.to define_enum_for(:degree_relevance).with_values(relevant: "relevant", unrelated: "unrelated").with_prefix(:degree).backed_by_column_of_type(:string) }
+    it { is_expected.to define_enum_for(:school_disadvantage).with_values(disadvantaged: "disadvantaged", non_disadvantaged: "non_disadvantaged").with_prefix(:school).backed_by_column_of_type(:string) }
+  end
 end

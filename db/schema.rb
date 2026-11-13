@@ -489,7 +489,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_131224) do
     t.bigint "academic_cycle_id"
     t.integer "amount", null: false
     t.datetime "created_at", null: false
+    t.string "degree_relevance"
     t.integer "funding_type"
+    t.string "school_disadvantage"
     t.string "training_route", null: false
     t.datetime "updated_at", null: false
     t.index ["academic_cycle_id"], name: "index_funding_methods_on_academic_cycle_id"
