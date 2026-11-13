@@ -47,13 +47,23 @@ describe ApplicationController do
       end
     end
 
-    context "if the uuid in the session does not match a user but the email does" do
-      let(:user_uid) { "d04df553-eab2-4fbe-a53a-1217c430dd00" }
+    context "if the uuid in the session does not match a user but the email does and the user has no stored uid" do
+      let(:user_uid) { nil }
       let(:user_email) { "alice@example.com" }
 
       it "finds the user" do
         get :index
         expect(response.body).to include "found user: alice@example.com"
+      end
+    end
+
+    context "if the uuid in the session does not match a user but the email does and the user has a different uid" do
+      let(:user_uid) { "d04df553-eab2-4fbe-a53a-1217c430dd00" }
+      let(:user_email) { "alice@example.com" }
+
+      it "refuses the sign in" do
+        get :index
+        expect(response.body).to include "current user is nil!"
       end
     end
 

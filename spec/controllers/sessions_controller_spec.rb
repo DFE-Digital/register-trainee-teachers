@@ -40,6 +40,54 @@ describe SessionsController do
       end
     end
 
+    context "existing database user with no stored uid matched by email" do
+      let(:user) { create(:user, dfe_sign_in_uid: nil) }
+      let(:dfe_uid) { SecureRandom.uuid }
+      let(:request_callback) do
+        request.env["omniauth.auth"] = user_exists_in_dfe_sign_in(
+          user: build(
+            :user,
+            email: user.email,
+            dfe_sign_in_uid: dfe_uid,
+            first_name: user.first_name,
+            last_name: user.last_name,
+          ),
+        )
+        post :callback
+      end
+
+      it "stores the dfe sign in uid and signs the user in" do
+        request_callback
+
+        expect(user.reload.dfe_sign_in_uid).to eq(dfe_uid)
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "email matches a user with a different stored uid" do
+      let(:user) { create(:user, dfe_sign_in_uid: SecureRandom.uuid) }
+      let(:request_callback) do
+        request.env["omniauth.auth"] = user_exists_in_dfe_sign_in(
+          user: build(
+            :user,
+            email: user.email,
+            dfe_sign_in_uid: SecureRandom.uuid,
+            first_name: user.first_name,
+            last_name: user.last_name,
+          ),
+        )
+        post :callback
+      end
+
+      it "refuses the sign in" do
+        request_callback
+
+        expect(session[:dfe_sign_in_user]).to be_nil
+        expect(user.reload.dfe_sign_in_uid).not_to be_nil
+        expect(response).to redirect_to(sign_in_user_not_found_path)
+      end
+    end
+
     context "non existing database user" do
       let(:user) { build(:user) }
 

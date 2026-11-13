@@ -76,6 +76,96 @@ describe DfESignInUser do
     end
   end
 
+  describe "#user" do
+    subject(:resolved_user) do
+      described_class.new(
+        dfe_sign_in_uid: session_uid,
+        email: session_email,
+        first_name: "Example",
+        last_name: "User",
+        provider: provider,
+      ).user
+    end
+
+    let(:session_uid) { "6dd394f1-df7d-45f1-976e-687190390d62" }
+    let(:session_email) { "alice@example.com" }
+    let(:provider) { "dfe" }
+
+    context "when a user matches by dfe_sign_in_uid" do
+      let!(:user) do
+        create(
+          :user,
+          dfe_sign_in_uid: session_uid,
+          email: "other@example.com",
+        )
+      end
+
+      it "returns that user" do
+        expect(resolved_user).to eq(user)
+      end
+    end
+
+    context "when no user matches by uid and the email matches a user with no stored uid" do
+      let!(:user) do
+        create(
+          :user,
+          dfe_sign_in_uid: nil,
+          email: "Alice@example.com",
+        )
+      end
+
+      it "returns that user" do
+        expect(resolved_user).to eq(user)
+      end
+    end
+
+    context "when no user matches by uid and the email matches a user with a different uid" do
+      let!(:user) do
+        create(
+          :user,
+          dfe_sign_in_uid: "different-uid",
+          email: session_email,
+        )
+      end
+
+      it "refuses the sign in" do
+        expect(resolved_user).to be_nil
+      end
+
+      it "logs the refusal with the register user id only" do
+        allow(Rails.logger).to receive(:warn)
+
+        resolved_user
+
+        expect(Rails.logger).to have_received(:warn).with(
+          "DSI sign-in refused: dfe_sign_in_uid mismatch for user_id=#{user.id}",
+        )
+      end
+    end
+
+    context "when signing in via persona with no uid and the user already has a stored uid" do
+      let(:provider) { "developer" }
+      let(:session_uid) { nil }
+      let!(:user) do
+        create(
+          :user,
+          dfe_sign_in_uid: "stored-uid",
+          email: session_email,
+        )
+      end
+
+      it "returns that user" do
+        expect(resolved_user).to eq(user)
+      end
+    end
+
+    context "when no user matches by uid or email" do
+      it "returns nil" do
+        expect(resolved_user).to be_nil
+      end
+    end
+  end
+
   describe "#logout_url" do
     it "returns the dfe logout url" do
       session = {
