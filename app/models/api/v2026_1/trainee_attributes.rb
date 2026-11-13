@@ -275,7 +275,7 @@ module Api
         updated_hesa_disabilities
       end
 
-      def self.from_trainee(trainee, params_for_update)
+      def self.from_trainee(trainee, params_for_update, degrees: trainee.degrees)
         trainee_attributes = trainee.attributes.select { |k, _v|
           ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
         }
@@ -288,7 +288,7 @@ module Api
         hesa_trainee_detail_attributes["course_study_mode"] ||=
           ::Trainees::MapStudyModeToHesa.call(trainee:)
 
-        degrees_attributes = trainee.degrees.map do |degree|
+        degrees_attributes = degrees.map do |degree|
           degree.attributes.select { |k, _v| DegreeAttributes::ATTRIBUTES.include?(k.to_sym) }
         end || []
 

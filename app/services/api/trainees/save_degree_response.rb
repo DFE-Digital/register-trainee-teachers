@@ -6,6 +6,7 @@ module Api
       include ServicePattern
       include Api::Attributable
       include Api::Serializable
+      include Api::DegreeFundingCheckable
       include Api::ErrorResponse
 
       include ActiveModel::Validations
@@ -43,8 +44,17 @@ module Api
 
       def save
         assign_attributes(attributes)
+        return false unless valid?
 
-        valid? && degree.save
+        funding_check_klass.new(trainee: trainee, degrees: degrees_after_change, version: version).errors.each do |error|
+          degree.errors.add(:base, error.full_message)
+        end
+
+        degree.errors.empty? && degree.save
+      end
+
+      def degrees_after_change
+        ::Degree.where(trainee_id: trainee.id).reject { |saved_degree| saved_degree.id == degree.id } + [degree]
       end
 
       def model = :degree
