@@ -27,7 +27,7 @@ features:
     send_data_to_big_query: true
   integrate_with_trs: true
   school_data_auto_import: true
-  maintenance_banner: false
+  maintenance_banner: true
 environment:
   name: beta
   display_name: Beta
