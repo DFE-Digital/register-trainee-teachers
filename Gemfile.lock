@@ -1,15 +1,15 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: df1c6f6e3befab6e2eb600a1a64731dc83d863a6
-  tag: v1.16.3
+  revision: de07679100599a18d758ed65e7bb4e9c679c3a34
+  tag: v1.16.4
   specs:
-    dfe-analytics (1.16.3)
+    dfe-analytics (1.16.4)
       google-cloud-bigquery (~> 1.38)
       googleauth (~> 1.17)
       httparty (~> 0.24)
       json (< 3)
       multi_xml (~> 0.6.0)
-      request_store_rails (~> 2)
+      request_store_rails (>= 2, < 4)
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
@@ -256,6 +256,7 @@ GEM
       base64 (~> 0.2)
       concurrent-ruby (~> 1.1)
       websocket-driver (~> 0.7)
+    ffi (1.17.4)
     ffi (1.17.4-arm64-darwin)
     ffi (1.17.4-x86_64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
@@ -414,6 +415,7 @@ GEM
       mime-types-data (~> 3.2025, >= 3.2025.0507)
     mime-types-data (3.2026.1103)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (6.1.0)
       drb (~> 2.0)
       prism (>= 1.5, < 3)
@@ -447,6 +449,9 @@ GEM
       net-protocol
     nio4r (2.7.5)
     nkf (0.3.0)
+    nokogiri (1.19.7)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.19.7-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.19.7-x86_64-darwin)
@@ -498,6 +503,7 @@ GEM
     parser (3.3.13.0)
       ast (~> 2.4.1)
       racc
+    pg (1.7.0)
     pg (1.7.0-arm64-darwin)
     pg (1.7.0-x86_64-darwin)
     pg (1.7.0-x86_64-linux)
@@ -620,7 +626,8 @@ GEM
       uber (< 0.2.0)
     request_store (1.7.0)
       rack (>= 1.4)
-    request_store_rails (2.0.0)
+    request_store_rails (3.0.0)
+      activesupport (>= 7.0)
       concurrent-ruby (~> 1.0)
     retriable (4.2.0)
     reverse_markdown (3.0.2)
@@ -1072,7 +1079,7 @@ CHECKSUMS
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   deep_merge (1.2.2) sha256=83ced3a3d7f95f67de958d2ce41b1874e83c8d94fe2ddbff50c8b4b82323563a
-  dfe-analytics (1.16.3)
+  dfe-analytics (1.16.4)
   dfe-reference-data (3.10.2)
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   discard (2.0.0) sha256=0fc520786b4d7b9b1ea8b2b3dadbb13c3e41d2ce7d297d04869baf1c9e30d2c0
@@ -1093,6 +1100,7 @@ CHECKSUMS
   faraday-follow_redirects (0.5.0) sha256=5cde93c894b30943a5d2b93c2fe9284216a6b756f7af406a1e55f211d97d10ad
   faraday-net_http (3.5.0) sha256=2e7094c34e38754ee048cc3df47376f8657005d9375f8473bce1c3b526a22e36
   ferrum (0.20.1) sha256=3a33d27f3e48ec66a36f7eaffa29180a9f1f4ff32694e8f2bc43d249f47612dc
+  ffi (1.17.4) sha256=bcd1642e06f0d16fc9e09ac6d49c3a7298b9789bcb58127302f934e437d60acf
   ffi (1.17.4-arm64-darwin) sha256=19071aaf1419251b0a46852abf960e77330a3b334d13a4ab51d58b31a937001b
   ffi (1.17.4-x86_64-darwin) sha256=aa70390523cf3235096cf64962b709b4cfbd5c082a2cb2ae714eb0fe2ccda496
   ffi (1.17.4-x86_64-linux-gnu) sha256=9d3db14c2eae074b382fa9c083fe95aec6e0a1451da249eab096c34002bc752d
@@ -1150,6 +1158,7 @@ CHECKSUMS
   mime-types (3.7.0) sha256=dcebf61c246f08e15a4de34e386ebe8233791e868564a470c3fe77c00eed5e56
   mime-types-data (3.2026.1103) sha256=cda7af94d895f1fd33e000acea800e6ed31e4c861e3d6c1a27c8b74f9e44dc64
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
+  mini_portile2 (2.8.9) sha256=0cd7c7f824e010c072e33f68bc02d85a00aeb6fce05bb4819c03dfd3c140c289
   minitest (6.1.0) sha256=ff373595aa8888631e8a5463986a76b3845346ae6d7fa46e139c1633d418076e
   mission_control-jobs (1.3.1) sha256=3230be224069b39fee2893eecd27c1c334fb5467290bf575e88b5c9121287b26
   msgpack (1.8.7) sha256=dfefec761b5f9047e6e8d95d2c7f8af4b3725d984a01942adc533aa819a2df33
@@ -1164,6 +1173,7 @@ CHECKSUMS
   net-smtp (0.5.1) sha256=ed96a0af63c524fceb4b29b0d352195c30d82dd916a42f03c62a3a70e5b70736
   nio4r (2.7.5) sha256=6c90168e48fb5f8e768419c93abb94ba2b892a1d0602cb06eef16d8b7df1dca1
   nkf (0.3.0) sha256=357a8dbeba38b727b75930f665146546076a394a1c243faf634ff176e3588895
+  nokogiri (1.19.7) sha256=abe94507c54cb18f872777b16bdca4aad32b1abdc4c52fe843f1c80fbdf992b8
   nokogiri (1.19.7-arm64-darwin) sha256=f27d7f25f4873fbc3aa35a2cc2fb680c98555fec1925348da439d0869d541142
   nokogiri (1.19.7-x86_64-darwin) sha256=508e81e8c5f84aaa240dce981bf1c43faae60808726f0ce7024ee92effc5cafe
   nokogiri (1.19.7-x86_64-linux-gnu) sha256=25865ccb462f714e712fdf8906fde07849cb6704a808e3d629d75baa5af5dd3b
@@ -1183,6 +1193,7 @@ CHECKSUMS
   parallel_tests (5.9.0) sha256=593169873cfeefe54f233103238cb3b078320e6eac0155d0f1107b39233f98f8
   parlour (9.1.2) sha256=446ce24243e125f0e8c4f9b5722c3b86063d42d8b106c847a7d73a8cc693c382
   parser (3.3.13.0) sha256=e02f9b63c2fe05b0c68f692ba4df89b3cb113b663964f75d988fbebfd6c3deca
+  pg (1.7.0) sha256=f7b536501284e883d4c9ef86dbde0313063e4aaafc23575b0017b0d572a26afb
   pg (1.7.0-arm64-darwin) sha256=9fa895bbe28bdd579b83ccc80464c01d1015ea7549a7919134c9f8f10c060e4b
   pg (1.7.0-x86_64-darwin) sha256=7b726ba6eab8b143fb803d3b4173b0a3e4b0b032025032212f90d436785022db
   pg (1.7.0-x86_64-linux) sha256=d0a24f448b3c874c8b2658d4efbbbefce7315c228ede84f6f6f42089d1d704b6
@@ -1229,7 +1240,7 @@ CHECKSUMS
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   representable (3.3.1) sha256=8a5fc8eef99f598147eee0390f606386268b429a840419fcfd3f7a8ccc40f566
   request_store (1.7.0) sha256=e1b75d5346a315f452242a68c937ef8e48b215b9453a77a6c0acdca2934c88cb
-  request_store_rails (2.0.0) sha256=2dbae9fb29de6bd8bf3cbd44fbef4ee49b71c849f8ccf235cba3e8b491701d2f
+  request_store_rails (3.0.0) sha256=1cee5e39356aed62a5c63a7281346afb5afa085f1bf4edf3c4674a982cc34e0e
   retriable (4.2.0) sha256=90c3b257472a1c02f2a3dfa64dd35a420f7a624cef1a5981e20fdac5730f8cdc
   reverse_markdown (3.0.2) sha256=818ebb92ce39dbb1a291690dd1ec9a6d62530d4725296b17e9c8f668f9a5b8af
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
