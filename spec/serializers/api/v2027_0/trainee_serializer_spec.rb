@@ -358,5 +358,17 @@ RSpec.describe Api::V20270::TraineeSerializer do
         expect(json[:iqts_country]).to eq("QO")
       end
     end
+
+    context "when the trainee's iQTS country is stored as the short Taiwan label" do
+      let(:trainee) do
+        create(:trainee, :iqts, :with_training_partner_scitt, :with_hesa_trainee_detail,
+               :with_diversity_information, :in_progress, :with_placements, :with_french_nationality,
+               iqts_country: "Taiwan")
+      end
+
+      it "serializes the HESA code for Taiwan" do
+        expect(json[:iqts_country]).to eq("TW")
+      end
+    end
   end
 end

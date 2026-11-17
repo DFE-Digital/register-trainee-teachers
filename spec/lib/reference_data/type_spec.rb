@@ -146,6 +146,17 @@ RSpec.describe ReferenceData::Type do
     it "returns nil for unknown HESA codes" do
       expect(type.find_by_hesa_code("99")).to be_nil
     end
+
+    context "for the Taiwan country entry" do
+      subject(:countries) { ReferenceData::Loader.instance.find("country") }
+
+      it "carries the HESA label and code the API and CSV paths write from" do
+        value = countries.find_by_hesa_code("TW")
+
+        expect(value.display_name).to eq("Taiwan [Taiwan, Province of China]")
+        expect(value.hesa_codes).to eq(["TW"])
+      end
+    end
   end
 
   describe "#method_missing" do
@@ -217,6 +228,18 @@ RSpec.describe ReferenceData::Type do
       it "resolves to the entry whose `display_name` matches" do
         expect(countries.hesa_code_for("Kosovo")).to eq("QO")
         expect(countries.hesa_code_for("United Kingdom, not otherwise specified")).to eq("XK")
+      end
+    end
+
+    context "with a country label recorded as an alias" do
+      subject(:countries) { ReferenceData::Loader.instance.find("country") }
+
+      it "resolves the Taiwan short label to TW" do
+        expect(countries.hesa_code_for("Taiwan")).to eq("TW")
+      end
+
+      it "still resolves the HESA Taiwan label" do
+        expect(countries.hesa_code_for("Taiwan [Taiwan, Province of China]")).to eq("TW")
       end
     end
 

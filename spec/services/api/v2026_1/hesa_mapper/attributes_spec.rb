@@ -56,6 +56,12 @@ RSpec.describe Api::V20261::HesaMapper::Attributes do
     expect(divergences).to be_empty, divergences.join("\n")
   end
 
+  # Both the API and the bulk CSV import call this mapper (BulkUpdate::AddTrainees::V20261::ImportRow),
+  # so the reference data label asserted here is what both paths write.
+  it "maps the Taiwan code to the label held in the reference data" do
+    expect(mapped(iqts_country: "TW")[:iqts_country]).to eq("Taiwan [Taiwan, Province of China]")
+  end
+
   it "maps course subjects for every code" do
     divergences = diverging(Hesa::CodeSets::CourseSubjects::MAPPING) { |code| mapped(course_subject_1: code)[:course_subject_one] }
     expect(divergences).to be_empty, divergences.join("\n")

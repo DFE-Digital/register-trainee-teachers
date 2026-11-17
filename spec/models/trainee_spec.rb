@@ -789,6 +789,26 @@ describe Trainee do
     end
   end
 
+  describe "#iqts_country" do
+    it "normalises the HESA Taiwan label to the short form" do
+      trainee = build(:trainee, :iqts, iqts_country: "Taiwan [Taiwan, Province of China]")
+
+      expect(trainee.iqts_country).to eq("Taiwan")
+    end
+
+    it "leaves other country values unchanged" do
+      trainee = build(:trainee, :iqts, iqts_country: "Ireland")
+
+      expect(trainee.iqts_country).to eq("Ireland")
+    end
+
+    it "leaves a nil value unchanged" do
+      trainee = build(:trainee, iqts_country: nil)
+
+      expect(trainee.iqts_country).to be_nil
+    end
+  end
+
   describe "#duplicate?" do
     let(:trainee) { create(:trainee) }
 

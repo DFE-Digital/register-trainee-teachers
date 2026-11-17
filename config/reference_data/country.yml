@@ -1189,6 +1189,8 @@ data:
 - id: "TW"
   name: ""
   display_name: "Taiwan [Taiwan, Province of China]"
+  aliases:
+  - "Taiwan"
   hesa_codes:
   - "TW"
 - id: "TJ"
