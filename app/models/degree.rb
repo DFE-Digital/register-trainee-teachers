@@ -42,8 +42,6 @@ class Degree < ApplicationRecord
 
   attr_writer :is_apply_import
 
-  # Degree country comes from the same HESA label writer as the trainee's iqts_country,
-  # so store the short form for both.
   normalizes :country, with: ->(value) { ::ReferenceData::COUNTRY_LABEL_ALIASES.fetch(value, value) }
 
   validates :locale_code, presence: true

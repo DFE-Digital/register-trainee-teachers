@@ -8,7 +8,6 @@ RSpec.describe NormaliseIqtsCountryTaiwan do
   let(:other_trainee) { create(:trainee, :iqts, iqts_country: "Ireland") }
 
   before do
-    # Bypasses the model normalisation, which is the state older rows are in.
     taiwan_trainee.update_column(:iqts_country, "Taiwan [Taiwan, Province of China]")
   end
 

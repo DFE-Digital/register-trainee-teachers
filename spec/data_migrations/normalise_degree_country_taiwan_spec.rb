@@ -8,7 +8,6 @@ RSpec.describe NormaliseDegreeCountryTaiwan do
   let(:kosovo_degree) { create(:degree, :non_uk_degree_type, country: "Kosovo") }
 
   before do
-    # Bypasses the model normalisation, which is the state older rows are in.
     taiwan_degree.update_column(:country, "Taiwan [Taiwan, Province of China]")
   end
 
