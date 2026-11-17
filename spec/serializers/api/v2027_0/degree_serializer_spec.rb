@@ -60,6 +60,16 @@ RSpec.describe Api::V20270::DegreeSerializer do
       end
     end
 
+    context "with a non-UK degree in Taiwan" do
+      let(:degree) do
+        create(:degree, :non_uk_degree_type, country: "Taiwan", subject: "Computing")
+      end
+
+      it "serializes the country as its HESA code" do
+        expect(json[:country]).to eq("TW")
+      end
+    end
+
     context "with a superseded subject label still stored against the degree" do
       let(:degree) { create(:degree, :uk_degree_type, subject: "Computing and information technology") }
 

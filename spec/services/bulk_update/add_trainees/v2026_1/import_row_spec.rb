@@ -133,18 +133,18 @@ module BulkUpdate
           before do
             row["training_route"] = "15"
             row["iqts_country"] = "TW"
-            row["uk_degree"] = "083"
+            row["non_uk_degree"] = "083"
             row["degree_subject"] = "100485"
-            row["degree_grade"] = "02"
+            row["degree_country"] = "TW"
             row["degree_graduation_year"] = "2019"
-            row["awarding_institution"] = "0117"
           end
 
-          it "stores the short Taiwan label" do
+          it "stores the short Taiwan label for the trainee and the degree" do
             expect { result }.to change { Trainee.count }.by(1)
 
             expect(result.success).to be(true)
             expect(Trainee.last.iqts_country).to eq("Taiwan")
+            expect(Trainee.last.degrees.first.country).to eq("Taiwan")
           end
         end
 

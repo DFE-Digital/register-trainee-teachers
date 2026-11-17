@@ -191,9 +191,7 @@ class Trainee < ApplicationRecord
 
   # The v2026.1 API/CSV writes the HESA label for Taiwan. Store the short form so the country
   # serialises back to TW and the TRS professional-status payload maps to CN (see #5457).
-  IQTS_COUNTRY_ALIASES = { "Taiwan [Taiwan, Province of China]" => "Taiwan" }.freeze
-
-  normalizes :iqts_country, with: ->(value) { IQTS_COUNTRY_ALIASES.fetch(value, value) }
+  normalizes :iqts_country, with: ->(value) { ::ReferenceData::COUNTRY_LABEL_ALIASES.fetch(value, value) }
 
   delegate :update_training_route!, to: :route_data_manager
   delegate :date, to: :current_withdrawal, prefix: :withdraw, allow_nil: true

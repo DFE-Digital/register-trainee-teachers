@@ -104,4 +104,24 @@ describe Degree do
       it { is_expected.to be_truthy }
     end
   end
+
+  describe "#country" do
+    it "normalises the HESA Taiwan label to the short form" do
+      degree = build(:degree, :non_uk_degree_type, country: "Taiwan [Taiwan, Province of China]")
+
+      expect(degree.country).to eq("Taiwan")
+    end
+
+    it "leaves other countries unchanged" do
+      degree = build(:degree, :non_uk_degree_type, country: "Kosovo")
+
+      expect(degree.country).to eq("Kosovo")
+    end
+
+    it "leaves a nil country unchanged" do
+      degree = build(:degree, :uk_degree_type, country: nil)
+
+      expect(degree.country).to be_nil
+    end
+  end
 end
