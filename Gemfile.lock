@@ -1,15 +1,15 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: df1c6f6e3befab6e2eb600a1a64731dc83d863a6
-  tag: v1.16.3
+  revision: de07679100599a18d758ed65e7bb4e9c679c3a34
+  tag: v1.16.4
   specs:
-    dfe-analytics (1.16.3)
+    dfe-analytics (1.16.4)
       google-cloud-bigquery (~> 1.38)
       googleauth (~> 1.17)
       httparty (~> 0.24)
       json (< 3)
       multi_xml (~> 0.6.0)
-      request_store_rails (~> 2)
+      request_store_rails (>= 2, < 4)
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
@@ -626,7 +626,8 @@ GEM
       uber (< 0.2.0)
     request_store (1.7.0)
       rack (>= 1.4)
-    request_store_rails (2.0.0)
+    request_store_rails (3.0.0)
+      activesupport (>= 7.0)
       concurrent-ruby (~> 1.0)
     retriable (4.2.0)
     reverse_markdown (3.0.2)
@@ -1078,7 +1079,7 @@ CHECKSUMS
   debug (1.11.1) sha256=2e0b0ac6119f2207a6f8ac7d4a73ca8eb4e440f64da0a3136c30343146e952b6
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   deep_merge (1.2.2) sha256=83ced3a3d7f95f67de958d2ce41b1874e83c8d94fe2ddbff50c8b4b82323563a
-  dfe-analytics (1.16.3)
+  dfe-analytics (1.16.4)
   dfe-reference-data (3.10.2)
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   discard (2.0.0) sha256=0fc520786b4d7b9b1ea8b2b3dadbb13c3e41d2ce7d297d04869baf1c9e30d2c0
@@ -1239,7 +1240,7 @@ CHECKSUMS
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   representable (3.3.1) sha256=8a5fc8eef99f598147eee0390f606386268b429a840419fcfd3f7a8ccc40f566
   request_store (1.7.0) sha256=e1b75d5346a315f452242a68c937ef8e48b215b9453a77a6c0acdca2934c88cb
-  request_store_rails (2.0.0) sha256=2dbae9fb29de6bd8bf3cbd44fbef4ee49b71c849f8ccf235cba3e8b491701d2f
+  request_store_rails (3.0.0) sha256=1cee5e39356aed62a5c63a7281346afb5afa085f1bf4edf3c4674a982cc34e0e
   retriable (4.2.0) sha256=90c3b257472a1c02f2a3dfa64dd35a420f7a624cef1a5981e20fdac5730f8cdc
   reverse_markdown (3.0.2) sha256=818ebb92ce39dbb1a291690dd1ec9a6d62530d4725296b17e9c8f668f9a5b8af
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
