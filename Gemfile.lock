@@ -321,7 +321,7 @@ GEM
       notifications-ruby-client (~> 6.2)
       rails (>= 4.1.0)
     hashdiff (1.2.1)
-    hashie (5.2.0)
+    hashie (6.0.0)
       logger
     highline (3.0.1)
     html-attributes-utils (1.0.2)
@@ -463,7 +463,7 @@ GEM
     notifications-ruby-client (6.4.0)
       jwt (>= 1.5, < 4)
     observer (0.1.2)
-    omniauth (2.3.1)
+    omniauth (2.4.1)
       hashie (>= 3.5.2)
       logger
       rack (>= 2.2.8)
@@ -532,7 +532,7 @@ GEM
       date
       stringio
     public_suffix (7.0.5)
-    puma (8.0.2)
+    puma (8.1.0)
       nio4r (~> 2.0)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
@@ -957,7 +957,7 @@ DEPENDENCIES
   progress_bar
   prometheus-client
   pry-byebug
-  puma (~> 8.0)
+  puma (~> 8.1)
   pundit
   rack-attack
   rack-mini-profiler
@@ -1123,7 +1123,7 @@ CHECKSUMS
   govuk_markdown (2.0.5) sha256=e52346563f0c0daf9269112d126c881e6341ae494bb67a660636c0f549a55324
   govuk_notify_rails (3.0.0) sha256=e0e1b8b0a7c47f90963034f290fb2982652aa8051a733c25c178680d44f2d7aa
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
-  hashie (5.2.0) sha256=357a22635195c2e3911fbbc3de9a7d528843d1f42ab0aae02171048f16332d72
+  hashie (6.0.0) sha256=0896391e9fc7a259bfe02abbb1a026b3e142e2f464e10255261d50a0eda18e3e
   highline (3.0.1) sha256=ca18b218fd581b1fae832f89bfeaf2b34d3a93429c44fd4411042ffce286f009
   html-attributes-utils (1.0.2) sha256=594e0b37b3dd4e554abe893bee9719896f876675fd08fe534fc2e6e1b4e2538c
   http-cookie (1.1.6) sha256=ba4b82be64de61dc281243dac70e3c382c45142f20268ed9276a3670c93feaa9
@@ -1180,7 +1180,7 @@ CHECKSUMS
   nokogiri (1.19.7-x86_64-linux-musl) sha256=464d1f3dfb0d53cf54c0c6a7e23e8e91cf68ec3cafc2b27dc4a7682f2d9bf546
   notifications-ruby-client (6.4.0) sha256=1aff01a7990d6c2b8a261c144e1d65143372da4674f73dd37409ca287dcc2822
   observer (0.1.2) sha256=d8a3107131ba661138d748e7be3dbafc0d82e732fffba9fccb3d7829880950ac
-  omniauth (2.3.1) sha256=bb47bfcd5614b00cd89de4b45b0687123d09143dfeb5dbaf1bb57ff190bc2d2e
+  omniauth (2.4.1) sha256=99950c2cf9231d4e960d2bda87e7efec5ace7c3e2d1860016ad3f2e40366489c
   omniauth-rails_csrf_protection (2.0.1) sha256=c6e3204d7e3925bb537cb52d50fdfc9f05293f1a9d87c5d4ab4ca3a39ba8c32d
   omniauth_openid_connect (0.8.0) sha256=1f2f3890386e2a742221cee0d2e903b78d874e6fab9ea3bfa31c1462f4793d25
   open3 (0.2.1) sha256=8e2d7d2113526351201438c1aa35c8139f0141c9e8913baa007c898973bf3952
@@ -1209,7 +1209,7 @@ CHECKSUMS
   pstore (0.3.0) sha256=97888d57cdc8b99b3587dde5e1d01fc5ca4a9124dfeb2afb84e3dd982e78f829
   psych (5.5.0) sha256=4b245bbbd0f3238df8ccee766ebc1a6b062b10e4ee1d3284eb588739ba156a0a
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
-  puma (8.0.2) sha256=c8ed871dfbbe66448ea9ffd46692342d9804d4071522b52b5331b7b6e7b686fb
+  puma (8.1.0) sha256=86337ed8a60eb3f246c287b7ffd7cbb81dee5a2408b745e2c33e77760b7c2ac7
   pundit (2.5.2) sha256=e374152baa24f90b630428293faf4b4c5468fc3cc010165f7d8fcb44ce108bbd
   raabro (1.5.0) sha256=3f998a7bc84f9c84df3ab580634d2e0a5bda4f0841168d56035f529c9877440a
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
