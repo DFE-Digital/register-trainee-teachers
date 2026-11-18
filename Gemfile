@@ -14,7 +14,7 @@ gem "turbo-rails"
 gem "pg", "~> 1.7"
 
 # Use Puma as the app server
-gem "puma", "~> 8.0"
+gem "puma", "~> 8.1"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -118,7 +118,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.10.2"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.16.3"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.16.4"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
