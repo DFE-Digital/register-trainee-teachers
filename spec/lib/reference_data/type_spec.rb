@@ -156,6 +156,10 @@ RSpec.describe ReferenceData::Type do
         expect(value.display_name).to eq("Taiwan [Taiwan, Province of China]")
         expect(value.hesa_codes).to eq(["TW"])
       end
+
+      it "uses the short form as the name the API and CSV paths write" do
+        expect(countries.find_by_hesa_code("TW").service_name).to eq("Taiwan")
+      end
     end
   end
 
@@ -231,7 +235,7 @@ RSpec.describe ReferenceData::Type do
       end
     end
 
-    context "with a country label recorded as an alias" do
+    context "for the Taiwan country entry" do
       subject(:countries) { ReferenceData::Loader.instance.find("country") }
 
       it "resolves the Taiwan short label to TW" do

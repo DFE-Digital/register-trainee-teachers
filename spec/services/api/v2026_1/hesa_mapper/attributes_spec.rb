@@ -56,8 +56,8 @@ RSpec.describe Api::V20261::HesaMapper::Attributes do
     expect(divergences).to be_empty, divergences.join("\n")
   end
 
-  it "maps the Taiwan code to the label held in the reference data" do
-    expect(mapped(iqts_country: "TW")[:iqts_country]).to eq("Taiwan [Taiwan, Province of China]")
+  it "maps the Taiwan code to the short form the reference data stores" do
+    expect(mapped(iqts_country: "TW")[:iqts_country]).to eq("Taiwan")
   end
 
   it "maps course subjects for every code" do
