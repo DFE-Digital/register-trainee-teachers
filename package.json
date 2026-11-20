@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@hotwired/turbo-rails": "^8.0.23",
-    "@ministryofjustice/frontend": "^12.0.0",
+    "@ministryofjustice/frontend": "^12.0.1",
     "accessible-autocomplete": "^3.0.2",
     "govuk-country-and-territory-autocomplete": "^2.0.0",
     "govuk-frontend": "^6.6.0",
-    "jquery": "^4.0.0",
+    "jquery": "^4.1.0",
     "rails-ujs": "^5.2.8",
     "sass": "^1.108.2",
     "turbolinks": "^5.2.0"
