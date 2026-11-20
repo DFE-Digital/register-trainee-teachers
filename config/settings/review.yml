@@ -8,6 +8,8 @@ features:
   publish_course_details: true
   user_can_have_multiple_organisations: true
   funding: true
+  routes:
+    teach_learn_change: true
   google:
     send_data_to_big_query: true
 

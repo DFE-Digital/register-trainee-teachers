@@ -5,6 +5,31 @@ weight: 2
 
 # Release notes
 
+## v2027.0 (in development)
+
+### New values
+
+The following new values have been added:
+
+#### Training route
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Code</th>
+      <th scope="col" class="govuk-table__header">Label</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <td class="govuk-table__cell">22</td>
+      <td class="govuk-table__cell">Teach Learn Change</td>
+    </tr>
+  </tbody>
+</table>
+
+Teach Learn Change is only valid for trainees starting from the 2027 to 2028 academic year.
+
 ## v2026.1 — 20 March 2026
 
 ### New values
