@@ -1040,6 +1040,15 @@ en:
             They provide incentives and support for people training to teach.<br><br>
             If you’re not sure if the trainee is on an initiative you could check with a colleague or ask the trainee directly.
         bursaries:
+          explanation:
+            degree:
+              relevant: The trainee’s degree in %{degree} is relevant or related to their %{subject} ITT course.
+              not_relevant:
+                one: The trainee’s degree in %{degrees} is not relevant or related to their %{subject} ITT course.
+                other: The trainee’s degrees in %{degrees} are not relevant or related to their %{subject} ITT course.
+            employing_school:
+              listed: The employing school, %{school}, is a secondary school or special school we have identified as having a high need for teachers.
+              not_listed: The employing school, %{school}, is not a secondary school or special school we have identified as having a high need for teachers.
           non_tiered:
             description: The trainee may be able to get funding for their %{subject} course.
             early_years_description: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary."
