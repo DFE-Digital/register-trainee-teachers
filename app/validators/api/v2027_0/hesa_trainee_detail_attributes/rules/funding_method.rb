@@ -29,7 +29,9 @@ module Api
                    :trainee_attributes, to: :hesa_trainee_detail_attributes
           delegate :training_route,
                    :course_subject_one,
-                   :course_allocation_subject_id, to: :trainee_attributes
+                   :course_allocation_subject_id,
+                   :degrees_attributes,
+                   :employing_school_id, to: :trainee_attributes
 
           def initialize(hesa_trainee_detail_attributes)
             @hesa_trainee_detail_attributes = hesa_trainee_detail_attributes
@@ -55,9 +57,40 @@ module Api
             @funding_method_exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
-              training_route: training_route.is_a?(Api::V20261::HesaMapper::Attributes::InvalidValue) ? nil : training_route,
-              subject_specialisms: { name: course_subject_one.is_a?(Api::V20261::HesaMapper::Attributes::InvalidValue) ? nil : course_subject_one },
+              training_route: invalid_value?(training_route) ? nil : training_route,
+              subject_specialisms: { name: invalid_value?(course_subject_one) ? nil : course_subject_one },
+              degree_relevance: degree_relevance,
+              school_disadvantage: school_disadvantage,
             )
+          end
+
+          def degree_relevance
+            return [nil] if UNDERGRAD_ROUTES.key?(training_route.to_s)
+            return [nil, "relevant", "unrelated"] if degrees_attributes.blank?
+
+            [nil, relevant_degree? ? "relevant" : "unrelated"]
+          end
+
+          def school_disadvantage
+            return [nil, "disadvantaged", "non_disadvantaged"] if employing_school_id.blank? || invalid_value?(employing_school_id)
+
+            [nil, designated_school? ? "disadvantaged" : "non_disadvantaged"]
+          end
+
+          def relevant_degree?
+            ::RelevantDegreeSubject.exists?(
+              academic_cycle_id: academic_cycle.id,
+              allocation_subject_id: course_allocation_subject_id,
+              hecos_code: degrees_attributes.filter_map { |degree| ::ReferenceData::DEGREE_SUBJECTS.hesa_code_for(degree.subject) },
+            )
+          end
+
+          def designated_school?
+            ::FundingSchoolDesignation.exists?(academic_cycle_id: academic_cycle.id, school_id: employing_school_id)
+          end
+
+          def invalid_value?(value)
+            value.is_a?(Api::HesaMapper::Attributes::InvalidValue)
           end
 
           def fund_code_not_eligible?

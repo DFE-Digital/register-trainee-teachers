@@ -25,5 +25,9 @@ blazer_database_url: postgresql://localhost/register_trainee_teacher_data_develo
 api:
   allowed_versions: [v2026.1, v2027.0]
 
+bulk_update:
+  add_trainees:
+    version: v2027.0
+
 rotp:
   base_url: "https://register-training-providers-staging.test.teacherservices.cloud/api"
