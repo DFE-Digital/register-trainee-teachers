@@ -56,6 +56,10 @@ RSpec.describe Api::V20261::HesaMapper::Attributes do
     expect(divergences).to be_empty, divergences.join("\n")
   end
 
+  it "maps the Taiwan code to the short form the reference data stores" do
+    expect(mapped(iqts_country: "TW")[:iqts_country]).to eq("Taiwan")
+  end
+
   it "maps course subjects for every code" do
     divergences = diverging(Hesa::CodeSets::CourseSubjects::MAPPING) { |code| mapped(course_subject_1: code)[:course_subject_one] }
     expect(divergences).to be_empty, divergences.join("\n")

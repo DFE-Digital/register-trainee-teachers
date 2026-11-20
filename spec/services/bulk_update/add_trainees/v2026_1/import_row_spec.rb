@@ -127,6 +127,27 @@ module BulkUpdate
           end
         end
 
+        context "when the row is an iQTS trainee in Taiwan" do
+          let(:row) { parsed_csv.first }
+
+          before do
+            row["training_route"] = "15"
+            row["iqts_country"] = "TW"
+            row["non_uk_degree"] = "083"
+            row["degree_subject"] = "100485"
+            row["degree_country"] = "TW"
+            row["degree_graduation_year"] = "2019"
+          end
+
+          it "stores the short Taiwan label for the trainee and the degree" do
+            expect { result }.to change { Trainee.count }.by(1)
+
+            expect(result.success).to be(true)
+            expect(Trainee.last.iqts_country).to eq("Taiwan")
+            expect(Trainee.last.degrees.first.country).to eq("Taiwan")
+          end
+        end
+
         context "when the row uses the early years course_age_range without an early years training_route" do
           let(:row) { parsed_csv.first }
 
