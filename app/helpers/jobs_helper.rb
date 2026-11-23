@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SidekiqJobsHelper
+module JobsHelper
   def last_run_or_scheduled_at(trainee)
     if dead_jobs[trainee.id]
       dead_jobs[trainee.id][:scheduled_at]

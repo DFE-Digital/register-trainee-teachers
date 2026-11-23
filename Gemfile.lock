@@ -189,9 +189,6 @@ GEM
       bigdecimal
       rexml
     crass (1.0.8)
-    cronex (0.15.0)
-      tzinfo
-      unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     csv (3.3.7)
@@ -616,7 +613,6 @@ GEM
       psych (>= 4.0.0)
       tsort
     redcarpet (3.6.1)
-    redis (4.8.1)
     regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
@@ -721,20 +717,8 @@ GEM
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
       logger
-    sentry-sidekiq (7.2.0)
-      sentry-ruby (~> 7.2.0)
-      sidekiq (>= 5.0)
     shoulda-matchers (8.0.1)
       activesupport (>= 7.2)
-    sidekiq (6.5.12)
-      connection_pool (>= 2.2.5, < 3)
-      rack (~> 2.0)
-      redis (>= 4.5.0, < 5)
-    sidekiq-cron (2.4.0)
-      cronex (>= 0.13.0)
-      fugit (~> 1.8, >= 1.11.1)
-      globalid (>= 1.0.1)
-      sidekiq (>= 6.5.0)
     signet (0.22.2)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -840,7 +824,6 @@ GEM
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
     uk_postcode (2.1.8)
-    unicode (0.4.4.5)
     unicode-display_width (3.3.0)
       unicode-emoji (~> 4.3)
     unicode-emoji (4.3.0)
@@ -981,10 +964,7 @@ DEPENDENCIES
   selenium-webdriver
   sentry-rails
   sentry-ruby
-  sentry-sidekiq
   shoulda-matchers (~> 8.0)
-  sidekiq (~> 6.5)
-  sidekiq-cron (~> 2.4)
   simplecov (~> 1.3.2)
   simplecov-json
   site_prism (~> 6.0)
@@ -1067,7 +1047,6 @@ CHECKSUMS
   connection_pool (2.5.5) sha256=e54ff92855753df1fd7c59fa04a398833355f27dd14c074f8c83a05f72a716ad
   crack (1.0.1) sha256=ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e
   crass (1.0.8) sha256=7a0145c7a2c59f8e7923b3a69ce819c444823a00a5127d805298fea13be24efe
-  cronex (0.15.0) sha256=21c794e085fad2951c4f2e279f440340a35ba2297e0b738f22f263f69fbe2186
   cssbundling-rails (1.4.3) sha256=53aecd5a7d24ac9c8fcd92975acd0e830fead4ee4583d3d3d49bb64651946e41
   csv (3.3.7) sha256=15a3f16f6628da8664d455eb634e7f22031bcf53044923caf56975109e71b9f8
   csv-safe (3.3.3) sha256=2b0d8e73f45fef0bc2730b422bb5610450225275014a25fd8386beaa6e53c472
@@ -1235,7 +1214,6 @@ CHECKSUMS
   rbs (4.2.0) sha256=51f7b886dcc05bc09e10b901daa6a81829f6adc03101d6ca9ea4aac6103e0674
   rdoc (7.2.0) sha256=8650f76cd4009c3b54955eb5d7e3a075c60a57276766ebf36f9085e8c9f23192
   redcarpet (3.6.1) sha256=d444910e6aa55480c6bcdc0cdb057626e8a32c054c29e793fa642ba2f155f445
-  redis (4.8.1) sha256=387ee086694fffc9632aaeb1efe4a7b1627ca783bf373320346a8a20cd93333a
   regexp_parser (2.13.1) sha256=5aedb6b7c35688f51e86eef17a15374dfd287c83f4ca644b2c5f3ec50a33b44b
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   representable (3.3.1) sha256=8a5fc8eef99f598147eee0390f606386268b429a840419fcfd3f7a8ccc40f566
@@ -1271,10 +1249,7 @@ CHECKSUMS
   semantic_logger (5.1.0) sha256=9a8170fc0212ad47ef29e0760219cf416cb5b9973061981733234f7148b6d6ea
   sentry-rails (7.2.0) sha256=c3874fed94a68f3f60a917243b6e25414ff284455abd14e3351479a32807af79
   sentry-ruby (7.2.0) sha256=2da448c2b7028a7691f31ae5c946830b8e694d0aec78ef2b9e5c7e1da9c3e01a
-  sentry-sidekiq (7.2.0) sha256=3b2f3cd73ddc0c6a60fdf6a37c411b2d19f97b6291b4a88ef8594d554710ccd6
   shoulda-matchers (8.0.1) sha256=5dbb46e5765b9da225111b085e0819e8c8a121ff94bba430a153eb1ea2c60288
-  sidekiq (6.5.12) sha256=b4f93b2204c42220d0b526a7b8e0c49b5f9da82c1ce1a05d2baf1e8f744c197f
-  sidekiq-cron (2.4.0) sha256=25595c5aee0c16d13a89466e5108af047fa4cfbf388199b39e1a600ca39472d4
   signet (0.22.2) sha256=9c6861bb599845ea0cb05ffadd3d64c7a3b07a29bdee0f5352bcbe87b7ade21d
   simplecov (1.3.2) sha256=2a22ec1759f1b8db60881a2e038758956fc69ef93ed669be0bde0678de6d0e85
   simplecov-json (0.2.3) sha256=c63823b5dfc95c85ff4cb94251765f08a166bdd68098f259368cbfe738e281f7
@@ -1310,7 +1285,6 @@ CHECKSUMS
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   uber (0.1.0) sha256=5beeb407ff807b5db994f82fa9ee07cfceaa561dad8af20be880bc67eba935dc
   uk_postcode (2.1.8) sha256=470ad343a86a9a8103cfa53e0d1c2e5d6dff09cba5894a33493c547889df0162
-  unicode (0.4.4.5) sha256=42f294bfc8e186d29da89d1f766071505a20a22776168a31bb3408e03fa7a9d7
   unicode-display_width (3.3.0) sha256=4b7aa66a4b11db50f6f7e98411215cd0dd10eaecb665d36eec5bcacb3fa0b613
   unicode-emoji (4.3.0) sha256=11c02fa73290378c066bb0562cd4c87d8e1b706fbbe0059ca12746a4244de8ce
   uniform_notifier (1.18.1) sha256=3745b83a6ed88daa5cf08c662f5b8786a8c438c21e103466519f1c6e641fd204
