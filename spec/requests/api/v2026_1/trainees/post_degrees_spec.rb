@@ -32,7 +32,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       end
 
       it "returns status code 422 with a StateTransitionError" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly(
           {
             "error" => "StateTransitionError",
@@ -268,7 +268,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         end
 
         it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "graduation_year must be in the past, for example 2014" },
             { "error" => "UnprocessableEntity", "message" => "graduation_year is invalid" },
@@ -289,7 +289,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         end
 
         it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "graduation_year must be in the past, for example 2014" },

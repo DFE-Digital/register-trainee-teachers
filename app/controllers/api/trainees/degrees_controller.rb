@@ -46,7 +46,7 @@ module Api
         if degree.destroy
           render(json: { data: trainee_serializer_klass.new(trainee).as_hash })
         else
-          render(json: { errors: degree.errors.full_messages }, status: :unprocessable_entity)
+          render(json: { errors: degree.errors.full_messages }, status: :unprocessable_content)
         end
       end
 

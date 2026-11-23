@@ -40,7 +40,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       end
 
       it "returns status code 422 with a StateTransitionError" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly(
           {
             "error" => "StateTransitionError",
@@ -374,7 +374,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         end
 
         it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "graduation_year must be in the past, for example 2014" },
@@ -395,7 +395,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         end
 
         it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "graduation_year must be in the past, for example 2014" },
@@ -417,7 +417,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
             foo: { subject: "new_subject" },
           }.to_json,
         )
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to eq(["Param is missing or the value is empty or invalid: data"])
         expect(trainee.reload.degrees.first.subject).to eq(original_subject)
       end

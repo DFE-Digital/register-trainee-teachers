@@ -47,7 +47,7 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
            headers: { authorization: "Bearer #{token}" },
            params: { data: { defer_date: nil } }, as: :json
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body[:errors]).not_to be_empty
       expect(response.parsed_body[:errors]).to contain_exactly(
         {

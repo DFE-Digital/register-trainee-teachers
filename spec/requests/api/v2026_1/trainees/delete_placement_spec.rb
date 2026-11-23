@@ -15,7 +15,7 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
 
       it "returns status code 422 with a StateTransitionError" do
         delete "/api/v2026.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token, **json_headers }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly(
           {
             "error" => "StateTransitionError",

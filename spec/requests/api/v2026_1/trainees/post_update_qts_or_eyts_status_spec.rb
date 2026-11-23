@@ -36,7 +36,7 @@ RSpec.describe "POST /api/v2026.1/trainees/:trainee_id/update-qts-or-eyts-status
            headers: { authorization: "Bearer #{token}" },
            params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(trainee.reload.recommended_for_award?).to be(false)
 
       expect(response.parsed_body[:errors]).to contain_exactly(

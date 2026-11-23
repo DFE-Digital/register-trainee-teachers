@@ -110,7 +110,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             params: params.to_json,
           )
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { error: "UnprocessableEntity", message: "another_reason Enter another reason" },
@@ -156,7 +156,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             params: params.to_json,
           )
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { error: "UnprocessableEntity", message: "safeguarding_concern_reasons Enter the concerns" },
@@ -209,7 +209,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
               params: params.to_json,
             )
 
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
 
             expect(response.parsed_body[:errors]).to contain_exactly(
               { error: "UnprocessableEntity", message: "withdrawal_date Choose a withdrawal date" },
@@ -239,7 +239,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
               params: params.to_json,
             )
 
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
 
             expect(response.parsed_body[:errors]).to contain_exactly(
               { error: "UnprocessableEntity", message: "withdrawal_date must be after itt_start_date" },
@@ -263,7 +263,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
               params: params.to_json,
             )
 
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
 
             expect(response.parsed_body[:errors]).to contain_exactly(
               { error: "UnprocessableEntity", message: "withdrawal_date Choose a withdrawal date" },
@@ -297,7 +297,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: params.to_json,
         )
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly({ "error" => "StateTransitionError", "message" => "It’s not possible to perform this action while the trainee is in its current state" })
       end
 

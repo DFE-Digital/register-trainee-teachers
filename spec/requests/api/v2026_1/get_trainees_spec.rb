@@ -163,7 +163,7 @@ describe "`GET /trainees` endpoint" do
           "academic_cycle" => ["not-a-number is not a valid academic cycle year"],
         },
       )
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 
@@ -217,7 +217,7 @@ describe "`GET /trainees` endpoint" do
         params: { since: "2023-13-01" },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(response.parsed_body).to eq(
         "message" => "Validation failed: 1 error prohibited this request being run",
@@ -288,7 +288,7 @@ describe "`GET /trainees` endpoint" do
         params: { status: "invalid_state" },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body).to eq(
         "message" => "Validation failed: 1 error prohibited this request being run",
         "errors" => {

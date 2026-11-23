@@ -25,7 +25,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
       end
 
       it "returns status code 422 with a StateTransitionError" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly(
           {
             "error" => "StateTransitionError",
@@ -191,7 +191,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           trainee.placements.count
         }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to contain_exactly(
           "error" => "UnprocessableEntity",
           "message" => "name can't be blank",

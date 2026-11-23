@@ -112,7 +112,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           end
 
           it "returns status code 422 with a StateTransitionError" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body[:errors]).to contain_exactly(
               {
                 "error" => "StateTransitionError",
@@ -165,7 +165,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "returns status code 422" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty or invalid: data")
       end
 
@@ -173,7 +173,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "returns status code 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty or invalid: data")
         end
       end
@@ -192,7 +192,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogocwhereisthecookie", email: "invalid" } }
 
         it "returns status code 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
 
           expect(response.parsed_body[:errors]).to include("email Enter an email address in the correct format, like name@example.com")
         end
@@ -201,7 +201,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "returns status code 422" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body[:errors]).to include(
               "email" => ["Enter an email address in the correct format, like name@example.com"],
             )
@@ -213,7 +213,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogocwhereisthecookie" } }
 
         it "returns status code 422" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
 
           expect(response.parsed_body[:errors]).to contain_exactly("first_names is too long (maximum is 60 characters)")
         end
@@ -222,7 +222,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "returns status code 422" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
 
             expect(response.parsed_body[:errors]).to eq(
               "first_names" => ["is too long (maximum is 60 characters)"],
@@ -401,7 +401,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "return status code 422 with a meaningful error message" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to contain_exactly("course_age_range can't be blank")
       end
 
@@ -409,7 +409,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to eq(
             "course_age_range" => ["can't be blank"],
           )
@@ -429,7 +429,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "return status code 422 with a meaningful error message" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to contain_exactly(
           "course_age_range has invalid reference data value of '1234'. Example values include '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'...",
         )
@@ -439,7 +439,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to eq(
             "course_age_range" => [
               "has invalid reference data value of '1234'. Example values include '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'...",
@@ -461,7 +461,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "return status code 422 with a meaningful error message" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to contain_exactly("sex can't be blank")
       end
 
@@ -469,7 +469,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to eq(
             "sex" => ["can't be blank"],
           )
@@ -489,7 +489,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "return status code 422 with a meaningful error message" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to contain_exactly(
           "sex has invalid reference data value of '3'. Valid values are '10', '11', '12', '96', '99'.",
         )
@@ -499,7 +499,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to eq(
             "sex" => ["has invalid reference data value of '3'. Valid values are '10', '11', '12', '96', '99'."],
           )
@@ -550,7 +550,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
             params: { data: { nationality: "XX" } }.to_json,
           )
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body[:errors]).to contain_exactly(
             /nationality has invalid reference data value of 'XX'. Example values include/,
           )
@@ -599,7 +599,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
               params: { data: { nationality: "XX" } }.to_json,
             )
 
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(trainee.reload.nationalities.map(&:name)).to be_empty
           end
         end
@@ -613,7 +613,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         headers: { Authorization: "Bearer #{token}" },
         params: { data: { itt_start_date: "2023-02-30" } },
       )
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body).to have_key("errors")
       expect(response.parsed_body["errors"]).to include("itt_start_date is invalid")
       expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
@@ -628,7 +628,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         params: { data: { itt_start_date: "2023-02-28", itt_end_date: "2023-13-13" } },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body).to have_key("errors")
       expect(response.parsed_body["errors"]).to include("itt_end_date is invalid")
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
@@ -644,7 +644,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         params: { data: { hesa_id: nil, itt_start_date: "2023-02-28", itt_end_date: "2022-02-28" } },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body).to have_key("errors")
 
       expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be after itt_start_date")
@@ -661,7 +661,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         params: { data: { itt_end_date: 11.years.ago.to_date.iso8601 } },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body).to have_key("errors")
       expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be within the last 10 years")
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
@@ -676,7 +676,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         params: { data: { itt_end_date: 6.years.from_now.to_date.iso8601 } },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body).to have_key("errors")
       expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be within the next 5 years")
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
@@ -689,7 +689,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         params: { data: { trainee_start_date: "2023-04-31" } },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body["errors"]).to include("trainee_start_date is invalid")
       expect(response.parsed_body).to have_key("errors")
     end
@@ -701,7 +701,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         params: { data: { trainee_start_date: "#{Time.zone.today.year + 1}-08-01" } },
       )
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body).to have_key("errors")
       expect(response.parsed_body["errors"]).to include("trainee_start_date must be in the past")
     end
@@ -718,7 +718,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           as: :json,
         )
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body["errors"]).to include(
           "itt_start_date" => ["is invalid"],
@@ -736,7 +736,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           as: :json,
         )
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body["errors"]).to include(
           "itt_end_date" => ["is invalid"],
@@ -755,7 +755,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           as: :json,
         )
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body[:errors]).to eq(
           "itt_end_date" => ["must be after itt_start_date"],
@@ -774,7 +774,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           as: :json,
         )
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body[:errors]).to eq(
           "itt_end_date" => ["must be within the last 10 years"],
@@ -792,7 +792,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           as: :json,
         )
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body[:errors]).to eq(
           "itt_end_date" => ["must be within the next 5 years"],
@@ -808,7 +808,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           as: :json,
         )
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body["errors"]).to include(
           "trainee_start_date" => ["is invalid"],
         )
@@ -823,7 +823,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           as: :json,
         )
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body["errors"]).to include(
           "trainee_start_date" => ["must be in the past"],
@@ -983,7 +983,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
             let(:new_training_partner) { build(:training_partner, :school) }
 
             it "sets training_partner_urn to nil and training_partner_not_applicable to true" do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
             end
           end
         end
@@ -1042,7 +1042,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
             let(:new_employing_school) { build(:school, urn: "123456") }
 
             it "returns status unprocessable entity" do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
             end
           end
         end
@@ -1103,7 +1103,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
               let(:new_training_partner) { build(:training_partner, :school) }
 
               it "returns an error" do
-                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response).to have_http_status(:unprocessable_content)
                 expect(response.parsed_body["errors"]).to include(
                   "training_partner_urn is invalid. The URN '#{new_training_partner.urn}' does not match any known training partners",
                 )
@@ -1164,7 +1164,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
               let(:new_employing_school) { build(:school) }
 
               it "returns an error" do
-                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response).to have_http_status(:unprocessable_content)
                 expect(response.parsed_body["errors"]).to include(
                   "employing_school_id is invalid. The URN '#{new_employing_school.urn}' does not match any known schools",
                 )
@@ -1415,7 +1415,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body[:errors]).to include(
             /ethnicity has invalid reference data value of 'Irish'./,
           )
@@ -1482,7 +1482,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           end
 
           it do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body[:errors]).to include(
               "ethnicity" => [/has invalid reference data value of 'Irish'./],
             )
@@ -1595,7 +1595,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body[:errors]).to contain_exactly(
             "training_route has invalid reference data value of 'provider_led_postgrad'. Example values include '03', '09', '10', '11', '12', '14', '15', '16', '17', '18'...",
           )
@@ -1605,7 +1605,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
                 "has invalid reference data value of 'provider_led_postgrad'. Example values include '03', '09', '10', '11', '12', '14', '15', '16', '17', '18'...",
@@ -1781,7 +1781,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body[:errors]).to contain_exactly(
             "disabilities contain duplicate values",
           )
@@ -1791,7 +1791,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body[:errors]).to eq(
               "disabilities" => ["contain duplicate values"],
             )
@@ -1874,7 +1874,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           end
 
           it "returns validation error for course_subject_1" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body[:errors]).to contain_exactly(
               "course_subject_1 is invalid. It should be `100511` for the course_age_range provided",
             )
@@ -1884,7 +1884,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
             let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
             it "returns validation error for course_subject_1" do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
               expect(response.parsed_body[:errors]).to eq(
                 "course_subject_1" => ["is invalid. It should be `100511` for the course_age_range provided"],
               )
@@ -2090,7 +2090,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /course_subject_1 has invalid reference data value of 'chemistry'/,
           )
@@ -2100,7 +2100,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "course_subject_1" => [/has invalid reference data value of 'chemistry'/],
             )
@@ -2123,7 +2123,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /course_subject_2 has invalid reference data value of/,
           )
@@ -2133,7 +2133,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "course_subject_2" => [/has invalid reference data value of/],
             )
@@ -2156,7 +2156,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /course_subject_3 has invalid reference data value of/,
           )
@@ -2166,7 +2166,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "course_subject_3" => [/has invalid reference data value of/],
             )
@@ -2189,7 +2189,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /study_mode has invalid reference data value of/,
           )
@@ -2199,7 +2199,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "study_mode" => [/has invalid reference data value of/],
             )
@@ -2222,7 +2222,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /nationality has invalid reference data value of/,
           )
@@ -2232,7 +2232,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "nationality" => [/has invalid reference data value of/],
             )
@@ -2255,7 +2255,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to contain_exactly(
             /training_initiative has invalid reference data value of/,
           )
@@ -2265,7 +2265,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to match(
               "training_initiative" => [/has invalid reference data value of/],
             )
@@ -2288,7 +2288,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to contain_exactly(
             "training_initiative 'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'",
           )
@@ -2298,7 +2298,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to eq(
               "training_initiative" => ["'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'"],
             )
@@ -2321,7 +2321,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /funding_method has invalid reference data value of/,
           )
@@ -2331,7 +2331,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "funding_method" => [/has invalid reference data value of/],
             )
@@ -2354,7 +2354,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /itt_aim has invalid reference data value of/,
           )
@@ -2364,7 +2364,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "itt_aim" => [/has invalid reference data value of/],
             )
@@ -2387,7 +2387,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
           )
@@ -2397,7 +2397,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "itt_qualification_aim" => [
                 "has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
@@ -2421,7 +2421,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include("course_year is not a valid course year")
         end
 
@@ -2429,7 +2429,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "course_year" => ["is not a valid course year"],
             )
@@ -2451,7 +2451,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             /additional_training_initiative has invalid reference data value of 'now_teach'/,
           )
@@ -2461,7 +2461,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "additional_training_initiative" => [/has invalid reference data value of 'now_teach'/],
             )
@@ -2483,7 +2483,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         end
 
         it "return status code 422 with a meaningful error message" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to include(
             "additional_training_initiative 'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'",
           )
@@ -2493,7 +2493,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["errors"]).to include(
               "additional_training_initiative" => ["'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'"],
             )
@@ -2626,7 +2626,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:data) { { course_subject_1: "100346" } }
 
         it "returns validation error for course_subject_1" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body[:errors]).to contain_exactly(
             "course_subject_1 is invalid. It should be `100510` for the training_route provided",
           )
@@ -2636,7 +2636,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
           it "returns validation error for course_subject_1" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body[:errors]).to eq(
               "course_subject_1" => ["is invalid. It should be `100510` for the training_route provided"],
             )
@@ -2734,7 +2734,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "returns a validation error" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly("iqts_country can't be blank")
       end
 
@@ -2742,7 +2742,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "returns a validation error" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to eq(
             "iqts_country" => ["can't be blank"],
           )
@@ -2758,7 +2758,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "returns a validation error" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly("iqts_country must be blank")
       end
 
@@ -2766,7 +2766,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "returns a validation error" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to eq(
             "iqts_country" => ["must be blank"],
           )
@@ -2782,7 +2782,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
       end
 
       it "returns a validation error" do
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly(
           "iqts_country has invalid reference data value of 'InvalidCountry'. Example values include 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AR', 'AS'...",
         )
@@ -2792,7 +2792,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
         let(:json_headers) { super().merge("HTTP_ENHANCED_ERRORS" => "true") }
 
         it "returns a validation error" do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.parsed_body["errors"]).to eq(
             "iqts_country" => ["has invalid reference data value of 'InvalidCountry'. Example values include 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AR', 'AS'..."],
           )
@@ -3325,7 +3325,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
           end
 
           it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
             expect(response.parsed_body["message"]).to eq(
               "Validation failed: 1 error prohibited this trainee from being saved",
             )
@@ -3456,7 +3456,7 @@ describe "`PUT /api/v2027.0/trainees/:id` endpoint" do
             end
 
             it "return status code 422 with a meaningful error message" do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
               expect(response.parsed_body["message"]).to eq(
                 "Validation failed: 1 error prohibited this trainee from being saved",
               )

@@ -23,7 +23,7 @@ describe "`DELETE /trainees/:trainee_slug/degrees/:slug` endpoint" do
           "/api/v2027.0/trainees/#{trainee.slug}/degrees/#{degree.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
         )
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.parsed_body[:errors]).to contain_exactly(
           {
             "error" => "StateTransitionError",

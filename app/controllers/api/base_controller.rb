@@ -15,7 +15,7 @@ module Api
     rescue_from ActionController::ParameterMissing do |e|
       render(
         json: { errors: [e.message.capitalize] },
-        status: :unprocessable_entity,
+        status: :unprocessable_content,
       )
     end
 

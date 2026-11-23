@@ -102,7 +102,7 @@ describe "`POST /api/v2027.0/trainees` endpoint", time_sensitive: true do
     it "does not create a trainee with a bursary and returns an error" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body[:errors]).to contain_exactly("funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_1 is 'mathematics'")
     end
   end
@@ -116,7 +116,7 @@ describe "`POST /api/v2027.0/trainees` endpoint", time_sensitive: true do
     it "does not create a trainee with a bursary and returns an error" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.parsed_body[:errors]).to contain_exactly(
         "funding_method 'scholarship' is not allowed when training_route is 'provider_led_postgrad' and course_subject_1 is 'psychology' in academic cycle '2026 to 2027'",
       )

@@ -68,7 +68,7 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
 
         trainee.reload
         expect(trainee.recommended_for_award_at).to be_nil
@@ -96,7 +96,7 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
 
         trainee.reload
         expect(trainee.recommended_for_award_at).to be_nil
@@ -145,7 +145,7 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
 
         trainee.reload
         expect(trainee.recommended_for_award_at).to be_nil
@@ -194,7 +194,7 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
 
         trainee.reload
         expect(trainee.recommended_for_award_at).to be_nil
@@ -222,7 +222,7 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(trainee.recommended_for_award_at).to be_nil
         expect(trainee.recommended_for_award?).to be(false)
 
@@ -247,7 +247,7 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_or_eyts_requirements_met_date: Time.zone.today } }, as: :json
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
 
         trainee.reload
         expect(trainee.recommended_for_award?).to be(false)
@@ -264,7 +264,7 @@ RSpec.describe "POST /api/v2027.0/trainees/:trainee_id/update-qts-or-eyts-status
            headers: { authorization: "Bearer #{token}" },
            params: { data: { qts_or_eyts_requirements_met_date: nil } }, as: :json
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(trainee.recommended_for_award_at).to be_nil
       expect(trainee.recommended_for_award?).to be(false)
 
