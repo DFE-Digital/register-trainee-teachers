@@ -8,7 +8,6 @@ class HeartbeatController < ActionController::API
   def healthcheck
     checks = {
       database: database_alive?,
-      redis: redis_alive?,
       solid_queue_processes: solid_queue_processes_check,
     }
 
@@ -33,13 +32,6 @@ private
 
     ActiveRecord::Base.connected?
   rescue ActiveRecord::ConnectionNotEstablished, PG::ConnectionBad
-    false
-  end
-
-  def redis_alive?
-    RedisSetup::RedisClient.current.ping
-    true
-  rescue StandardError
     false
   end
 

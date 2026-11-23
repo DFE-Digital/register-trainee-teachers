@@ -20,7 +20,6 @@ results. For example:
 {
   "checks": {
     "database": true,
-    "redis": true,
     "solid_queue_processes": true
   }
 }
@@ -31,11 +30,6 @@ The available checks:
 ### `database`
 
 Check that ‘ActiveRecord’ connection to the database is active.
-
-### `redis`
-
-Checks that the app can connect to the Redis server that form drafts fall back
-to while they move to Solid Cache.
 
 ### `solid_queue_processes`
 

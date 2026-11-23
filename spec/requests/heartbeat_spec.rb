@@ -12,10 +12,7 @@ describe "heartbeat requests" do
   end
 
   describe "GET /healthcheck" do
-    let(:redis) { instance_double(Redis, ping: "PONG") }
-
     before do
-      allow(RedisSetup::RedisClient).to receive(:current).and_return(redis)
       allow(ActiveRecord::Base.connection).to receive(:active?).and_return(true)
     end
 
@@ -36,7 +33,6 @@ describe "heartbeat requests" do
 
         expect(response.body).to eq({ checks: {
           database: true,
-          redis: true,
           solid_queue_processes: true,
         } }.to_json)
       end
@@ -87,26 +83,6 @@ describe "heartbeat requests" do
 
           expect(response.parsed_body["checks"]).to include("solid_queue_processes" => false)
         end
-      end
-    end
-
-    context "there's no Redis connection" do
-      before do
-        allow(redis).to receive(:ping).and_raise(Redis::CannotConnectError)
-      end
-
-      it("returns 503") do
-        get "/healthcheck"
-
-        expect(response).to have_http_status :service_unavailable
-      end
-
-      it "sets the redis check to false" do
-        get "/healthcheck"
-
-        json_response = response.parsed_body
-
-        expect(json_response["checks"]).to include("redis" => false)
       end
     end
 

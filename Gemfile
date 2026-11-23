@@ -51,8 +51,6 @@ gem "request_store", "~> 1.7"
 gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
-gem "redis", "~> 4.8"
-
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
 
