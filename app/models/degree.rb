@@ -42,6 +42,8 @@ class Degree < ApplicationRecord
 
   attr_writer :is_apply_import
 
+  normalizes :country, with: ->(value) { ::ReferenceData::COUNTRY_LABEL_ALIASES.fetch(value, value) }
+
   validates :locale_code, presence: true
   with_options unless: :apply_import? do
     validates :institution, presence: true, on: :uk

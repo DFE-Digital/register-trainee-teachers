@@ -1187,7 +1187,7 @@ data:
   hesa_codes:
   - "SY"
 - id: "TW"
-  name: ""
+  name: "Taiwan"
   display_name: "Taiwan [Taiwan, Province of China]"
   hesa_codes:
   - "TW"

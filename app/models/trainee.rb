@@ -189,6 +189,8 @@ class Trainee < ApplicationRecord
 
   attribute :progress, Progress.to_type
 
+  normalizes :iqts_country, with: ->(value) { ::ReferenceData::COUNTRY_LABEL_ALIASES.fetch(value, value) }
+
   delegate :update_training_route!, to: :route_data_manager
   delegate :date, to: :current_withdrawal, prefix: :withdraw, allow_nil: true
 
