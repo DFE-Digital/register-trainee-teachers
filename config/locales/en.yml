@@ -381,7 +381,10 @@ en:
           training_partner_payment_schedule: Upload training partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
+      funding_schools:
+        index: Disadvantaged and special schools
       pending_awards:
+
         index: Pending status change
       pending_trns:
         index: Trainees Pending TRN
