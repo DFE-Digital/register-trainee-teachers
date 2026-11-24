@@ -373,6 +373,8 @@ en:
         new: Upload a file
       duplicate_apply_applications:
         index: Duplicate Apply applications
+      relevant_degree_subjects:
+        index: Relevant degrees
       funding_uploads:
         index: Upload funding information
         confirmation: File processed successfully

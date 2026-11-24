@@ -28,6 +28,11 @@ class RelevantDegreeSubject < ApplicationRecord
   belongs_to :academic_cycle
   belongs_to :allocation_subject
 
+  scope :order_by_academic_year_and_subject, lambda {
+    joins(:academic_cycle, :allocation_subject)
+      .order("academic_cycles.start_date DESC", "allocation_subjects.name", :hecos_code)
+  }
+
   normalizes :hecos_code, with: ->(code) { code.strip }
 
   validates :hecos_code,
@@ -35,4 +40,8 @@ class RelevantDegreeSubject < ApplicationRecord
             uniqueness: { scope: %i[academic_cycle_id allocation_subject_id] },
             inclusion: { in: ->(_) { ReferenceData::DEGREE_SUBJECTS.hesa_codes }, allow_blank: true },
             exclusion: { in: PLACEHOLDER_HECOS_CODES }
+
+  def degree_subject_name
+    ReferenceData::DEGREE_SUBJECTS.find_by_hesa_code(hecos_code)&.display_name
+  end
 end
