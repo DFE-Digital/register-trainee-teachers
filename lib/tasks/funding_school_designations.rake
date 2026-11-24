@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :funding_school_designations do
-  desc "Import disadvantaged and special schools from an uploaded CSV with urn and designation headers: rails 'funding_school_designations:from_upload[upload_id,2027]'"
+  desc "Import disadvantaged and special schools from an uploaded CSV with urn and designation headers. This only creates designations, it never updates or deletes them: changes like that need a custom request to a developer. rails 'funding_school_designations:from_upload[upload_id,2027]'"
   task :from_upload, %i[upload_id academic_year] => :environment do |_, args|
     academic_cycle = AcademicCycle.for_year(args.academic_year)
     abort("No academic cycle found for #{args.academic_year}") if academic_cycle.nil?
