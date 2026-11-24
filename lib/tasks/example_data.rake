@@ -81,6 +81,22 @@ namespace :example_data do
     # Create some subjects
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
 
+    # Create some relevant degrees
+    {
+      AllocationSubjects::CHEMISTRY => %w[100417 100416],
+      AllocationSubjects::COMPUTING => %w[100366],
+      AllocationSubjects::MATHEMATICS => %w[100403],
+      AllocationSubjects::PHYSICS => %w[100425 100426 100416],
+    }.each do |allocation_subject_name, hecos_codes|
+      allocation_subject = AllocationSubject.find_by!(name: allocation_subject_name)
+
+      [AcademicCycle.current, AcademicCycle.next].each do |academic_cycle|
+        hecos_codes.each do |hecos_code|
+          RelevantDegreeSubject.find_or_create_by!(academic_cycle:, allocation_subject:, hecos_code:)
+        end
+      end
+    end
+
     recruitment_cycle_years = [
       Settings.current_recruitment_cycle_year - 1,
       Settings.current_recruitment_cycle_year,
