@@ -23,7 +23,7 @@ module Api
 
     def transition_error_response(model_name: "trainee")
       {
-        status: :unprocessable_entity,
+        status: :unprocessable_content,
         json: {
           errors: errors(
             "StateTransitionError",

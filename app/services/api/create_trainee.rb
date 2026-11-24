@@ -74,7 +74,7 @@ module Api
           message: "Validation failed: #{validation_errors.count} #{'error'.pluralize(validation_errors.count)} prohibited this trainee from being saved",
           errors: validation_errors,
         },
-        status: :unprocessable_entity,
+        status: :unprocessable_content,
       }
     end
 
