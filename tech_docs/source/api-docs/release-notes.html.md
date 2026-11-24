@@ -12,7 +12,7 @@ weight: 2
 * Removed deprecated `POST /trainees/{trainee_id}/recommend-for-qts`. Use `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
 * Renamed request field `qts_standards_met_date` to `qts_or_eyts_requirements_met_date` on `POST /trainees/{trainee_id}/update-qts-or-eyts-status`.
 * `hesa_id` is no longer required when `training_route` is HPITT ([HESA code `21`](/reference-data/v2026.1/training-route.html)), matching iQTS.
-* Added support for the Teach Learn Change training route ([HESA code `22`](/reference-data/v2027.0/training-route.html)) for trainees starting from the 2027 to 2028 academic year
+* Added support for the Teach Learn Change training route ([HESA code `22`](/reference-data/v2027.0/training-route.html)) for trainees starting from the 2027 to 2028 academic year. `hesa_id` is not required for this route, matching iQTS and HPITT.
 
 ## v2026.1 — 20 March 2026
 
