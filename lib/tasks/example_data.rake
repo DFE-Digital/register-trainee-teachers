@@ -330,7 +330,7 @@ namespace :example_data do
       employing_schools.first(6).each_with_index do |school, index|
         FactoryBot.create(
           :funding_school_designation,
-          school:,
+          school: school,
           academic_cycle: academic_cycle_2027,
           designation: index.even? ? :disadvantaged : :special,
         )
@@ -340,15 +340,13 @@ namespace :example_data do
       employing_schools.last(2).each_with_index do |school, index|
         FactoryBot.create(
           :funding_school_designation,
-          school:,
+          school: school,
           academic_cycle: academic_cycle_2026,
           designation: index.even? ? :disadvantaged : :special,
         )
       end
     end
   end
-
-
 
   desc "Create a smaller set of personas, providers and trainees (approx 10% of full size)"
   task generate_light: :environment do
