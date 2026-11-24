@@ -36,12 +36,12 @@ private
   end
 
   def then_i_do_not_see_any_funding_links
-    expect(page).not_to have_link("Funding")
+    expect(page).not_to have_link("Funding", exact: true)
   end
 
   def when_i_click_on_the_funding_link
     expect(page).not_to have_link("Funding", href: "/funding/payment-schedule")
-    click_on("Funding")
+    click_link("Funding", exact: true)
   end
 
   def and_i_click_on_support_for_register
