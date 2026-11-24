@@ -20,10 +20,25 @@ feature "List funding schools" do
       given_i_am_authenticated(user:)
     end
 
-    scenario "lists disadvantaged and special schools for 2027 to 2028" do
+    scenario "lists disadvantaged and special schools for 2027 to 2028 by default" do
       when_i_visit_the_funding_schools_index_page
       then_i_see_the_2027_schools
       and_i_do_not_see_schools_from_other_years
+    end
+
+    scenario "filters by academic year" do
+      when_i_visit_the_funding_schools_index_page
+      and_i_filter_by_academic_year("2026 to 2027")
+      then_i_see_the_2026_school
+      and_i_do_not_see_the_2027_schools
+    end
+
+    scenario "shows schools for all academic years" do
+      when_i_visit_the_funding_schools_index_page
+      and_i_filter_by_academic_year("All academic years")
+      then_i_see_the_2027_schools
+      and_i_see_the_2026_school
+      and_i_see_the_academic_year_column
     end
 
     scenario "navigates from the support console tab" do
@@ -57,6 +72,11 @@ feature "List funding schools" do
     click_on "Funding schools"
   end
 
+  def and_i_filter_by_academic_year(label)
+    select label, from: "Academic year"
+    click_on "Apply filter"
+  end
+
   def then_i_am_on_the_funding_schools_index_page
     expect(page).to have_current_path(funding_management_schools_path)
   end
@@ -70,11 +90,30 @@ feature "List funding schools" do
     expect(page).to have_text("Special Academy")
     expect(page).to have_text("222222")
     expect(page).to have_css(".govuk-tag", text: "Special school")
-    expect(page).to have_text("2 schools")
+  end
+
+  def and_i_do_not_see_the_2027_schools
+    expect(page).not_to have_text("Greendale Primary")
+    expect(page).not_to have_text("Special Academy")
+  end
+
+  def then_i_see_the_2026_school
+    expect(page).to have_text("Wrong Year School")
+    expect(page).to have_text("333333")
+  end
+
+  def and_i_see_the_2026_school
+    then_i_see_the_2026_school
   end
 
   def and_i_do_not_see_schools_from_other_years
     expect(page).not_to have_text("Wrong Year School")
     expect(page).not_to have_text("333333")
+  end
+
+  def and_i_see_the_academic_year_column
+    expect(page).to have_css("th", text: "Academic year")
+    expect(page).to have_text("2027 to 2028")
+    expect(page).to have_text("2026 to 2027")
   end
 end

@@ -323,8 +323,9 @@ namespace :example_data do
       end
     end
 
-    # Disadvantaged / special schools for the 2027 to 2028 funding list
+    # Disadvantaged / special schools for funding lists (default 2027, plus another year for the filter)
     academic_cycle_2027 = AcademicCycle.for_year(2027)
+    academic_cycle_2026 = AcademicCycle.for_year(2026)
     if academic_cycle_2027
       employing_schools.first(6).each_with_index do |school, index|
         FactoryBot.create(
@@ -335,7 +336,18 @@ namespace :example_data do
         )
       end
     end
+    if academic_cycle_2026
+      employing_schools.last(2).each_with_index do |school, index|
+        FactoryBot.create(
+          :funding_school_designation,
+          school:,
+          academic_cycle: academic_cycle_2026,
+          designation: index.even? ? :disadvantaged : :special,
+        )
+      end
+    end
   end
+
 
 
   desc "Create a smaller set of personas, providers and trainees (approx 10% of full size)"

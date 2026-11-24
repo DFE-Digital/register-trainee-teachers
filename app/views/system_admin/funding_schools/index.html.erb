@@ -8,12 +8,52 @@
     <%= render "system_admin/tab_nav" %>
 
     <p class="govuk-body">
-      Schools recorded as disadvantaged or special schools for funding for the
-      <%= @academic_cycle.label %> academic year.
+      <% if all_years? %>
+        Schools recorded as disadvantaged or special schools for funding, by academic year.
+      <% else %>
+        Schools recorded as disadvantaged or special schools for funding for the
+        <%= @academic_cycle.label %> academic year.
+      <% end %>
     </p>
 
+    <div class="govuk-!-margin-bottom-6">
+      <%= form_with url: funding_management_schools_path, method: :get do %>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="academic_year">Academic year</label>
+          <select name="academic_year" id="academic_year" class="govuk-select" data-filter-select>
+            <option value="all" <%= "selected" if all_years? %>>All academic years</option>
+            <% @academic_cycles.each do |cycle| %>
+              <option value="<%= cycle.start_year %>" <%= "selected" if !all_years? && cycle == @academic_cycle %>>
+                <%= cycle.label %>
+              </option>
+            <% end %>
+          </select>
+        </div>
+
+        <div class="app-no-js-only">
+          <%= button_tag "Apply filter", type: "submit", class: "govuk-button govuk-button--secondary" %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= javascript_tag nonce: true do -%>
+      (function () {
+        document.querySelectorAll("[data-filter-select]").forEach(function (select) {
+          select.addEventListener("change", function () {
+            if (this.form.requestSubmit) {
+              this.form.requestSubmit();
+            } else {
+              this.form.submit();
+            }
+          });
+        });
+      })();
+    <% end %>
+
     <% if @designations.empty? %>
-      <p class="govuk-body">No schools have been added for <%= @academic_cycle.label %>.</p>
+      <p class="govuk-body">
+        <%= all_years? ? "No schools have been added." : "No schools have been added for #{@academic_cycle.label}." %>
+      </p>
     <% else %>
       <p class="govuk-body govuk-!-margin-bottom-2">
         <strong><%= @designations.size %></strong> <%= "school".pluralize(@designations.size) %>
@@ -26,6 +66,7 @@
             row.with_cell(text: "School")
             row.with_cell(text: "Town")
             row.with_cell(text: "Designation")
+            row.with_cell(text: "Academic year") if all_years?
           end
         end
 
@@ -39,6 +80,7 @@
                 text: designation.designation_label,
                 colour: designation.disadvantaged? ? "magenta" : "purple",
               ))
+              row.with_cell(text: designation.academic_cycle.label) if all_years?
             end
           end
         end
