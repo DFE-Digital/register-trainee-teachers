@@ -1143,4 +1143,12 @@ RSpec.describe Api::V20270::TraineeAttributes do
       end
     end
   end
+
+  describe "#hesa_trainee_detail_attributes" do
+    subject(:attributes) { described_class.new(fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE) }
+
+    it "is the v2027.0 version" do
+      expect(attributes.hesa_trainee_detail_attributes).to be_an_instance_of(Api::V20270::HesaTraineeDetailAttributes)
+    end
+  end
 end
