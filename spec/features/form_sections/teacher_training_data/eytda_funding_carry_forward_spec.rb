@@ -35,11 +35,16 @@ feature "EYTDA amounts apply to later start years", feature_funding_draft_amount
     given_a_2027_eytda_trainee
 
     visit "/trainees/#{trainee.slug}/funding/bursary/edit"
-    expect(page).to have_text("Grant for trainees starting in 2027 to 2028")
+    expect(page).to have_text("ESG amount for trainees starting in 2027 to 2028")
     expect(page).to have_text("These amounts were set for 2026 to 2027 and apply to trainees starting in later years until new amounts are added.")
     expect(page).to have_text("Year 1 (27/28)")
     expect(page).to have_text("£8,236")
     expect(page).to have_text("These amounts are from the 2026 to 2027 draft")
+
+    # The check page names the same year as the funding type page.
+    visit "/trainees/#{trainee.slug}/funding/confirm"
+    expect(page).to have_text("These amounts are from the 2026 to 2027 draft")
+    expect(page).not_to have_text("2027 to 2028 draft")
   end
 
   scenario "with no EYTDA amounts at all, the funding type page isn't shown" do

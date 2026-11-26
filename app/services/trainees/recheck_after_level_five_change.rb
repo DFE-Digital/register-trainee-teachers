@@ -10,8 +10,13 @@ module Trainees
   #     provider adds it again
   #   - a confirmed longer course (extended_course_confirmed) is cleared, so the
   #     provider confirms it again against the new usual length
-  # The first answer, or the same answer saved again, isn't a change. Runs after
-  # the declaration is saved and the expected end date is moved
+  # The same answer saved again isn't a change. The course dates and funding can
+  # be added before the first answer, using the standard length, so after the
+  # first answer:
+  #   - course details go back to in progress if the provider's end date is
+  #     longer than the usual length the answer sets, so they confirm it
+  #   - funding, if started, is reset for Year 2 entry, as the funded years change
+  # Runs after the declaration is saved and the expected end date is moved
   # (Trainees::SetLevelFiveEndDate). Moving the date can already have cleared the
   # funding as a course details change, so whether funding had been started is
   # taken from before the save, and the reason shown is the level 5 declaration.
@@ -31,12 +36,10 @@ module Trainees
 
     def call
       return false unless trainee.draft? && trainee.requires_level_five_declaration?
-      return false if previous_answer.nil? || trainee.level_five_qualification.nil?
+      return false if trainee.level_five_qualification.nil?
       return false if previous_answer == trainee.level_five_qualification
 
-      course_details = recheck_course_details?
-      funding = reset_funding?
-      declaration = trainee.extended_course_confirmed
+      course_details, funding, declaration = previous_answer.nil? ? first_answer_changes : answer_changes
       return false unless course_details || funding || declaration
 
       # The usual course length changed, so a longer course is confirmed again.
@@ -50,6 +53,24 @@ module Trainees
   private
 
     attr_reader :trainee, :previous_answer, :funding_started_before
+
+    # What to check again: course details, funding, and a confirmed longer course.
+    def answer_changes
+      [recheck_course_details?, reset_funding?, trainee.extended_course_confirmed]
+    end
+
+    # Before the first answer, the course used the standard length and the
+    # standard funded years, and a longer course couldn't be confirmed.
+    def first_answer_changes
+      [course_longer_than_usual?, trainee.level_five_qualification == true && reset_funding?, false]
+    end
+
+    # Before the first answer there's no usual length to confirm a longer course against.
+    def course_longer_than_usual?
+      return false unless trainee.itt_start_date && trainee.itt_end_date
+
+      trainee.itt_end_date > trainee.itt_start_date + trainee.level_five_course_months.months
+    end
 
     def recheck_course_details?
       trainee.progress.course_details || course_dates_entered?

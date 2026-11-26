@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.start_date_verification.show",
+<%= render PageTitle::View.new(text: route_t(@trainee, "components.page_titles.trainees.start_date_verification.show"),
                                has_errors: @start_date_verification_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
@@ -18,7 +18,7 @@
       <%= render TraineeName::View.new(@trainee) %>
 
       <%= f.govuk_radio_buttons_fieldset(:trainee_has_started_course,
-                                         legend: { text: t(".legend").html_safe, size: "l", tag: "h1" }) do %>
+                                         legend: { text: route_t(@trainee, "trainees.start_date_verifications.show.legend").html_safe, size: "l", tag: "h1" }) do %>
         <%= f.govuk_radio_button(:trainee_has_started_course,
                                  :yes,
                                  label: { text: t(".yes_they_started") },

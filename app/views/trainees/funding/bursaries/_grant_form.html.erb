@@ -4,14 +4,11 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= render TraineeName::View.new(@trainee) %>
-      <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.grants.edit") %></h1>
+      <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.grants.#{@bursary_form.yearly_route? ? :esg : :edit}") %></h1>
 
       <% if @bursary_form.yearly_route? %>
         <p class="govuk-body">
-          <%= t(
-            "views.forms.funding.bursaries.grant.yearly_description",
-            training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
-          ) %>
+          <%= t("views.forms.funding.bursaries.grant.yearly_description") %>
         </p>
 
         <% if @funding_manager.shortened_by_level_five? %>
@@ -51,7 +48,7 @@
 
       <p class="govuk-body">
         <%= govuk_link_to(
-          t("views.forms.funding.bursaries.guidance_link_text"),
+          route_t(@trainee, "views.forms.funding.bursaries.guidance_link_text"),
           @bursary_form.funding_guidance_url,
           target: "_blank",
           rel: "noopener noreferrer",

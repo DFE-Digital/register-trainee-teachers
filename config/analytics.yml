@@ -298,10 +298,13 @@ shared:
     - dttp_update_sha
     - ebacc
     - email
+    - employing_school_address_line_one
+    - employing_school_address_line_two
     - employing_school_id
     - employing_school_name
     - employing_school_not_applicable
     - employing_school_postcode
+    - employing_school_town
     - employing_school_urn
     - end_academic_cycle_id
     - ethnic_background

@@ -18,7 +18,7 @@ module RouteIndicator
       if trainee.apply_application?
         apply_text
       else
-        t(".display_text", training_route_link:).html_safe
+        RouteTerminology.t(trainee, "route_indicator.view.display_text", training_route_link:).html_safe
       end
     end
 

@@ -41,7 +41,7 @@ module CourseDetails
         field_value: tag.div(
           t("activerecord.attributes.trainee.training_routes.#{data_model.training_route}"),
           class: "govuk-!-margin-bottom-2",
-        ) + tag.span(course_details, class: "govuk-hint"),
+        ) + (course_details.present? ? tag.span(course_details, class: "govuk-hint") : "".html_safe),
         action_url: edit_trainee_training_route_path(trainee, context: "edit-course"),
       }
     end
@@ -69,7 +69,14 @@ module CourseDetails
     end
 
     def study_mode_row
-      if requires_study_mode?
+      # The EYTDA is full time only, so there's nothing to change.
+      if RouteTerminology.eytda?(data_model)
+        {
+          field_value: RouteTerminology.t(data_model, "components.course_detail.study_mode_values.full_time"),
+          field_label: RouteTerminology.t(data_model, "components.course_detail.study_mode"),
+          action_url: nil,
+        }
+      elsif requires_study_mode?
         default_mappable_field(study_mode, t("components.course_detail.study_mode"))
       end
     end
@@ -82,20 +89,21 @@ module CourseDetails
     end
 
     def course_date_row(value, context)
-      default_mappable_field(value, t("components.course_detail.itt_#{context}_date").html_safe)
+      default_mappable_field(value, RouteTerminology.t(data_model, "components.course_detail.itt_#{context}_date").html_safe)
     end
 
-    # EYTDA: a course the provider confirmed is longer than the usual 2 or 3 years.
+    # EYTDA: a course the provider confirmed is longer than the usual 2 years or 33 months.
     def course_length_row
-      return unless extended_course_confirmed? && trainee.level_five_course_years
+      return unless extended_course_confirmed? && trainee.level_five_course_months
 
       start_date = data_model.itt_start_date
       end_date = data_model.itt_end_date
       return unless start_date.is_a?(Date) && end_date.is_a?(Date)
 
       key = trainee.level_five_qualification ? :level_five : :no_level_five
+      length = TrainingRouteManager.course_length_text(trainee.level_five_course_months)
       value = tag.div(course_length_text(start_date, end_date)) +
-        tag.span(t("components.course_detail.course_length_confirmed.#{key}", years: trainee.level_five_course_years), class: "govuk-hint")
+        tag.span(t("components.course_detail.course_length_confirmed.#{key}", length:), class: "govuk-hint")
       default_mappable_field(value, t("components.course_detail.course_length"))
     end
 
@@ -113,6 +121,8 @@ module CourseDetails
 
     def course_details
       return "#{course.name} (#{course.code})" if course
+      # The route names the apprenticeship, so the shared "Early years ITT" subject isn't shown.
+      return if RouteTerminology.eytda?(data_model)
 
       return primary_allocation_subject if manual_entry_primary_phase? && non_early_year_route?
 

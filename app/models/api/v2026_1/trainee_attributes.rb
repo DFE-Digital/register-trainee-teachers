@@ -192,7 +192,7 @@ module Api
 
       def build_nested_models(new_attributes)
         new_attributes[:placements_attributes]&.each do |placement_params|
-          placements_attributes << PlacementAttributes.new(placement_params, record_source:)
+          placements_attributes << self.class.module_parent::PlacementAttributes.new(placement_params, record_source:)
         end
 
         new_attributes[:degrees_attributes]&.each do |degree_params|

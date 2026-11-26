@@ -21,6 +21,7 @@ module Trainees
         placements_form: placements_form,
         placement: Placement.new(placement_params),
       )
+      @placement_form.require_full_address!
 
       if use_non_js_flow?
         redirect_to(
@@ -55,6 +56,7 @@ module Trainees
         )
       else
         placement_form.update_placement(placement_params)
+        placement_form.require_full_address!
         if placement_form.save_or_stash
           redirect_to(relevant_redirect_path)
         else
@@ -95,10 +97,21 @@ module Trainees
 
     def placement_params
       if params[:placement].present?
-        params.fetch(:placement, {}).permit(:school_id, :school_search, :urn, :name, :address, :postcode)
+        with_address_from_lines(
+          params.fetch(:placement, {}).permit(:school_id, :school_search, :urn, :name, :postcode, *Placement::ADDRESS_LINE_FIELDS),
+        )
       elsif params[:select_placement_school_form].present?
         params.fetch(:select_placement_school_form, {}).permit(:school_id)
       end
+    end
+
+    # The page asks for the address one line at a time. They are kept together
+    # in the placement's `address`.
+    def with_address_from_lines(attrs)
+      return attrs unless Placement::ADDRESS_LINE_FIELDS.any? { |field| attrs.key?(field) }
+
+      lines = Placement::ADDRESS_LINE_FIELDS.map { |field| attrs.delete(field) }
+      attrs.merge(address: Placement.address_from_lines(*lines))
     end
 
     def use_non_js_flow?

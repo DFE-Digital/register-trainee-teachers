@@ -95,26 +95,27 @@ class CourseDetailsForm < TraineeForm
     new_date({ year: end_year, month: end_month, day: end_day })
   end
 
-  # Early years teacher degree apprenticeship, full time, with the Level 5
-  # declaration answered: the course lasts 2 or 3 years, which sets the
-  # expected end date. Nil otherwise.
-  def level_five_course_years
-    return unless trainee.requires_level_five_declaration? && !trainee.level_five_qualification.nil?
-    return unless study_mode.to_s == COURSE_STUDY_MODES[:full_time]
+  # Early years teacher degree apprenticeship: the usual course length in
+  # months, which fills in the expected end date. 24 for Year 2 entry,
+  # otherwise (including before the Level 5 declaration) 33. Nil on other routes.
+  delegate :level_five_course_months, to: :trainee
 
-    trainee.level_five_course_years
+  # "2 years" or "33 months".
+  def usual_course_length_text
+    TrainingRouteManager.course_length_text(level_five_course_months) if level_five_course_months
   end
 
-  # The end date the Level 5 declaration gives: the ITT start date plus the course length.
+  # The end date the usual course length gives: the start date plus the course length.
   def level_five_end_date
     start = itt_start_date
-    start + level_five_course_years.years if level_five_course_years && start.is_a?(Date)
+    start + level_five_course_months.months if level_five_course_months && start.is_a?(Date)
   end
 
-  # The course runs past the usual 2 or 3 years the Level 5 declaration sets.
-  # Any later end date is allowed, with no latest year, but the provider confirms a longer course.
+  # Once the Level 5 declaration is answered, the course runs past the usual
+  # length it sets. Any later end date is allowed, with no latest year, but the
+  # provider confirms a longer course.
   def course_longer_than_usual?
-    return false unless level_five_end_date && itt_end_date.is_a?(Date)
+    return false unless course_length_section? && level_five_end_date && itt_end_date.is_a?(Date)
 
     itt_end_date > level_five_end_date
   end
@@ -344,13 +345,13 @@ private
 
   def itt_start_date_valid
     if [start_day, start_month, start_year].all?(&:blank?)
-      errors.add(:itt_start_date, :blank)
+      errors.add(:itt_start_date, date_error(:blank))
     elsif start_year.to_i > next_year
-      errors.add(:itt_start_date, :future)
+      errors.add(:itt_start_date, date_error(:future))
     elsif !itt_start_date.is_a?(Date)
-      errors.add(:itt_start_date, :invalid)
+      errors.add(:itt_start_date, date_error(:invalid))
     elsif before_academic_cycle_starts?(itt_start_date)
-      errors.add(:itt_start_date, :too_old)
+      errors.add(:itt_start_date, date_error(:too_old))
     end
   end
 
@@ -359,24 +360,29 @@ private
     return true if end_date_not_required? && end_date_not_provided?
 
     if [end_day, end_month, end_year].all?(&:blank?)
-      errors.add(:itt_end_date, :blank)
-    elsif end_year.to_i > latest_end_year && !level_five_course_years
-      errors.add(:itt_end_date, :future, year: latest_end_year)
-    elsif !itt_end_date.is_a?(Date) || (level_five_course_years && !end_year.to_s.strip.match?(/\A\d{4}\z/))
-      errors.add(:itt_end_date, :invalid)
+      errors.add(:itt_end_date, date_error(:blank))
+    elsif end_year.to_i > latest_end_year && !course_length_section?
+      errors.add(:itt_end_date, date_error(:future), year: latest_end_year)
+    elsif !itt_end_date.is_a?(Date) || (course_length_section? && !end_year.to_s.strip.match?(/\A\d{4}\z/))
+      errors.add(:itt_end_date, date_error(:invalid))
     elsif itt_end_date < 10.years.ago
-      errors.add(:itt_end_date, :too_old)
+      errors.add(:itt_end_date, date_error(:too_old))
     end
 
     additional_validation = !errors.attribute_names.intersect?(%i[itt_start_date itt_end_date])
 
     if additional_validation && itt_start_date >= itt_end_date
-      errors.add(:itt_end_date, :before_or_same_as_start_date)
+      errors.add(:itt_end_date, date_error(:before_or_same_as_start_date))
     end
   end
 
-  # The latest year an expected end date can be in. A full-time EYTDA course
-  # with the Level 5 question answered has no latest year.
+  # The EYTDA error says "course start date" rather than "ITT start date".
+  def date_error(type)
+    RouteTerminology.error_type(trainee, type)
+  end
+
+  # The latest year an expected end date can be in. An EYTDA course with the
+  # Level 5 question answered has no latest year.
   def latest_end_year
     next_year + MAX_END_YEARS
   end
@@ -385,17 +391,17 @@ private
     %i[course_length_warning_shown]
   end
 
-  # A blank expected end date is filled in from the Level 5 declaration.
+  # A blank expected end date is filled in from the usual EYTDA course length.
   def level_five_end_date_filled_in?
     level_five_end_date.present? && [end_day, end_month, end_year].all?(&:blank?)
   end
 
-  # A course longer than the usual 2 or 3 years needs the provider to confirm it.
+  # A course longer than the usual 2 years or 33 months needs the provider to confirm it.
   def extended_course_confirmed_valid
     return if errors.include?(:itt_start_date) || errors.include?(:itt_end_date)
     return unless course_longer_than_usual? && !extended_course_confirmed?
 
-    errors.add(:extended_course_confirmed, :blank, years: level_five_course_years)
+    errors.add(:extended_course_confirmed, :blank, length: usual_course_length_text)
   end
 
   def course_subject_two_valid

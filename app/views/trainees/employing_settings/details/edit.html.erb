@@ -1,0 +1,42 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.employing_settings.details.edit", has_errors: @employing_setting_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<%= register_form_with model: @employing_setting_form, url: trainee_employing_settings_details_path(@trainee), method: :put, local: true do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= render TraineeName::View.new(@trainee) %>
+
+      <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
+      <p class="govuk-body"><%= t(@employing_setting_form.from_search? ? ".check_lede" : ".enter_lede") %></p>
+
+      <%= f.hidden_field :employing_school_id %>
+
+      <%= f.govuk_text_field :employing_school_name, label: { text: t(".name"), size: "s" }, width: "two-thirds", autocomplete: :off %>
+      <%= f.govuk_text_field :employing_school_address_line_one, label: { text: t(".address_line_one"), size: "s" }, width: "two-thirds", autocomplete: :off %>
+      <%= f.govuk_text_field :employing_school_address_line_two, label: { text: t(".address_line_two"), size: "s" }, width: "two-thirds", autocomplete: :off %>
+      <%= f.govuk_text_field :employing_school_town, label: { text: t(".town"), size: "s" }, width: "two-thirds", autocomplete: :off %>
+      <%= f.govuk_text_field :employing_school_postcode, label: { text: t(".postcode"), size: "s" }, class: "govuk-input--width-10 app-!-uppercase", autocomplete: :off %>
+
+      <% if @employing_setting_form.from_search? %>
+        <div class="govuk-form-group">
+          <h2 class="govuk-label govuk-label--s"><%= t(".urn") %></h2>
+          <p class="govuk-body">
+            <%= @employing_setting_form.school.urn %>
+            <%= govuk_link_to(t(".search_again"), edit_trainee_employing_schools_path(@trainee), class: "govuk-!-margin-left-2") %>
+          </p>
+        </div>
+      <% end %>
+
+      <%= f.govuk_submit t("continue") %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @trainee.draft? %>
+  <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+<% end %>

@@ -207,6 +207,16 @@ RSpec.describe Placement do
       end
     end
 
+    context "when the address was entered one line at a time" do
+      subject {
+        create(:placement, address: described_class.address_from_lines("1 High Street", "", "Oxford"), urn: nil, postcode: "OX1 1AA")
+      }
+
+      it "joins the lines that are filled in" do
+        expect(subject.full_address).to eq("1 High Street, Oxford, OX1 1AA")
+      end
+    end
+
     context "when the school urn is among the School::NOT_APPLICABLE_SCHOOL_URNS" do
       subject {
         create(:placement, urn: School::NOT_APPLICABLE_SCHOOL_URNS.sample)
@@ -215,6 +225,26 @@ RSpec.describe Placement do
       it "returns no address" do
         expect(subject.full_address).to be_nil
       end
+    end
+  end
+
+  describe ".address_from_lines" do
+    it "keeps a blank line in its place" do
+      expect(described_class.address_from_lines(" 1 High  Street ", nil, "Oxford")).to eq("1 High Street\n\nOxford")
+    end
+
+    it "returns nil when no lines are given" do
+      expect(described_class.address_from_lines("", nil, " ")).to be_nil
+    end
+  end
+
+  describe ".split_address" do
+    it "returns the lines in order" do
+      expect(described_class.split_address("1 High Street\n\nOxford")).to eq(["1 High Street", "", "Oxford"])
+    end
+
+    it "treats an address on one line as the first line" do
+      expect(described_class.split_address("1 High Street, Oxford")).to eq(["1 High Street, Oxford"])
     end
   end
 

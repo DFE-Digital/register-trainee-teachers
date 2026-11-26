@@ -341,6 +341,25 @@ describe Trainee do
         end
       end
     end
+
+    context "training initiative on the early years teacher degree apprenticeship" do
+      let(:trainee) { create(:trainee, :early_years_teacher_degree_apprenticeship, training_initiative: nil) }
+
+      it "isn't set before funding is answered" do
+        expect(trainee.training_initiative).to be_nil
+      end
+
+      it "is saved as not on a training initiative once funding is answered" do
+        trainee.update!(applying_for_grant: true)
+        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
+      end
+
+      it "isn't set on other routes" do
+        other = create(:trainee, :early_years_salaried, training_initiative: nil)
+        other.update!(applying_for_grant: true)
+        expect(other.training_initiative).to be_nil
+      end
+    end
   end
 
   context "class methods" do

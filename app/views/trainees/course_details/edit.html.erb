@@ -50,43 +50,53 @@
           <%= f.govuk_radio_button :study_mode, COURSE_STUDY_MODES[:full_time], label: { text: t(".study_mode_full_time") }, link_errors: true %>
           <%= f.govuk_radio_button :study_mode, COURSE_STUDY_MODES[:part_time], label: { text: t(".study_mode_part_time") } %>
         <% end %>
+      <% elsif @trainee.requires_level_five_declaration? %>
+        <%# EYTDA is full time only. %>
+        <div class="govuk-form-group">
+          <h2 class="govuk-heading-s govuk-!-margin-bottom-1"><%= t(".eytda.study_mode_label") %></h2>
+          <p class="govuk-body"><%= t(".eytda.study_mode") %></p>
+        </div>
       <% end %>
 
-      <%= f.govuk_date_field(:itt_start_date,
-                             date_of_birth: false,
-                             legend: { text: t("publish_course_details.view.itt_start_date").html_safe, size: "s" },
-                             hint: { text: t("activemodel.errors.models.course_details_form.attributes.itt_start_date.hint_html", year: Time.zone.now.year) }) %>
-
-      <% end_date_hint = t("activemodel.errors.models.course_details_form.attributes.itt_end_date.hint_html", year: Time.zone.now.next_year.year) %>
-      <% if @trainee.requires_level_five_declaration? && !@trainee.level_five_qualification.nil? %>
-        <%# EYTDA: the Level 5 declaration sets the course length, so the end date can be filled in. %>
-        <% end_date_hint += t("activemodel.errors.models.course_details_form.attributes.itt_end_date.level_five_hint_html", years: @trainee.level_five_course_years) %>
+      <% eytda = @trainee.requires_level_five_declaration? %>
+      <% dates_scope = "activemodel.errors.models.course_details_form.attributes" %>
+      <% start_date_hint = t("#{dates_scope}.itt_start_date.#{eytda ? 'eytda_hint_html' : 'hint_html'}", year: Time.zone.now.year) %>
+      <% end_date_hint = t("#{dates_scope}.itt_end_date.#{eytda ? 'eytda_hint_html' : 'hint_html'}", year: Time.zone.now.next_year.year) %>
+      <% if eytda %>
+        <%# The end date is filled in from the usual course length, and moves with the start date until the provider changes it. %>
+        <% filled_key = @trainee.level_five_qualification.nil? ? "filled_in_before_declaration_html" : "filled_in_html" %>
+        <% end_date_hint += t("#{dates_scope}.itt_end_date.#{filled_key}", length: @course_details_form.usual_course_length_text) %>
       <% end %>
-      <%= f.govuk_date_field(:itt_end_date,
-                            date_of_birth: false,
-                            legend: { text: t("publish_course_details.view.itt_end_date").html_safe, size: "s" },
-                            hint: { text: end_date_hint }) %>
+      <%= tag.div(data: ({ module: "app-course-end-date", fill_months: @course_details_form.level_five_course_months } if eytda)) do %>
+        <%= f.govuk_date_field(:itt_start_date,
+                               date_of_birth: false,
+                               legend: { text: t(eytda ? ".eytda.itt_start_date_label" : "publish_course_details.view.itt_start_date").html_safe, size: "s" },
+                               hint: { text: start_date_hint }) %>
+
+        <%= f.govuk_date_field(:itt_end_date,
+                              date_of_birth: false,
+                              legend: { text: t(eytda ? ".eytda.itt_end_date_label" : "publish_course_details.view.itt_end_date").html_safe, size: "s" },
+                              hint: { text: end_date_hint }) %>
+      <% end %>
 
       <% if @course_details_form.course_length_section? %>
-        <%# EYTDA: a full-time course longer than the usual 2 or 3 years shows a warning and needs confirming. %>
+        <%# EYTDA: an end date later than the usual 2 years or 33 months shows a warning, and the provider confirms the longer course. %>
         <%# The page script shows and hides it as the dates change. %>
         <% scope = "activemodel.errors.models.course_details_form.attributes.extended_course_confirmed" %>
-        <% years = @trainee.level_five_course_years %>
-        <% warning_key = "#{scope}.#{@trainee.level_five_qualification ? 'warning_level_five' : 'warning_no_level_five'}" %>
+        <% length = @course_details_form.usual_course_length_text %>
         <% longer = @course_details_form.course_longer_than_usual? %>
-        <%= tag.div(hidden: !longer,
-                    data: { module: "app-course-length",
-                            usual_years: years,
-                            full_time: @course_details_form.study_mode.to_s == COURSE_STUDY_MODES[:full_time],
-                            warning: t(warning_key, years: years, length: "{length}") }) do %>
+        <%= tag.div(hidden: !longer, data: { module: "app-course-length", usual_months: @course_details_form.level_five_course_months }) do %>
           <%= f.hidden_field(:course_length_warning_shown, value: longer ? "1" : "", data: { course_length_shown: true }) %>
           <div class="govuk-warning-text">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
             <strong class="govuk-warning-text__text">
               <span class="govuk-visually-hidden">Warning</span>
-              <span data-course-length-text><%= t(warning_key, years: years, length: course_length_text(@course_details_form.itt_start_date, @course_details_form.itt_end_date)) if longer %></span>
+              <%= t("#{scope}.heading") %>
             </strong>
           </div>
+          <% t("#{scope}.#{@trainee.level_five_qualification ? 'warning_year_two' : 'warning_standard'}").each do |paragraph| %>
+            <p class="govuk-body"><%= paragraph %></p>
+          <% end %>
           <%= f.govuk_check_boxes_fieldset(:extended_course_confirmed,
                                            multiple: false,
                                            small: true,
@@ -95,7 +105,7 @@
                                   multiple: false,
                                   link_errors: true,
                                   checked: @course_details_form.extended_course_confirmed?,
-                                  label: { text: t("#{scope}.label", years:) }) %>
+                                  label: { text: t("#{scope}.label", length:) }) %>
           <% end %>
         <% end %>
       <% end %>

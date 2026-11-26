@@ -7,6 +7,16 @@ module Funding
     subject { described_class.new(trainee) }
 
     describe "validations" do
+      context "with an early years teacher degree apprenticeship trainee" do
+        let(:trainee) { build(:trainee, :early_years_teacher_degree_apprenticeship, training_initiative: nil) }
+
+        it "doesn't need a training initiative" do
+          subject.valid?
+          expect(subject.errors[:training_initiative]).to be_empty
+          expect(subject.fields).not_to have_key(:training_initiative)
+        end
+      end
+
       context "when no bursary would be available" do
         let(:trainee) { build(:trainee) }
         let(:training_initiative_form) { instance_double(Funding::TrainingInitiativesForm, fields: nil, training_initiative: nil) }

@@ -31,6 +31,8 @@ module Schools
     def summary_title
       if trainee.requires_assessment_only_employing_school?
         t("schools.view.employing_school")
+      elsif trainee.requires_employing_setting?
+        t(".employing_setting_summary_title")
       else
         t(".summary_title")
       end
@@ -39,6 +41,11 @@ module Schools
   private
 
     attr_accessor :data_model, :training_partner, :has_errors, :editable, :header_level
+
+    # The form being confirmed (with any changes not yet saved), or the trainee.
+    def employing_setting_source
+      data_model.respond_to?(:employing_school_address_line_one) ? data_model : trainee
+    end
 
     def training_partner_not_applicable?
       if data_model.is_a?(Schools::FormValidator)

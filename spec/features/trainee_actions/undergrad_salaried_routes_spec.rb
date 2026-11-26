@@ -11,7 +11,7 @@ feature "the Undergraduate (salaried) route group" do
 
     within(:xpath, "//fieldset[.//legend[normalize-space()='Undergraduate (salaried)']]") do
       expect(page).to have_field("Teacher degree apprenticeship (salaried)", type: :radio)
-      expect(page).to have_field("Early years teacher degree apprenticeship (salaried)", type: :radio)
+      expect(page).to have_field("Early Years Teacher Degree Apprenticeship (salaried)", type: :radio)
     end
 
     within(:xpath, "//fieldset[.//legend[normalize-space()='Other']]") do

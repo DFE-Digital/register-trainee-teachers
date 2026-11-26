@@ -15,7 +15,8 @@ module Funding
 
     # Only with the eligibility step, and not when no question is asked.
     validate :validate_funding_eligibility, if: :eligibility_question?
-    validate :validate_training_initiative
+    # Not asked on the early years teacher degree apprenticeship.
+    validate :validate_training_initiative, if: :training_initiative_required?
     validate :validate_funding, if: -> { funding_manager.can_apply_for_funding_type? }
     # Draft funding that depends on a missing degree or employing school isn't complete,
     # even when it was marked complete before the detail was removed.
@@ -30,7 +31,7 @@ module Funding
 
       @fields = funding_eligibility_form_fields
         .merge(bursary_form_fields)
-        .merge(training_initiatives_form_fields)
+        .merge(training_initiative_required? ? training_initiatives_form_fields : {})
     end
 
     def save!
@@ -51,7 +52,7 @@ module Funding
     def funding_forms
       [
         (funding_eligibility_form if eligibility_question?),
-        training_initiatives_form,
+        (training_initiatives_form if training_initiative_required?),
         (bursary_form if funding_manager.can_apply_for_bursary? || funding_manager.can_apply_for_grant?),
       ].compact
     end
@@ -65,6 +66,10 @@ module Funding
 
     def eligibility_step?
       FeatureService.enabled?(:funding_eligibility_step)
+    end
+
+    def training_initiative_required?
+      trainee.requires_training_initiative?
     end
 
     def eligibility_question?

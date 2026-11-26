@@ -143,7 +143,7 @@ module TaskListHelper
     when :funding_active
       {
         task_name: "Funding",
-        path: FeatureService.enabled?(:funding_eligibility_step) ? edit_trainee_funding_funding_eligibility_path(trainee) : edit_trainee_funding_training_initiative_path(trainee),
+        path: funding_start_path(trainee),
         confirm_path: trainee_funding_confirm_path(trainee),
         status: ProgressService.call(
           validator: Funding::FormValidator.new(trainee),
@@ -191,6 +191,16 @@ module TaskListHelper
   end
 
 private
+
+  # The first funding page: the eligibility question, or (without it) the
+  # training initiative. The early years teacher degree apprenticeship isn't
+  # asked about initiatives, so it starts at the funding type, if there's one to choose.
+  def funding_start_path(trainee)
+    return edit_trainee_funding_funding_eligibility_path(trainee) if FeatureService.enabled?(:funding_eligibility_step)
+    return edit_trainee_funding_training_initiative_path(trainee) if trainee.requires_training_initiative?
+
+    FundingManager.new(trainee).can_apply_for_funding_type? ? edit_trainee_funding_bursary_path(trainee) : trainee_funding_confirm_path(trainee)
+  end
 
   def training_partner_and_employing_school_details_title(route)
     I18n.t("components.review_draft.draft.schools.titles.#{route}")

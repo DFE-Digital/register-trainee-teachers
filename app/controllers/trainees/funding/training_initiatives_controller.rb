@@ -5,6 +5,8 @@ module Trainees
     class TrainingInitiativesController < BaseController
       include FundingPrerequisitesCheckable
 
+      before_action :training_initiative_required
+
       def edit
         @training_initiatives_form = ::Funding::TrainingInitiativesForm.new(trainee)
       end
@@ -20,6 +22,11 @@ module Trainees
       end
 
     private
+
+      # The early years teacher degree apprenticeship isn't asked about initiatives.
+      def training_initiative_required
+        redirect_to(trainee_funding_confirm_path(trainee)) unless trainee.requires_training_initiative?
+      end
 
       def trainee_params
         return { training_initiative: nil } if params[:funding_training_initiatives_form].blank?

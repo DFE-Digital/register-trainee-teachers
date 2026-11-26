@@ -42,6 +42,17 @@
       <% end %>
     <% end %>
 
+    <% if @entries.any? || @carried_forward_entries.present? %>
+      <p class="govuk-body">
+        <%= govuk_link_to(
+              viewing_draft_year? ? "Download draft funding requirements (CSV)" : "Download funding requirements (CSV)",
+              funding_management_requirements_path(request.query_parameters.except("page").merge(format: :csv)),
+              no_visited_state: true,
+            ) %>
+        <span class="govuk-hint govuk-!-display-block govuk-!-margin-bottom-0">Includes every entry that matches the filters, not only this page.</span>
+      </p>
+    <% end %>
+
     <% if @entries.empty? %>
       <p class="govuk-body"><%= all_years? ? "No funding is recorded." : "No funding is recorded for this academic year." %></p>
     <% else %>

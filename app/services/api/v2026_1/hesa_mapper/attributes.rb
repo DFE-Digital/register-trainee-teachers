@@ -111,7 +111,7 @@ module Api
         end
 
         def placements_attributes
-          params[:placements_attributes]&.map { |placement| Api::V20261::HesaMapper::PlacementAttributes.new(placement).call }
+          params[:placements_attributes]&.map { |placement| self.class.module_parent::PlacementAttributes.new(placement).call }
         end
 
         def sex

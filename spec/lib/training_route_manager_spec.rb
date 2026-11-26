@@ -158,7 +158,7 @@ describe TrainingRouteManager do
   end
 
   describe "#requires_study_mode?" do
-    (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
+    (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only early_years_teacher_degree_apprenticeship]).each do |route|
       context "for route #{route}" do
         let(:trainee) { Struct.new(:training_route).new(route.to_s) }
 
@@ -168,7 +168,7 @@ describe TrainingRouteManager do
       end
     end
 
-    %w[early_years_assessment_only assessment_only].each do |route|
+    %w[early_years_assessment_only assessment_only early_years_teacher_degree_apprenticeship].each do |route|
       context "for route #{route}" do
         let(:trainee) { create(:trainee, route) }
 
@@ -235,6 +235,18 @@ describe TrainingRouteManager do
 
         it "returns false" do
           expect(subject.requires_placements?).to be false
+        end
+      end
+    end
+  end
+
+  describe "#requires_training_initiative?" do
+    TRAINING_ROUTES.each_key do |route|
+      context "for route #{route}" do
+        let(:trainee) { Struct.new(:training_route).new(route.to_s) }
+
+        it "is false only for the early years teacher degree apprenticeship" do
+          expect(subject.requires_training_initiative?).to be(route.to_s != "early_years_teacher_degree_apprenticeship")
         end
       end
     end

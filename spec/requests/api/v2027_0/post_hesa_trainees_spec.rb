@@ -117,6 +117,36 @@ describe "`POST /api/v2027.0/trainees` endpoint" do
     end
   end
 
+  context "when a placement at a school or setting that is not listed is sent with its address" do
+    let(:data) do
+      super().merge(
+        placements_attributes: [
+          {
+            name: "Little Acorns Day Nursery",
+            address_line_one: "14 Mill Lane",
+            address_line_two: "Headington",
+            town_city: "Oxford",
+            postcode: "OX3 9DU",
+          },
+        ],
+      )
+    end
+
+    it "saves the address and returns it" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to have_http_status(:created)
+      placement = Trainee.last.placements.last
+      expect(placement.address_lines).to eq(["14 Mill Lane", "Headington", "Oxford"])
+      expect(placement.postcode).to eq("OX3 9DU")
+      expect(response.parsed_body[:data][:placements].first).to include(
+        address: "14 Mill Lane, Headington, Oxford, OX3 9DU",
+        address_line_one: "14 Mill Lane",
+        town_city: "Oxford",
+      )
+    end
+  end
+
   context "when the request is valid" do
     before do
       allow(Api::V20270::HesaMapper::Attributes).to receive(:call).and_call_original

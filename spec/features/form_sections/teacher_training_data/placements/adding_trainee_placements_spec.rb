@@ -204,7 +204,53 @@ feature "Add a placement" do
     then_i_see_the_trainee_page
   end
 
+  scenario "Add a placement at a school or setting that is not listed, with its full address" do
+    given_i_am_authenticated
+    and_a_trainee_exists_with_trn_received
+    and_i_navigate_to_the_new_placement_form
+
+    when_i_enter_a_school_that_is_not_listed_without_an_address
+    and_i_click_continue
+    then_i_see_the_full_address_errors
+
+    when_i_enter_details_for_a_new_school
+    fill_in("Address line 2 (optional)", with: "Jericho", visible: false)
+    and_i_click_continue
+    then_i_see_the_confirmation_page
+    and_i_see_the_full_address_ready_for_confirmation
+
+    when_i_click_update
+    then_the_placement_is_saved_with_the_full_address
+  end
+
 private
+
+  def when_i_enter_a_school_that_is_not_listed_without_an_address
+    fill_in("School or setting name", with: "St. Alice's Primary School", visible: false)
+  end
+
+  def then_i_see_the_full_address_errors
+    within(".govuk-error-summary") do
+      expect(page).to have_text("Enter address line 1, typically the building and street")
+      expect(page).to have_text("Enter town or city")
+      expect(page).to have_text("Enter postcode")
+    end
+    expect(page).to have_css("details[open]")
+    expect(page).to have_field("School or setting name", with: "St. Alice's Primary School")
+  end
+
+  def and_i_see_the_full_address_ready_for_confirmation
+    within("#school-or-setting-1") do
+      expect(page).to have_text("St. Alice's Primary School")
+      expect(page).to have_text("URN 654321, 1 High Street, Jericho, Oxford, OX1 1AA")
+    end
+  end
+
+  def then_the_placement_is_saved_with_the_full_address
+    placement = @trainee.reload.placements.last
+    expect(placement.address_lines).to eq(["1 High Street", "Jericho", "Oxford"])
+    expect(placement.postcode).to eq("OX1 1AA")
+  end
 
   def then_i_see_the_trainee_page
     expect(page).to have_current_path(trainee_path(trainee))
@@ -296,6 +342,8 @@ private
   def when_i_enter_details_for_a_new_school
     fill_in("School or setting name", with: "St. Alice's Primary School", visible: false)
     fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: false)
+    fill_in("Address line 1", with: "1 High Street", visible: false)
+    fill_in("Town or city", with: "Oxford", visible: false)
     fill_in("Postcode", with: "OX1 1AA", visible: false)
   end
 
@@ -304,8 +352,7 @@ private
 
     within("#school-or-setting-1") do
       expect(page).to have_text("St. Alice's Primary School")
-      expect(page).to have_text("OX1 1AA")
-      expect(page).to have_text("URN 654321")
+      expect(page).to have_text("URN 654321, 1 High Street, Oxford, OX1 1AA")
     end
   end
 

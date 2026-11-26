@@ -28,7 +28,7 @@ module Api
       def self.from_placement(placement)
         new(
           placement.attributes.select do |k, _v|
-            ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
+            self::ATTRIBUTES.include?(k.to_sym) || self::INTERNAL_ATTRIBUTES.include?(k.to_sym)
           end,
         )
       end
@@ -45,7 +45,7 @@ module Api
 
         super(
           new_attributes.select do |k, _v|
-            ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
+            self.class::ATTRIBUTES.include?(k.to_sym) || self.class::INTERNAL_ATTRIBUTES.include?(k.to_sym)
           end
         )
       end

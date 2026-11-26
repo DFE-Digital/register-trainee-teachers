@@ -17,7 +17,7 @@
 <% end %>
 
 <h2 class="govuk-heading-m">
-  About their teacher training
+  <%= route_t(@trainee, "components.heading.draft.about_their_teaching_training") %>
 </h2>
 
 <%= render Sections::View.new(trainee: @trainee, form: @form, section: :course_details, editable: @trainee_editable) %>

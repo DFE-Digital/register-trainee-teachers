@@ -24,6 +24,12 @@
 class Placement < ApplicationRecord
   include Sluggable
 
+  # A school or setting that is not listed is given a full address. The lines
+  # are kept in the `address` column, one per line, in this order, so that a
+  # blank second line keeps its place.
+  ADDRESS_LINE_FIELDS = %i[address_line_one address_line_two town_city].freeze
+  ADDRESS_LINE_SEPARATOR = "\n"
+
   attr_accessor :school_search
   default_scope { order(created_at: :asc) }
 
@@ -49,11 +55,26 @@ class Placement < ApplicationRecord
     school&.postcode || super
   end
 
+  def self.address_from_lines(*lines)
+    lines = lines.map { |line| line.to_s.squish }
+    return if lines.all?(&:blank?)
+
+    lines.join(ADDRESS_LINE_SEPARATOR)
+  end
+
+  def self.split_address(address)
+    address.to_s.split(ADDRESS_LINE_SEPARATOR, ADDRESS_LINE_FIELDS.size)
+  end
+
+  def address_lines
+    self.class.split_address(address).compact_blank
+  end
+
   def full_address
     return if School::NOT_APPLICABLE_SCHOOL_URNS.include?(urn)
 
     full_address = if school.blank?
-                     parts = [address, postcode].compact
+                     parts = [*address_lines, postcode].compact_blank
 
                      urn.present? ? parts.unshift("URN #{urn}") : parts
                    else

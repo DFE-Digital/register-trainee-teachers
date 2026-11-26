@@ -17,8 +17,6 @@ feature "completing funding with draft amounts (internal testing)",
     when_i_visit_the_funding_eligibility_page
     then_i_see_the_amount_not_signed_off_banner
     and_i_answer_eligible
-
-    when_i_choose_not_on_a_training_initiative
     then_i_see_the_draft_training_year_grants
     and_i_see_the_amount_not_signed_off_banner_again
 
@@ -63,18 +61,12 @@ private
   def then_i_see_the_amount_not_signed_off_banner
     expect(page).to have_text("Amount not signed off")
     expect(page).to have_text("These amounts are from the #{draft_cycle.label} draft and haven’t been signed off")
-    expect(page).to have_text("Is the trainee eligible for a training grant?")
+    expect(page).to have_text("Is the trainee eligible for the ESG?")
   end
 
   def and_i_answer_eligible
     funding_eligibility_page.eligible.click
     funding_eligibility_page.submit_button.click
-    expect(training_initiative_page).to be_displayed(id: trainee.slug)
-  end
-
-  def when_i_choose_not_on_a_training_initiative
-    page.choose("Not on a training initiative")
-    training_initiative_page.submit_button.click
   end
 
   def then_i_see_the_draft_training_year_grants
@@ -90,7 +82,7 @@ private
   end
 
   def when_i_apply_for_the_grant
-    page.choose("Yes, apply for a grant")
+    page.choose("Yes, apply for the ESG")
     bursary_page.submit_button.click
   end
 

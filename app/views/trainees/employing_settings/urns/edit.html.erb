@@ -1,0 +1,28 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.employing_settings.urns.edit", has_errors: @urn_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<%= register_form_with model: @urn_form, url: trainee_employing_settings_urn_path(@trainee), method: :put, local: true do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= render TraineeName::View.new(@trainee) %>
+
+      <%= f.govuk_radio_buttons_fieldset :has_urn,
+                                         legend: { text: t(".heading"), tag: "h1", size: "l" },
+                                         hint: { text: t(".hint") } do %>
+        <%= f.govuk_radio_button :has_urn, "yes", label: { text: t(".yes") }, hint: { text: t(".yes_hint") }, link_errors: true %>
+        <%= f.govuk_radio_button :has_urn, "no", label: { text: t(".no") }, hint: { text: t(".no_hint") } %>
+      <% end %>
+
+      <%= f.govuk_submit t("continue") %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @trainee.draft? %>
+  <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+<% end %>

@@ -312,18 +312,27 @@ module SystemAdmin
       end
     end
 
+    DEGREE_RELEVANCE_LABELS = { "relevant" => "Relevant", "unrelated" => "Unrelated" }.freeze
+    DEGREE_RELEVANCE_TAG_COLOURS = { "relevant" => "light-blue", "unrelated" => "grey" }.freeze
+    SCHOOL_DISADVANTAGE_LABELS = { "disadvantaged" => "Disadvantaged/special", "non_disadvantaged" => "Non disadvantaged" }.freeze
+    SCHOOL_DISADVANTAGE_TAG_COLOURS = { "disadvantaged" => "magenta", "non_disadvantaged" => "grey" }.freeze
+
+    def degree_relevance_label(degree_relevance)
+      DEGREE_RELEVANCE_LABELS[degree_relevance.to_s]
+    end
+
     def degree_relevance_tag(degree_relevance)
-      case degree_relevance.to_s
-      when "relevant"  then govuk_tag(text: "Relevant", colour: "light-blue")
-      when "unrelated" then govuk_tag(text: "Unrelated", colour: "grey")
-      end
+      label = degree_relevance_label(degree_relevance)
+      govuk_tag(text: label, colour: DEGREE_RELEVANCE_TAG_COLOURS[degree_relevance.to_s]) if label
+    end
+
+    def school_disadvantage_label(school_disadvantage)
+      SCHOOL_DISADVANTAGE_LABELS[school_disadvantage.to_s]
     end
 
     def school_disadvantage_tag(school_disadvantage)
-      case school_disadvantage.to_s
-      when "disadvantaged"     then govuk_tag(text: "Disadvantaged/special", colour: "magenta")
-      when "non_disadvantaged" then govuk_tag(text: "Non disadvantaged", colour: "grey")
-      end
+      label = school_disadvantage_label(school_disadvantage)
+      govuk_tag(text: label, colour: SCHOOL_DISADVANTAGE_TAG_COLOURS[school_disadvantage.to_s]) if label
     end
 
     # Increase / Decrease / New / No change vs the previous academic cycle.

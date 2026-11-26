@@ -47,11 +47,32 @@ module Trainees
       expect(trainee.extended_course_confirmed).to be(false)
     end
 
-    it "does nothing for the first answer" do
-      expect(call(previous_answer: nil)).to be(false)
-      expect(trainee.progress.course_details).to be(true)
-      expect(trainee.progress.funding).to be(true)
-      expect(trainee.applying_for_grant).to be(true)
+    context "with the first answer" do
+      before { trainee.update!(itt_start_date: Date.new(2026, 9, 1), itt_end_date: Date.new(2029, 6, 1)) }
+
+      it "does nothing for No when the end date is the standard 33 months" do
+        expect(call(previous_answer: nil)).to be(false)
+        expect(trainee.progress.course_details).to be(true)
+        expect(trainee.progress.funding).to be(true)
+        expect(trainee.applying_for_grant).to be(true)
+      end
+
+      it "sends course details back when the provider's end date is longer than 33 months" do
+        trainee.update!(itt_end_date: Date.new(2029, 9, 1))
+
+        expect(call(previous_answer: nil)).to be(true)
+        expect(trainee.progress.course_details).to be(false)
+        expect(trainee.progress.course_details_recheck_level_five_declaration).to be(true)
+        expect(trainee.applying_for_grant).to be(true)
+      end
+
+      it "resets the funding for Year 2 entry, as the funded years change" do
+        trainee.update!(level_five_qualification: true, itt_end_date: Date.new(2028, 9, 1))
+
+        expect(call(previous_answer: nil)).to be(true)
+        expect(trainee.progress.funding_removed_reason).to eq("level_five_declaration")
+        expect(trainee.progress.course_details).to be(true)
+      end
     end
 
     it "does nothing when the same answer is saved again" do

@@ -1,4 +1,4 @@
-import CourseLengthWarning, { courseLength, dateFrom } from './course_length_warning'
+import CourseLengthWarning, { addMonths, dateFrom } from './course_length_warning'
 
 // The day field as it is on a page with an error: a different id, and the name
 // moved by the autofill script.
@@ -7,39 +7,33 @@ const dateFields = (name, [day, month, year]) => `
   <input id="course_details_form_${name}_2i" name="x2" data-nameoriginal="course_details_form[${name}(2i)]" value="${month}">
   <input id="course_details_form_${name}_1i" name="course_details_form[${name}(1i)]" value="${year}">`
 
-const templateHTML = (start, end) => `
+const templateHTML = (usualMonths, start, end) => `
 <form>
-  <input type="radio" name="course_details_form[study_mode]" value="full_time" checked>
-  <input type="radio" name="course_details_form[study_mode]" value="part_time">
   ${dateFields('itt_start_date', start)}
   ${dateFields('itt_end_date', end)}
-  <div data-module="app-course-length" data-usual-years="2" data-full-time="true"
-       data-warning="This course is {length}. Courses for trainees with a level 5 qualification are usually 2 years." hidden>
+  <div data-module="app-course-length" data-usual-months="${usualMonths}" hidden>
     <input type="hidden" data-course-length-shown value="">
-    <span data-course-length-text></span>
   </div>
 </form>`
 
 const section = () => document.querySelector('[data-module="app-course-length"]')
 const shown = () => document.querySelector('[data-course-length-shown]').value
-const setEndYear = (year) => {
+const setEnd = (month, year) => {
+  document.getElementById('course_details_form_itt_end_date_2i').value = month
   const input = document.getElementById('course_details_form_itt_end_date_1i')
   input.value = year
   input.dispatchEvent(new Event('input', { bubbles: true }))
 }
 
-describe('courseLength', () => {
-  it('describes whole years', () => {
-    expect(courseLength(new Date(2026, 8, 1), new Date(2029, 8, 1))).toEqual('3 years')
+describe('addMonths', () => {
+  it('adds whole months', () => {
+    expect(addMonths(new Date(2026, 8, 1), 33)).toEqual(new Date(2029, 5, 1))
+    expect(addMonths(new Date(2026, 8, 1), 24)).toEqual(new Date(2028, 8, 1))
   })
 
-  it('describes years and months', () => {
-    expect(courseLength(new Date(2026, 8, 1), new Date(2029, 2, 1))).toEqual('2 years and 6 months')
-    expect(courseLength(new Date(2026, 8, 1), new Date(2027, 9, 1))).toEqual('1 year and 1 month')
-  })
-
-  it('counts a month only once it has passed', () => {
-    expect(courseLength(new Date(2026, 8, 1), new Date(2029, 7, 31))).toEqual('2 years and 11 months')
+  it('uses the last day of a shorter month', () => {
+    expect(addMonths(new Date(2026, 7, 31), 33)).toEqual(new Date(2029, 4, 31))
+    expect(addMonths(new Date(2026, 4, 31), 33)).toEqual(new Date(2029, 1, 28))
   })
 })
 
@@ -54,47 +48,50 @@ describe('dateFrom', () => {
 })
 
 describe('CourseLengthWarning', () => {
-  beforeEach(() => {
-    document.body.innerHTML = templateHTML(['1', '9', '2026'], ['1', '9', '2028'])
-    CourseLengthWarning.init()
+  describe('the standard length, 33 months', () => {
+    beforeEach(() => {
+      document.body.innerHTML = templateHTML(33, ['1', '9', '2026'], ['1', '6', '2029'])
+      CourseLengthWarning.init()
+    })
+
+    it('shows the warning once the end date is later than 33 months', () => {
+      setEnd('9', '2029')
+
+      expect(section().hidden).toBe(false)
+      expect(shown()).toEqual('1')
+    })
+
+    it('hides it again when the end date is back to 33 months', () => {
+      setEnd('9', '2029')
+      setEnd('6', '2029')
+
+      expect(section().hidden).toBe(true)
+      expect(shown()).toEqual('')
+    })
+
+    it('shows it for an end date many years ahead', () => {
+      setEnd('9', '2036')
+
+      expect(section().hidden).toBe(false)
+    })
+
+    it('does not show it for a year that is not 4 digits', () => {
+      setEnd('9', '20299')
+
+      expect(section().hidden).toBe(true)
+    })
   })
 
-  it('shows the warning once the course is longer than usual', () => {
-    setEndYear('2029')
+  describe('Year 2 entry, 2 years', () => {
+    beforeEach(() => {
+      document.body.innerHTML = templateHTML(24, ['1', '9', '2026'], ['1', '9', '2028'])
+      CourseLengthWarning.init()
+    })
 
-    expect(section().hidden).toBe(false)
-    expect(section().textContent).toContain('This course is 3 years. Courses for trainees with a level 5 qualification are usually 2 years.')
-    expect(shown()).toEqual('1')
-  })
+    it('shows the warning once the end date is later than 2 years', () => {
+      setEnd('10', '2028')
 
-  it('hides it again when the course is back to the usual length', () => {
-    setEndYear('2029')
-    setEndYear('2028')
-
-    expect(section().hidden).toBe(true)
-    expect(shown()).toEqual('')
-  })
-
-  it('shows it for an end date many years ahead', () => {
-    setEndYear('2036')
-
-    expect(section().hidden).toBe(false)
-    expect(shown()).toEqual('1')
-    expect(document.querySelector('[data-course-length-text]').textContent).toContain('This course is 10 years.')
-  })
-
-  it('does not show it for a year that is not 4 digits', () => {
-    setEndYear('20299')
-
-    expect(section().hidden).toBe(true)
-  })
-
-  it('does not show it for a part-time course', () => {
-    const partTime = document.querySelector('[value="part_time"]')
-    partTime.checked = true
-    partTime.dispatchEvent(new Event('change', { bubbles: true }))
-    setEndYear('2030')
-
-    expect(section().hidden).toBe(true)
+      expect(section().hidden).toBe(false)
+    })
   })
 })

@@ -90,6 +90,16 @@ module Sections
         it_behaves_like renders_incomplete_section, :course_details, :incomplete
       end
 
+      context "early years teacher degree apprenticeship", "feature_routes.early_years_teacher_degree_apprenticeship": true do
+        let(:trainee) { create(:trainee, :incomplete, :early_years_teacher_degree_apprenticeship, start_academic_cycle: AcademicCycle.first) }
+        let(:section) { :schools }
+
+        it "names the section after the employing setting" do
+          expect(rendered_content).to have_text("Training partner and employing setting not started")
+          expect(rendered_content).not_to have_text("Schools not started")
+        end
+      end
+
       context "trainee incomplete funding section" do
         let(:trainee) { create(:trainee, :with_start_date, start_academic_cycle: AcademicCycle.first) }
 

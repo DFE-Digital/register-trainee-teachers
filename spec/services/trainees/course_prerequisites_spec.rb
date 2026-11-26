@@ -4,21 +4,8 @@ require "rails_helper"
 
 module Trainees
   describe CoursePrerequisites do
-    let(:trainee) { build(:trainee, :early_years_teacher_degree_apprenticeship, level_five_qualification: nil) }
-
-    it "needs the Level 5 declaration first on the EYTDA route" do
-      expect(described_class.missing(trainee)).to eq([:level_five_declaration])
-    end
-
-    it "still needs it when answered but not marked complete" do
-      trainee.level_five_qualification = true
-
-      expect(described_class.missing(trainee)).to eq([:level_five_declaration])
-    end
-
-    it "needs nothing once it's complete" do
-      trainee.level_five_qualification = false
-      trainee.progress.level_five_declaration = true
+    it "doesn't need the Level 5 declaration first on the EYTDA route" do
+      trainee = build(:trainee, :early_years_teacher_degree_apprenticeship, level_five_qualification: nil)
 
       expect(described_class.missing(trainee)).to be_empty
     end

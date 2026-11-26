@@ -20,9 +20,9 @@ feature "level 5 declaration" do
     when_i_choose_yes_and_continue
     then_i_see_the_confirm_page_with("Yes", duration: "2 years")
 
-    when_i_click_on("Change")
+    when_i_click_on("Change year 2 entry")
     and_i_choose_no_and_continue
-    then_i_see_the_confirm_page_with("No", duration: "3 years")
+    then_i_see_the_confirm_page_with("No", duration: "3 years (33 months)")
 
     when_i_confirm_the_section
     then_the_task_is("Completed")
@@ -67,17 +67,15 @@ private
 
   def then_i_see_the_question
     expect(page).to have_css("h1", text: "Level 5 declaration")
-    expect(page).to have_text("Their answer sets the course duration")
-    expect(page).to have_text("with a level 5 qualification, 2 years")
-    expect(page).to have_text("without a level 5 qualification, 3 years")
-    expect(page).to have_text("Level 5 qualifications include foundation degrees")
-    expect(page).to have_css("legend", text: "Does the trainee hold a level 5 qualification?")
-    expect(page).to have_text("The course duration will be set at 2 years")
-    expect(page).to have_text("The course duration will be set at 3 years")
+    expect(page).to have_text("The Early Years Teacher Degree Apprenticeship (EYTDA) normally takes 3 years (33 months) to complete.")
+    expect(page).to have_text("This is the only Level 5 qualification that allows Year 2 entry.")
+    expect(page).not_to have_text("Level 5 qualifications include foundation degrees")
+    expect(page).to have_css("legend", text: "Will the trainee enter the EYTDA at Year 2 and complete it in 2 years?")
+    expect(page).to have_text("Funded as Year 2 and Year 3")
   end
 
   def then_i_see_the_error
-    expect(page).to have_css(".govuk-error-summary", text: "Select yes if the trainee holds a level 5 qualification")
+    expect(page).to have_css(".govuk-error-summary", text: "Select yes if the trainee will enter the EYTDA at Year 2")
   end
 
   def when_i_choose_yes_and_continue
@@ -93,9 +91,9 @@ private
   def then_i_see_the_confirm_page_with(answer, duration:)
     expect(page).to have_css("h1", text: "Confirm level 5 declaration")
     within(".app-summary-card") do
-      expect(page).to have_text("Level 5 qualification")
+      expect(page).to have_text("Year 2 entry")
       expect(page).to have_text(answer)
-      expect(page).to have_css(".govuk-summary-list__row", text: /Course duration\s*#{duration}/)
+      expect(page).to have_css(".govuk-summary-list__row", text: /Course duration\s*#{Regexp.escape(duration)}/)
     end
   end
 

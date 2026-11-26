@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.employing_schools.index",
+<%= render PageTitle::View.new(i18n_key: @trainee.requires_employing_setting? ? "trainees.employing_settings.index" : "trainees.employing_schools.index",
                                has_errors: @employing_school_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
@@ -19,6 +19,10 @@
       <%= render (@school_search.schools.empty? ? "no_results" : "results"), f: f %>
     </div>
   </div>
+<% end %>
+
+<% if @trainee.requires_employing_setting? %>
+  <p class="govuk-body"><%= govuk_link_to(t("trainees.employing_schools.edit.eytda.cannot_find"), edit_trainee_employing_settings_details_path(@trainee, setting: :typed)) %></p>
 <% end %>
 
 <%= render(CancelLink::View.new(@trainee)) %>

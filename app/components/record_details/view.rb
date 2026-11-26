@@ -124,7 +124,7 @@ module RecordDetails
         return
       end
 
-      mappable_field(start_date_text, t(".trainee_start_date"), start_date.link)
+      mappable_field(start_date_text, RouteTerminology.t(trainee, "record_details.view.trainee_start_date"), start_date.link)
     end
 
     def start_year_row
@@ -175,7 +175,7 @@ module RecordDetails
 
     def status_date
       if trainee.itt_not_yet_started?
-        return I18n.t("deferral_details.view.deferred_before_itt_started").html_safe if trainee.starts_course_in_the_future?
+        return RouteTerminology.t(trainee, "deferral_details.view.deferred_before_itt_started").html_safe if trainee.starts_course_in_the_future?
 
         return I18n.t("deferral_details.view.itt_started_but_trainee_did_not_start").html_safe
       end

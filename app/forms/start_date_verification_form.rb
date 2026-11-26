@@ -12,7 +12,9 @@ class StartDateVerificationForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
-  validates :trainee_has_started_course, presence: true, inclusion: { in: %w[yes no] }
+  validates :trainee_has_started_course, presence: true, unless: :eytda?
+  validates :trainee_has_started_course, presence: { message: :eytda_blank }, if: :eytda?
+  validates :trainee_has_started_course, inclusion: { in: %w[yes no] }
 
   def save!
     if valid?
@@ -22,6 +24,11 @@ class StartDateVerificationForm < TraineeForm
     else
       false
     end
+  end
+
+  # The EYTDA error says "course" rather than "ITT".
+  def eytda?
+    RouteTerminology.eytda?(trainee)
   end
 
   def already_started?

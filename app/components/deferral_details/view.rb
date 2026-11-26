@@ -22,12 +22,13 @@ module DeferralDetails
     def trainee_start_date_row
       return unless trainee_started_itt?
 
+      label = RouteTerminology.t(data_model.trainee, "deferral_details.view.start_date_label")
       {
-        key: t(".start_date_label"),
+        key: label,
         value: trainee_start_date,
         action_href: trainee_start_date_verification_path(data_model.trainee, context: :defer),
         action_text: t(:change),
-        action_visually_hidden_text: "itt start date",
+        action_visually_hidden_text: RouteTerminology.eytda?(data_model.trainee) ? label.downcase : "itt start date",
       }
     end
 
@@ -54,7 +55,7 @@ module DeferralDetails
   private
 
     def defer_date
-      return t(".deferred_before_itt_started").html_safe if deferred_before_itt_started?
+      return RouteTerminology.t(data_model.trainee, "deferral_details.view.deferred_before_itt_started").html_safe if deferred_before_itt_started?
 
       return t(".itt_started_but_trainee_did_not_start").html_safe if itt_not_yet_started?
 

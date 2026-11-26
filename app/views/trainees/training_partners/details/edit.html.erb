@@ -14,7 +14,7 @@
         :id,
         :name,
         legend: { text: t(".heading"), size: "l" },
-        hint: { text: t(".not_applicable_details.hint") }
+        hint: { text: route_t(@trainee, "trainees.training_partners.details.edit.not_applicable_details.hint") }
       %>
 
       <%= f.govuk_submit t("continue") %>

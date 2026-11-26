@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.trainee_start_status.edit", has_errors: @trainee_start_status_form.errors.present?) %>
+<%= render PageTitle::View.new(text: route_t(@trainee, "components.page_titles.trainees.trainee_start_status.edit"), has_errors: @trainee_start_status_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <% if @trainee_start_status_form.next_step_context? %>
@@ -21,7 +21,7 @@
       <%= render TraineeName::View.new(@trainee) %>
 
       <%= f.govuk_radio_buttons_fieldset(:commencement_status,
-                                           legend: { text: t(".label").html_safe, size: "l", tag: "h1" },
+                                           legend: { text: route_t(@trainee, "trainees.start_statuses.edit.label").html_safe, size: "l", tag: "h1" },
                                            class: "age_range") do %>
 
           <%= f.govuk_radio_button(:commencement_status, :itt_started_on_time,

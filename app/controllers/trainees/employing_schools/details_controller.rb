@@ -3,6 +3,8 @@
 module Trainees
   module EmployingSchools
     class DetailsController < BaseController
+      before_action :employing_setting_route
+
       def edit
         @employing_school_form = Schools::EmployingSchoolForm.new(trainee)
       end
@@ -22,6 +24,12 @@ module Trainees
       end
 
     private
+
+      # The early years teacher degree apprenticeship asks whether the apprentice
+      # employing setting has a URN instead.
+      def employing_setting_route
+        redirect_to(edit_trainee_employing_settings_urn_path(trainee)) if trainee.requires_employing_setting?
+      end
 
       def trainee_params
         params

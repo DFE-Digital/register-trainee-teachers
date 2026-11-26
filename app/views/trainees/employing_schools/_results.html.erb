@@ -4,7 +4,7 @@
 
 <%= render TraineeName::View.new(@trainee) %>
 <%= f.govuk_radio_buttons_fieldset :employing_school_id,
-  legend: { text: t("components.page_titles.trainees.employing_schools.index"), tag: "h1", size: "l" },
+  legend: { text: t(@trainee.requires_employing_setting? ? "components.page_titles.trainees.employing_settings.index" : "components.page_titles.trainees.employing_schools.index"), tag: "h1", size: "l" },
   hint: { text: "#{t('components.page_titles.search_schools.sub_text_results')} ‘#{query}’" } do %>
     <% @school_search.schools.each_with_index do |school, index| %>
       <%= f.govuk_radio_button :employing_school_id, school.id,

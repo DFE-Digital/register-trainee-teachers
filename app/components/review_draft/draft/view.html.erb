@@ -22,7 +22,7 @@
       end
     end %>
 
-    <h2 class="govuk-heading-m"><%= t("components.heading.draft.about_their_teaching_training") %></h2>
+    <h2 class="govuk-heading-m"><%= RouteTerminology.t(@trainee, "components.heading.draft.about_their_teaching_training") %></h2>
 
     <%= render TaskList::View.new do |component|
       if show_publish_courses?(@trainee)

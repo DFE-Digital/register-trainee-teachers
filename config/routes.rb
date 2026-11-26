@@ -126,6 +126,12 @@ Rails.application.routes.draw do
         resource :details, only: %i[edit update]
       end
 
+      # Early years teacher degree apprenticeship: the apprentice employing setting.
+      namespace :employing_settings, path: "employing-setting" do
+        resource :urn, only: %i[edit update], path: "urn"
+        resource :details, only: %i[edit update]
+      end
+
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
       resource :course_years, only: %i[edit update], path: "/course-years"
       resource :publish_course_details, only: %i[edit update], path: "/publish-course-details" do

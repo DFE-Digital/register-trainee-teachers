@@ -1,4 +1,5 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.employing_schools.edit", has_errors: @employing_school_form.errors.present?) %>
+<% setting = @trainee.requires_employing_setting? %>
+<%= render PageTitle::View.new(i18n_key: setting ? "trainees.employing_settings.search" : "trainees.employing_schools.edit", has_errors: @employing_school_form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
@@ -14,8 +15,8 @@
 
       <%= f.govuk_text_field(
         :query,
-        label: { text: t(".heading"), size: "l", tag: "h1" },
-        hint: { text: t(".hint") },
+        label: { text: t(setting ? ".eytda.heading" : ".heading"), size: "l", tag: "h1" },
+        hint: { text: t(setting ? ".eytda.hint" : ".hint") },
         value: query,
         "data-field" => "schools-autocomplete",
         width: "three-quarters",
@@ -27,7 +28,12 @@
 
       <%= f.hidden_field :employing_school_id, id: "school-id", value: nil %>
 
-      <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
+      <% if setting %>
+        <%= t(".eytda.body_html") %>
+        <p class="govuk-body"><%= govuk_link_to(t(".eytda.cannot_find"), edit_trainee_employing_settings_details_path(@trainee, setting: :typed)) %></p>
+      <% else %>
+        <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
+      <% end %>
 
       <%= f.govuk_submit t("continue") %>
     </div>

@@ -59,7 +59,7 @@ class FundingManager
   EARLY_YEARS_SALARIED_TRAINING_GRANT = 9_535
   EARLY_YEARS_SALARIED_EMPLOYER_INCENTIVE = 7_000
 
-  NO_FUNDING_CONTENT_KEYS = %i[no_funding no_funding_early_years no_funding_subject no_funding_degree].freeze
+  NO_FUNDING_CONTENT_KEYS = %i[no_funding no_funding_early_years no_funding_eytda no_funding_subject no_funding_degree].freeze
 
   def initialize(trainee, funding_eligibility: nil)
     @trainee = trainee
@@ -178,12 +178,12 @@ class FundingManager
 
   # Which eligibility content the trainee sees. First match wins:
   #   :not_signed_off, :training_bursary, :training_grant, :training_grant_by_year,
-  #   :no_funding, :no_funding_early_years, :no_funding_subject, :grant, :bursary_scholarship
+  #   :no_funding, :no_funding_early_years, :no_funding_eytda, :no_funding_subject, :grant, :bursary_scholarship
   def eligibility_content_key
     return :not_signed_off unless funding_signed_off? || draft_amounts_usable?
     return :training_bursary if trainee.early_years_postgrad?
     return :training_grant if trainee.early_years_salaried?
-    return (funding_for_subject? ? :training_grant_by_year : :no_funding_early_years) if yearly_route?
+    return (funding_for_subject? ? :training_grant_by_year : :no_funding_eytda) if yearly_route?
     return :no_funding if NON_EARLY_YEARS_NO_FUNDING_ROUTES.include?(training_route)
     return :no_funding_early_years if EARLY_YEARS_NO_FUNDING_ROUTES.include?(training_route)
     return teacher_degree_apprenticeship_content_key if training_route == TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]
@@ -353,6 +353,9 @@ class FundingManager
   end
 
   def funding_guidance_url
+    # The EYTDA has its own guidance, the same for every academic year.
+    return I18n.t("views.forms.funding.bursaries.eytda_guidance_url") if training_route.to_s == EYTDA_ROUTE
+
     academic_year = academic_cycle.label.parameterize
     key = trainee.early_years_route? ? :early_years_guidance_url : :guidance_url
     I18n.t("views.forms.funding.bursaries.#{key}", academic_year:)

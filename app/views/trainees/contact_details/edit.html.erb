@@ -13,7 +13,7 @@
       <h1 class="govuk-heading-l">Contact details</h1>
 
       <%= f.govuk_email_field :email,
-                              hint: { text: t(".email.hint")},
+                              hint: { text: route_t(@trainee, "trainees.contact_details.edit.email.hint") },
                               width: "two-thirds",
                               label: { text: "Email address", size: "s" },
                               autocomplete: :off %>

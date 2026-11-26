@@ -16,6 +16,11 @@ module Trainees
         return redirect_to(trainee_employing_schools_path(@trainee, query:))
       end
 
+      # The apprentice employing setting found: its details are checked and completed next.
+      if trainee.requires_employing_setting? && @employing_school_form.school_id.to_i.positive?
+        return redirect_to(edit_trainee_employing_settings_details_path(trainee, school_id: @employing_school_form.school_id))
+      end
+
       if @employing_school_form.stash_or_save!
         redirect_to(trainee_schools_confirm_path(trainee))
       else
@@ -43,7 +48,10 @@ module Trainees
         permitted.push(:employing_school_name, :employing_school_urn, :employing_school_postcode)
       end
 
-      params.fetch(form_param_key, {}).permit(*permitted)
+      trainee_params = params.fetch(form_param_key, {}).permit(*permitted)
+      # The apprentice employing setting always applies (an apprentice has an employer).
+      trainee_params = trainee_params.merge(employing_school_not_applicable: false) if trainee.requires_employing_setting?
+      trainee_params
     end
 
     def form_param_key
@@ -91,6 +99,7 @@ module Trainees
     def employing_school_applicable
       employing_school_form
       return if trainee.requires_assessment_only_employing_school?
+      return if trainee.requires_employing_setting?
       return unless @employing_school_form.school_not_applicable?
 
       redirect_to(edit_trainee_employing_schools_details_path(trainee))

@@ -181,6 +181,8 @@ module Sections
     def section_title
       if section == :schools && trainee.requires_assessment_only_employing_school?
         I18n.t("components.review_draft.draft.schools.titles.assessment_only")
+      elsif section == :schools && trainee.requires_employing_setting?
+        I18n.t("components.review_draft.draft.schools.titles.early_years_teacher_degree_apprenticeship")
       else
         I18n.t("components.sections.titles.#{section}")
       end

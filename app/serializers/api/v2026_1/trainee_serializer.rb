@@ -46,6 +46,9 @@ module Api
         bursary_tier
         level_five_qualification
         extended_course_confirmed
+        employing_school_address_line_one
+        employing_school_address_line_two
+        employing_school_town
         funding_eligibility
         course_subject_one
         course_subject_two
@@ -98,7 +101,7 @@ module Api
 
       def placements
         @placements ||= @trainee.placements.map do |placement|
-          PlacementSerializer.new(placement).as_hash
+          self.class.module_parent::PlacementSerializer.new(placement).as_hash
         end
       end
 

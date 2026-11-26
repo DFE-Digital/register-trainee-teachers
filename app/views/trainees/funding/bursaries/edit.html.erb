@@ -1,6 +1,6 @@
 <% page_text = {
   grant_and_tiered_bursary: "Funding",
-  grant: "Grant funding",
+  grant: @funding_manager.yearly_route? ? t("components.page_titles.trainees.funding.grants.esg") : "Grant funding",
   non_tiered_bursary: "Funding",
 }[@funding_manager.applicable_available_funding] %>
 <%= render PageTitle::View.new(text: page_text,

@@ -13,7 +13,8 @@ module CommencementDateHelpers
     elsif trainee.itt_end_date.present? && trainee_start_date > trainee.itt_end_date
       errors.add(
         :trainee_start_date,
-        I18n.t(
+        RouteTerminology.t(
+          trainee,
           "activemodel.errors.models.trainee_start_status_form.attributes.trainee_start_date.not_after_itt_end_date_html",
           itt_end_date: trainee.itt_end_date.strftime("%-d %B %Y"),
         ).html_safe,

@@ -26,7 +26,8 @@ module LevelFiveDeclaration
           editable: editable,
         ).to_h,
         course_duration_row,
-        expected_end_date_row,
+        course_date_row(:itt_start_date, trainee.itt_start_date),
+        course_date_row(:expected_end_date, trainee.itt_end_date),
       ].compact
     end
 
@@ -41,19 +42,30 @@ module LevelFiveDeclaration
       t(value ? ".yes" : ".no")
     end
 
-    # Filled in from the answer (Trainees::SetLevelFiveEndDate), or entered in course details.
-    def expected_end_date_row
-      return if data_model.level_five_qualification.nil? || trainee.itt_end_date.blank?
+    # The dates are entered in course details (the end date can be filled in
+    # from the answer, Trainees::SetLevelFiveEndDate), so they're changed there.
+    def course_date_row(label, date)
+      return if date.blank?
 
-      { key: t(".expected_end_date"), value: trainee.itt_end_date.to_fs(:govuk) }
+      MappableFieldRow.new(
+        field_value: date.to_fs(:govuk),
+        field_label: t(".#{label}"),
+        text: "missing",
+        action_url: edit_trainee_course_details_path(trainee),
+        editable: editable,
+      ).to_h
     end
 
     # Set by the answer, so there's nothing to change here.
     def course_duration_row
       return if data_model.level_five_qualification.nil?
 
-      years = TrainingRouteManager::LEVEL_FIVE_COURSE_YEARS.fetch(data_model.level_five_qualification == true)
-      { key: t(".course_duration"), value: t(".years", count: years) }
+      value = if data_model.level_five_qualification
+                t(".years", count: TrainingRouteManager::LEVEL_FIVE_COURSE_YEARS.fetch(true))
+              else
+                t(".standard_course_duration")
+              end
+      { key: t(".course_duration"), value: value }
     end
   end
 end

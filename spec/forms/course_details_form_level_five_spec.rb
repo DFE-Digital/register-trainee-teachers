@@ -2,17 +2,17 @@
 
 require "rails_helper"
 
-# The Level 5 declaration sets the usual length of an EYTDA course (2 or 3
-# years). A blank expected end date is filled in from it. Any end date can be
-# entered, but a full-time course longer than usual has to be confirmed.
+# The Level 5 declaration sets the usual length of an EYTDA course: 2 years for
+# Year 2 entry, otherwise the standard 33 months. A blank expected end date is
+# filled in from it, including before the declaration is answered. Any end date
+# can be entered, but a course longer than usual has to be confirmed.
 describe CourseDetailsForm, type: :model do
   let(:level_five_qualification) { true }
   let(:trainee) { build(:trainee, :early_years_teacher_degree_apprenticeship, level_five_qualification: level_five_qualification, itt_start_date: nil, itt_end_date: nil) }
   let(:form_store) { class_double(FormStore, get: nil) }
   let(:end_date) { {} }
   let(:confirmed) { {} }
-  let(:study_mode) { "full_time" }
-  let(:params) { { study_mode: study_mode, start_day: "1", start_month: "9", start_year: "2026" }.merge(end_date).merge(confirmed) }
+  let(:params) { { start_day: "1", start_month: "9", start_year: "2026" }.merge(end_date).merge(confirmed) }
 
   subject(:form) { described_class.new(trainee, params: params, store: form_store) }
 
@@ -21,7 +21,7 @@ describe CourseDetailsForm, type: :model do
     form.valid?
   end
 
-  context "with a level 5 qualification (usually 2 years)" do
+  context "with Year 2 entry (usually 2 years)" do
     it "fills in a blank expected end date 2 years after the ITT start date" do
       expect(form.errors[:itt_end_date]).to be_empty
       expect(form.itt_end_date).to eq(Date.new(2028, 9, 1))
@@ -48,7 +48,7 @@ describe CourseDetailsForm, type: :model do
       it "accepts the date but asks the provider to confirm the longer course" do
         expect(form.errors[:itt_end_date]).to be_empty
         expect(form.course_longer_than_usual?).to be(true)
-        expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the course is longer than 2 years"])
+        expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the EYTDA will take longer than 2 years"])
         expect(form.course_length_section?).to be(true)
       end
 
@@ -63,7 +63,7 @@ describe CourseDetailsForm, type: :model do
 
         it "shows the error" do
           form.warn_about_course_length
-          expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the course is longer than 2 years"])
+          expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the EYTDA will take longer than 2 years"])
         end
       end
 
@@ -86,7 +86,7 @@ describe CourseDetailsForm, type: :model do
       it "accepts the date but asks the provider to confirm the longer course" do
         expect(form.errors[:itt_end_date]).to be_empty
         expect(form.course_longer_than_usual?).to be(true)
-        expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the course is longer than 2 years"])
+        expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the EYTDA will take longer than 2 years"])
       end
 
       context "when the provider confirms it" do
@@ -100,43 +100,29 @@ describe CourseDetailsForm, type: :model do
       let(:end_date) { { end_day: "1", end_month: "9", end_year: "20299" } }
       let(:confirmed) { { extended_course_confirmed: "1" } }
 
-      it { expect(form.errors[:itt_end_date]).to eq(["Enter a valid Expected end date"]) }
-    end
-
-    context "part time" do
-      let(:study_mode) { "part_time" }
-      let(:end_date) { { end_day: "1", end_month: "9", end_year: "2030" } }
-
-      it "needs no declaration" do
-        expect(form.errors).to be_empty
-        expect(form.course_longer_than_usual?).to be(false)
-      end
-
-      context "with an expected end date past the latest year allowed" do
-        let(:end_date) { { end_day: "1", end_month: "9", end_year: (Time.zone.now.year + 6).to_s } }
-
-        it "says which year is the latest" do
-          expect(form.errors[:itt_end_date]).to eq(["Enter an Expected end date in #{Time.zone.now.year + 5} or earlier"])
-          expect(form.errors[:extended_course_confirmed]).to be_empty
-        end
-      end
+      it { expect(form.errors[:itt_end_date]).to eq(["Enter a valid expected end date"]) }
     end
   end
 
-  context "without a level 5 qualification (usually 3 years)" do
+  context "with standard entry (usually 33 months)" do
     let(:level_five_qualification) { false }
 
-    context "with an expected end date within 3 years" do
-      let(:end_date) { { end_day: "1", end_month: "7", end_year: "2028" } }
+    it "fills in a blank expected end date 33 months after the ITT start date" do
+      expect(form.errors).to be_empty
+      expect(form.itt_end_date).to eq(Date.new(2029, 6, 1))
+    end
+
+    context "with an expected end date within 33 months" do
+      let(:end_date) { { end_day: "1", end_month: "6", end_year: "2029" } }
 
       it { expect(form.errors).to be_empty }
     end
 
-    context "with an expected end date more than 3 years after the start" do
-      let(:end_date) { { end_day: "1", end_month: "9", end_year: "2030" } }
+    context "with an expected end date 3 years after the start" do
+      let(:end_date) { { end_day: "1", end_month: "9", end_year: "2029" } }
 
-      it "asks the provider to confirm the course is longer than 3 years" do
-        expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the course is longer than 3 years"])
+      it "asks the provider to confirm the EYTDA will take longer than 33 months" do
+        expect(form.errors[:extended_course_confirmed]).to eq(["Confirm the EYTDA will take longer than 33 months"])
       end
     end
   end
@@ -144,8 +130,18 @@ describe CourseDetailsForm, type: :model do
   context "before the Level 5 declaration is answered" do
     let(:level_five_qualification) { nil }
 
-    it "asks for the expected end date as before" do
-      expect(form.errors[:itt_end_date]).to include("Enter an Expected end date")
+    it "fills in a blank expected end date with the standard 33 months" do
+      expect(form.errors).to be_empty
+      expect(form.itt_end_date).to eq(Date.new(2029, 6, 1))
+    end
+
+    context "with a later expected end date" do
+      let(:end_date) { { end_day: "1", end_month: "9", end_year: "2030" } }
+
+      it "accepts it without asking for confirmation, as there's no usual length yet" do
+        expect(form.errors).to be_empty
+        expect(form.course_length_section?).to be(false)
+      end
     end
   end
 
@@ -160,9 +156,9 @@ describe CourseDetailsForm, type: :model do
       let(:end_date) { { end_day: "1", end_month: "9", end_year: "2029" } }
       let(:confirmed) { { extended_course_confirmed: "1" } }
 
-      it "records the declaration" do
+      it "records the declaration, and the trainee is full time" do
         form.save!
-        expect(trainee.reload).to have_attributes(itt_end_date: Date.new(2029, 9, 1), extended_course_confirmed: true)
+        expect(trainee.reload).to have_attributes(itt_end_date: Date.new(2029, 9, 1), extended_course_confirmed: true, study_mode: "full_time")
       end
     end
 

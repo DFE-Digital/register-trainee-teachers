@@ -14,7 +14,7 @@
       <%= f.govuk_text_field(
         :query,
         label: { text: t(".heading"), size: "l", tag: "h1" },
-        hint: { text: "#{t('.description')}<p>#{t('.hint')}</p>".html_safe },
+        hint: { text: "#{route_t(@trainee, 'trainees.training_partners.edit.description')}<p>#{t('.hint')}</p>".html_safe },
         value: query,
         "data-field" => "training-partners-autocomplete",
         width: "three-quarters",

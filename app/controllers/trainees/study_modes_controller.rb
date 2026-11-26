@@ -28,8 +28,12 @@ module Trainees
       params.fetch(:study_modes_form, {}).permit(:study_mode)
     end
 
+    # The early years teacher degree apprenticeship is full time only, so there's no choice to make.
     def check_if_study_mode_can_be_taken_from_course
-      if course.single_study_mode?
+      if trainee.requires_level_five_declaration?
+        StudyModesForm.new(trainee, params: { study_mode: COURSE_STUDY_MODES[:full_time] }, user: current_user).stash_or_save!
+        redirect_to(edit_trainee_course_details_itt_dates_path(trainee))
+      elsif course.single_study_mode?
         StudyModesForm.new(trainee, params: { study_mode: course.study_mode }, user: current_user).stash_or_save!
         redirect_to(edit_trainee_course_details_itt_dates_path(trainee))
       end

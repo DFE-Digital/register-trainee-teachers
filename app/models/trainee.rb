@@ -4,85 +4,88 @@
 #
 # Table name: trainees
 #
-#  id                              :bigint           not null, primary key
-#  additional_dttp_data            :jsonb
-#  additional_ethnic_background    :text
-#  applying_for_bursary            :boolean
-#  applying_for_grant              :boolean
-#  applying_for_scholarship        :boolean
-#  awarded_at                      :datetime
-#  bursary_tier                    :integer
-#  commencement_status             :integer
-#  course_education_phase          :integer
-#  course_max_age                  :integer
-#  course_min_age                  :integer
-#  course_subject_one              :text
-#  course_subject_three            :text
-#  course_subject_two              :text
-#  course_uuid                     :uuid
-#  created_from_dttp               :boolean          default(FALSE), not null
-#  created_from_hesa               :boolean          default(FALSE), not null
-#  date_of_birth                   :date
-#  defer_date                      :date
-#  defer_reason                    :string
-#  disability_disclosure           :integer
-#  discarded_at                    :datetime
-#  diversity_disclosure            :integer
-#  dttp_update_sha                 :string
-#  ebacc                           :boolean          default(FALSE)
-#  email                           :text
-#  employing_school_name           :string
-#  employing_school_not_applicable :boolean          default(FALSE)
-#  employing_school_postcode       :string
-#  employing_school_urn            :string
-#  ethnic_background               :text
-#  ethnic_group                    :integer
-#  extended_course_confirmed       :boolean          default(FALSE), not null
-#  first_names                     :text
-#  funding_eligibility             :string
-#  hesa_editable                   :boolean          default(FALSE)
-#  hesa_updated_at                 :datetime
-#  iqts_country                    :string
-#  itt_end_date                    :date
-#  itt_start_date                  :date
-#  last_name                       :text
-#  level_five_qualification        :boolean
-#  middle_names                    :text
-#  outcome_date                    :date
-#  placement_detail                :integer
-#  progress                        :jsonb
-#  recommended_for_award_at        :datetime
-#  record_source                   :string
-#  region                          :string
-#  reinstate_date                  :date
-#  searchable                      :tsvector
-#  sex                             :integer
-#  slug                            :citext           not null
-#  slug_sent_to_trs_at             :datetime
-#  state                           :integer          default("draft")
-#  study_mode                      :integer
-#  submission_ready                :boolean          default(FALSE)
-#  submitted_for_trn_at            :datetime
-#  trainee_start_date              :date
-#  training_initiative             :integer
-#  training_partner_not_applicable :boolean          default(FALSE)
-#  training_route                  :integer
-#  trn                             :string
-#  created_at                      :datetime         not null
-#  updated_at                      :datetime         not null
-#  application_choice_id           :integer
-#  apply_application_id            :bigint
-#  course_allocation_subject_id    :bigint
-#  dormancy_dttp_id                :uuid
-#  dttp_id                         :uuid
-#  employing_school_id             :bigint
-#  end_academic_cycle_id           :bigint
-#  hesa_id                         :string
-#  placement_assignment_dttp_id    :uuid
-#  provider_id                     :bigint           not null
-#  provider_trainee_id             :text
-#  start_academic_cycle_id         :bigint
-#  training_partner_id             :bigint
+#  id                                :bigint           not null, primary key
+#  additional_dttp_data              :jsonb
+#  additional_ethnic_background      :text
+#  applying_for_bursary              :boolean
+#  applying_for_grant                :boolean
+#  applying_for_scholarship          :boolean
+#  awarded_at                        :datetime
+#  bursary_tier                      :integer
+#  commencement_status               :integer
+#  course_education_phase            :integer
+#  course_max_age                    :integer
+#  course_min_age                    :integer
+#  course_subject_one                :text
+#  course_subject_three              :text
+#  course_subject_two                :text
+#  course_uuid                       :uuid
+#  created_from_dttp                 :boolean          default(FALSE), not null
+#  created_from_hesa                 :boolean          default(FALSE), not null
+#  date_of_birth                     :date
+#  defer_date                        :date
+#  defer_reason                      :string
+#  disability_disclosure             :integer
+#  discarded_at                      :datetime
+#  diversity_disclosure              :integer
+#  dttp_update_sha                   :string
+#  ebacc                             :boolean          default(FALSE)
+#  email                             :text
+#  employing_school_address_line_one :string
+#  employing_school_address_line_two :string
+#  employing_school_name             :string
+#  employing_school_not_applicable   :boolean          default(FALSE)
+#  employing_school_postcode         :string
+#  employing_school_town             :string
+#  employing_school_urn              :string
+#  ethnic_background                 :text
+#  ethnic_group                      :integer
+#  extended_course_confirmed         :boolean          default(FALSE), not null
+#  first_names                       :text
+#  funding_eligibility               :string
+#  hesa_editable                     :boolean          default(FALSE)
+#  hesa_updated_at                   :datetime
+#  iqts_country                      :string
+#  itt_end_date                      :date
+#  itt_start_date                    :date
+#  last_name                         :text
+#  level_five_qualification          :boolean
+#  middle_names                      :text
+#  outcome_date                      :date
+#  placement_detail                  :integer
+#  progress                          :jsonb
+#  recommended_for_award_at          :datetime
+#  record_source                     :string
+#  region                            :string
+#  reinstate_date                    :date
+#  searchable                        :tsvector
+#  sex                               :integer
+#  slug                              :citext           not null
+#  slug_sent_to_trs_at               :datetime
+#  state                             :integer          default("draft")
+#  study_mode                        :integer
+#  submission_ready                  :boolean          default(FALSE)
+#  submitted_for_trn_at              :datetime
+#  trainee_start_date                :date
+#  training_initiative               :integer
+#  training_partner_not_applicable   :boolean          default(FALSE)
+#  training_route                    :integer
+#  trn                               :string
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
+#  application_choice_id             :integer
+#  apply_application_id              :bigint
+#  course_allocation_subject_id      :bigint
+#  dormancy_dttp_id                  :uuid
+#  dttp_id                           :uuid
+#  employing_school_id               :bigint
+#  end_academic_cycle_id             :bigint
+#  hesa_id                           :string
+#  placement_assignment_dttp_id      :uuid
+#  provider_id                       :bigint           not null
+#  provider_trainee_id               :text
+#  start_academic_cycle_id           :bigint
+#  training_partner_id               :bigint
 #
 # Indexes
 #
@@ -385,6 +388,8 @@ class Trainee < ApplicationRecord
 
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
   before_save :clear_training_partner_id, if: :training_partner_not_applicable?
+  before_save :set_full_time_study_mode, if: :requires_level_five_declaration?
+  before_save :set_no_training_initiative, if: :no_training_initiative_answer?
   before_save :set_submission_ready, if: :awaiting_action?
   before_save :set_academic_cycles
   before_save :update_searchable
@@ -629,10 +634,30 @@ private
     self.employing_school_name = nil
     self.employing_school_urn = nil
     self.employing_school_postcode = nil
+    self.employing_school_address_line_one = nil
+    self.employing_school_address_line_two = nil
+    self.employing_school_town = nil
   end
 
   def clear_training_partner_id
     self.training_partner_id = nil
+  end
+
+  # The early years teacher degree apprenticeship is full time only.
+  def set_full_time_study_mode
+    self.study_mode = COURSE_STUDY_MODES[:full_time]
+  end
+
+  # The early years teacher degree apprenticeship doesn't ask about training
+  # initiatives. Once funding is answered it's saved as "Not on a training
+  # initiative", as the API does when none is sent.
+  def no_training_initiative_answer?
+    !requires_training_initiative? && training_initiative.nil? &&
+      [funding_eligibility, applying_for_grant, applying_for_bursary, applying_for_scholarship].any? { |answer| !answer.nil? }
+  end
+
+  def set_no_training_initiative
+    self.training_initiative = ROUTE_INITIATIVES_ENUMS[:no_initiative]
   end
 
   def set_submission_ready

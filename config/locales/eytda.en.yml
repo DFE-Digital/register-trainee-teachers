@@ -1,0 +1,111 @@
+# Early years teacher degree apprenticeship (EYTDA) wording.
+#
+# The EYTDA is a separate route from initial teacher training (ITT), so its pages
+# use Register's "trainee" wording but say "course" rather than "ITT".
+#
+# - Keys under `eytda.` replace today's text at the same key path, for EYTDA
+#   trainees only (RouteTerminology.t, and route_t in views).
+# - `eytda_*` error types are used for EYTDA trainees (RouteTerminology.error_type).
+#
+# Service-wide words stay: "Draft trainees", "Registered trainees", "Trainee ID",
+# "trainee record", "Register trainee and request TRN".
+en:
+  eytda:
+    route_indicator:
+      view:
+        display_text: Trainee on the %{training_route_link} route.
+    components:
+      heading:
+        draft:
+          about_their_teaching_training: About their training
+      course_detail:
+        itt_start_date: Course start date
+        itt_end_date: Expected end date
+        study_mode: Study mode
+        study_mode_values:
+          full_time: Full-time
+      page_titles:
+        trainees:
+          trainee_start_date:
+            edit: When did the trainee start their course?
+          trainee_start_status:
+            edit: Did the trainee start their course on time?
+          start_date_verification:
+            show: Did the trainee start their course?
+    views:
+      forms:
+        funding:
+          bursaries:
+            guidance_link_text: Read the EYTDA Employer Support Grant guidance
+        start_dates:
+          trainee_start_date:
+            label: When did the trainee start their course?
+            hint: Their course started on %{itt_start_date}
+      trainees:
+        edit:
+          status_summary:
+            itt_not_started: The trainee’s course starts on %{itt_start_date}
+    trainees:
+      training_partners:
+        details:
+          edit:
+            not_applicable_details:
+              hint: You do not need to provide a training partner if there is not one separate from the employing setting.
+        edit:
+          description: "<p>The training partner is the organisation and point of contact for training providers, placements and partner schools.</p><p>The training partner you select will be able to view the trainee’s record.</p><p>You do not need to provide a training partner if there is not one separate from the employing setting.</p>"
+      contact_details:
+        edit:
+          email:
+            hint: Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE.
+      start_statuses:
+        edit:
+          label: Did the trainee start their course on time?
+      start_date_verifications:
+        show:
+          legend: Did the trainee start their course?
+      forbidden_deletes:
+        show:
+          reason: You can only delete a trainee record before the trainee starts their course. You can defer or withdraw the trainee.
+      forbidden_withdrawals:
+        show:
+          heading: You cannot withdraw this trainee
+          reason: You can only withdraw a trainee after they have started their course.
+    record_details:
+      view:
+        trainee_start_date: Trainee start date
+        itt_has_not_started: Course has not started
+        deferred_before_itt_started: Trainee deferred before starting their course
+    deferral_details:
+      view:
+        start_date_label: Trainee start date
+        deferred_before_itt_started: Trainee deferred before their course started
+    reinstatement_details:
+      view:
+        reinstated_before_starting: Trainee returned before their course started
+    activemodel:
+      errors:
+        models:
+          trainee_start_status_form:
+            attributes:
+              trainee_start_date:
+                not_after_itt_end_date_html: Trainee start date must not be after the course has finished <span class="no-wrap">(%{itt_end_date})</span>
+  activemodel:
+    errors:
+      models:
+        course_details_form:
+          attributes:
+            itt_start_date:
+              eytda_blank: Enter a course start date
+              eytda_future: Enter a course start date closer to today
+              eytda_invalid: Enter a valid course start date
+              eytda_too_old: Enter a valid course start date
+            itt_end_date:
+              eytda_blank: Enter an expected end date
+              eytda_future: Enter an expected end date in %{year} or earlier
+              eytda_invalid: Enter a valid expected end date
+              eytda_too_old: Enter a valid expected end date
+              eytda_before_or_same_as_start_date: The expected end date must be after the course start date
+        start_date_verification_form:
+          attributes:
+            trainee_has_started_course:
+              eytda_blank: Select yes if the trainee started their course

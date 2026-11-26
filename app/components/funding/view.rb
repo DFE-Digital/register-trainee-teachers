@@ -29,7 +29,9 @@ module Funding
     def draft_amounts_banner_heading
       return unless eligibility_step? && funding_manager.using_draft_amounts?
 
-      t("views.forms.funding.amount_not_signed_off.draft_heading", academic_year: trainee.start_academic_cycle.label)
+      # The year the amounts were set for, which can be earlier than the start year
+      # when EYTDA amounts are carried forward (as on the funding type page).
+      t("views.forms.funding.amount_not_signed_off.draft_heading", academic_year: funding_manager.funding_cycle.label)
     end
 
     def funding_detail_rows
@@ -70,6 +72,8 @@ module Funding
     end
 
     def training_initiative_row
+      return unless trainee.requires_training_initiative?
+
       mappable_field(
         training_initiative,
         t(".training_initiative"),
@@ -141,10 +145,22 @@ module Funding
 
     def grant_text
       if data_model.applying_for_grant
-        "#{t('.grant_applied_for', subject: allocation_subject_name)}#{grant_hint}"
+        funding_manager.yearly_route? ? esg_text : "#{t('.grant_applied_for', subject: allocation_subject_name)}#{amount_hint(grant_amount)}"
       else
-        t(".no_grant_applied_for")
+        t(funding_manager.yearly_route? ? ".no_esg_applied_for" : ".no_grant_applied_for")
       end
+    end
+
+    # The early years teacher degree apprenticeship's Employer Support Grant (ESG),
+    # with the amount for each funded year: Year 2 and Year 3 for Year 2 entry.
+    def esg_text
+      amounts = funding_manager.grant_amounts_by_year.map do |year, amount|
+        "#{funding_manager.training_year_label(year)}: #{format_currency(amount)}"
+      end
+      return t(".esg_applied_for") if amounts.empty?
+
+      hint = safe_join([t(".esg_amounts"), *amounts], tag.br)
+      "#{t('.esg_applied_for')}<br>#{tag.span(hint, class: 'govuk-hint')}"
     end
 
     def grant_funding_row
@@ -216,13 +232,6 @@ module Funding
 
     def bursary_funding_hint
       "<br>#{tag.span("#{format_currency(bursary_amount)} estimated bursary", class: 'govuk-hint')}"
-    end
-
-    # Routes funded per training year (EYTDA) show the current year's grant.
-    def grant_hint
-      return amount_hint(grant_amount) unless funding_manager.yearly_route?
-
-      "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant (#{funding_manager.training_year_label})", class: 'govuk-hint')}"
     end
 
     def amount_hint(amount)

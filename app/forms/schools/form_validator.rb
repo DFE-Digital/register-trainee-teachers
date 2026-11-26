@@ -17,7 +17,11 @@ module Schools
     def initialize(trainee, non_search_validation: false)
       @trainee = trainee
       @training_partner_form = ::Partners::TrainingPartnerForm.new(trainee, params: { non_search_validation: })
-      @employing_school_form = EmployingSchoolForm.new(trainee, params: { non_search_validation: })
+      @employing_school_form = if trainee.requires_employing_setting?
+                                 EmployingSettingForm.new(trainee)
+                               else
+                                 EmployingSchoolForm.new(trainee, params: { non_search_validation: })
+                               end
       @fields = training_partner_form_fields.merge(employing_school_form_fields).except(:non_search_validation)
     end
 
@@ -33,6 +37,19 @@ module Schools
     def save!
       training_partner_form.save!
       employing_school_form.save!
+    end
+
+    # The apprentice employing setting's details (early years teacher degree
+    # apprenticeship), including any not yet saved, for the confirm page. Nil on other routes.
+    %i[
+      employing_school_name
+      employing_school_urn
+      employing_school_address_line_one
+      employing_school_address_line_two
+      employing_school_town
+      employing_school_postcode
+    ].each do |field|
+      define_method(field) { employing_school_form.try(field) }
     end
 
   private

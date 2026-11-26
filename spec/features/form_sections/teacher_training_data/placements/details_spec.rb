@@ -49,6 +49,8 @@ private
   def when_i_enter_details_for_a_new_school
     fill_in("School or setting name", with: "St. Alice's Primary School", visible: false)
     fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: false)
+    fill_in("Address line 1", with: "1 High Street", visible: false)
+    fill_in("Town or city", with: "Oxford", visible: false)
     fill_in("Postcode", with: "OX1 1AA", visible: false)
   end
 

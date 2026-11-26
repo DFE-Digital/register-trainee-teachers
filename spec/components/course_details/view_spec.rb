@@ -265,6 +265,21 @@ module CourseDetails
       end
     end
 
+    context "early years teacher degree apprenticeship" do
+      let(:trainee) { create(:trainee, :early_years_teacher_degree_apprenticeship, study_mode: "full_time") }
+
+      before do
+        render_inline(View.new(data_model: trainee, editable: true))
+      end
+
+      it "shows the full time only study mode with no change link" do
+        expect(rendered_content).to have_css(".govuk-summary-list__row.study-mode .govuk-summary-list__key", text: "Study mode")
+        expect(rendered_content).to have_css(".govuk-summary-list__row.study-mode .govuk-summary-list__value", text: "Full-time")
+        expect(rendered_content).not_to have_css(".govuk-summary-list__row.study-mode .govuk-summary-list__actions a")
+        expect(rendered_content).not_to have_text("Full time or part time")
+      end
+    end
+
     context "route without study_mode" do
       let(:trainee) { create(:trainee, :assessment_only, study_mode: nil) }
 

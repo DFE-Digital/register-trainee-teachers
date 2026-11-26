@@ -20,6 +20,7 @@ import LiveFilter from './scripts/live_filter'
 import FilterToggle from './scripts/filter_toggle'
 import CookieBanner from './scripts/cookie_banner'
 import CourseLengthWarning from './scripts/course_length_warning'
+import CourseEndDate from './scripts/course_end_date'
 
 import { initAll } from 'govuk-frontend'
 
@@ -37,4 +38,5 @@ document.addEventListener('turbo:load', function () {
   FilterToggle.init()
   CookieBanner.init()
   CourseLengthWarning.init()
+  CourseEndDate.init()
 })

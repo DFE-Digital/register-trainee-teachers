@@ -61,6 +61,7 @@ describe PlacementForm, type: :model do
         name: "Test name",
         postcode: "GU1 1AA",
         urn: 123456,
+        address: nil,
         school_search: nil,
       })
     end
@@ -314,6 +315,66 @@ describe PlacementForm, type: :model do
             I18n.t("activemodel.errors.validators.postcode.invalid"),
           )
         end
+      end
+    end
+  end
+
+  describe "full address for a school or setting that is not listed" do
+    let(:placement) { Placement.new(name: "St. Alice's Primary School") }
+
+    it "is not required for placements loaded from the record" do
+      expect(subject).to be_valid
+    end
+
+    context "when the provider fills in the placement page" do
+      before { subject.require_full_address! }
+
+      it "requires address line 1, town or city and postcode" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.messages).to include(
+          address_line_one: ["Enter address line 1, typically the building and street"],
+          town_city: ["Enter town or city"],
+          postcode: ["Enter postcode"],
+        )
+        expect(subject.open_details?).to be(true)
+      end
+
+      it "is valid with a full address" do
+        subject.address = Placement.address_from_lines("1 High Street", "", "Oxford")
+        subject.postcode = "OX1 1AA"
+
+        expect(subject).to be_valid
+        expect(subject.address_line_one).to eq("1 High Street")
+        expect(subject.address_line_two).to eq("")
+        expect(subject.town_city).to eq("Oxford")
+      end
+
+      context "when a listed school is chosen" do
+        let(:placement) { Placement.new(school: create(:school)) }
+
+        it "is not required" do
+          subject.school_id = placement.school.id
+
+          expect(subject).to be_valid
+        end
+      end
+    end
+
+    describe "#update_placement" do
+      let(:placement) { Placement.new(name: "Old school", address: "1 High Street\n\nOxford", postcode: "OX1 1AA") }
+      let(:school) { create(:school) }
+
+      it "clears the address when a listed school is chosen" do
+        subject.update_placement(school_id: school.id.to_s)
+
+        expect(subject.address).to be_nil
+        expect(subject.school_id).to eq(school.id.to_s)
+      end
+
+      it "keeps the address entered for a school that is not listed" do
+        subject.update_placement(school_id: nil, name: "New school", address: "2 Low Road\n\nLeeds", postcode: "LS1 1AA")
+
+        expect(subject.town_city).to eq("Leeds")
       end
     end
   end

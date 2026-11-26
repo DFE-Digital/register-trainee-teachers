@@ -30,7 +30,7 @@ describe LevelFiveDeclarationForm, type: :model do
 
     it "asks for an answer" do
       expect(form).not_to be_valid
-      expect(form.errors[:level_five_qualification]).to eq(["Select yes if the trainee holds a level 5 qualification"])
+      expect(form.errors[:level_five_qualification]).to eq(["Select yes if the trainee will enter the EYTDA at Year 2"])
     end
   end
 end

@@ -21,9 +21,22 @@ module SystemAdmin
     helper_method :academic_cycle, :academic_cycles, :requirement_year_cycles, :viewing_draft_year?, :funding_query, :all_years?, :roll_over_source, :can_roll_over?, :can_delete_draft?, :funded_subjects
 
     def index
-      entries = all_years? ? entries_outside_drafts : funding_query.entries
-      @entries = Kaminari.paginate_array(apply_entry_filters(entries)).page(params[:page]).per(ENTRIES_PER_PAGE)
+      entries = apply_entry_filters(all_years? ? entries_outside_drafts : funding_query.entries)
       load_carried_forward_entries unless all_years?
+
+      respond_to do |format|
+        format.html { @entries = Kaminari.paginate_array(entries).page(params[:page]).per(ENTRIES_PER_PAGE) }
+        format.csv do
+          export = ::Funding::RequirementsExport.new(
+            entries: entries,
+            labels: helpers,
+            academic_cycle: (academic_cycle unless all_years?),
+            carried_forward_entries: @carried_forward_entries,
+            carried_forward_source: @carried_forward_source,
+          )
+          send_data(export.to_csv, filename: export.filename, type: "text/csv")
+        end
+      end
     end
 
     def show

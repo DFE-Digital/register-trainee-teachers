@@ -59,6 +59,10 @@ en:
       tiered_grant_applied_for: Grant applied for
       no_bursary_applied_for: Not funded
       no_grant_applied_for: Not grant funded
+      # The early years teacher degree apprenticeship's Employer Support Grant.
+      esg_applied_for: Employer Support Grant (ESG)
+      esg_amounts: "Estimated ESG amount:"
+      no_esg_applied_for: Not ESG funded
       no_funding_available: Not applicable
       fund_code: Fund code
       applying_for_bursary: Applying for bursary
@@ -113,6 +117,7 @@ en:
   schools:
     view:
       summary_title: Training partners
+      employing_setting_summary_title: Training partner and employing setting
       training_partner: &training_partner Training partner
       employing_school: &employing_school Employing school
   record_details:
@@ -154,8 +159,10 @@ en:
   level_five_declaration:
     view:
       title: &level_five_declaration Level 5 declaration
-      level_five_qualification: &level_five_qualification Level 5 qualification
+      level_five_qualification: &level_five_qualification Year 2 entry
       course_duration: Course duration
+      standard_course_duration: 3 years (33 months)
+      itt_start_date: Course start date
       expected_end_date: Expected end date
       years:
         one: "%{count} year"
@@ -327,8 +334,8 @@ en:
       itt_end_date: Expected end date
       course_length: Course length
       course_length_confirmed:
-        level_five: Confirmed as longer than the usual %{years} years for a trainee with a level 5 qualification
-        no_level_five: Confirmed as longer than the usual %{years} years for a trainee without a level 5 qualification
+        level_five: Confirmed as longer than the usual %{length} for Year 2 entry
+        no_level_five: Confirmed as longer than the usual %{length}
       route: Training route
       course_details: Course details
       details_not_on_publish: Course details added manually
@@ -347,6 +354,8 @@ en:
       summary_title: Schools
       training_partner_key: Training partner
       employing_school_key: Employing school
+      employing_setting_key: Employing setting
+      no_urn: No URN
     placement_detail: &placement_detail
       title: Placement details
       placement_1: First placement
@@ -521,6 +530,14 @@ en:
           index: Select the employing school
           edit: Employing school
           edit_assessment_only: What is the trainee’s employing school?
+        # Early years teacher degree apprenticeship: the employing setting.
+        employing_settings:
+          urns:
+            edit: Does the employing setting have a URN?
+          details:
+            edit: Employing setting
+          search: Search for the employing setting
+          index: Select the employing setting
         funding:
           training_initiatives:
             edit: Training initiatives
@@ -530,6 +547,8 @@ en:
             edit: Funding
           grants:
             edit: Grant funding
+            # The early years teacher degree apprenticeship's grant.
+            esg: Employer Support Grant (ESG) funding
         language_specialisms:
           edit: Choose subject specialisms
         subject_specialisms:
@@ -709,7 +728,7 @@ en:
             early_years_salaried: *training_partner_and_employing_school
             early_years_undergrad: *training_partner
             teacher_degree_apprenticeship: *training_partner_and_employing_school
-            early_years_teacher_degree_apprenticeship: *training_partner_and_employing_school
+            early_years_teacher_degree_apprenticeship: Training partner and employing setting
             assessment_only: Employing school
     personas:
       view:
@@ -811,6 +830,9 @@ en:
         employing_school_name: edit_trainee_employing_schools_path
         employing_school_urn: edit_trainee_employing_schools_path
         employing_school_postcode: edit_trainee_employing_schools_path
+        employing_school_address_line_one: &employing_setting_path edit_trainee_employing_settings_urn_path
+        employing_school_address_line_two: *employing_setting_path
+        employing_school_town: *employing_setting_path
         query: edit_trainee_employing_schools_path
         school_id: *training_partner_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
@@ -871,6 +893,9 @@ en:
         employing_school_name: *employing_school
         employing_school_urn: *employing_school
         employing_school_postcode: *employing_school
+        employing_school_address_line_one: *employing_school
+        employing_school_address_line_two: *employing_school
+        employing_school_town: *employing_school
         query: *employing_school
         school_id: *training_partner
         training_partner_id: *training_partner
@@ -1003,7 +1028,7 @@ en:
           no_disability: They shared that they’re not disabled
       placement_details:
         eytda_requirements:
-          intro: Early years teacher degree apprentices must do 3 placements before they can be awarded EYTS.
+          intro: Trainees on the early years teacher degree apprenticeship must do 3 placements before they can be awarded EYTS.
           must_do: "They must do:"
           alternative_setting: a placement in an alternative setting, such as a family hub or Children’s Centre
           supplementary_setting: a placement in a supplementary setting, if they cannot teach children aged 0 to 5 in the setting where they work
@@ -1168,11 +1193,11 @@ en:
             guidance_intro: "For information about grant eligibility for Early Years Salaried routes, refer to the guidance:"
             guidance_link_text: "Early years initial teacher training: %{academic_year} funding guidance"
           training_grant_by_year:
-            question: Is the trainee eligible for a training grant?
+            question: Is the trainee eligible for the ESG?
             description_html: >-
-              Early years ITT (EYITT) providers receive a training grant for each year of the early years teacher degree apprenticeship.
-            guidance_intro: "For information about grant eligibility for the early years teacher degree apprenticeship, refer to the guidance:"
-            guidance_link_text: "Early years initial teacher training: %{academic_year} funding guidance"
+              Providers receive an Employer Support Grant (ESG) for each year of the EYTDA.
+            guidance_intro: "For information about ESG eligibility, refer to the guidance:"
+            guidance_link_text: EYTDA Employer Support Grant guidance
           no_funding:
             description_html: >-
               There is no bursary, scholarship or grant funding available on the %{route} route for the academic year %{academic_year}.
@@ -1185,6 +1210,13 @@ en:
               There is no training bursary or training grant available on the %{route} route for the academic year %{academic_year}.
             guidance_intro: "For a complete overview of which Early Years routes have access to funding in the %{academic_year} academic year, refer to the guidance:"
             guidance_link_text: "Early years initial teacher training: %{academic_year} funding guidance"
+            contact_html: >-
+              If you believe there is funding available for this route and course, please contact your training provider or email the Department for Education at <a class="govuk-link" href="mailto:itt.funding@education.gov.uk">itt.funding@education.gov.uk</a>.
+          no_funding_eytda:
+            description_html: >-
+              There is no Employer Support Grant (ESG) available on the %{route} route for the academic year %{academic_year}.
+            guidance_intro: "For information about the ESG, refer to the guidance:"
+            guidance_link_text: EYTDA Employer Support Grant guidance
             contact_html: >-
               If you believe there is funding available for this route and course, please contact your training provider or email the Department for Education at <a class="govuk-link" href="mailto:itt.funding@education.gov.uk">itt.funding@education.gov.uk</a>.
           # The type is only for a relevant degree, and the trainee's degree isn't relevant.
@@ -1231,9 +1263,10 @@ en:
           grant:
             description: The trainee may be able to get funding for their %{subject} course.
             early_years_description: "%{training_route} has a grant available of %{amount}. You need to check if the trainee is eligible for this grant."
-            yearly_description: "%{training_route} has a grant available for each training year. You need to check if the trainee is eligible for this grant."
-            yearly_heading: Grant for trainees starting in %{academic_year}
-            level_five_years: The trainee holds a level 5 qualification, so their course is %{years} years and they get the grants for Year %{first_year} and Year %{last_year}.
+            # The yearly text is the early years teacher degree apprenticeship's Employer Support Grant (ESG).
+            yearly_description: The ESG is available for each training year of the EYTDA. You need to check if the trainee is eligible for it.
+            yearly_heading: ESG amount for trainees starting in %{academic_year}
+            level_five_years: The trainee enters the EYTDA at Year %{first_year}, so their course is %{years} years and they get the ESG for Year %{first_year} and Year %{last_year}.
             carried_forward: These amounts were set for %{academic_year} and apply to trainees starting in later years until new amounts are added.
             title: Choose funding type
           early_years_salaried_grant:
@@ -1254,6 +1287,7 @@ en:
           guidance_link_text: Check the funding eligibility criteria for this academic year
           guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-%{academic_year}
           early_years_guidance_url: https://www.gov.uk/guidance/early-years-initial-teacher-training-%{academic_year}-funding-guidance
+          eytda_guidance_url: https://www.gov.uk/government/publications/early-years-teacher-degree-apprenticeship-guidance-for-training-providers
         funding_type:
           bursary:
             label: Bursary (up to %{amount})
@@ -1267,8 +1301,8 @@ en:
           grant:
             label: Grant (up to %{amount})
             hint: You apply on behalf of the trainee.
-            yearly_label: Yes, apply for a grant
-            yearly_hint: You apply on behalf of the trainee. The grant is paid each training year. This trainee is in %{training_year}.
+            yearly_label: Yes, apply for the ESG
+            yearly_hint: You apply on behalf of the trainee. The ESG is paid each training year. This trainee is in %{training_year}.
             none:
               label: None
   landing_page:
@@ -1425,6 +1459,11 @@ en:
         study_mode_label: Full time or part time?
         study_mode_full_time: Full time
         study_mode_part_time: Part time
+        eytda:
+          study_mode_label: Study mode
+          study_mode: Full-time
+          itt_start_date_label: Course start date
+          itt_end_date_label: Expected end date
       primary_phase:
         subject_label: Subject
         primary_with_another_label: Primary with another subject
@@ -1469,6 +1508,11 @@ en:
       edit:
         heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
+        eytda:
+          heading: Search for the employing setting
+          hint: Search by unique reference number (URN), name or postcode
+          body_html: <p class="govuk-body">If the setting is missing from the list, try searching for its URN on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+          cannot_find: I cannot find the setting
         not_applicable_details:
           summary_text: Employing school is not listed, or the trainee is funded or employed privately
           label_text: Employing school is not applicable
@@ -1486,6 +1530,28 @@ en:
         postcode: Postcode (optional)
         gias_help_html:
           <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+    # Early years teacher degree apprenticeship: the employing setting.
+    employing_settings:
+      urns:
+        edit:
+          heading: Does the employing setting have a URN?
+          hint: The employing setting may be a nursery or another early years setting. A school URN is not required if the setting does not have one.
+          "yes": "Yes"
+          yes_hint: For example, a maintained nursery school or a school with a nursery class
+          "no": "No"
+          no_hint: For example, a private, voluntary or independent nursery
+      details:
+        edit:
+          heading: Employing setting
+          check_lede: Check the details of the early years setting or nursery where the trainee works, and add anything missing.
+          enter_lede: Enter the details of the early years setting or nursery where the trainee works.
+          name: Name of employing setting
+          address_line_one: Address line 1
+          address_line_two: Address line 2 (optional)
+          town: Town or city
+          postcode: Postcode
+          urn: URN
+          search_again: Search again
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
@@ -1553,16 +1619,13 @@ en:
     level_five_declarations:
       edit:
         heading: Level 5 declaration
-        duration_intro: "The early years teacher degree apprenticeship is shorter for trainees who already hold a level 5 qualification. Their answer sets the course duration:"
-        with_level_five_html: with a level 5 qualification, <strong>2 years</strong>, funded as Year 2 and Year 3
-        without_level_five_html: without a level 5 qualification, <strong>3 years</strong>
-        examples: Level 5 qualifications include foundation degrees, higher national diplomas (HND) and diplomas of higher education (DipHE).
+        standard_duration: The Early Years Teacher Degree Apprenticeship (EYTDA) normally takes 3 years (33 months) to complete.
+        year_two_entry: Trainees who hold a Level 5 Early Years Lead Practitioner qualification can enter the EYTDA at Year 2 and complete it in 2 years instead of 3. This is the only Level 5 qualification that allows Year 2 entry.
         change_warning: If you change this answer, the course details will need to be checked and confirmed again, and the funding will be removed so you can add it again.
-        question: Does the trainee hold a level 5 qualification?
+        question: Will the trainee enter the EYTDA at Year 2 and complete it in 2 years?
         "yes": "Yes"
         "no": "No"
-        yes_hint: The course duration will be set at 2 years
-        no_hint: The course duration will be set at 3 years
+        yes_hint: Funded as Year 2 and Year 3
     withdrawals:
       start:
         show:
@@ -1643,7 +1706,7 @@ en:
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergraduate)
           teacher_degree_apprenticeship: &teacher_degree_apprenticeship Teacher degree apprenticeship (salaried)
-          early_years_teacher_degree_apprenticeship: Early years teacher degree apprenticeship (EYTDA)
+          early_years_teacher_degree_apprenticeship: Early Years Teacher Degree Apprenticeship (EYTDA)
           itt: &itt_routes
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
@@ -1659,7 +1722,7 @@ en:
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
             teacher_degree_apprenticeship: *teacher_degree_apprenticeship
-            early_years_teacher_degree_apprenticeship: Early years teacher degree apprenticeship (salaried)
+            early_years_teacher_degree_apprenticeship: Early Years Teacher Degree Apprenticeship (salaried)
         states:
           draft: Draft
           apply_draft: Apply Draft
@@ -2125,6 +2188,12 @@ en:
               blank: Enter a school name
             urn:
               invalid_format: "Enter a valid school unique reference number (URN). It should be 6 digits long."
+            address_line_one:
+              blank: Enter address line 1, typically the building and street
+            town_city:
+              blank: Enter town or city
+            postcode:
+              blank: Enter postcode
         study_modes_form:
           attributes:
             study_mode:
@@ -2171,6 +2240,9 @@ en:
               hint_html:
                 <p class="govuk-body govuk-hint">The start date of the Initial Teacher Training part of their course.</p>
                 <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
+              eytda_hint_html:
+                <p class="govuk-body govuk-hint">Enter the date the trainee started their EYTDA course.</p>
+                <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
             itt_end_date:
               blank: Enter an Expected end date
               future: Enter an Expected end date in %{year} or earlier
@@ -2180,14 +2252,24 @@ en:
               hint_html:
                 <p class="govuk-body govuk-hint">The end date of the Initial Teacher Training part of their course.</p>
                 <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
-              level_five_hint_html: " <p class=\"govuk-body govuk-hint\">For a full-time course, leave this blank to set it from the level 5 declaration: %{years} years after the ITT start date. You can enter a later date if the course is longer.</p>"
-            # EYTDA: a full-time course longer than the usual 2 or 3 years set by the Level 5 declaration.
+              eytda_hint_html:
+                <p class="govuk-body govuk-hint">The date the trainee is expected to finish their EYTDA course.</p>
+                <p class="govuk-body govuk-hint">For example, 11 3 %{year}</p>
+              # EYTDA: the end date is filled in from the usual course length (2 years or 33 months).
+              filled_in_html: " <p class=\"govuk-body govuk-hint\">Filled in from the Level 5 declaration as %{length} after the course start date. You can change it.</p>"
+              filled_in_before_declaration_html: " <p class=\"govuk-body govuk-hint\">Filled in as %{length} after the course start date, the standard length. If the trainee enters at Year 2, this changes to 2 years when you answer the Level 5 declaration. You can change it.</p>"
+            # EYTDA: an end date later than the usual 2 years or 33 months set by the Level 5 declaration.
             extended_course_confirmed:
-              blank: Confirm the course is longer than %{years} years
+              blank: Confirm the EYTDA will take longer than %{length}
+              heading: Check the expected end date
+              warning_standard:
+                - The standard EYTDA takes 3 years (33 months), but the expected end date is later than that.
+                - Check the start and end dates. If they’re right, confirm the longer course.
+              warning_year_two:
+                - You said the trainee will enter at Year 2, so the EYTDA should normally take 2 years.
+                - Check the expected end date. If it’s right, confirm the longer course.
               legend: Course length
-              warning_level_five: This course is %{length}. Courses for trainees with a level 5 qualification are usually %{years} years.
-              warning_no_level_five: This course is %{length}. Courses for trainees without a level 5 qualification are usually %{years} years.
-              label: I confirm the course is longer than %{years} years
+              label: I confirm the EYTDA will take longer than %{length}
         publish_course_details_form:
           attributes:
             course_uuid:
@@ -2295,6 +2377,21 @@ en:
               blank: Enter a school or setting name
             employing_school_urn:
               invalid_format: Enter a valid school unique reference number (URN). It should be 6 digits long.
+        schools/employing_setting_urn_form:
+          attributes:
+            has_urn:
+              inclusion: Select yes if the employing setting has a URN
+        schools/employing_setting_form:
+          attributes:
+            employing_school_name:
+              blank: Enter the name of the employing setting
+            employing_school_address_line_one:
+              blank: Enter address line 1, typically the building and street
+            employing_school_town:
+              blank: Enter town or city
+            employing_school_postcode:
+              blank: Enter postcode
+              invalid: Enter a real postcode
         schools/form_validator:
           attributes:
             training_partner_id:
@@ -2346,7 +2443,7 @@ en:
         level_five_declaration_form:
           attributes:
             level_five_qualification:
-              inclusion: Select yes if the trainee holds a level 5 qualification
+              inclusion: Select yes if the trainee will enter the EYTDA at Year 2
         otp_form:
           attributes:
             email:

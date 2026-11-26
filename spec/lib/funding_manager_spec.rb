@@ -153,6 +153,16 @@ describe FundingManager do
       end
     end
 
+    context "when the training route is the early years teacher degree apprenticeship" do
+      let(:training_route) { :early_years_teacher_degree_apprenticeship }
+
+      it "returns the EYTDA guidance for training providers" do
+        expect(subject).to eq(
+          "https://www.gov.uk/government/publications/early-years-teacher-degree-apprenticeship-guidance-for-training-providers",
+        )
+      end
+    end
+
     context "when the training route is not an early years route" do
       let(:training_route) { :provider_led_postgrad }
 

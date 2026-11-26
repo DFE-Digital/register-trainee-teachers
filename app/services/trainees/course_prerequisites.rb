@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module Trainees
-  # What a draft trainee needs to complete before course details. Early years
-  # teacher degree apprentices complete the Level 5 declaration first, as it
-  # sets the course duration (and so the expected end date).
+  # What a draft trainee needs to complete before course details. Nothing at
+  # the moment: early years teacher degree apprentices can enter the course
+  # dates before the Level 5 declaration. The end date is filled in from the
+  # standard length, and moves when the declaration is answered
+  # (Trainees::SetLevelFiveEndDate).
   class CoursePrerequisites
-    def self.missing(trainee)
-      [(:level_five_declaration if trainee.requires_level_five_declaration? && !level_five_declaration_complete?(trainee))].compact
-    end
-
-    def self.level_five_declaration_complete?(trainee)
-      trainee.progress.level_five_declaration && !trainee.level_five_qualification.nil?
+    def self.missing(_trainee)
+      []
     end
   end
 end

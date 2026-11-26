@@ -139,7 +139,7 @@ RSpec.describe Api::V20270::PlacementAttributes do
     end
 
     it "sets the ATTRIBUTES and INTERNAL_ATTRIBUTES" do
-      expect(subject.attributes).to eq(params)
+      expect(subject.attributes).to eq(params.merge("address" => nil))
     end
   end
 end

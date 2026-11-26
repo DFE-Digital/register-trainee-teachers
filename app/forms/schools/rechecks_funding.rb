@@ -10,6 +10,9 @@ module Schools
       employing_school_name
       employing_school_urn
       employing_school_postcode
+      employing_school_address_line_one
+      employing_school_address_line_two
+      employing_school_town
     ].freeze
 
     def save!

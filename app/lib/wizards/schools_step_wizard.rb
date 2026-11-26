@@ -16,6 +16,7 @@ module Wizards
     def start_point
       return unless forms_to_complete?
       return edit_trainee_training_partners_path(trainee) unless training_partner_selected?
+      return edit_trainee_employing_settings_urn_path(trainee) if trainee.requires_employing_setting?
 
       edit_trainee_employing_schools_path(trainee)
     end
@@ -29,6 +30,8 @@ module Wizards
     end
 
     def redirect_url
+      return edit_trainee_employing_settings_urn_path(trainee) if trainee.requires_employing_setting?
+
       trainee.requires_employing_school? ? edit_trainee_employing_schools_details_path(trainee) : trainee_schools_confirm_path(trainee)
     end
 

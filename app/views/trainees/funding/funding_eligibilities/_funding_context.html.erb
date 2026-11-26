@@ -1,6 +1,7 @@
 <div class="govuk-inset-text">
   <p class="govuk-body govuk-!-margin-bottom-1">Route: <%= t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}") %></p>
-  <% if @funding_manager.allocation_subject_name.present? %>
+  <%# The route names the apprenticeship, so the shared "Early years ITT" subject isn't shown. %>
+  <% if @funding_manager.allocation_subject_name.present? && !RouteTerminology.eytda?(@trainee) %>
     <p class="govuk-body govuk-!-margin-bottom-1">Subject: <%= @funding_manager.allocation_subject_name %></p>
   <% end %>
   <% if @trainee.start_academic_cycle.present? %>

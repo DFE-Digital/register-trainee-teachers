@@ -88,10 +88,17 @@ module Trainees
           trainee_start_status: "start date",
           iqts_country: "international training details",
           level_five_declaration: "level 5 declaration",
-          schools: trainee.requires_assessment_only_employing_school? ? "employing school" : "training partners",
+          schools: schools_section_title,
         }
         titles[trainee_section_key.to_sym] || trainee_section_key.gsub("_", " ").gsub("id", "ID")
       end
+    end
+
+    def schools_section_title
+      return "employing school" if trainee.requires_assessment_only_employing_school?
+      return "training partner and employing setting" if trainee.requires_employing_setting?
+
+      "training partners"
     end
 
     def flash_message_title

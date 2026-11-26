@@ -15,7 +15,7 @@ module ReinstatementDetails
     end
 
     def reinstate_date
-      deferred_before_starting? ? t(".reinstated_before_starting").html_safe : date_for_summary_view(reinstatement_form.date)
+      deferred_before_starting? ? RouteTerminology.t(reinstatement_form.trainee, "reinstatement_details.view.reinstated_before_starting").html_safe : date_for_summary_view(reinstatement_form.date)
     end
 
     def deferred_before_starting?

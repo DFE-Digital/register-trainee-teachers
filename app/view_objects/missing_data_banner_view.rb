@@ -60,6 +60,7 @@ private
     if employing_school_missing_field?(field) && trainee.requires_assessment_only_employing_school?
       return edit_trainee_employing_schools_path(trainee)
     end
+    return edit_trainee_employing_settings_urn_path(trainee) if employing_school_missing_field?(field) && trainee.requires_employing_setting?
 
     path_helper = I18n.t("views.missing_data_banner_view.missing_field_link.#{field}")
 
@@ -87,6 +88,9 @@ private
       employing_school_name
       employing_school_urn
       employing_school_postcode
+      employing_school_address_line_one
+      employing_school_address_line_two
+      employing_school_town
       query
     ].include?(field.to_sym)
   end

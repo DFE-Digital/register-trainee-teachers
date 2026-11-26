@@ -2,8 +2,18 @@
 
 class TrainingRouteManager
   # Early years teacher degree apprenticeship course length, in years, by
-  # whether the trainee holds a level 5 qualification.
+  # whether the trainee enters at Year 2 with a Level 5 Early Years Lead
+  # Practitioner qualification. Sets the funded years.
   LEVEL_FIVE_COURSE_YEARS = { true => 2, false => 3 }.freeze
+  # The usual course length in months, which sets the expected end date and
+  # when a course counts as longer than usual: 2 years for Year 2 entry,
+  # otherwise the standard 3 years (33 months).
+  LEVEL_FIVE_COURSE_MONTHS = { true => 24, false => 33 }.freeze
+
+  # "2 years" or "33 months": a usual course length, as the pages write it.
+  def self.course_length_text(months)
+    (months % 12).zero? ? "#{months / 12} #{'year'.pluralize(months / 12)}" : "#{months} #{'month'.pluralize(months)}"
+  end
 
   delegate :training_route, to: :trainee
 
@@ -53,6 +63,25 @@ class TrainingRouteManager
     LEVEL_FIVE_COURSE_YEARS.fetch(trainee.level_five_qualification == true)
   end
 
+  # The usual EYTDA course length in months: 24 for Year 2 entry, otherwise (or
+  # until it's declared) 33.
+  def level_five_course_months
+    return unless requires_level_five_declaration?
+
+    LEVEL_FIVE_COURSE_MONTHS.fetch(trainee.level_five_qualification == true)
+  end
+
+  # Early years teacher degree apprentices work in an employing setting, which may
+  # be a nursery without a URN, so it can be searched for or typed in.
+  def requires_employing_setting?
+    enabled?(:early_years_teacher_degree_apprenticeship)
+  end
+
+  # Early years teacher degree apprentices aren't asked about ITT training initiatives.
+  def requires_training_initiative?
+    training_route != TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship]
+  end
+
   def award_type
     TRAINING_ROUTE_AWARD_TYPE[training_route&.to_sym]
   end
@@ -61,10 +90,12 @@ class TrainingRouteManager
     EARLY_YEARS_TRAINING_ROUTES.keys.include?(training_route.to_s)
   end
 
+  # The early years teacher degree apprenticeship is full time only, so there's no choice to make.
   def requires_study_mode?
     [
       TRAINING_ROUTE_ENUMS[:assessment_only],
       TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+      TRAINING_ROUTE_ENUMS[:early_years_teacher_degree_apprenticeship],
     ].exclude?(training_route)
   end
 

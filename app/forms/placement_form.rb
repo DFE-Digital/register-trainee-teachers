@@ -5,7 +5,8 @@ class PlacementForm
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  FIELDS = %i[slug school_search school_id name urn postcode].freeze
+  FIELDS = %i[slug school_search school_id name urn address postcode].freeze
+  NOT_LISTED_FIELDS = %i[name urn address postcode].freeze
   URN_REGEX = /^[0-9]{6}$/
 
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
@@ -15,6 +16,14 @@ class PlacementForm
   validates :name, presence: true, if: -> { school_id.blank? && school_search.blank? }
   validate :urn_valid
   validate :postcode_valid
+
+  # Only asked for when a provider adds or changes a school or setting that is
+  # not listed. Older, HESA and API placements without an address stay valid.
+  with_options if: :full_address_required? do
+    validates :address_line_one, presence: true
+    validates :town_city, presence: true
+    validates :postcode, presence: true
+  end
 
   delegate :persisted?, :school, to: :placement
 
@@ -42,6 +51,21 @@ class PlacementForm
     ActiveModel::Name.new(self, nil, "Placement")
   end
 
+  # Called by the placement controller when the provider has filled in the
+  # placement page, so the full address is required for a school or setting
+  # that is not listed.
+  def require_full_address!
+    @full_address_required = true
+  end
+
+  def full_address_required?
+    @full_address_required.present? && school_id.blank? && NOT_LISTED_FIELDS.any? { |field| public_send(field).present? }
+  end
+
+  Placement::ADDRESS_LINE_FIELDS.each_with_index do |field, index|
+    define_method(field) { Placement.split_address(address)[index] }
+  end
+
   def fields
     placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
   end
@@ -49,9 +73,9 @@ class PlacementForm
   def update_placement(attrs)
     rely_on_school_name = attrs[:school_id].blank? || (attrs[:school_id] == school_id.to_s && attrs[:name].present?)
 
-    reset_hash = (rely_on_school_name ? [:school_id] : %i[name urn postcode]).index_with { nil }
+    reset_hash = (rely_on_school_name ? [:school_id] : NOT_LISTED_FIELDS).index_with { nil }
 
-    update_attributes = attrs.slice(:school_id, :name, :urn, :postcode).merge(reset_hash)
+    update_attributes = attrs.slice(:school_id, *NOT_LISTED_FIELDS).merge(reset_hash)
 
     assign_attributes(update_attributes)
   end
@@ -139,7 +163,7 @@ class PlacementForm
   end
 
   def open_details?
-    %i[name urn].intersect?(errors.attribute_names)
+    %i[name urn address_line_one town_city postcode].intersect?(errors.attribute_names)
   end
 
   def urn_valid
@@ -180,6 +204,7 @@ private
     {
       name:,
       urn:,
+      address:,
       postcode:,
     }
   end

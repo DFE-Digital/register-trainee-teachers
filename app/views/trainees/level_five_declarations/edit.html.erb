@@ -12,12 +12,8 @@
       <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-      <p class="govuk-body"><%= t(".duration_intro") %></p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li><%= t(".with_level_five_html") %></li>
-        <li><%= t(".without_level_five_html") %></li>
-      </ul>
-      <p class="govuk-body"><%= t(".examples") %></p>
+      <p class="govuk-body"><%= t(".standard_duration") %></p>
+      <p class="govuk-body"><%= t(".year_two_entry") %></p>
 
       <% if @trainee.progress.course_details || @trainee.progress.funding %>
         <%= govuk_warning_text(text: t(".change_warning")) %>
@@ -25,7 +21,7 @@
 
       <%= f.govuk_radio_buttons_fieldset(:level_five_qualification, legend: { text: t(".question"), size: "m" }) do %>
         <%= f.govuk_radio_button(:level_five_qualification, true, label: { text: t(".yes") }, hint: { text: t(".yes_hint") }, link_errors: true) %>
-        <%= f.govuk_radio_button(:level_five_qualification, false, label: { text: t(".no") }, hint: { text: t(".no_hint") }) %>
+        <%= f.govuk_radio_button(:level_five_qualification, false, label: { text: t(".no") }) %>
       <% end %>
 
       <%= f.govuk_submit %>
