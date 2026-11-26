@@ -16,7 +16,7 @@ module Funding
 
     def answer
       @answer ||=
-        if UNDERGRAD_ROUTES.key?(trainee.training_route.to_s)
+        if UNDERGRAD_ROUTES.key?(trainee.training_route)
           :not_applicable
         elsif degrees.empty?
           :unknown
@@ -25,10 +25,6 @@ module Funding
         else
           :unrelated
         end
-    end
-
-    def degree_subject
-      degrees.first&.subject
     end
 
     def relevant_degree_subject
@@ -45,7 +41,7 @@ module Funding
       return true if answer == :unknown
       return false if answer == :not_applicable
 
-      funding_method.degree_relevance.to_s == answer.to_s
+      funding_method.degree_relevance == answer.to_s
     end
 
   private
@@ -53,7 +49,7 @@ module Funding
     attr_reader :trainee, :academic_cycle, :allocation_subject
 
     def degrees
-      @degrees ||= trainee.degrees.to_a.sort_by { |degree| [degree.created_at || Time.zone.now, degree.id.to_i] }
+      @degrees ||= trainee.degrees.sort_by { |degree| [degree.created_at || Time.zone.now, degree.id.to_i] }
     end
 
     def hecos_codes

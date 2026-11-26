@@ -127,7 +127,6 @@ private
     @matching_funding_methods ||= {}
     @matching_funding_methods[funding_type.to_s] ||= allocation_subject.funding_methods
       .where(training_route:, funding_type:, academic_cycle:)
-      .to_a
       .select { |funding_method| degree_relevance.matches?(funding_method) && school_designation.matches?(funding_method) }
   end
 

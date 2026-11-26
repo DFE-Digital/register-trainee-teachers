@@ -29,7 +29,7 @@ module Funding
       return true if funding_method.school_disadvantage.nil?
       return true if answer == :unknown
 
-      funding_method.school_disadvantage.to_s == answer.to_s
+      funding_method.school_disadvantage == answer.to_s
     end
 
     def school_label
