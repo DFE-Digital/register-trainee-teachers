@@ -310,6 +310,10 @@ namespace :example_data do
       end
     end
 
+    # Review apps: degree/school split funding for trying the bursary journey
+    # (lib/tasks/demo_funding.rake). Local: rails example_data:demo_funding
+    Rake::Task["example_data:demo_funding"].invoke if Rails.env.review?
+
     # We don't want all trainees having the same update date on the index page
     Audited.audit_class.find_each do |audit|
       random_date = rand(100).days.ago

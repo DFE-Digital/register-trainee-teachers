@@ -80,6 +80,28 @@ class FundingManager
     "#{academic_cycle.label} (opens a new tab)"
   end
 
+  # Why the amount applies, when it depends on the degree:
+  # { key: :relevant, degree: "Mathematics" }, { key: :not_relevant, degrees: [...] }, or nil.
+  def degree_explanation
+    return unless explanations_shown? && split_by?(:degree_relevance)
+
+    case degree_relevance.answer
+    when :relevant then { key: :relevant, degree: degree_relevance.relevant_degree_subject }
+    when :unrelated then { key: :not_relevant, degrees: degree_relevance.degree_subjects }
+    end
+  end
+
+  # Why the amount applies, when it depends on the employing school:
+  # { key: :listed or :not_listed, school: "Name (URN 123456)" }, or nil.
+  def employing_school_explanation
+    return unless explanations_shown? && split_by?(:school_disadvantage)
+
+    case school_designation.answer
+    when :disadvantaged then { key: :listed, school: school_designation.school_label }
+    when :non_disadvantaged then { key: :not_listed, school: school_designation.school_label }
+    end
+  end
+
 private
 
   attr_reader :trainee, :academic_cycle, :allocation_subject
@@ -96,10 +118,37 @@ private
     @available_amounts ||= {}
     return @available_amounts[funding_type] if @available_amounts.key?(funding_type)
 
-    @available_amounts[funding_type] = allocation_subject.funding_methods.find_by(
-      training_route:,
-      funding_type:,
-      academic_cycle:,
-    )&.amount
+    # Records that fit the trainee's degree and employing school. While either
+    # isn't known, the highest matching amount ("up to").
+    @available_amounts[funding_type] = matching_funding_methods(funding_type).filter_map(&:amount).max
+  end
+
+  def matching_funding_methods(funding_type)
+    @matching_funding_methods ||= {}
+    @matching_funding_methods[funding_type.to_s] ||= allocation_subject.funding_methods
+      .where(training_route:, funding_type:, academic_cycle:)
+      .select { |funding_method| degree_relevance.matches?(funding_method) && school_designation.matches?(funding_method) }
+  end
+
+  def explanations_shown?
+    allocation_subject && academic_cycle && !trainee.early_years_route?
+  end
+
+  def split_by?(column)
+    @split_by ||= {}
+    return @split_by[column] if @split_by.key?(column)
+
+    @split_by[column] = allocation_subject.funding_methods
+      .where(training_route:, academic_cycle:)
+      .where.not(column => nil)
+      .exists?
+  end
+
+  def degree_relevance
+    @degree_relevance ||= ::Funding::DegreeRelevance.new(trainee, academic_cycle:, allocation_subject:)
+  end
+
+  def school_designation
+    @school_designation ||= ::Funding::SchoolDesignation.new(trainee, academic_cycle:)
   end
 end
