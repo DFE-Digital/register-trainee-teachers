@@ -18,4 +18,14 @@ describe FundingSchoolDesignation do
   describe "enums" do
     it { is_expected.to define_enum_for(:designation).with_values(disadvantaged: "disadvantaged", special: "special").backed_by_column_of_type(:string) }
   end
+
+  describe "#designation_label" do
+    it "returns a human-readable label for disadvantaged schools" do
+      expect(build(:funding_school_designation, designation: :disadvantaged).designation_label).to eq("Disadvantaged school")
+    end
+
+    it "returns a human-readable label for special schools" do
+      expect(build(:funding_school_designation, :special).designation_label).to eq("Special school")
+    end
+  end
 end

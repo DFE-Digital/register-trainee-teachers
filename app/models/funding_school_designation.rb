@@ -30,4 +30,11 @@ class FundingSchoolDesignation < ApplicationRecord
 
   validates :designation, presence: true
   validates :school_id, uniqueness: { scope: :academic_cycle_id }
+
+  def designation_label
+    {
+      "disadvantaged" => "Disadvantaged school",
+      "special" => "Special school",
+    }.fetch(designation, designation)
+  end
 end

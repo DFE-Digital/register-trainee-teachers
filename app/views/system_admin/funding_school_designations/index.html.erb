@@ -1,0 +1,74 @@
+<% page_title = t("components.page_titles.funding_schools.index") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render PageTitle::View.new(text: page_title) %>
+    <h1 class="govuk-heading-l"><%= page_title %></h1>
+
+    <%= render "system_admin/tab_nav" %>
+    <%= render "system_admin/funding_nav" %>
+
+    <p class="govuk-body">
+      <% if all_years? %>
+        Schools recorded as disadvantaged or special schools for funding, by academic year.
+      <% else %>
+        Schools recorded as disadvantaged or special schools for funding for the
+        <%= @academic_cycle.label %> academic year.
+      <% end %>
+    </p>
+
+    <div class="govuk-!-margin-bottom-6">
+      <%= form_with url: funding_management_schools_path, method: :get do %>
+        <div class="govuk-form-group" style="max-width: 20em;">
+          <label class="govuk-label" for="academic_year">Academic year</label>
+          <select name="academic_year" id="academic_year" class="govuk-select">
+            <option value="all" <%= "selected" if all_years? %>>All academic years</option>
+            <% @academic_cycles.each do |cycle| %>
+              <option value="<%= cycle.start_year %>" <%= "selected" if !all_years? && cycle == @academic_cycle %>>
+                <%= cycle.label %>
+              </option>
+            <% end %>
+          </select>
+        </div>
+
+        <%= button_tag "Apply filter", type: "submit", class: "govuk-button govuk-button--secondary" %>
+      <% end %>
+    </div>
+
+    <% if @designations.empty? %>
+      <p class="govuk-body">
+        <%= all_years? ? "No schools have been added." : "No schools have been added for #{@academic_cycle.label}." %>
+      </p>
+    <% else %>
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        <strong><%= @designations.total_count %></strong> <%= "school".pluralize(@designations.total_count) %>
+      </p>
+
+      <%= govuk_table do |table|
+        table.with_head do |head|
+          head.with_row do |row|
+            row.with_cell(text: "URN")
+            row.with_cell(text: "School")
+            row.with_cell(text: "Town")
+            row.with_cell(text: "Designation")
+            row.with_cell(text: "Academic year") if all_years?
+          end
+        end
+
+        table.with_body do |body|
+          @designations.each do |designation|
+            body.with_row do |row|
+              row.with_cell(text: designation.school.urn)
+              row.with_cell(text: designation.school.name)
+              row.with_cell(text: designation.school.town)
+              row.with_cell(text: designation.designation_label)
+              row.with_cell(text: designation.academic_cycle.label) if all_years?
+            end
+          end
+        end
+      end %>
+
+      <%= render Paginator::View.new(scope: @designations) %>
+    <% end %>
+  </div>
+</div>
