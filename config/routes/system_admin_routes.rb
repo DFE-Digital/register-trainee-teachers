@@ -22,7 +22,7 @@ module SystemAdminRoutes
         end
 
         scope path: "funding-management", as: :funding_management do
-          get "/schools", to: "funding_schools#index", as: :schools
+          get "/schools", to: "funding_school_designations#index", as: :schools
         end
 
         resources :providers, only: %i[index new create show edit update destroy] do

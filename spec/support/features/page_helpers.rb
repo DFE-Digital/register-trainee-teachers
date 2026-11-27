@@ -102,8 +102,8 @@ module Features
       @schools_index_page ||= PageObjects::Schools::Index.new
     end
 
-    def funding_schools_index_page
-      @funding_schools_index_page ||= PageObjects::SystemAdmin::FundingSchools::Index.new
+    def funding_school_designations_index_page
+      @funding_school_designations_index_page ||= PageObjects::SystemAdmin::FundingSchoolDesignations::Index.new
     end
 
     def lead_schools_index_page

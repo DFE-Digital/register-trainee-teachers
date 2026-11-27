@@ -1,0 +1,4 @@
+<%= render TabNavigation::View.new(items: [
+  ({ name: "Funding upload", url: funding_uploads_path } if FeatureService.enabled?("funding_uploads")),
+  { name: "Disadvantaged and special schools", url: funding_management_schools_path },
+], size: :compact) %>

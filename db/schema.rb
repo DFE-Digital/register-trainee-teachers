@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_06_131224) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_27_140637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -781,6 +781,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_131224) do
     t.datetime "updated_at", null: false
     t.string "urn", null: false
     t.index ["close_date"], name: "index_schools_on_close_date", where: "(close_date IS NULL)"
+    t.index ["name"], name: "index_schools_on_name"
     t.index ["searchable"], name: "index_schools_on_searchable", using: :gin
     t.index ["urn"], name: "index_schools_on_urn", unique: true
   end

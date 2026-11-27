@@ -384,7 +384,6 @@ en:
       funding_schools:
         index: Disadvantaged and special schools
       pending_awards:
-
         index: Pending status change
       pending_trns:
         index: Trainees Pending TRN

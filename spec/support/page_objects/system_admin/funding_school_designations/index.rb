@@ -2,7 +2,7 @@
 
 module PageObjects
   module SystemAdmin
-    module FundingSchools
+    module FundingSchoolDesignations
       class Index < PageObjects::Base
         set_url "/system-admin/funding-management/schools"
       end

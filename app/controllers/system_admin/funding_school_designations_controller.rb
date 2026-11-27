@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module SystemAdmin
-  class FundingSchoolsController < ApplicationController
-    # Default until the user picks another year (or "all") from the filter.
-    # Not Settings.current_recruitment_cycle_year (that's the live year, currently 2026).
-    DEFAULT_ACADEMIC_YEAR = 2027
-
+  class FundingSchoolDesignationsController < ApplicationController
     helper_method :all_years?
 
     def index
@@ -15,7 +11,7 @@ module SystemAdmin
       scope = FundingSchoolDesignation.includes(:school, :academic_cycle).joins(:school)
       scope = scope.where(academic_cycle: @academic_cycle) unless all_years?
 
-      @designations = scope.order("schools.name")
+      @designations = scope.order("schools.name").page(params[:page] || 1)
     end
 
   private
@@ -26,7 +22,14 @@ module SystemAdmin
 
     def academic_cycle_from_params
       year = params[:academic_year].presence&.to_i
-      (AcademicCycle.for_year(year) if year) || AcademicCycle.for_year(DEFAULT_ACADEMIC_YEAR)
+      (AcademicCycle.for_year(year) if year) || default_academic_cycle
+    end
+
+    def default_academic_cycle
+      current = AcademicCycle.current
+      return current if current && FundingSchoolDesignation.exists?(academic_cycle: current)
+
+      AcademicCycle.next || current
     end
   end
 end

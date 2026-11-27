@@ -6,6 +6,7 @@
     <h1 class="govuk-heading-l"><%= page_title %></h1>
 
     <%= render "system_admin/tab_nav" %>
+    <%= render "system_admin/funding_nav" %>
 
     <p class="govuk-body">
       <% if all_years? %>
@@ -18,9 +19,9 @@
 
     <div class="govuk-!-margin-bottom-6">
       <%= form_with url: funding_management_schools_path, method: :get do %>
-        <div class="govuk-form-group">
+        <div class="govuk-form-group" style="max-width: 20em;">
           <label class="govuk-label" for="academic_year">Academic year</label>
-          <select name="academic_year" id="academic_year" class="govuk-select" data-filter-select>
+          <select name="academic_year" id="academic_year" class="govuk-select">
             <option value="all" <%= "selected" if all_years? %>>All academic years</option>
             <% @academic_cycles.each do |cycle| %>
               <option value="<%= cycle.start_year %>" <%= "selected" if !all_years? && cycle == @academic_cycle %>>
@@ -30,25 +31,9 @@
           </select>
         </div>
 
-        <div class="app-no-js-only">
-          <%= button_tag "Apply filter", type: "submit", class: "govuk-button govuk-button--secondary" %>
-        </div>
+        <%= button_tag "Apply filter", type: "submit", class: "govuk-button govuk-button--secondary" %>
       <% end %>
     </div>
-
-    <%= javascript_tag nonce: true do -%>
-      (function () {
-        document.querySelectorAll("[data-filter-select]").forEach(function (select) {
-          select.addEventListener("change", function () {
-            if (this.form.requestSubmit) {
-              this.form.requestSubmit();
-            } else {
-              this.form.submit();
-            }
-          });
-        });
-      })();
-    <% end %>
 
     <% if @designations.empty? %>
       <p class="govuk-body">
@@ -56,7 +41,7 @@
       </p>
     <% else %>
       <p class="govuk-body govuk-!-margin-bottom-2">
-        <strong><%= @designations.size %></strong> <%= "school".pluralize(@designations.size) %>
+        <strong><%= @designations.total_count %></strong> <%= "school".pluralize(@designations.total_count) %>
       </p>
 
       <%= govuk_table do |table|
@@ -76,15 +61,14 @@
               row.with_cell(text: designation.school.urn)
               row.with_cell(text: designation.school.name)
               row.with_cell(text: designation.school.town)
-              row.with_cell(text: govuk_tag(
-                text: designation.designation_label,
-                colour: designation.disadvantaged? ? "magenta" : "purple",
-              ))
+              row.with_cell(text: designation.designation_label)
               row.with_cell(text: designation.academic_cycle.label) if all_years?
             end
           end
         end
       end %>
+
+      <%= render Paginator::View.new(scope: @designations) %>
     <% end %>
   </div>
 </div>

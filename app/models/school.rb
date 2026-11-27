@@ -18,6 +18,7 @@
 # Indexes
 #
 #  index_schools_on_close_date  (close_date) WHERE (close_date IS NULL)
+#  index_schools_on_name        (name)
 #  index_schools_on_searchable  (searchable) USING gin
 #  index_schools_on_urn         (urn) UNIQUE
 #
