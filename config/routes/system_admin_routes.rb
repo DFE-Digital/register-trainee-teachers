@@ -14,6 +14,7 @@ module SystemAdminRoutes
         resources :duplicate_apply_applications, only: %i[index show]
 
         get "funding-uploads", to: "funding_uploads#index", as: :funding_uploads
+        resources :relevant_degree_subjects, only: %i[index], path: "funding-management/relevant-degrees"
 
         resource :funding_uploads, only: %i[new create], path: "/funding-uploads" do
           scope module: :funding_uploads do
