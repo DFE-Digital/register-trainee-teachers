@@ -7,6 +7,16 @@ RSpec.describe Api::V20270::HesaTraineeDetailAttributes do
 
   subject { described_class.new }
 
+  describe "rules" do
+    subject { described_class.new(trainee_attributes: Api::V20270::TraineeAttributes.new) }
+
+    it "runs the v2027.0 rules" do
+      expect(Api::V20270::HesaTraineeDetailAttributes::Rules::FundingMethod).to receive(:call).and_call_original
+
+      subject.validate
+    end
+  end
+
   describe "validations" do
     it { is_expected.to validate_presence_of(:course_year) }
     it { is_expected.to validate_presence_of(:fund_code) }
