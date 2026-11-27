@@ -36,6 +36,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     apk add --update --no-cache \
       icu-libs \
       libpq \
+      'libxml2>=2.13.9-r4' \
       shared-mime-info \
       'sqlite-libs>=3.53.4-r0' \
       yaml \
@@ -102,8 +103,8 @@ RUN apk add --update --no-cache tzdata && \
 
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
-RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info \
-    'sqlite-libs>=3.53.4-r0' yaml yarn 'zlib>=1.3.2-r1'
+RUN apk add --update --no-cache icu-data-full icu-libs libpq 'libxml2>=2.13.9-r4' \
+    shared-mime-info 'sqlite-libs>=3.53.4-r0' yaml yarn 'zlib>=1.3.2-r1'
 
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
 COPY --from=rails-build /app/ .
