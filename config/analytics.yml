@@ -132,8 +132,10 @@ shared:
     - amount
     - created_at
     - created_at
+    - degree_relevance
     - funding_type
     - id
+    - school_disadvantage
     - training_route
     - updated_at
     - updated_at
