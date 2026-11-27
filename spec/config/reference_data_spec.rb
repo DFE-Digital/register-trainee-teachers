@@ -49,7 +49,7 @@ RSpec.describe "Reference data integrity" do
       gem_codes: -> { Hesa::CodeSets::TrainingInitiatives::MAPPING.keys } },
     { file: "training_route.yml", v26: :training_route, v25: :training_route,
       gem_codes: -> { Hesa::CodeSets::TrainingRoutes::MAPPING.keys },
-      except: %w[21] },
+      except: %w[21 22] },
   ].freeze
 
   def load_data(file)

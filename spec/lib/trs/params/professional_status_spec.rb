@@ -129,6 +129,14 @@ module Trs
           end
         end
 
+        context "trainee is teach learn change" do
+          let(:trainee) { create(:trainee, :trn_received, training_route: TRAINING_ROUTE_ENUMS[:teach_learn_change]) }
+
+          it "sets appropriate route type ID" do
+            expect(subject["routeToProfessionalStatusTypeId"]).to eq("D2809A38-0B62-415F-9BD1-0D6FCEDF20FC")
+          end
+        end
+
         context "trainee is school direct tuition fee" do
           let(:trainee) { create(:trainee, :school_direct_tuition_fee, :trn_received) }
           let(:provider_led_trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
