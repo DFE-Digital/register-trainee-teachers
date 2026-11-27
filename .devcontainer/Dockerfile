@@ -29,6 +29,7 @@ RUN apk add --update --no-cache --virtual build-dependencies \
       icu-dev \
       zlib=1.3.2-r1 \
       zlib-dev=1.3.2-r1 \
+      'libxml2>=2.13.9-r4' \
       libxml2-dev \
       libxslt-dev \
   && bundle install --jobs=4 \
