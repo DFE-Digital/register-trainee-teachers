@@ -83,10 +83,11 @@ namespace :example_data do
 
     # Create some relevant degrees
     {
-      AllocationSubjects::CHEMISTRY => %w[100417 100416],
-      AllocationSubjects::COMPUTING => %w[100366],
-      AllocationSubjects::MATHEMATICS => %w[100403],
-      AllocationSubjects::PHYSICS => %w[100425 100426 100416],
+      AllocationSubjects::BIOLOGY => %w[100346 100354 100356 100353 100347 100259],
+      AllocationSubjects::CHEMISTRY => %w[100417 100416 100344 100413 100423],
+      AllocationSubjects::COMPUTING => %w[100366 100374 100359 100372],
+      AllocationSubjects::MATHEMATICS => %w[100403 100406 100400 100405 100404],
+      AllocationSubjects::PHYSICS => %w[100425 100426 100416 100415 101060],
     }.each do |allocation_subject_name, hecos_codes|
       allocation_subject = AllocationSubject.find_by!(name: allocation_subject_name)
 
