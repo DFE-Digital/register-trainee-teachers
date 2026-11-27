@@ -42,7 +42,7 @@ gem "stackprof"
 # Logging
 gem "amazing_print", "~> 3.0"
 
-gem "rails_semantic_logger", "5.0.0"
+gem "rails_semantic_logger", "5.3.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -56,7 +56,7 @@ gem "uk_postcode"
 
 gem "config", "~> 5.6"
 
-gem "httparty", "~> 0.24"
+gem "httparty", "~> 0.25"
 
 # Wrap jsonb columns with activemodel-like classes
 gem "store_model", "~> 4.6"
