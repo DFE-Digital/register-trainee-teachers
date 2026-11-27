@@ -17,7 +17,7 @@ module SystemAdmin
       @funding_upload = FundingUpload.create!(
         funding_type: funding_type,
         month: month,
-        csv_data: file.read,
+        csv_data: File.read(file.path, encoding: "bom|utf-8"),
       )
     end
   end
